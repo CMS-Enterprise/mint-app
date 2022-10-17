@@ -35,8 +35,8 @@ SET
 RETURNING
 id,
 operational_need_id,
-NULL AS name,
-NULL AS key,
+NULL AS sol_name,
+NULL AS sol_key,
 solution_type,
 archived,
 name_other,

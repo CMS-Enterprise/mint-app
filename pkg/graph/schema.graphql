@@ -1427,8 +1427,8 @@ type OperationalSolution {
 
     solutionType: Int
     archived: Boolean!
-    name: String!
-    key: OperationalSolutionKey!
+    name: String
+    key: OperationalSolutionKey
     nameOther: String
     
     pocName: String     

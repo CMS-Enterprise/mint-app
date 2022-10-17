@@ -3,9 +3,9 @@ SELECT
     OpSol.operational_need_id,
     OpSol.solution_type,
     OpSol.archived,
-    pOpSol.name AS name,
-    pOpSol.key, AS key,
-    OpSol.solution_other,
+    pOpSol.sol_name AS sol_name,
+    pOpSol.sol_key AS sol_key,
+    OpSol.name_other,
     OpSol.poc_name,
     OpSol.poc_email,
     OpSol.must_start_dts,
@@ -16,5 +16,6 @@ SELECT
     OpSol.modified_by,
     OpSol.modified_dts
 FROM operational_solution AS OpSol
-LEFT JOIN possible_operational_solution AS pOpSol ON OpSol.solution_type = pOpSol.id
-WHERE OpSol.operational_need_id = :operational_need_id AND pOpSol.key = :solution_type;
+LEFT JOIN possible_operational_solution AS pOpSol
+    ON pOpSol.id = OpSol.solution_type
+WHERE OpSol.operational_need_id = :operational_need_id AND pOpSol.sol_key = :sol_key;

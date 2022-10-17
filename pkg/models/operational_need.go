@@ -6,9 +6,9 @@ import "github.com/google/uuid"
 type OperationalNeed struct {
 	baseStruct
 	modelPlanRelation
-	NeedType *int               `json:"needType" db:"need_type"`
-	Name     string             `json:"name" db:"name"` //From Possible Operational Need Table
-	Key      OperationalNeedKey `json:"key" db:"key"`   //From Possible Operational Need Table
+	NeedType *int                `json:"needType" db:"need_type"`
+	Name     *string             `json:"name" db:"need_name"` //From Possible Operational Need Table
+	Key      *OperationalNeedKey `json:"key" db:"need_key"`   //From Possible Operational Need Table
 
 	NameOther *string `json:"nameOther" db:"name_other"`
 	Needed    bool    `json:"needed" db:"needed"`

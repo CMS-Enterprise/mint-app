@@ -74,7 +74,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 }
 
 // OperationalNeedGetByModelPlanIDAndType existing OperationalNeed associated to a model plan by id and type
-func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey) (*models.OperationalNeed, error) {
+func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, modelPlanID uuid.UUID, needKey models.OperationalNeedKey) (*models.OperationalNeed, error) {
 	need := models.OperationalNeed{}
 
 	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndTypeSQL)
@@ -85,7 +85,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, model
 	arg := map[string]interface{}{
 
 		"model_plan_id": modelPlanID,
-		"need_type":     needType,
+		"need_key":      needKey,
 	}
 
 	err = stmt.Get(&need, arg)
@@ -113,7 +113,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(logger *zap.Logger, 
 	arg := map[string]interface{}{
 
 		"model_plan_id": modelPlanID,
-		"need_other":    customNeedType,
+		"name_other":    customNeedType,
 	}
 
 	err = stmt.Get(&need, arg)
@@ -136,7 +136,7 @@ func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.O
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
 	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
-	need.Key = needTypeKey // This will set the need type id IN the db
+	need.Key = &needTypeKey // This will set the need type id IN the db
 
 	err = statement.Get(need, need)
 	if err != nil {

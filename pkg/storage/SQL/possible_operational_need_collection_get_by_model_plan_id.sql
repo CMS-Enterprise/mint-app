@@ -1,7 +1,7 @@
 SELECT
     id,
-    name,
-    key,
+    need_name,
+    need_key,
     created_by,
     created_dts,
     modified_by,

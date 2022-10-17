@@ -31,8 +31,8 @@ CREATE TYPE OPERATIONAL_NEED_KEY AS ENUM (
 
 CREATE TABLE possible_operational_need (
     id SERIAL PRIMARY KEY NOT NULL, -- instead of UUID
-    name ZERO_STRING NOT NULL,
-    key OPERATIONAL_NEED_KEY NOT NULL,
+    need_name ZERO_STRING NOT NULL,
+    need_key OPERATIONAL_NEED_KEY NOT NULL,
 
 
 
@@ -46,4 +46,4 @@ CREATE TABLE possible_operational_need (
 
 
 ALTER TABLE possible_operational_need
-ADD CONSTRAINT unique_enum_pos_op_need UNIQUE (key);
+ADD CONSTRAINT unique_enum_pos_op_need UNIQUE (need_key);

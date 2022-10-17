@@ -3,9 +3,9 @@ SELECT
     operational_need_id,
     solution_type,
     archived,
-    NULL AS name,
-    NULL AS key,
-    solution_other,
+    NULL AS sol_name,
+    NULL AS sol_key,
+    name_other,
     poc_name,
     poc_email,
     must_start_dts,
@@ -16,4 +16,4 @@ SELECT
     modified_by,
     modified_dts
 FROM operational_solution
-WHERE operational_need_id = :operational_need_id AND solution_other = :solution_other;
+WHERE operational_need_id = :operational_need_id AND name_other = :name_other;

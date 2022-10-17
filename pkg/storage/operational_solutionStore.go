@@ -50,7 +50,7 @@ func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.
 }
 
 // OperationalSolutionGetByOperationNeedIDAndType returns an operational solution that matches by operational need an solutionType
-func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logger, operationNeedID uuid.UUID, solutionType models.OperationalSolutionKey) (*models.OperationalSolution, error) {
+func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logger, operationNeedID uuid.UUID, solutionKey models.OperationalSolutionKey) (*models.OperationalSolution, error) {
 	solution := models.OperationalSolution{}
 
 	stmt, err := s.db.PrepareNamed(operationalSolutionGetByOperationalNeedIDAndTypeSQL)
@@ -60,7 +60,7 @@ func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logge
 
 	arg := map[string]interface{}{
 		"operational_need_id": operationNeedID,
-		"solution_type":       solutionType,
+		"sol_key":             solutionKey,
 	}
 	err = stmt.Get(&solution, arg)
 	if err != nil {
@@ -86,7 +86,7 @@ func (s *Store) OperationalSolutionGetByOperationNeedIDAndOtherType(logger *zap.
 
 	arg := map[string]interface{}{
 		"operational_need_id": operationNeedID,
-		"solution_other":      customSolutionType,
+		"name_other":          customSolutionType,
 	}
 	err = stmt.Get(&solution, arg)
 	if err != nil {
@@ -108,7 +108,7 @@ func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
 	}
 	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
-	solution.Key = solutionTypeKey
+	solution.Key = &solutionTypeKey
 	err = statement.Get(solution, solution)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..

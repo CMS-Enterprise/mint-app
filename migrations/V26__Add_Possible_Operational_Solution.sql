@@ -40,12 +40,8 @@ CREATE TYPE OPERATIONAL_SOLUTION_KEY AS ENUM (
 
 CREATE TABLE possible_operational_solution (
     id SERIAL PRIMARY KEY NOT NULL,
-    name ZERO_STRING NOT NULL,
-    key OPERATIONAL_SOLUTION_KEY NOT NULL,
-
-    --TODO add fields
-    -- default LINKING TABLE TO default POCS
-
+    sol_name ZERO_STRING NOT NULL,
+    sol_key OPERATIONAL_SOLUTION_KEY NOT NULL,
 
     --META DATA
     created_by EUA_ID NOT NULL,
@@ -55,4 +51,4 @@ CREATE TABLE possible_operational_solution (
 
 );
 ALTER TABLE possible_operational_solution
-ADD CONSTRAINT unique_enum_pos_op_sol UNIQUE (key);
+ADD CONSTRAINT unique_enum_pos_op_sol UNIQUE (sol_key);

@@ -7509,8 +7509,8 @@ type OperationalSolution {
 
     solutionType: Int
     archived: Boolean!
-    name: String!
-    key: OperationalSolutionKey!
+    name: String
+    key: OperationalSolutionKey
     nameOther: String
     
     pocName: String     
@@ -17389,9 +17389,9 @@ func (ec *executionContext) _OperationalNeed_key(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.OperationalNeedKey)
+	res := resTmp.(*models.OperationalNeedKey)
 	fc.Result = res
-	return ec.marshalOOperationalNeedKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx, field.Selections, res)
+	return ec.marshalOOperationalNeedKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalNeed_key(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17430,9 +17430,9 @@ func (ec *executionContext) _OperationalNeed_name(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalNeed_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17983,14 +17983,11 @@ func (ec *executionContext) _OperationalSolution_name(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalSolution_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18027,14 +18024,11 @@ func (ec *executionContext) _OperationalSolution_key(ctx context.Context, field 
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(models.OperationalSolutionKey)
+	res := resTmp.(*models.OperationalSolutionKey)
 	fc.Result = res
-	return ec.marshalNOperationalSolutionKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, field.Selections, res)
+	return ec.marshalOOperationalSolutionKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalSolution_key(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -45426,16 +45420,10 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 
 			out.Values[i] = ec._OperationalSolution_name(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "key":
 
 			out.Values[i] = ec._OperationalSolution_key(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "nameOther":
 
 			out.Values[i] = ec._OperationalSolution_nameOther(ctx, field, obj)
@@ -58885,14 +58873,37 @@ func (ec *executionContext) marshalOOpSolutionStatus2ᚖgithubᚗcomᚋcmsgovᚋ
 	return res
 }
 
-func (ec *executionContext) unmarshalOOperationalNeedKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx context.Context, v interface{}) (models.OperationalNeedKey, error) {
+func (ec *executionContext) unmarshalOOperationalNeedKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx context.Context, v interface{}) (*models.OperationalNeedKey, error) {
+	if v == nil {
+		return nil, nil
+	}
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.OperationalNeedKey(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOOperationalNeedKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx context.Context, sel ast.SelectionSet, v models.OperationalNeedKey) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
+func (ec *executionContext) marshalOOperationalNeedKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx context.Context, sel ast.SelectionSet, v *models.OperationalNeedKey) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOOperationalSolutionKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx context.Context, v interface{}) (*models.OperationalSolutionKey, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.OperationalSolutionKey(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOOperationalSolutionKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx context.Context, sel ast.SelectionSet, v *models.OperationalSolutionKey) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
 	return res
 }
 

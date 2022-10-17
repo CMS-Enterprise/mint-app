@@ -14,7 +14,7 @@ INSERT INTO operational_solution(
 SELECT
     :id AS id,
     :operational_need_id AS operational_need_id,
-    (SELECT possible_operational_solution.id FROM possible_operational_solution WHERE possible_operational_solution.key = :solution_type_key) AS solution_type, --check if this works
+    (SELECT possible_operational_solution.id FROM possible_operational_solution WHERE possible_operational_solution.sol_key = :sol_key) AS solution_type, --check if this works
     :archived AS archived,
     :name_other AS name_other,
     :poc_name AS poc_name,

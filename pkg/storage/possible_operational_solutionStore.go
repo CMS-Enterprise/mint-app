@@ -17,7 +17,7 @@ var possibleOperationalSolutionCollectionByNeedTypeSQL string
 var possibleOperationalSolutionCollectionByOperationalNeedIDSQL string
 
 // PossibleOperationalSolutionCollectionGetByNeedType returns possible operational solutions for a given operational need
-func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.Logger, needType models.OperationalNeedKey) ([]*models.PossibleOperationalSolution, error) {
+func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.Logger, needKey models.OperationalNeedKey) ([]*models.PossibleOperationalSolution, error) {
 
 	posSols := []*models.PossibleOperationalSolution{}
 
@@ -27,7 +27,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.L
 	}
 
 	arg := map[string]interface{}{
-		"need_type": needType,
+		"need_key": needKey,
 	}
 
 	err = stmt.Select(&posSols, arg) //this returns more than one

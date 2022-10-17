@@ -1,7 +1,7 @@
 SELECT
     POS.id,
-    POS.name,
-    POS.key,
+    POS.sol_name,
+    POS.sol_key,
     POS.created_by,
     POS.created_dts,
     POS.modified_by,

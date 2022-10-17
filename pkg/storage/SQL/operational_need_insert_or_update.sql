@@ -9,7 +9,7 @@ INSERT INTO operational_need(
 SELECT
     :id AS id, -- could do gen_random_uuid()
     :model_plan_id AS model_plan_id,
-    (SELECT possible_operational_need.id FROM possible_operational_need WHERE possible_operational_need.name = :need_type_name) AS need_type,
+    (SELECT possible_operational_need.id FROM possible_operational_need WHERE possible_operational_need.need_key = :need_key) AS need_type,
     :needed AS needed,
     :created_by AS created_by,
     CURRENT_TIMESTAMP AS created_dts
