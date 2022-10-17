@@ -27,7 +27,6 @@ export default gql`
         createdBy
         createdDts
         status
-        isAssessment
         replies {
           id
           discussionID
@@ -35,7 +34,6 @@ export default gql`
           createdBy
           createdDts
           resolution
-          isAssessment
         }
       }
       generalCharacteristics {

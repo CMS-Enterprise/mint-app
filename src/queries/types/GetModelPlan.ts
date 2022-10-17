@@ -36,7 +36,6 @@ export interface GetModelPlan_modelPlan_discussions_replies {
   createdBy: string;
   createdDts: Time;
   resolution: boolean | null;
-  isAssessment: boolean;
 }
 
 export interface GetModelPlan_modelPlan_discussions {
@@ -46,7 +45,6 @@ export interface GetModelPlan_modelPlan_discussions {
   createdBy: string;
   createdDts: Time;
   status: DiscussionStatus;
-  isAssessment: boolean;
   replies: GetModelPlan_modelPlan_discussions_replies[];
 }
 

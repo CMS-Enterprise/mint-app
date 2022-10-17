@@ -15,7 +15,6 @@ export interface CreateModelPlanReply_createDiscussionReply {
   discussionID: UUID;
   content: string | null;
   resolution: boolean | null;
-  isAssessment: boolean;
   createdBy: string;
   createdDts: Time;
 }

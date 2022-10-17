@@ -32,7 +32,6 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
-import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import GetModelPlan from 'queries/GetModelPlan';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
@@ -41,6 +40,7 @@ import {
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
   GetModelPlan_modelPlan_crTdls as CRTDLType,
+  GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
   GetModelPlan_modelPlan_itTools as ITToolsType,
