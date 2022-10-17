@@ -170,9 +170,14 @@ const ReadOnly = () => {
       }`;
     });
 
-  const formattedCrTdls = crTdls?.map((collaborator, index) => {
-    return `${collaborator.idNumber}${index === crTdls.length - 1 ? '' : ', '}`;
-  });
+  const formattedCrTdls = items => {
+    const idNumbers = items.map(item => item.idNumber);
+    if (idNumbers.length > 3) {
+      return `${idNumbers.slice(0, 3).join(', ')} + 2 more`;
+      // TODO: figure out how to dynamically change the '2'
+    }
+    return idNumbers.join(', ');
+  };
 
   const subComponents: subComponentsProps = {
     'model-basics': {
@@ -358,7 +363,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0 "
-                  term={formattedCrTdls ?? t('noAnswer.noneEntered')}
+                  term={formattedCrTdls(crTdls) ?? t('noAnswer.noneEntered')}
                 />
               </Grid>
             </Grid>
