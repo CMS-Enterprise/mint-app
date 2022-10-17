@@ -140,7 +140,8 @@ const ReadOnly = () => {
     basics,
     generalCharacteristics,
     collaborators,
-    isCollaborator
+    isCollaborator,
+    crTdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
   const editAccess: boolean = isCollaborator || isAssessment(groups);
@@ -168,6 +169,10 @@ const ReadOnly = () => {
           : ', '
       }`;
     });
+
+  const formattedCrTdls = crTdls?.map((collaborator, index) => {
+    return `${collaborator.idNumber}${index === crTdls.length - 1 ? '' : ', '}`;
+  });
 
   const subComponents: subComponentsProps = {
     'model-basics': {
@@ -353,7 +358,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0 "
-                  term={t('noAnswer.noneEntered')}
+                  term={formattedCrTdls ?? t('noAnswer.noneEntered')}
                 />
               </Grid>
             </Grid>
