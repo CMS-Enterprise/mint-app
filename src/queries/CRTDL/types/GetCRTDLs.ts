@@ -21,6 +21,7 @@ export interface GetCRTDLs_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  isCollaborator: boolean;
   crTdls: GetCRTDLs_modelPlan_crTdls[];
 }
 
