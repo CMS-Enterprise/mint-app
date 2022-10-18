@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import GetCRTDLs from 'queries/CRTDL/GetCRDTLs';
 
@@ -22,6 +25,7 @@ const mocks = [
           __typename: 'ModelPlan',
           id: modelID,
           modelName: 'modelName',
+          isCollaborator: true,
           crTdls: [
             {
               __typename: 'PlanCrTdl',
@@ -39,6 +43,15 @@ const mocks = [
   }
 ];
 
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
 describe('Read Only CR and TDLs page', () => {
   it('renders without errors', async () => {
     render(
@@ -48,7 +61,9 @@ describe('Read Only CR and TDLs page', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/read-only/crs-and-tdl">
-              <ReadOnlyCRTDLs modelID={modelID} />
+              <Provider store={store}>
+                <ReadOnlyCRTDLs modelID={modelID} />
+              </Provider>
             </Route>
           </MessageProvider>
         </MockedProvider>
@@ -73,7 +88,9 @@ describe('Read Only CR and TDLs page', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/read-only/crs-and-tdl">
-              <ReadOnlyCRTDLs modelID={modelID} />
+              <Provider store={store}>
+                <ReadOnlyCRTDLs modelID={modelID} />
+              </Provider>
             </Route>
           </MessageProvider>
         </MockedProvider>
