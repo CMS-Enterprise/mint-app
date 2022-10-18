@@ -283,7 +283,7 @@ const Table = ({
       initialState: {
         sortBy: useMemo(() => [{ id: 'idNumber', asc: true }], []),
         pageIndex: 0,
-        hiddenColumns: !hasEditAccess ? [] : ['id']
+        hiddenColumns: hasEditAccess ? [] : ['id']
       }
     },
     useFilters,
