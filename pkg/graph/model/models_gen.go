@@ -2728,6 +2728,7 @@ const (
 	TaskListSectionOperationsEvaluationAndLearning TaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
 	TaskListSectionPayment                         TaskListSection = "PAYMENT"
 	TaskListSectionItTools                         TaskListSection = "IT_TOOLS"
+	TaskListSectionPrepareForClearance             TaskListSection = "PREPARE_FOR_CLEARANCE"
 )
 
 var AllTaskListSection = []TaskListSection{
@@ -2738,11 +2739,12 @@ var AllTaskListSection = []TaskListSection{
 	TaskListSectionOperationsEvaluationAndLearning,
 	TaskListSectionPayment,
 	TaskListSectionItTools,
+	TaskListSectionPrepareForClearance,
 }
 
 func (e TaskListSection) IsValid() bool {
 	switch e {
-	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools:
+	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools, TaskListSectionPrepareForClearance:
 		return true
 	}
 	return false
