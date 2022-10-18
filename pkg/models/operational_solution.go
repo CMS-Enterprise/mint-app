@@ -28,6 +28,7 @@ func NewOperationalSolution(createdBy string, operationalNeedID uuid.UUID) *Oper
 	return &OperationalSolution{
 		baseStruct:        NewBaseStruct(createdBy),
 		OperationalNeedID: operationalNeedID, //TODO, should this be an embedded struct
+		Status:            OpSNotStarted,
 	}
 }
 

@@ -89,24 +89,25 @@ func (suite *ResolverSuite) createOperationalNeed(mp *models.ModelPlan, needType
 	return opNeed
 
 }
-func (suite *ResolverSuite) createOperationalSolution(opNeed *models.OperationalNeed, solutionType *models.OperationalSolutionKey, customSolutionType *string, needed bool) *models.OperationalSolution {
 
-	changes := map[string]interface{}{
+// func (suite *ResolverSuite) createOperationalSolution(opNeed *models.OperationalNeed, solutionType *models.OperationalSolutionKey, customSolutionType *string, needed bool) *models.OperationalSolution {
 
-		"operational_need_id": opNeed.ID,
-	}
+// 	changes := map[string]interface{}{
 
-	if solutionType != nil {
-		sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, opNeed.ID, *solutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
-		suite.NoError(err)
-		return sol
-	}
+// 		"operational_need_id": opNeed.ID,
+// 	}
 
-	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, opNeed.ID, *customSolutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-	return sol
+// 	if solutionType != nil {
+// 		sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, opNeed.ID, *solutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 		suite.NoError(err)
+// 		return sol
+// 	}
 
-}
+// 	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, opNeed.ID, *customSolutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	suite.NoError(err)
+// 	return sol
+
+// }
 
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
