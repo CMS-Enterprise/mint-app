@@ -30,7 +30,8 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
-  GetModelSummary_modelPlan as GetModelSummaryTypes
+  GetModelSummary_modelPlan as GetModelSummaryTypes,
+  GetModelSummary_modelPlan_crTdls as CRTDLsTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
@@ -170,11 +171,12 @@ const ReadOnly = () => {
       }`;
     });
 
-  const formattedCrTdls = items => {
+  const formattedCrTdls = (items: CRTDLsTypes[]) => {
     const idNumbers = items.map(item => item.idNumber);
     if (idNumbers.length > 3) {
-      return `${idNumbers.slice(0, 3).join(', ')} + 2 more`;
-      // TODO: figure out how to dynamically change the '2'
+      return `${idNumbers.slice(0, 3).join(', ')} +${idNumbers.length - 3} ${t(
+        'more'
+      )}`;
     }
     return idNumbers.join(', ');
   };
@@ -363,7 +365,9 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0 "
-                  term={formattedCrTdls(crTdls) ?? t('noAnswer.noneEntered')}
+                  term={
+                    crTdls ? formattedCrTdls(crTdls) : t('noAnswer.noneEntered')
+                  }
                 />
               </Grid>
             </Grid>
