@@ -28,7 +28,7 @@ func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdate() {
 	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
 	suite.NotNil(need.CreatedDts)
 	suite.EqualValues(need.Key, &needKey)
-	// suite.NotNil(need.Name) // Enforce returning the name from this query //TODO
+	suite.NotNil(need.Name) // Enforce returning the name from this query //TODO
 	suite.EqualValues(need.Needed, needed)
 
 	//2. Update need and make sure fields change. A Different Key means a different entry
@@ -59,5 +59,16 @@ func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdateCustom() {
 	suite.Nil(need.Name)
 	suite.EqualValues(need.NameOther, &customNeed)
 	suite.EqualValues(need.Needed, needed)
+
+	//2. Update need and make sure fields change. A Different Key means a different entry
+	needed = false
+	need, err = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, customNeed, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(need)
+	suite.NotNil(need.ModifiedDts)
+
+	suite.EqualValues(need.Needed, needed)
+	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 }
