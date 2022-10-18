@@ -96,44 +96,6 @@ const taskListSectionMap: TaskListSectionMapType = {
   prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
 };
 
-// const getLastModifiedPrepareForClearance = (
-//   taskListSections: TaskListSectionsType
-// ) => {
-//   let lastModified: string = '';
-//   Object.keys(taskListSections).forEach(section => {
-//     if (
-//       taskListSections[section].modifiedDts &&
-//       taskListSections[section].modifiedDts! > lastModified
-//     )
-//       lastModified = taskListSections[section].modifiedDts!;
-//   });
-//   return lastModified;
-// };
-
-// const computePrepareForClearanceStatus = (
-//   taskListSections: TaskListSectionsType
-// ): PrepareForClearanceStatusType => {
-
-//   const twentyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 20));
-
-//   if (new Date(taskListSections?.basics?.clearanceStarts) > twentyDaysAgo)
-//     return CLEARANCE_STATUS.CANNOT_START;
-
-//   const clearanceNotFinished = Object.keys(taskListSections).find(
-//     section => !taskListSections[section].readyForClearanceDts
-//   );
-
-//   if (!clearanceNotFinished) return TaskStatus.READY_FOR_CLEARANCE;
-
-//   const clearanceStarted = Object.keys(taskListSections).find(
-//     section => taskListSections[section].readyForClearanceDts
-//   );
-
-//   if (clearanceStarted) return TaskStatus.IN_PROGRESS;
-
-//   return TaskStatus.READY;
-// };
-
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -185,7 +147,6 @@ const TaskList = () => {
     []) as GetCollaboratorsType[];
 
   const prepareForClearance: PrepareForClearanceType = {
-    // modifiedDts: getLastModifiedPrepareForClearance(taskListSections),
     modifiedDts: null,
     // status: TaskStatus.IN_PROGRESS,
     status: CLEARANCE_STATUS.CANNOT_START
