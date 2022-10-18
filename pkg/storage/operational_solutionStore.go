@@ -31,7 +31,6 @@ func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.
 	solutions := []*models.OperationalSolution{}
 
 	stmt, err := s.db.PrepareNamed(operationalSolutionCollectionGetByOperationalNeedIDSQL)
-	// stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDSQL)
 	if err != nil {
 		return nil, err
 	}

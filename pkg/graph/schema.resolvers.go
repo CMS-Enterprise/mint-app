@@ -386,7 +386,7 @@ func (r *mutationResolver) AddOrUpdateCustomOperationalSolution(ctx context.Cont
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeed(logger, obj.ID, r.store)
+	return resolvers.OperationaSolutionsGetByOPNeedID(logger, obj.ID, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -883,7 +883,7 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 // OperationalSolutions is the resolver for the operationalSolutions field.
 func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeed(logger, operationalNeedID, r.store)
+	return resolvers.OperationaSolutionsGetByOPNeedID(logger, operationalNeedID, r.store)
 }
 
 // AuditChanges is the resolver for the auditChanges field.

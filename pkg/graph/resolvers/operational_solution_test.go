@@ -4,10 +4,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) TestOperationalSolutionCollectionGetByOperationalNeedID() {
-}
-
-func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeed() {
+func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 }
 
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {

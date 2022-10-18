@@ -10,14 +10,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// OperationalSolutionCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
-func OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, store *storage.Store) ([]*models.OperationalSolution, error) {
-	// result, err := store.OperationalSolutionGetByModelPlanID(logger,modelPlanID);
-	return store.OperationalSolutionCollectionGetByOperationalNeedID(logger, operationalNeedID)
-}
-
-// OperationaSolutionsGetByOPNeed returns operational Solutions and possible Operational Solutions based on a specific operational Need
-func OperationaSolutionsGetByOPNeed(logger *zap.Logger, operationalNeedID uuid.UUID, store *storage.Store) (*model.OperationalSolutions, error) {
+// OperationaSolutionsGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need
+func OperationaSolutionsGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, store *storage.Store) (*model.OperationalSolutions, error) {
 	opSols := model.OperationalSolutions{}
 	sols, err := store.OperationalSolutionCollectionGetByOperationalNeedID(logger, operationalNeedID)
 	if err != nil {
