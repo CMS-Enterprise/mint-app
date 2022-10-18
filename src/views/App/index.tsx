@@ -39,6 +39,7 @@ import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
+import PrepareForClearance from 'views/ModelPlan/TaskList/PrepareForClearance';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
@@ -143,6 +144,10 @@ const AppRoutes = () => {
       <SecureRoute
         path="/models/:modelID/task-list/it-tools"
         component={ITTools}
+      />
+      <SecureRoute
+        path="/models/:modelID/task-list/prepare-for-clearance"
+        component={PrepareForClearance}
       />
       <SecureRoute
         path="/models/:modelID/task-list/submit-request"

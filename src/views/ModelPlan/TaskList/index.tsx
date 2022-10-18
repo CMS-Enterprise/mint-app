@@ -48,8 +48,8 @@ import {
   GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
-import { TaskListSection } from 'types/graphql-global-types';
-import { CLEARANCE_STATUS, ModelPlanTaskStatus } from 'types/modelPlan';
+import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
+import { ModelPlanTaskStatus } from 'types/modelPlan';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
@@ -148,8 +148,8 @@ const TaskList = () => {
 
   const prepareForClearance: PrepareForClearanceType = {
     modifiedDts: null,
-    // status: TaskStatus.IN_PROGRESS,
-    status: CLEARANCE_STATUS.CANNOT_START
+    status: TaskStatus.IN_PROGRESS
+    // status: CLEARANCE_STATUS.CANNOT_START
   };
 
   const taskListSections: TaskListSectionsType = {
