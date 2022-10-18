@@ -96,12 +96,23 @@ const modelPlanTaskList = {
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'it-tools'
+    },
+    prepareForClearance: {
+      heading: 'Prepare for clearance',
+      team:
+        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
+      assessment:
+        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
+      path: 'prepare-for-clearance'
     }
   },
+  cannotStartClearance:
+    'This step will become available 20 days prior to beginning internal clearance.',
   taskListButton: {
     start: 'Start',
     continue: 'Continue',
-    update: 'Update'
+    update: 'Update',
+    updateStatuses: 'Update statuses'
   },
   taskListItem: {
     ready: 'Ready to start',
@@ -109,7 +120,9 @@ const modelPlanTaskList = {
     inProgress: 'In progress',
     completed: 'Completed',
     notNeeded: 'Not needed',
-    lastUpdated: 'Last updated:'
+    lastUpdated: 'Last updated:',
+    readyForClearance: 'Ready for clearance',
+    cannotStart: 'Cannot start yet'
   },
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',

@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
-import { TaskStatus } from 'types/graphql-global-types';
+import { ModelPlanTaskStatus } from 'types/modelPlan';
 
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;
@@ -19,7 +19,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 export const TaskListStatusTag = ({
   status
 }: {
-  status: TaskStatus | undefined;
+  status: ModelPlanTaskStatus | undefined;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -37,6 +37,14 @@ export const TaskListStatusTag = ({
     case 'READY':
       tagCopy = t('taskListItem.ready');
       tagStyle = 'bg-accent-cool';
+      break;
+    case 'READY_FOR_CLEARANCE':
+      tagCopy = t('taskListItem.readyForClearance');
+      tagStyle = 'bg-base-lighter text-base-darker';
+      break;
+    case 'CANNOT_START':
+      tagCopy = t('taskListItem.cannotStart');
+      tagStyle = 'bg-white border-2px text-base';
       break;
     default:
       tagCopy = '';
@@ -56,7 +64,7 @@ export const TaskListStatusTag = ({
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: TaskStatus;
+  status: ModelPlanTaskStatus;
   testId: string;
   lastUpdated?: string | null;
 };

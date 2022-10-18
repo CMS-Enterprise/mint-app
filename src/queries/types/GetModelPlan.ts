@@ -12,7 +12,9 @@ import { ModelStatus, TaskStatus, DiscussionStatus } from "./../../types/graphql
 export interface GetModelPlan_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
+  clearanceStarts: Time | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -55,6 +57,7 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -65,6 +68,7 @@ export interface GetModelPlan_modelPlan_participantsAndProviders {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -75,6 +79,7 @@ export interface GetModelPlan_modelPlan_beneficiaries {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -85,6 +90,7 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -95,6 +101,7 @@ export interface GetModelPlan_modelPlan_payments {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 

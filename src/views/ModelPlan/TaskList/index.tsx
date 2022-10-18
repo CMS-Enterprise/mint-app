@@ -43,13 +43,13 @@ import {
   GetModelPlan_modelPlan_crTdls as CRTDLType,
   GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
-  GetModelPlan_modelPlan_itTools as ITToolsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { TaskListSection } from 'types/graphql-global-types';
+import { CLEARANCE_STATUS, ModelPlanTaskStatus } from 'types/modelPlan';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
@@ -66,6 +66,11 @@ import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
+type PrepareForClearanceType = {
+  modifiedDts: string | null;
+  status: ModelPlanTaskStatus;
+};
+
 type TaskListSectionsType = {
   [key: string]:
     | BasicsType
@@ -74,7 +79,7 @@ type TaskListSectionsType = {
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
     | PaymentsType
-    | ITToolsType;
+    | PrepareForClearanceType;
 };
 
 type TaskListSectionMapType = {
@@ -85,11 +90,49 @@ const taskListSectionMap: TaskListSectionMapType = {
   basics: TaskListSection.MODEL_BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
   generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  itTools: TaskListSection.IT_TOOLS,
   opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
   participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
-  payments: TaskListSection.PAYMENT
+  payments: TaskListSection.PAYMENT,
+  prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
 };
+
+// const getLastModifiedPrepareForClearance = (
+//   taskListSections: TaskListSectionsType
+// ) => {
+//   let lastModified: string = '';
+//   Object.keys(taskListSections).forEach(section => {
+//     if (
+//       taskListSections[section].modifiedDts &&
+//       taskListSections[section].modifiedDts! > lastModified
+//     )
+//       lastModified = taskListSections[section].modifiedDts!;
+//   });
+//   return lastModified;
+// };
+
+// const computePrepareForClearanceStatus = (
+//   taskListSections: TaskListSectionsType
+// ): PrepareForClearanceStatusType => {
+
+//   const twentyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 20));
+
+//   if (new Date(taskListSections?.basics?.clearanceStarts) > twentyDaysAgo)
+//     return CLEARANCE_STATUS.CANNOT_START;
+
+//   const clearanceNotFinished = Object.keys(taskListSections).find(
+//     section => !taskListSections[section].readyForClearanceDts
+//   );
+
+//   if (!clearanceNotFinished) return TaskStatus.READY_FOR_CLEARANCE;
+
+//   const clearanceStarted = Object.keys(taskListSections).find(
+//     section => taskListSections[section].readyForClearanceDts
+//   );
+
+//   if (clearanceStarted) return TaskStatus.IN_PROGRESS;
+
+//   return TaskStatus.READY;
+// };
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
@@ -126,8 +169,7 @@ const TaskList = () => {
     participantsAndProviders,
     opsEvalAndLearning,
     beneficiaries,
-    payments,
-    itTools
+    payments
   } = modelPlan;
 
   const { data: collaboratorData } = useQuery<GetModelCollaborators>(
@@ -142,6 +184,13 @@ const TaskList = () => {
   const collaborators = (collaboratorData?.modelPlan?.collaborators ??
     []) as GetCollaboratorsType[];
 
+  const prepareForClearance: PrepareForClearanceType = {
+    // modifiedDts: getLastModifiedPrepareForClearance(taskListSections),
+    modifiedDts: null,
+    // status: TaskStatus.IN_PROGRESS,
+    status: CLEARANCE_STATUS.CANNOT_START
+  };
+
   const taskListSections: TaskListSectionsType = {
     basics,
     generalCharacteristics,
@@ -149,7 +198,7 @@ const TaskList = () => {
     beneficiaries,
     opsEvalAndLearning,
     payments,
-    itTools
+    prepareForClearance
   };
 
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
@@ -287,6 +336,7 @@ const TaskList = () => {
                               }
                               status={taskListSections[key].status}
                             />
+
                             <TaskListLock
                               isAssessment={
                                 !!getTaskListLockedStatus(key)?.isAssessment
