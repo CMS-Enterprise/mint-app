@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import GetCRDTLs from 'queries/CRTDL/GetCRDTLs';
 
@@ -21,6 +24,7 @@ const mocks = [
         modelPlan: {
           id: modelID,
           modelName: 'My Plan',
+          isCollaborator: true,
           crTdls: [
             {
               __typename: 'PlanCrTdl',
@@ -38,6 +42,15 @@ const mocks = [
   }
 ];
 
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
 describe('Model Plan CR and TDL table', () => {
   it('renders query data in table', async () => {
     const { getByTestId } = render(
@@ -49,11 +62,13 @@ describe('Model Plan CR and TDL table', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/cr-and-tdl">
-              <PlanCRTDLsTable
-                modelID={modelID}
-                setCRTDLMessage={() => null}
-                setCRTDLStatus={() => null}
-              />
+              <Provider store={store}>
+                <PlanCRTDLsTable
+                  modelID={modelID}
+                  setCRTDLMessage={() => null}
+                  setCRTDLStatus={() => null}
+                />
+              </Provider>
             </Route>
           </MessageProvider>
         </MockedProvider>
@@ -77,11 +92,13 @@ describe('Model Plan CR and TDL table', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/cr-and-tdl">
-              <PlanCRTDLsTable
-                modelID={modelID}
-                setCRTDLMessage={() => null}
-                setCRTDLStatus={() => null}
-              />
+              <Provider store={store}>
+                <PlanCRTDLsTable
+                  modelID={modelID}
+                  setCRTDLMessage={() => null}
+                  setCRTDLStatus={() => null}
+                />
+              </Provider>
             </Route>
           </MessageProvider>
         </MockedProvider>
