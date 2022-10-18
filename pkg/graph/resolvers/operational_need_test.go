@@ -4,10 +4,48 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
-}
-
 func (suite *ResolverSuite) TestOperationalNeedsGetByModelPlanID() {
+
+	plan := suite.createModelPlan("plan for need")
+	needKey := models.OpNKAcquireALearnCont
+	needed := true
+
+	//1. No Needs
+	opNeeds, err := OperationalNeedsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opNeeds.Needs, 0)
+	possibleCount := len(opNeeds.PossibleNeeds)
+	suite.GreaterOrEqual(possibleCount, 1) //there is at least 1 possible need
+
+	//2. 1 Standard need
+	_, err = OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opNeeds.Needs, 1)
+	suite.Len(opNeeds.PossibleNeeds, possibleCount-1) //Remove existing possible need
+
+	//3. 2 Standard needs
+	needKey = models.OpNKAcquireAnEvalCont
+	_, err = OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opNeeds.Needs, 2)
+	suite.Len(opNeeds.PossibleNeeds, possibleCount-2) //Remove existing possible need
+
+	//4. 2 Standard needs, 1 custom
+
+	customNeed := "To test my Operational Need resolver Logic"
+	_, err = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, customNeed, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opNeeds.Needs, 3)
+	suite.Len(opNeeds.PossibleNeeds, possibleCount-2) //Remove existing possible need
 
 }
 

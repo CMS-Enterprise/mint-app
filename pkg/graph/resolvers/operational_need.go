@@ -10,12 +10,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
-func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.OperationalNeed, error) {
-	// result, err := store.OperationalNeedGetByModelPlanID(logger,modelPlanID);
-	return store.OperationalNeedAndPossibleCollectionGetByModelPlanID(logger, modelPlanID)
-}
-
 // OperationalNeedsGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
 func OperationalNeedsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*model.OperationalNeeds, error) {
 	opNeeds := model.OperationalNeeds{}
