@@ -14,7 +14,13 @@ const prepareForClearance = {
   markAsReady: 'Mark as ready for clearance',
   basicsChanges: 'Make changes to model basics',
   errorHeading: 'Update Error',
-  mutationError: 'Failed to mark section as ’Ready for clearance’'
+  mutationError: 'Failed to mark section as ’Ready for clearance’',
+  modal: {
+    heading: 'Are you sure you want to update this Model Plan section?',
+    subheading: 'This section has already been marked ready for clearance. ',
+    update: 'Update this section ',
+    goBack: 'Go back'
+  }
 };
 
 export default prepareForClearance;

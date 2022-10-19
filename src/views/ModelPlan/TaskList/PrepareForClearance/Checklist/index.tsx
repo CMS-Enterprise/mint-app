@@ -89,7 +89,7 @@ const initialPaymentValues: GetClearanceStatusesModelPlanPayments = {
   status: TaskStatus.READY
 };
 
-type GetClearanceStatusesModelPlanFormType = Omit<
+export type GetClearanceStatusesModelPlanFormType = Omit<
   GetClearanceStatusesModelPlanType,
   'id' | '__typename'
 >;

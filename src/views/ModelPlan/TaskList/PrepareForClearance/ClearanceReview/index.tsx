@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { MutationFunction, useMutation } from '@apollo/client';
+import { MutationFunction, useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   Grid,
@@ -9,8 +9,16 @@ import {
   IconArrowForward
 } from '@trussworks/react-uswds';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
+import {
+  GetClearanceStatuses as GetClearanceStatusesType,
+  GetClearanceStatusesVariables
+} from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdateClearanceBasics as UpdateClearanceBasicsType } from 'queries/PrepareForClearance/types/UpdateClearanceBasics';
 import { UpdateClearanceBeneficiaries as UpdateClearanceBeneficiariesType } from 'queries/PrepareForClearance/types/UpdateClearanceBeneficiaries';
 import { UpdateClearanceCharacteristics as UpdateClearanceCharacteristicsType } from 'queries/PrepareForClearance/types/UpdateClearanceCharacteristics';
@@ -29,6 +37,14 @@ import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralChar
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyPayments from 'views/ModelPlan/ReadOnly/Payments';
+import {
+  findLockedSection,
+  LockStatus,
+  taskListSectionMap
+} from 'views/SubscriptionHandler';
+import { SubscriptionContext } from 'views/SubscriptionWrapper';
+
+import { GetClearanceStatusesModelPlanFormType } from '../Checklist';
 
 type ClearanceReviewProps = {
   modelID: string;
@@ -53,7 +69,7 @@ const routeMap: routeMapType = {
   'participants-and-providers': 'participantsAndProviders',
   beneficiaries: 'beneficiaries',
   'ops-eval-and-learning': 'opsEvalAndLearning',
-  payment: 'payment'
+  payment: 'payments'
 };
 
 const renderReviewTaskSection = (
@@ -80,15 +96,40 @@ const renderReviewTaskSection = (
 
 export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const [errors, setErrors] = useState<string>();
+  const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
+
+  const { taskListSectionLocks } = useContext(SubscriptionContext);
+
+  const taskListLocked: LockStatus = findLockedSection(
+    taskListSectionLocks,
+    taskListSectionMap[section]
+  );
 
   const { t } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
+  const { t: i } = useTranslation('itTools');
   const history = useHistory();
 
   const taskListSections: any = t('modelPlanTaskList:numberedList', {
     returnObjects: true
   });
+
+  const { data, loading, error } = useQuery<
+    GetClearanceStatusesType,
+    GetClearanceStatusesVariables
+  >(GetClearanceStatuses, {
+    variables: {
+      id: modelID
+    }
+  });
+
+  const modelPlanSection = routeMap[section];
+
+  const readyForClearance: boolean =
+    data?.modelPlan?.[
+      modelPlanSection as keyof GetClearanceStatusesModelPlanFormType
+    ].status === TaskStatus.READY_FOR_CLEARANCE;
 
   const [updateBasics] = useMutation<UpdateClearanceBasicsType>(
     UpdateClearanceBasics
@@ -146,6 +187,38 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       });
   };
 
+  const renderModal = (locked: boolean) => {
+    return (
+      <Modal
+        className="radius-lg"
+        isOpen={isModalOpen}
+        scroll
+        closeModal={() => setModalOpen(false)}
+      >
+        <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-0">
+          {!locked ? p('modal.heading') : i('modal.heading')}
+        </PageHeading>
+        <p className="margin-bottom-3">
+          {!locked ? p('modal.subheading') : i('modal.subHeading')}
+        </p>
+        <UswdsReactLink
+          data-testid="return-to-task-list"
+          className="margin-right-2 usa-button text-white text-no-underline"
+          to={
+            !locked
+              ? `/models/${modelID}/task-list/${section}`
+              : `/models/${modelID}/task-list`
+          }
+        >
+          {!locked ? p('modal.update') : i('modal.return')}
+        </UswdsReactLink>
+        <Button type="button" unstyled onClick={() => setModalOpen(false)}>
+          {p('modal.goBack')}
+        </Button>
+      </Modal>
+    );
+  };
+
   return (
     <MainContent data-testid="clearance-review">
       <GridContainer>
@@ -159,6 +232,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               <ErrorAlertMessage errorKey="error" message={errors} />
             </ErrorAlert>
           )}
+
+          {renderModal(taskListLocked === LockStatus.LOCKED)}
 
           {renderReviewTaskSection(modelID, section)}
           <div className="margin-top-6 margin-bottom-3">
@@ -177,20 +252,27 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               {p('markAsReady')}
             </Button>
           </div>
-          <Button
-            type="button"
-            className="usa-button usa-button--unstyled display-flex"
-            onClick={() =>
-              history.push(`/models/${modelID}/task-list/${section}`)
-            }
-          >
-            {p('changes', {
-              section: taskListSections[
-                routeMap[section]
-              ]?.heading?.toLowerCase()
-            })}
-            <IconArrowForward className="margin-left-1" aria-hidden />
-          </Button>
+
+          {!loading && !error && (
+            <Button
+              type="button"
+              className="usa-button usa-button--unstyled display-flex"
+              onClick={() => {
+                if (taskListLocked === LockStatus.LOCKED || readyForClearance) {
+                  setModalOpen(true);
+                } else {
+                  history.push(`/models/${modelID}/task-list/${section}`);
+                }
+              }}
+            >
+              {p('changes', {
+                section: taskListSections[
+                  routeMap[section]
+                ]?.heading?.toLowerCase()
+              })}
+              <IconArrowForward className="margin-left-1" aria-hidden />
+            </Button>
+          )}
         </Grid>
       </GridContainer>
     </MainContent>

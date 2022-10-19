@@ -6,16 +6,10 @@ import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
 import PrepareForClearanceCheckList from './Checklist';
-// import {
-//   findLockedSection,
-//   taskListSectionMap
-// } from 'views/SubscriptionHandler';
-// import { SubscriptionContext } from 'views/SubscriptionWrapper';
 import ClearanceReview from './ClearanceReview';
 
 export const PrepareForClearance = () => {
   const { modelID } = useParams<{ modelID: string }>();
-  //   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
   return (
     <MainContent data-testid="model-it-tools">
