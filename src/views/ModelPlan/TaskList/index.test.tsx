@@ -5,6 +5,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
+import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
@@ -97,7 +98,9 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/task-list" component={TaskList} />
+            <MessageProvider>
+              <Route path="/models/:modelID/task-list" component={TaskList} />
+            </MessageProvider>
           </MockedProvider>
         </MemoryRouter>
       </Provider>
@@ -117,7 +120,9 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/task-list" component={TaskList} />
+            <MessageProvider>
+              <Route path="/models/:modelID/task-list" component={TaskList} />
+            </MessageProvider>
           </MockedProvider>
         </MemoryRouter>
       </Provider>
@@ -135,7 +140,9 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/task-list" component={TaskList} />
+            <MessageProvider>
+              <Route path="/models/:modelID/task-list" component={TaskList} />
+            </MessageProvider>
           </MockedProvider>
         </MemoryRouter>
       </Provider>
@@ -157,7 +164,9 @@ describe('The Model Plan Task List', () => {
               mocks={[modelPlanQuery(modelPlan)]}
               addTypename={false}
             >
-              <Route path="/models/:modelID/task-list" component={TaskList} />
+              <MessageProvider>
+                <Route path="/models/:modelID/task-list" component={TaskList} />
+              </MessageProvider>
             </MockedProvider>
           </MemoryRouter>
         </Provider>
