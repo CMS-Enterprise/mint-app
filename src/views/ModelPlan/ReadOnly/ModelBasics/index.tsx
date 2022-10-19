@@ -26,15 +26,12 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 
 import './index.scss';
 
-type ReadOnlyModelBasicsProps = {
+export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
 };
 
-const ReadOnlyModelBasics = ({
-  modelID,
-  clearance
-}: ReadOnlyModelBasicsProps) => {
+const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   const { t } = useTranslation('basics');
   const { t: p } = useTranslation('prepareForClearance');
 

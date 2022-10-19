@@ -9,9 +9,12 @@ const prepareForClearance = {
   markedAsReady:
     'Marked ready for clearance by {{-readyForClearanceBy}} on {{-readyForClearanceDts}}',
   review: 'Review {{-section}}',
+  changes: 'Make changes to {{-section}}',
   forModelPlan: 'for {{-modelName}}',
   markAsReady: 'Mark as ready for clearance',
-  basicsChanges: 'Make changes to model basics'
+  basicsChanges: 'Make changes to model basics',
+  errorHeading: 'Update Error',
+  mutationError: 'Failed to mark section as ’Ready for clearance’'
 };
 
 export default prepareForClearance;

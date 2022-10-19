@@ -345,7 +345,7 @@ const PrepareForClearanceCheckList = ({
                               })}
 
                               <IconArrowForward
-                                className="margin-right-1"
+                                className="margin-left-1"
                                 aria-hidden
                               />
                             </UswdsReactLink>

@@ -5,13 +5,13 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
+import PrepareForClearanceCheckList from './Checklist';
 // import {
 //   findLockedSection,
 //   taskListSectionMap
 // } from 'views/SubscriptionHandler';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
-import ClearanceBasics from './Basics';
-import PrepareForClearanceCheckList from './Checklist';
+import ClearanceReview from './ClearanceReview';
 
 export const PrepareForClearance = () => {
   const { modelID } = useParams<{ modelID: string }>();
@@ -30,9 +30,9 @@ export const PrepareForClearance = () => {
             />
 
             <Route
-              path="/models/:modelID/task-list/prepare-for-clearance/basics/:basicsID"
+              path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID"
               exact
-              render={() => <ClearanceBasics modelID={modelID} />}
+              render={() => <ClearanceReview modelID={modelID} />}
             />
 
             {/* 404 */}
