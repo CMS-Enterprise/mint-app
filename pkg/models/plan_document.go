@@ -28,7 +28,7 @@ type PlanDocument struct {
 	DeletedAt *time.Time `json:"deletedAt" db:"deleted_at"`
 }
 
-//NewPlanDocument returns a new Plan Document
+// NewPlanDocument returns a new Plan Document
 func NewPlanDocument(createdBy string, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, otherTypeDescription zero.String, optionalNotes zero.String) *PlanDocument {
 	return &PlanDocument{
 		modelPlanRelation:    NewModelPlanRelation(modelPlanID),

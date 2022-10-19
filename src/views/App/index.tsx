@@ -17,9 +17,12 @@ import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
+import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import Home from 'views/Home';
 import Login from 'views/Login';
+import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import Collaborators from 'views/ModelPlan/Collaborators';
+import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
 import LockedTaskListSection from 'views/ModelPlan/LockedTaskListSection';
 import ModelPlan from 'views/ModelPlan/ModelPlanOverview';
@@ -78,10 +81,10 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <SecureRoute
-        path="/models/:modelID/read-only"
+      <Redirect
         exact
-        component={ReadOnly}
+        from="/models/:modelID/read-only"
+        to="/models/:modelID/read-only/model-basics"
       />
 
       <SecureRoute
@@ -99,10 +102,10 @@ const AppRoutes = () => {
       <SecureRoute path="/models/new-plan" component={NewPlan} />
       <SecureRoute
         path="/models/:modelID/collaborators"
-        exact
         component={Collaborators}
       />
       <SecureRoute path="/models/:modelID/documents" component={Documents} />
+      <SecureRoute path="/models/:modelID/cr-and-tdl" component={CRTDL} />
       <SecureRoute path="/models/:modelID/status" exact component={Status} />
       <SecureRoute
         path="/models/:modelID/task-list"
@@ -145,6 +148,8 @@ const AppRoutes = () => {
         path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
       />
+
+      <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
 
       <SecureRoute path="/pre-decisional-notice" component={NDA} />
 
@@ -201,15 +206,17 @@ const App = () => {
                 <FlagsWrapper>
                   <UserInfoWrapper>
                     <NDAWrapper>
-                      <TimeOutWrapper>
-                        <NavContextProvider>
-                          <PageWrapper>
-                            <Header />
-                            <AppRoutes />
-                            <Footer />
-                          </PageWrapper>
-                        </NavContextProvider>
-                      </TimeOutWrapper>
+                      <ModelAccessWrapper>
+                        <TimeOutWrapper>
+                          <NavContextProvider>
+                            <PageWrapper>
+                              <Header />
+                              <AppRoutes />
+                              <Footer />
+                            </PageWrapper>
+                          </NavContextProvider>
+                        </TimeOutWrapper>
+                      </ModelAccessWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>
                 </FlagsWrapper>

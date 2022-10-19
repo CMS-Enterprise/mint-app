@@ -66,6 +66,8 @@ SELECT
     modified_dts,
     ready_for_review_by,
     ready_for_review_dts,
+    ready_for_clearance_by,
+    ready_for_clearance_dts,
     status
 FROM plan_payments
 WHERE model_plan_id = :model_plan_id;

@@ -12,6 +12,7 @@ import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
+import CsvExportLink from 'utils/export/CsvExportLink';
 
 const TaskListSideNav = ({
   modelPlan,
@@ -74,15 +75,12 @@ const TaskListSideNav = ({
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
-        <UswdsReactLink to="/" className="display-block margin-bottom-1">
+        <UswdsReactLink to="/" className="display-block">
           {t('sideNav.saveAndExit')}
         </UswdsReactLink>
-        <UswdsReactLink
-          to={`/models/${modelID}/read-only/model-basics`}
-          className="display-block margin-bottom-1"
-        >
-          {t('sideNav.view')}
-        </UswdsReactLink>
+        <div className="flex-align-self-center margin-y-2">
+          <CsvExportLink modelPlanID={modelID} includeAll={false} />
+        </div>
         <Button
           className="line-height-body-5 test-withdraw-request"
           type="button"
@@ -93,18 +91,18 @@ const TaskListSideNav = ({
         </Button>
         <div className="margin-top-4 margin-bottom-7">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
-          <UswdsReactLink
-            aria-label={t('sideNav.ariaLabelForOverview')}
-            className="line-height-body-5"
-            to="/"
-            variant="external"
-            target="_blank"
+          <Button
+            type="button"
+            onClick={() =>
+              window.open('/help-and-knowledge/model-plan-overview', '_blank')
+            }
+            className="usa-button usa-button--unstyled line-height-body-5"
           >
             <Trans i18nKey="modelPlanTaskList:sideNav.overview">
               indexZero
               <span aria-hidden /> indexTwo
             </Trans>
-          </UswdsReactLink>
+          </Button>
         </div>
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>

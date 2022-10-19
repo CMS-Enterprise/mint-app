@@ -33,18 +33,22 @@ const basics = {
     'Seamless Care Models Group (SCMG)',
     'State Innovations Group (SIG)'
   ],
+  cmmiGroupInfo:
+    'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
   modelType: 'Model Type',
   voluntary: 'Voluntary',
   mandatory: 'Mandatory',
-  problem: 'Problem',
+  problem: 'Problem statement',
   goal: 'Goal',
   goalHelp:
     'Please include the high level goal of the program and a description of the project.',
   validDate: 'Please use a valid date format',
   testInterventions: 'Test Interventions',
-  highLevelTimeline: 'High level timeline',
+  highLevelTimeline: 'Anticipated high level timeline',
   completeICIP: 'Complete ICIP',
   clearance: 'Clearance',
+  clearanceInfo:
+    'When you think you’ll begin internal (CMMI) clearance through when you’ll complete OMB/ASRF clearance',
   clearanceStartDate: 'Clearance start date',
   clearanceEndDate: 'Clearance end date',
   annouceModel: 'Announce model',
@@ -61,7 +65,8 @@ const basics = {
     'If timelines are tight, might there be pieces of the model that can be phased in over time?',
   tightTimelineInfo:
     'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
-  na: 'No answer entered'
+  na: 'No answer entered',
+  otherNotSpecificed: 'Other not specified'
 };
 
 export default basics;

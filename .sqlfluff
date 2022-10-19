@@ -6,12 +6,19 @@ ignore = parsing
 
 # Ignoring L014 because it seems to want to uppercase column names if there are capitalized enums defined before the table (like in V11__Add_Plan_General_Characteristics)
 # Ignoring L016 because we break line-length requirements in a few places with comments
-exclude_rules = L014, L016
+# Ignoring L031 so we can use table aliases
+# Ignoreing L034 becase we like to order SQL statements similarly across files
+exclude_rules = L014, L016, L031, L034
 
 [sqlfluff:rules:L010]
 # Inconsistent capitalisation of keywords.
 # https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L010
 capitalisation_policy = upper
+
+[sqlfluff:rules:L031]
+# Avoid table aliases in from clauses and join conditions.
+# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.rules.Rule_L031
+force_enable = False
 
 [sqlfluff:rules:L040]
 # Inconsistent capitalisation of boolean/null literal.

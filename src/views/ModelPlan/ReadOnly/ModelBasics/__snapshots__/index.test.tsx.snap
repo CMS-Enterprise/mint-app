@@ -117,12 +117,12 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       </p>
     </div>
     <div
-      class="read-only-section read-only-section--problem margin-bottom-3"
+      class="read-only-section read-only-section--problem-statement margin-bottom-3"
     >
       <p
         class="text-bold margin-y-0 font-body-sm line-height-sans-4"
       >
-        Problem
+        Problem statement
       </p>
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
@@ -179,7 +179,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <h3
         class="margin-top-0 margin-bottom-4"
       >
-        High level timeline
+        Anticipated high level timeline
       </h3>
       <ol
         class="usa-process-list read-only-model-plan__timeline"
@@ -375,6 +375,20 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
         class="margin-y-0 font-body-md line-height-sans-4"
       >
         No
+      </p>
+    </div>
+    <div
+      class="read-only-section read-only-section--notes margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Notes
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        This can't be phased in
       </p>
     </div>
     <div

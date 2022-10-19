@@ -8,6 +8,7 @@ export default gql`
         modelPlanID
         section
         lockedBy
+        isAssessment
       }
       actionType
     }

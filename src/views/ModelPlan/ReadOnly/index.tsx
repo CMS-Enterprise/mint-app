@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
@@ -16,6 +17,7 @@ import classnames from 'classnames';
 import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import {
@@ -30,9 +32,10 @@ import {
   GetModelSummary as GetModelSummaryType,
   GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
-import { ModelStatus } from 'types/graphql-global-types';
+import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
@@ -44,6 +47,11 @@ import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
+import ReadOnlyBeneficiaries from './Beneficiaries';
+import ReadOnlyDiscussions from './Discussions';
+import ReadOnlyDocuments from './Documents';
+import ReadOnlyPayments from './Payments';
+import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
@@ -77,6 +85,9 @@ const ReadOnly = () => {
     modelID: string;
     subinfo: SubpageKey;
   }>();
+
+  // Usered to check if user is assessment for rendering subnav to task list
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   const descriptionRef = React.createRef<HTMLElement>();
   const [
@@ -127,8 +138,11 @@ const ReadOnly = () => {
     status,
     basics,
     generalCharacteristics,
-    collaborators
+    collaborators,
+    isCollaborator
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  const editAccess: boolean = isCollaborator || isAssessment(groups);
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
@@ -143,11 +157,16 @@ const ReadOnly = () => {
     }
   );
 
-  const formattedModelLeads = collaborators?.map((collaborator, index) => {
-    return `${collaborator.fullName}${
-      index === collaborators.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedModelLeads = collaborators
+    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
+    .map((collaborator, index) => {
+      return `${collaborator.fullName}${
+        index ===
+        collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
+          ? ''
+          : ', '
+      }`;
+    });
 
   const subComponents: subComponentsProps = {
     'model-basics': {
@@ -164,7 +183,7 @@ const ReadOnly = () => {
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
-      component: <h1>beneficiaries</h1>
+      component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
@@ -172,7 +191,7 @@ const ReadOnly = () => {
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
-      component: <h1>payment</h1>
+      component: <ReadOnlyPayments modelID={modelID} />
     },
     'it-tools': {
       route: `/models/${modelID}/read-only/it-tools`,
@@ -180,15 +199,15 @@ const ReadOnly = () => {
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
-      component: <h1>team</h1>
+      component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
-      component: <h1>discussions</h1>
+      component: <ReadOnlyDiscussions modelID={modelID} />
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
-      component: <h1>documents</h1>
+      component: <ReadOnlyDocuments modelID={modelID} />
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
@@ -207,9 +226,11 @@ const ReadOnly = () => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
+      {editAccess && <ModelSubNav modelID={modelID} link="task-list" />}
+
       <SummaryBox
         heading=""
-        className="padding-y-6 border-0 bg-primary-lighter"
+        className="padding-y-6 border-0 bg-primary-lighter margin-top-0"
         data-testid="read-only-model-summary"
       >
         <GridContainer>
@@ -229,7 +250,7 @@ const ReadOnly = () => {
             />
           </div>
 
-          <PageHeading className="margin-0 line-height-sans-2">
+          <PageHeading className="margin-0 line-height-sans-2 minh-6">
             {modelName}
           </PageHeading>
 
@@ -256,7 +277,12 @@ const ReadOnly = () => {
                 definition={basics?.goal ?? ''}
                 ref={descriptionRef}
                 dataTestId="read-only-model-summary__description"
-                className="font-body-lg line-height-body-5 text-light"
+                className={classnames(
+                  'font-body-lg line-height-body-5 text-light',
+                  {
+                    'minh-5': loading || basics?.goal
+                  }
+                )}
               />
               {isDescriptionExpandable && (
                 <div>
@@ -279,7 +305,7 @@ const ReadOnly = () => {
               )}
             </div>
             <Grid row className="margin-top-3">
-              <Grid col={6} className="margin-bottom-2">
+              <Grid col={6} className="margin-bottom-2 minh-7">
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.keyCharacteristics')}
@@ -293,7 +319,7 @@ const ReadOnly = () => {
                   }
                 />
               </Grid>
-              <Grid col={6} className="margin-bottom-2">
+              <Grid col={6} className="margin-bottom-2 minh-7">
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.modelLeads')}
@@ -303,7 +329,10 @@ const ReadOnly = () => {
                   term={formattedModelLeads}
                 />
               </Grid>
-              <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
+              <Grid
+                col={6}
+                className="margin-bottom-2 desktop:margin-bottom-0 minh-7"
+              >
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.modelStartDate')}
@@ -313,13 +342,16 @@ const ReadOnly = () => {
                   term={formattedApplicationStartDate ?? t('noAnswer.tBD')}
                 />
               </Grid>
-              <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
+              <Grid
+                col={6}
+                className="margin-bottom-2 desktop:margin-bottom-0 minh-7"
+              >
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.crAndTdls')}
                 />
                 <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-bottom-0"
+                  className="font-body-lg line-height-sans-2 margin-bottom-0 "
                   term={t('noAnswer.noneEntered')}
                 />
               </Grid>
@@ -329,14 +361,12 @@ const ReadOnly = () => {
       </SummaryBox>
       <SectionWrapper className="model-plan-status-bar bg-base-lightest">
         <GridContainer>
-          <div className="padding-y-1">
+          <div className="padding-y-1 status-min-height">
             <TaskListStatus
-              icon
               readOnly
               modelID={modelID}
               status={status}
               statusLabel
-              updateLabel
               modifiedDts={modifiedDts ?? ''}
             />
           </div>
@@ -357,7 +387,12 @@ const ReadOnly = () => {
         <GridContainer>
           <Grid row gap>
             {!isMobile && (
-              <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
+              <Grid
+                desktop={{ col: 3 }}
+                className={classnames('padding-right-4 sticky-nav', {
+                  'sticky-nav__collaborator': editAccess
+                })}
+              >
                 <SideNav subComponents={subComponents} />
               </Grid>
             )}
@@ -367,12 +402,16 @@ const ReadOnly = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
+                    <Grid desktop={{ col: subinfo === 'documents' ? 12 : 8 }}>
+                      {subComponent.component}
+                    </Grid>
                     {/* Contact info sidebar */}
                     <Grid
                       desktop={{ col: 4 }}
                       className={classnames({
-                        'sticky-nav': !isMobile
+                        'sticky-nav': !isMobile,
+                        'sticky-nav__collaborator': editAccess,
+                        'desktop:display-none': subinfo === 'documents'
                       })}
                     >
                       <ContactInfo modelID={modelID} />

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, KeyCharacteristic } from "./../../../types/graphql-global-types";
+import { ModelStatus, KeyCharacteristic, TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelSummary
@@ -23,6 +23,7 @@ export interface GetModelSummary_modelPlan_generalCharacteristics {
 export interface GetModelSummary_modelPlan_collaborators {
   __typename: "PlanCollaborator";
   fullName: string;
+  teamRole: TeamRole;
 }
 
 export interface GetModelSummary_modelPlan {
@@ -34,6 +35,7 @@ export interface GetModelSummary_modelPlan {
   isFavorite: boolean;
   basics: GetModelSummary_modelPlan_basics;
   generalCharacteristics: GetModelSummary_modelPlan_generalCharacteristics;
+  isCollaborator: boolean;
   collaborators: GetModelSummary_modelPlan_collaborators[];
 }
 

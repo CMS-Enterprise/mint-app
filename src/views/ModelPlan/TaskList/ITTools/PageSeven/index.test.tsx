@@ -12,6 +12,7 @@ import {
   DataToSendParticipantsType,
   OelSendReportsType
 } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageSeven from '.';
 
@@ -67,7 +68,7 @@ describe('IT Tools Page seven', () => {
       >
         <MockedProvider mocks={itToolsPageSevenMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-seven">
-            <ITToolsPageSeven />
+            <ITToolsPageSeven opsEvalAndLearningLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -103,7 +104,7 @@ describe('IT Tools Page seven', () => {
       >
         <MockedProvider mocks={itToolsPageSevenMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-seven">
-            <ITToolsPageSeven />
+            <ITToolsPageSeven opsEvalAndLearningLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>

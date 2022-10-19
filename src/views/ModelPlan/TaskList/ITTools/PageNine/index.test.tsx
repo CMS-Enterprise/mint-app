@@ -12,6 +12,7 @@ import {
   PayType,
   PNonClaimsBasedPaymentsType
 } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageNine from '.';
 
@@ -66,7 +67,7 @@ describe('IT Tools Page nine', () => {
       >
         <MockedProvider mocks={itToolsPageNineMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-nine">
-            <ITToolsPageNine />
+            <ITToolsPageNine paymentsLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -102,7 +103,7 @@ describe('IT Tools Page nine', () => {
       >
         <MockedProvider mocks={itToolsPageNineMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-nine">
-            <ITToolsPageNine />
+            <ITToolsPageNine paymentsLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>

@@ -69,10 +69,16 @@ type PlanDocumentInput struct {
 	OptionalNotes        *string             `json:"optionalNotes"`
 }
 
+type PrepareForClearance struct {
+	Status             PrepareForClearanceStatus `json:"status"`
+	LatestClearanceDts *time.Time                `json:"latestClearanceDts"`
+}
+
 type TaskListSectionLockStatus struct {
-	ModelPlanID uuid.UUID       `json:"modelPlanID"`
-	Section     TaskListSection `json:"section"`
-	LockedBy    string          `json:"lockedBy"`
+	ModelPlanID  uuid.UUID       `json:"modelPlanID"`
+	Section      TaskListSection `json:"section"`
+	LockedBy     string          `json:"lockedBy"`
+	IsAssessment bool            `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {
@@ -2471,6 +2477,51 @@ func (e PpToAdvertiseType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type PrepareForClearanceStatus string
+
+const (
+	PrepareForClearanceStatusCannotStart       PrepareForClearanceStatus = "CANNOT_START"
+	PrepareForClearanceStatusReady             PrepareForClearanceStatus = "READY"
+	PrepareForClearanceStatusInProgress        PrepareForClearanceStatus = "IN_PROGRESS"
+	PrepareForClearanceStatusReadyForClearance PrepareForClearanceStatus = "READY_FOR_CLEARANCE"
+)
+
+var AllPrepareForClearanceStatus = []PrepareForClearanceStatus{
+	PrepareForClearanceStatusCannotStart,
+	PrepareForClearanceStatusReady,
+	PrepareForClearanceStatusInProgress,
+	PrepareForClearanceStatusReadyForClearance,
+}
+
+func (e PrepareForClearanceStatus) IsValid() bool {
+	switch e {
+	case PrepareForClearanceStatusCannotStart, PrepareForClearanceStatusReady, PrepareForClearanceStatusInProgress, PrepareForClearanceStatusReadyForClearance:
+		return true
+	}
+	return false
+}
+
+func (e PrepareForClearanceStatus) String() string {
+	return string(e)
+}
+
+func (e *PrepareForClearanceStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PrepareForClearanceStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PrepareForClearanceStatus", str)
+	}
+	return nil
+}
+
+func (e PrepareForClearanceStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type ProviderAddType string
 
 const (
@@ -2727,6 +2778,7 @@ const (
 	TaskListSectionOperationsEvaluationAndLearning TaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
 	TaskListSectionPayment                         TaskListSection = "PAYMENT"
 	TaskListSectionItTools                         TaskListSection = "IT_TOOLS"
+	TaskListSectionPrepareForClearance             TaskListSection = "PREPARE_FOR_CLEARANCE"
 )
 
 var AllTaskListSection = []TaskListSection{
@@ -2737,11 +2789,12 @@ var AllTaskListSection = []TaskListSection{
 	TaskListSectionOperationsEvaluationAndLearning,
 	TaskListSectionPayment,
 	TaskListSectionItTools,
+	TaskListSectionPrepareForClearance,
 }
 
 func (e TaskListSection) IsValid() bool {
 	switch e {
-	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools:
+	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools, TaskListSectionPrepareForClearance:
 		return true
 	}
 	return false
@@ -2771,18 +2824,20 @@ func (e TaskListSection) MarshalGQL(w io.Writer) {
 type TaskStatusInput string
 
 const (
-	TaskStatusInputInProgress     TaskStatusInput = "IN_PROGRESS"
-	TaskStatusInputReadyForReview TaskStatusInput = "READY_FOR_REVIEW"
+	TaskStatusInputInProgress        TaskStatusInput = "IN_PROGRESS"
+	TaskStatusInputReadyForReview    TaskStatusInput = "READY_FOR_REVIEW"
+	TaskStatusInputReadyForClearance TaskStatusInput = "READY_FOR_CLEARANCE"
 )
 
 var AllTaskStatusInput = []TaskStatusInput{
 	TaskStatusInputInProgress,
 	TaskStatusInputReadyForReview,
+	TaskStatusInputReadyForClearance,
 }
 
 func (e TaskStatusInput) IsValid() bool {
 	switch e {
-	case TaskStatusInputInProgress, TaskStatusInputReadyForReview:
+	case TaskStatusInputInProgress, TaskStatusInputReadyForReview, TaskStatusInputReadyForClearance:
 		return true
 	}
 	return false

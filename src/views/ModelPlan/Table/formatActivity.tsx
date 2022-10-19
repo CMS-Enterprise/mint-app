@@ -24,7 +24,7 @@ const formatRecentActivity = (
 
     // Checking/formatting for unanswered questions
     let recentActivity: React.ReactNode = unansweredQuestions ? (
-      <p>
+      <p className="margin-y-0">
         {unansweredQuestions}{' '}
         {i18next.t('home:requestsTable.unansweredQuestion')}
         {unansweredQuestions > 1 && 's'} {/* Adding 's' for pluraltiy */}
@@ -40,7 +40,7 @@ const formatRecentActivity = (
       <div className="text-bold">
         {recentActivity}{' '}
         {answeredQuestions > 0 && (
-          <p>
+          <p className="margin-y-0">
             {answeredQuestions}{' '}
             {i18next.t('home:requestsTable.answeredQuestion')}
             {answeredQuestions > 1 && 's'}

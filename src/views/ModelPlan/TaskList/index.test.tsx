@@ -34,6 +34,7 @@ describe('The Model Plan Task List', () => {
     beneficiaries: [] as any,
     itTools: [] as any,
     payments: [] as any,
+    crTdls: [] as any,
     documents: [
       {
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
@@ -149,8 +150,6 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      modelPlan.basics.modelCategory = null;
-      modelPlan.basics.cmsCenters = [];
       render(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>

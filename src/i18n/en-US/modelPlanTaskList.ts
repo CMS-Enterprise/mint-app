@@ -6,12 +6,21 @@ const modelPlanTaskList = {
   subheading: 'for <1>{{modelName}}</1>',
   status: 'Status:',
   update: 'Update',
-  summaryBox: {
-    copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
-    existingDocuments: 'document<1>{{plural}}</1> uploaded for ',
+  documentSummaryBox: {
+    heading: 'Documents',
+    copy: 'There are no documents uploaded',
+    existingDocuments: 'document<1>{{plural}}</1> uploaded',
     cta: 'Upload a document',
     viewAll: 'View all model documents',
     uploadAnother: 'Upload another document'
+  },
+  crTDLsSummaryBox: {
+    heading: 'CRs and TDLs',
+    copy: 'There are no CRs or TDLs added.',
+    add: 'Add a CR or TDL',
+    viewAll: 'Manage CRs and TDLs',
+    uploadAnother: 'Add another CR or TDL',
+    more: ' more'
   },
   sideNav: {
     saveAndExit: 'Save & Exit',
@@ -34,44 +43,58 @@ const modelPlanTaskList = {
   numberedList: {
     basics: {
       heading: 'Model basics',
-      copy:
-        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.',
+      team:
+        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'basics'
     },
     generalCharacteristics: {
       heading: 'General characteristics',
-      copy:
-        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.',
+      team:
+        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'characteristics'
     },
     participantsAndProviders: {
       heading: 'Participants and providers',
-      copy:
+      team:
         'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'participants-and-providers'
     },
     beneficiaries: {
       heading: 'Beneficiaries',
-      copy:
+      team:
         'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'beneficiaries'
     },
     opsEvalAndLearning: {
       heading: 'Operations, evaluation, and learning',
-      copy:
+      team:
         'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'ops-eval-and-learning'
     },
     payments: {
       heading: 'Payment',
-      copy:
+      team:
         'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
     },
     itTools: {
       heading: 'IT tools',
-      copy:
+      team:
         'Choose the IT solutions your model will utilize. Many questions in this section are populated based on responses to questions answered in previous sections.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'it-tools'
     }
   },
@@ -91,6 +114,8 @@ const modelPlanTaskList = {
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
   locked: ' is editing this section. You may access it when they’re done.',
+  assessmentLocked:
+    'The Assessment Team is editing this section. You may access it when they’re done.',
   lockedHeading:
     'Someone is currently editing the Model Plan section you’re trying to access.',
   lockedSubheading: 'Please try again later.',

@@ -8,7 +8,7 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -22,6 +22,7 @@ import {
   GetModelPlans as GetDraftModelPlansType,
   GetModelPlans_modelPlanCollection as DraftModelPlanType
 } from 'queries/types/GetModelPlans';
+import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
@@ -38,9 +39,10 @@ import './index.scss';
 type TableProps = {
   data: DraftModelPlanType[];
   hiddenColumns?: string[];
+  showDownloadButton: boolean;
 };
 
-const Table = ({ data, hiddenColumns }: TableProps) => {
+const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
   const { t } = useTranslation('home');
 
   const columns = useMemo(() => {
@@ -165,17 +167,11 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
           className="margin-bottom-4"
         />
 
-        <div className="flex-align-self-center">
-          <button
-            className="usa-button usa-button--unstyled easi-no-print display-flex margin-bottom-4 text-no-underline"
-            type="button"
-            // onClick={fetchCSV}
-          >
-            <IconFileDownload />
-            &nbsp;
-            <span className="text-underline">{t('downloadCSV')}</span>
-          </button>
-        </div>
+        {showDownloadButton && (
+          <div className="flex-align-self-center">
+            <CsvExportLink includeAll />
+          </div>
+        )}
       </div>
 
       <TableResults
@@ -217,7 +213,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                       {...column.getSortByToggleProps()}
                     >
                       {column.render('Header')}
-                      {getHeaderSortIcon(column)}
+                      {getHeaderSortIcon(column, false)}
                     </button>
                   </th>
                 ))}
@@ -295,11 +291,16 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
 
 type DraftModelTableProps = {
   hiddenColumns?: string[];
+  isAssessment: boolean;
 };
 
-const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
+const DraftModelPlansTable = ({
+  hiddenColumns,
+  isAssessment
+}: DraftModelTableProps) => {
   const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
-    GetDraftModelPlans
+    GetDraftModelPlans,
+    { variables: { includeAll: isAssessment } }
   );
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
@@ -312,7 +313,13 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={data} hiddenColumns={hiddenColumns} />;
+  return (
+    <Table
+      data={data}
+      hiddenColumns={hiddenColumns}
+      showDownloadButton={isAssessment}
+    />
+  );
 };
 
 export default DraftModelPlansTable;

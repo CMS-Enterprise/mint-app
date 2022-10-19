@@ -6,7 +6,7 @@ describe('The Model Plan Form', () => {
   it('fills out model plan name and creates plan', () => {
     cy.visit('/');
 
-    cy.contains('a', 'Start a draft model plan').click();
+    cy.contains('a', 'Start a new Model Plan').click();
 
     cy.contains('h1', 'Start a new model plan');
 
@@ -21,7 +21,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
 
     cy.get('[data-testid="continue-to-tasklist"]').click();
@@ -32,7 +32,7 @@ describe('The Model Plan Form', () => {
   it('create and renames a model plan', () => {
     cy.visit('/');
 
-    cy.contains('a', 'Start a draft model plan').click();
+    cy.contains('a', 'SStart a new Model Plan').click();
     cy.contains('h1', 'Start a new model plan');
     cy.get('[data-testid="continue-link"]').click();
 
@@ -43,7 +43,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
     cy.get('[data-testid="continue-to-tasklist"]').click();
     cy.contains('h1', 'Model Plan task list');
@@ -222,7 +222,7 @@ describe('The Model Plan Form', () => {
   it('updates model plan status', () => {
     cy.visit('/');
 
-    cy.contains('a', 'Start a draft model plan').click();
+    cy.contains('a', 'Start a new Model Plan').click();
     cy.contains('h1', 'Start a new model plan');
     cy.get('[data-testid="continue-link"]').click();
 
@@ -233,7 +233,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
     cy.get('[data-testid="continue-to-tasklist"]').click();
 

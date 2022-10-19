@@ -1,7 +1,10 @@
 import i18next from 'i18next';
 
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
-import { DocumentType } from 'types/graphql-global-types';
+import {
+  ComplexityCalculationLevelType,
+  DocumentType
+} from 'types/graphql-global-types';
 
 /**
  * Translate the API enum to a human readable string
@@ -13,6 +16,43 @@ export const translateBoolean = (type: boolean) => {
       return i18next.t('draftModelPlan:yes');
     case false:
       return i18next.t('draftModelPlan:no');
+    default:
+      return '';
+  }
+};
+
+export const translateBooleanOrNull = (type: boolean | null | undefined) => {
+  switch (type) {
+    case true:
+      return i18next.t('draftModelPlan:yes');
+    case false:
+      return i18next.t('draftModelPlan:no');
+    case null:
+      return null;
+    default:
+      return '';
+  }
+};
+
+export const translateNewModel = (type: boolean | null | undefined) => {
+  switch (type) {
+    case true:
+      return i18next.t('generalCharacteristics:newModel');
+    case false:
+      return i18next.t('generalCharacteristics:newTrack');
+    default:
+      return null;
+  }
+};
+
+export const translateTriStateAnswer = (type: string) => {
+  switch (type) {
+    case 'YES':
+      return i18next.t('draftModelPlan:yes');
+    case 'NO':
+      return i18next.t('draftModelPlan:no');
+    case 'TBD':
+      return i18next.t('beneficiaries:beneficiariesOptions.na');
     default:
       return '';
   }
@@ -30,6 +70,21 @@ export const translateTeamRole = (teamRole: string) => {
       return i18next.t('modelPlan:teamRoles.modelLead');
     case 'MODEL_TEAM':
       return i18next.t('modelPlan:teamRoles.modelTeam');
+    default:
+      return '';
+  }
+};
+
+export const translateComplexityLevel = (
+  key: ComplexityCalculationLevelType
+) => {
+  switch (key) {
+    case ComplexityCalculationLevelType.LOW:
+      return i18next.t('payments:complexityLevel.low');
+    case ComplexityCalculationLevelType.MIDDLE:
+      return i18next.t('payments:complexityLevel.middle');
+    case ComplexityCalculationLevelType.HIGH:
+      return i18next.t('payments:complexityLevel.high');
     default:
       return '';
   }

@@ -156,7 +156,7 @@ const (
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
 )
 
-//NewPlanOpsEvalAndLearning returns a new ops Eval and Learning object
+// NewPlanOpsEvalAndLearning returns a new ops Eval and Learning object
 func NewPlanOpsEvalAndLearning(tls baseTaskListSection) *PlanOpsEvalAndLearning {
 	return &PlanOpsEvalAndLearning{
 		baseTaskListSection: tls,

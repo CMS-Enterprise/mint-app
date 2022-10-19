@@ -16,12 +16,20 @@ const mockModel: ModelPlanType = {
   modelName: 'Plan For General Characteristics',
   status: ModelStatus.PLAN_DRAFT,
   isFavorite: true,
+  isCollaborator: false,
   basics: {
     applicationsStart: '2022-06-03T17:41:40.962971Z',
     modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
+  crTdls: [
+    {
+      __typename: 'PlanCrTdl',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
   collaborators: [
     {
       fullName: 'Test User',

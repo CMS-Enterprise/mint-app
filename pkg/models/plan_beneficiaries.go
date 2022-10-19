@@ -36,7 +36,7 @@ type PlanBeneficiaries struct {
 	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
 }
 
-//NewPlanBeneficiaries returns a new plan Beneficiaries
+// NewPlanBeneficiaries returns a new plan Beneficiaries
 func NewPlanBeneficiaries(tls baseTaskListSection) *PlanBeneficiaries {
 	return &PlanBeneficiaries{
 		baseTaskListSection: tls,

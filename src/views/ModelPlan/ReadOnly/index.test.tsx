@@ -1,11 +1,18 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor, within } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
-import { KeyCharacteristic, ModelStatus } from 'types/graphql-global-types';
+import {
+  KeyCharacteristic,
+  ModelStatus,
+  TeamRole
+} from 'types/graphql-global-types';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 
 import ReadOnly from './index';
@@ -26,8 +33,13 @@ const mockData: GetModelSummaryTypes = {
     __typename: 'PlanGeneralCharacteristics',
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
+  isCollaborator: true,
   collaborators: [
-    { __typename: 'PlanCollaborator', fullName: 'First Collaborator' }
+    {
+      __typename: 'PlanCollaborator',
+      fullName: 'First Collaborator',
+      teamRole: TeamRole.MODEL_LEAD
+    }
   ]
 };
 
@@ -47,6 +59,15 @@ const mock = [
   }
 ];
 
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
 describe('Read Only Model Plan Summary', () => {
   it('renders without errors', async () => {
     render(
@@ -56,9 +77,11 @@ describe('Read Only Model Plan Summary', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/read-only/:subinfo">
-            <ReadOnly />
-          </Route>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-only/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -93,9 +116,11 @@ describe('Read Only Model Plan Summary', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/read-only/:subinfo">
-            <ReadOnly />
-          </Route>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-only/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -122,9 +147,11 @@ describe('Read Only Model Plan Summary', () => {
           ]}
         >
           <MockedProvider mocks={mock} addTypename={false}>
-            <Route path="/models/:modelID/read-only/:subinfo">
-              <ReadOnly />
-            </Route>
+            <Provider store={store}>
+              <Route path="/models/:modelID/read-only/:subinfo">
+                <ReadOnly />
+              </Route>
+            </Provider>
           </MockedProvider>
         </MemoryRouter>
       );
@@ -146,9 +173,11 @@ describe('Read Only Model Plan Summary', () => {
           ]}
         >
           <MockedProvider mocks={mock} addTypename={false}>
-            <Route path="/models/:modelID/read-only/:subinfo">
-              <ReadOnly />
-            </Route>
+            <Provider store={store}>
+              <Route path="/models/:modelID/read-only/:subinfo">
+                <ReadOnly />
+              </Route>
+            </Provider>
           </MockedProvider>
         </MemoryRouter>
       );

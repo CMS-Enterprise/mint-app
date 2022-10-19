@@ -592,16 +592,19 @@ export enum TaskListSection {
   OPERATIONS_EVALUATION_AND_LEARNING = "OPERATIONS_EVALUATION_AND_LEARNING",
   PARTICIPANTS_AND_PROVIDERS = "PARTICIPANTS_AND_PROVIDERS",
   PAYMENT = "PAYMENT",
+  PREPARE_FOR_CLEARANCE = "PREPARE_FOR_CLEARANCE",
 }
 
 export enum TaskStatus {
   IN_PROGRESS = "IN_PROGRESS",
   READY = "READY",
+  READY_FOR_CLEARANCE = "READY_FOR_CLEARANCE",
   READY_FOR_REVIEW = "READY_FOR_REVIEW",
 }
 
 export enum TaskStatusInput {
   IN_PROGRESS = "IN_PROGRESS",
+  READY_FOR_CLEARANCE = "READY_FOR_CLEARANCE",
   READY_FOR_REVIEW = "READY_FOR_REVIEW",
 }
 
@@ -710,6 +713,21 @@ export interface PlanCollaboratorCreateInput {
   fullName: string;
   teamRole: TeamRole;
   email: string;
+}
+
+export interface PlanCrTdlChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
+export interface PlanCrTdlCreateInput {
+  modelPlanID: UUID;
+  idNumber: string;
+  dateInitiated: Time;
+  title: string;
+  note?: string | null;
 }
 
 /**

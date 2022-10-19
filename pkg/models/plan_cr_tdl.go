@@ -16,7 +16,7 @@ type PlanCrTdl struct {
 	Note          *string    `json:"note" db:"note"`
 }
 
-//NewPlanCrTdl returns a New PlanCrTdl
+// NewPlanCrTdl returns a New PlanCrTdl
 func NewPlanCrTdl(createdBy string, modelPlanID uuid.UUID) *PlanCrTdl {
 	return &PlanCrTdl{
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),

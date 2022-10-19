@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RelatedArticle matches the snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-4 article"
+    data-testid="article-card"
+  >
+    <div
+      class="usa-card__container radius-md shadow-2 minh-mobile"
+    >
+      <header
+        class="usa-card__header padding-x-3 padding-top-3"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="line-height-body-4 margin-bottom-1"
+        >
+          Overview for adding a model
+        </h3>
+      </header>
+      <div
+        class="usa-card__body padding-top-0 article__body"
+        data-testid="CardBody"
+      >
+        <p>
+          Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the IT solutions the model will use and track its status through implementation
+        </p>
+      </div>
+      <div
+        class="usa-card__footer padding-top-2 article__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button usa-button--outline"
+          href="/"
+        >
+          Read
+        </a>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

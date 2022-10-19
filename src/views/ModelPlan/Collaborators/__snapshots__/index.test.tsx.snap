@@ -43,7 +43,7 @@ exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
                 aria-current="page"
                 class="usa-breadcrumb__list-item usa-current"
               >
-                Start a new Model Plan
+                Add model team members
               </li>
             </ol>
           </nav>
@@ -66,7 +66,7 @@ exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
           </h4>
           <a
             class="usa-button margin-bottom-2"
-            href="/models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/add-collaborator"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator"
           >
             Add team member
           </a>

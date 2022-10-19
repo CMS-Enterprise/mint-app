@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"fmt"
-	"testing"
 
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
 
@@ -32,9 +31,9 @@ type TestConfigs struct {
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
-func GetDefaultTestConfigs(t *testing.T) *TestConfigs {
+func GetDefaultTestConfigs() *TestConfigs {
 	tc := TestConfigs{}
-	tc.GetDefaults(t)
+	tc.GetDefaults()
 	return &tc
 }
 
@@ -51,7 +50,7 @@ func createS3Client() upload.S3Client {
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
-func (tc *TestConfigs) GetDefaults(t *testing.T) {
+func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 

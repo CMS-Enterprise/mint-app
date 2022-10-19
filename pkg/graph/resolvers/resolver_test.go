@@ -125,6 +125,6 @@ func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber strin
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
-	rs.testConfigs = GetDefaultTestConfigs(t)
+	rs.testConfigs = GetDefaultTestConfigs()
 	suite.Run(t, rs)
 }

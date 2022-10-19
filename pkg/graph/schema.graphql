@@ -23,6 +23,16 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 """
 scalar Time
 
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
+enum SortDirection {
+  ASC
+  DESC
+}
 """
 https://gqlgen.com/reference/file-upload/
 Represents a multipart file upload
@@ -54,6 +64,8 @@ type ModelPlan {
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
 }
 
 """
@@ -118,6 +130,7 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
+  isAssessment: Boolean!
 }
 
 """
@@ -204,6 +217,8 @@ type PlanBasics {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 }
 
@@ -257,6 +272,7 @@ type PlanDiscussion  {
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
+  isAssessment: Boolean!
 
   createdBy: String!
   createdDts: Time!
@@ -290,6 +306,7 @@ type DiscussionReply  {
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
+  isAssessment: Boolean!
 
 	createdBy: String!
 	createdDts: Time!
@@ -390,6 +407,8 @@ type PlanGeneralCharacteristics {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 }
 
@@ -502,6 +521,8 @@ type PlanBeneficiaries {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 }
 
@@ -604,6 +625,8 @@ type PlanParticipantsAndProviders {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 
 }
@@ -761,6 +784,8 @@ type PlanPayments {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status:      TaskStatus!
 }
 
@@ -1165,6 +1190,8 @@ type PlanOpsEvalAndLearning {
     modifiedDts: Time
     readyForReviewBy: String
     readyForReviewDts: Time
+    readyForClearanceBy: String
+    readyForClearanceDts: Time
     status: TaskStatus!
 }
 
@@ -1332,6 +1359,22 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     note: String
 }
 
+type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}
+
+type AuditChange {
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: String!
+  action: String!
+  fields: Map!
+  modifiedBy: String
+  modifiedDts: Time
+}
+
 """
 Query definition for the schema
 """
@@ -1339,7 +1382,7 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
+  modelPlanCollection(includeAll: Boolean!): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
@@ -1347,6 +1390,7 @@ type Query {
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
   crTdl(id: UUID!): PlanCrTdl!
+  auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
 }
 
 """
@@ -1459,10 +1503,20 @@ enum TaskStatus {
   READY
   IN_PROGRESS
   READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
 }
+
+enum PrepareForClearanceStatus {
+  CANNOT_START
+  READY
+  IN_PROGRESS
+  READY_FOR_CLEARANCE
+}
+
 enum TaskStatusInput {
   IN_PROGRESS
   READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
 }
 
 enum TaskListSection {
@@ -1472,7 +1526,8 @@ enum TaskListSection {
   BENEFICIARIES,
   OPERATIONS_EVALUATION_AND_LEARNING,
   PAYMENT,
-  IT_TOOLS
+  IT_TOOLS,
+  PREPARE_FOR_CLEARANCE
 }
 
 enum TeamRole {

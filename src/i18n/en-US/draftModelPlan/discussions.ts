@@ -3,7 +3,7 @@ const discussions = {
   modalHeading: 'Model discussions',
   askAQuestion: 'Ask a question',
   description:
-    'Need help with something? Ask a question here and someone will get back to you with an answer. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
+    'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
   noDiscussions: 'There are no discussions yet. ',
   askAQuestionLink: 'Ask a question',
   toGetStarted: ' to get started',
@@ -12,7 +12,7 @@ const discussions = {
   save: 'Save question',
   saveAnswer: 'Save answer',
   useLinkAbove:
-    'There a no discussions yet. Ask a question using the link above to get started.',
+    'There are no discussions yet. Ask a question using the link above to get started.',
   unanswered: 'unanswered question',
   answered: 'answered question',
   viewDiscussions: 'View discussions',
@@ -33,7 +33,14 @@ const discussions = {
     'There are no answered questions yet. When a question is answered, it will appear here with the response.',
   noUanswered:
     'There are no unanswered questions. Ask a question using the link above.',
-  ariaLabel: 'Discussion Center Modal'
+  nonEditor: {
+    noDiscussions:
+      'There are no discussions yet. When a question is asked, it will appear here.',
+    noQuestions:
+      'There are no questions yet. When a question is asked, it will appear here.'
+  },
+  ariaLabel: 'Discussion Center Modal',
+  assessment: 'Model Assessment Team'
 };
 
 export default discussions;

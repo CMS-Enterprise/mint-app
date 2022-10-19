@@ -7,17 +7,25 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
     data-testid="sidenav-actions"
   >
     <a
-      class="usa-link display-block margin-bottom-1"
+      class="usa-link display-block"
       href="/"
     >
       Save & Exit
     </a>
-    <a
-      class="usa-link display-block margin-bottom-1"
-      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics"
+    <div
+      class="flex-align-self-center margin-y-2"
     >
-      View this Model Plan
-    </a>
+      <div>
+        <button
+          class="usa-button usa-button--unstyled display-flex"
+          type="button"
+        >
+          <span>
+            Download this Model Plan (CSV)
+          </span>
+        </button>
+      </div>
+    </div>
     <button
       class="usa-button usa-button--unstyled line-height-body-5 test-withdraw-request"
       data-testid="button"
@@ -33,10 +41,10 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
       >
         Related Content
       </h4>
-      <a
-        class="usa-link usa-link--external line-height-body-5"
-        href="/"
-        target="_blank"
+      <button
+        class="usa-button usa-button usa-button--unstyled line-height-body-5"
+        data-testid="button"
+        type="button"
       >
         Overview for adding a model 
         <span
@@ -44,7 +52,7 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
         >
           (opens in a new tab)
         </span>
-      </a>
+      </button>
     </div>
     <div>
       <h3
