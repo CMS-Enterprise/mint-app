@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import NavigationBar, { navLinks } from './index';
 
@@ -58,13 +57,10 @@ describe('The NavigationBar component', () => {
     );
 
     const { t } = useTranslation();
-    const flags = useFlags();
 
-    navLinks(flags).forEach(route => {
-      if (route.isEnabled) {
-        const linkTitle = t(`header:${route.label}`);
-        expect(getByText(linkTitle)).toBeInTheDocument();
-      }
+    navLinks().forEach(route => {
+      const linkTitle = t(`header:${route.label}`);
+      expect(getByText(linkTitle)).toBeInTheDocument();
     });
     done();
   });

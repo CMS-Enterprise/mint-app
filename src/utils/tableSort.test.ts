@@ -42,7 +42,7 @@ describe('tableSortUtil', () => {
         isSorted: false,
         isSortedDesc: false
       } as HeaderGroup;
-      expect(getHeaderSortIcon(column).props['data-testid']).toBe(
+      expect(getHeaderSortIcon(column, false).props['data-testid']).toBe(
         'caret--sort'
       );
     });
@@ -52,7 +52,7 @@ describe('tableSortUtil', () => {
         isSorted: true,
         isSortedDesc: true
       } as HeaderGroup;
-      expect(getHeaderSortIcon(column).props['data-testid']).toBe(
+      expect(getHeaderSortIcon(column, false).props['data-testid']).toBe(
         'caret--down'
       );
     });
@@ -62,7 +62,9 @@ describe('tableSortUtil', () => {
         isSorted: true,
         isSortedDesc: false
       } as HeaderGroup;
-      expect(getHeaderSortIcon(column).props['data-testid']).toBe('caret--up');
+      expect(getHeaderSortIcon(column, false).props['data-testid']).toBe(
+        'caret--up'
+      );
     });
   });
 

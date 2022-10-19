@@ -22,7 +22,8 @@ const modelSummary = {
     discussions: 'Discussions',
     documents: 'Documents',
     'crs-and-tdl': 'CRs and TDLs'
-  }
+  },
+  more: ' more'
 };
 
 export default modelSummary;
