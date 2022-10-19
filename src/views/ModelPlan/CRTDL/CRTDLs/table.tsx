@@ -157,6 +157,7 @@ const Table = ({
             setCRTDLStatus('success');
             refetch();
           }
+          setModalOpen(false);
         })
         .catch(() => {
           setCRTDLMessage(
