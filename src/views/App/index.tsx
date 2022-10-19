@@ -21,6 +21,7 @@ import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
+import ModelInfoWrapper from 'views/ModelInfoWrapper';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -212,15 +213,17 @@ const App = () => {
                   <UserInfoWrapper>
                     <NDAWrapper>
                       <ModelAccessWrapper>
-                        <TimeOutWrapper>
-                          <NavContextProvider>
-                            <PageWrapper>
-                              <Header />
-                              <AppRoutes />
-                              <Footer />
-                            </PageWrapper>
-                          </NavContextProvider>
-                        </TimeOutWrapper>
+                        <ModelInfoWrapper>
+                          <TimeOutWrapper>
+                            <NavContextProvider>
+                              <PageWrapper>
+                                <Header />
+                                <AppRoutes />
+                                <Footer />
+                              </PageWrapper>
+                            </NavContextProvider>
+                          </TimeOutWrapper>
+                        </ModelInfoWrapper>
                       </ModelAccessWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>

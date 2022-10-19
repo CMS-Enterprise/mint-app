@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -106,15 +106,19 @@ const initialPrepareForClearanceValues: GetClearanceStatusesModelPlanFormType = 
 const convertReadyStatus = (status: TaskStatus): TaskStatus =>
   status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status;
 
-const PrepareForClearanceCheckList = () => {
+type PrepareForClearanceCheckListProps = {
+  modelID: string;
+};
+
+const PrepareForClearanceCheckList = ({
+  modelID
+}: PrepareForClearanceCheckListProps) => {
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('draftModelPlan');
 
   const taskListSections: any = t('modelPlanTaskList:numberedList', {
     returnObjects: true
   });
-
-  const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetClearanceStatusesModelPlanFormType>>(
     null
@@ -139,8 +143,7 @@ const PrepareForClearanceCheckList = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetClearanceStatusesModelPlanFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    formikValues: GetClearanceStatusesModelPlanFormType
   ) => {
     const {
       basics,
@@ -176,11 +179,7 @@ const PrepareForClearanceCheckList = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/prepare-for-clearance`);
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          }
+          history.push(`/models/${modelID}/task-list`);
         }
       })
       .catch(errors => {
@@ -222,7 +221,7 @@ const PrepareForClearanceCheckList = () => {
       <Formik
         initialValues={modelPlan}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          handleFormSubmit(values);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -309,6 +308,8 @@ const PrepareForClearanceCheckList = () => {
                                 }
                               }}
                             />
+
+                            {/* Label to render who marked readyForClearance and when */}
                             {values[
                               section as keyof GetClearanceStatusesModelPlanFormType
                             ]?.readyForClearanceBy && (
@@ -325,8 +326,16 @@ const PrepareForClearanceCheckList = () => {
                                 }
                               />
                             )}
+
+                            {/* Need to pass in Basics ID to update readyForClearance state on next route */}
                             <UswdsReactLink
-                              to="/"
+                              to={`/models/${modelID}/task-list/prepare-for-clearance/${
+                                taskListSections[section].path
+                              }/${
+                                values[
+                                  section as keyof GetClearanceStatusesModelPlanFormType
+                                ]?.id
+                              }`}
                               className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                             >
                               {t('review', {
@@ -334,6 +343,7 @@ const PrepareForClearanceCheckList = () => {
                                   section
                                 ].heading.toLowerCase()
                               })}
+
                               <IconArrowForward
                                 className="margin-right-1"
                                 aria-hidden
@@ -355,7 +365,7 @@ const PrepareForClearanceCheckList = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit(values, 'task-list')}
+                    onClick={() => handleFormSubmit(values)}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {t('dontUpdate')}
@@ -386,6 +396,7 @@ type SectionClearanceLabelProps = {
   readyForClearanceDts: string;
 };
 
+// Label to render who marked readyForClearance and when
 const SectionClearanceLabel = ({
   className,
   readyForClearanceBy,
@@ -393,7 +404,7 @@ const SectionClearanceLabel = ({
 }: SectionClearanceLabelProps): JSX.Element => {
   const { t } = useTranslation('prepareForClearance');
   return (
-    <p className={classNames('margin-left-4 text-base margin-y-0')}>
+    <p className={classNames(className, 'margin-left-4 text-base margin-y-0')}>
       {t('markedAsReady', {
         readyForClearanceBy,
         readyForClearanceDts: formatDate(readyForClearanceDts, 'MM/d/yyyy')

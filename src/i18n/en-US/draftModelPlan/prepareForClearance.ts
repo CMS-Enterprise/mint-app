@@ -8,7 +8,10 @@ const prepareForClearance = {
   dontUpdate: 'Don’t update statuses and return to task list',
   markedAsReady:
     'Marked ready for clearance by {{-readyForClearanceBy}} on {{-readyForClearanceDts}}',
-  review: 'Review {{-section}}'
+  review: 'Review {{-section}}',
+  forModelPlan: 'for {{-modelName}}',
+  markAsReady: 'Mark as ready for clearance',
+  basicsChanges: 'Make changes to model basics'
 };
 
 export default prepareForClearance;
