@@ -134,8 +134,8 @@ func TestGraphQLTestSuite(t *testing.T) {
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
 	assert.NoError(t, err)
 
-	emailServiceConfig.Host = "email"
-	emailServiceConfig.Port = 1025
+	emailServiceConfig.Host = "localhost"
+	emailServiceConfig.Port = 1030
 	emailServiceConfig.ClientAddress = "http://localhost:3005"
 
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
