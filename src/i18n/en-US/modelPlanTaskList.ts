@@ -34,9 +34,10 @@ const modelPlanTaskList = {
   },
   withdraw_modal: {
     header: 'Confirm you want to remove {{-requestName}}.',
-    warning: 'You will lose any information you have filled in.',
-    confirm: 'Remove request',
-    cancel: 'Cancel',
+    warning:
+      'Nobody will be able to edit or access this plan. This action cannot be undone. Please proceed with caution.',
+    confirm: 'Remove Model Plan',
+    cancel: 'Keep Model Plan',
     confirmationText_name: 'The request for {{-requestName}} has been removed',
     confirmationText_noName: 'The request has been removed'
   },

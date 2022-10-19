@@ -48,15 +48,17 @@ const TaskListSideNav = ({
   const renderModal = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
+        <PageHeading headingLevel="h2" className="margin-y-0">
           {t('withdraw_modal.header', {
             requestName: modelPlan.modelName
           })}
         </PageHeading>
-        <p>{t('withdraw_modal.warning')}</p>
+        <p className="margin-top-2 margin-bottom-3">
+          {t('withdraw_modal.warning')}
+        </p>
         <Button
           type="button"
-          className="margin-right-4"
+          className="margin-right-4 bg-error"
           onClick={() => archiveModelPlan()}
         >
           {t('withdraw_modal.confirm')}
