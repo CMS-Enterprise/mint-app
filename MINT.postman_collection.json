@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "010c80bf-f995-4fc8-8c9a-4bd1dbef50aa",
+		"_postman_id": "a6c84ae7-494f-4e64-acc0-df5f2e2c2973",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1158,7 +1158,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalNeed{\n  \n  addOrUpdateOperationalNeed(modelPlanID:\"{{modelPlanID}}\",needType:MANAGE_BEN_OVERLAP ,needed: true){\n    \n        id\n        modelPlanID\n\n        needType\n        needTypeFullName\n        needTypeShortName\n        needOther\n        needed\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
+								"query": "mutation OperationalNeed{\n  \n  addOrUpdateOperationalNeed(modelPlanID:\"{{modelPlanID}}\",needType:MANAGE_BEN_OVERLAP ,needed: true){\n    \n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts       \n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1194,7 +1194,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalNeed{\n  \n  addOrUpdateCustomOperationalNeed(\n      modelPlanID:\"{{modelPlanID}}\"\n      ,customNeedType :\"To have a fun day\"\n      ,needed: true)\n      {\n    \n        id\n        modelPlanID\n\n        needType\n        needTypeFullName\n        needTypeShortName\n        needOther\n        needed\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
+								"query": "mutation OperationalNeed{\n  \n  addOrUpdateCustomOperationalNeed(\n      modelPlanID:\"{{modelPlanID}}\"\n      ,customNeedType :\"To have a fun day\"\n      ,needed: true)\n      {\n    \n        id\n        modelPlanID\n\n        name\n        key\n        nameOther\n        needed\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1230,7 +1230,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  addOrUpdateOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",solutionType:FFS_COMPETENCY_CENTER, changes: {\n      archived: false\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n        id\n    operationalNeedID\n\n    solutionType\n    solutionTypeFullName\n    solutionTypeShortName\n    solutionOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  addOrUpdateOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",solutionType:FFS_COMPETENCY_CENTER, changes: {\n      archived: false\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n    #   status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    archived\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1266,7 +1266,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  addOrUpdateCustomOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",customSolutionType: \"Barbecue some good meat\", changes: {\n      archived: false\n      pocName: \"Grill Master\"\n      pocEmail: \"bbqKing@gump.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n\n    solutionType\n    solutionTypeFullName\n    solutionTypeShortName\n    solutionOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  addOrUpdateCustomOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",customSolutionType: \"Barbecue some good meat\", changes: {\n      archived: false\n      pocName: \"Grill Master\"\n      pocEmail: \"bbqKing@gump.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    archived\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1298,7 +1298,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\"){\n    \n    \n                solutions {\n                    id\n                    status\n                    mustStartDts\n                    solutionType\n                    solutionOther\n                    solutionTypeShortName   \n                    solutionTypeFullName\n                    pocEmail\n                    pocName     \n                    createdBy\n                    createdDts\n                }\n                possibleSolutions {\n                    id\n                    fullName\n                    shortName                    \n                }\n    \n  }\n}\n",
+								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\"){\n    \n    \n    solutions {\n        id\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        archived\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n    possibleSolutions {\n        id\n        name\n        key\n\n    }\n    \n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -1319,7 +1319,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    operationalNeeds {\n        needs \n        {\n            id\n            modelPlanID\n            needType\n            needTypeFullName\n            needTypeShortName\n            needOther\n            needed\n            solutions {\n                solutions {\n                    id\n                    status\n                    mustStartDts\n                    solutionType\n                    solutionOther\n                    solutionTypeShortName   \n                    pocEmail\n                    pocName     \n                    createdBy\n                    createdDts\n                }\n                possibleSolutions {\n                    id\n                    fullName\n                    shortName                    \n                }\n    \n                \n            }        \n            # createdBy\n            # createdDts\n            # modifiedBy\n            # modifiedDts     \n        }\n        # possibleNeeds {\n        #     id\n        #     fullName\n        #     shortName\n        #     possibleSolutions {\n        #         id\n        #         fullName\n        #         shortName                    \n        #     }\n        # }\n\n    }\n  }\n  \n  \n}",
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    operationalNeeds {\n        needs \n        {\n            id\n            modelPlanID\n            name\n            key\n            nameOther\n            needed\n            \n            solutions {\n                solutions {\n                    id\n                    status\n                    mustStartDts\n                    \n                    nameOther\n                    key   \n                    pocEmail\n                    pocName     \n                    createdBy\n                    createdDts\n                }\n                possibleSolutions {\n                    id\n                    name\n                    key                    \n                }\n                \n            }\n                    \n        }\n        possibleNeeds {\n            name\n            key\n                # possibleSolutions {\n                #     id\n                #     name\n                #     key                    \n                # }\n        }\n\n    }\n  }\n  \n  \n}",
 								"variables": ""
 							}
 						},
