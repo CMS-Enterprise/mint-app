@@ -9,6 +9,7 @@ import {
   GetITToolPageFive_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType
 } from 'queries/ITTools/types/GetITToolPageFive';
 import { OelProcessAppealsType } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageFive from '.';
 
@@ -66,7 +67,7 @@ describe('IT Tools Page five', () => {
       >
         <MockedProvider mocks={itToolsPageFiveMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-five">
-            <ITToolsPageFive />
+            <ITToolsPageFive opsEvalAndLearningLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -104,7 +105,7 @@ describe('IT Tools Page five', () => {
       >
         <MockedProvider mocks={itToolsPageFiveMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-five">
-            <ITToolsPageFive />
+            <ITToolsPageFive opsEvalAndLearningLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>

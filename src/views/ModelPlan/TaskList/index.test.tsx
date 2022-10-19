@@ -150,8 +150,6 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      modelPlan.basics.modelCategory = null;
-      modelPlan.basics.cmsCenters = [];
       render(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
