@@ -94,8 +94,8 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	suite.EqualValues(sol.Archived, true)
 	suite.EqualValues(sol.PocName, &pocName)
 	suite.EqualValues(sol.PocEmail, &pocEmail)
-	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 3)
-	suite.WithinDuration(sol.MustFinishDts.UTC(), mustFinishDts.UTC(), 3)
+	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 30*time.Second)
+	suite.WithinDuration(sol.MustFinishDts.UTC(), mustFinishDts.UTC(), 30*time.Second)
 	suite.EqualValues(sol.Status, inProg)
 
 }
@@ -161,8 +161,8 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.EqualValues(sol.Archived, true)
 	suite.EqualValues(sol.PocName, &pocName)
 	suite.EqualValues(sol.PocEmail, &pocEmail)
-	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 3)
-	suite.WithinDuration(sol.MustFinishDts.UTC(), mustFinishDts.UTC(), 3)
+	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 30*time.Second)
+	suite.WithinDuration(sol.MustFinishDts.UTC(), mustFinishDts.UTC(), 30*time.Second)
 	suite.EqualValues(sol.Status, inProg)
 
 }
