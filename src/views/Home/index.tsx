@@ -10,6 +10,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
+import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import user from 'utils/user';
@@ -33,7 +34,7 @@ const Home = () => {
         <>
           <NDABanner collapsable />
           <GridContainer>
-            {message}
+            {message && <Expire delay={4000}>{message}</Expire>}
 
             <Grid>
               <PageHeading>{t('title')}</PageHeading>
