@@ -2,7 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
-import { ModelPlanTaskStatus } from 'types/modelPlan';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;
@@ -19,7 +22,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 export const TaskListStatusTag = ({
   status
 }: {
-  status: ModelPlanTaskStatus | undefined;
+  status: TaskStatus | PrepareForClearanceStatus | undefined;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -64,7 +67,7 @@ export const TaskListStatusTag = ({
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: ModelPlanTaskStatus;
+  status: TaskStatus | PrepareForClearanceStatus;
   testId: string;
   lastUpdated?: string | null;
 };

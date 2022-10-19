@@ -91,6 +91,10 @@ export default gql`
         modifiedDts
         status
       }
+      prepareForClearance {
+        status
+        modifiedDts: latestClearanceDts
+      }
     }
   }
 `;

@@ -3,12 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Alert, Button } from '@trussworks/react-uswds';
 
-import { ModelPlanTaskStatus } from 'types/modelPlan';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 type TaskListButtonProps = {
   path: string;
   disabled?: boolean;
-  status: ModelPlanTaskStatus;
+  status: TaskStatus | PrepareForClearanceStatus;
 };
 
 const TaskListButton = ({ path, disabled, status }: TaskListButtonProps) => {

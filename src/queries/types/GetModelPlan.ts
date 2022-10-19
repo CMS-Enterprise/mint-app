@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, TaskStatus, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, TaskStatus, DiscussionStatus, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -115,6 +115,12 @@ export interface GetModelPlan_modelPlan_itTools {
   status: TaskStatus;
 }
 
+export interface GetModelPlan_modelPlan_prepareForClearance {
+  __typename: "PrepareForClearance";
+  status: PrepareForClearanceStatus;
+  modifiedDts: Time | null;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -132,6 +138,7 @@ export interface GetModelPlan_modelPlan {
   opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
   payments: GetModelPlan_modelPlan_payments;
   itTools: GetModelPlan_modelPlan_itTools;
+  prepareForClearance: GetModelPlan_modelPlan_prepareForClearance;
 }
 
 export interface GetModelPlan {

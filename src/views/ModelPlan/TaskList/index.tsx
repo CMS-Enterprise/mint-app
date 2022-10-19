@@ -46,10 +46,10 @@ import {
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
+  GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
-import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
-import { ModelPlanTaskStatus } from 'types/modelPlan';
+import { TaskListSection } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
@@ -65,11 +65,6 @@ import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
-
-type PrepareForClearanceType = {
-  modifiedDts: string | null;
-  status: ModelPlanTaskStatus;
-};
 
 type TaskListSectionsType = {
   [key: string]:
@@ -131,7 +126,8 @@ const TaskList = () => {
     participantsAndProviders,
     opsEvalAndLearning,
     beneficiaries,
-    payments
+    payments,
+    prepareForClearance
   } = modelPlan;
 
   const { data: collaboratorData } = useQuery<GetModelCollaborators>(
@@ -145,12 +141,6 @@ const TaskList = () => {
 
   const collaborators = (collaboratorData?.modelPlan?.collaborators ??
     []) as GetCollaboratorsType[];
-
-  const prepareForClearance: PrepareForClearanceType = {
-    modifiedDts: null,
-    status: TaskStatus.IN_PROGRESS
-    // status: CLEARANCE_STATUS.CANNOT_START
-  };
 
   const taskListSections: TaskListSectionsType = {
     basics,
