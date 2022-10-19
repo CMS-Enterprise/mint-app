@@ -38,7 +38,8 @@ const modelPlanTaskList = {
       'Nobody will be able to edit or access this plan. This action cannot be undone. Please proceed with caution.',
     confirm: 'Remove Model Plan',
     cancel: 'Keep Model Plan',
-    confirmationText_name: 'The request for {{-requestName}} has been removed',
+    confirmationText_name:
+      'Success! {{-modelName}} has been removed from MINT.',
     confirmationText_noName: 'The request has been removed'
   },
   numberedList: {
