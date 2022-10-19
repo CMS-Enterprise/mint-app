@@ -202,7 +202,7 @@ const Collaborators = () => {
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               setSearchTerm(e?.target?.value);
-                              if (values.fullName || values.euaUserId) {
+                              if (values.fullName || values.euaUserID) {
                                 setFieldValue('fullName', '');
                                 setFieldValue('euaUserID', '');
                               }
