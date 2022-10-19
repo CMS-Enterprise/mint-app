@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
 import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
@@ -78,7 +81,16 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Documents page', () => {
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
+describe('Discussion Component', () => {
   // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
   // eslint-disable-next-line
   console.error = jest.fn();
@@ -86,13 +98,13 @@ describe('Model Plan Documents page', () => {
   jest.spyOn(window, 'scroll');
 
   it('renders discussions and replies without errors', async () => {
-    const { getByText, getByTestId } = render(
+    const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Discussions modelID={modelID} isOpen closeModal={() => null} />
+        <Provider store={store}>
+          <Discussions modelID={modelID} />
+        </Provider>
       </MockedProvider>
     );
-
-    expect(getByTestId('discussion-modal')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(getByText(/This is a question./i)).toBeInTheDocument();
@@ -107,7 +119,9 @@ describe('Model Plan Documents page', () => {
   it('renders a question', async () => {
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Discussions modelID={modelID} isOpen closeModal={() => null} />
+        <Provider store={store}>
+          <Discussions modelID={modelID} />
+        </Provider>
       </MockedProvider>
     );
 
@@ -130,19 +144,5 @@ describe('Model Plan Documents page', () => {
     userEvent.type(feedbackField, 'Test feedback');
 
     expect(feedbackField).toHaveValue('Test feedback');
-  });
-
-  it('closes the modal', async () => {
-    const handleClose = jest.fn();
-
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Discussions modelID={modelID} isOpen closeModal={handleClose} />
-      </MockedProvider>
-    );
-
-    fireEvent.click(screen.getByTestId('close-discussions'));
-
-    expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
