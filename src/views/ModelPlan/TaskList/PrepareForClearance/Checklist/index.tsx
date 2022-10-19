@@ -9,20 +9,19 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack
-  //   Label,
-  //   TextInput
+  IconArrowBack,
+  IconArrowForward
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import AskAQuestion from 'components/AskAQuestion';
+import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
-import PageNumber from 'components/PageNumber';
-// import AutoSave from 'components/shared/AutoSave';
+import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-// import FieldErrorMsg from 'components/shared/FieldErrorMsg';
-// import FieldGroup from 'components/shared/FieldGroup';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   GetClearanceStatuses as GetClearanceStatusesType,
@@ -38,6 +37,7 @@ import {
 import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
 import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
 import { TaskStatus } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -89,9 +89,12 @@ const initialPaymentValues: GetClearanceStatusesModelPlanPayments = {
   status: TaskStatus.READY
 };
 
-const initialPrepareForClearanceValues: GetClearanceStatusesModelPlanType = {
-  __typename: 'ModelPlan',
-  id: '',
+type GetClearanceStatusesModelPlanFormType = Omit<
+  GetClearanceStatusesModelPlanType,
+  'id' | '__typename'
+>;
+
+const initialPrepareForClearanceValues: GetClearanceStatusesModelPlanFormType = {
   basics: initialBasicsValues,
   generalCharacteristics: initialCharacteristicsValues,
   participantsAndProviders: initialParticipantsAndProvidersValues,
@@ -104,7 +107,7 @@ const convertReadyStatus = (status: TaskStatus): TaskStatus =>
   status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status;
 
 const PrepareForClearanceCheckList = () => {
-  const { t } = useTranslation('prepareForClearnace');
+  const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('draftModelPlan');
 
   const taskListSections: any = t('modelPlanTaskList:numberedList', {
@@ -113,7 +116,7 @@ const PrepareForClearanceCheckList = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetClearanceStatusesModelPlanType>>(
+  const formikRef = useRef<FormikProps<GetClearanceStatusesModelPlanFormType>>(
     null
   );
   const history = useHistory();
@@ -136,7 +139,7 @@ const PrepareForClearanceCheckList = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetClearanceStatusesModelPlanType,
+    formikValues: GetClearanceStatusesModelPlanFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const {
@@ -190,7 +193,7 @@ const PrepareForClearanceCheckList = () => {
   }
 
   return (
-    <>
+    <Grid desktop={{ col: 6 }}>
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -213,10 +216,8 @@ const PrepareForClearanceCheckList = () => {
         data-testid="model-plan-name"
       />
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {t('subheading')}
+        {t('description')}
       </p>
-
-      <AskAQuestion modelID={modelID} />
 
       <Formik
         initialValues={modelPlan}
@@ -226,7 +227,7 @@ const PrepareForClearanceCheckList = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetClearanceStatusesModelPlanType>) => {
+        {(formikProps: FormikProps<GetClearanceStatusesModelPlanFormType>) => {
           const {
             errors,
             handleSubmit,
@@ -256,70 +257,113 @@ const PrepareForClearanceCheckList = () => {
                 </ErrorAlert>
               )}
 
-              <Grid row gap>
-                <Grid desktop={{ col: 6 }}>
-                  <Form
-                    className="margin-top-6"
-                    data-testid="it-tools-page-one-form"
-                    onSubmit={e => {
-                      handleSubmit(e);
-                    }}
-                  >
-                    <h2>{t('heading')}</h2>
+              <Form
+                className="margin-y-6"
+                data-testid="prepare-for-clearance-form"
+                onSubmit={e => {
+                  handleSubmit(e);
+                }}
+              >
+                <h3 className="margin-bottom-0">{t('subheading')}</h3>
 
-                    <Fieldset disabled={loading}>
-                      <div className="margin-top-6 margin-bottom-3">
-                        {Object.keys(taskListSections).map((section: any) => {
-                          return (
-                            <Fragment key={section}>
-                              <Field
-                                as={CheckboxField}
-                                id={`prepare-for-clearance-${section}`}
-                                testid={`prepare-for-clearance-${section}`}
-                                name={`${section}.status`}
-                                label={taskListSections[section].heading}
-                                checked={
-                                  values[section]?.status ===
-                                  TaskStatus.READY_FOR_CLEARANCE
+                <Fieldset disabled={loading}>
+                  <div className="margin-top-3 margin-bottom-3">
+                    <FieldGroup
+                      scrollElement="basics"
+                      error={!!flatErrors.basics}
+                      className="margin-top-4"
+                    >
+                      <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
+                      {Object.keys(taskListSections).map((section: string) => {
+                        if (
+                          section === 'itTools' ||
+                          section === 'prepareForClearance'
+                        )
+                          return null;
+                        return (
+                          <Fragment key={section}>
+                            <Field
+                              as={CheckboxField}
+                              id={`prepare-for-clearance-${section}`}
+                              testid={`prepare-for-clearance-${section}`}
+                              name={`${section}.status`}
+                              label={taskListSections[section].heading}
+                              checked={
+                                values[
+                                  section as keyof GetClearanceStatusesModelPlanFormType
+                                ]?.status === TaskStatus.READY_FOR_CLEARANCE
+                              }
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                if (e.target.checked) {
+                                  setFieldValue(
+                                    `${section}.status`,
+                                    TaskStatus.READY_FOR_CLEARANCE
+                                  );
+                                } else {
+                                  setFieldValue(
+                                    `${section}.status`,
+                                    TaskStatus.READY_FOR_REVIEW
+                                  );
                                 }
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    setFieldValue(
-                                      `${section}.status`,
-                                      TaskStatus.READY_FOR_CLEARANCE
-                                    );
-                                  } else {
-                                    setFieldValue(
-                                      `${section}.status`,
-                                      TaskStatus.READY_FOR_REVIEW
-                                    );
-                                  }
-                                }}
+                              }}
+                            />
+                            {values[
+                              section as keyof GetClearanceStatusesModelPlanFormType
+                            ]?.readyForClearanceBy && (
+                              <SectionClearanceLabel
+                                readyForClearanceBy={
+                                  values[
+                                    section as keyof GetClearanceStatusesModelPlanFormType
+                                  ]?.readyForClearanceBy!
+                                }
+                                readyForClearanceDts={
+                                  values[
+                                    section as keyof GetClearanceStatusesModelPlanFormType
+                                  ]?.readyForClearanceDts!
+                                }
                               />
-                            </Fragment>
-                          );
-                        })}
+                            )}
+                            <UswdsReactLink
+                              to="/"
+                              className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                            >
+                              {t('review', {
+                                section: taskListSections[
+                                  section
+                                ].heading.toLowerCase()
+                              })}
+                              <IconArrowForward
+                                className="margin-right-1"
+                                aria-hidden
+                              />
+                            </UswdsReactLink>
+                          </Fragment>
+                        );
+                      })}
+                    </FieldGroup>
 
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
-                        </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Button>
-                    </Fieldset>
-                  </Form>
-                </Grid>
-              </Grid>
+                    <Button
+                      className="margin-top-4"
+                      type="submit"
+                      onClick={() => setErrors({})}
+                    >
+                      {t('update')}
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => handleFormSubmit(values, 'task-list')}
+                  >
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {t('dontUpdate')}
+                  </Button>
+                </Fieldset>
+              </Form>
 
-              {/* {modelPlan.id && !loading && (
+              {modelPlan && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {
@@ -327,13 +371,34 @@ const PrepareForClearanceCheckList = () => {
                   }}
                   debounceDelay={3000}
                 />
-              )} */}
+              )}
             </>
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={9} className="margin-y-6" />
-    </>
+    </Grid>
+  );
+};
+
+type SectionClearanceLabelProps = {
+  className?: string;
+  readyForClearanceBy: string;
+  readyForClearanceDts: string;
+};
+
+const SectionClearanceLabel = ({
+  className,
+  readyForClearanceBy,
+  readyForClearanceDts
+}: SectionClearanceLabelProps): JSX.Element => {
+  const { t } = useTranslation('prepareForClearance');
+  return (
+    <p className={classNames('margin-left-4 text-base margin-y-0')}>
+      {t('markedAsReady', {
+        readyForClearanceBy,
+        readyForClearanceDts: formatDate(readyForClearanceDts, 'MM/d/yyyy')
+      })}
+    </p>
   );
 };
 
