@@ -64,6 +64,7 @@ type ModelPlan {
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: OperationalNeeds!
 }
@@ -1408,6 +1409,10 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     note: String
 }
 
+type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}
 
 type AuditChange {
   id: Int!
@@ -1595,6 +1600,14 @@ enum TaskStatus {
   READY_FOR_REVIEW
   READY_FOR_CLEARANCE
 }
+
+enum PrepareForClearanceStatus {
+  CANNOT_START
+  READY
+  IN_PROGRESS
+  READY_FOR_CLEARANCE
+}
+
 enum TaskStatusInput {
   IN_PROGRESS
   READY_FOR_REVIEW

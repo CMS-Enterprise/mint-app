@@ -5,7 +5,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-// import GetPlanDocumentByModelID from 'queries/Documents/GetPlanDocumentByModelID';
 import { DocumentType } from 'types/graphql-global-types';
 
 import ReadOnlyDocuments from './index';

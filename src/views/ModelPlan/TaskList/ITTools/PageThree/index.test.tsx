@@ -12,6 +12,7 @@ import {
   ParticipantCommunicationType,
   PpCommunicateWithParticipantType
 } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageThree from '.';
 
@@ -66,7 +67,9 @@ describe('IT Tools Page three', () => {
       >
         <MockedProvider mocks={itToolsPageThreeMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-three">
-            <ITToolsPageThree />
+            <ITToolsPageThree
+              participantsAndProvidersLock={LockStatus.LOCKED}
+            />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -106,7 +109,9 @@ describe('IT Tools Page three', () => {
       >
         <MockedProvider mocks={itToolsPageThreeMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-three">
-            <ITToolsPageThree />
+            <ITToolsPageThree
+              participantsAndProvidersLock={LockStatus.LOCKED}
+            />
           </Route>
         </MockedProvider>
       </MemoryRouter>

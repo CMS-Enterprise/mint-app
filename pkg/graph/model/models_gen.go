@@ -79,6 +79,11 @@ type PlanDocumentInput struct {
 	OptionalNotes        *string             `json:"optionalNotes"`
 }
 
+type PrepareForClearance struct {
+	Status             PrepareForClearanceStatus `json:"status"`
+	LatestClearanceDts *time.Time                `json:"latestClearanceDts"`
+}
+
 type TaskListSectionLockStatus struct {
 	ModelPlanID  uuid.UUID       `json:"modelPlanID"`
 	Section      TaskListSection `json:"section"`
@@ -2479,6 +2484,51 @@ func (e *PpToAdvertiseType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e PpToAdvertiseType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PrepareForClearanceStatus string
+
+const (
+	PrepareForClearanceStatusCannotStart       PrepareForClearanceStatus = "CANNOT_START"
+	PrepareForClearanceStatusReady             PrepareForClearanceStatus = "READY"
+	PrepareForClearanceStatusInProgress        PrepareForClearanceStatus = "IN_PROGRESS"
+	PrepareForClearanceStatusReadyForClearance PrepareForClearanceStatus = "READY_FOR_CLEARANCE"
+)
+
+var AllPrepareForClearanceStatus = []PrepareForClearanceStatus{
+	PrepareForClearanceStatusCannotStart,
+	PrepareForClearanceStatusReady,
+	PrepareForClearanceStatusInProgress,
+	PrepareForClearanceStatusReadyForClearance,
+}
+
+func (e PrepareForClearanceStatus) IsValid() bool {
+	switch e {
+	case PrepareForClearanceStatusCannotStart, PrepareForClearanceStatusReady, PrepareForClearanceStatusInProgress, PrepareForClearanceStatusReadyForClearance:
+		return true
+	}
+	return false
+}
+
+func (e PrepareForClearanceStatus) String() string {
+	return string(e)
+}
+
+func (e *PrepareForClearanceStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PrepareForClearanceStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PrepareForClearanceStatus", str)
+	}
+	return nil
+}
+
+func (e PrepareForClearanceStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

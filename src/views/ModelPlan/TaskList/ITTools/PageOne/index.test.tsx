@@ -9,6 +9,7 @@ import {
   GetITToolPageOne_modelPlan_itTools as GetITToolsPageOneType
 } from 'queries/ITTools/types/GetITToolPageOne';
 import { GcPartCDType } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageOne from '.';
 
@@ -63,7 +64,7 @@ describe('IT Tools Page One', () => {
       >
         <MockedProvider mocks={itToolsPageOneMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-one">
-            <ITToolsPageOne />
+            <ITToolsPageOne characteristicsLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -95,7 +96,7 @@ describe('IT Tools Page One', () => {
       >
         <MockedProvider mocks={itToolsPageOneMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-one">
-            <ITToolsPageOne />
+            <ITToolsPageOne characteristicsLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>

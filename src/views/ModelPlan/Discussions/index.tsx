@@ -30,15 +30,17 @@ import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions
 import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/Discussions/types/CreateModelPlanDiscussion';
 import {
   GetModelPlanDiscussions as GetModelPlanDiscussionsType,
+  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
   GetModelPlanDiscussionsVariables
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import {
-  CreateModelPlanReply as CreateModelPlanReplyType,
-  CreateModelPlanReply_createDiscussionReply as ReplyType
+  CreateModelPlanReply as CreateModelPlanReplyType
+  // CreateModelPlanReply_createDiscussionReply as ReplyType
 } from 'queries/types/CreateModelPlanReply';
-import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
+// import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
