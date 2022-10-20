@@ -31,6 +31,7 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
+  // Fetches model plan info on change of valid modelID
   const { data } = useQuery(GetModelPlanBase, {
     variables: {
       id: modelID
@@ -48,7 +49,7 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
   });
 
   if (data) {
-    // Sets the initial lock statuses once useLazyQuery data is fetched
+    // Sets the model plan ref info once fetched
     modelContextData.current = { ...data.modelPlan };
   }
 

@@ -1,3 +1,8 @@
+/*
+Checklist view and form for Prepare for Clearance task list section
+Each checkbox modifies the 'status' on its respective task list sections
+*/
+
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
@@ -24,13 +29,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   GetClearanceStatuses as GetClearanceStatusesType,
-  GetClearanceStatuses_modelPlan as GetClearanceStatusesModelPlanType,
-  GetClearanceStatuses_modelPlan_basics as GetClearanceStatusesModelPlanBasicsType,
-  GetClearanceStatuses_modelPlan_beneficiaries as GetClearanceStatusesModelPlanBeneficiaries,
-  GetClearanceStatuses_modelPlan_generalCharacteristics as GetClearanceStatusesModelPlanGeneralCharacteristics,
-  GetClearanceStatuses_modelPlan_opsEvalAndLearning as GetClearanceStatusesModelPlanOpsEvalAndLearning,
-  GetClearanceStatuses_modelPlan_participantsAndProviders as GetClearanceStatusesModelPlanParticipantsAndProviders,
-  GetClearanceStatuses_modelPlan_payments as GetClearanceStatusesModelPlanPayments,
   GetClearanceStatusesVariables
 } from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
@@ -40,68 +38,39 @@ import { formatDate } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
-const initialBasicsValues: GetClearanceStatusesModelPlanBasicsType = {
-  __typename: 'PlanBasics',
+// Initial form values and types for each task-list clearance checkbox
+const initialClearanceValues = {
   id: '',
   readyForClearanceBy: null,
   readyForClearanceDts: null,
   status: TaskStatus.READY
 };
+interface ClearanceFormValues {
+  id: string;
+  readyForClearanceBy: string | null;
+  readyForClearanceDts: string | null;
+  status: TaskStatus;
+}
 
-const initialCharacteristicsValues: GetClearanceStatusesModelPlanGeneralCharacteristics = {
-  __typename: 'PlanGeneralCharacteristics',
-  id: '',
-  readyForClearanceBy: null,
-  readyForClearanceDts: null,
-  status: TaskStatus.READY
+export type ClearanceStatusesModelPlanFormType = {
+  basics: ClearanceFormValues;
+  generalCharacteristics: ClearanceFormValues;
+  participantsAndProviders: ClearanceFormValues;
+  beneficiaries: ClearanceFormValues;
+  opsEvalAndLearning: ClearanceFormValues;
+  payments: ClearanceFormValues;
 };
 
-const initialParticipantsAndProvidersValues: GetClearanceStatusesModelPlanParticipantsAndProviders = {
-  __typename: 'PlanParticipantsAndProviders',
-  id: '',
-  readyForClearanceBy: null,
-  readyForClearanceDts: null,
-  status: TaskStatus.READY
+const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormType = {
+  basics: { ...initialClearanceValues },
+  generalCharacteristics: { ...initialClearanceValues },
+  participantsAndProviders: { ...initialClearanceValues },
+  beneficiaries: { ...initialClearanceValues },
+  opsEvalAndLearning: { ...initialClearanceValues },
+  payments: { ...initialClearanceValues }
 };
 
-const initialBeneficiariesValues: GetClearanceStatusesModelPlanBeneficiaries = {
-  __typename: 'PlanBeneficiaries',
-  id: '',
-  readyForClearanceBy: null,
-  readyForClearanceDts: null,
-  status: TaskStatus.READY
-};
-
-const initialOpsEvalAndLearningValues: GetClearanceStatusesModelPlanOpsEvalAndLearning = {
-  __typename: 'PlanOpsEvalAndLearning',
-  id: '',
-  readyForClearanceBy: null,
-  readyForClearanceDts: null,
-  status: TaskStatus.READY
-};
-
-const initialPaymentValues: GetClearanceStatusesModelPlanPayments = {
-  __typename: 'PlanPayments',
-  id: '',
-  readyForClearanceBy: null,
-  readyForClearanceDts: null,
-  status: TaskStatus.READY
-};
-
-export type GetClearanceStatusesModelPlanFormType = Omit<
-  GetClearanceStatusesModelPlanType,
-  'id' | '__typename'
->;
-
-const initialPrepareForClearanceValues: GetClearanceStatusesModelPlanFormType = {
-  basics: initialBasicsValues,
-  generalCharacteristics: initialCharacteristicsValues,
-  participantsAndProviders: initialParticipantsAndProvidersValues,
-  beneficiaries: initialBeneficiariesValues,
-  opsEvalAndLearning: initialOpsEvalAndLearningValues,
-  payments: initialPaymentValues
-};
-
+// Function to convert any statuses that are READY, as it's not allowed in mutation
 const convertReadyStatus = (status: TaskStatus): TaskStatus =>
   status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status;
 
@@ -115,14 +84,17 @@ const PrepareForClearanceCheckList = ({
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('draftModelPlan');
 
+  const history = useHistory();
+
+  // Used to map, iterate and label task list sections and values from query
   const taskListSections: any = t('modelPlanTaskList:numberedList', {
     returnObjects: true
   });
 
-  const formikRef = useRef<FormikProps<GetClearanceStatusesModelPlanFormType>>(
+  // User to set errors outside the script of the form component
+  const formikRef = useRef<FormikProps<ClearanceStatusesModelPlanFormType>>(
     null
   );
-  const history = useHistory();
 
   const { data, loading, error } = useQuery<
     GetClearanceStatusesType,
@@ -142,7 +114,7 @@ const PrepareForClearanceCheckList = ({
   );
 
   const handleFormSubmit = (
-    formikValues: GetClearanceStatusesModelPlanFormType
+    formikValues: ClearanceStatusesModelPlanFormType
   ) => {
     const {
       basics,
@@ -225,7 +197,7 @@ const PrepareForClearanceCheckList = ({
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetClearanceStatusesModelPlanFormType>) => {
+        {(formikProps: FormikProps<ClearanceStatusesModelPlanFormType>) => {
           const {
             errors,
             handleSubmit,
@@ -272,7 +244,28 @@ const PrepareForClearanceCheckList = ({
                       className="margin-top-4"
                     >
                       <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
+                      {/* Mapping over task list sections and dynamically rendering each checkbox with labels */}
                       {Object.keys(taskListSections).map((section: string) => {
+                        const sectionID =
+                          values[
+                            section as keyof ClearanceStatusesModelPlanFormType
+                          ]?.id;
+
+                        const sectionStatus =
+                          values[
+                            section as keyof ClearanceStatusesModelPlanFormType
+                          ]?.status;
+
+                        const readyForClearanceBy =
+                          values[
+                            section as keyof ClearanceStatusesModelPlanFormType
+                          ]?.readyForClearanceBy;
+
+                        const readyForClearanceDts =
+                          values[
+                            section as keyof ClearanceStatusesModelPlanFormType
+                          ]?.readyForClearanceDts;
+
                         // Bypass/don't render itTools or prepareForClearance task list sections
                         if (
                           section === 'itTools' ||
@@ -288,9 +281,7 @@ const PrepareForClearanceCheckList = ({
                               name={`${section}.status`}
                               label={taskListSections[section].heading}
                               checked={
-                                values[
-                                  section as keyof GetClearanceStatusesModelPlanFormType
-                                ]?.status === TaskStatus.READY_FOR_CLEARANCE
+                                sectionStatus === TaskStatus.READY_FOR_CLEARANCE
                               }
                               onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
@@ -310,32 +301,17 @@ const PrepareForClearanceCheckList = ({
                             />
 
                             {/* Label to render who marked readyForClearance and when */}
-                            {values[
-                              section as keyof GetClearanceStatusesModelPlanFormType
-                            ]?.readyForClearanceBy && (
+                            {readyForClearanceBy && (
                               <SectionClearanceLabel
-                                readyForClearanceBy={
-                                  values[
-                                    section as keyof GetClearanceStatusesModelPlanFormType
-                                  ]?.readyForClearanceBy!
-                                }
-                                readyForClearanceDts={
-                                  values[
-                                    section as keyof GetClearanceStatusesModelPlanFormType
-                                  ]?.readyForClearanceDts!
-                                }
+                                readyForClearanceBy={readyForClearanceBy!}
+                                readyForClearanceDts={readyForClearanceDts!}
                               />
                             )}
+
                             <Grid tablet={{ col: 8 }}>
                               {/* Need to pass in section ID to update readyForClearance state on next route */}
                               <UswdsReactLink
-                                to={`/models/${modelID}/task-list/prepare-for-clearance/${
-                                  taskListSections[section].path
-                                }/${
-                                  values[
-                                    section as keyof GetClearanceStatusesModelPlanFormType
-                                  ]?.id
-                                }`}
+                                to={`/models/${modelID}/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
                                 className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                               >
                                 {t('review', {

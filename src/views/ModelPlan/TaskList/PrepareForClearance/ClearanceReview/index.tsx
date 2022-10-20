@@ -1,3 +1,9 @@
+/*
+Clearance review component used to conditionally render readonly components
+Contains submissions to update status for each section on marked 'Ready for clearance'
+Link to each task list section and checks if task list sections are locked
+*/
+
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -47,7 +53,7 @@ import {
 } from 'views/SubscriptionHandler';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
-import { GetClearanceStatusesModelPlanFormType } from '../Checklist';
+import { ClearanceStatusesModelPlanFormType } from '../Checklist';
 
 type ClearanceReviewProps = {
   modelID: string;
@@ -58,15 +64,16 @@ type ClearanceParamProps = {
   sectionID: string;
 };
 
-type mutationObjectType = {
+type MutationObjectType = {
   [key: string]: MutationFunction;
 };
 
-type routeMapType = {
+type RouteMapType = {
   [key: string]: string;
 };
 
-const routeMap: routeMapType = {
+// Mappping for url param to gql objects
+const routeMap: RouteMapType = {
   basics: 'basics',
   characteristics: 'generalCharacteristics',
   'participants-and-providers': 'participantsAndProviders',
@@ -75,6 +82,7 @@ const routeMap: routeMapType = {
   payment: 'payments'
 };
 
+// Switch statement for conditional rendering of readonly components
 const renderReviewTaskSection = (
   modelID: string,
   section: string
@@ -102,16 +110,18 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
 
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
-
-  const taskListLocked: boolean =
-    findLockedSection(taskListSectionLocks, taskListSectionMap[section]) ===
-    LockStatus.LOCKED;
-
   const { t } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
   const { t: i } = useTranslation('itTools');
   const history = useHistory();
+
+  // Subscription locks context for task list
+  const { taskListSectionLocks } = useContext(SubscriptionContext);
+
+  // Subscription lock boolean if current section is locked
+  const taskListLocked: boolean =
+    findLockedSection(taskListSectionLocks, taskListSectionMap[section]) ===
+    LockStatus.LOCKED;
 
   const taskListSections: any = t('modelPlanTaskList:numberedList', {
     returnObjects: true
@@ -130,7 +140,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const readyForClearance: boolean =
     data?.modelPlan?.[
-      modelPlanSection as keyof GetClearanceStatusesModelPlanFormType
+      modelPlanSection as keyof ClearanceStatusesModelPlanFormType
     ].status === TaskStatus.READY_FOR_CLEARANCE;
 
   const [updateBasics] = useMutation<UpdateClearanceBasicsType>(
@@ -163,7 +173,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     UpdateClearancePayments
   );
 
-  const clearanceMutations: mutationObjectType = {
+  // Object to dynamically call each task list mutation within handleFormSubmit
+  const clearanceMutations: MutationObjectType = {
     basics: updateBasics,
     characteristics: updateCharacteristics,
     'participants-and-providers': updateParticipantsAndProviders,
@@ -189,6 +200,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       });
   };
 
+  // Modal used to render task list locked info or Ready for Clearance warning
   const renderModal = (locked: boolean) => {
     return (
       <Modal
@@ -265,6 +277,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
           {renderModal(taskListLocked)}
 
           {renderReviewTaskSection(modelID, section)}
+
           <div className="margin-top-6 margin-bottom-3">
             <Button
               type="button"
@@ -282,6 +295,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             </Button>
           </div>
 
+          {/* Link to respective task list form section */}
           {!loading && !error && (
             <Button
               type="button"
