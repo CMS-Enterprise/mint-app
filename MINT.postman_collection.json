@@ -1280,6 +1280,42 @@
 					"response": []
 				},
 				{
+					"name": "OperationNeedUpdateCustom",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.updateCustomOperationalNeedByID",
+									"",
+									"operationalNeedID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalNeedID\", operationalNeedID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalNeed{\n  \n  updateCustomOperationalNeedByID(id:\"{{operationalNeedID}}\"\n  ,customNeedType:\"To Dance in the Rain 3 times\"\n  ,needed: true)\n  {\n    \n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "OperationSolutionsGetByOperationalNeedID",
 					"event": [
 						{
@@ -1320,6 +1356,42 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    operationalNeeds {\n        needs \n        {\n            id\n            modelPlanID\n            name\n            key\n            nameOther\n            needed\n            \n            solutions {\n                solutions {\n                    id\n                    status\n                    mustStartDts\n                    \n                    nameOther\n                    key   \n                    pocEmail\n                    pocName     \n                    createdBy\n                    createdDts\n                }\n                possibleSolutions {\n                    id\n                    name\n                    key                    \n                }\n                \n            }\n                    \n        }\n        possibleNeeds {\n            name\n            key\n                # possibleSolutions {\n                #     id\n                #     name\n                #     key                    \n                # }\n        }\n\n    }\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationSolutionUpdateCustom",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.updateCustomOperationalSolutionByID",
+									"",
+									"operationalSolutionID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalSolution{\n  \n  updateCustomOperationalSolutionByID(id:\"{{operationalSolutionID}}\",customSolutionType: \"Have the ice cream come to you!\", changes: {\n      archived: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    archived\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
