@@ -67,3 +67,21 @@ func OperationalSolutionInsertOrUpdateCustom(logger *zap.Logger, operationNeedID
 	return store.OperationalSolutionInsertOrUpdateOther(logger, existing, customSolutionType)
 
 }
+
+// OperationalSolutionCustomUpdateByID updates an operational Solution by it's ID
+func OperationalSolutionCustomUpdateByID(logger *zap.Logger, id uuid.UUID, customSolutionType *string, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
+
+	existing, err := store.OperationalSolutionGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false) ///TODO!!! update so we can check if the user has access or not!
+	if err != nil {
+		return nil, err
+	}
+	existing.NameOther = customSolutionType //update the custom solutiopn type
+
+	return store.OperationalSolutionUpdateByID(logger, existing)
+
+}

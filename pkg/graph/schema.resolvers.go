@@ -375,6 +375,13 @@ func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context,
 	return resolvers.OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
 }
 
+// UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
+func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
+}
+
 // AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
 func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
 	principal := appcontext.Principal(ctx)
@@ -387,6 +394,13 @@ func (r *mutationResolver) AddOrUpdateCustomOperationalSolution(ctx context.Cont
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationalSolutionInsertOrUpdateCustom(logger, operationalNeedID, customSolutionType, changes, principal, r.store)
+}
+
+// UpdateCustomOperationalSolutionByID is the resolver for the updateCustomOperationalSolutionByID field.
+func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Context, id uuid.UUID, customSolutionType *string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionCustomUpdateByID(logger, id, customSolutionType, changes, principal, r.store)
 }
 
 // Solutions is the resolver for the solutions field.

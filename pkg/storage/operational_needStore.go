@@ -20,6 +20,12 @@ var operationalNeedGetByModelPlanIDAndTypeSQL string
 //go:embed SQL/operational_need_get_by_model_plan_id_and_other_type.sql
 var operationalNeedGetByModelPlanIDAndOtherTypeSQL string
 
+//go:embed SQL/operational_need_get_by_id.sql
+var operationalNeedGetByIDSQL string
+
+//go:embed SQL/operational_need_update_by_id.sql
+var operationalNeedUpdateByIDSQL string
+
 //go:embed SQL/operational_need_insert_or_update.sql
 var operationalNeedInsertOrUpdateSQL string
 
@@ -104,6 +110,28 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(logger *zap.Logger, 
 	return &need, nil
 }
 
+// OperationalNeedGetByID returns an Operational Need by it's ID
+func (s *Store) OperationalNeedGetByID(logger *zap.Logger, id uuid.UUID) (*models.OperationalNeed, error) {
+	need := models.OperationalNeed{}
+
+	stmt, err := s.db.PrepareNamed(operationalNeedGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+
+		"id": id,
+	}
+
+	err = stmt.Get(&need, arg)
+
+	if err != nil {
+		return nil, err
+	}
+	return &need, nil
+}
+
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need in the DB
 func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.OperationalNeed, needTypeKey models.OperationalNeedKey) (*models.OperationalNeed, error) {
 	statement, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateSQL)
@@ -129,6 +157,21 @@ func (s *Store) OperationalNeedInsertOrUpdateOther(logger *zap.Logger, need *mod
 	}
 	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
 	need.NameOther = &customNeedType // This will set the need type id IN the db
+
+	err = statement.Get(need, need)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, need) //this could be either update or insert..
+	}
+	return need, err
+
+}
+
+// OperationalNeedUpdateByID will update an operational need in the DB
+func (s *Store) OperationalNeedUpdateByID(logger *zap.Logger, need *models.OperationalNeed) (*models.OperationalNeed, error) {
+	statement, err := s.db.PrepareNamed(operationalNeedUpdateByIDSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
+	}
 
 	err = statement.Get(need, need)
 	if err != nil {

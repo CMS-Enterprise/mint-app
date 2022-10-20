@@ -166,3 +166,36 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.EqualValues(sol.Status, inProg)
 
 }
+
+func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
+
+	// 1. Create solution, and update by ID
+	plan := suite.createModelPlan("plan for solutions")
+	needType := models.OpNKAcquireALearnCont
+	solTypeCustom := "A Unit test to test operational solutions"
+
+	need := suite.createOperationalNeed(plan, &needType, nil, true)
+
+	changes := map[string]interface{}{}
+
+	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, solTypeCustom, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(sol)
+
+	newSolType := "A Modified unit test to test operational Solutions"
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.EUAID)
+
+	sol2, err := OperationalSolutionCustomUpdateByID(suite.testConfigs.Logger, sol.ID, &newSolType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	suite.EqualValues(sol2.NameOther, &newSolType)
+	suite.EqualValues(sol2.ID, sol.ID)
+	suite.NotNil(sol2.ModifiedDts)
+	suite.EqualValues(sol2.CreatedBy, suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(sol2.ModifiedBy, &suite.testConfigs.Principal.EUAID)
+
+	// 2. Fail update when set solution type to null
+	_, err = OperationalSolutionCustomUpdateByID(suite.testConfigs.Logger, sol.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.Error(err)
+
+}

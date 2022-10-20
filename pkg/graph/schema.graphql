@@ -1573,10 +1573,16 @@ addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! nee
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.
+updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed! 
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! #TODO update the
+addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! 
+@hasRole(role: MINT_USER)
+
+addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! 
+@hasRole(role: MINT_USER)
+
+updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution! 
 @hasRole(role: MINT_USER)
 }
 

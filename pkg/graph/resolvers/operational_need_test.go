@@ -110,3 +110,26 @@ func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdateCustom() {
 	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 }
+
+func (suite *ResolverSuite) TestOperationalNeedCustomUpdateByID() {
+	plan := suite.createModelPlan("plan for need")
+	needed := true
+	customNeed := "To test my Operational Need resolver Logic"
+	need1, _ := OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, customNeed, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+
+	//1. Update need
+	newNeed := "To make sure I can change custom Need types"
+	needed = false
+	need2, err := OperationalNeedCustomUpdateByID(suite.testConfigs.Logger, need1.ID, &newNeed, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.EqualValues(need2.NameOther, &newNeed)
+	suite.EqualValues(need2.Needed, needed)
+	suite.EqualValues(need2.CreatedBy, suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(need2.ModifiedBy, &suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(need1.ID, need2.ID)
+
+	//2. Error when setting need to null
+	_, err = OperationalNeedCustomUpdateByID(suite.testConfigs.Logger, need1.ID, nil, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.Error(err)
+
+}

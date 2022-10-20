@@ -20,6 +20,12 @@ var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
 //go:embed SQL/operational_solution_get_by_operational_need_id_and_other_type.sql
 var operationalSolutionGetByOperationalNeedIDAndOtherTypeSQL string
 
+//go:embed SQL/operational_solution_get_by_id.sql
+var operationalSolutionGetByIDSQL string
+
+//go:embed SQL/operational_solution_update_by_id.sql
+var operationalSolutionUpdateByIDSQL string
+
 //go:embed SQL/operational_solution_insert_or_update.sql
 var operationalSolutionInsertOrUpdateSQL string
 
@@ -100,6 +106,26 @@ func (s *Store) OperationalSolutionGetByOperationNeedIDAndOtherType(logger *zap.
 
 }
 
+// OperationalSolutionGetByID returns an operational solution by ID
+func (s *Store) OperationalSolutionGetByID(logger *zap.Logger, id uuid.UUID) (*models.OperationalSolution, error) {
+	solution := models.OperationalSolution{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"id": id,
+	}
+	err = stmt.Get(&solution, arg)
+	if err != nil {
+		return nil, err
+	}
+	return &solution, err
+
+}
+
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational solution if it already exists
 func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *models.OperationalSolution, solutionTypeKey models.OperationalSolutionKey) (*models.OperationalSolution, error) {
 	statement, err := s.db.PrepareNamed(operationalSolutionInsertOrUpdateSQL)
@@ -123,6 +149,20 @@ func (s *Store) OperationalSolutionInsertOrUpdateOther(logger *zap.Logger, solut
 	}
 	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
 	solution.NameOther = &customSolutionType
+	err = statement.Get(solution, solution)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..
+	}
+	return solution, err
+}
+
+// OperationalSolutionUpdateByID updates an operational solution by it's ID
+func (s *Store) OperationalSolutionUpdateByID(logger *zap.Logger, solution *models.OperationalSolution) (*models.OperationalSolution, error) {
+	statement, err := s.db.PrepareNamed(operationalSolutionUpdateByIDSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
+	}
+
 	err = statement.Get(solution, solution)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..

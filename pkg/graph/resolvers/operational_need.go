@@ -73,3 +73,25 @@ func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UU
 	return store.OperationalNeedInsertOrUpdateOther(logger, existing, customNeedType)
 
 }
+
+// OperationalNeedCustomUpdateByID updates an Operational Need by it's ID. Note, we don't allow updating a need type, except customNeedTypes
+func OperationalNeedCustomUpdateByID(logger *zap.Logger, operationNeedID uuid.UUID, customNeedType *string, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
+
+	existing, err := store.OperationalNeedGetByID(logger, operationNeedID)
+	if err != nil {
+		return nil, err
+	}
+
+	changes := map[string]interface{}{
+		"needed":    needed,
+		"nameOther": customNeedType,
+	}
+
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return store.OperationalNeedUpdateByID(logger, existing)
+
+}
