@@ -1,6 +1,10 @@
 package resolvers
 
 import (
+	"fmt"
+
+	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -49,6 +53,7 @@ func createS3Client() upload.S3Client {
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
+
 	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
@@ -94,5 +99,21 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	}
 
 	return config, ldClient, logger, userInfo, ps, princ
+}
 
+func createAddedAsCollaboratorTemplateCacheHelper(
+	planName string,
+	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
+	templateCache := emailTemplates.NewTemplateCache()
+	_ = templateCache.LoadTemplateFromString("testSubject", "{{.ModelName}}")
+	_ = templateCache.LoadTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}")
+	testTemplate := emailTemplates.NewEmailTemplate(
+		templateCache,
+		"testSubject",
+		"testBody",
+	)
+
+	expectedSubject := planName
+	expectedBody := fmt.Sprintf("%s %s", planName, plan.ID.String())
+	return testTemplate, expectedSubject, expectedBody
 }
