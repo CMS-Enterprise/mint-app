@@ -1,13 +1,23 @@
 package resolvers
 
 import (
+	"github.com/golang/mock/gomock"
+
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (suite *ResolverSuite) TestCreatePlanCollaborator() {
-	plan := suite.createModelPlan("Plan For Milestones")
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
+
+	planName := "Plan For Milestones"
+	plan := suite.createModelPlan(planName)
 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
@@ -16,7 +26,46 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		TeamRole:    models.TeamRoleLeadership,
 		Email:       "clab@rater.com",
 	}
-	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+
+	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+
+	mockEmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
+		Return(testTemplate, nil).
+		AnyTimes()
+
+	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(emailServiceConfig).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Any(),
+			gomock.Eq(expectedSubject),
+			gomock.Any(),
+			gomock.Eq(expectedBody),
+		).
+		AnyTimes()
+
+	collaborator, err := CreatePlanCollaborator(
+		suite.testConfigs.Logger,
+		mockEmailService,
+		mockEmailTemplateService,
+		collaboratorInput,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
@@ -25,6 +74,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
+	mockController.Finish()
 }
 
 func (suite *ResolverSuite) TestUpdatePlanCollaborator() {

@@ -5,6 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"go.uber.org/zap"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -79,14 +82,28 @@ func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.Model
 // addPlanCollaborator is a wrapper for resolvers.CreatePlanCollaborator
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
-func addPlanCollaborator(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCollaboratorCreateInput) *models.PlanCollaborator {
+func addPlanCollaborator(
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	logger *zap.Logger,
+	mp *models.ModelPlan,
+	input *model.PlanCollaboratorCreateInput,
+) *models.PlanCollaborator {
 	princ := &authentication.EUAPrincipal{
 		EUAID:             mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
 
-	collaborator, err := resolvers.CreatePlanCollaborator(logger, input, princ, store)
+	collaborator, err := resolvers.CreatePlanCollaborator(
+		logger,
+		emailService,
+		emailTemplateService,
+		input,
+		princ,
+		store,
+	)
 	if err != nil {
 		panic(err)
 	}
