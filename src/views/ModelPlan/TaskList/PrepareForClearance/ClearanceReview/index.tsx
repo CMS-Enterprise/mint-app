@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { MutationFunction, useMutation, useQuery } from '@apollo/client';
 import {
+  Breadcrumb,
+  BreadcrumbBar,
+  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -101,10 +104,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const taskListLocked: LockStatus = findLockedSection(
-    taskListSectionLocks,
-    taskListSectionMap[section]
-  );
+  const taskListLocked: boolean =
+    findLockedSection(taskListSectionLocks, taskListSectionMap[section]) ===
+    LockStatus.LOCKED;
 
   const { t } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
@@ -222,7 +224,34 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   return (
     <MainContent data-testid="clearance-review">
       <GridContainer>
-        <Grid desktop={{ col: 12 }} className="padding-y-6">
+        <Grid desktop={{ col: 12 }}>
+          <BreadcrumbBar variant="wrap" className="margin-bottom-4">
+            <Breadcrumb>
+              <BreadcrumbLink asCustom={UswdsReactLink} to="/">
+                <span>{t('home')}</span>
+              </BreadcrumbLink>
+            </Breadcrumb>
+            <Breadcrumb>
+              <BreadcrumbLink
+                asCustom={UswdsReactLink}
+                to={`/models/${modelID}/task-list/`}
+              >
+                <span>{t('tasklistBreadcrumb')}</span>
+              </BreadcrumbLink>
+            </Breadcrumb>
+            <Breadcrumb>
+              <BreadcrumbLink
+                asCustom={UswdsReactLink}
+                to={`/models/${modelID}/task-list/prepare-for-clearance`}
+              >
+                <span>{p('breadcrumb')}</span>
+              </BreadcrumbLink>
+            </Breadcrumb>
+            <Breadcrumb current>
+              {p(`reviewBreadcrumbs.${routeMap[section]}`)}
+            </Breadcrumb>
+          </BreadcrumbBar>
+
           {errors && (
             <ErrorAlert
               testId="formik-validation-errors"
@@ -233,7 +262,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             </ErrorAlert>
           )}
 
-          {renderModal(taskListLocked === LockStatus.LOCKED)}
+          {renderModal(taskListLocked)}
 
           {renderReviewTaskSection(modelID, section)}
           <div className="margin-top-6 margin-bottom-3">
@@ -258,7 +287,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               type="button"
               className="usa-button usa-button--unstyled display-flex"
               onClick={() => {
-                if (taskListLocked === LockStatus.LOCKED || readyForClearance) {
+                if (taskListLocked || readyForClearance) {
                   setModalOpen(true);
                 } else {
                   history.push(`/models/${modelID}/task-list/${section}`);

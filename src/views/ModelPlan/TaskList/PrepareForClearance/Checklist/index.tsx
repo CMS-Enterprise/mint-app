@@ -17,7 +17,6 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -274,6 +273,7 @@ const PrepareForClearanceCheckList = ({
                     >
                       <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
                       {Object.keys(taskListSections).map((section: string) => {
+                        // Bypass/don't render itTools or prepareForClearance task list sections
                         if (
                           section === 'itTools' ||
                           section === 'prepareForClearance'
@@ -303,7 +303,7 @@ const PrepareForClearanceCheckList = ({
                                 } else {
                                   setFieldValue(
                                     `${section}.status`,
-                                    TaskStatus.READY_FOR_REVIEW
+                                    TaskStatus.IN_PROGRESS
                                   );
                                 }
                               }}
@@ -326,29 +326,30 @@ const PrepareForClearanceCheckList = ({
                                 }
                               />
                             )}
+                            <Grid tablet={{ col: 8 }}>
+                              {/* Need to pass in section ID to update readyForClearance state on next route */}
+                              <UswdsReactLink
+                                to={`/models/${modelID}/task-list/prepare-for-clearance/${
+                                  taskListSections[section].path
+                                }/${
+                                  values[
+                                    section as keyof GetClearanceStatusesModelPlanFormType
+                                  ]?.id
+                                }`}
+                                className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                              >
+                                {t('review', {
+                                  section: taskListSections[
+                                    section
+                                  ].heading.toLowerCase()
+                                })}
 
-                            {/* Need to pass in Basics ID to update readyForClearance state on next route */}
-                            <UswdsReactLink
-                              to={`/models/${modelID}/task-list/prepare-for-clearance/${
-                                taskListSections[section].path
-                              }/${
-                                values[
-                                  section as keyof GetClearanceStatusesModelPlanFormType
-                                ]?.id
-                              }`}
-                              className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                            >
-                              {t('review', {
-                                section: taskListSections[
-                                  section
-                                ].heading.toLowerCase()
-                              })}
-
-                              <IconArrowForward
-                                className="margin-left-1"
-                                aria-hidden
-                              />
-                            </UswdsReactLink>
+                                <IconArrowForward
+                                  className="margin-left-1"
+                                  aria-hidden
+                                />
+                              </UswdsReactLink>
+                            </Grid>
                           </Fragment>
                         );
                       })}
@@ -364,24 +365,14 @@ const PrepareForClearanceCheckList = ({
                   </div>
                   <Button
                     type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit(values)}
+                    className="usa-button usa-button--unstyled display-flex"
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {t('dontUpdate')}
                   </Button>
                 </Fieldset>
               </Form>
-
-              {modelPlan && !loading && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

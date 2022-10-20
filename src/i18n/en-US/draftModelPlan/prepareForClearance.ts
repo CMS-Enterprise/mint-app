@@ -2,6 +2,14 @@ const prepareForClearance = {
   heading: 'Prepare for clearance',
   subheading: 'Select which sections are ready for clearance.',
   breadcrumb: 'Prepare for clearance',
+  reviewBreadcrumbs: {
+    basics: 'Review model basics',
+    generalCharacteristics: 'Review general characteristics',
+    participantsAndProviders: 'Review participants and providers',
+    beneficiaries: 'Review beneficiaries',
+    opsEvalAndLearning: 'Review operations evaluation and learning',
+    payments: 'Review payment'
+  },
   description:
     'After you’ve iterated on your Model Plan, make sure the information that’s included in your Model Plan matches any documentation that you’re using for clearance.',
   update: 'Update section statuses',
