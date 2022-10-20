@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanBase from 'queries/GetModelPlanBase';
 import { TaskStatus } from 'types/graphql-global-types';
@@ -31,6 +34,15 @@ const mocks = [
   }
 ];
 
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
 describe('Model Plan CR and TDL page', () => {
   it('matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
@@ -38,7 +50,9 @@ describe('Model Plan CR and TDL page', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/cr-and-tdl">
-              <CRTDL />
+              <Provider store={store}>
+                <CRTDL />
+              </Provider>
             </Route>
           </MessageProvider>
         </MockedProvider>

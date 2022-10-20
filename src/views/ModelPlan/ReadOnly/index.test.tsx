@@ -40,6 +40,12 @@ const mockData: GetModelSummaryTypes = {
       fullName: 'First Collaborator',
       teamRole: TeamRole.MODEL_LEAD
     }
+  ],
+  crTdls: [
+    {
+      __typename: 'PlanCrTdl',
+      idNumber: 'TDL-123'
+    }
   ]
 };
 
