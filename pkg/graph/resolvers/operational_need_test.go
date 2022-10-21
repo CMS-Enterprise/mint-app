@@ -48,35 +48,45 @@ import (
 // 	suite.Len(opNeeds.PossibleNeeds, possibleCount-2) //Remove existing possible need
 
 // }
+func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
+	plan := suite.createModelPlan("plan for need")
+
+	//1. Get all current possible needs
+	posNeeds, err := PossibleOperationalNeedCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(posNeeds)
+	possibleCount := len(posNeeds)
+
+	//2. Get
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opNeeds, possibleCount)
+	firstNeed := opNeeds[0]
+
+	suite.Nil(firstNeed.ModifiedBy)
+	suite.Nil(firstNeed.ModifiedDts)
+	suite.Nil(firstNeed.NameOther)
+	suite.EqualValues(firstNeed.CreatedBy, suite.testConfigs.Principal.EUAID)
+	suite.NotNil(firstNeed.CreatedDts)
+	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query //TODO
+	suite.Nil(firstNeed.Needed)  //Needed should not yet be set
+
+}
 
 func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdate() {
 
-	// 1. Create need, ensure fields are as expected
+	// 1. Create plan
 	plan := suite.createModelPlan("plan for need")
-	needKey := models.OpNKAcquireALearnCont
-	needed := true
-	need, err := OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
-
-	suite.NoError(err)
-	suite.NotNil(need)
-	suite.Nil(need.ModifiedBy)
-	suite.Nil(need.ModifiedDts)
-	suite.Nil(need.NameOther)
-
-	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
-	suite.NotNil(need.CreatedDts)
-	suite.EqualValues(need.Key, &needKey)
-	suite.NotNil(need.Name) // Enforce returning the name from this query //TODO
-	suite.EqualValues(need.Needed, needed)
 
 	//2. Update need and make sure fields change. A Different Key means a different entry
-	needed = false
-	need, err = OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	needed := false
+	needKey := models.OpNKAcquireALearnCont
+	need, err := OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(need)
 	suite.NotNil(need.ModifiedDts)
 
-	suite.EqualValues(need.Needed, needed)
+	suite.EqualValues(need.Needed, &needed)
 	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
 	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
@@ -96,7 +106,7 @@ func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdateCustom() {
 	suite.Nil(need.Key)
 	suite.Nil(need.Name)
 	suite.EqualValues(need.NameOther, &customNeed)
-	suite.EqualValues(need.Needed, needed)
+	suite.EqualValues(need.Needed, &needed)
 
 	//2. Update need and make sure fields change. A Different Key means a different entry
 	needed = false
@@ -105,7 +115,7 @@ func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdateCustom() {
 	suite.NotNil(need)
 	suite.NotNil(need.ModifiedDts)
 
-	suite.EqualValues(need.Needed, needed)
+	suite.EqualValues(need.Needed, &needed)
 	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
 	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
@@ -123,7 +133,7 @@ func (suite *ResolverSuite) TestOperationalNeedCustomUpdateByID() {
 	need2, err := OperationalNeedCustomUpdateByID(suite.testConfigs.Logger, need1.ID, &newNeed, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.EqualValues(need2.NameOther, &newNeed)
-	suite.EqualValues(need2.Needed, needed)
+	suite.EqualValues(need2.Needed, &needed)
 	suite.EqualValues(need2.CreatedBy, suite.testConfigs.Principal.EUAID)
 	suite.EqualValues(need2.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 	suite.EqualValues(need1.ID, need2.ID)
