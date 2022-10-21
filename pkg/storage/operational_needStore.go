@@ -29,6 +29,9 @@ var operationalNeedUpdateByIDSQL string
 //go:embed SQL/operational_need_insert_or_update.sql
 var operationalNeedInsertOrUpdateSQL string
 
+//go:embed SQL/operational_need_insert_all_possible.sql
+var operationalNeedInsertAllPossibleSQL string
+
 //go:embed SQL/operational_need_insert_or_update_other.sql
 var operationalNeedInsertOrUpdateOtherSQL string
 
@@ -178,5 +181,27 @@ func (s *Store) OperationalNeedUpdateByID(logger *zap.Logger, need *models.Opera
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need) //this could be either update or insert..
 	}
 	return need, err
+
+}
+
+// OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
+func (s *Store) OperationalNeedInsertAllPossible(logger *zap.Logger, modelPlanID uuid.UUID, createdBy string) ([]*models.OperationalNeed, error) {
+
+	needs := []*models.OperationalNeed{}
+	statement, err := s.db.PrepareNamed(operationalNeedInsertAllPossibleSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+
+		"model_plan_id": modelPlanID,
+		"created_by":    createdBy,
+	}
+
+	err = statement.Select(&needs, arg)
+	if err != nil {
+		return nil, err
+	}
+	return needs, err
 
 }

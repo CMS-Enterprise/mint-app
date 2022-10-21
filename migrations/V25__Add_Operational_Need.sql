@@ -4,7 +4,7 @@ CREATE TABLE operational_need (
     need_type INT,
     name_other ZERO_STRING,
 
-    needed BOOLEAN DEFAULT TRUE,
+    needed BOOLEAN, --null means not answered
 
 
     created_by EUA_ID NOT NULL,

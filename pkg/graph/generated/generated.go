@@ -6204,7 +6204,7 @@ type ModelPlan {
   crTdls: [PlanCrTdl!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: OperationalNeeds!
+  operationalNeeds: OperationalNeeds
 }
 
 type OperationalNeeds {
@@ -6221,7 +6221,7 @@ type OperationalNeed {
     modelPlanID: UUID!
 
     # needType: Int
-    needed: Boolean!
+    needed: Boolean # if null, it has not been answered
     solutions: OperationalSolutions!
 
     key: OperationalNeedKey
@@ -13191,14 +13191,11 @@ func (ec *executionContext) _ModelPlan_operationalNeeds(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.OperationalNeeds)
 	fc.Result = res
-	return ec.marshalNOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx, field.Selections, res)
+	return ec.marshalOOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17705,14 +17702,11 @@ func (ec *executionContext) _OperationalNeed_needed(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(bool)
+	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalNeed_needed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -45391,9 +45385,6 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._ModelPlan_operationalNeeds(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			}
 
@@ -45817,9 +45808,6 @@ func (ec *executionContext) _OperationalNeed(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._OperationalNeed_needed(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "solutions":
 			field := field
 
@@ -53891,20 +53879,6 @@ func (ec *executionContext) marshalNOperationalNeedKey2githubᚗcomᚋcmsgovᚋm
 	return res
 }
 
-func (ec *executionContext) marshalNOperationalNeeds2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx context.Context, sel ast.SelectionSet, v model.OperationalNeeds) graphql.Marshaler {
-	return ec._OperationalNeeds(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx context.Context, sel ast.SelectionSet, v *model.OperationalNeeds) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._OperationalNeeds(ctx, sel, v)
-}
-
 func (ec *executionContext) marshalNOperationalSolution2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolution(ctx context.Context, sel ast.SelectionSet, v models.OperationalSolution) graphql.Marshaler {
 	return ec._OperationalSolution(ctx, sel, &v)
 }
@@ -59483,6 +59457,13 @@ func (ec *executionContext) marshalOOperationalNeedKey2ᚖgithubᚗcomᚋcmsgov�
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) marshalOOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx context.Context, sel ast.SelectionSet, v *model.OperationalNeeds) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._OperationalNeeds(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOOperationalSolutionKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx context.Context, v interface{}) (*models.OperationalSolutionKey, error) {

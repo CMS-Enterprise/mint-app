@@ -11,7 +11,7 @@ type OperationalNeed struct {
 	Key      *OperationalNeedKey `json:"key" db:"need_key"`   //From Possible Operational Need Table
 
 	NameOther *string `json:"nameOther" db:"name_other"`
-	Needed    bool    `json:"needed" db:"needed"`
+	Needed    *bool   `json:"needed" db:"needed"` //Null means that it has not been answered
 }
 
 // NewOperationalNeed creatd an Operational Need with the required fields
