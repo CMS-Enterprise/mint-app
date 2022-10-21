@@ -202,11 +202,6 @@ type ComplexityRoot struct {
 		Solutions   func(childComplexity int) int
 	}
 
-	OperationalNeeds struct {
-		Needs         func(childComplexity int) int
-		PossibleNeeds func(childComplexity int) int
-	}
-
 	OperationalSolution struct {
 		Archived          func(childComplexity int) int
 		CreatedBy         func(childComplexity int) int
@@ -808,6 +803,7 @@ type ComplexityRoot struct {
 		PlanCollaboratorByID     func(childComplexity int, id uuid.UUID) int
 		PlanDocument             func(childComplexity int, id uuid.UUID) int
 		PlanPayments             func(childComplexity int, id uuid.UUID) int
+		PossibleOperationalNeeds func(childComplexity int) int
 		TaskListSectionLocks     func(childComplexity int, modelPlanID uuid.UUID) int
 	}
 
@@ -856,7 +852,7 @@ type ModelPlanResolver interface {
 	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
 	PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error)
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
-	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) (*model.OperationalNeeds, error)
+	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -1057,6 +1053,7 @@ type QueryResolver interface {
 	CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
 	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error)
 	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
+	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -2037,20 +2034,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalNeed.Solutions(childComplexity), true
-
-	case "OperationalNeeds.needs":
-		if e.complexity.OperationalNeeds.Needs == nil {
-			break
-		}
-
-		return e.complexity.OperationalNeeds.Needs(childComplexity), true
-
-	case "OperationalNeeds.possibleNeeds":
-		if e.complexity.OperationalNeeds.PossibleNeeds == nil {
-			break
-		}
-
-		return e.complexity.OperationalNeeds.PossibleNeeds(childComplexity), true
 
 	case "OperationalSolution.archived":
 		if e.complexity.OperationalSolution.Archived == nil {
@@ -5940,6 +5923,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.PlanPayments(childComplexity, args["id"].(uuid.UUID)), true
 
+	case "Query.possibleOperationalNeeds":
+		if e.complexity.Query.PossibleOperationalNeeds == nil {
+			break
+		}
+
+		return e.complexity.Query.PossibleOperationalNeeds(childComplexity), true
+
 	case "Query.taskListSectionLocks":
 		if e.complexity.Query.TaskListSectionLocks == nil {
 			break
@@ -6204,13 +6194,9 @@ type ModelPlan {
   crTdls: [PlanCrTdl!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: OperationalNeeds
+  operationalNeeds: [OperationalNeed!]!
 }
 
-type OperationalNeeds {
-  needs: [OperationalNeed!]!
-  possibleNeeds: [PossibleOperationalNeed!]!
-}
 type OperationalSolutions {
   solutions: [OperationalSolution!]!
   possibleSolutions: [PossibleOperationalSolution!]!
@@ -7612,6 +7598,7 @@ type Query {
   crTdl(id: UUID!): PlanCrTdl!
   operationalSolutions(operationalNeedID: UUID!): OperationalSolutions!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
+  possibleOperationalNeeds: [PossibleOperationalNeed!]!
 }
 
 """
@@ -13191,11 +13178,14 @@ func (ec *executionContext) _ModelPlan_operationalNeeds(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.OperationalNeeds)
+	res := resTmp.([]*models.OperationalNeed)
 	fc.Result = res
-	return ec.marshalOOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx, field.Selections, res)
+	return ec.marshalNOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -13206,12 +13196,30 @@ func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "needs":
-				return ec.fieldContext_OperationalNeeds_needs(ctx, field)
-			case "possibleNeeds":
-				return ec.fieldContext_OperationalNeeds_possibleNeeds(ctx, field)
+			case "id":
+				return ec.fieldContext_OperationalNeed_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalNeed_needed(ctx, field)
+			case "solutions":
+				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalNeed_key(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalNeed_name(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalNeeds", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
 		},
 	}
 	return fc, nil
@@ -18060,136 +18068,6 @@ func (ec *executionContext) fieldContext_OperationalNeed_modifiedDts(ctx context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _OperationalNeeds_needs(ctx context.Context, field graphql.CollectedField, obj *model.OperationalNeeds) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_OperationalNeeds_needs(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Needs, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.OperationalNeed)
-	fc.Result = res
-	return ec.marshalNOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_OperationalNeeds_needs(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "OperationalNeeds",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalNeed_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalNeed_needed(ctx, field)
-			case "solutions":
-				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
-			case "key":
-				return ec.fieldContext_OperationalNeed_key(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalNeed_name(ctx, field)
-			case "nameOther":
-				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _OperationalNeeds_possibleNeeds(ctx context.Context, field graphql.CollectedField, obj *model.OperationalNeeds) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_OperationalNeeds_possibleNeeds(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.PossibleNeeds, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.PossibleOperationalNeed)
-	fc.Result = res
-	return ec.marshalNPossibleOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalNeedᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_OperationalNeeds_possibleNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "OperationalNeeds",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PossibleOperationalNeed_id(ctx, field)
-			case "possibleSolutions":
-				return ec.fieldContext_PossibleOperationalNeed_possibleSolutions(ctx, field)
-			case "name":
-				return ec.fieldContext_PossibleOperationalNeed_name(ctx, field)
-			case "key":
-				return ec.fieldContext_PossibleOperationalNeed_key(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PossibleOperationalNeed_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PossibleOperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PossibleOperationalNeed_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PossibleOperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalNeed", field.Name)
 		},
 	}
 	return fc, nil
@@ -41867,6 +41745,68 @@ func (ec *executionContext) fieldContext_Query_auditChanges(ctx context.Context,
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_possibleOperationalNeeds(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_possibleOperationalNeeds(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().PossibleOperationalNeeds(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PossibleOperationalNeed)
+	fc.Result = res
+	return ec.marshalNPossibleOperationalNeed2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalNeedᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_possibleOperationalNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PossibleOperationalNeed_id(ctx, field)
+			case "possibleSolutions":
+				return ec.fieldContext_PossibleOperationalNeed_possibleSolutions(ctx, field)
+			case "name":
+				return ec.fieldContext_PossibleOperationalNeed_name(ctx, field)
+			case "key":
+				return ec.fieldContext_PossibleOperationalNeed_key(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PossibleOperationalNeed_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PossibleOperationalNeed_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PossibleOperationalNeed_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PossibleOperationalNeed_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalNeed", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -45385,6 +45325,9 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._ModelPlan_operationalNeeds(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -45862,41 +45805,6 @@ func (ec *executionContext) _OperationalNeed(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._OperationalNeed_modifiedDts(ctx, field, obj)
 
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
-var operationalNeedsImplementors = []string{"OperationalNeeds"}
-
-func (ec *executionContext) _OperationalNeeds(ctx context.Context, sel ast.SelectionSet, obj *model.OperationalNeeds) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, operationalNeedsImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("OperationalNeeds")
-		case "needs":
-
-			out.Values[i] = ec._OperationalNeeds_needs(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "possibleNeeds":
-
-			out.Values[i] = ec._OperationalNeeds_possibleNeeds(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -50086,6 +49994,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_auditChanges(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "possibleOperationalNeeds":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_possibleOperationalNeeds(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -59457,13 +59388,6 @@ func (ec *executionContext) marshalOOperationalNeedKey2ᚖgithubᚗcomᚋcmsgov�
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
-}
-
-func (ec *executionContext) marshalOOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx context.Context, sel ast.SelectionSet, v *model.OperationalNeeds) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._OperationalNeeds(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOOperationalSolutionKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx context.Context, v interface{}) (*models.OperationalSolutionKey, error) {

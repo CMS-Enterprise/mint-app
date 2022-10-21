@@ -37,11 +37,6 @@ type NDAInfo struct {
 	AgreedDts *time.Time `json:"agreedDts"`
 }
 
-type OperationalNeeds struct {
-	Needs         []*models.OperationalNeed         `json:"needs"`
-	PossibleNeeds []*models.PossibleOperationalNeed `json:"possibleNeeds"`
-}
-
 type OperationalSolutions struct {
 	Solutions         []*models.OperationalSolution         `json:"solutions"`
 	PossibleSolutions []*models.PossibleOperationalSolution `json:"possibleSolutions"`

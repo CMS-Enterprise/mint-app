@@ -130,9 +130,9 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 }
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
-func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) (*model.OperationalNeeds, error) {
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedsGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -910,6 +910,12 @@ func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNee
 func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey, r.store)
+}
+
+// PossibleOperationalNeeds is the resolver for the possibleOperationalNeeds field.
+func (r *queryResolver) PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalNeedCollectionGet(logger, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

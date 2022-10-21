@@ -66,13 +66,9 @@ type ModelPlan {
   crTdls: [PlanCrTdl!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: OperationalNeeds
+  operationalNeeds: [OperationalNeed!]!
 }
 
-type OperationalNeeds {
-  needs: [OperationalNeed!]!
-  possibleNeeds: [PossibleOperationalNeed!]!
-}
 type OperationalSolutions {
   solutions: [OperationalSolution!]!
   possibleSolutions: [PossibleOperationalSolution!]!
@@ -1474,6 +1470,7 @@ type Query {
   crTdl(id: UUID!): PlanCrTdl!
   operationalSolutions(operationalNeedID: UUID!): OperationalSolutions!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
+  possibleOperationalNeeds: [PossibleOperationalNeed!]!
 }
 
 """
