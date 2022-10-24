@@ -14,7 +14,10 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
 
   useEffect(() => {
     if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {
-      history.push('/pre-decisional-notice');
+      history.push({
+        pathname: '/pre-decisional-notice',
+        state: { nextState: pathname !== '/pre-decisional-notice' && pathname }
+      });
     }
   }, [pathname, history, user?.acceptedNDA]);
 
