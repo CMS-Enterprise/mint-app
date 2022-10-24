@@ -34,3 +34,6 @@ ADD CONSTRAINT unique_need_name_other_per_plan UNIQUE (model_plan_id, name_other
 
 ALTER TABLE operational_need
 ADD CONSTRAINT need_type_null_if_other CHECK ((need_type IS NULL OR name_other IS NULL) AND NOT (need_type IS NULL AND name_other IS NULL) );
+
+
+SELECT audit.AUDIT_TABLE('public', 'operational_need', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
