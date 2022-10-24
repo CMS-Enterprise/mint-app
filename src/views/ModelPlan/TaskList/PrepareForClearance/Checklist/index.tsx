@@ -39,18 +39,19 @@ import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 // Initial form values and types for each task-list clearance checkbox
-const initialClearanceValues = {
-  id: '',
-  readyForClearanceBy: null,
-  readyForClearanceDts: null,
-  status: TaskStatus.READY
-};
 interface ClearanceFormValues {
   id: string;
   readyForClearanceBy: string | null;
   readyForClearanceDts: string | null;
   status: TaskStatus;
 }
+
+const initialClearanceFormValues = {
+  id: '',
+  readyForClearanceBy: null,
+  readyForClearanceDts: null,
+  status: TaskStatus.READY
+};
 
 export type ClearanceStatusesModelPlanFormType = {
   basics: ClearanceFormValues;
@@ -61,13 +62,13 @@ export type ClearanceStatusesModelPlanFormType = {
   payments: ClearanceFormValues;
 };
 
-const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormType = {
-  basics: { ...initialClearanceValues },
-  generalCharacteristics: { ...initialClearanceValues },
-  participantsAndProviders: { ...initialClearanceValues },
-  beneficiaries: { ...initialClearanceValues },
-  opsEvalAndLearning: { ...initialClearanceValues },
-  payments: { ...initialClearanceValues }
+export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormType = {
+  basics: { ...initialClearanceFormValues },
+  generalCharacteristics: { ...initialClearanceFormValues },
+  participantsAndProviders: { ...initialClearanceFormValues },
+  beneficiaries: { ...initialClearanceFormValues },
+  opsEvalAndLearning: { ...initialClearanceFormValues },
+  payments: { ...initialClearanceFormValues }
 };
 
 // Function to convert any statuses that are READY, as it's not allowed in mutation
@@ -364,14 +365,17 @@ type SectionClearanceLabelProps = {
 };
 
 // Label to render who marked readyForClearance and when
-const SectionClearanceLabel = ({
+export const SectionClearanceLabel = ({
   className,
   readyForClearanceBy,
   readyForClearanceDts
 }: SectionClearanceLabelProps): JSX.Element => {
   const { t } = useTranslation('prepareForClearance');
   return (
-    <p className={classNames(className, 'margin-left-4 text-base margin-y-0')}>
+    <p
+      data-testid="clearance-label"
+      className={classNames(className, 'margin-left-4 text-base margin-y-0')}
+    >
       {t('markedAsReady', {
         readyForClearanceBy,
         readyForClearanceDts: formatDate(readyForClearanceDts, 'MM/d/yyyy')

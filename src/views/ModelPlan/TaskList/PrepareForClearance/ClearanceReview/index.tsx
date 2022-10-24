@@ -209,7 +209,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
         scroll
         closeModal={() => setModalOpen(false)}
       >
-        <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-0">
+        <PageHeading
+          headingLevel="h2"
+          className="margin-top-0 margin-bottom-0"
+          data-testid="clearance-modal-header"
+        >
           {!locked ? p('modal.heading') : i('modal.heading')}
         </PageHeading>
         <p className="margin-bottom-3">
@@ -299,6 +303,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
           {!loading && !error && (
             <Button
               type="button"
+              data-testid="modify-task-list-for-clearance"
               className="usa-button usa-button--unstyled display-flex"
               onClick={() => {
                 if (taskListLocked || readyForClearance) {
