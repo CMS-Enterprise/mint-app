@@ -294,7 +294,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             >
               {t('back')}
             </Button>
-            <Button type="submit" onClick={() => handleFormSubmit(section)}>
+            <Button
+              type="submit"
+              data-testid="mark-task-list-for-clearance"
+              onClick={() => handleFormSubmit(section)}
+            >
               {p('markAsReady')}
             </Button>
           </div>

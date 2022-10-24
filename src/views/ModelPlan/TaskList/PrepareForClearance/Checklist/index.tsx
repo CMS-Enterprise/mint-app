@@ -312,6 +312,7 @@ const PrepareForClearanceCheckList = ({
                             <Grid tablet={{ col: 8 }}>
                               {/* Need to pass in section ID to update readyForClearance state on next route */}
                               <UswdsReactLink
+                                data-testid={`clearance-${section}`}
                                 to={`/models/${modelID}/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
                                 className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                               >
@@ -335,6 +336,7 @@ const PrepareForClearanceCheckList = ({
                     <Button
                       className="margin-top-4"
                       type="submit"
+                      data-testid="update-clearance"
                       onClick={() => setErrors({})}
                     >
                       {t('update')}
@@ -342,6 +344,7 @@ const PrepareForClearanceCheckList = ({
                   </div>
                   <Button
                     type="button"
+                    data-testid="dont-update-clearance"
                     className="usa-button usa-button--unstyled display-flex"
                     onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >

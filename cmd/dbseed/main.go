@@ -92,14 +92,15 @@ func seedData(config *viper.Viper) {
 	// Seed a plan with some information already in it
 	planWithBasics := createModelPlan(store, logger, "Plan with Basics", "MINT")
 	updatePlanBasics(store, logger, planWithBasics, map[string]interface{}{
-		"modelType":     models.MTVoluntary,
-		"goal":          "Some goal",
-		"cmsCenters":    []string{"CMMI", "OTHER"},
-		"cmsOther":      "SOME OTHER CMS CENTER",
-		"cmmiGroups":    []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		"completeICIP":  "2020-05-13T20:47:50.12Z",
-		"phasedIn":      true,
-		"highLevelNote": "Some high level note",
+		"modelType":       models.MTVoluntary,
+		"goal":            "Some goal",
+		"cmsCenters":      []string{"CMMI", "OTHER"},
+		"cmsOther":        "SOME OTHER CMS CENTER",
+		"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+		"completeICIP":    "2020-05-13T20:47:50.12Z",
+		"phasedIn":        true,
+		"clearanceStarts": time.Now(),
+		"highLevelNote":   "Some high level note",
 	})
 
 	// Seed a plan with collaborators
