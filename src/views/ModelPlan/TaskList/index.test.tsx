@@ -26,6 +26,8 @@ describe('The Model Plan Task List', () => {
     basics: {
       id: 'adsf',
       modifiedDts: null,
+      clearanceStarts: '2022-05-12T15:01:39.190679Z',
+      readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
       status: 'READY'
     },
     opsEvalAndLearning: [] as any,
@@ -33,6 +35,7 @@ describe('The Model Plan Task List', () => {
     participantsAndProviders: [] as any,
     beneficiaries: [] as any,
     itTools: [] as any,
+    prepareForClearance: [] as any,
     payments: [] as any,
     crTdls: [] as any,
     documents: [

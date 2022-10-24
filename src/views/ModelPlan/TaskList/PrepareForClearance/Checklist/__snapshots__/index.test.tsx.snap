@@ -110,6 +110,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
             >
               <a
                 class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                data-testid="clearance-basics"
                 href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/basics/"
               >
                 Review model basics
@@ -160,6 +161,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
             >
               <a
                 class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                data-testid="clearance-generalCharacteristics"
                 href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/characteristics/"
               >
                 Review general characteristics
@@ -210,6 +212,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
             >
               <a
                 class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                data-testid="clearance-participantsAndProviders"
                 href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/participants-and-providers/"
               >
                 Review participants and providers
@@ -260,6 +263,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
             >
               <a
                 class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                data-testid="clearance-beneficiaries"
                 href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/beneficiaries/"
               >
                 Review beneficiaries
@@ -310,6 +314,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
             >
               <a
                 class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                data-testid="clearance-opsEvalAndLearning"
                 href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/ops-eval-and-learning/"
               >
                 Review operations, evaluation, and learning
@@ -360,6 +365,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
             >
               <a
                 class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                data-testid="clearance-payments"
                 href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/payment/"
               >
                 Review payment
@@ -386,7 +392,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
           </div>
           <button
             class="usa-button margin-top-4"
-            data-testid="button"
+            data-testid="update-clearance"
             type="submit"
           >
             Update section statuses
@@ -394,7 +400,7 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
         </div>
         <button
           class="usa-button usa-button usa-button--unstyled display-flex"
-          data-testid="button"
+          data-testid="dont-update-clearance"
           type="button"
         >
           <svg

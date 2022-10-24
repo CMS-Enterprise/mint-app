@@ -118,7 +118,7 @@ exports[`ClearanceReview component matches snapshot 1`] = `
           </button>
           <button
             class="usa-button"
-            data-testid="button"
+            data-testid="mark-task-list-for-clearance"
             type="submit"
           >
             Mark as ready for clearance
