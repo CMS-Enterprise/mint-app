@@ -383,7 +383,7 @@ const ReadOnly = () => {
         )}
       </SectionWrapper>
 
-      <SectionWrapper className="model-plan__body-content">
+      <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
           <Grid row gap>
             {!isMobile && (
