@@ -49,6 +49,7 @@ import SubscriptionHandler from 'views/SubscriptionHandler';
 import SubscriptionWrapper from 'views/SubscriptionWrapper';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
+import UnfollowWrapper from 'views/Unfollow';
 import UserInfo from 'views/User';
 import UserInfoWrapper from 'views/UserInfoWrapper';
 
@@ -206,17 +207,19 @@ const App = () => {
                 <FlagsWrapper>
                   <UserInfoWrapper>
                     <NDAWrapper>
-                      <ModelAccessWrapper>
-                        <TimeOutWrapper>
-                          <NavContextProvider>
-                            <PageWrapper>
-                              <Header />
-                              <AppRoutes />
-                              <Footer />
-                            </PageWrapper>
-                          </NavContextProvider>
-                        </TimeOutWrapper>
-                      </ModelAccessWrapper>
+                      <UnfollowWrapper>
+                        <ModelAccessWrapper>
+                          <TimeOutWrapper>
+                            <NavContextProvider>
+                              <PageWrapper>
+                                <Header />
+                                <AppRoutes />
+                                <Footer />
+                              </PageWrapper>
+                            </NavContextProvider>
+                          </TimeOutWrapper>
+                        </ModelAccessWrapper>
+                      </UnfollowWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>
                 </FlagsWrapper>
