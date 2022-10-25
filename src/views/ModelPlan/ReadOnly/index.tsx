@@ -30,7 +30,8 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
-  GetModelSummary_modelPlan as GetModelSummaryTypes
+  GetModelSummary_modelPlan as GetModelSummaryTypes,
+  GetModelSummary_modelPlan_crTdls as CRTDLsTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
@@ -48,6 +49,7 @@ import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
+import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
 import ReadOnlyPayments from './Payments';
@@ -139,7 +141,8 @@ const ReadOnly = () => {
     basics,
     generalCharacteristics,
     collaborators,
-    isCollaborator
+    isCollaborator,
+    crTdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
   const editAccess: boolean = isCollaborator || isAssessment(groups);
@@ -167,6 +170,16 @@ const ReadOnly = () => {
           : ', '
       }`;
     });
+
+  const formattedCrTdls = (items: CRTDLsTypes[]) => {
+    const idNumbers = items.map(item => item.idNumber);
+    if (idNumbers.length > 3) {
+      return `${idNumbers.slice(0, 3).join(', ')} +${idNumbers.length - 3} ${t(
+        'more'
+      )}`;
+    }
+    return idNumbers.join(', ');
+  };
 
   const subComponents: subComponentsProps = {
     'model-basics': {
@@ -211,7 +224,7 @@ const ReadOnly = () => {
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
-      component: <h1>crsAndTdls</h1>
+      component: <ReadOnlyCRTDLs modelID={modelID} />
     }
   };
 
@@ -352,7 +365,9 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0 "
-                  term={t('noAnswer.noneEntered')}
+                  term={
+                    crTdls ? formattedCrTdls(crTdls) : t('noAnswer.noneEntered')
+                  }
                 />
               </Grid>
             </Grid>
@@ -402,20 +417,28 @@ const ReadOnly = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    <Grid desktop={{ col: subinfo === 'documents' ? 12 : 8 }}>
+                    <Grid
+                      desktop={{
+                        col:
+                          subinfo === 'documents' || subinfo === 'crs-and-tdl'
+                            ? 12
+                            : 8
+                      }}
+                    >
                       {subComponent.component}
                     </Grid>
                     {/* Contact info sidebar */}
-                    <Grid
-                      desktop={{ col: 4 }}
-                      className={classnames({
-                        'sticky-nav': !isMobile,
-                        'sticky-nav__collaborator': editAccess,
-                        'desktop:display-none': subinfo === 'documents'
-                      })}
-                    >
-                      <ContactInfo modelID={modelID} />
-                    </Grid>
+                    {subinfo !== 'documents' && subinfo !== 'crs-and-tdl' && (
+                      <Grid
+                        desktop={{ col: 4 }}
+                        className={classnames({
+                          'sticky-nav': !isMobile,
+                          'sticky-nav__collaborator': editAccess
+                        })}
+                      >
+                        <ContactInfo modelID={modelID} />
+                      </Grid>
+                    )}
                   </Grid>
                 </GridContainer>
               </div>

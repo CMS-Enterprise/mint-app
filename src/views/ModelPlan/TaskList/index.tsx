@@ -493,7 +493,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
           >
             {crTdls.map(
               (crtdl, index) =>
-                index < 2 &&
+                index < 3 &&
                 `${crtdl.idNumber}${index !== crTdls.length - 1 ? ',' : ''} `
             )}
             {crTdls.length > 3 &&

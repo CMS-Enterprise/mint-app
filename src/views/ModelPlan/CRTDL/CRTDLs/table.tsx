@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
@@ -25,10 +26,12 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
+import { isAssessment } from 'utils/user';
 
 type CRTDLTableProps = {
   hiddenColumns?: string[];
   modelID: string;
+  readOnly?: boolean;
   setCRTDLMessage: (value: string) => void;
   setCRTDLStatus: (value: CRTDLStatusType) => void;
 };
@@ -38,6 +41,7 @@ type CRTDLStatusType = 'success' | 'error';
 const CRTDLTable = ({
   hiddenColumns,
   modelID,
+  readOnly,
   setCRTDLMessage,
   setCRTDLStatus
 }: CRTDLTableProps) => {
@@ -56,6 +60,10 @@ const CRTDLTable = ({
   const crtdls = (data?.modelPlan?.crTdls ?? []) as CDTRLType[];
 
   const modelName = data?.modelPlan.modelName;
+
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
 
   if (loading) {
     return <PageLoading />;
@@ -85,6 +93,8 @@ const CRTDLTable = ({
       refetch={refetchCRTDLs}
       setCRTDLMessage={setCRTDLMessage}
       setCRTDLStatus={setCRTDLStatus}
+      readOnly={readOnly}
+      hasEditAccess={hasEditAccess}
     />
   );
 };
@@ -99,6 +109,8 @@ type TableProps = {
   refetch: () => any | undefined;
   setCRTDLMessage: (value: string) => void;
   setCRTDLStatus: (value: CRTDLStatusType) => void;
+  readOnly?: boolean;
+  hasEditAccess?: boolean;
 };
 
 const Table = ({
@@ -108,7 +120,9 @@ const Table = ({
   hiddenColumns,
   refetch,
   setCRTDLMessage,
-  setCRTDLStatus
+  setCRTDLStatus,
+  readOnly,
+  hasEditAccess
 }: TableProps) => {
   const { t } = useTranslation('crtdl');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -143,6 +157,7 @@ const Table = ({
             setCRTDLStatus('success');
             refetch();
           }
+          setModalOpen(false);
         })
         .catch(() => {
           setCRTDLMessage(
@@ -210,7 +225,9 @@ const Table = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${row.original.id}`}
+                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${
+                  row.original.id
+                }${readOnly ? '#read-only' : ''}`}
                 className="margin-right-2"
               >
                 {t('crtdlsTable.edit')}
@@ -232,7 +249,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, modelID]);
+  }, [t, modelID, readOnly]);
 
   const {
     getTableProps,
@@ -266,7 +283,8 @@ const Table = ({
       autoResetPage: false,
       initialState: {
         sortBy: useMemo(() => [{ id: 'idNumber', asc: true }], []),
-        pageIndex: 0
+        pageIndex: 0,
+        hiddenColumns: hasEditAccess ? [] : ['id']
       }
     },
     useFilters,

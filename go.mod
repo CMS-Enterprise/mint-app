@@ -33,10 +33,7 @@ require (
 
 require github.com/gorilla/websocket v1.5.0
 
-require (
-	github.com/xhit/go-simple-mail/v2 v2.12.0
-	gopkg.in/yaml.v3 v3.0.1
-)
+require github.com/xhit/go-simple-mail/v2 v2.12.0
 
 require github.com/contribsys/faktory v1.6.0
 
@@ -104,4 +101,5 @@ require (
 	gopkg.in/launchdarkly/go-sdk-events.v1 v1.1.1 // indirect
 	gopkg.in/launchdarkly/go-server-sdk-evaluation.v1 v1.5.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -2,27 +2,25 @@ package oddmail
 
 import (
 	"crypto/tls"
-	"io/ioutil"
-	"path/filepath"
 	"time"
-
-	"gopkg.in/yaml.v3"
 
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
 // GoSimpleMailServiceConfig is a configuration structure to define the behavior of a GoSimpleMailService
 type GoSimpleMailServiceConfig struct {
-	Helo           string          `yaml:"helo"`
-	Host           string          `yaml:"host"`
-	Port           int             `yaml:"port"`
-	Authentication mail.AuthType   `yaml:"authentication"`
-	Username       string          `yaml:"username"`
-	Password       string          `yaml:"password"`
-	Encryption     mail.Encryption `yaml:"encryption"`
-	ConnectTimeout time.Duration   `yaml:"connectTimeout"`
-	SendTimeout    time.Duration   `yaml:"sendTimeout"`
-	KeepAlive      bool            `yaml:"keepAlive"`
+	Helo           string
+	Host           string
+	ClientAddress  string
+	Port           int
+	Authentication mail.AuthType
+	DefaultSender  string
+	Username       string
+	Password       string
+	Encryption     mail.Encryption
+	ConnectTimeout time.Duration
+	SendTimeout    time.Duration
+	KeepAlive      bool
 	TLSConfig      *tls.Config
 }
 
@@ -36,6 +34,16 @@ func (g *GoSimpleMailServiceConfig) GetHost() string {
 	return g.Host
 }
 
+// GetHostName returns the HostName configuration
+func (g *GoSimpleMailServiceConfig) GetHostName() string {
+	return g.Host
+}
+
+// GetClientAddress returns the ClientAddress configuration
+func (g *GoSimpleMailServiceConfig) GetClientAddress() string {
+	return g.ClientAddress
+}
+
 // GetPort returns Port configuration
 func (g *GoSimpleMailServiceConfig) GetPort() int {
 	return g.Port
@@ -44,6 +52,11 @@ func (g *GoSimpleMailServiceConfig) GetPort() int {
 // GetAuthentication returns the Authentication configuration
 func (g *GoSimpleMailServiceConfig) GetAuthentication() mail.AuthType {
 	return g.Authentication
+}
+
+// GetDefaultSender returns the DefaultSender configuration
+func (g *GoSimpleMailServiceConfig) GetDefaultSender() string {
+	return g.DefaultSender
 }
 
 // GetUsername returns the Username configuration
@@ -79,22 +92,4 @@ func (g *GoSimpleMailServiceConfig) GetKeepAlive() bool {
 // GetTLSConfig returns the TLSConfig configuration
 func (g *GoSimpleMailServiceConfig) GetTLSConfig() *tls.Config {
 	return g.TLSConfig
-}
-
-// LoadYAML loads configuration from a YAML file
-func (g *GoSimpleMailServiceConfig) LoadYAML(filePath string) error {
-	yamlFile, err := ioutil.ReadFile(filepath.Clean(filePath))
-	if err != nil {
-		return err
-	}
-
-	var loadConfig GoSimpleMailServiceConfig
-	err = yaml.Unmarshal(yamlFile, &loadConfig)
-	if err != nil {
-		return err
-	}
-
-	*g = loadConfig
-
-	return nil
 }
