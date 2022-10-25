@@ -103,13 +103,15 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
         });
     }
   }, [
+    error,
+    h,
     history,
     modelIDToRemove,
+    modelName,
+    pathname,
     removeMutate,
     showMessageOnNextPage,
-    t,
-    pathname,
-    modelName
+    t
   ]);
 
   return <>{children}</>;
