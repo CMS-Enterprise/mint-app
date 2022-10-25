@@ -40,7 +40,6 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
   const modelName = data?.modelPlan.modelName;
 
   useEffect(() => {
-    console.log(pathname);
     if (pathname === '/unfollow/' && modelName) {
       removeMutate({
         variables: {

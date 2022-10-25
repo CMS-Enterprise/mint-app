@@ -19,51 +19,20 @@ describe('Email Unfollow Link', () => {
       .click();
 
     cy.get('#favorite-table').within(() => {
-      cy.contains('Empty Plan');
+      cy.contains('Empty Plan').then($el => {
+        const modelID = $el[0].pathname.replace(
+          /.*models\/(.*)\/read.*/g,
+          '$1'
+        );
+
+        cy.visit(`/unfollow/?modelID=${modelID}`);
+      });
     });
 
-    cy.visit('/unfollow/?modelID=75d7cfc7-cff5-4238-86ed-997a50f27908');
+    cy.url().should('include', '/models');
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\//);
-    });
+    cy.get('#favorite-table').should('not.exist');
 
-    // cy.clickPlanTableByName('Empty Plan');
-    // cy.contains('a', 'Edit team').click();
-
-    // cy.contains('h1', 'Add model team members');
-
-    // cy.get('table').within(() => {
-    //   cy.get('thead').within(() => {
-    //     cy.contains('th', 'Name');
-    //     cy.contains('th', 'Role');
-    //     cy.contains('th', 'Date added');
-    //     cy.contains('th', 'Actions');
-    //   });
-
-    //   cy.get('tbody').within(() => {
-    //     cy.contains('th', 'mint Doe');
-    //     cy.contains('td', 'Model Lead');
-    //   });
-    // });
-
-    // cy.contains('a', 'Add team member').click();
-
-    // cy.get('input')
-    //   .type('Jerry{downArrow}{enter}')
-    //   .should('have.value', 'Jerry Seinfeld, SF13');
-
-    // cy.contains('button', 'Add team member').should('be.disabled');
-
-    // cy.get('select').select('Evaluation').should('have.value', 'EVALUATION');
-
-    // cy.contains('button', 'Add team member').click();
-
-    // cy.get('table').within(() => {
-    //   cy.get('tbody').within(() => {
-    //     cy.contains('th', 'Jerry Seinfeld');
-    //     cy.contains('td', 'Evaluation');
-    //   });
-    // });
+    cy.get('[data-testid="mandatory-fields-alert"]').contains('Empty Plan');
   });
 });
