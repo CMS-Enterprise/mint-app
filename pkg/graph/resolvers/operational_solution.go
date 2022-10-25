@@ -24,7 +24,6 @@ func OperationaSolutionsGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid
 		return nil, err
 	}
 	opSols.PossibleSolutions = posSols
-	// result, err := store.OperationalNeedGetByModelPlanID(logger,modelPlanID);
 	return &opSols, nil
 }
 
