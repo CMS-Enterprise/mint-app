@@ -46,7 +46,7 @@ func NewServer(config *viper.Viper) *Server {
 	r := mux.NewRouter()
 
 	// set up server dependencies
-	clientAddress := config.GetString("CLIENT_ADDRESS")
+	clientAddress := config.GetString(appconfig.ClientAddressKey)
 
 	s := &Server{
 		router:      r,

@@ -4,6 +4,9 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -11,16 +14,73 @@ import (
 )
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
-func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
+func CreatePlanCollaborator(
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	input *model.PlanCollaboratorCreateInput,
+	principal authentication.Principal,
+	store *storage.Store) (*models.PlanCollaborator, error) {
 	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
-
 	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
-	return retCollaborator, err
+	if err != nil {
+		return nil, err
+	}
+
+	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+	if err != nil {
+		return nil, err
+	}
+
+	return retCollaborator, nil
+}
+
+func sendCollaboratorAddedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	receiverEmail string,
+	modelPlan *models.ModelPlan,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.AddedAsCollaboratorTemplateName)
+	if err != nil {
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.AddedAsCollaboratorSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.AddedAsCollaboratorBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelName:     modelPlan.ModelName,
+		ModelID:       modelPlan.GetModelPlanID().String(),
+	})
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // UpdatePlanCollaborator implements resolver logic to update a plan collaborator

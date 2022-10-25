@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
@@ -61,6 +61,7 @@ const AddCRTDL = () => {
   const formikRef = useRef<FormikProps<CRTDLInputType>>(null);
 
   const history = useHistory();
+  const readOnly = useLocation().hash === '#read-only';
 
   const { data, loading, error } = useQuery<GetCRTDLType, GetCRTDLVariables>(
     GetCRTDL,
@@ -94,7 +95,11 @@ const AddCRTDL = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/${modelID}/cr-and-tdl`);
+            if (readOnly) {
+              history.push(`/models/${modelID}/read-only/crs-and-tdl`);
+            } else {
+              history.push(`/models/${modelID}/task-list/`);
+            }
           }
         })
         .catch(errors => {
@@ -324,7 +329,13 @@ const AddCRTDL = () => {
               );
             }}
           </Formik>
-          <UswdsReactLink to={`/models/${modelID}/cr-and-tdl`}>
+          <UswdsReactLink
+            to={
+              readOnly
+                ? `/models/${modelID}/read-only/crs-and-tdl`
+                : `/models/${modelID}/cr-and-tdl`
+            }
+          >
             <span>&larr; </span>{' '}
             {!crtdlID ? t('addRedirect') : t('updateRedirect')}
           </UswdsReactLink>

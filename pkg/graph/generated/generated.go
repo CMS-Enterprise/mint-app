@@ -138,6 +138,7 @@ type ComplexityRoot struct {
 		OpsEvalAndLearning       func(childComplexity int) int
 		ParticipantsAndProviders func(childComplexity int) int
 		Payments                 func(childComplexity int) int
+		PrepareForClearance      func(childComplexity int) int
 		Status                   func(childComplexity int) int
 	}
 
@@ -716,6 +717,11 @@ type ComplexityRoot struct {
 		WillRecoverPaymentsNote                           func(childComplexity int) int
 	}
 
+	PrepareForClearance struct {
+		LatestClearanceDts func(childComplexity int) int
+		Status             func(childComplexity int) int
+	}
+
 	Query struct {
 		AuditChanges             func(childComplexity int, tableName string, primaryKey uuid.UUID) int
 		CedarPersonsByCommonName func(childComplexity int, commonName string) int
@@ -774,6 +780,7 @@ type ModelPlanResolver interface {
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
+	PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error)
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 }
 type MutationResolver interface {
@@ -1410,6 +1417,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.Payments(childComplexity), true
+
+	case "ModelPlan.prepareForClearance":
+		if e.complexity.ModelPlan.PrepareForClearance == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.PrepareForClearance(childComplexity), true
 
 	case "ModelPlan.status":
 		if e.complexity.ModelPlan.Status == nil {
@@ -5294,6 +5308,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.WillRecoverPaymentsNote(childComplexity), true
 
+	case "PrepareForClearance.latestClearanceDts":
+		if e.complexity.PrepareForClearance.LatestClearanceDts == nil {
+			break
+		}
+
+		return e.complexity.PrepareForClearance.LatestClearanceDts(childComplexity), true
+
+	case "PrepareForClearance.status":
+		if e.complexity.PrepareForClearance.Status == nil {
+			break
+		}
+
+		return e.complexity.PrepareForClearance.Status(childComplexity), true
+
 	case "Query.auditChanges":
 		if e.complexity.Query.AuditChanges == nil {
 			break
@@ -5673,6 +5701,7 @@ type ModelPlan {
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
 }
 
@@ -6967,6 +6996,10 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     note: String
 }
 
+type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}
 
 type AuditChange {
   id: Int!
@@ -7109,6 +7142,14 @@ enum TaskStatus {
   READY_FOR_REVIEW
   READY_FOR_CLEARANCE
 }
+
+enum PrepareForClearanceStatus {
+  CANNOT_START
+  READY
+  IN_PROGRESS
+  READY_FOR_CLEARANCE
+}
+
 enum TaskStatusInput {
   IN_PROGRESS
   READY_FOR_REVIEW
@@ -7122,7 +7163,8 @@ enum TaskListSection {
   BENEFICIARIES,
   OPERATIONS_EVALUATION_AND_LEARNING,
   PAYMENT,
-  IT_TOOLS
+  IT_TOOLS,
+  PREPARE_FOR_CLEARANCE
 }
 
 enum TeamRole {
@@ -12131,6 +12173,56 @@ func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, f
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_prepareForClearance(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().PrepareForClearance(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.PrepareForClearance)
+	fc.Result = res
+	return ec.marshalNPrepareForClearance2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearance(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_prepareForClearance(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "status":
+				return ec.fieldContext_PrepareForClearance_status(ctx, field)
+			case "latestClearanceDts":
+				return ec.fieldContext_PrepareForClearance_latestClearanceDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PrepareForClearance", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_nameHistory(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 	if err != nil {
@@ -12291,6 +12383,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -12416,6 +12510,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -36919,6 +37015,91 @@ func (ec *executionContext) fieldContext_PlanPayments_status(ctx context.Context
 	return fc, nil
 }
 
+func (ec *executionContext) _PrepareForClearance_status(ctx context.Context, field graphql.CollectedField, obj *model.PrepareForClearance) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PrepareForClearance_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.PrepareForClearanceStatus)
+	fc.Result = res
+	return ec.marshalNPrepareForClearanceStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearanceStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PrepareForClearance_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PrepareForClearance",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type PrepareForClearanceStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PrepareForClearance_latestClearanceDts(ctx context.Context, field graphql.CollectedField, obj *model.PrepareForClearance) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PrepareForClearance_latestClearanceDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LatestClearanceDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PrepareForClearance_latestClearanceDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PrepareForClearance",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_currentUser(ctx, field)
 	if err != nil {
@@ -37048,6 +37229,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -37242,6 +37425,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -41416,6 +41601,26 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "prepareForClearance":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_prepareForClearance(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "nameHistory":
 			field := field
 
@@ -45314,6 +45519,38 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var prepareForClearanceImplementors = []string{"PrepareForClearance"}
+
+func (ec *executionContext) _PrepareForClearance(ctx context.Context, sel ast.SelectionSet, obj *model.PrepareForClearance) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, prepareForClearanceImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PrepareForClearance")
+		case "status":
+
+			out.Values[i] = ec._PrepareForClearance_status(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "latestClearanceDts":
+
+			out.Values[i] = ec._PrepareForClearance_latestClearanceDts(ctx, field, obj)
+
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -50856,6 +51093,30 @@ func (ec *executionContext) marshalNPpToAdvertiseType2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNPrepareForClearance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearance(ctx context.Context, sel ast.SelectionSet, v model.PrepareForClearance) graphql.Marshaler {
+	return ec._PrepareForClearance(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPrepareForClearance2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearance(ctx context.Context, sel ast.SelectionSet, v *model.PrepareForClearance) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PrepareForClearance(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPrepareForClearanceStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearanceStatus(ctx context.Context, v interface{}) (model.PrepareForClearanceStatus, error) {
+	var res model.PrepareForClearanceStatus
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPrepareForClearanceStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearanceStatus(ctx context.Context, sel ast.SelectionSet, v model.PrepareForClearanceStatus) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, v interface{}) (model.ProviderAddType, error) {

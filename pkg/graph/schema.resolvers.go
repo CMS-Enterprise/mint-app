@@ -116,6 +116,12 @@ func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) (
 	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// PrepareForClearance is the resolver for the prepareForClearance field.
+func (r *modelPlanResolver) PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ReadyForClearanceRead(logger, r.store, obj.ID)
+}
+
 // NameHistory is the resolver for the nameHistory field.
 func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -152,7 +158,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanCollaborator(logger, &input, principal, r.store)
+	return resolvers.CreatePlanCollaborator(logger, r.emailService, r.emailTemplateService, &input, principal, r.store)
 }
 
 // UpdatePlanCollaborator is the resolver for the updatePlanCollaborator field.

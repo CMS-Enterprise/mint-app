@@ -9,6 +9,7 @@ import {
   GetITToolPageTwo_modelPlan_participantsAndProviders as ParticipantsAndProvidersType
 } from 'queries/ITTools/types/GetITToolPageTwo';
 import { PpToAdvertiseType, RecruitmentType } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageTwo from '.';
 
@@ -62,7 +63,7 @@ describe('IT Tools Page two', () => {
       >
         <MockedProvider mocks={itToolsPageTwoMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-two">
-            <ITToolsPageTwo />
+            <ITToolsPageTwo participantsAndProvidersLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -100,7 +101,7 @@ describe('IT Tools Page two', () => {
       >
         <MockedProvider mocks={itToolsPageTwoMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-two">
-            <ITToolsPageTwo />
+            <ITToolsPageTwo participantsAndProvidersLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
