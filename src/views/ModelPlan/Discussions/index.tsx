@@ -242,7 +242,16 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
         {renderType === 'reply' && reply && (
           <div>
             <div className="display-flex">
-              <IconInitial user={reply.createdBy} index={0} />
+              {reply.isAssessment ? (
+                <div className="display-flex flex-align-center">
+                  <AssessmentIcon size={3} />{' '}
+                  <span>
+                    {t('assessment')} | {reply.createdBy}
+                  </span>
+                </div>
+              ) : (
+                <IconInitial user={reply.createdBy} index={0} />
+              )}
               <span className="margin-left-2 margin-top-05 text-base">
                 {getTimeElapsed(reply.createdDts)
                   ? getTimeElapsed(reply.createdDts) + t('ago')
