@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
@@ -25,7 +27,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appses"
 	"github.com/cmsgov/mint-app/pkg/authorization"
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 
@@ -91,25 +92,23 @@ func (s *Server) routes(
 		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
 	}
 
-	// set up Email Client
-	sesConfig := s.NewSESConfig()
-	sesSender := appses.NewSender(sesConfig)
-	emailConfig := s.NewEmailConfig()
-	emailClient, err := email.NewClient(emailConfig, sesSender)
+	// set up Email Template Service
+	emailTemplateService, err := email.NewTemplateServiceImpl()
 	if err != nil {
-		s.logger.Fatal("Failed to create email client", zap.Error(err))
-	}
-	// override email client with local one
-	if s.environment.Local() || s.environment.Test() {
-		localSender := local.NewSender()
-		emailClient, err = email.NewClient(emailConfig, localSender)
-		if err != nil {
-			s.logger.Fatal("Failed to create email client", zap.Error(err))
-		}
+		s.logger.Fatal("Failed to create an email template service", zap.Error(err))
 	}
 
-	if s.environment.Deployed() {
-		s.CheckEmailClient(emailClient)
+	// Set up Oddball email Service
+	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
+	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
+	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
+	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
+	emailServiceConfig.DefaultSender = "no-reply@mint.cms.gov"
+
+	var emailService *oddmail.GoSimpleMailService
+	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
+	if err != nil {
+		s.logger.Fatal("Failed to create an email service", zap.Error(err))
 	}
 
 	// set up S3 client
@@ -157,7 +156,8 @@ func (s *Server) routes(
 			SearchCommonNameContains: cedarLDAPClient.SearchCommonNameContains,
 		},
 		&s3Client,
-		&emailClient,
+		emailService,
+		emailTemplateService,
 		ldClient,
 		s.pubsub,
 	)

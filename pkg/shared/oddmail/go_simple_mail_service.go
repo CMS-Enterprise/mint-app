@@ -83,3 +83,8 @@ func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses
 func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
 	return email.Send(g.smtpClient)
 }
+
+// GetConfig returns this service's configuration
+func (g GoSimpleMailService) GetConfig() EmailServiceConfig {
+	return g.config
+}
