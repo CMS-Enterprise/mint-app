@@ -20,6 +20,7 @@ type UnfollowProps = {
 const UnfollowWrapper = ({ children }: UnfollowProps) => {
   const history = useHistory();
   const { t } = useTranslation('modelPlan');
+  const { t: h } = useTranslation('modelPlanTaskList');
   const { pathname, search } = useLocation();
   const { showMessageOnNextPage } = useMessage();
 
@@ -31,15 +32,33 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
     DeletePlanFavorite
   );
 
-  const { data } = useQuery<GetBasicsType, GetBasicsVariables>(GetBasics, {
-    variables: {
-      id: modelIDToRemove
+  const { data, error } = useQuery<GetBasicsType, GetBasicsVariables>(
+    GetBasics,
+    {
+      variables: {
+        id: modelIDToRemove
+      }
     }
-  });
+  );
 
   const modelName = data?.modelPlan.modelName;
 
   useEffect(() => {
+    if (pathname === '/unfollow/' && error) {
+      showMessageOnNextPage(
+        <Alert
+          type="error"
+          slim
+          data-testid="mandatory-fields-alert"
+          className="margin-y-4"
+        >
+          <span className="mandatory-fields-alert__text">
+            {h('errorHeading')}. {h('errorMessage')}
+          </span>
+        </Alert>
+      );
+      history.push(`/models`);
+    }
     if (pathname === '/unfollow/' && modelName) {
       removeMutate({
         variables: {
