@@ -34,7 +34,7 @@ const Home = () => {
         <>
           <NDABanner collapsable />
           <GridContainer>
-            {message && <Expire delay={4000}>{message}</Expire>}
+            {message}
 
             <Grid>
               <PageHeading>{t('title')}</PageHeading>
