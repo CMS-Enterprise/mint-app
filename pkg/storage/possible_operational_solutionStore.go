@@ -30,7 +30,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.L
 		"need_key": needKey,
 	}
 
-	err = stmt.Select(&posSols, arg) //this returns more than one
+	err = stmt.Select(&posSols, arg) // this returns more than one
 
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(logg
 		"operational_need_id": operationalNeedID,
 	}
 
-	err = stmt.Select(&posSols, arg) //this returns more than one
+	err = stmt.Select(&posSols, arg) // this returns more than one
 
 	if err != nil {
 		return nil, err

@@ -27,7 +27,7 @@ func NewOperationalSolution(createdBy string, operationalNeedID uuid.UUID) *Oper
 
 	return &OperationalSolution{
 		baseStruct:        NewBaseStruct(createdBy),
-		OperationalNeedID: operationalNeedID, //TODO, should this be an embedded struct
+		OperationalNeedID: operationalNeedID, // TODO, should this be an embedded struct. (FUTURE TICKET EASI-2429)
 		Status:            OpSNotStarted,
 	}
 }
@@ -35,7 +35,7 @@ func NewOperationalSolution(createdBy string, operationalNeedID uuid.UUID) *Oper
 // OpSolutionStatus represents the types of OpSolutionStatus types.
 type OpSolutionStatus string
 
-//These are the options for OpSolutionStatus
+// These are the options for OpSolutionStatus
 const (
 	OpSNotStarted OpSolutionStatus = "NOT_STARTED"
 	OpSOnboarding OpSolutionStatus = "ONBOARDING"

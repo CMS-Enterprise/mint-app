@@ -6,7 +6,6 @@ import (
 
 // PossibleOperationalNeed represents the need of a model plan
 type PossibleOperationalNeed struct {
-	// baseStruct //TODO, should we change this to UUID so we can use base struct?
 	ID          int        `json:"id" db:"id"`
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
@@ -20,7 +19,7 @@ type PossibleOperationalNeed struct {
 // OperationalNeedKey represents the types of OperationalNeedKey types.
 type OperationalNeedKey string
 
-//These are the options for OperationalNeedKey
+// These are the options for OperationalNeedKey
 const (
 	OpNKManageCd                    OperationalNeedKey = "MANAGE_CD"
 	OpNKRevColBids                  OperationalNeedKey = "REV_COL_BIDS"

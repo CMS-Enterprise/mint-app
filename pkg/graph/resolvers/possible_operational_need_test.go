@@ -8,6 +8,6 @@ func (suite *ResolverSuite) TestPossibleOperationalNeedCollectionGet() {
 	suite.NotNil(posNeeds)
 	possibleCount := len(posNeeds)
 
-	suite.Greater(possibleCount, 1) //the number of possible needs is determined in the DB. Assert that there is at least more than 1.
+	suite.Greater(possibleCount, 1) // the number of possible needs is determined in the DB. Assert that there is at least more than 1.
 
 }

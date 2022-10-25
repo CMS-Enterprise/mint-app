@@ -6,7 +6,6 @@ import (
 
 // PossibleOperationalSolution represents a possible solution to an Operational Need
 type PossibleOperationalSolution struct {
-	// baseStruct //TODO, should we change this to UUID so we can use base struct?
 	ID          int        `json:"id" db:"id"`
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
@@ -20,7 +19,7 @@ type PossibleOperationalSolution struct {
 // OperationalSolutionKey represents the types of OperationalSolutionKey types.
 type OperationalSolutionKey string
 
-//These are the options for OperationalSolutionKey
+// These are the options for OperationalSolutionKey
 const (
 	OpSKMarx                      OperationalSolutionKey = "MARX"
 	OpSKHpms                      OperationalSolutionKey = "HPMS"
