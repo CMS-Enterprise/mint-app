@@ -5,24 +5,23 @@ import { useMutation, useQuery } from '@apollo/client';
 
 import Alert from 'components/shared/Alert';
 import useMessage from 'hooks/useMessage';
+import GetBasics from 'queries/Basics/GetBasics';
+import {
+  GetBasics as GetBasicsType,
+  GetBasicsVariables
+} from 'queries/Basics/types/GetBasics';
 import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
 import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
-import GetModelPlan from 'queries/GetModelPlan';
-import {
-  GetModelPlan as GetModelPlanType,
-  GetModelPlan_modelPlan as GetModelPlanTypes,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
 
 type UnfollowProps = {
   children: React.ReactNode;
 };
 
 const UnfollowWrapper = ({ children }: UnfollowProps) => {
-  const { pathname, search } = useLocation();
   const history = useHistory();
-  const { showMessageOnNextPage } = useMessage();
   const { t } = useTranslation('modelPlan');
+  const { pathname, search } = useLocation();
+  const { showMessageOnNextPage } = useMessage();
 
   const modelIDToRemove = search
     .replace(/.*modelID=(.*)\/?/g, '$1')
@@ -31,22 +30,17 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
   const [removeMutate] = useMutation<DeletePlanFavoriteVariables>(
     DeletePlanFavorite
   );
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
-    GetModelPlan,
-    {
-      variables: {
-        id: modelIDToRemove
-      }
+
+  const { data } = useQuery<GetBasicsType, GetBasicsVariables>(GetBasics, {
+    variables: {
+      id: modelIDToRemove
     }
-  );
+  });
 
-  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
-
-  const { modelName } = modelPlan;
+  const modelName = data?.modelPlan.modelName;
 
   useEffect(() => {
-    console.log(modelName);
-    if (pathname === '/unfollow/') {
+    if (pathname === '/unfollow/' && modelName) {
       removeMutate({
         variables: {
           modelPlanID: modelIDToRemove
