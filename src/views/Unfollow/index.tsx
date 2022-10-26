@@ -20,7 +20,6 @@ type UnfollowProps = {
 const UnfollowWrapper = ({ children }: UnfollowProps) => {
   const history = useHistory();
   const { t } = useTranslation('modelPlan');
-  const { t: h } = useTranslation('modelPlanTaskList');
   const { pathname, search } = useLocation();
   const { showMessageOnNextPage } = useMessage();
 
@@ -53,7 +52,7 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
           className="margin-y-4"
         >
           <span className="mandatory-fields-alert__text">
-            {h('errorHeading')}. {h('errorMessage')}
+            {t('favorite.error')}
           </span>
         </Alert>
       );
@@ -104,7 +103,6 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
     }
   }, [
     error,
-    h,
     history,
     modelIDToRemove,
     modelName,
