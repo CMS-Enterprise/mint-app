@@ -81,7 +81,11 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         {status && <TaskListStatusTag status={status} />}
       </div>
 
-      <ReadOnlySection heading="Previous Name" list listItems={nameHistory} />
+      <ReadOnlySection
+        heading={t('previousNames')}
+        list
+        listItems={nameHistory}
+      />
 
       <ReadOnlySection
         heading={t('modelCategory')}
