@@ -38,6 +38,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     return <NotFoundPartial />;
   }
 
+  const { nameHistory } = data?.modelPlan || {};
+
   const {
     modelCategory,
     cmsCenters,
@@ -79,7 +81,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         {status && <TaskListStatusTag status={status} />}
       </div>
 
-      {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
+      <ReadOnlySection heading="Previous Name" list listItems={nameHistory} />
 
       <ReadOnlySection
         heading={t('modelCategory')}
