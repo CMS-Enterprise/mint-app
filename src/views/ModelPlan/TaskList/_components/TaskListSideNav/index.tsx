@@ -7,7 +7,9 @@ import { Button } from '@trussworks/react-uswds';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import IconInitial from 'components/shared/IconInitial';
+import useMessage from 'hooks/useMessage';
 import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
@@ -24,6 +26,7 @@ const TaskListSideNav = ({
   const { id: modelID } = modelPlan;
   const history = useHistory();
   const { t } = useTranslation('modelPlanTaskList');
+  const { showMessageOnNextPage } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [update] = useMutation<ArchiveModelPlanVariables>(ArchiveModelPlan);
@@ -37,6 +40,22 @@ const TaskListSideNav = ({
     })
       .then(response => {
         if (!response?.errors) {
+          showMessageOnNextPage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  {t('withdraw_modal.confirmationText_name', {
+                    modelName: modelPlan.modelName
+                  })}
+                </span>
+              </Alert>
+            </>
+          );
           history.push(`/`);
         }
       })
@@ -48,15 +67,17 @@ const TaskListSideNav = ({
   const renderModal = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
+        <PageHeading headingLevel="h2" className="margin-y-0">
           {t('withdraw_modal.header', {
             requestName: modelPlan.modelName
           })}
         </PageHeading>
-        <p>{t('withdraw_modal.warning')}</p>
+        <p className="margin-top-2 margin-bottom-3">
+          {t('withdraw_modal.warning')}
+        </p>
         <Button
           type="button"
-          className="margin-right-4"
+          className="margin-right-4 bg-error"
           onClick={() => archiveModelPlan()}
         >
           {t('withdraw_modal.confirm')}
