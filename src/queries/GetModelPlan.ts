@@ -10,7 +10,9 @@ export default gql`
       status
       basics {
         id
+        clearanceStarts
         modifiedDts
+        readyForClearanceDts
         status
       }
       documents {
@@ -42,6 +44,7 @@ export default gql`
         createdDts
         modifiedBy
         modifiedDts
+        readyForClearanceDts
         status
       }
       participantsAndProviders {
@@ -50,6 +53,7 @@ export default gql`
         createdDts
         modifiedBy
         modifiedDts
+        readyForClearanceDts
         status
       }
       beneficiaries {
@@ -58,6 +62,7 @@ export default gql`
         createdDts
         modifiedBy
         modifiedDts
+        readyForClearanceDts
         status
       }
       opsEvalAndLearning {
@@ -66,6 +71,7 @@ export default gql`
         createdDts
         modifiedBy
         modifiedDts
+        readyForClearanceDts
         status
       }
       payments {
@@ -74,6 +80,7 @@ export default gql`
         createdDts
         modifiedBy
         modifiedDts
+        readyForClearanceDts
         status
       }
       itTools {
@@ -83,6 +90,10 @@ export default gql`
         modifiedBy
         modifiedDts
         status
+      }
+      prepareForClearance {
+        status
+        modifiedDts: latestClearanceDts
       }
     }
   }

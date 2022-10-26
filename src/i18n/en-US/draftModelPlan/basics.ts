@@ -1,5 +1,6 @@
 const basics = {
   heading: 'Model basics',
+  clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
   modelName: 'Model name',
   modelCategory: 'Model category',

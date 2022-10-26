@@ -1,5 +1,6 @@
 const participantsAndProviders = {
   heading: 'Participants and Providers',
+  clearanceHeading: 'Review participants and providers',
   breadcrumb: 'Participants and providers',
   participantsDifferenceHeading:
     'What’s the difference between participants and providers?',

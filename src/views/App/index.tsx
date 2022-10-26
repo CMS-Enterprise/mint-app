@@ -21,6 +21,7 @@ import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
+import ModelInfoWrapper from 'views/ModelInfoWrapper';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -39,6 +40,7 @@ import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
+import PrepareForClearance from 'views/ModelPlan/TaskList/PrepareForClearance';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
@@ -145,6 +147,10 @@ const AppRoutes = () => {
         component={ITTools}
       />
       <SecureRoute
+        path="/models/:modelID/task-list/prepare-for-clearance"
+        component={PrepareForClearance}
+      />
+      <SecureRoute
         path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
       />
@@ -207,15 +213,17 @@ const App = () => {
                   <UserInfoWrapper>
                     <NDAWrapper>
                       <ModelAccessWrapper>
-                        <TimeOutWrapper>
-                          <NavContextProvider>
-                            <PageWrapper>
-                              <Header />
-                              <AppRoutes />
-                              <Footer />
-                            </PageWrapper>
-                          </NavContextProvider>
-                        </TimeOutWrapper>
+                        <ModelInfoWrapper>
+                          <TimeOutWrapper>
+                            <NavContextProvider>
+                              <PageWrapper>
+                                <Header />
+                                <AppRoutes />
+                                <Footer />
+                              </PageWrapper>
+                            </NavContextProvider>
+                          </TimeOutWrapper>
+                        </ModelInfoWrapper>
                       </ModelAccessWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>
