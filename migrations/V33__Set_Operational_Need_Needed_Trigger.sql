@@ -21,26 +21,26 @@ BEGIN
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
     h_changed = (h_new - h_old);
-    CREATE TEMP TABLE NeedConditions AS
+    WITH NeedConditions AS
+    (
         SELECT 
         id,
 	    need_key,
         trigger_col,
         trigger_vals
     FROM public.possible_operational_need
-    WHERE trigger_table = TG_TABLE_NAME::text AND h_changed ?| trigger_col; -- Only get needs where the column has changes
---TODO return if no rows
-
-CREATE TEMP TABLE NeedUpdates AS
+    WHERE trigger_table = TG_TABLE_NAME::text AND h_changed ?| trigger_col -- Only get needs where the column has changes
+    ),
+    NeedUpdates AS
+    (
     SELECT
     id,
     need_key,
     (h_new -> 'model_plan_id')::UUID as model_plan_id,
     h_new -> 'modified_by' as modified_by,
     (h_changed -> trigger_col && trigger_vals) as needed -- This checks if it has values in common, EG overlap
-
-    FROM NeedConditions;
-
+    FROM NeedConditions
+    )
 -- UPDATE based on the above query results 
 UPDATE operational_need
 SET
