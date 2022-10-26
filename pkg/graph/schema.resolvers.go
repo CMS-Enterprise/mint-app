@@ -293,14 +293,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
