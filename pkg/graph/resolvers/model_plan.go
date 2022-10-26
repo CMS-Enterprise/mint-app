@@ -92,6 +92,11 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	if err != nil {
 		return nil, err
 	}
+	//Create default Operational Needs
+	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.ID())
+	if err != nil {
+		return nil, err
+	}
 
 	return createdPlan, err
 }

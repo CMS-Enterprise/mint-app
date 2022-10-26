@@ -66,6 +66,52 @@ type ModelPlan {
   crTdls: [PlanCrTdl!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+}
+
+type OperationalSolutions {
+  solutions: [OperationalSolution!]!
+  possibleSolutions: [PossibleOperationalSolution!]!
+}
+
+type OperationalNeed {
+    id: UUID!
+    modelPlanID: UUID!
+
+    # needType: Int
+    needed: Boolean # if null, it has not been answered
+    solutions: OperationalSolutions!
+
+    key: OperationalNeedKey
+    name: String
+    nameOther: String
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
+type PossibleOperationalNeed {
+    id: Int!
+    possibleSolutions: [PossibleOperationalSolution!]!
+    name: String!
+    key: OperationalNeedKey!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+type PossibleOperationalSolution {
+    id: Int!
+    name: String!
+    key: OperationalSolutionKey!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
 }
 
 """
@@ -1375,6 +1421,38 @@ type AuditChange {
   modifiedDts: Time
 }
 
+
+type OperationalSolution {
+    id: UUID!
+    operationalNeedID: UUID!
+
+    solutionType: Int
+    archived: Boolean!
+    name: String
+    key: OperationalSolutionKey
+    nameOther: String
+    
+    pocName: String     
+    pocEmail: String
+    mustStartDts: Time
+    mustFinishDts: Time
+    status: OpSolutionStatus!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
+input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
+    archived: Boolean
+    pocName: String     
+    pocEmail: String
+    mustStartDts: Time
+    mustFinishDts: Time
+    status: OpSolutionStatus
+}
+
 """
 Query definition for the schema
 """
@@ -1390,7 +1468,9 @@ type Query {
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
   crTdl(id: UUID!): PlanCrTdl!
+  operationalSolutions(operationalNeedID: UUID!): OperationalSolutions!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
+  possibleOperationalNeeds: [PossibleOperationalNeed!]!
 }
 
 """
@@ -1482,6 +1562,24 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
+@hasRole(role: MINT_USER)
+
+addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! 
+@hasRole(role: MINT_USER)
+
+addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
+@hasRole(role: MINT_USER)
+
+updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed! 
+@hasRole(role: MINT_USER)
+
+addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! 
+@hasRole(role: MINT_USER)
+
+addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! 
+@hasRole(role: MINT_USER)
+
+updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution! 
 @hasRole(role: MINT_USER)
 }
 
@@ -2093,6 +2191,83 @@ enum AnticipatedPaymentFrequencyType {
   OTHER
 }
 
+enum OpSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  AT_RISK
+}
+
+enum OperationalNeedKey{
+  MANAGE_CD
+  REV_COL_BIDS
+  UPDATE_CONTRACT
+  ADVERTISE_MODEL
+  COL_REV_SCORE_APP
+  APP_SUPPORT_CON
+  COMM_W_PART
+  MANAGE_PROV_OVERLAP
+  MANAGE_BEN_OVERLAP
+  HELPDESK_SUPPORT
+  IDDOC_SUPPORT
+  ESTABLISH_BENCH
+  PROCESS_PART_APPEALS
+  ACQUIRE_AN_EVAL_CONT
+  DATA_TO_MONITOR
+  DATA_TO_SUPPORT_EVAL
+  CLAIMS_BASED_MEASURES
+  QUALITY_PERFORMANCE_SCORES
+  SEND_REPDATA_TO_PART
+  ACQUIRE_A_LEARN_CONT
+  PART_TO_PART_COLLAB
+  EDUCATE_BENEF
+  ADJUST_FFS_CLAIMS
+  MANAGE_FFS_EXCL_PAYMENTS
+  MAKE_NON_CLAIMS_BASED_PAYMENTS
+  COMPUTE_SHARED_SAVINGS_PAYMENT
+  RECOVER_PAYMENTS
+}
+
+enum OperationalSolutionKey{
+  MARX
+  HPMS
+  SALESFORCE
+  GRANT_SOLUTIONS
+  RFA
+  ARS
+  RMADA
+  OUTLOOK_MAILBOX
+  GOVDELIVERY
+  SALESFORCE_PORTAL
+  MDM
+  CBOSC
+  THROUGH_A_CONTRACTOR
+  ACO_OS
+  ACO_UI
+  INNOVATION
+  IDR
+  CCW
+  MEDICARE_APPEAL_SYSTEM
+  IDOS
+  ISP
+  ANOTHER_CONTRACTOR
+  EXISTING_CMS_DATA_AND_PROCESS
+  NEW_CMMI_PROCESS
+  OTHER_NEW_PROCESS
+  INTERNAL_STAFF
+  CROSS_MODEL_CONTRACT
+  CONNECT
+  OC
+  SHARED_SYSTEMS
+  HIGLAS
+  FFS_COMPETENCY_CENTER
+  APPS
+  IPC
+  MAC
+  RMADA_CONTRACTOR
+}
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives
