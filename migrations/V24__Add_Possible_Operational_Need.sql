@@ -29,15 +29,27 @@ CREATE TYPE OPERATIONAL_NEED_KEY AS ENUM (
     'RECOVER_PAYMENTS'
 );
 
+CREATE TYPE TASK_LIST_SECTION AS ENUM (
+    'MODEL_BASICS',
+    'GENERAL_CHARACTERISTICS',
+    'PARTICIPANTS_AND_PROVIDERS',
+    'BENEFICIARIES',
+    'OPERATIONS_EVALUATION_AND_LEARNING',
+    'PAYMENT',
+    'IT_TOOLS',
+    'PREPARE_FOR_CLEARANCE'
+
+);
+
 CREATE TABLE possible_operational_need (
     id SERIAL PRIMARY KEY NOT NULL, -- instead of UUID
     need_name ZERO_STRING NOT NULL,
     need_key OPERATIONAL_NEED_KEY NOT NULL,
 
-
-    trigger_table TEXT, -- assume public
-    trigger_col TEXT,
-    trigger_vals TEXT[],
+    section TASK_LIST_SECTION NOT NULL,
+    trigger_table TEXT NOT NULL, -- assume public
+    trigger_col TEXT [] NOT NULL,
+    trigger_vals TEXT[] NOT NULL,
 
 
 
