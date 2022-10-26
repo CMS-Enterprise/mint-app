@@ -35,6 +35,11 @@ CREATE TABLE possible_operational_need (
     need_key OPERATIONAL_NEED_KEY NOT NULL,
 
 
+    trigger_table TEXT, -- assume public
+    trigger_col TEXT,
+    trigger_vals TEXT[],
+
+
 
     --META DATA
     created_by EUA_ID NOT NULL,
