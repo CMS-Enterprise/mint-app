@@ -129,6 +129,12 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 	return resolvers.ModelPlanNameHistory(logger, obj.ID, sort, r.store)
 }
 
+// OperationalNeeds is the resolver for the operationalNeeds field.
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -353,6 +359,54 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
+}
+
+// AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
+func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, needed, principal, r.store)
+}
+
+// AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
+func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
+}
+
+// UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
+func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
+}
+
+// AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
+func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionInsertOrUpdate(logger, operationalNeedID, solutionType, changes, principal, r.store)
+}
+
+// AddOrUpdateCustomOperationalSolution is the resolver for the addOrUpdateCustomOperationalSolution field.
+func (r *mutationResolver) AddOrUpdateCustomOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, customSolutionType string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionInsertOrUpdateCustom(logger, operationalNeedID, customSolutionType, changes, principal, r.store)
+}
+
+// UpdateCustomOperationalSolutionByID is the resolver for the updateCustomOperationalSolutionByID field.
+func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Context, id uuid.UUID, customSolutionType *string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionCustomUpdateByID(logger, id, customSolutionType, changes, principal, r.store)
+}
+
+// Solutions is the resolver for the solutions field.
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationaSolutionsGetByOPNeedID(logger, obj.ID, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -757,6 +811,12 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
+// PossibleSolutions is the resolver for the possibleSolutions field.
+func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -840,10 +900,22 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 	return resolvers.PlanCrTdlGet(logger, id, r.store)
 }
 
+// OperationalSolutions is the resolver for the operationalSolutions field.
+func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationaSolutionsGetByOPNeedID(logger, operationalNeedID, r.store)
+}
+
 // AuditChanges is the resolver for the auditChanges field.
 func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey, r.store)
+}
+
+// PossibleOperationalNeeds is the resolver for the possibleOperationalNeeds field.
+func (r *queryResolver) PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalNeedCollectionGet(logger, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -873,6 +945,11 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
+// OperationalNeed returns generated.OperationalNeedResolver implementation.
+func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
+	return &operationalNeedResolver{r}
+}
 
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
@@ -911,6 +988,11 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
+// PossibleOperationalNeed returns generated.PossibleOperationalNeedResolver implementation.
+func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedResolver {
+	return &possibleOperationalNeedResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -923,6 +1005,7 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type operationalNeedResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
@@ -932,6 +1015,7 @@ type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
+type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
