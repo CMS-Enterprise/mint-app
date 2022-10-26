@@ -103,6 +103,7 @@ func (s *Server) routes(
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
+	emailServiceConfig.DefaultSender = "no-reply@mint.cms.gov"
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
