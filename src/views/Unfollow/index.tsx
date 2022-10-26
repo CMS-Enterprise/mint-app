@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useMessage from 'hooks/useMessage';
 import GetBasics from 'queries/Basics/GetBasics';
@@ -13,19 +14,14 @@ import {
 import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
 import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
 
-type UnfollowProps = {
-  children: React.ReactNode;
-};
-
-const UnfollowWrapper = ({ children }: UnfollowProps) => {
+const Unfollow = () => {
   const history = useHistory();
   const { t } = useTranslation('modelPlan');
-  const { pathname, search } = useLocation();
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
   const { showMessageOnNextPage } = useMessage();
 
-  const modelIDToRemove = search
-    .replace(/.*modelID=(.*)\/?/g, '$1')
-    .replace(/\/+$/, '');
+  const modelIDToRemove = params.get('modelID');
 
   const [removeMutate] = useMutation<DeletePlanFavoriteVariables>(
     DeletePlanFavorite
@@ -35,7 +31,7 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
     GetBasics,
     {
       variables: {
-        id: modelIDToRemove
+        id: modelIDToRemove!
       }
     }
   );
@@ -43,7 +39,7 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
   const modelName = data?.modelPlan.modelName;
 
   useEffect(() => {
-    if (pathname === '/unfollow/' && error) {
+    if (error) {
       showMessageOnNextPage(
         <Alert
           type="error"
@@ -56,9 +52,9 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
           </span>
         </Alert>
       );
-      history.push(`/models`);
+      history.push('/models');
     }
-    if (pathname === '/unfollow/' && modelName) {
+    if (modelName) {
       removeMutate({
         variables: {
           modelPlanID: modelIDToRemove
@@ -80,7 +76,7 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
                 </span>
               </Alert>
             );
-            history.push(`/models`);
+            history.push('/models');
           }
         })
         .catch(errors => {
@@ -98,7 +94,7 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
               </span>
             </Alert>
           );
-          history.push(`/models`);
+          history.push('/models');
         });
     }
   }, [
@@ -106,13 +102,12 @@ const UnfollowWrapper = ({ children }: UnfollowProps) => {
     history,
     modelIDToRemove,
     modelName,
-    pathname,
     removeMutate,
     showMessageOnNextPage,
     t
   ]);
 
-  return <>{children}</>;
+  return <PageLoading />;
 };
 
-export default UnfollowWrapper;
+export default Unfollow;
