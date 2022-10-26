@@ -30,7 +30,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
   GetModelPlanInfo as GetModelPlanInfoType,
-  GetModelPlanInfo_modelPlan as ModelPlanInfoFormType,
+  GetModelPlanInfo_modelPlan as ModelFormType,
   GetModelPlanInfoVariables
 } from 'queries/Basics/types/GetModelPlanInfo';
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
@@ -51,6 +51,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import Milestones from './Milestones';
 import Overview from './Overview';
+
+type ModelPlanInfoFormType = Omit<ModelFormType, 'nameHistory'>;
 
 const BasicsContent = () => {
   const { t } = useTranslation('basics');
@@ -75,7 +77,7 @@ const BasicsContent = () => {
     }
   });
 
-  const { id, modelName, basics } = data?.modelPlan || {};
+  const { id, modelName, basics, nameHistory } = data?.modelPlan || {};
 
   const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
@@ -441,8 +443,9 @@ const BasicsContent = () => {
                         {t('previousNames')}
                       </p>
                       <ul className="margin-top-1 margin-bottom-0 padding-left-2">
-                        <li>Lorem, ipsum.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
+                        {nameHistory?.map(previousName => {
+                          return <li>{previousName}</li>;
+                        })}
                       </ul>
                     </SummaryBox>
                   </Grid>
