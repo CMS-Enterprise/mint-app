@@ -11,6 +11,7 @@ import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
+import prepareForClearance from './draftModelPlan/prepareForClearance';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
@@ -61,6 +62,7 @@ const enUS = {
   operationsEvaluationAndLearning,
   participantsAndProviders,
   payments,
+  prepareForClearance,
   privacyPolicy,
   readOnlyModelPlan,
   sampleModelPlan,
