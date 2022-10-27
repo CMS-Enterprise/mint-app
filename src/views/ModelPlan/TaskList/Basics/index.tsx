@@ -78,6 +78,9 @@ const BasicsContent = () => {
   });
 
   const { id, modelName, basics, nameHistory } = data?.modelPlan || {};
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
 
   const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
@@ -438,17 +441,15 @@ const BasicsContent = () => {
                   </Grid>
 
                   <Grid desktop={{ col: 6 }}>
-                    {nameHistory && nameHistory.length > 1 && (
+                    {filteredNameHistory && filteredNameHistory.length > 0 && (
                       <SummaryBox heading="" className="margin-top-6">
                         <p className="margin-y-0 text-bold">
                           {t('previousNames')}
                         </p>
                         <ul className="margin-top-1 margin-bottom-0 padding-left-2">
-                          {nameHistory
-                            .filter(previousName => previousName !== modelName)
-                            .map(previousName => {
-                              return <li>{previousName}</li>;
-                            })}
+                          {filteredNameHistory.map(previousName => {
+                            return <li>{previousName}</li>;
+                          })}
                         </ul>
                       </SummaryBox>
                     )}
