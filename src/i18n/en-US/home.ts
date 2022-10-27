@@ -5,6 +5,9 @@ const home = {
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
   startNow: 'Start a new Model Plan',
+  previously: 'previously ',
+  viewMore: 'View {{-number}} more',
+  viewLess: 'View less',
   mintTasks: [
     'collaborate on requirements for new CMMI models and demonstrations',
     'access resources to help you complete your model plans'
