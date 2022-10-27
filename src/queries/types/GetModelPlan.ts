@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, TaskStatus, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, TaskStatus, DiscussionStatus, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -12,7 +12,9 @@ import { ModelStatus, TaskStatus, DiscussionStatus } from "./../../types/graphql
 export interface GetModelPlan_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
+  clearanceStarts: Time | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -55,6 +57,7 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -65,6 +68,7 @@ export interface GetModelPlan_modelPlan_participantsAndProviders {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -75,6 +79,7 @@ export interface GetModelPlan_modelPlan_beneficiaries {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -85,6 +90,7 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -95,6 +101,7 @@ export interface GetModelPlan_modelPlan_payments {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -106,6 +113,12 @@ export interface GetModelPlan_modelPlan_itTools {
   modifiedBy: string | null;
   modifiedDts: Time | null;
   status: TaskStatus;
+}
+
+export interface GetModelPlan_modelPlan_prepareForClearance {
+  __typename: "PrepareForClearance";
+  status: PrepareForClearanceStatus;
+  modifiedDts: Time | null;
 }
 
 export interface GetModelPlan_modelPlan {
@@ -125,6 +138,7 @@ export interface GetModelPlan_modelPlan {
   opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
   payments: GetModelPlan_modelPlan_payments;
   itTools: GetModelPlan_modelPlan_itTools;
+  prepareForClearance: GetModelPlan_modelPlan_prepareForClearance;
 }
 
 export interface GetModelPlan {
