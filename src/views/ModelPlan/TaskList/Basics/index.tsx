@@ -444,12 +444,11 @@ const BasicsContent = () => {
                           {t('previousNames')}
                         </p>
                         <ul className="margin-top-1 margin-bottom-0 padding-left-2">
-                          {nameHistory.map(previousName => {
-                            if (previousName !== modelName) {
+                          {nameHistory
+                            .filter(previousName => previousName !== modelName)
+                            .map(previousName => {
                               return <li>{previousName}</li>;
-                            }
-                            return '';
-                          })}
+                            })}
                         </ul>
                       </SummaryBox>
                     )}
