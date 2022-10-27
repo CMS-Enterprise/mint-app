@@ -438,16 +438,21 @@ const BasicsContent = () => {
                   </Grid>
 
                   <Grid desktop={{ col: 6 }}>
-                    <SummaryBox heading="" className="margin-top-6">
-                      <p className="margin-y-0 text-bold">
-                        {t('previousNames')}
-                      </p>
-                      <ul className="margin-top-1 margin-bottom-0 padding-left-2">
-                        {nameHistory?.map(previousName => {
-                          return <li>{previousName}</li>;
-                        })}
-                      </ul>
-                    </SummaryBox>
+                    {nameHistory && nameHistory.length > 1 && (
+                      <SummaryBox heading="" className="margin-top-6">
+                        <p className="margin-y-0 text-bold">
+                          {t('previousNames')}
+                        </p>
+                        <ul className="margin-top-1 margin-bottom-0 padding-left-2">
+                          {nameHistory.map(previousName => {
+                            if (previousName !== modelName) {
+                              return <li>{previousName}</li>;
+                            }
+                            return '';
+                          })}
+                        </ul>
+                      </SummaryBox>
+                    )}
                   </Grid>
                 </Grid>
               </GridContainer>
