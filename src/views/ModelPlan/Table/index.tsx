@@ -44,7 +44,7 @@ type TableProps = {
 
 const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
   const { t } = useTranslation('home');
-  const [showMore, setShowMore] = useState(true);
+  const [isShowingAllNames, setShowAllNames] = useState(false);
 
   const firstThreeNames = names.slice(0, 3);
 
@@ -59,19 +59,21 @@ const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
     <>
       <p className="margin-y-0 font-body-xs line-height-sans-2">
         {t('previously')}{' '}
-        {showMore ? `${firstThreeNames.join(', ')}` : `${names.join(', ')}`}
+        {isShowingAllNames
+          ? `${names.join(', ')}`
+          : `${firstThreeNames.join(', ')}`}
       </p>
       <Button
         unstyled
         type="button"
         className="margin-top-1"
         onClick={() => {
-          setShowMore(!showMore);
+          setShowAllNames(!isShowingAllNames);
         }}
       >
-        {showMore
-          ? t('viewMore', { number: `${names.length - 3}` })
-          : t('viewLess')}
+        {isShowingAllNames
+          ? t('viewLess')
+          : t('viewMore', { number: `${names.length - 3}` })}
       </Button>
     </>
   );
