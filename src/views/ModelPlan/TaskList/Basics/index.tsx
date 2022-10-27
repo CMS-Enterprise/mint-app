@@ -442,13 +442,21 @@ const BasicsContent = () => {
 
                   <Grid desktop={{ col: 6 }}>
                     {filteredNameHistory && filteredNameHistory.length > 0 && (
-                      <SummaryBox heading="" className="margin-top-6">
+                      <SummaryBox
+                        heading=""
+                        className="margin-top-6"
+                        data-testid="summary-box--previous-name"
+                      >
                         <p className="margin-y-0 text-bold">
                           {t('previousNames')}
                         </p>
                         <ul className="margin-top-1 margin-bottom-0 padding-left-2">
                           {filteredNameHistory.map(previousName => {
-                            return <li>{previousName}</li>;
+                            return (
+                              <li key={`${modelName}-${previousName}`}>
+                                {previousName}
+                              </li>
+                            );
                           })}
                         </ul>
                       </SummaryBox>
