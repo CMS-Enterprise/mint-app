@@ -1,3 +1,6 @@
+/* This inserts the possible operational needs a model could have, as well as the logic mapping for if the need is needed.
+ * See comments on the trigger and the possible operational need table to see the use case of this.
+*/
 INSERT INTO "public"."possible_operational_need"("id", "need_name", "need_key", "section", "trigger_table", "trigger_col", "trigger_vals", "created_by") VALUES(1, 'Manage Part C/D enrollment', 'MANAGE_CD', 'GENERAL_CHARACTERISTICS', 'plan_general_characteristics', '{manage_part_c_d_enrollment}', '{t}', 'MINT');
 INSERT INTO "public"."possible_operational_need"("id", "need_name", "need_key", "section", "trigger_table", "trigger_col", "trigger_vals", "created_by") VALUES(2, 'Review and collect plan bids', 'REV_COL_BIDS', 'GENERAL_CHARACTERISTICS', 'plan_general_characteristics', '{collect_plan_bids}', '{t}', 'MINT');
 INSERT INTO "public"."possible_operational_need"("id", "need_name", "need_key", "section", "trigger_table", "trigger_col", "trigger_vals", "created_by") VALUES(3, 'Update the plan’s contract', 'UPDATE_CONTRACT', 'GENERAL_CHARACTERISTICS', 'plan_general_characteristics', '{collect_plan_bids}', '{t}', 'MINT');

@@ -38,7 +38,7 @@ BEGIN
     need_key,
     (h_new -> 'model_plan_id')::UUID as model_plan_id,
     h_new -> 'modified_by' as modified_by,
-    (h_new -> trigger_col && trigger_vals) as needed -- This checks if it has values in common, EG overlap --TODO verify that this works with h_new. h_changed could miss composite columns
+    (h_new -> trigger_col && trigger_vals) as needed -- This checks if it has values in common, EG overlap
     FROM NeedConditions
     )
 -- UPDATE based on the above query results 
@@ -54,4 +54,10 @@ WHERE operational_need.model_plan_id = NeedUpdates.model_plan_id AND operational
 
 
 END;
-$body$ LANGUAGE plpgsql
+$body$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION SET_OPERATIONAL_NEED_NEEDED IS
+'This trigger looks at the configuration in the Possible Operational need table and sets a need as needed or not based on values in the row.
+It first casts the rows at h_stores and compares which fields have changed. If any of the changed fields match (?|) a value from trigger_cols it gets inserted in NeedConditions CTE.
+From there, it checks all the current values (NEW) for the trigger col, and checks if any of them satisfy the trigger_vals (&&). 
+If it does, the need is set to needed = true, else needed = false.';
