@@ -193,6 +193,7 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 	suite.NotNil(manageProvOverlap)
 	suite.True(*manageProvOverlap.Needed)
 
+	//multi-select test
 	changes["selectionMethod"] = []string{model.ParticipantSelectionTypeApplicationReviewAndScoringTool.String(), model.ParticipantSelectionTypeApplicationSupportContractor.String()}
 	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NotNil(updatedPP)
@@ -205,7 +206,7 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon)
 	suite.NotNil(appSuppCont)
 
-	suite.True(*colRevScoreApp.Needed)
+	suite.True(*colRevScoreApp.Needed) //TODO this test is failing. correct trigger so it works as expected on multi-select columns
 	suite.True(*appSuppCont.Needed)
 
 }
