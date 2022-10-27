@@ -53,7 +53,7 @@ describe('Model Plan Documents page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
         ]}
       >
-        <MockedProvider>
+        <MockedProvider mocks={mocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/basics">
             <Basics />
           </Route>
@@ -66,7 +66,6 @@ describe('Model Plan Documents page', () => {
       expect(
         screen.getByTestId('summary-box--previous-name')
       ).toBeInTheDocument();
-      expect(screen.getByText('Second Name')).toBeInTheDocument();
     });
   });
   it('matches snapshot', async () => {
@@ -84,6 +83,7 @@ describe('Model Plan Documents page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
+      expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
       expect(
         screen.getByTestId('summary-box--previous-name')
       ).toBeInTheDocument();

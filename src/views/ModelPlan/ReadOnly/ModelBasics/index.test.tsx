@@ -111,6 +111,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(screen.getByTestId('other-entry')).toHaveTextContent(
         'The Center for Awesomeness'
       );
+      expect(screen.getByText('Second Name')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
