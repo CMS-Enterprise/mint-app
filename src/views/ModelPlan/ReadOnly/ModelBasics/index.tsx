@@ -48,6 +48,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   }
 
   const { nameHistory } = data?.modelPlan || {};
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
 
   const {
     modelCategory,
@@ -104,7 +107,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
       <ReadOnlySection
         heading={t('previousNames')}
         list
-        listItems={nameHistory}
+        listItems={filteredNameHistory}
       />
 
       <ReadOnlySection
