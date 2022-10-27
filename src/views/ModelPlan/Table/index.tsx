@@ -48,13 +48,6 @@ const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
 
   const firstThreeNames = names.slice(0, 3);
 
-  if (names.length < 4) {
-    return (
-      <p className="margin-y-0 font-body-xs line-height-sans-2">
-        {t('previously')} {firstThreeNames.join(', ')}
-      </p>
-    );
-  }
   return (
     <>
       <p className="margin-y-0 font-body-xs line-height-sans-2">
@@ -63,18 +56,20 @@ const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
           ? `${names.join(', ')}`
           : `${firstThreeNames.join(', ')}`}
       </p>
-      <Button
-        unstyled
-        type="button"
-        className="margin-top-1"
-        onClick={() => {
-          setShowAllNames(!isShowingAllNames);
-        }}
-      >
-        {isShowingAllNames
-          ? t('viewLess')
-          : t('viewMore', { number: `${names.length - 3}` })}
-      </Button>
+      {names.length > 3 && (
+        <Button
+          unstyled
+          type="button"
+          className="margin-top-1 font-body-xs"
+          onClick={() => {
+            setShowAllNames(!isShowingAllNames);
+          }}
+        >
+          {isShowingAllNames
+            ? t('viewLess')
+            : t('viewMore', { number: `${names.length - 3}` })}
+        </Button>
+      )}
     </>
   );
 };
