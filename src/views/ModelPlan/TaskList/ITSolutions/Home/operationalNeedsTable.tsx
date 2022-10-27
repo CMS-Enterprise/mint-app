@@ -1,3 +1,5 @@
+/* eslint react/prop-types: 0 */
+
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
@@ -11,7 +13,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
-// import UswdsReactLink from 'components/LinkWrapper';
+import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import TablePagination from 'components/TablePagination';
@@ -31,10 +33,9 @@ import {
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
 
-import { OperationalNeedStatus } from '../_components/NeedsStatus';
-// import OperationalNeedsStatusTag, {
-//   OperationalNeedStatus
-// } from '../_components/NeedsStatus';
+import OperationalNeedsStatusTag, {
+  OperationalNeedStatus
+} from '../_components/NeedsStatus';
 
 type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
@@ -135,28 +136,29 @@ const OperationalNeedsTable = ({
       {
         Header: t<string>('itSolutionsTable.need'),
         accessor: 'name'
-      }
+      },
       // {
       //   Header: t<string>('itSolutionsTable.section'),
       //   accessor: 'section'
       // },
-      // {
-      //   Header: t<string>('itSolutionsTable.status'),
-      //   accessor: 'status',
-      //   Cell: ({ row, value }: any) => {
-      //     return <OperationalNeedsStatusTag status={value} />;
-      //   }
-      // },
-      // {
-      //   Header: t<string>('itSolutionsTable.actions'),
-      //   Cell: ({ row }: any) => {
-      //     const linkText: string =
-      //       row.original.status === OperationalNeedStatus.NOT_ANSWERED
-      //         ? t('itSolutionsTable.answer')
-      //         : t('itSolutionsTable.changeAnswer');
-      //     return <UswdsReactLink to="/">{linkText}</UswdsReactLink>;
-      //   }
-      // }
+      {
+        Header: t<string>('itSolutionsTable.status'),
+        accessor: 'status',
+        Cell: ({ row, value }: any): JSX.Element => {
+          return <OperationalNeedsStatusTag status={value} />;
+        }
+      },
+      {
+        Header: t<string>('itSolutionsTable.actions'),
+        accessor: 'id',
+        Cell: ({ row }: any): JSX.Element => {
+          const linkText: string =
+            row.original.status === OperationalNeedStatus.NOT_ANSWERED
+              ? t('itSolutionsTable.answer')
+              : t('itSolutionsTable.changeAnswer');
+          return <UswdsReactLink to="/">{linkText}</UswdsReactLink>;
+        }
+      }
     ];
   }, [t]);
 
