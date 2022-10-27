@@ -57,6 +57,81 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 	suite.False(*revColBids.Needed)
 
 }
+func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
+	plan := suite.createModelPlan("plan for complex need")
+
+	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(oelExisting)
+
+	changes := map[string]interface{}{ // NEED 13, PROCESS_PART_APPEALS
+
+		"appealNote": "we are testing appeal statements",
+	}
+
+	oel, err := PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(oel)
+	suite.NoError(err)
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	processPart := findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
+	suite.NotNil(processPart)
+	suite.Nil(processPart.Needed) // Un-Answered
+
+	changes = map[string]interface{}{
+		"appealFeedback": true,
+		// "appealPayments": false,
+		// "appealOther":    false,
+		"appealPerformance": true,
+	}
+
+	oel, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(oel)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
+	suite.NotNil(processPart)
+	suite.True(*processPart.Needed)
+
+	changes = map[string]interface{}{
+		// "appealFeedback": true,
+		"appealPayments": false,
+		"appealOther":    false,
+		// "appealPerformance": true,
+	}
+	oel, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(oel)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
+	suite.NotNil(processPart)
+	suite.True(*processPart.Needed) // Still needed because the other appeal values are set to true, even though the only changed columsn are false
+
+	changes = map[string]interface{}{
+		"appealFeedback": false,
+		// "appealPayments": false,
+		// "appealOther":    false,
+		"appealPerformance": false,
+	}
+	oel, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(oel)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
+	suite.NotNil(processPart)
+	suite.False(*processPart.Needed) // Now, no composite column has  a true value, so it is not needed
+
+}
 
 func findOpNeed(collection []*models.OperationalNeed, key models.OperationalNeedKey) *models.OperationalNeed {
 
