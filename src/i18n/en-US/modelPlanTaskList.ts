@@ -89,13 +89,15 @@ const modelPlanTaskList = {
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
     },
-    itTools: {
-      heading: 'IT tools',
+    itSolutions: {
+      heading: 'IT solutions and implementation status',
       team:
-        'Choose the IT solutions your model will utilize. Many questions in this section are populated based on responses to questions answered in previous sections.',
+        'Choose the IT solutions your model model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
+      team2:
+        'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the Assessment Team understand how best to help you.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
-      path: 'it-tools'
+      path: 'it-solutions'
     },
     prepareForClearance: {
       heading: 'Prepare for clearance',

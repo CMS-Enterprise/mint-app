@@ -14,6 +14,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 
+import OperationalNeedsTable from './operationalNeedsTable';
+
 const ITSolutionsHome = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('itSolutions');
@@ -71,6 +73,12 @@ const ITSolutionsHome = () => {
       <AskAQuestion modelID={modelID} />
 
       <Divider className="margin-y-4" />
+
+      <OperationalNeedsTable modelID={modelID} type="needs" />
+
+      <Divider className="margin-y-4" />
+
+      <OperationalNeedsTable modelID={modelID} type="possibleNeeds" />
     </>
   );
 };

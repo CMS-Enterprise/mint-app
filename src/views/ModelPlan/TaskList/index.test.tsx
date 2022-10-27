@@ -24,6 +24,7 @@ describe('The Model Plan Task List', () => {
     modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
     basics: {
+      __typename: 'PlanBasics',
       id: 'adsf',
       modifiedDts: null,
       clearanceStarts: '2022-05-12T15:01:39.190679Z',
@@ -38,8 +39,10 @@ describe('The Model Plan Task List', () => {
     prepareForClearance: [] as any,
     payments: [] as any,
     crTdls: [] as any,
+    operationalNeeds: [] as any,
     documents: [
       {
+        __typename: 'PlanDocument',
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
         fileName: 'test.pdf'
       }
