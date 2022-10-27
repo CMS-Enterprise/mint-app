@@ -3,6 +3,7 @@ package resolvers
 import (
 	"reflect"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -130,6 +131,82 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
 	suite.NotNil(processPart)
 	suite.False(*processPart.Needed) // Now, no composite column has  a true value, so it is not needed
+
+}
+
+func (suite *ResolverSuite) TestSelectionTypeTrigger() {
+	plan := suite.createModelPlan("plan for selection need")
+
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{
+		"confidenceNote":     "This is a confidence note",
+		"recruitmentNote":    "This is a recruitment note",
+		"estimateConfidence": string(models.ConfidenceSlightly),
+	}
+
+	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(updatedPP)
+	suite.NoError(err)
+
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	manageProvOverlap := findOpNeed(opNeeds, models.OpNKManageProvOverlap)
+	suite.NotNil(manageProvOverlap)
+	suite.Nil(manageProvOverlap.Needed)
+
+	changes["providerOverlap"] = string(models.OverlapNo) //not needed
+	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(updatedPP)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	manageProvOverlap = findOpNeed(opNeeds, models.OpNKManageProvOverlap)
+	suite.NotNil(manageProvOverlap)
+	suite.False(*manageProvOverlap.Needed)
+
+	changes["providerOverlap"] = string(models.OverlapYesNeedPolicies) //needed
+	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(updatedPP)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	manageProvOverlap = findOpNeed(opNeeds, models.OpNKManageProvOverlap)
+	suite.NotNil(manageProvOverlap)
+	suite.True(*manageProvOverlap.Needed)
+
+	changes["providerOverlap"] = string(models.OverlapYesNoIssues) // still needed with diff answer
+	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(updatedPP)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	manageProvOverlap = findOpNeed(opNeeds, models.OpNKManageProvOverlap)
+	suite.NotNil(manageProvOverlap)
+	suite.True(*manageProvOverlap.Needed)
+
+	changes["selectionMethod"] = []string{model.ParticipantSelectionTypeApplicationReviewAndScoringTool.String(), model.ParticipantSelectionTypeApplicationSupportContractor.String()}
+	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NotNil(updatedPP)
+	suite.NoError(err)
+
+	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	colRevScoreApp := findOpNeed(opNeeds, models.OpNKColRevScoreApp)
+	suite.NotNil(colRevScoreApp)
+	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon)
+	suite.NotNil(appSuppCont)
+
+	suite.True(*colRevScoreApp.Needed)
+	suite.True(*appSuppCont.Needed)
 
 }
 
