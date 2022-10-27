@@ -17952,9 +17952,9 @@ func (ec *executionContext) _OperationalNeed_section(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.TaskListSection)
+	res := resTmp.(*models.TaskListSection)
 	fc.Result = res
-	return ec.marshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, field.Selections, res)
+	return ec.marshalOTaskListSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalNeed_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -60994,6 +60994,23 @@ func (ec *executionContext) unmarshalOTaskListSection2githubᚗcomᚋcmsgovᚋmi
 
 func (ec *executionContext) marshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v models.TaskListSection) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOTaskListSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (*models.TaskListSection, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.TaskListSection(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTaskListSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v *models.TaskListSection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
 	return res
 }
 

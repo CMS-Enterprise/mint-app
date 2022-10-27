@@ -38,7 +38,7 @@ BEGIN
     need_key,
     (h_new -> 'model_plan_id')::UUID as model_plan_id,
     h_new -> 'modified_by' as modified_by,
-    (h_changed -> trigger_col && trigger_vals) as needed -- This checks if it has values in common, EG overlap
+    (h_new -> trigger_col && trigger_vals) as needed -- This checks if it has values in common, EG overlap --TODO verify that this works with h_new. h_changed could miss composite columns
     FROM NeedConditions
     )
 -- UPDATE based on the above query results 
