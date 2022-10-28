@@ -4,27 +4,32 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
+  CellProps,
   Column,
   useFilters,
+  useGlobalFilter,
   usePagination,
   useSortBy,
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { Alert, Table as UswdsTable } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
+import TableResults from 'components/TableResults';
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
   GetOperationalNeeds as GetOperationalNeedsType,
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions as GetOperationalNeedsSolutionsType,
   GetOperationalNeedsVariables
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import globalTableFilter from 'utils/globalTableFilter';
+import { formatDate } from 'utils/date';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -34,8 +39,13 @@ import {
 import { isAssessment } from 'utils/user';
 
 import OperationalNeedsStatusTag, {
-  OperationalNeedStatus
+  OperationalNeedsSolutionsStatus
 } from '../_components/NeedsStatus';
+import {
+  filterNeedsFormatSolutions,
+  filterPossibleNeeds,
+  returnActionLinks
+} from '../util';
 
 type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
@@ -44,33 +54,10 @@ type OperationalNeedsTableProps = {
   readOnly?: boolean;
 };
 
-const filterPossibleNeeds = (
-  needs: GetOperationalNeedsOperationalNeedsType[]
-) => {
-  return needs
-    .filter(need => !need.needed)
-    .map(need => {
-      return {
-        ...need,
-        status:
-          need.needed === null
-            ? OperationalNeedStatus.NOT_ANSWERED
-            : OperationalNeedStatus.NOT_NEEDED
-      };
-    });
-};
-
-const filterNeedsFormatSolutions = (
-  needs: GetOperationalNeedsOperationalNeedsType[]
-) => {
-  const operationalSolutions: GetOperationalNeedsSolutionsType[] = [];
-  needs
-    .filter(need => !need.needed)
-    .forEach(need => {
-      operationalSolutions.concat(need.solutions.solutions);
-    });
-  return operationalSolutions;
-};
+interface GetOperationalNeedsTableType
+  extends GetOperationalNeedsOperationalNeedsType {
+  status: OperationalNeedsSolutionsStatus;
+}
 
 const OperationalNeedsTable = ({
   hiddenColumns,
@@ -106,7 +93,27 @@ const OperationalNeedsTable = ({
     return [
       {
         Header: t<string>('itSolutionsTable.need'),
-        accessor: 'name'
+        accessor: 'needName'
+      },
+      {
+        Header: t<string>('itSolutionsTable.solution'),
+        accessor: 'name',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): JSX.Element | string => {
+          if (!value) {
+            return (
+              <UswdsReactLink to="/">
+                {t('itSolutionsTable.selectSolution')}
+              </UswdsReactLink>
+            );
+          }
+          return value;
+        }
       },
       // {
       //   Header: t<string>('itSolutionsTable.solution'),
@@ -114,20 +121,42 @@ const OperationalNeedsTable = ({
       // },
       {
         Header: t<string>('itSolutionsTable.finishBy'),
-        accessor: 'mustFinishDts'
-      }
+        accessor: 'mustFinishDts',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          return formatDate(value, 'MM/d/yyyy');
+        }
+      },
       // {
       //   Header: t<string>('itSolutionsTable.subtasks'),
       //   accessor: 'mustFinishDts'
       // },
-      // {
-      //   Header: t<string>('itSolutionsTable.status'),
-      //   accessor: 'status'
-      // },
-      // {
-      //   Header: t<string>('itSolutionsTable.action')
-      //   // accessor: 'name'
-      // }
+      {
+        Header: t<string>('itSolutionsTable.status'),
+        accessor: 'status',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): JSX.Element => {
+          return <OperationalNeedsStatusTag status={value} />;
+        }
+      },
+      {
+        Header: t<string>('itSolutionsTable.actions'),
+        Cell: ({
+          row
+        }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
+          return returnActionLinks(row.original.status);
+        }
+      }
     ];
   }, [t]);
 
@@ -144,19 +173,22 @@ const OperationalNeedsTable = ({
       {
         Header: t<string>('itSolutionsTable.status'),
         accessor: 'status',
-        Cell: ({ row, value }: any): JSX.Element => {
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): JSX.Element => {
           return <OperationalNeedsStatusTag status={value} />;
         }
       },
       {
         Header: t<string>('itSolutionsTable.actions'),
-        accessor: 'id',
-        Cell: ({ row }: any): JSX.Element => {
-          const linkText: string =
-            row.original.status === OperationalNeedStatus.NOT_ANSWERED
-              ? t('itSolutionsTable.answer')
-              : t('itSolutionsTable.changeAnswer');
-          return <UswdsReactLink to="/">{linkText}</UswdsReactLink>;
+        Cell: ({
+          row
+        }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
+          return returnActionLinks(row.original.status);
         }
       }
     ];
@@ -166,6 +198,7 @@ const OperationalNeedsTable = ({
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    setGlobalFilter,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -176,6 +209,7 @@ const OperationalNeedsTable = ({
     setPageSize,
     page,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -189,7 +223,7 @@ const OperationalNeedsTable = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
@@ -199,9 +233,12 @@ const OperationalNeedsTable = ({
       }
     },
     useFilters,
+    useGlobalFilter,
     useSortBy,
     usePagination
   );
+
+  rows.map(row => prepareRow(row));
 
   if (loading) {
     return <PageLoading />;
@@ -224,8 +261,25 @@ const OperationalNeedsTable = ({
 
   return (
     <div className="model-plan-table" data-testid="cr-tdl-table">
+      <div className="mint-header__basic">
+        <GlobalClientFilter
+          setGlobalFilter={setGlobalFilter}
+          tableID={t('requestsTable.id')}
+          tableName={t('requestsTable.title')}
+          className="margin-bottom-4 width-mobile-lg maxw-full"
+        />
+      </div>
+
+      <TableResults
+        globalFilter={state.globalFilter}
+        pageIndex={state.pageIndex}
+        pageSize={state.pageSize}
+        filteredRowLength={page.length}
+        rowLength={operationalNeeds.length}
+        className="margin-bottom-4"
+      />
+
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
-        {/* <caption className="usa-sr-only">{t('requestsTable.caption')}</caption> */}
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -240,9 +294,9 @@ const OperationalNeedsTable = ({
                     scope="col"
                     style={{
                       minWidth: '138px',
-                      paddingLeft: '0',
                       paddingBottom: '.5rem',
-                      position: 'relative'
+                      position: 'relative',
+                      paddingLeft: index === 0 ? '.5em' : '0px'
                     }}
                   >
                     <button
@@ -260,7 +314,6 @@ const OperationalNeedsTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
@@ -274,6 +327,10 @@ const OperationalNeedsTable = ({
                         <th
                           {...cell.getCellProps()}
                           scope="row"
+                          className={classNames('padding-x-1', {
+                            'bg-base-lightest':
+                              row.original.status === 'NOT_NEEDED'
+                          })}
                           style={{
                             paddingLeft: '0',
                             borderBottom:
@@ -287,6 +344,10 @@ const OperationalNeedsTable = ({
                     return (
                       <td
                         {...cell.getCellProps()}
+                        className={classNames({
+                          'bg-base-lightest':
+                            row.original.status === 'NOT_NEEDED'
+                        })}
                         style={{
                           paddingLeft: '0',
                           borderBottom:
@@ -327,9 +388,9 @@ const OperationalNeedsTable = ({
       </div>
 
       {operationalNeeds.length === 0 && (
-        <p data-testid="no-operational-needs">
-          {t('itSolutionsTable.noNeeds')}
-        </p>
+        <Alert heading={t('itSolutionsTable.noNeeds')} type="info">
+          {t('itSolutionsTable.noNeedsInfo')}
+        </Alert>
       )}
     </div>
   );

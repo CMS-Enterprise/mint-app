@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
@@ -13,6 +13,9 @@ import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
+
+import HelpBox from '../_components/HelpBox';
 
 import OperationalNeedsTable from './operationalNeedsTable';
 
@@ -21,7 +24,8 @@ const ITSolutionsHome = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const modelName = 'HEY';
+  const { modelName } = useContext(ModelInfoContext);
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -74,11 +78,29 @@ const ITSolutionsHome = () => {
 
       <Divider className="margin-y-4" />
 
+      <h2 className="margin-top-4 margin-bottom-2">
+        {t('itSolutionsTable.needs')}
+      </h2>
+
+      <p className="line-height-body-4 margin-bottom-4">
+        {t('itSolutionsTable.needsInfo')}
+      </p>
+
       <OperationalNeedsTable modelID={modelID} type="needs" />
 
       <Divider className="margin-y-4" />
 
+      <h2 className="margin-top-4 margin-bottom-2">
+        {t('itSolutionsTable.otherNeeds')}
+      </h2>
+
+      <p className="line-height-body-4 margin-bottom-4">
+        {t('itSolutionsTable.otherNeedsInfo')}
+      </p>
+
       <OperationalNeedsTable modelID={modelID} type="possibleNeeds" />
+
+      <HelpBox className="margin-top-4" />
     </>
   );
 };

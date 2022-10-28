@@ -9,7 +9,7 @@ import ITSolutionsHome from './Home';
 
 const ITSolutions = () => {
   return (
-    <MainContent className="grid-container" data-testid="it-solutions">
+    <MainContent data-testid="it-solutions">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>

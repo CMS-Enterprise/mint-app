@@ -1507,9 +1507,9 @@ export const translatePRecoverPaymentsType = (type: string) => {
 export const translateOpNeedsStatusType = (type: string) => {
   switch (type) {
     case 'NOT_NEEDED':
-      return i18next.t('itSolutions:status.notAnswered');
-    case 'NOT_ANSWERED':
       return i18next.t('itSolutions:status.notNeeded');
+    case 'NOT_ANSWERED':
+      return i18next.t('itSolutions:status.notAnswered');
     case 'NOT_STARTED':
       return i18next.t('itSolutions:status.notStarted');
     case 'ONBOARDING':

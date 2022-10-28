@@ -134,7 +134,7 @@ const TaskList = () => {
     opsEvalAndLearning,
     beneficiaries,
     payments,
-    operationalNeeds,
+    operationalNeeds = [],
     prepareForClearance
   } = modelPlan;
 

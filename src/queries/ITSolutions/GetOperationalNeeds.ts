@@ -17,7 +17,9 @@ export default gql`
           solutions {
             id
             status
+            name
             mustStartDts
+            mustFinishDts
             archived
             nameOther
             key

@@ -13,7 +13,9 @@ export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions_soluti
   __typename: "OperationalSolution";
   id: UUID;
   status: OpSolutionStatus;
+  name: string | null;
   mustStartDts: Time | null;
+  mustFinishDts: Time | null;
   archived: boolean;
   nameOther: string | null;
   key: OperationalSolutionKey | null;
