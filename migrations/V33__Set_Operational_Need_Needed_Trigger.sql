@@ -13,7 +13,7 @@ DECLARE
 BEGIN
 
     IF TG_WHEN <> 'AFTER' OR TG_OP <> 'UPDATE'THEN
-        RAISE EXCEPTION 'public.SET_OPERATIONAL_NEED_NEEDED() may only run as an AFTER trigger for UPDATE statements';
+        RAISE EXCEPTION 'public.SET_OPERATIONAL_NEED_NEEDED() may only run AS an AFTER trigger for UPDATE statements';
     END IF;
     
 
@@ -31,15 +31,55 @@ BEGIN
     FROM public.possible_operational_need
     WHERE trigger_table = TG_TABLE_NAME::text AND h_changed ?| trigger_col -- Only get needs where the column has changes
     ),
-    NeedUpdates AS
+    normalNeeds AS
     (
     SELECT
     id,
     need_key,
-    (h_new -> 'model_plan_id')::UUID as model_plan_id,
-    h_new -> 'modified_by' as modified_by,
-    (h_new -> trigger_col && trigger_vals) as needed -- This checks if it has values in common, EG overlap
+    trigger_col,
+    trigger_vals,
+    (h_new -> 'model_plan_id')::UUID AS model_plan_id,
+    h_new -> 'modified_by' AS modified_by,
+    (h_new -> trigger_col)::TEXT[] AS vals,
+    starts_with(((h_new -> trigger_col)::TEXT[])[1], '{') AS nested
     FROM NeedConditions
+    ),
+    Combined AS
+	(
+		SELECT
+		id,
+		need_key,
+        trigger_col,
+        trigger_vals,
+		model_plan_id,
+		modified_by,
+		unnest(vals)::TEXT[] AS vals --If it has a nested array, unnest it
+		FROM normalNeeds
+		WHERE nested = true
+
+        UNION
+		SELECT
+		id,
+		need_key,
+        trigger_col,
+        trigger_vals,
+		model_plan_id,
+		modified_by,
+		vals::TEXT[] AS vals
+		FROM
+		normalNeeds WHERE nested = false
+	),
+    NeedUpdates AS
+    (
+        SELECT
+		id,
+		need_key,
+        trigger_col,
+        trigger_vals,
+		model_plan_id,
+		modified_by,
+		(vals && trigger_vals) AS needed
+		FROM Combined
     )
 -- UPDATE based on the above query results 
 UPDATE operational_need
@@ -57,7 +97,7 @@ END;
 $body$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION SET_OPERATIONAL_NEED_NEEDED IS
-'This trigger looks at the configuration in the Possible Operational need table and sets a need as needed or not based on values in the row.
+'This trigger looks at the configuration in the Possible Operational need table and sets a need AS needed or not based on values in the row.
 It first casts the rows at h_stores and compares which fields have changed. If any of the changed fields match (?|) a value from trigger_cols it gets inserted in NeedConditions CTE.
 From there, it checks all the current values (NEW) for the trigger col, and checks if any of them satisfy the trigger_vals (&&). 
 If it does, the need is set to needed = true, else needed = false.';

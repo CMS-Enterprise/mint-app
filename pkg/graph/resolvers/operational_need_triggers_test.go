@@ -206,7 +206,7 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon)
 	suite.NotNil(appSuppCont)
 
-	suite.True(*colRevScoreApp.Needed) //TODO this test is failing. correct trigger so it works as expected on multi-select columns
+	suite.True(*colRevScoreApp.Needed)
 	suite.True(*appSuppCont.Needed)
 
 }
