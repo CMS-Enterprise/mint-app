@@ -43,10 +43,10 @@ import {
   GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
-  GetModelPlan_modelPlan_itTools as ITToolsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
+  GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { TaskListSection } from 'types/graphql-global-types';
@@ -74,7 +74,7 @@ type TaskListSectionsType = {
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
     | PaymentsType
-    | ITToolsType;
+    | PrepareForClearanceType;
 };
 
 type TaskListSectionMapType = {
@@ -85,10 +85,10 @@ const taskListSectionMap: TaskListSectionMapType = {
   basics: TaskListSection.MODEL_BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
   generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  itTools: TaskListSection.IT_TOOLS,
   opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
   participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
-  payments: TaskListSection.PAYMENT
+  payments: TaskListSection.PAYMENT,
+  prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
 };
 
 const TaskList = () => {
@@ -127,7 +127,7 @@ const TaskList = () => {
     opsEvalAndLearning,
     beneficiaries,
     payments,
-    itTools
+    prepareForClearance
   } = modelPlan;
 
   const { data: collaboratorData } = useQuery<GetModelCollaborators>(
@@ -149,7 +149,7 @@ const TaskList = () => {
     beneficiaries,
     opsEvalAndLearning,
     payments,
-    itTools
+    prepareForClearance
   };
 
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
@@ -287,6 +287,7 @@ const TaskList = () => {
                               }
                               status={taskListSections[key].status}
                             />
+
                             <TaskListLock
                               isAssessment={
                                 !!getTaskListLockedStatus(key)?.isAssessment
