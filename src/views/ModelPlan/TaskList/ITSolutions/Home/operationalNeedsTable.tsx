@@ -1,5 +1,11 @@
 /* eslint react/prop-types: 0 */
 
+/*
+Table component for rendering both Other Operational Needs and Operational Need Solutions
+Queries operationalNeeds which contains possible needs and needs
+Can render table of type GetOperationalNeeds_modelPlan_operationalNeeds or GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions
+*/
+
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
@@ -115,10 +121,6 @@ const OperationalNeedsTable = ({
           return value;
         }
       },
-      // {
-      //   Header: t<string>('itSolutionsTable.solution'),
-      //   accessor: 'solution'
-      // },
       {
         Header: t<string>('itSolutionsTable.finishBy'),
         accessor: 'mustFinishDts',
@@ -132,10 +134,10 @@ const OperationalNeedsTable = ({
           return formatDate(value, 'MM/d/yyyy');
         }
       },
-      // {
-      //   Header: t<string>('itSolutionsTable.subtasks'),
-      //   accessor: 'mustFinishDts'
-      // },
+      {
+        Header: t<string>('itSolutionsTable.subtasks'),
+        accessor: 'subTasks'
+      },
       {
         Header: t<string>('itSolutionsTable.status'),
         accessor: 'status',
@@ -166,10 +168,10 @@ const OperationalNeedsTable = ({
         Header: t<string>('itSolutionsTable.need'),
         accessor: 'name'
       },
-      // {
-      //   Header: t<string>('itSolutionsTable.section'),
-      //   accessor: 'section'
-      // },
+      {
+        Header: t<string>('itSolutionsTable.section'),
+        accessor: 'section'
+      },
       {
         Header: t<string>('itSolutionsTable.status'),
         accessor: 'status',

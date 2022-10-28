@@ -75,6 +75,7 @@ const emptySolution = (needName: string | null, needID: string) => {
   } as GetOperationalNeedsSolutionsType;
 };
 
+// Returns operational need/solutions table action links according to status
 export const returnActionLinks = (
   status: OperationalNeedStatus | OpSolutionStatus
 ): JSX.Element => {
