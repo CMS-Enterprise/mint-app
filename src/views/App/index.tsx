@@ -79,7 +79,7 @@ const AppRoutes = () => {
       <Route path="/signin" exact component={Login} />
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
 
-      <Route path="/unfollow" exact component={Unfollow} />
+      <SecureRoute path="/unfollow" exact component={Unfollow} />
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
