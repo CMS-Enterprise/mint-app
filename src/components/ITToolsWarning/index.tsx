@@ -23,7 +23,7 @@ const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
         className="usa-button usa-button--unstyled"
         onClick={onClick}
       >
-        {t('goToITTools')}.
+        {t('goToITTools')}
       </Button>
     </Alert>
   );

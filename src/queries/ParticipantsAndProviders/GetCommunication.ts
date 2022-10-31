@@ -17,8 +17,8 @@ export default gql`
         willRiskChange
         willRiskChangeNote
       }
-      itTools {
-        status
+      operationalNeeds {
+        modifiedDts
       }
     }
   }

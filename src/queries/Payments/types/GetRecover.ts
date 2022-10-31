@@ -25,9 +25,9 @@ export interface GetRecover_modelPlan_payments {
   status: TaskStatus;
 }
 
-export interface GetRecover_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetRecover_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetRecover_modelPlan {
@@ -35,7 +35,7 @@ export interface GetRecover_modelPlan {
   id: UUID;
   modelName: string;
   payments: GetRecover_modelPlan_payments;
-  itTools: GetRecover_modelPlan_itTools;
+  operationalNeeds: GetRecover_modelPlan_operationalNeeds[];
 }
 
 export interface GetRecover {

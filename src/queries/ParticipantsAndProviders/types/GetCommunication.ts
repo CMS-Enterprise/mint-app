@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantCommunicationType, ParticipantRiskType, TaskStatus } from "./../../../types/graphql-global-types";
+import { ParticipantCommunicationType, ParticipantRiskType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCommunication
@@ -23,9 +23,9 @@ export interface GetCommunication_modelPlan_participantsAndProviders {
   willRiskChangeNote: string | null;
 }
 
-export interface GetCommunication_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetCommunication_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetCommunication_modelPlan {
@@ -33,7 +33,7 @@ export interface GetCommunication_modelPlan {
   id: UUID;
   modelName: string;
   participantsAndProviders: GetCommunication_modelPlan_participantsAndProviders;
-  itTools: GetCommunication_modelPlan_itTools;
+  operationalNeeds: GetCommunication_modelPlan_operationalNeeds[];
 }
 
 export interface GetCommunication {

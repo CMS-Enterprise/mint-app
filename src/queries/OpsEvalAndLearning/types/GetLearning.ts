@@ -23,9 +23,9 @@ export interface GetLearning_modelPlan_opsEvalAndLearning {
   status: TaskStatus;
 }
 
-export interface GetLearning_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetLearning_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetLearning_modelPlan {
@@ -33,7 +33,7 @@ export interface GetLearning_modelPlan {
   id: UUID;
   modelName: string;
   opsEvalAndLearning: GetLearning_modelPlan_opsEvalAndLearning;
-  itTools: GetLearning_modelPlan_itTools;
+  operationalNeeds: GetLearning_modelPlan_operationalNeeds[];
 }
 
 export interface GetLearning {

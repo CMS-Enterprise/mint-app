@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType, TaskStatus } from "./../../../types/graphql-global-types";
+import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetFunding
@@ -28,9 +28,9 @@ export interface GetFunding_modelPlan_payments {
   payClaims: ClaimsBasedPayType[];
 }
 
-export interface GetFunding_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetFunding_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetFunding_modelPlan {
@@ -38,7 +38,7 @@ export interface GetFunding_modelPlan {
   id: UUID;
   modelName: string;
   payments: GetFunding_modelPlan_payments;
-  itTools: GetFunding_modelPlan_itTools;
+  operationalNeeds: GetFunding_modelPlan_operationalNeeds[];
 }
 
 export interface GetFunding {
