@@ -117,3 +117,28 @@ export const returnActionLinks = (
       return <></>;
   }
 };
+
+// Returns operational need/solutions table action text to for global query
+export const returnActionText = (
+  status: OperationalNeedStatus | OpSolutionStatus
+): string => {
+  switch (status) {
+    case OpSolutionStatus.AT_RISK:
+    case OpSolutionStatus.COMPLETED:
+    case OpSolutionStatus.BACKLOG:
+    case OpSolutionStatus.IN_PROGRESS:
+    case OpSolutionStatus.ONBOARDING:
+      return (
+        i18next.t('itSolutions:itSolutionsTable.updateStatus') +
+        i18next.t('itSolutions:itSolutionsTable.viewDetails')
+      );
+    case OpSolutionStatus.NOT_STARTED:
+      return i18next.t('itSolutions:itSolutionsTable.changePlanAnswer');
+    case OperationalNeedStatus.NOT_NEEDED:
+      return i18next.t('itSolutions:itSolutionsTable.changeAnswer');
+    case OperationalNeedStatus.NOT_ANSWERED:
+      return i18next.t('itSolutions:itSolutionsTable.answer');
+    default:
+      return '';
+  }
+};

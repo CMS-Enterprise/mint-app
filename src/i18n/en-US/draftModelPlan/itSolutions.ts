@@ -13,6 +13,8 @@ const itSolutions = {
     implementationStatuses: 'Implementation statuses'
   },
   itSolutionsTable: {
+    id: 'operational-needs',
+    title: 'Operational Needs Table',
     needs: 'Selected operational needs and solutions',
     needsInfo:
       'The operational needs below have been selected based on your answers to questions in your Model Plan. You may use the table below to select IT solutions and track the implementation status of those solutions.',

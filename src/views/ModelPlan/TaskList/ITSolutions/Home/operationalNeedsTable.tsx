@@ -21,6 +21,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { Alert, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -34,8 +35,7 @@ import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeedsVariables
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { formatDate } from 'utils/date';
-import globalFilterCellText from 'utils/globalFilterCellText';
+import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -50,8 +50,14 @@ import OperationalNeedsStatusTag, {
 import {
   filterNeedsFormatSolutions,
   filterPossibleNeeds,
-  returnActionLinks
+  returnActionLinks,
+  returnActionText
 } from '../util';
+
+interface GetOperationalNeedsTableType
+  extends GetOperationalNeedsOperationalNeedsType {
+  status: OperationalNeedsSolutionsStatus;
+}
 
 type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
@@ -60,11 +66,6 @@ type OperationalNeedsTableProps = {
   readOnly?: boolean;
 };
 
-interface GetOperationalNeedsTableType
-  extends GetOperationalNeedsOperationalNeedsType {
-  status: OperationalNeedsSolutionsStatus;
-}
-
 const OperationalNeedsTable = ({
   hiddenColumns,
   modelID,
@@ -72,6 +73,7 @@ const OperationalNeedsTable = ({
   readOnly
 }: OperationalNeedsTableProps) => {
   const { t } = useTranslation('itSolutions');
+
   const { data, loading, error } = useQuery<
     GetOperationalNeedsType,
     GetOperationalNeedsVariables
@@ -85,6 +87,7 @@ const OperationalNeedsTable = ({
     const needData = data?.modelPlan?.operationalNeeds
       ? data?.modelPlan?.operationalNeeds
       : ([] as GetOperationalNeedsOperationalNeedsType[]);
+
     return type === 'possibleNeeds'
       ? filterPossibleNeeds(needData)
       : filterNeedsFormatSolutions(needData);
@@ -93,6 +96,7 @@ const OperationalNeedsTable = ({
   const isCollaborator = data?.modelPlan?.isCollaborator;
 
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+
   const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
 
   const needsColumns = useMemo<Column<any>[]>(() => {
@@ -103,7 +107,12 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.solution'),
-        accessor: 'name',
+        accessor: ({ name }: any) => {
+          if (!name) {
+            return t('itSolutionsTable.selectSolution');
+          }
+          return name;
+        },
         Cell: ({
           row,
           value
@@ -111,27 +120,21 @@ const OperationalNeedsTable = ({
           GetOperationalNeedsTableType,
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
-          if (!value) {
-            return (
-              <UswdsReactLink to="/">
-                {t('itSolutionsTable.selectSolution')}
-              </UswdsReactLink>
-            );
+          if (value === t('itSolutionsTable.selectSolution')) {
+            return <UswdsReactLink to="/">{value}</UswdsReactLink>;
           }
           return value;
         }
       },
       {
         Header: t<string>('itSolutionsTable.finishBy'),
-        accessor: 'mustFinishDts',
-        Cell: ({
-          row,
-          value
-        }: CellProps<
-          GetOperationalNeedsTableType,
-          OperationalNeedsSolutionsStatus
-        >): string => {
-          return formatDate(value, 'MM/d/yyyy');
+        accessor: ({ mustFinishDts }: any) => {
+          if (mustFinishDts) {
+            return DateTime.fromISO(mustFinishDts).toLocaleString(
+              DateTime.DATE_SHORT
+            );
+          }
+          return null;
         }
       },
       {
@@ -153,6 +156,9 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.actions'),
+        accessor: ({ status }: CellProps<GetOperationalNeedsTableType>) => {
+          return returnActionText(status);
+        },
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
@@ -211,7 +217,6 @@ const OperationalNeedsTable = ({
     setPageSize,
     page,
     state,
-    rows,
     prepareRow
   } = useTable(
     {
@@ -225,7 +230,7 @@ const OperationalNeedsTable = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalFilterCellText, []),
+      globalFilter: useMemo(() => globalTableFilter, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
@@ -240,8 +245,6 @@ const OperationalNeedsTable = ({
     usePagination
   );
 
-  rows.map(row => prepareRow(row));
-
   if (loading) {
     return <PageLoading />;
   }
@@ -254,7 +257,7 @@ const OperationalNeedsTable = ({
         heading={t('itSolutionsTable.error.heading')}
       >
         <ErrorAlertMessage
-          errorKey="error-crtdls"
+          errorKey="error-it-solutions"
           message={t('itSolutionsTable.error.body')}
         />
       </ErrorAlert>
@@ -266,8 +269,8 @@ const OperationalNeedsTable = ({
       <div className="mint-header__basic">
         <GlobalClientFilter
           setGlobalFilter={setGlobalFilter}
-          tableID={t('requestsTable.id')}
-          tableName={t('requestsTable.title')}
+          tableID={t('itSolutionsTable.id')}
+          tableName={t('itSolutionsTable.title')}
           className="margin-bottom-4 width-mobile-lg maxw-full"
         />
       </div>
@@ -316,6 +319,7 @@ const OperationalNeedsTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
+            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
@@ -331,7 +335,7 @@ const OperationalNeedsTable = ({
                           scope="row"
                           className={classNames('padding-x-1', {
                             'bg-base-lightest':
-                              row.original.status === 'NOT_NEEDED'
+                              row.values.status === 'NOT_NEEDED'
                           })}
                           style={{
                             paddingLeft: '0',
@@ -347,8 +351,7 @@ const OperationalNeedsTable = ({
                       <td
                         {...cell.getCellProps()}
                         className={classNames({
-                          'bg-base-lightest':
-                            row.original.status === 'NOT_NEEDED'
+                          'bg-base-lightest': row.values.status === 'NOT_NEEDED'
                         })}
                         style={{
                           paddingLeft: '0',
