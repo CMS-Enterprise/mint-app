@@ -29,9 +29,10 @@ Priority is given to the solution that gives us flexibility for anticipated futu
 * `+` Having a secondary user table allows us to store more additional data associated to a user.
 * `+` This decouples the idea of a user from an EUAID. A user can be represented even if they have login information that differs from the traditional EUAID.
 * `+` This allows future growth and flexibility. We can cache user information and store it directly in the database
+* `+` It allows us to cache user information that we currently need to reach out to an API for.
 * `-` The current database tables rely on an EUAID, and would need to be re-factored to use this paradigm.
 * `-` Different validation would need to be implemented to verify that the user has a record in MINT outside of IDM managed permissions.
 
 ### Conditional Secondary ID when needed
 * `+` This solution fits all future and current use needs, without complicating the current architecture.
-* `-` If more interactions for with the system for non - eau users are identified in the future, we'd need to revisit this and potentially refactor to a more complex solution.
+* `-` If more interactions for with the system for non - eua users are identified in the future, we'd need to revisit this and potentially refactor to a more complex solution.
