@@ -1,5 +1,6 @@
 const generalCharacteristics = {
   heading: 'General characteristics',
+  clearanceHeading: 'Review general characteristics',
   breadcrumb: 'General characteristics',
   isNewModel: 'Is this a new track of an existing model or a new model?',
   newModel: 'New model',

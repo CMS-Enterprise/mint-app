@@ -537,6 +537,13 @@ export enum PpToAdvertiseType {
   SALESFORCE = "SALESFORCE",
 }
 
+export enum PrepareForClearanceStatus {
+  CANNOT_START = "CANNOT_START",
+  IN_PROGRESS = "IN_PROGRESS",
+  READY = "READY",
+  READY_FOR_CLEARANCE = "READY_FOR_CLEARANCE",
+}
+
 export enum ProviderAddType {
   MANDATORILY = "MANDATORILY",
   NA = "NA",
