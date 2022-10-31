@@ -60,7 +60,7 @@ type TaskListSection string
 
 // These are the options for TaskListSection
 const (
-	TLSModelBasics                     TaskListSection = "MODEL_BASICS"
+	TLSBasics                          TaskListSection = "BASICS"
 	TLSGeneralCharacteristics          TaskListSection = "GENERAL_CHARACTERISTICS"
 	TLSParticipantsAndProviders        TaskListSection = "PARTICIPANTS_AND_PROVIDERS"
 	TLSBeneficiaries                   TaskListSection = "BENEFICIARIES"

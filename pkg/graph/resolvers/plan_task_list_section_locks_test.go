@@ -15,7 +15,7 @@ func (suite *ResolverSuite) TestGetTaskListSectionLocksWithLockedSections() {
 	ps := mockpubsub.NewMockPubSub(mockController)
 	modelPlanID, _ := uuid.Parse("f11eb129-2c80-4080-9440-439cbe1a286f")
 	lockResolver := NewPlanTaskListSectionLocksResolverImplementation()
-	sections := [...]models.TaskListSection{models.TLSModelBasics, models.TLSGeneralCharacteristics}
+	sections := [...]models.TaskListSection{models.TLSBasics, models.TLSGeneralCharacteristics}
 
 	ps.EXPECT().Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, gomock.Any()).Times(4)
 
@@ -46,7 +46,7 @@ func (suite *ResolverSuite) TestLockTaskListSection() {
 	mockController := gomock.NewController(suite.T())
 	ps := mockpubsub.NewMockPubSub(mockController)
 	modelPlanID, _ := uuid.Parse("f11eb129-2c80-4080-9440-439cbe1a286f")
-	section := models.TLSModelBasics
+	section := models.TLSBasics
 
 	ps.EXPECT().Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, gomock.Any())
 

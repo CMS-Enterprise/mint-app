@@ -82,7 +82,7 @@ type TaskListSectionMapType = {
 };
 
 const taskListSectionMap: TaskListSectionMapType = {
-  basics: TaskListSection.MODEL_BASICS,
+  basics: TaskListSection.BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
   generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
   opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
