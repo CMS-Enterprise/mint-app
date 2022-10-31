@@ -35,6 +35,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
+import { RenderFilteredNameHistory } from 'views/ModelPlan/Table';
 
 type ModelPlansTableProps = {
   data: AllModelPlansType[];
@@ -84,12 +85,18 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
         Header: t('allModels.tableHeading.modelName'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
+          const filteredNameHistory: string[] = row.original.nameHistory?.filter(
+            (previousName: string) => previousName !== value
+          );
           return (
-            <UswdsReactLink
-              to={`/models/${row.original.id}/read-only/model-basics`}
-            >
-              {value}
-            </UswdsReactLink>
+            <>
+              <UswdsReactLink
+                to={`/models/${row.original.id}/read-only/model-basics`}
+              >
+                {value}
+              </UswdsReactLink>
+              <RenderFilteredNameHistory names={filteredNameHistory} />
+            </>
           );
         }
       },

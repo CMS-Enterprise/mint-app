@@ -42,7 +42,7 @@ type TableProps = {
   showDownloadButton: boolean;
 };
 
-const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
+export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
   const { t } = useTranslation('home');
   const [isShowingAllNames, setShowAllNames] = useState(false);
 
