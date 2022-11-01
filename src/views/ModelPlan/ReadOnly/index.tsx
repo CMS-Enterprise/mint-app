@@ -417,7 +417,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               <Grid
                 desktop={{ col: 3 }}
                 className={classnames('padding-right-4 sticky-nav', {
-                  'sticky-nav__collaborator': editAccess
+                  'sticky-nav__collaborator': editAccess && !isHelpArticle
                 })}
               >
                 <SideNav subComponents={subComponents} />
@@ -445,7 +445,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         desktop={{ col: 4 }}
                         className={classnames({
                           'sticky-nav': !isMobile,
-                          'sticky-nav__collaborator': editAccess
+                          'sticky-nav__collaborator':
+                            editAccess && !isHelpArticle
                         })}
                       >
                         <ContactInfo modelID={modelID} />
