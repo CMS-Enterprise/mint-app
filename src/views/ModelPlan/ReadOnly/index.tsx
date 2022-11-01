@@ -58,8 +58,9 @@ import ReadOnlyTeamInfo from './Team';
 import './index.scss';
 
 type subComponentProps = {
-  component: React.ReactNode;
   route: string;
+  helpRoute: string;
+  component: React.ReactNode;
 };
 
 export interface subComponentsProps {
@@ -187,46 +188,60 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
       component: <ReadOnlyModelBasics modelID={modelID} />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/general-characteristics',
       component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
     },
     'participants-and-providers': {
       route: `/models/${modelID}/read-only/participants-and-providers`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/participants-and-providers',
       component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/beneficiaries',
       component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
       component: <h1>operationsEvaluationAndLearning</h1>
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/payment',
       component: <ReadOnlyPayments modelID={modelID} />
     },
     'it-tools': {
       route: `/models/${modelID}/read-only/it-tools`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/it-tools',
       component: <h1>itTools</h1>
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/team',
       component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/discussions',
       component: <ReadOnlyDiscussions modelID={modelID} />
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/documents',
       component: <ReadOnlyDocuments modelID={modelID} />
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
       component: <ReadOnlyCRTDLs modelID={modelID} />
     }
   };
@@ -400,7 +415,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         </GridContainer>
       </SectionWrapper>
 
-      <MobileNav subComponents={subComponents} subinfo={subinfo} />
+      <MobileNav
+        subComponents={subComponents}
+        subinfo={subinfo}
+        isHelpArticle={isHelpArticle}
+      />
 
       <SectionWrapper className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
@@ -420,7 +439,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                   'sticky-nav__collaborator': editAccess && !isHelpArticle
                 })}
               >
-                <SideNav subComponents={subComponents} />
+                <SideNav
+                  subComponents={subComponents}
+                  isHelpArticle={isHelpArticle}
+                />
               </Grid>
             )}
 
