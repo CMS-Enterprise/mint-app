@@ -3,6 +3,8 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
+import { MessageProvider } from 'hooks/useMessage';
+
 import ModelPlan from './index';
 
 describe('Read Only Model Plan Overivew', () => {
@@ -11,7 +13,9 @@ describe('Read Only Model Plan Overivew', () => {
       <MemoryRouter initialEntries={['/models']}>
         <MockedProvider>
           <Route path="/models">
-            <ModelPlan />
+            <MessageProvider>
+              <ModelPlan />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>
