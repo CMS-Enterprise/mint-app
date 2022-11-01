@@ -8,7 +8,7 @@ const home = {
   previously: 'previously ',
   viewMore: 'View {{-number}} more',
   viewLess: 'View less',
-  more: ' more',
+  more: 'more',
   mintTasks: [
     'collaborate on requirements for new CMMI models and demonstrations',
     'access resources to help you complete your model plans'
