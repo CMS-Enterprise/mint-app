@@ -293,14 +293,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
@@ -359,13 +359,6 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
-}
-
-// AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
-func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, needed, principal, r.store)
 }
 
 // AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.

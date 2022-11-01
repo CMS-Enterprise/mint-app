@@ -4,6 +4,7 @@ SELECT
     pOpNd.id AS need_type,
     pOpNd.need_name AS need_name,
     pOpNd.need_key AS need_key,
+    pOpNd.section AS section,
     OpNd.name_other,
     OpNd.needed AS needed,
     OpNd.created_by AS created_by,

@@ -1,9 +1,5 @@
 package resolvers
 
-import (
-	"github.com/cmsgov/mint-app/pkg/models"
-)
-
 func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("plan for need")
 
@@ -26,25 +22,6 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	suite.NotNil(firstNeed.CreatedDts)
 	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query //TODO
 	suite.Nil(firstNeed.Needed)  //Needed should not yet be set
-
-}
-
-func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdate() {
-
-	// 1. Create plan
-	plan := suite.createModelPlan("plan for need")
-
-	//2. Update need and make sure fields change. A Different Key means a different entry
-	needed := false
-	needKey := models.OpNKAcquireALearnCont
-	need, err := OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-	suite.NotNil(need)
-	suite.NotNil(need.ModifiedDts)
-
-	suite.EqualValues(need.Needed, &needed)
-	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
-	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 }
 

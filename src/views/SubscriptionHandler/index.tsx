@@ -36,7 +36,7 @@ type TaskListSectionMapType = {
 
 // Map used to connect url route to Subscription Task List Section
 export const taskListSectionMap: TaskListSectionMapType = {
-  basics: TaskListSection.MODEL_BASICS,
+  basics: TaskListSection.BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
   characteristics: TaskListSection.GENERAL_CHARACTERISTICS,
   'it-tools': TaskListSection.IT_TOOLS,

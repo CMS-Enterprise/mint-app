@@ -7,16 +7,23 @@ type NDAWrapperProps = {
 };
 
 const NDAWrapper = ({ children }: NDAWrapperProps) => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+
   const history = useHistory();
 
   const user = useSelector((state: RootStateOrAny) => state.auth);
 
   useEffect(() => {
     if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {
-      history.push('/pre-decisional-notice');
+      history.push({
+        pathname: '/pre-decisional-notice',
+        state: {
+          nextState:
+            pathname !== '/pre-decisional-notice' && pathname + (search || '')
+        }
+      });
     }
-  }, [pathname, history, user?.acceptedNDA]);
+  }, [history, pathname, search, user?.acceptedNDA]);
 
   return <>{children}</>;
 };

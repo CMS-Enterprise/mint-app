@@ -16,6 +16,7 @@ import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 import useFavoritePlan from 'hooks/useFavoritePlan';
+import useMessage from 'hooks/useMessage';
 import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
 import {
   GetAllModelPlans as GetAllModelPlansType,
@@ -51,11 +52,14 @@ const ModelPlan = () => {
     }).then(refetch);
   };
 
+  const { message } = useMessage();
+
   return (
     <MainContent data-testid="model-plan-overview">
       <NDABanner collapsable className="margin-top-0" />
       <GridContainer>
         <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+          {message}
           <PageHeading className="margin-bottom-1">{t('heading')}</PageHeading>
           <p className="line-height-body-5 font-body-lg text-light margin-bottom-05 margin-top-0">
             {t('subheading')}
