@@ -63,7 +63,7 @@ type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   type: 'needs' | 'possibleNeeds';
-  readOnly?: boolean;
+  readOnly?: boolean; // TODO: used to render when readonly component is developed
 };
 
 const OperationalNeedsTable = ({
@@ -83,6 +83,7 @@ const OperationalNeedsTable = ({
     }
   });
 
+  // Memoized function to return/filter possible needs and needed solutions
   const operationalNeeds = useMemo(() => {
     const needData = data?.modelPlan?.operationalNeeds
       ? data?.modelPlan?.operationalNeeds
