@@ -78,9 +78,8 @@ type OperationalNeed {
     id: UUID!
     modelPlanID: UUID!
 
-    # needType: Int
     needed: Boolean # if null, it has not been answered
-    solutions: OperationalSolutions!
+    solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
 
     key: OperationalNeedKey
     name: String
@@ -1429,7 +1428,7 @@ type OperationalSolution {
     operationalNeedID: UUID!
 
     solutionType: Int
-    archived: Boolean!
+    needed: Boolean # if null, it has not been selectd
     name: String
     key: OperationalSolutionKey
     nameOther: String
@@ -1447,7 +1446,7 @@ type OperationalSolution {
 }
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-    archived: Boolean
+    needed: Boolean
     pocName: String     
     pocEmail: String
     mustStartDts: Time

@@ -11,7 +11,7 @@ type OperationalSolution struct {
 	baseStruct
 	OperationalNeedID uuid.UUID               `json:"operationalNeedID" db:"operational_need_id"`
 	SolutionType      *int                    `json:"solutionType" db:"solution_type"`
-	Archived          bool                    `json:"archived" db:"archived"`
+	Needed            *bool                   `json:"needed" db:"needed"` // Null means that it is not an actual record
 	Name              *string                 `json:"name" db:"sol_name"`
 	Key               *OperationalSolutionKey `json:"key" db:"sol_key"`
 	NameOther         *string                 `json:"nameOther" db:"name_other"`

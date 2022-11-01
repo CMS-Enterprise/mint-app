@@ -27,6 +27,14 @@ func OperationaSolutionsGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid
 	return &opSols, nil
 }
 
+// OperationaSolutionsAndPossibleGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need
+func OperationaSolutionsAndPossibleGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool, store *storage.Store) ([]*models.OperationalSolution, error) {
+
+	sols, err := store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger, operationalNeedID, includeNotNeeded)
+
+	return sols, err
+}
+
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready
 func OperationalSolutionInsertOrUpdate(logger *zap.Logger, operationNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
 

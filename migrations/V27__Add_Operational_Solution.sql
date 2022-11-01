@@ -11,7 +11,7 @@ CREATE TYPE OP_SOLUTION_STATUS AS ENUM (
 CREATE TABLE operational_solution (
     id UUID PRIMARY KEY NOT NULL,
     operational_need_id UUID NOT NULL, --foreign key to operational need
-    archived BOOL NOT NULL DEFAULT FALSE,
+    needed BOOL NOT NULL DEFAULT FALSE,
     solution_type INT,
     name_other ZERO_STRING,
 

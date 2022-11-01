@@ -68,7 +68,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.EUAID)
 	suite.NotNil(sol.CreatedDts)
 	suite.NotNil(sol.Name)
-	suite.EqualValues(sol.Archived, false)
+	suite.EqualValues(sol.Needed, false)
 	suite.EqualValues(sol.Key, &solType)
 	suite.EqualValues(sol.Status, defStatus)
 
@@ -78,7 +78,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	pocEmail := "tester@email.com"
 	mustStartDts := time.Now()
 	mustFinishDts := time.Now()
-	changes["archived"] = true
+	changes["needed"] = true
 	changes["pocName"] = pocName
 	changes["pocEmail"] = pocEmail
 	changes["mustStartDts"] = mustStartDts
@@ -94,7 +94,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 	//update correct
-	suite.EqualValues(sol.Archived, true)
+	suite.EqualValues(sol.Needed, true)
 	suite.EqualValues(sol.PocName, &pocName)
 	suite.EqualValues(sol.PocEmail, &pocEmail)
 	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 30*time.Second)
@@ -136,7 +136,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.EqualValues(sol.NameOther, &solTypeCustom)
 	suite.NotNil(sol.CreatedDts)
 
-	suite.EqualValues(sol.Archived, false)
+	suite.EqualValues(sol.Needed, false)
 
 	suite.EqualValues(sol.Status, defStatus)
 
@@ -146,7 +146,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	pocEmail := "tester@email.com"
 	mustStartDts := time.Now()
 	mustFinishDts := time.Now()
-	changes["archived"] = true
+	changes["needed"] = true
 	changes["pocName"] = pocName
 	changes["pocEmail"] = pocEmail
 	changes["mustStartDts"] = mustStartDts
@@ -162,7 +162,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 	//update correct
-	suite.EqualValues(sol.Archived, true)
+	suite.EqualValues(sol.Needed, true)
 	suite.EqualValues(sol.PocName, &pocName)
 	suite.EqualValues(sol.PocEmail, &pocEmail)
 	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 30*time.Second)

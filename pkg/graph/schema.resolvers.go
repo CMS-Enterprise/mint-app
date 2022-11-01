@@ -397,9 +397,9 @@ func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Conte
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeedID(logger, obj.ID, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
