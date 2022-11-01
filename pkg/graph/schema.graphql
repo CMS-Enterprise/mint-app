@@ -85,6 +85,7 @@ type OperationalNeed {
     key: OperationalNeedKey
     name: String
     nameOther: String
+    section: TaskListSection
 
     createdBy: String!
     createdDts: Time!
@@ -97,6 +98,7 @@ type PossibleOperationalNeed {
     possibleSolutions: [PossibleOperationalSolution!]!
     name: String!
     key: OperationalNeedKey!
+    section: TaskListSection
 
     createdBy: String!
     createdDts: Time!
@@ -1564,9 +1566,6 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! 
-@hasRole(role: MINT_USER)
-
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
 @hasRole(role: MINT_USER)
 
@@ -1618,7 +1617,7 @@ enum TaskStatusInput {
 }
 
 enum TaskListSection {
-  MODEL_BASICS,
+  BASICS,
   GENERAL_CHARACTERISTICS,
   PARTICIPANTS_AND_PROVIDERS,
   BENEFICIARIES,

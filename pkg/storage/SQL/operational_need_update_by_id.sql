@@ -24,6 +24,7 @@ SELECT
     retVal.need_type,
     pon.need_name,
     pon.need_key,
+    pon.section,
     retVal.name_other,
     retVal.needed,
     retVal.created_by,
