@@ -79,11 +79,14 @@ export type SubpageKey =
   | 'documents'
   | 'crs-and-tdl';
 
-const ReadOnly = () => {
+const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
-  const { modelID, subinfo } = useParams<{
+  const {
+    modelID = `${isHelpArticle ? 'd32493bc-1aae-41fe-bd4e-661a1f13a8b9' : ''}`,
+    subinfo
+  } = useParams<{
     modelID: string;
     subinfo: SubpageKey;
   }>();
@@ -239,7 +242,9 @@ const ReadOnly = () => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
-      {editAccess && <ModelSubNav modelID={modelID} link="task-list" />}
+      {!isHelpArticle && editAccess && (
+        <ModelSubNav modelID={modelID} link="task-list" />
+      )}
 
       <SummaryBox
         heading=""
@@ -247,23 +252,28 @@ const ReadOnly = () => {
         data-testid="read-only-model-summary"
       >
         <GridContainer>
-          <div className="display-flex flex-justify">
-            <UswdsReactLink
-              to="/models"
-              className="display-flex flex-align-center margin-bottom-3"
-            >
-              <IconArrowBack className="text-primary margin-right-1" />
-              {h('back')}
-            </UswdsReactLink>
+          {!isHelpArticle && (
+            <div className="display-flex flex-justify">
+              <UswdsReactLink
+                to="/models"
+                className="display-flex flex-align-center margin-bottom-3"
+              >
+                <IconArrowBack className="text-primary margin-right-1" />
+                {h('back')}
+              </UswdsReactLink>
 
-            <FavoriteIcon
-              isFavorite={isFavorite}
-              modelPlanID={id}
-              updateFavorite={handleUpdateFavorite}
-            />
-          </div>
+              <FavoriteIcon
+                isFavorite={isFavorite}
+                modelPlanID={id}
+                updateFavorite={handleUpdateFavorite}
+              />
+            </div>
+          )}
 
-          <PageHeading className="margin-0 line-height-sans-2 minh-6">
+          <PageHeading
+            className="margin-0 line-height-sans-2 minh-6"
+            headingLevel={isHelpArticle ? 'h2' : 'h1'}
+          >
             {modelName}
           </PageHeading>
 
