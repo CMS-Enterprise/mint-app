@@ -6,6 +6,7 @@ import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
+import SectionWrapper from 'components/shared/SectionWrapper';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
 
 export const SampleModelPlan = () => {
@@ -26,7 +27,9 @@ export const SampleModelPlan = () => {
         </GridContainer>
       </MainContent>
       <ReadOnly isHelpArticle />
-      <RelatedArticles currentArticle={t('title')} />
+      <SectionWrapper className="margin-top-6">
+        <RelatedArticles currentArticle={t('title')} />
+      </SectionWrapper>
     </>
   );
 };
