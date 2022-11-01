@@ -85,8 +85,8 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
         Header: t('allModels.tableHeading.modelName'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
-          const filteredNameHistory: string[] = row.original.nameHistory?.filter(
-            (previousName: string) => previousName !== value
+          const filteredNameHistory: string[] = row.original.nameHistory?.slice(
+            1
           );
           return (
             <>

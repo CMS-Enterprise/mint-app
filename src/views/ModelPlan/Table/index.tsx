@@ -83,8 +83,8 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
         Header: t('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
-          const filteredNameHistory: string[] = row.original.nameHistory?.filter(
-            (previousName: string) => previousName !== value
+          const filteredNameHistory: string[] = row.original.nameHistory?.slice(
+            1
           );
           return (
             <>
