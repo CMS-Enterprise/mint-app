@@ -85,7 +85,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
   const {
-    modelID = `${isHelpArticle ? 'd32493bc-1aae-41fe-bd4e-661a1f13a8b9' : ''}`,
+    modelID = `${isHelpArticle ? '864e0bbf-674d-427e-a95a-d9e7b300b713' : ''}`,
     subinfo
   } = useParams<{
     modelID: string;
@@ -237,12 +237,16 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     documents: {
       route: `/models/${modelID}/read-only/documents`,
       helpRoute: '/help-and-knowledge/sample-model-plan/documents',
-      component: <ReadOnlyDocuments modelID={modelID} />
+      component: (
+        <ReadOnlyDocuments modelID={modelID} isHelpArticle={isHelpArticle} />
+      )
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
       helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
-      component: <ReadOnlyCRTDLs modelID={modelID} />
+      component: (
+        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
+      )
     }
   };
 

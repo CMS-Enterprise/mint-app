@@ -7,7 +7,13 @@ import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
 
 type DocumentStatusType = 'success' | 'error';
 
-const ReadOnlyDocuments = ({ modelID }: { modelID: string }) => {
+const ReadOnlyDocuments = ({
+  modelID,
+  isHelpArticle
+}: {
+  modelID: string;
+  isHelpArticle?: boolean;
+}) => {
   const { t } = useTranslation('documents');
 
   const [documentMessage, setDocumentMessage] = useState('');
@@ -38,6 +44,8 @@ const ReadOnlyDocuments = ({ modelID }: { modelID: string }) => {
           </Alert>
         </Expire>
       )}
+
+      {/* TODO: Pass down isHelpArticle down to Table component */}
 
       <PlanDocumentsTable
         modelID={modelID}

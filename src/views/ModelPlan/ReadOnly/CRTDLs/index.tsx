@@ -7,7 +7,13 @@ import CRTDLTable from 'views/ModelPlan/CRTDL/CRTDLs/table';
 
 type CRTDLStatusType = 'success' | 'error';
 
-const ReadOnlyCRTDLs = ({ modelID }: { modelID: string }) => {
+const ReadOnlyCRTDLs = ({
+  modelID,
+  isHelpArticle
+}: {
+  modelID: string;
+  isHelpArticle?: boolean;
+}) => {
   const { t } = useTranslation('crtdl');
   const [crtdlMessage, setCRTDLMessage] = useState('');
   const [crtdlStatus, setCRTDLStatus] = useState<CRTDLStatusType>('error');
@@ -36,6 +42,7 @@ const ReadOnlyCRTDLs = ({ modelID }: { modelID: string }) => {
         </Expire>
       )}
 
+      {/* TODO: Pass down isHelpArticle down to Table component */}
       <CRTDLTable
         modelID={modelID}
         readOnly
