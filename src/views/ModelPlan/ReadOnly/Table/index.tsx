@@ -95,7 +95,9 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
               >
                 {value}
               </UswdsReactLink>
-              <RenderFilteredNameHistory names={filteredNameHistory} />
+              {filteredNameHistory && filteredNameHistory.length > 0 && (
+                <RenderFilteredNameHistory names={filteredNameHistory} />
+              )}
             </>
           );
         }
