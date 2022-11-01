@@ -50,9 +50,11 @@ export const filterNeedsFormatSolutions = (
 const formatSolutionsFromNeed = (
   need: GetOperationalNeedsOperationalNeedsType
 ) => {
-  return need.solutions.solutions.map(solution => {
-    return { ...solution, needName: need.name };
-  });
+  return need.solutions.solutions
+    .filter(solution => !solution.archived) // Don't display archived solutions in table
+    .map(solution => {
+      return { ...solution, needName: need.name };
+    });
 };
 
 // Utility to populate an empty solution from an operational need

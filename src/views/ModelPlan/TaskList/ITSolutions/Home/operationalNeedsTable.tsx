@@ -108,11 +108,12 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.solution'),
-        accessor: ({ name }: any) => {
-          if (!name) {
+        accessor: ({ name, nameOther }: any) => {
+          if (!name && !nameOther) {
             return t('itSolutionsTable.selectSolution');
           }
-          return name;
+          // Resturn custom name if exists, otherwise return standard solution name
+          return nameOther || name;
         },
         Cell: ({
           row,
