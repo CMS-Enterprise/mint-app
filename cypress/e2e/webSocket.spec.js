@@ -18,7 +18,7 @@ describe('Web Socket Connections', () => {
       cy.task('lockTaskListSection', {
         euaId: 'KR14',
         modelPlanID,
-        section: TaskListSection.MODEL_BASICS
+        section: TaskListSection.BASICS
       });
 
       cy.get('[data-testid="basics"]').should('be.disabled');

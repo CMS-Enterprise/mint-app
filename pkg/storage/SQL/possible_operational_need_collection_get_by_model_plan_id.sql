@@ -2,6 +2,7 @@ SELECT
     id,
     need_name,
     need_key,
+    section,
     created_by,
     created_dts,
     modified_by,

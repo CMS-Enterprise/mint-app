@@ -122,20 +122,6 @@ func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber strin
 	return crTdl
 }
 
-func (suite *ResolverSuite) createOperationalNeed(mp *models.ModelPlan, needType *models.OperationalNeedKey, customNeedType *string, needed bool) *models.OperationalNeed {
-
-	if needType != nil {
-		opNeed, err := OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, mp.ID, *needType, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
-		suite.NoError(err)
-		return opNeed
-	}
-
-	opNeed, err := OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, mp.ID, *customNeedType, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-	return opNeed
-
-}
-
 // func (suite *ResolverSuite) createOperationalSolution(opNeed *models.OperationalNeed, solutionType *models.OperationalSolutionKey, customSolutionType *string, needed bool) *models.OperationalSolution {
 
 // 	changes := map[string]interface{}{
