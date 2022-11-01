@@ -148,7 +148,6 @@ type ComplexityRoot struct {
 	Mutation struct {
 		AddOrUpdateCustomOperationalNeed     func(childComplexity int, modelPlanID uuid.UUID, customNeedType string, needed bool) int
 		AddOrUpdateCustomOperationalSolution func(childComplexity int, operationalNeedID uuid.UUID, customSolutionType string, changes map[string]interface{}) int
-		AddOrUpdateOperationalNeed           func(childComplexity int, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) int
 		AddOrUpdateOperationalSolution       func(childComplexity int, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) int
 		AddPlanFavorite                      func(childComplexity int, modelPlanID uuid.UUID) int
 		AgreeToNda                           func(childComplexity int, agree bool) int
@@ -163,9 +162,9 @@ type ComplexityRoot struct {
 		DeletePlanDiscussion                 func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument                   func(childComplexity int, id uuid.UUID) int
 		DeletePlanFavorite                   func(childComplexity int, modelPlanID uuid.UUID) int
-		LockTaskListSection                  func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
+		LockTaskListSection                  func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UnlockAllTaskListSections            func(childComplexity int, modelPlanID uuid.UUID) int
-		UnlockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
+		UnlockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID      func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
 		UpdateCustomOperationalSolutionByID  func(childComplexity int, id uuid.UUID, customSolutionType *string, changes map[string]interface{}) int
 		UpdateDiscussionReply                func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -199,6 +198,7 @@ type ComplexityRoot struct {
 		Name        func(childComplexity int) int
 		NameOther   func(childComplexity int) int
 		Needed      func(childComplexity int) int
+		Section     func(childComplexity int) int
 		Solutions   func(childComplexity int) int
 	}
 
@@ -773,6 +773,7 @@ type ComplexityRoot struct {
 		ModifiedDts       func(childComplexity int) int
 		Name              func(childComplexity int) int
 		PossibleSolutions func(childComplexity int) int
+		Section           func(childComplexity int) int
 	}
 
 	PossibleOperationalSolution struct {
@@ -874,8 +875,8 @@ type MutationResolver interface {
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
-	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
-	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
+	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
+	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
@@ -884,7 +885,6 @@ type MutationResolver interface {
 	CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error)
 	UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error)
 	DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
-	AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error)
 	AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error)
 	UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error)
 	AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error)
@@ -1548,18 +1548,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddOrUpdateCustomOperationalSolution(childComplexity, args["operationalNeedID"].(uuid.UUID), args["customSolutionType"].(string), args["changes"].(map[string]interface{})), true
 
-	case "Mutation.addOrUpdateOperationalNeed":
-		if e.complexity.Mutation.AddOrUpdateOperationalNeed == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addOrUpdateOperationalNeed_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddOrUpdateOperationalNeed(childComplexity, args["modelPlanID"].(uuid.UUID), args["needType"].(models.OperationalNeedKey), args["needed"].(bool)), true
-
 	case "Mutation.addOrUpdateOperationalSolution":
 		if e.complexity.Mutation.AddOrUpdateOperationalSolution == nil {
 			break
@@ -1738,7 +1726,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
+		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(models.TaskListSection)), true
 
 	case "Mutation.unlockAllTaskListSections":
 		if e.complexity.Mutation.UnlockAllTaskListSections == nil {
@@ -1762,7 +1750,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
+		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(models.TaskListSection)), true
 
 	case "Mutation.updateCustomOperationalNeedByID":
 		if e.complexity.Mutation.UpdateCustomOperationalNeedByID == nil {
@@ -2027,6 +2015,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalNeed.Needed(childComplexity), true
+
+	case "OperationalNeed.section":
+		if e.complexity.OperationalNeed.Section == nil {
+			break
+		}
+
+		return e.complexity.OperationalNeed.Section(childComplexity), true
 
 	case "OperationalNeed.solutions":
 		if e.complexity.OperationalNeed.Solutions == nil {
@@ -5731,6 +5726,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PossibleOperationalNeed.PossibleSolutions(childComplexity), true
 
+	case "PossibleOperationalNeed.section":
+		if e.complexity.PossibleOperationalNeed.Section == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalNeed.Section(childComplexity), true
+
 	case "PossibleOperationalSolution.createdBy":
 		if e.complexity.PossibleOperationalSolution.CreatedBy == nil {
 			break
@@ -6213,6 +6215,7 @@ type OperationalNeed {
     key: OperationalNeedKey
     name: String
     nameOther: String
+    section: TaskListSection
 
     createdBy: String!
     createdDts: Time!
@@ -6225,6 +6228,7 @@ type PossibleOperationalNeed {
     possibleSolutions: [PossibleOperationalSolution!]!
     name: String!
     key: OperationalNeedKey!
+    section: TaskListSection
 
     createdBy: String!
     createdDts: Time!
@@ -7692,9 +7696,6 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! 
-@hasRole(role: MINT_USER)
-
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
 @hasRole(role: MINT_USER)
 
@@ -7746,7 +7747,7 @@ enum TaskStatusInput {
 }
 
 enum TaskListSection {
-  MODEL_BASICS,
+  BASICS,
   GENERAL_CHARACTERISTICS,
   PARTICIPANTS_AND_PROVIDERS,
   BENEFICIARIES,
@@ -8534,39 +8535,6 @@ func (ec *executionContext) field_Mutation_addOrUpdateCustomOperationalSolution_
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_addOrUpdateOperationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["modelPlanID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["modelPlanID"] = arg0
-	var arg1 models.OperationalNeedKey
-	if tmp, ok := rawArgs["needType"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("needType"))
-		arg1, err = ec.unmarshalNOperationalNeedKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["needType"] = arg1
-	var arg2 bool
-	if tmp, ok := rawArgs["needed"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("needed"))
-		arg2, err = ec.unmarshalNBoolean2bool(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["needed"] = arg2
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_addOrUpdateOperationalSolution_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -8807,10 +8775,10 @@ func (ec *executionContext) field_Mutation_lockTaskListSection_args(ctx context.
 		}
 	}
 	args["modelPlanID"] = arg0
-	var arg1 model.TaskListSection
+	var arg1 models.TaskListSection
 	if tmp, ok := rawArgs["section"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
-		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
+		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -8846,10 +8814,10 @@ func (ec *executionContext) field_Mutation_unlockTaskListSection_args(ctx contex
 		}
 	}
 	args["modelPlanID"] = arg0
-	var arg1 model.TaskListSection
+	var arg1 models.TaskListSection
 	if tmp, ok := rawArgs["section"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
-		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
+		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -13210,6 +13178,8 @@ func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.
 				return ec.fieldContext_OperationalNeed_name(ctx, field)
 			case "nameOther":
 				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
+			case "section":
+				return ec.fieldContext_OperationalNeed_section(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
 			case "createdDts":
@@ -15837,7 +15807,7 @@ func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, f
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
+			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(models.TaskListSection))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -15916,7 +15886,7 @@ func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
+			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(models.TaskListSection))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -16868,109 +16838,6 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_addOrUpdateOperationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addOrUpdateOperationalNeed(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().AddOrUpdateOperationalNeed(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["needType"].(models.OperationalNeedKey), fc.Args["needed"].(bool))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.OperationalNeed); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalNeed`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.OperationalNeed)
-	fc.Result = res
-	return ec.marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeed(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_addOrUpdateOperationalNeed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalNeed_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalNeed_needed(ctx, field)
-			case "solutions":
-				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
-			case "key":
-				return ec.fieldContext_OperationalNeed_key(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalNeed_name(ctx, field)
-			case "nameOther":
-				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addOrUpdateOperationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_addOrUpdateCustomOperationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_addOrUpdateCustomOperationalNeed(ctx, field)
 	if err != nil {
@@ -17048,6 +16915,8 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateCustomOperationalNe
 				return ec.fieldContext_OperationalNeed_name(ctx, field)
 			case "nameOther":
 				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
+			case "section":
+				return ec.fieldContext_OperationalNeed_section(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
 			case "createdDts":
@@ -17151,6 +17020,8 @@ func (ec *executionContext) fieldContext_Mutation_updateCustomOperationalNeedByI
 				return ec.fieldContext_OperationalNeed_name(ctx, field)
 			case "nameOther":
 				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
+			case "section":
+				return ec.fieldContext_OperationalNeed_section(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
 			case "createdDts":
@@ -17898,6 +17769,47 @@ func (ec *executionContext) fieldContext_OperationalNeed_nameOther(ctx context.C
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _OperationalNeed_section(ctx context.Context, field graphql.CollectedField, obj *models.OperationalNeed) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalNeed_section(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Section, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.TaskListSection)
+	fc.Result = res
+	return ec.marshalOTaskListSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_OperationalNeed_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "OperationalNeed",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskListSection does not have child fields")
 		},
 	}
 	return fc, nil
@@ -40090,6 +40002,47 @@ func (ec *executionContext) fieldContext_PossibleOperationalNeed_key(ctx context
 	return fc, nil
 }
 
+func (ec *executionContext) _PossibleOperationalNeed_section(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalNeed) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalNeed_section(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Section, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(models.TaskListSection)
+	fc.Result = res
+	return ec.marshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalNeed_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalNeed",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskListSection does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PossibleOperationalNeed_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalNeed) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PossibleOperationalNeed_createdBy(ctx, field)
 	if err != nil {
@@ -41792,6 +41745,8 @@ func (ec *executionContext) fieldContext_Query_possibleOperationalNeeds(ctx cont
 				return ec.fieldContext_PossibleOperationalNeed_name(ctx, field)
 			case "key":
 				return ec.fieldContext_PossibleOperationalNeed_key(ctx, field)
+			case "section":
+				return ec.fieldContext_PossibleOperationalNeed_section(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PossibleOperationalNeed_createdBy(ctx, field)
 			case "createdDts":
@@ -42208,9 +42163,9 @@ func (ec *executionContext) _TaskListSectionLockStatus_section(ctx context.Conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.TaskListSection)
+	res := resTmp.(models.TaskListSection)
 	fc.Result = res
-	return ec.marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, field.Selections, res)
+	return ec.marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -45626,15 +45581,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "addOrUpdateOperationalNeed":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addOrUpdateOperationalNeed(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "addOrUpdateCustomOperationalNeed":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -45782,6 +45728,10 @@ func (ec *executionContext) _OperationalNeed(ctx context.Context, sel ast.Select
 		case "nameOther":
 
 			out.Values[i] = ec._OperationalNeed_nameOther(ctx, field, obj)
+
+		case "section":
+
+			out.Values[i] = ec._OperationalNeed_section(ctx, field, obj)
 
 		case "createdBy":
 
@@ -49560,6 +49510,10 @@ func (ec *executionContext) _PossibleOperationalNeed(ctx context.Context, sel as
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "section":
+
+			out.Values[i] = ec._PossibleOperationalNeed_section(ctx, field, obj)
+
 		case "createdBy":
 
 			out.Values[i] = ec._PossibleOperationalNeed_createdBy(ctx, field, obj)
@@ -55939,14 +55893,20 @@ func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel
 	return ret
 }
 
-func (ec *executionContext) unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx context.Context, v interface{}) (model.TaskListSection, error) {
-	var res model.TaskListSection
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (models.TaskListSection, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.TaskListSection(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v model.TaskListSection) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v models.TaskListSection) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.TaskListSectionLockStatus) graphql.Marshaler {
@@ -60859,6 +60819,34 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 		return graphql.Null
 	}
 	res := graphql.MarshalString(*v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (models.TaskListSection, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.TaskListSection(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v models.TaskListSection) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOTaskListSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, v interface{}) (*models.TaskListSection, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.TaskListSection(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTaskListSection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v *models.TaskListSection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
 	return res
 }
 

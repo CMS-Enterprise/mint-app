@@ -12,7 +12,9 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKOutlookMailbox
 
-	need := suite.createOperationalNeed(plan, &needType, nil, true)
+	// need := suite.createOperationalNeed(plan, &needType,  true)
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
 	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -42,7 +44,8 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	needType := models.OpNKAcquireALearnCont
 	solType := models.OpSKOutlookMailbox
 
-	need := suite.createOperationalNeed(plan, &needType, nil, true)
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
 
 	changes := map[string]interface{}{}
 	defStatus := models.OpSNotStarted
@@ -107,7 +110,8 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	needType := models.OpNKAcquireALearnCont
 	solTypeCustom := "A Unit test to test operational solutions"
 
-	need := suite.createOperationalNeed(plan, &needType, nil, true)
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
 
 	changes := map[string]interface{}{}
 	defStatus := models.OpSNotStarted
@@ -174,7 +178,8 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	needType := models.OpNKAcquireALearnCont
 	solTypeCustom := "A Unit test to test operational solutions"
 
-	need := suite.createOperationalNeed(plan, &needType, nil, true)
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
 
 	changes := map[string]interface{}{}
 
