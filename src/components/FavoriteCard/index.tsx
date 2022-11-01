@@ -77,9 +77,8 @@ const FavoriteCard = ({
         </div>
         <p className="margin-y-0 font-body-xs line-height-sans-2">
           {h('previously')} {firstThreeNames}{' '}
-          {filteredList.length > 3
-            ? `+ ${filteredList.length - 3} ${h('more')}`
-            : ''}
+          {filteredList.length > 3 ??
+            `+ ${filteredList.length - 3} ${h('more')}`}
         </p>
         <p className="bookmark__body-text line-height-body-4">
           {basics.goal || ''}
