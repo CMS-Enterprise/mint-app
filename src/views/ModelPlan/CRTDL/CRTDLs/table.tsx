@@ -34,6 +34,7 @@ type CRTDLTableProps = {
   readOnly?: boolean;
   setCRTDLMessage: (value: string) => void;
   setCRTDLStatus: (value: CRTDLStatusType) => void;
+  isHelpArticle?: boolean;
 };
 
 type CRTDLStatusType = 'success' | 'error';
@@ -43,7 +44,8 @@ const CRTDLTable = ({
   modelID,
   readOnly,
   setCRTDLMessage,
-  setCRTDLStatus
+  setCRTDLStatus,
+  isHelpArticle
 }: CRTDLTableProps) => {
   const { t } = useTranslation('crtdl');
   const {
@@ -94,7 +96,7 @@ const CRTDLTable = ({
       setCRTDLMessage={setCRTDLMessage}
       setCRTDLStatus={setCRTDLStatus}
       readOnly={readOnly}
-      hasEditAccess={hasEditAccess}
+      hasEditAccess={!isHelpArticle && hasEditAccess}
     />
   );
 };

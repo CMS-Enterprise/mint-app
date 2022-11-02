@@ -42,12 +42,12 @@ const ReadOnlyCRTDLs = ({
         </Expire>
       )}
 
-      {/* TODO: Pass down isHelpArticle down to Table component */}
       <CRTDLTable
         modelID={modelID}
         readOnly
         setCRTDLMessage={setCRTDLMessage}
         setCRTDLStatus={setCRTDLStatus}
+        isHelpArticle={isHelpArticle}
       />
     </div>
   );
