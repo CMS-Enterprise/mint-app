@@ -7,9 +7,7 @@ describe('The Model Plan Form', () => {
     cy.visit('/');
 
     cy.contains('a', 'Start a new Model Plan').click();
-
     cy.contains('h1', 'Start a new model plan');
-
     cy.get('[data-testid="continue-link"]').click();
 
     // General Model Plan Information
@@ -32,7 +30,7 @@ describe('The Model Plan Form', () => {
   it('create and renames a model plan', () => {
     cy.visit('/');
 
-    cy.contains('a', 'SStart a new Model Plan').click();
+    cy.contains('a', 'Start a new Model Plan').click();
     cy.contains('h1', 'Start a new model plan');
     cy.get('[data-testid="continue-link"]').click();
 
@@ -110,7 +108,7 @@ describe('The Model Plan Form', () => {
         /\/models\/.{36}\/task-list\/basics\/milestones/
       );
     });
-    cy.contains('h3', 'High level timeline');
+    cy.contains('h3', 'Anticipated high level timeline');
     cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
     cy.contains('button', 'Save and start next Model Plan section').click();
 
@@ -172,7 +170,7 @@ describe('The Model Plan Form', () => {
         /\/models\/.{36}\/task-list\/basics\/milestones/
       );
     });
-    cy.contains('h3', 'High level timeline');
+    cy.contains('h3', 'Anticipated high level timeline');
     cy.get('#Milestone-completeICIP')
       .type('05/23/2025')
       .should('have.value', '05/23/2025');
