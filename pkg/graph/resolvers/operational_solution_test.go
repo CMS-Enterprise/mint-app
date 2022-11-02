@@ -6,37 +6,46 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
+func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 
-// 	plan := suite.createModelPlan("plan for solutions")
-// 	needType := models.OpNKManageCd
-// 	solType := models.OpSKOutlookMailbox
+	plan := suite.createModelPlan("plan for solutions")
+	needType := models.OpNKManageCd
+	solType := models.OpSKOutlookMailbox
 
-// 	// need := suite.createOperationalNeed(plan, &needType,  true)
-// 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
-// 	suite.NoError(err)
-// 	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	// need := suite.createOperationalNeed(plan, &needType,  true)
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
+	// _, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-// 	opSols, err := OperationaSolutionsGetByOPNeedID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
-// 	suite.NoError(err)
-// 	suite.Len(opSols.Solutions, 3)
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opSols, 2)
 
-// 	suite.Len(opSols.PossibleSolutions, 1) //There is only 1 possilbe solution right now for ManageCD.
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, true, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opSols, 3) //We now have the possible need that is not needed
 
-// 	//2. Get possible solutions for a custom type
-// 	need, _ = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, "Testing custom need types", true, suite.testConfigs.Principal, suite.testConfigs.Store)
-// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	//INSERt the possible and return only needed types, verify it still returns 3
+	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-// 	opSols, err = OperationaSolutionsGetByOPNeedID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
-// 	suite.NoError(err)
-// 	suite.Len(opSols.Solutions, 2)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opSols, 3) //We still have 3 solutions, because they are now all needed
 
-// 	suite.Len(opSols.PossibleSolutions, 0) //There is only 1 possilbe solution right now for ManageCD.
+	//2. Get possible solutions for a custom type
+	need, _ = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, "Testing custom need types", true, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-// }
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(opSols, 2)
+
+	// suite.Len(opSols.PossibleSolutions, 0) //There is only 1 possilbe solution right now for ManageCD.
+
+}
 
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	// 1. Create solution, ensure fields are as expected
@@ -48,6 +57,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{}
+	changes["needed"] = false
 	defStatus := models.OpSNotStarted
 
 	sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -68,7 +78,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.EUAID)
 	suite.NotNil(sol.CreatedDts)
 	suite.NotNil(sol.Name)
-	suite.EqualValues(sol.Needed, false)
+	suite.EqualValues(*sol.Needed, false)
 	suite.EqualValues(sol.Key, &solType)
 	suite.EqualValues(sol.Status, defStatus)
 
@@ -94,7 +104,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 	//update correct
-	suite.EqualValues(sol.Needed, true)
+	suite.EqualValues(*sol.Needed, true)
 	suite.EqualValues(sol.PocName, &pocName)
 	suite.EqualValues(sol.PocEmail, &pocEmail)
 	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 30*time.Second)
@@ -136,7 +146,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.EqualValues(sol.NameOther, &solTypeCustom)
 	suite.NotNil(sol.CreatedDts)
 
-	suite.EqualValues(sol.Needed, false)
+	suite.EqualValues(*sol.Needed, true)
 
 	suite.EqualValues(sol.Status, defStatus)
 
@@ -162,7 +172,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 	//update correct
-	suite.EqualValues(sol.Needed, true)
+	suite.EqualValues(*sol.Needed, true)
 	suite.EqualValues(sol.PocName, &pocName)
 	suite.EqualValues(sol.PocEmail, &pocEmail)
 	suite.WithinDuration(sol.MustStartDts.UTC(), mustStartDts.UTC(), 30*time.Second)

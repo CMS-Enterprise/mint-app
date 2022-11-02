@@ -24,11 +24,13 @@ type OperationalSolution struct {
 
 // NewOperationalSolution creates a Operation Solution with the required fields
 func NewOperationalSolution(createdBy string, operationalNeedID uuid.UUID) *OperationalSolution {
+	needed := true
 
 	return &OperationalSolution{
 		baseStruct:        NewBaseStruct(createdBy),
 		OperationalNeedID: operationalNeedID, // TODO, should this be an embedded struct. (FUTURE TICKET EASI-2429)
 		Status:            OpSNotStarted,
+		Needed:            &needed,
 	}
 }
 
