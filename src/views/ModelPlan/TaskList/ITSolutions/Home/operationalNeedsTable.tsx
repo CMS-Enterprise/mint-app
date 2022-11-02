@@ -104,7 +104,10 @@ const OperationalNeedsTable = ({
     return [
       {
         Header: t<string>('itSolutionsTable.need'),
-        accessor: 'needName'
+        accessor: ({ needName, nameOther }: any) => {
+          // Resturn custom name if exists, otherwise return standard need name
+          return nameOther || needName;
+        }
       },
       {
         Header: t<string>('itSolutionsTable.solution'),

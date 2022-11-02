@@ -299,11 +299,12 @@ const TaskList = () => {
                                 <p className="margin-top-0">
                                   {t(`numberedList.${key}.${userRole}`)}
                                 </p>
-                                {key === 'itSolutions' && (
-                                  <p className="margin-top-0">
-                                    {t(`numberedList.${key}.${userRole}2`)}
-                                  </p>
-                                )}
+                                {key === 'itSolutions' &&
+                                  userRole !== 'assessment' && (
+                                    <p className="margin-top-0">
+                                      {t(`numberedList.${key}.${userRole}2`)}
+                                    </p>
+                                  )}
                               </TaskListDescription>
                             </div>
                             <TaskListButton
