@@ -214,3 +214,21 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	suite.Error(err)
 
 }
+
+func (suite *ResolverSuite) TestOperationaSolutionsGetByID() {
+
+	plan := suite.createModelPlan("plan for solutions")
+	needType := models.OpNKManageCd
+	solType := models.OpSKOutlookMailbox
+
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
+	sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(sol)
+	solGet, err := OperationalSolutionGetByID(suite.testConfigs.Logger, sol.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(solGet)
+	suite.EqualValues(solGet.ID, sol.ID)
+
+}
