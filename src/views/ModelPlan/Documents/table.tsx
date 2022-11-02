@@ -59,7 +59,8 @@ const PlanDocumentsTable = ({
   const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean =
+    !isHelpArticle && (isCollaborator || isAssessment(groups));
 
   if (loading) {
     return <PageLoading />;
@@ -87,7 +88,7 @@ const PlanDocumentsTable = ({
       refetch={refetchDocuments}
       setDocumentMessage={setDocumentMessage}
       setDocumentStatus={setDocumentStatus}
-      hasEditAccess={!isHelpArticle && hasEditAccess}
+      hasEditAccess={hasEditAccess}
     />
   );
 };

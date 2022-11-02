@@ -65,7 +65,8 @@ const CRTDLTable = ({
 
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean =
+    !isHelpArticle && (isCollaborator || isAssessment(groups));
 
   if (loading) {
     return <PageLoading />;
@@ -96,7 +97,7 @@ const CRTDLTable = ({
       setCRTDLMessage={setCRTDLMessage}
       setCRTDLStatus={setCRTDLStatus}
       readOnly={readOnly}
-      hasEditAccess={!isHelpArticle && hasEditAccess}
+      hasEditAccess={hasEditAccess}
     />
   );
 };
