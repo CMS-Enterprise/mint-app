@@ -40,7 +40,9 @@ export const filterNeedsFormatSolutions = (
           formatSolutionsFromNeed(need)
         );
       } else {
-        operationalSolutions.push(emptySolution(need.name, need.id));
+        operationalSolutions.push(
+          emptySolution(need.nameOther || need.name, need.id)
+        );
       }
     });
   return operationalSolutions;
@@ -53,7 +55,7 @@ const formatSolutionsFromNeed = (
   return need.solutions.solutions
     .filter(solution => !solution.archived) // Don't display archived solutions in table
     .map(solution => {
-      return { ...solution, needName: need.name };
+      return { ...solution, needName: need.nameOther || need.name };
     });
 };
 
