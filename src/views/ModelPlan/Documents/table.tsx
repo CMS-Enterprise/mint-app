@@ -32,6 +32,7 @@ type PlanDocumentsTableProps = {
   modelID: string;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
+  isHelpArticle?: boolean;
 };
 
 type DocumentStatusType = 'success' | 'error';
@@ -40,7 +41,8 @@ const PlanDocumentsTable = ({
   hiddenColumns,
   modelID,
   setDocumentMessage,
-  setDocumentStatus
+  setDocumentStatus,
+  isHelpArticle
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
   const { error, loading, data, refetch: refetchDocuments } = useQuery<

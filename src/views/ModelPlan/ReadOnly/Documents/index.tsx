@@ -51,6 +51,7 @@ const ReadOnlyDocuments = ({
         modelID={modelID}
         setDocumentMessage={setDocumentMessage}
         setDocumentStatus={setDocumentStatus}
+        isHelpArticle={isHelpArticle}
       />
     </div>
   );
