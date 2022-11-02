@@ -45,8 +45,6 @@ const ReadOnlyDocuments = ({
         </Expire>
       )}
 
-      {/* TODO: Pass down isHelpArticle down to Table component */}
-
       <PlanDocumentsTable
         modelID={modelID}
         setDocumentMessage={setDocumentMessage}
