@@ -6,37 +6,37 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
+// func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 
-	plan := suite.createModelPlan("plan for solutions")
-	needType := models.OpNKManageCd
-	solType := models.OpSKOutlookMailbox
+// 	plan := suite.createModelPlan("plan for solutions")
+// 	needType := models.OpNKManageCd
+// 	solType := models.OpSKOutlookMailbox
 
-	// need := suite.createOperationalNeed(plan, &needType,  true)
-	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
-	suite.NoError(err)
-	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	// need := suite.createOperationalNeed(plan, &needType,  true)
+// 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+// 	suite.NoError(err)
+// 	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err := OperationaSolutionsGetByOPNeedID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
-	suite.NoError(err)
-	suite.Len(opSols.Solutions, 3)
+// 	opSols, err := OperationaSolutionsGetByOPNeedID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
+// 	suite.NoError(err)
+// 	suite.Len(opSols.Solutions, 3)
 
-	suite.Len(opSols.PossibleSolutions, 1) //There is only 1 possilbe solution right now for ManageCD.
+// 	suite.Len(opSols.PossibleSolutions, 1) //There is only 1 possilbe solution right now for ManageCD.
 
-	//2. Get possible solutions for a custom type
-	need, _ = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, "Testing custom need types", true, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	//2. Get possible solutions for a custom type
+// 	need, _ = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, "Testing custom need types", true, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+// 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err = OperationaSolutionsGetByOPNeedID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
-	suite.NoError(err)
-	suite.Len(opSols.Solutions, 2)
+// 	opSols, err = OperationaSolutionsGetByOPNeedID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
+// 	suite.NoError(err)
+// 	suite.Len(opSols.Solutions, 2)
 
-	suite.Len(opSols.PossibleSolutions, 0) //There is only 1 possilbe solution right now for ManageCD.
+// 	suite.Len(opSols.PossibleSolutions, 0) //There is only 1 possilbe solution right now for ManageCD.
 
-}
+// }
 
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	// 1. Create solution, ensure fields are as expected

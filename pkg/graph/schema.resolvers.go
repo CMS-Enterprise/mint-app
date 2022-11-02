@@ -894,9 +894,23 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 }
 
 // OperationalSolutions is the resolver for the operationalSolutions field.
-func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error) {
+func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeedID(logger, operationalNeedID, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, includeNotNeeded, r.store)
+}
+
+// OperationalSolution is the resolver for the operationalSolution field.
+func (r *queryResolver) OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionGetByID(logger, id, r.store)
+}
+
+// OperationalNeed is the resolver for the operationalNeed field.
+func (r *queryResolver) OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalNeedGetByID(logger, id, r.store)
 }
 
 // AuditChanges is the resolver for the auditChanges field.

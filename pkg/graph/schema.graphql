@@ -69,11 +69,6 @@ type ModelPlan {
   operationalNeeds: [OperationalNeed!]!
 }
 
-type OperationalSolutions {
-  solutions: [OperationalSolution!]!
-  possibleSolutions: [PossibleOperationalSolution!]!
-}
-
 type OperationalNeed {
     id: UUID!
     modelPlanID: UUID!
@@ -1469,7 +1464,9 @@ type Query {
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
   crTdl(id: UUID!): PlanCrTdl!
-  operationalSolutions(operationalNeedID: UUID!): OperationalSolutions!
+  operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+  operationalSolution(id: UUID!): OperationalSolution!
+  operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
 }
