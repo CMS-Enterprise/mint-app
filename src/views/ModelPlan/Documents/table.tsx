@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
@@ -26,6 +27,7 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
+import { isAssessment } from 'utils/user';
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
@@ -55,6 +57,9 @@ const PlanDocumentsTable = ({
   });
 
   const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
 
   if (loading) {
     return <PageLoading />;
@@ -82,7 +87,7 @@ const PlanDocumentsTable = ({
       refetch={refetchDocuments}
       setDocumentMessage={setDocumentMessage}
       setDocumentStatus={setDocumentStatus}
-      isCollaborator={data?.modelPlan.isCollaborator}
+      hasEditAccess={!isHelpArticle && hasEditAccess}
     />
   );
 };
@@ -95,7 +100,7 @@ type TableProps = {
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
-  isCollaborator?: boolean;
+  hasEditAccess?: boolean;
 };
 
 const Table = ({
@@ -104,7 +109,7 @@ const Table = ({
   refetch,
   setDocumentMessage,
   setDocumentStatus,
-  isCollaborator
+  hasEditAccess
 }: TableProps) => {
   const { t } = useTranslation('documents');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -235,7 +240,7 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                {isCollaborator && (
+                {hasEditAccess && (
                   <Button
                     type="button"
                     unstyled
@@ -258,7 +263,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, handleDownload, isCollaborator]);
+  }, [t, handleDownload, hasEditAccess]);
 
   const {
     getTableProps,
