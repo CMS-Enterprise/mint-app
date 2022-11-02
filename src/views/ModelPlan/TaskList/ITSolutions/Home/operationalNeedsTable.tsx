@@ -19,7 +19,11 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Alert, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Alert,
+  IconArrowForward,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
@@ -122,7 +126,15 @@ const OperationalNeedsTable = ({
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
           if (value === t('itSolutionsTable.selectSolution')) {
-            return <UswdsReactLink to="/">{value}</UswdsReactLink>;
+            return (
+              <UswdsReactLink
+                to={`/models/${modelID}/task-list/it-solutions/select-solutions/${row.original.id}`}
+                className="display-flex flex-align-center"
+              >
+                {value}
+                <IconArrowForward className="margin-left-1" />
+              </UswdsReactLink>
+            );
           }
           return value;
         }

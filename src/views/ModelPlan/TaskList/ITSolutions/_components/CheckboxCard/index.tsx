@@ -1,0 +1,71 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  Card,
+  Checkbox,
+  Grid,
+  IconArrowForward
+} from '@trussworks/react-uswds';
+import classNames from 'classnames';
+import { Field } from 'formik';
+
+import Divider from 'components/shared/Divider';
+
+import './index.scss';
+
+type CheckboxCardProps = {
+  className?: string;
+  disabled?: boolean;
+  solution: any; // TODO: import solution type
+  index: number;
+};
+
+const CheckboxCard = ({
+  className,
+  disabled,
+  solution,
+  index
+}: CheckboxCardProps) => {
+  const { t } = useTranslation('itSolutions');
+  const id = `it-solutions-${solution.key.toLowerCase()}`;
+
+  return (
+    <Grid tablet={{ col: 6 }}>
+      <Card className={classNames(className)}>
+        <div className="solutions-checkbox__header padding-2">
+          <Field
+            as={Checkbox}
+            disabled={disabled}
+            id={id}
+            testid={id}
+            name={`solutions[${index}].needed`}
+            label={t('selectSolution')}
+            value={solution.needed}
+            checked={solution.needed}
+          />
+
+          <h3 className="margin-y-2">{solution.name}</h3>
+
+          <div className="margin-bottom-2 solutions-checkbox__body-text">
+            {solution.description}
+          </div>
+
+          <p className="text-bold">{t('contact')}</p>
+
+          <Divider />
+
+          <Button
+            type="button"
+            className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+          >
+            {t('aboutSolution')}
+            <IconArrowForward className="margin-left-1" />
+          </Button>
+        </div>
+      </Card>
+    </Grid>
+  );
+};
+
+export default CheckboxCard;

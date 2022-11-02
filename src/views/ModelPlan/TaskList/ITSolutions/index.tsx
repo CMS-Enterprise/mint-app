@@ -6,6 +6,7 @@ import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ITSolutionsHome from './Home';
+import SelectSolutions from './SelectSolutions';
 
 const ITSolutions = () => {
   return (
@@ -15,6 +16,13 @@ const ITSolutions = () => {
           <Switch>
             <Route path="/models/:modelID/task-list/it-solutions" exact>
               <ITSolutionsHome />
+            </Route>
+
+            <Route
+              path="/models/:modelID/task-list/it-solutions/select-solutions/:operationalNeedID"
+              exact
+            >
+              <SelectSolutions />
             </Route>
 
             <Route path="*" render={() => <NotFoundPartial />} />
