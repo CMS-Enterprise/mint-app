@@ -124,6 +124,18 @@ const TaskListSideNav = ({
               <span aria-hidden /> indexTwo
             </Trans>
           </Button>
+          <Button
+            type="button"
+            onClick={() =>
+              window.open('/help-and-knowledge/sample-model-plan', '_blank')
+            }
+            className="usa-button usa-button--unstyled line-height-body-5"
+          >
+            <Trans i18nKey="modelPlanTaskList:sideNav.sampleModelPlan">
+              indexZero
+              <span aria-hidden /> indexTwo
+            </Trans>
+          </Button>
         </div>
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
