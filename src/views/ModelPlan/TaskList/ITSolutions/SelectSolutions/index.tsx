@@ -18,32 +18,52 @@ import PageHeading from 'components/PageHeading';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import CheckboxCard from '../_components/CheckboxCard';
+import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 const SelectSolutions = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{
+    modelID: string;
+    // operationalNeedID: string;
+  }>();
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
   const formikRef = useRef<FormikProps<any>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const solutions = {
-    solutions: [
-      {
-        key: 'FFS_COMPETENCY_CENTER',
-        name: 'FFS Competency Center',
-        description:
-          'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...',
-        needed: false
-      },
-      {
-        key: 'SHARED_SYSTEMS',
-        name: 'Shared Systems',
-        description:
-          'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...',
-        needed: true
-      }
-    ]
+  const operationalNeed = {
+    id: '7395dd13-ceda-409c-a2e9-36b065b874de',
+    modelPlanID: '727ab46c-8a5e-4896-bb66-7ed63c212b39',
+    name: 'Manage Part C/D enrollment',
+    section: 'GENERAL_CHARACTERISTICS',
+    key: 'MANAGE_CD',
+    nameOther: null,
+    needed: true,
+    solutions: {
+      solutions: [
+        {
+          key: 'FFS_COMPETENCY_CENTER',
+          name: 'FFS Competency Center',
+          description:
+            'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...',
+          needed: false
+        },
+        {
+          key: 'SHARED_SYSTEMS',
+          name: 'Shared Systems',
+          description:
+            'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...',
+          needed: true
+        }
+      ],
+      possibleSolutions: [
+        {
+          id: 1,
+          name: 'Medicare Advantage Prescription Drug System (MARx)',
+          key: 'MARX'
+        }
+      ]
+    }
   };
 
   return (
@@ -88,10 +108,17 @@ const SelectSolutions = () => {
 
           <p>{t('selectInfo')}</p>
 
+          <Grid tablet={{ col: 8 }}>
+            <NeedQuestionAndAnswer
+              operationalNeed={operationalNeed}
+              modelID={modelID}
+            />
+          </Grid>
+
           <Grid row gap>
             <Grid tablet={{ col: 10 }}>
               <Formik
-                initialValues={solutions}
+                initialValues={operationalNeed.solutions}
                 onSubmit={values => {
                   //   console.log(values);
                   //   handleFormSubmit(values, 'next');
@@ -122,7 +149,11 @@ const SelectSolutions = () => {
                       <CardGroup>
                         {values.solutions.map(
                           (solution: any, index: number) => (
-                            <CheckboxCard solution={solution} index={index} />
+                            <CheckboxCard
+                              solution={solution}
+                              index={index}
+                              key={solution.id}
+                            />
                           )
                         )}
                       </CardGroup>

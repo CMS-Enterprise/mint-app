@@ -62,25 +62,25 @@ export interface GetOperationalNeedAnswer {
 
 export interface GetOperationalNeedAnswerVariables {
   id: UUID;
-  managePartCDEnrollment?: boolean | null;
-  collectPlanBids?: boolean | null;
-  planContactUpdated?: boolean | null;
-  recruitmentMethod?: boolean | null;
-  selectionMethod?: boolean | null;
-  communicationMethod?: boolean | null;
-  helpdeskUse?: boolean | null;
-  iddocSupport?: boolean | null;
-  benchmarkForPerformance?: boolean | null;
-  appealPerformance?: boolean | null;
-  appealFeedback?: boolean | null;
-  appealPayments?: boolean | null;
-  appealOther?: boolean | null;
-  evaluationApproaches?: boolean | null;
-  dataNeededForMonitoring?: boolean | null;
-  dataToSendParticicipants?: boolean | null;
-  modelLearningSystems?: boolean | null;
-  payType?: boolean | null;
-  colleshouldAnyProvidersExcludedFFSSystemsctPlanBids?: boolean | null;
-  nonClaimsPayments?: boolean | null;
-  willRecoverPayments?: boolean | null;
+  managePartCDEnrollment: boolean;
+  collectPlanBids: boolean;
+  planContactUpdated: boolean;
+  recruitmentMethod: boolean;
+  selectionMethod: boolean;
+  communicationMethod: boolean;
+  helpdeskUse: boolean;
+  iddocSupport: boolean;
+  benchmarkForPerformance: boolean;
+  appealPerformance: boolean;
+  appealFeedback: boolean;
+  appealPayments: boolean;
+  appealOther: boolean;
+  evaluationApproaches: boolean;
+  dataNeededForMonitoring: boolean;
+  dataToSendParticicipants: boolean;
+  modelLearningSystems: boolean;
+  payType: boolean;
+  shouldAnyProvidersExcludedFFSSystems: boolean;
+  nonClaimsPayments: boolean;
+  willRecoverPayments: boolean;
 }
