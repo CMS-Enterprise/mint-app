@@ -36,12 +36,6 @@ const MobileNav = ({
     }
   }, [isMobile]);
 
-  // console.log(
-  //   Object.keys(subComponents)
-  //     .filter(key => key !== 'discussions')
-  //     .map(key => `${subComponents[key].helpRoute}`)
-  // );
-
   const subComponentsList = isHelpArticle
     ? Object.keys(subComponents).filter(key => key !== 'discussions')
     : Object.keys(subComponents);
