@@ -8,7 +8,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Remove your Model Plan').click();
 
-    cy.contains('button', 'Remove request').click();
+    cy.contains('button', 'Remove Model Plan').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.eq('/');

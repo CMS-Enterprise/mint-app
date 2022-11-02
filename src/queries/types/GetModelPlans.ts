@@ -32,6 +32,7 @@ export interface GetModelPlans_modelPlanCollection {
   id: UUID;
   modelName: string;
   status: ModelStatus;
+  nameHistory: string[];
   createdBy: string;
   createdDts: Time;
   modifiedDts: Time | null;

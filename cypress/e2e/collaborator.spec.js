@@ -95,7 +95,7 @@ describe('The Collaborator/Team Member Form', () => {
   });
 });
 
-describe('The Collaborator Acces Control', () => {
+describe('The Collaborator Access Control', () => {
   it('attempts to enter a model plan where not a collaborator', () => {
     cy.localLogin({ name: 'ABCD', role: 'MINT_USER' });
 
