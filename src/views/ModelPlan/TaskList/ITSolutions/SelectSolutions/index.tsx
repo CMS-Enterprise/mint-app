@@ -198,7 +198,7 @@ const SelectSolutions = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-0">
+        <Grid tablet={{ col: 3 }} className="padding-x-1">
           <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
             <AskAQuestion modelID={modelID} opNeeds />
           </div>
