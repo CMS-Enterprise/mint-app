@@ -366,7 +366,9 @@ const ReadOnly = () => {
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0 "
                   term={
-                    crTdls ? formattedCrTdls(crTdls) : t('noAnswer.noneEntered')
+                    crTdls && crTdls.length !== 0
+                      ? formattedCrTdls(crTdls)
+                      : t('noAnswer.noneEntered')
                   }
                 />
               </Grid>
