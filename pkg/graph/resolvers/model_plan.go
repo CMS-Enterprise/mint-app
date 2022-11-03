@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -134,8 +135,7 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 
 // ModelPlanGetSampleModel returns the sample model plan
 func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
-	modelName := "Enhancing Oncology Model"
-	plan, err := store.ModelPlanGetByName(logger, modelName)
+	plan, err := store.ModelPlanGetByName(logger, constants.SampleModelName)
 	if err != nil {
 		return nil, err
 	}
