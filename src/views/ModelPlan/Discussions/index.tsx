@@ -47,6 +47,8 @@ import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
+import SingleDiscussionEntry from './SingleDiscussionEntry';
+
 import './index.scss';
 
 export type DiscussionsProps = {
@@ -421,7 +423,6 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
       discussionsContent.sort(sortRepliesByDate); // Sort discusssions by the most recent reply for answered questions
     }
 
-    console.log(discussionsContent);
     return discussionsContent.map((discussion, index) => {
       return (
         <div
@@ -433,21 +434,41 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
         >
           {discussion.replies.length > 0 ? (
             // If discussions has replies, join together in array for rendering as a connected discussion
-            <div>
-              {[
-                discussion,
-                ...discussion.replies
-              ].map((discussionReply: ReplyType | DiscussionType, replyIndex) =>
-                discussionComponent(
-                  discussionReply,
-                  index,
-                  replyIndex !== discussion.replies.length
+            <>
+              {[discussion, ...discussion.replies].map(
+                (discussionReply: ReplyType | DiscussionType, replyIndex) => (
+                  // discussionComponent(
+                  //   discussionReply,
+                  //   index,
+                  //   replyIndex !== discussion.replies.length
+                  // )
+                  <SingleDiscussionEntry
+                    discussion={discussionReply}
+                    index={index}
+                    connected={replyIndex !== discussion.replies.length}
+                    hasEditAccess={hasEditAccess}
+                    collaborators={collaborators}
+                    setDiscussionStatusMessage={setDiscussionStatusMessage}
+                    setDiscussionType={setDiscussionType}
+                    setReply={setReply}
+                  />
                 )
               )}
-            </div>
+            </>
           ) : (
             // Render only question if no replies
-            discussionComponent(discussion, index, undefined, true)
+            // discussionComponent(discussion, index, undefined, true)
+            <SingleDiscussionEntry
+              discussion={discussion}
+              index={index}
+              connected={false}
+              answerQuestion
+              hasEditAccess={hasEditAccess}
+              collaborators={collaborators}
+              setDiscussionStatusMessage={setDiscussionStatusMessage}
+              setDiscussionType={setDiscussionType}
+              setReply={setReply}
+            />
           )}
           {/* Divider to separate questions if not the last question */}
           {index !== discussionsContent.length - 1 && (
