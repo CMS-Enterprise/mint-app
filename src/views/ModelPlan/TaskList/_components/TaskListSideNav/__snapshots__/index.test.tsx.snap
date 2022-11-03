@@ -53,6 +53,18 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
           (opens in a new tab)
         </span>
       </button>
+      <button
+        class="usa-button usa-button usa-button--unstyled line-height-body-5"
+        data-testid="button"
+        type="button"
+      >
+        Sample Model Plan 
+        <span
+          aria-hidden="true"
+        >
+          (opens in a new tab)
+        </span>
+      </button>
     </div>
     <div>
       <h3
