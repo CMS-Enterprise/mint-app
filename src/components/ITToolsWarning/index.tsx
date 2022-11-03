@@ -12,7 +12,7 @@ interface ITToolsWarningType {
 }
 
 const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
-  const { t } = useTranslation('itTools');
+  const { t } = useTranslation('itSolutions');
 
   return (
     <Alert type="warning" className={classNames('it-tools-warning', className)}>
@@ -23,7 +23,7 @@ const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
         className="usa-button usa-button--unstyled"
         onClick={onClick}
       >
-        {t('goToITTools')}.
+        {t('goToITTools')}
       </Button>
     </Alert>
   );

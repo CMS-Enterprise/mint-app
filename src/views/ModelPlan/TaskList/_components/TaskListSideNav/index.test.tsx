@@ -3,7 +3,6 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 
-import { MessageProvider } from 'hooks/useMessage';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 
 import TaskListSideNav from './index';
@@ -23,9 +22,7 @@ describe('The TaskListSideNavActions', () => {
       >
         <MockedProvider>
           <Route path="models/:modelID/task-list">
-            <MessageProvider>
-              <TaskListSideNav modelPlan={modelPlan} collaborators={[]} />
-            </MessageProvider>
+            <TaskListSideNav modelPlan={modelPlan} collaborators={[]} />
           </Route>
         </MockedProvider>
       </MemoryRouter>

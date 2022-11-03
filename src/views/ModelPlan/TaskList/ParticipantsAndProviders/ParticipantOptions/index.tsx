@@ -39,8 +39,7 @@ import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders
 import {
   ConfidenceType,
   ParticipantSelectionType,
-  RecruitmentType,
-  TaskStatus
+  RecruitmentType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -86,8 +85,9 @@ export const ParticipantOptions = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -318,7 +318,7 @@ export const ParticipantOptions = () => {
                   <Label htmlFor="participants-and-providers-recruitment-method">
                     {t('recruitParticipants')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="participants-and-providers-recruitment-method-warning"
                       onClick={() =>
@@ -388,7 +388,7 @@ export const ParticipantOptions = () => {
                   <Label htmlFor="participants-and-providers-selection-method">
                     {t('howWillYouSelect')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="participants-and-providers-selection-method-warning"
                       onClick={() =>

@@ -273,28 +273,6 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
       >
         How will you recruit the participants?
       </label>
-      <div
-        class="usa-alert usa-alert--warning it-tools-warning"
-        data-testid="alert"
-      >
-        <div
-          class="usa-alert__body"
-        >
-          <p
-            class="usa-alert__text"
-          >
-            Changing your answer to this question may also affect your responses to questions in IT tools.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="participants-and-providers-recruitment-method-warning"
-              type="button"
-            >
-              Go to IT tools.
-            </button>
-          </p>
-        </div>
-      </div>
       <fieldset
         class="usa-fieldset"
         data-testid="fieldset"
@@ -436,28 +414,6 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
       >
         How will you select participants? Select all that appy.
       </label>
-      <div
-        class="usa-alert usa-alert--warning it-tools-warning"
-        data-testid="alert"
-      >
-        <div
-          class="usa-alert__body"
-        >
-          <p
-            class="usa-alert__text"
-          >
-            Changing your answer to this question may also affect your responses to questions in IT tools.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="participants-and-providers-selection-method-warning"
-              type="button"
-            >
-              Go to IT tools.
-            </button>
-          </p>
-        </div>
-      </div>
       <div
         class="margin-top-1"
       >
