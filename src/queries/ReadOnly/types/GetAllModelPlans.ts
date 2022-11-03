@@ -32,6 +32,7 @@ export interface GetAllModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  nameHistory: string[];
   status: ModelStatus;
   isFavorite: boolean;
   isCollaborator: boolean;

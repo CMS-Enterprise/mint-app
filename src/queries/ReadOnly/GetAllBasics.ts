@@ -4,6 +4,7 @@ export default gql`
   query GetAllBasics($id: UUID!) {
     modelPlan(id: $id) {
       id
+      nameHistory(sort: DESC)
       basics {
         id
         modelCategory

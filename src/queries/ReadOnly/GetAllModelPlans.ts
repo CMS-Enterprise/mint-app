@@ -5,6 +5,7 @@ export default gql`
     modelPlanCollection(includeAll: true) {
       id
       modelName
+      nameHistory(sort: DESC)
       status
       isFavorite
       isCollaborator

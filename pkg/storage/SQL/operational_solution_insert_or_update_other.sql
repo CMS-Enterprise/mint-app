@@ -1,7 +1,7 @@
 INSERT INTO operational_solution(
     id,
     operational_need_id,
-    archived,
+    needed,
     name_other,
     poc_name,
     poc_email,
@@ -13,7 +13,7 @@ INSERT INTO operational_solution(
 SELECT
     :id AS id,
     :operational_need_id AS operational_need_id,
-    :archived AS archived,
+    :needed AS needed,
     :name_other AS name_other,
     :poc_name AS poc_name,
     :poc_email AS poc_email,
@@ -24,7 +24,7 @@ SELECT
 ON CONFLICT(operational_need_id, name_other) DO -- If there is already a record for this, update
 UPDATE
 SET
-    archived = :archived,
+    needed = :needed,
     poc_name = :poc_name,
     poc_email = :poc_email,
     must_start_dts = :must_start_dts,
@@ -38,7 +38,7 @@ operational_need_id,
 NULL AS sol_name,
 NULL AS sol_key,
 solution_type,
-archived,
+needed,
 name_other,
 poc_name,
 poc_email,

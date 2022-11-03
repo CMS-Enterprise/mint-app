@@ -17,6 +17,7 @@ const basicMockData: GetModelPlanInfoType = {
   __typename: 'ModelPlan',
   id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
   modelName: 'My excellent plan that I just initiated',
+  nameHistory: ['First Name', 'Second Name', 'Third Name'],
   basics: {
     id: 'asdf',
     __typename: 'PlanBasics',
@@ -52,7 +53,7 @@ describe('Model Plan Documents page', () => {
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
         ]}
       >
-        <MockedProvider>
+        <MockedProvider mocks={mocks} addTypename={false}>
           <Route path="/models/:modelID/task-list/basics">
             <Basics />
           </Route>
@@ -62,6 +63,9 @@ describe('Model Plan Documents page', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('summary-box--previous-name')
+      ).toBeInTheDocument();
     });
   });
   it('matches snapshot', async () => {
@@ -79,7 +83,11 @@ describe('Model Plan Documents page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
+      expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('summary-box--previous-name')
+      ).toBeInTheDocument();
     });
+    expect(asFragment()).toMatchSnapshot();
   });
 });
