@@ -72,10 +72,10 @@ const NeedQuestionAndAnswer = ({
       helpdeskUse: fieldName === 'helpdeskUse',
       iddocSupport: fieldName === 'iddocSupport',
       benchmarkForPerformance: fieldName === 'benchmarkForPerformance',
-      appealPerformance: fieldName.includes('appealPerformance'),
-      appealFeedback: fieldName.includes('appealFeedback'),
-      appealPayments: fieldName.includes('appealPayments'),
-      appealOther: fieldName.includes('appealOther'),
+      appealPerformance: fieldName?.includes('appealPerformance'),
+      appealFeedback: fieldName?.includes('appealFeedback'),
+      appealPayments: fieldName?.includes('appealPayments'),
+      appealOther: fieldName?.includes('appealOther'),
       evaluationApproaches: fieldName === 'evaluationApproaches',
       dataNeededForMonitoring: fieldName === 'dataNeededForMonitoring',
       dataToSendParticicipants: fieldName === 'dataToSendParticicipants',
@@ -96,7 +96,7 @@ const NeedQuestionAndAnswer = ({
     [fieldName as string[]].forEach((field: any) => {
       if (
         data?.modelPlan[
-          needConfig.parentField as keyof GetOperationalNeedAnswerModelPlanType
+          needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
         ][field]
       ) {
         answers = true;
@@ -105,11 +105,11 @@ const NeedQuestionAndAnswer = ({
   } else {
     answers =
       data?.modelPlan[
-        needConfig.parentField as keyof GetOperationalNeedAnswerModelPlanType
+        needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
       ][fieldName as string];
   }
 
-  if (answers.constructor !== Array) {
+  if (answers?.constructor !== Array) {
     answers = [answers];
   }
 
@@ -144,7 +144,7 @@ const NeedQuestionAndAnswer = ({
           <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
             <p className="text-bold margin-top-0">{t('youAnswered')}</p>
 
-            <p>{t(needConfig.question)}</p>
+            <p>{t(needConfig?.question)}</p>
 
             {data && (
               <ul className="padding-left-4">

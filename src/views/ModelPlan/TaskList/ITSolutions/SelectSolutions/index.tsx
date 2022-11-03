@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -15,60 +16,99 @@ import { Form, Formik, FormikProps } from 'formik';
 import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
+import {
+  GetOperationalNeed as GetOperationalNeedType,
+  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
+  GetOperationalNeedVariables
+} from 'queries/ITSolutions/types/GetOperationalNeed';
+import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
+import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
+import { OperationalNeedKey } from 'types/graphql-global-types';
+import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
 import CheckboxCard from '../_components/CheckboxCard';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
+const initialValues: GetOperationalNeedOperationalNeedType = {
+  __typename: 'OperationalNeed',
+  id: '',
+  modelPlanID: '',
+  name: '',
+  key: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT,
+  nameOther: '',
+  needed: false,
+  solutions: []
+};
+
 const SelectSolutions = () => {
-  const { modelID } = useParams<{
+  const { modelID, operationalNeedID } = useParams<{
     modelID: string;
-    // operationalNeedID: string;
+    operationalNeedID: string;
   }>();
+
+  const history = useHistory();
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const formikRef = useRef<FormikProps<any>>(null);
+  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
+    null
+  );
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const operationalNeed = {
-    id: '7395dd13-ceda-409c-a2e9-36b065b874de',
-    modelPlanID: '727ab46c-8a5e-4896-bb66-7ed63c212b39',
-    name: 'Manage Part C/D enrollment',
-    section: 'GENERAL_CHARACTERISTICS',
-    key: 'MANAGE_CD',
-    nameOther: null,
-    needed: true,
-    solutions: {
-      solutions: [
-        {
-          id: 3,
-          key: 'FFS_COMPETENCY_CENTER',
-          name: 'FFS Competency Center',
-          description:
-            'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...',
-          needed: false
-        },
-        {
-          id: 2,
-          key: 'SHARED_SYSTEMS',
-          name: 'Shared Systems',
-          description:
-            'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...',
-          needed: true
-        }
-      ],
-      possibleSolutions: [
-        {
-          id: 1,
-          name: 'Medicare Advantage Prescription Drug System (MARx)',
-          key: 'MARX'
-        }
-      ]
+  const { data, loading, error } = useQuery<
+    GetOperationalNeedType,
+    GetOperationalNeedVariables
+  >(GetOperationalNeed, {
+    variables: {
+      id: operationalNeedID
+    }
+  });
+
+  // console.log(data);
+
+  const operationalNeed = data?.operationalNeed || initialValues;
+
+  const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
+    UpdateOperationalNeedSolution
+  );
+
+  const handleFormSubmit = async (
+    formikValues: GetOperationalNeedOperationalNeedType
+  ) => {
+    const { solutions } = formikValues;
+
+    try {
+      const response = await Promise.all(
+        solutions.map(solution => {
+          return updateSolution({
+            variables: {
+              operationalNeedID,
+              solutionType: solution.key,
+              changes: {
+                needed: solution.needed
+              }
+            }
+          });
+        })
+      );
+
+      if (response) {
+        history.push(`/models/${modelID}/task-list/it-solutions`);
+      }
+    } catch (errors) {
+      // formikRef?.current?.setErrors(errors);
     }
   };
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <>
@@ -122,76 +162,103 @@ const SelectSolutions = () => {
           <Grid row gap>
             <Grid tablet={{ col: 10 }}>
               <Formik
-                initialValues={operationalNeed.solutions}
+                initialValues={operationalNeed}
                 onSubmit={values => {
-                  //   console.log(values);
-                  //   handleFormSubmit(values, 'next');
+                  handleFormSubmit(values);
                 }}
                 enableReinitialize
                 innerRef={formikRef}
               >
-                {(formikProps: FormikProps<any>) => {
-                  const {
-                    // errors,
-                    handleSubmit,
-                    // setErrors,
-                    values
-                  } = formikProps;
+                {(
+                  formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
+                ) => {
+                  const { errors, handleSubmit, values } = formikProps;
+
+                  const flatErrors = flattenErrors(errors);
 
                   return (
-                    <Form
-                      className="margin-top-6"
-                      data-testid="it-tools-page-seven-form"
-                      onSubmit={e => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <legend className="text-bold margin-bottom-2">
-                        {t('chooseSolution')}
-                      </legend>
+                    <>
+                      {Object.keys(errors).length > 0 && (
+                        <ErrorAlert
+                          testId="formik-validation-errors"
+                          classNames="margin-top-3"
+                          heading={h('checkAndFix')}
+                        >
+                          {Object.keys(flatErrors).map(key => {
+                            return (
+                              <ErrorAlertMessage
+                                key={`Error.${key}`}
+                                errorKey={key}
+                                message={flatErrors[key]}
+                              />
+                            );
+                          })}
+                        </ErrorAlert>
+                      )}
 
-                      <CardGroup>
-                        {values.solutions.map(
-                          (solution: any, index: number) => (
-                            <CheckboxCard
-                              solution={solution}
-                              index={index}
-                              key={solution.id}
-                            />
-                          )
-                        )}
-                      </CardGroup>
-
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-top-2"
-                        onClick={() => {
-                          // handleFormSubmit(values, 'back');
+                      <Form
+                        className="margin-top-6"
+                        data-testid="it-tools-page-seven-form"
+                        onSubmit={e => {
+                          handleSubmit(e);
                         }}
                       >
-                        {t('selectAnother')}
-                      </Button>
+                        <legend className="text-bold margin-bottom-2">
+                          {t('chooseSolution')}
+                        </legend>
 
-                      <div className="margin-top-6 margin-bottom-3">
+                        {!loading && (
+                          <CardGroup>
+                            {values.solutions.map(
+                              (solution: any, index: number) => (
+                                <CheckboxCard
+                                  solution={solution}
+                                  index={index}
+                                  key={solution.name || solution.nameOther}
+                                />
+                              )
+                            )}
+                          </CardGroup>
+                        )}
+
                         <Button
                           type="button"
-                          className="margin-bottom-1"
+                          className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
-                            // handleFormSubmit(values, 'back');
+                            handleFormSubmit(values);
                           }}
                         >
-                          {t('continue')}
+                          {t('selectAnother')}
                         </Button>
-                      </div>
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled display-flex flex-align-center"
-                        // onClick={() => handleFormSubmit(values, 'task-list')}
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {t('dontAdd')}
-                      </Button>
-                    </Form>
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit(values);
+                            }}
+                          >
+                            {t('continue')}
+                          </Button>
+                        </div>
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled display-flex flex-align-center"
+                          onClick={() =>
+                            history.push(
+                              `/models/${modelID}/task-list/it-solutions`
+                            )
+                          }
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {t('dontAdd')}
+                        </Button>
+                      </Form>
+                    </>
                   );
                 }}
               </Formik>

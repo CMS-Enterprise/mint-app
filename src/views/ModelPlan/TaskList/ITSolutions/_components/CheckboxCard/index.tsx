@@ -11,13 +11,14 @@ import classNames from 'classnames';
 import { Field } from 'formik';
 
 import Divider from 'components/shared/Divider';
+import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 
 import './index.scss';
 
 type CheckboxCardProps = {
   className?: string;
   disabled?: boolean;
-  solution: any; // TODO: import solution type
+  solution: GetOperationalNeedSolutionsType;
   index: number;
 };
 
@@ -28,7 +29,12 @@ const CheckboxCard = ({
   index
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
-  const id = `it-solutions-${solution.key.toLowerCase()}`;
+  const id = `it-solutions-${solution?.key?.toLowerCase()}`;
+
+  // console.log(solution);
+
+  const tempDescription: string =
+    'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
 
   return (
     <Grid tablet={{ col: 6 }}>
@@ -41,14 +47,16 @@ const CheckboxCard = ({
             testid={id}
             name={`solutions[${index}].needed`}
             label={t('selectSolution')}
-            value={solution.needed}
-            checked={solution.needed}
+            value={!!solution.needed}
+            checked={!!solution.needed}
           />
 
           <h3 className="margin-y-2">{solution.name}</h3>
 
           <div className="margin-bottom-2 solutions-checkbox__body-text">
-            {solution.description}
+            {/* TODO: replace tempDescription with real data */}
+            {tempDescription}
+            {/* {solution?.description} */}
           </div>
 
           <p className="text-bold">{t('contact')}</p>

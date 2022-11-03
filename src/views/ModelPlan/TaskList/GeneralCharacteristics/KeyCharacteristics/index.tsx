@@ -412,7 +412,7 @@ const KeyCharacteristics = () => {
                           onClick={() =>
                             handleFormSubmit(
                               values,
-                              `/models/${modelID}/task-list/it-tools/page-one`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -469,7 +469,7 @@ const KeyCharacteristics = () => {
                           onClick={() =>
                             handleFormSubmit(
                               values,
-                              `/models/${modelID}/task-list/it-tools/page-one`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -526,7 +526,7 @@ const KeyCharacteristics = () => {
                           onClick={() =>
                             handleFormSubmit(
                               values,
-                              `/models/${modelID}/task-list/it-tools/page-one`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />

@@ -324,7 +324,7 @@ export const ParticipantOptions = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-two`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -394,7 +394,7 @@ export const ParticipantOptions = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-two`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
