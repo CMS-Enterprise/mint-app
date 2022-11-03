@@ -47,6 +47,7 @@ import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
+import FormatDiscussion from './FormatDiscussion';
 import SingleDiscussion from './SingleDiscussion';
 
 import './index.scss';
@@ -510,12 +511,27 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                       {questionCount.answeredQuestions !== 1 && 's'}
                     </strong>
                   ),
-                content: formatDiscussions(
-                  discussions.filter(
-                    discussion => discussion.status === status
-                  ),
-                  DiscussionStatus[status]
-                ),
+                // content: formatDiscussions(
+                // discussions.filter(
+                //   discussion => discussion.status === status
+                // ),
+                //   DiscussionStatus[status]
+                // ),
+                content: discussions
+                  .filter(discussion => discussion.status === status)
+                  .map(discussionsContent => {
+                    return (
+                      <FormatDiscussion
+                        discussionsContent={discussionsContent}
+                        status={DiscussionStatus[status]}
+                        hasEditAccess={hasEditAccess}
+                        collaborators={collaborators}
+                        setDiscussionStatusMessage={setDiscussionStatusMessage}
+                        setDiscussionType={setDiscussionType}
+                        setReply={setReply}
+                      />
+                    );
+                  }),
                 expanded: openStatus(DiscussionStatus[status]),
                 id: status,
                 headingLevel: 'h4'
