@@ -39,8 +39,7 @@ import {
   CcmInvolvmentType,
   DataForMonitoringType,
   DataToSendParticipantsType,
-  EvaluationApproachType,
-  TaskStatus
+  EvaluationApproachType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -93,8 +92,9 @@ const Evaluation = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -250,7 +250,7 @@ const Evaluation = () => {
                         {t('evaluationApproach')}
                       </legend>
 
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="ops-eval-and-learning-evaluation-approach-warning"
                           onClick={() =>
@@ -404,7 +404,7 @@ const Evaluation = () => {
                   >
                     {t('dataNeeded')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-data-needed-warning"
                       onClick={() =>
@@ -475,7 +475,7 @@ const Evaluation = () => {
                   >
                     {t('dataToSend')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-data-to-send-warning"
                       onClick={() =>

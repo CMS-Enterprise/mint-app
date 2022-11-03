@@ -7,8 +7,7 @@ import GetFunding from 'queries/Payments/GetFunding';
 import { GetFunding_modelPlan_payments as GetFundingType } from 'queries/Payments/types/GetFunding';
 import {
   FundingSource as FundingSourceType,
-  PayType,
-  TaskStatus
+  PayType
 } from 'types/graphql-global-types';
 
 import FundingSource from './index';
@@ -44,9 +43,11 @@ const paymentMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           payments: mockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

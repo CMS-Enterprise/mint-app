@@ -5,7 +5,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
 import { GetParticipantOptions_modelPlan_participantsAndProviders as GetParticipantOptionsType } from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
-import { TaskStatus } from 'types/graphql-global-types';
 
 import ParticipantOptions from './index';
 
@@ -35,9 +34,11 @@ const participantOptionsMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: participantOptionsMockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

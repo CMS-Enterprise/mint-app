@@ -5,7 +5,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
-import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
@@ -25,6 +24,7 @@ describe('The Model Plan Task List', () => {
     modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
     basics: {
+      __typename: 'PlanBasics',
       id: 'adsf',
       modifiedDts: null,
       clearanceStarts: '2022-05-12T15:01:39.190679Z',
@@ -39,8 +39,10 @@ describe('The Model Plan Task List', () => {
     prepareForClearance: [] as any,
     payments: [] as any,
     crTdls: [] as any,
+    operationalNeeds: [] as any,
     documents: [
       {
+        __typename: 'PlanDocument',
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
         fileName: 'test.pdf'
       }
@@ -101,9 +103,7 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <MessageProvider>
-              <Route path="/models/:modelID/task-list" component={TaskList} />
-            </MessageProvider>
+            <Route path="/models/:modelID/task-list" component={TaskList} />
           </MockedProvider>
         </MemoryRouter>
       </Provider>
@@ -123,9 +123,7 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <MessageProvider>
-              <Route path="/models/:modelID/task-list" component={TaskList} />
-            </MessageProvider>
+            <Route path="/models/:modelID/task-list" component={TaskList} />
           </MockedProvider>
         </MemoryRouter>
       </Provider>
@@ -143,9 +141,7 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <MessageProvider>
-              <Route path="/models/:modelID/task-list" component={TaskList} />
-            </MessageProvider>
+            <Route path="/models/:modelID/task-list" component={TaskList} />
           </MockedProvider>
         </MemoryRouter>
       </Provider>
@@ -167,9 +163,7 @@ describe('The Model Plan Task List', () => {
               mocks={[modelPlanQuery(modelPlan)]}
               addTypename={false}
             >
-              <MessageProvider>
-                <Route path="/models/:modelID/task-list" component={TaskList} />
-              </MessageProvider>
+              <Route path="/models/:modelID/task-list" component={TaskList} />
             </MockedProvider>
           </MemoryRouter>
         </Provider>

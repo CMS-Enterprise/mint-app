@@ -83,13 +83,9 @@ export default gql`
         readyForClearanceDts
         status
       }
-      itTools {
+      operationalNeeds {
         id
-        createdBy
-        createdDts
-        modifiedBy
         modifiedDts
-        status
       }
       prepareForClearance {
         status

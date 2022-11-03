@@ -1504,6 +1504,29 @@ export const translatePRecoverPaymentsType = (type: string) => {
   }
 };
 
+export const translateOpNeedsStatusType = (type: string) => {
+  switch (type) {
+    case 'NOT_NEEDED':
+      return i18next.t('itSolutions:status.notNeeded');
+    case 'NOT_ANSWERED':
+      return i18next.t('itSolutions:status.notAnswered');
+    case 'NOT_STARTED':
+      return i18next.t('itSolutions:status.notStarted');
+    case 'ONBOARDING':
+      return i18next.t('itSolutions:status.onboarding');
+    case 'BACKLOG':
+      return i18next.t('itSolutions:status.backlog');
+    case 'IN_PROGRESS':
+      return i18next.t('itSolutions:status.inProgress');
+    case 'COMPLETED':
+      return i18next.t('itSolutions:status.completed');
+    case 'AT_RISK':
+      return i18next.t('itSolutions:status.atRisk');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

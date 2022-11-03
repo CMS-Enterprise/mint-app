@@ -35,12 +35,10 @@ const modelPlanTaskList = {
   },
   withdraw_modal: {
     header: 'Confirm you want to remove {{-requestName}}.',
-    warning:
-      'Nobody will be able to edit or access this plan. This action cannot be undone. Please proceed with caution.',
-    confirm: 'Remove Model Plan',
-    cancel: 'Keep Model Plan',
-    confirmationText_name:
-      'Success! {{-modelName}} has been removed from MINT.',
+    warning: 'You will lose any information you have filled in.',
+    confirm: 'Remove request',
+    cancel: 'Cancel',
+    confirmationText_name: 'The request for {{-requestName}} has been removed',
     confirmationText_noName: 'The request has been removed'
   },
   numberedList: {
@@ -92,13 +90,15 @@ const modelPlanTaskList = {
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
     },
-    itTools: {
-      heading: 'IT tools',
+    itSolutions: {
+      heading: 'IT solutions and implementation status',
       team:
-        'Choose the IT solutions your model will utilize. Many questions in this section are populated based on responses to questions answered in previous sections.',
+        'Choose the IT solutions your model model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
+      team2:
+        'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the Assessment Team understand how best to help you.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
-      path: 'it-tools'
+      path: 'it-solutions'
     },
     prepareForClearance: {
       heading: 'Prepare for clearance',

@@ -43,8 +43,7 @@ import {
   AgencyOrStateHelpType,
   CcmInvolvmentType,
   ContractorSupportType,
-  StakeholdersType,
-  TaskStatus
+  StakeholdersType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -134,8 +133,9 @@ export const OpsEvalAndLearningContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -409,7 +409,7 @@ export const OpsEvalAndLearningContent = () => {
                   <Label htmlFor="ops-eval-and-learning-help-desk-use">
                     {t('helpDesk')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-help-desk-use-warning"
                       onClick={() =>
@@ -551,7 +551,7 @@ export const OpsEvalAndLearningContent = () => {
                   <Label htmlFor="ops-eval-and-learning-iddoc-support">
                     {t('iddocSupport')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-iddoc-support-warning"
                       onClick={() =>

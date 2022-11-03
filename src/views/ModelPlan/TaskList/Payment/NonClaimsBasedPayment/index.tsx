@@ -40,8 +40,7 @@ import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   ClaimsBasedPayType,
   NonClaimsBasedPayType,
-  PayType,
-  TaskStatus
+  PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -90,8 +89,9 @@ const NonClaimsBasedPayment = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -261,7 +261,7 @@ const NonClaimsBasedPayment = () => {
                         <Label htmlFor="payment-nonclaims-payments">
                           {t('nonClaimsPayments')}
                         </Label>
-                        {itToolsStarted && (
+                        {itSolutionsStarted && (
                           <ITToolsWarning
                             id="payment-nonclaims-payments-warning"
                             onClick={() =>

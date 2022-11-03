@@ -24,8 +24,8 @@ export default gql`
         appealOther
         appealNote
       }
-      itTools {
-        status
+      operationalNeeds {
+        modifiedDts
       }
     }
   }

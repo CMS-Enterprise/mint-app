@@ -85,7 +85,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
   const {
-    modelID = `${isHelpArticle ? 'f25d8f70-6470-47e6-a6d9-debc10f26567' : ''}`,
+    modelID = `${isHelpArticle ? '2cb8b1d1-cb0b-431c-9309-2765a780e25f' : ''}`,
     subinfo
   } = useParams<{
     modelID: string;

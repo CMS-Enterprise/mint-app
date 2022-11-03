@@ -37,11 +37,7 @@ import {
 } from 'queries/Payments/types/GetClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  ClaimsBasedPayType,
-  PayType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
@@ -89,8 +85,9 @@ const ClaimsBasedPayment = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -309,7 +306,7 @@ const ClaimsBasedPayment = () => {
                         >
                           {t('excludedFromPayment')}
                         </Label>
-                        {itToolsStarted && (
+                        {itSolutionsStarted && (
                           <ITToolsWarning
                             id="payment-provider-exclusion-ffs-system-warning"
                             className="margin-top-neg-5"

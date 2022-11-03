@@ -5,11 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import { GetClaimsBasedPayment_modelPlan_payments as GetClaimsBasedPaymentType } from 'queries/Payments/types/GetClaimsBasedPayment';
-import {
-  ClaimsBasedPayType,
-  PayType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 
 import ClaimsBasedPayment from './index';
 
@@ -42,9 +38,11 @@ const paymentsMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           payments: mockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }
