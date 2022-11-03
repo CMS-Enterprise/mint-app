@@ -26,7 +26,7 @@ const globalTableFilter = (
       // If string, convert to lowercase and search
       if (
         typeof data === 'string' &&
-        data.toLowerCase().includes(lowerCaseQuery)
+        data.toLowerCase().replace('_', ' ').includes(lowerCaseQuery)
       ) {
         foundValue = true;
       }

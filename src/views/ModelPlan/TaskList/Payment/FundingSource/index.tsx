@@ -39,8 +39,7 @@ import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
   PayRecipient,
-  PayType,
-  TaskStatus
+  PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -94,8 +93,9 @@ const FundingSource = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -494,7 +494,7 @@ const FundingSource = () => {
                         <Label htmlFor="payType" className="maxw-none">
                           {t('whatWillYouPay')}
                         </Label>
-                        {itToolsStarted && (
+                        {itSolutionsStarted && (
                           <ITToolsWarning
                             id="payment-pay-recipients-warning"
                             onClick={() =>

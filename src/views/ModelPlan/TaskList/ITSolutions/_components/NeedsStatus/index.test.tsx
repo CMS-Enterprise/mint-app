@@ -1,0 +1,22 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+
+import { OpSolutionStatus } from 'types/graphql-global-types';
+
+import OperationalNeedsStatusTag from '.';
+
+describe('IT Solutions HelpBox', () => {
+  it('rendered status tag text', async () => {
+    const { getByTestId } = render(
+      <OperationalNeedsStatusTag status={OpSolutionStatus.COMPLETED} />
+    );
+    expect(getByTestId('tag')).toHaveTextContent('Completed');
+  });
+
+  it('matches snapshot', async () => {
+    const { asFragment } = render(
+      <OperationalNeedsStatusTag status={OpSolutionStatus.COMPLETED} />
+    );
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

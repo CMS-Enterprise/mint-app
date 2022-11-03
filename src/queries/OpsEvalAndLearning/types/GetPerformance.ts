@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, BenchmarkForPerformanceType, TaskStatus } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, BenchmarkForPerformanceType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetPerformance
@@ -30,9 +30,9 @@ export interface GetPerformance_modelPlan_opsEvalAndLearning {
   appealNote: string | null;
 }
 
-export interface GetPerformance_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetPerformance_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetPerformance_modelPlan {
@@ -40,7 +40,7 @@ export interface GetPerformance_modelPlan {
   id: UUID;
   modelName: string;
   opsEvalAndLearning: GetPerformance_modelPlan_opsEvalAndLearning;
-  itTools: GetPerformance_modelPlan_itTools;
+  operationalNeeds: GetPerformance_modelPlan_operationalNeeds[];
 }
 
 export interface GetPerformance {

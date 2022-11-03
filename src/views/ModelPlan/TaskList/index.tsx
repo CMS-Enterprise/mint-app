@@ -43,13 +43,14 @@ import {
   GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
+  GetModelPlan_modelPlan_operationalNeeds as OperationalNeedsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlan_modelPlan_prepareForClearance as PrepareForClearanceType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
-import { TaskListSection } from 'types/graphql-global-types';
+import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
@@ -66,6 +67,11 @@ import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
+type ITSolutionsType = {
+  modifiedDts: string | null;
+  status: TaskStatus;
+};
+
 type TaskListSectionsType = {
   [key: string]:
     | BasicsType
@@ -74,6 +80,7 @@ type TaskListSectionsType = {
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
     | PaymentsType
+    | ITSolutionsType
     | PrepareForClearanceType;
 };
 
@@ -127,6 +134,7 @@ const TaskList = () => {
     opsEvalAndLearning,
     beneficiaries,
     payments,
+    operationalNeeds = [],
     prepareForClearance
   } = modelPlan;
 
@@ -142,6 +150,19 @@ const TaskList = () => {
   const collaborators = (collaboratorData?.modelPlan?.collaborators ??
     []) as GetCollaboratorsType[];
 
+  const getITSolutionsStatus = (
+    operationalNeedsArray: OperationalNeedsType[]
+  ) => {
+    const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
+    return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
+  };
+
+  const itSolutions: ITSolutionsType = {
+    // modifiedDts: operationalNeeds?.modifiedDts,
+    modifiedDts: null, // TODO: Get most recently updated operational need
+    status: getITSolutionsStatus(operationalNeeds)
+  };
+
   const taskListSections: TaskListSectionsType = {
     basics,
     generalCharacteristics,
@@ -149,6 +170,7 @@ const TaskList = () => {
     beneficiaries,
     opsEvalAndLearning,
     payments,
+    itSolutions,
     prepareForClearance
   };
 
@@ -277,6 +299,12 @@ const TaskList = () => {
                                 <p className="margin-top-0">
                                   {t(`numberedList.${key}.${userRole}`)}
                                 </p>
+                                {key === 'itSolutions' &&
+                                  userRole !== 'assessment' && (
+                                    <p className="margin-top-0">
+                                      {t(`numberedList.${key}.${userRole}2`)}
+                                    </p>
+                                  )}
                               </TaskListDescription>
                             </div>
                             <TaskListButton
@@ -299,7 +327,7 @@ const TaskList = () => {
                               )}
                             />
                           </TaskListItem>
-                          {key !== 'itTools' && (
+                          {key !== 'prepareForClearance' && (
                             <Divider className="margin-bottom-4" />
                           )}
                         </Fragment>

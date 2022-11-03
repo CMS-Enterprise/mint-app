@@ -34,10 +34,7 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import {
-  ModelLearningSystemType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ModelLearningSystemType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -86,8 +83,9 @@ const Learning = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -230,7 +228,7 @@ const Learning = () => {
                         {t('learningSystem')}
                       </legend>
 
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="ops-eval-and-learning-learning-systems-warning"
                           onClick={() =>
