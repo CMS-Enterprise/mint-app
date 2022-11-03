@@ -6,9 +6,9 @@ idm_username,
 commonName,
 email
 
-FROM user where eua_id = :eua_id
+FROM user_account where eua_id = :eua_id
 )
 AS existing_USER
 
-CASE 
+CASE
 WHE
