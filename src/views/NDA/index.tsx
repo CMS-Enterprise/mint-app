@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Alert,
@@ -22,21 +22,31 @@ type NDAType = {
   agreed: boolean;
 };
 
+interface LocationProps {
+  nextState: string;
+}
+
 const NDA = () => {
   const { t } = useTranslation('nda');
   const dispatch = useDispatch();
   const history = useHistory();
+  const { state: locationState } = useLocation<LocationProps>();
+  const [originalRoute, setOriginalRoute] = useState<string>('');
   const { acceptedNDA, ...user } = useSelector(
     (state: RootStateOrAny) => state.auth
   );
 
   const [signNDA] = useMutation(UpdateNDA);
 
+  useEffect(() => {
+    if (locationState?.nextState) setOriginalRoute(locationState?.nextState);
+  }, [locationState?.nextState]);
+
   const handleFormSubmit = (formikValues: NDAType) => {
     signNDA()
       .then(response => {
         dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
-        history.push('/');
+        history.push(originalRoute || '/');
       })
       .catch(err => {
         // TODO: No roles assigned error?

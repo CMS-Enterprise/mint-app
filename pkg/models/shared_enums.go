@@ -21,20 +21,6 @@ const (
 	TaskReadyForClearance TaskStatus = "READY_FOR_CLEARANCE"
 )
 
-// TaskSection Represents the possible task sections in the model plan worklist
-type TaskSection string
-
-// These constants represent the possible values of a TaskSection enum
-const (
-	TsBasics          TaskSection = "BASICS"
-	TsCharacteristics TaskSection = "CHARACTERISTICS"
-	TsParticipants    TaskSection = "PARTICIPANTS"
-	TsBeneficiaries   TaskSection = "BENEFICIARIES"
-	TsOperations      TaskSection = "OPERATIONS"
-	TsPayment         TaskSection = "PAYMENT"
-	TsFinal           TaskSection = "FINAL"
-)
-
 // FrequencyType represents the possible Frequency options
 type FrequencyType string
 
@@ -67,4 +53,19 @@ const (
 	OverlapYesNeedPolicies OverlapType = "YES_NEED_POLICIES"
 	OverlapYesNoIssues     OverlapType = "YES_NO_ISSUES"
 	OverlapNo              OverlapType = "NO"
+)
+
+// TaskListSection represents the parts of the task list
+type TaskListSection string
+
+// These are the options for TaskListSection
+const (
+	TLSBasics                          TaskListSection = "BASICS"
+	TLSGeneralCharacteristics          TaskListSection = "GENERAL_CHARACTERISTICS"
+	TLSParticipantsAndProviders        TaskListSection = "PARTICIPANTS_AND_PROVIDERS"
+	TLSBeneficiaries                   TaskListSection = "BENEFICIARIES"
+	TLSOperationsEvaluationAndLearning TaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
+	TLSPayment                         TaskListSection = "PAYMENT"
+	TLSItTools                         TaskListSection = "IT_TOOLS"
+	TLSPrepareForClearance             TaskListSection = "PREPARE_FOR_CLEARANCE"
 )

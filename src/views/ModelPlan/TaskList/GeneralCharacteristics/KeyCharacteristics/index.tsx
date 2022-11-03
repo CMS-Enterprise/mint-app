@@ -38,8 +38,7 @@ import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharac
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import {
   AlternativePaymentModelType,
-  KeyCharacteristic,
-  TaskStatus
+  KeyCharacteristic
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -86,8 +85,9 @@ const KeyCharacteristics = () => {
     data?.modelPlan?.generalCharacteristics ||
     ({} as KeyCharacteristicsFormType);
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -406,7 +406,7 @@ const KeyCharacteristics = () => {
                       >
                         {t('reviewPlanBids')}
                       </Label>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="plan-characteristics-collect-bids-warning"
                           onClick={() =>
@@ -463,7 +463,7 @@ const KeyCharacteristics = () => {
                       >
                         {t('manageEnrollment')}
                       </Label>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="plan-characteristics-manage-enrollment-warning"
                           onClick={() =>
@@ -520,7 +520,7 @@ const KeyCharacteristics = () => {
                       >
                         {t('updatedContact')}
                       </Label>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="plan-characteristics-contact-updated-warning"
                           onClick={() =>

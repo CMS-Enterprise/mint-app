@@ -293,14 +293,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
@@ -361,13 +361,6 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
 }
 
-// AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
-func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, needed, principal, r.store)
-}
-
 // AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
 func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
 	principal := appcontext.Principal(ctx)
@@ -404,9 +397,9 @@ func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Conte
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeedID(logger, obj.ID, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -901,9 +894,23 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 }
 
 // OperationalSolutions is the resolver for the operationalSolutions field.
-func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error) {
+func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeedID(logger, operationalNeedID, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, includeNotNeeded, r.store)
+}
+
+// OperationalSolution is the resolver for the operationalSolution field.
+func (r *queryResolver) OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionGetByID(logger, id, r.store)
+}
+
+// OperationalNeed is the resolver for the operationalNeed field.
+func (r *queryResolver) OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalNeedGetByID(logger, id, r.store)
 }
 
 // AuditChanges is the resolver for the auditChanges field.

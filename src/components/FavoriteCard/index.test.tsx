@@ -14,6 +14,7 @@ import FavoriteCard from './index';
 const mockModel: ModelPlanType = {
   id: '0186774a-80b0-454c-b69e-c4e949343483',
   modelName: 'Plan For General Characteristics',
+  nameHistory: ['first', 'second'],
   status: ModelStatus.PLAN_DRAFT,
   isFavorite: true,
   isCollaborator: false,

@@ -12,6 +12,7 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
+  SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
@@ -29,7 +30,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
   GetModelPlanInfo as GetModelPlanInfoType,
-  GetModelPlanInfo_modelPlan as ModelPlanInfoFormType,
+  GetModelPlanInfo_modelPlan as ModelFormType,
   GetModelPlanInfoVariables
 } from 'queries/Basics/types/GetModelPlanInfo';
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
@@ -50,6 +51,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import Milestones from './Milestones';
 import Overview from './Overview';
+
+type ModelPlanInfoFormType = Omit<ModelFormType, 'nameHistory'>;
 
 const BasicsContent = () => {
   const { t } = useTranslation('basics');
@@ -74,7 +77,10 @@ const BasicsContent = () => {
     }
   });
 
-  const { id, modelName, basics } = data?.modelPlan || {};
+  const { id, modelName, basics, nameHistory } = data?.modelPlan || {};
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
 
   const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
@@ -230,191 +236,234 @@ const BasicsContent = () => {
                   })}
                 </ErrorAlert>
               )}
-              <Form
-                className="tablet:grid-col-6 margin-top-6"
-                onSubmit={e => {
-                  handleSubmit(e);
-                  window.scrollTo(0, 0);
-                }}
-              >
-                <FieldGroup
-                  scrollElement="modelName"
-                  error={!!flatErrors.modelName}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="plan-basics-model-name">
-                    {t('modelName')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.modelName}
-                    id="plan-basics-model-name"
-                    maxLength={50}
-                    name="modelName"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="modelCategory"
-                  error={!!flatErrors['basics.modelCategory']}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="plan-basics-model-category">
-                    {t('modelCategory')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors['basics.modelCategory']}
-                  </FieldErrorMsg>
-                  <Field
-                    as={Dropdown}
-                    id="plan-basics-model-category"
-                    name="basics.modelCategory"
-                    value={values.basics.modelCategory || ''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('basics.modelCategory', e.target.value);
-                    }}
-                  >
-                    <option key="default-select" disabled value="">
-                      {`-${h('select')}-`}
-                    </option>
-                    {Object.keys(ModelCategory).map(category => {
-                      return (
-                        <option key={category} value={category || ''}>
-                          {translateModelCategory(category)}
-                        </option>
-                      );
-                    })}
-                  </Field>
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="cmsCenters"
-                  error={!!flatErrors['basics.cmsCenters']}
-                  className="margin-top-4"
-                >
-                  <FieldArray
-                    name="basics.cmsCenters"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {t('cmsComponent')}
-                        </legend>
-                        <FieldErrorMsg>
-                          {flatErrors['basics.cmsCenters']}
-                        </FieldErrorMsg>
-
-                        {Object.keys(CMSCenter).map(center => {
-                          return (
-                            <Field
-                              key={center}
-                              as={CheckboxField}
-                              id={`new-plan-cmsCenters-${center}`}
-                              name="basics.cmsCenters"
-                              label={translateCmsCenter(center)}
-                              value={center}
-                              checked={values.basics.cmsCenters.includes(
-                                center as CMSCenter
-                              )}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                if (e.target.checked) {
-                                  arrayHelpers.push(e.target.value);
-                                } else {
-                                  const idx = values.basics.cmsCenters.indexOf(
-                                    e.target.value as CMSCenter
-                                  );
-                                  arrayHelpers.remove(idx);
-                                }
-                                if (e.target.value === CMSCenter.CMMI) {
-                                  setAreCmmiGroupsShown(!areCmmiGroupsShown);
-                                }
-                                if (e.target.value === CMSCenter.OTHER) {
-                                  setShowOther(!showOther);
-                                }
-                              }}
-                            />
-                          );
-                        })}
-
-                        {values.basics.cmsCenters.includes(CMSCenter.OTHER) && (
-                          <FieldGroup
-                            className="margin-top-4"
-                            error={!!flatErrors['basics.cmsOther']}
-                          >
-                            <Label htmlFor="plan-basics-cmsCategory--Other">
-                              {h('pleaseSpecify')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors['basics.cmsOther']}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextInput}
-                              id="plan-basics-cmsCategory--Other"
-                              maxLength={50}
-                              name="basics.cmsOther"
-                            />
-                          </FieldGroup>
-                        )}
-                      </>
-                    )}
-                  />
-                </FieldGroup>
-                <FieldGroup
-                  error={!!flatErrors['basics.cmmiGroups']}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="basics.cmmiGroups" className="text-normal">
-                    {t('cmmiGroup')}
-                  </Label>
-
-                  <p className="text-base margin-bottom-1 margin-top-1">
-                    {t('cmmiGroupInfo')}
-                  </p>
-
-                  <FieldErrorMsg>
-                    {flatErrors['basics.cmmiGroups']}
-                  </FieldErrorMsg>
-                  {Object.keys(CMMIGroup).map(group => {
-                    return (
-                      <Fragment key={group}>
+              <GridContainer className="padding-x-0">
+                <Grid row gap>
+                  <Grid desktop={{ col: 6 }}>
+                    <Form
+                      className="margin-top-6"
+                      onSubmit={e => {
+                        handleSubmit(e);
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      <FieldGroup
+                        scrollElement="modelName"
+                        error={!!flatErrors.modelName}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="plan-basics-model-name">
+                          {t('modelName')}
+                        </Label>
+                        <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
                         <Field
-                          as={CheckboxField}
-                          disabled={
-                            !values.basics.cmsCenters.includes(CMSCenter.CMMI)
-                          }
-                          id={`new-plan-cmmiGroup-${group}`}
-                          name="basics.cmmiGroups"
-                          label={translateCmmiGroups(group)}
-                          value={group}
-                          checked={values.basics.cmmiGroups.includes(
-                            group as CMMIGroup
+                          as={TextInput}
+                          error={!!flatErrors.modelName}
+                          id="plan-basics-model-name"
+                          maxLength={50}
+                          name="modelName"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="modelCategory"
+                        error={!!flatErrors['basics.modelCategory']}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="plan-basics-model-category">
+                          {t('modelCategory')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors['basics.modelCategory']}
+                        </FieldErrorMsg>
+                        <Field
+                          as={Dropdown}
+                          id="plan-basics-model-category"
+                          name="basics.modelCategory"
+                          value={values.basics.modelCategory || ''}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setFieldValue(
+                              'basics.modelCategory',
+                              e.target.value
+                            );
+                          }}
+                        >
+                          <option key="default-select" disabled value="">
+                            {`-${h('select')}-`}
+                          </option>
+                          {Object.keys(ModelCategory).map(category => {
+                            return (
+                              <option key={category} value={category || ''}>
+                                {translateModelCategory(category)}
+                              </option>
+                            );
+                          })}
+                        </Field>
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="cmsCenters"
+                        error={!!flatErrors['basics.cmsCenters']}
+                        className="margin-top-4"
+                      >
+                        <FieldArray
+                          name="basics.cmsCenters"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('cmsComponent')}
+                              </legend>
+                              <FieldErrorMsg>
+                                {flatErrors['basics.cmsCenters']}
+                              </FieldErrorMsg>
+
+                              {Object.keys(CMSCenter).map(center => {
+                                return (
+                                  <Field
+                                    key={center}
+                                    as={CheckboxField}
+                                    id={`new-plan-cmsCenters-${center}`}
+                                    name="basics.cmsCenters"
+                                    label={translateCmsCenter(center)}
+                                    value={center}
+                                    checked={values.basics.cmsCenters.includes(
+                                      center as CMSCenter
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.basics.cmsCenters.indexOf(
+                                          e.target.value as CMSCenter
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                      if (e.target.value === CMSCenter.CMMI) {
+                                        setAreCmmiGroupsShown(
+                                          !areCmmiGroupsShown
+                                        );
+                                      }
+                                      if (e.target.value === CMSCenter.OTHER) {
+                                        setShowOther(!showOther);
+                                      }
+                                    }}
+                                  />
+                                );
+                              })}
+
+                              {values.basics.cmsCenters.includes(
+                                CMSCenter.OTHER
+                              ) && (
+                                <FieldGroup
+                                  className="margin-top-4"
+                                  error={!!flatErrors['basics.cmsOther']}
+                                >
+                                  <Label htmlFor="plan-basics-cmsCategory--Other">
+                                    {h('pleaseSpecify')}
+                                  </Label>
+                                  <FieldErrorMsg>
+                                    {flatErrors['basics.cmsOther']}
+                                  </FieldErrorMsg>
+                                  <Field
+                                    as={TextInput}
+                                    id="plan-basics-cmsCategory--Other"
+                                    maxLength={50}
+                                    name="basics.cmsOther"
+                                  />
+                                </FieldGroup>
+                              )}
+                            </>
                           )}
                         />
-                      </Fragment>
-                    );
-                  })}
-                </FieldGroup>
+                      </FieldGroup>
+                      <FieldGroup
+                        error={!!flatErrors['basics.cmmiGroups']}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="basics.cmmiGroups"
+                          className="text-normal"
+                        >
+                          {t('cmmiGroup')}
+                        </Label>
 
-                <div className="margin-top-6 margin-bottom-3">
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    onClick={() => setErrors({})}
-                  >
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'back')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
-              </Form>
+                        <p className="text-base margin-bottom-1 margin-top-1">
+                          {t('cmmiGroupInfo')}
+                        </p>
+
+                        <FieldErrorMsg>
+                          {flatErrors['basics.cmmiGroups']}
+                        </FieldErrorMsg>
+                        {Object.keys(CMMIGroup).map(group => {
+                          return (
+                            <Fragment key={group}>
+                              <Field
+                                as={CheckboxField}
+                                disabled={
+                                  !values.basics.cmsCenters.includes(
+                                    CMSCenter.CMMI
+                                  )
+                                }
+                                id={`new-plan-cmmiGroup-${group}`}
+                                name="basics.cmmiGroups"
+                                label={translateCmmiGroups(group)}
+                                value={group}
+                                checked={values.basics.cmmiGroups.includes(
+                                  group as CMMIGroup
+                                )}
+                              />
+                            </Fragment>
+                          );
+                        })}
+                      </FieldGroup>
+
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="submit"
+                          disabled={!(dirty || isValid)}
+                          onClick={() => setErrors({})}
+                        >
+                          {h('next')}
+                        </Button>
+                      </div>
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'back')}
+                      >
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
+                      </Button>
+                    </Form>
+                  </Grid>
+
+                  <Grid desktop={{ col: 6 }}>
+                    {filteredNameHistory && filteredNameHistory.length > 0 && (
+                      <SummaryBox
+                        heading=""
+                        className="margin-top-6"
+                        data-testid="summary-box--previous-name"
+                      >
+                        <p className="margin-y-0 text-bold">
+                          {t('previousNames')}
+                        </p>
+                        <ul className="margin-top-1 margin-bottom-0 padding-left-2">
+                          {filteredNameHistory.map(previousName => {
+                            return (
+                              <li key={`${modelName}-${previousName}`}>
+                                {previousName}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </SummaryBox>
+                    )}
+                  </Grid>
+                </Grid>
+              </GridContainer>
               <AutoSave
                 values={values}
                 onSave={() => {

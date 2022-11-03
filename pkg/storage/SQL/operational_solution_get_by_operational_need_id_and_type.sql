@@ -2,7 +2,7 @@ SELECT
     OpSol.id,
     OpSol.operational_need_id,
     OpSol.solution_type,
-    OpSol.archived,
+    OpSol.needed,
     pOpSol.sol_name AS sol_name,
     pOpSol.sol_key AS sol_key,
     OpSol.name_other,

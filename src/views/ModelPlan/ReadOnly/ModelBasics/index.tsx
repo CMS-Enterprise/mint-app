@@ -47,6 +47,11 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
     return <NotFoundPartial />;
   }
 
+  const { nameHistory } = data?.modelPlan || {};
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
+
   const {
     modelCategory,
     cmsCenters,
@@ -99,7 +104,11 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
         </p>
       )}
 
-      {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
+      <ReadOnlySection
+        heading={t('previousNames')}
+        list
+        listItems={filteredNameHistory}
+      />
 
       <ReadOnlySection
         heading={t('modelCategory')}

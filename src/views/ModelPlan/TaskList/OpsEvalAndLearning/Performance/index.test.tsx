@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
 import { GetPerformance_modelPlan_opsEvalAndLearning as GetPerformanceType } from 'queries/OpsEvalAndLearning/types/GetPerformance';
-import { CcmInvolvmentType, TaskStatus } from 'types/graphql-global-types';
+import { CcmInvolvmentType } from 'types/graphql-global-types';
 
 import Performance from '.';
 
@@ -42,9 +42,11 @@ const performanceMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           opsEvalAndLearning: performanceMockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

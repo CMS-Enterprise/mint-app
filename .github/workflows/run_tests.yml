@@ -40,7 +40,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure go cache
-        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         with:
           path: |
             ~/go/pkg/mod
@@ -142,14 +142,14 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -222,7 +222,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Set up go
@@ -230,7 +230,7 @@ jobs:
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
       - name: Configure go cache
-        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         with:
           path: |
             ~/go/pkg/mod
@@ -241,7 +241,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -274,14 +274,14 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -307,14 +307,14 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v2.1.5
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # v2.1.5
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120 # v2.1.6
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v2.1.6
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |

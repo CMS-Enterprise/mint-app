@@ -4,6 +4,7 @@ SELECT
     pOpNd.id AS need_type,
     pOpNd.need_name AS need_name,
     pOpNd.need_key AS need_key,
+    pOpNd.section AS section,
     OpNd.name_other,
     COALESCE(OpNd.needed, FALSE) AS needed,
     COALESCE(OpNd.created_by, 'NULL') AS created_by,

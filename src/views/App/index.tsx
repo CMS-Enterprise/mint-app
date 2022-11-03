@@ -36,6 +36,7 @@ import Basics from 'views/ModelPlan/TaskList/Basics';
 import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'views/ModelPlan/TaskList/GeneralCharacteristics';
+import ITSolutions from 'views/ModelPlan/TaskList/ITSolutions';
 import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
@@ -51,6 +52,7 @@ import SubscriptionHandler from 'views/SubscriptionHandler';
 import SubscriptionWrapper from 'views/SubscriptionWrapper';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
+import Unfollow from 'views/Unfollow';
 import UserInfo from 'views/User';
 import UserInfoWrapper from 'views/UserInfoWrapper';
 
@@ -79,6 +81,8 @@ const AppRoutes = () => {
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
+
+      <SecureRoute path="/unfollow" exact component={Unfollow} />
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
@@ -145,6 +149,10 @@ const AppRoutes = () => {
       <SecureRoute
         path="/models/:modelID/task-list/it-tools"
         component={ITTools}
+      />
+      <SecureRoute
+        path="/models/:modelID/task-list/it-solutions"
+        component={ITSolutions}
       />
       <SecureRoute
         path="/models/:modelID/task-list/prepare-for-clearance"

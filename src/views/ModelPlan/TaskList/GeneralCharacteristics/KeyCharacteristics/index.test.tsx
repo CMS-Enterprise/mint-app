@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import { GetKeyCharacteristics_modelPlan_generalCharacteristics as GetKeyCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetKeyCharacteristics';
-import { KeyCharacteristic, TaskStatus } from 'types/graphql-global-types';
+import { KeyCharacteristic } from 'types/graphql-global-types';
 
 import KeyCharacteristics from './index';
 
@@ -38,9 +38,11 @@ const keyCharacteristicsMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           generalCharacteristics: keyCharacteristicsMockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

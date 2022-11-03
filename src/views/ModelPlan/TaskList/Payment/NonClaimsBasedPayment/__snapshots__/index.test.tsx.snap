@@ -124,28 +124,6 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               Select which non-claims-based payments will you pay.
             </label>
             <div
-              class="usa-alert usa-alert--warning it-tools-warning"
-              data-testid="alert"
-            >
-              <div
-                class="usa-alert__body"
-              >
-                <p
-                  class="usa-alert__text"
-                >
-                  Changing your answer to this question may also affect your responses to questions in IT tools.  
-                  <button
-                    class="usa-button usa-button usa-button--unstyled"
-                    data-testid="button"
-                    id="payment-nonclaims-payments-warning"
-                    type="button"
-                  >
-                    Go to IT tools.
-                  </button>
-                </p>
-              </div>
-            </div>
-            <div
               class="margin-top-1"
             >
               <div

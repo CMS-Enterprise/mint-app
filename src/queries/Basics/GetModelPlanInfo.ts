@@ -5,6 +5,7 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      nameHistory(sort: DESC)
       basics {
         id
         modelCategory

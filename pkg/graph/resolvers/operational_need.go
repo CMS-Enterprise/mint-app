@@ -20,29 +20,6 @@ func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID u
 	return needs, nil
 }
 
-// OperationalNeedInsertOrUpdate either inserts or updates an operational need depending on if it exists or notalready
-func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
-
-	existing, err := store.OperationalNeedGetByModelPlanIDAndType(logger, modelPlanID, needType)
-	if err != nil {
-		return nil, err
-	}
-	if existing == nil {
-		existing = models.NewOperationalNeed(principal.ID(), modelPlanID)
-	}
-	changes := map[string]interface{}{
-		"needed": needed,
-	}
-
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
-	if err != nil {
-		return nil, err
-	}
-
-	return store.OperationalNeedInsertOrUpdate(logger, existing, needType)
-
-}
-
 // OperationalNeedInsertOrUpdateCustom adds or updates a Custom Operational Need
 func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UUID, customNeedType string, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
 
@@ -86,4 +63,9 @@ func OperationalNeedCustomUpdateByID(logger *zap.Logger, operationNeedID uuid.UU
 
 	return store.OperationalNeedUpdateByID(logger, existing)
 
+}
+
+// OperationalNeedGetByID returns an operational Need by it's ID
+func OperationalNeedGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.OperationalNeed, error) {
+	return store.OperationalNeedGetByID(logger, id)
 }
