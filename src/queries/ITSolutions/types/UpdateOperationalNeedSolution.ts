@@ -13,6 +13,7 @@ export interface UpdateOperationalNeedSolution_addOrUpdateOperationalSolution {
   __typename: "OperationalSolution";
   id: UUID;
   needed: boolean | null;
+  key: OperationalSolutionKey | null;
 }
 
 export interface UpdateOperationalNeedSolution {

@@ -25,7 +25,10 @@ import {
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
-import { OperationalNeedKey } from 'types/graphql-global-types';
+import {
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
@@ -70,8 +73,6 @@ const SelectSolutions = () => {
     }
   });
 
-  // console.log(data);
-
   const operationalNeed = data?.operationalNeed || initialValues;
 
   const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
@@ -91,18 +92,23 @@ const SelectSolutions = () => {
               operationalNeedID,
               solutionType: solution.key,
               changes: {
-                needed: solution.needed
+                needed: solution.needed,
+                status: OpSolutionStatus.IN_PROGRESS
               }
             }
           });
         })
       );
 
-      if (response) {
+      const errors = response?.find(result => result.errors);
+
+      if (response && !errors) {
         history.push(`/models/${modelID}/task-list/it-solutions`);
+      } else if (errors) {
+        formikRef?.current?.setErrors({ id: JSON.stringify(error) });
       }
     } catch (errors) {
-      // formikRef?.current?.setErrors(errors);
+      formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
     }
   };
 

@@ -31,8 +31,6 @@ const CheckboxCard = ({
   const { t } = useTranslation('itSolutions');
   const id = `it-solutions-${solution?.key?.toLowerCase()}`;
 
-  // console.log(solution);
-
   const tempDescription: string =
     'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
 

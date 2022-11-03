@@ -13,6 +13,7 @@ export default gql`
     ) {
       id
       needed
+      key
     }
   }
 `;
