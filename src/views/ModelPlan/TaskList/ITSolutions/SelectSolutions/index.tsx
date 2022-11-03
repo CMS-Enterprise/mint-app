@@ -25,8 +25,10 @@ const SelectSolutions = () => {
     modelID: string;
     // operationalNeedID: string;
   }>();
+
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
   const formikRef = useRef<FormikProps<any>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
@@ -42,6 +44,7 @@ const SelectSolutions = () => {
     solutions: {
       solutions: [
         {
+          id: 3,
           key: 'FFS_COMPETENCY_CENTER',
           name: 'FFS Competency Center',
           description:
@@ -49,6 +52,7 @@ const SelectSolutions = () => {
           needed: false
         },
         {
+          id: 2,
           key: 'SHARED_SYSTEMS',
           name: 'Shared Systems',
           description:
@@ -194,9 +198,9 @@ const SelectSolutions = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }}>
+        <Grid tablet={{ col: 3 }} className="padding-0">
           <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-            <AskAQuestion modelID={modelID} />
+            <AskAQuestion modelID={modelID} opNeeds />
           </div>
           <div className="margin-top-4">
             <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
