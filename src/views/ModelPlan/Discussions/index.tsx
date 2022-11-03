@@ -421,6 +421,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
       discussionsContent.sort(sortRepliesByDate); // Sort discusssions by the most recent reply for answered questions
     }
 
+    console.log(discussionsContent);
     return discussionsContent.map((discussion, index) => {
       return (
         <div
