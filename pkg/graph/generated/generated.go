@@ -199,11 +199,10 @@ type ComplexityRoot struct {
 		NameOther   func(childComplexity int) int
 		Needed      func(childComplexity int) int
 		Section     func(childComplexity int) int
-		Solutions   func(childComplexity int) int
+		Solutions   func(childComplexity int, includeNotNeeded bool) int
 	}
 
 	OperationalSolution struct {
-		Archived          func(childComplexity int) int
 		CreatedBy         func(childComplexity int) int
 		CreatedDts        func(childComplexity int) int
 		ID                func(childComplexity int) int
@@ -214,16 +213,12 @@ type ComplexityRoot struct {
 		MustStartDts      func(childComplexity int) int
 		Name              func(childComplexity int) int
 		NameOther         func(childComplexity int) int
+		Needed            func(childComplexity int) int
 		OperationalNeedID func(childComplexity int) int
 		PocEmail          func(childComplexity int) int
 		PocName           func(childComplexity int) int
 		SolutionType      func(childComplexity int) int
 		Status            func(childComplexity int) int
-	}
-
-	OperationalSolutions struct {
-		PossibleSolutions func(childComplexity int) int
-		Solutions         func(childComplexity int) int
 	}
 
 	PlanBasics struct {
@@ -800,7 +795,9 @@ type ComplexityRoot struct {
 		ModelPlan                func(childComplexity int, id uuid.UUID) int
 		ModelPlanCollection      func(childComplexity int, includeAll bool) int
 		NdaInfo                  func(childComplexity int) int
-		OperationalSolutions     func(childComplexity int, operationalNeedID uuid.UUID) int
+		OperationalNeed          func(childComplexity int, id uuid.UUID) int
+		OperationalSolution      func(childComplexity int, id uuid.UUID) int
+		OperationalSolutions     func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
 		PlanCollaboratorByID     func(childComplexity int, id uuid.UUID) int
 		PlanDocument             func(childComplexity int, id uuid.UUID) int
 		PlanPayments             func(childComplexity int, id uuid.UUID) int
@@ -892,7 +889,7 @@ type MutationResolver interface {
 	UpdateCustomOperationalSolutionByID(ctx context.Context, id uuid.UUID, customSolutionType *string, changes map[string]interface{}) (*models.OperationalSolution, error)
 }
 type OperationalNeedResolver interface {
-	Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error)
+	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -1051,7 +1048,9 @@ type QueryResolver interface {
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
 	CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
-	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error)
+	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error)
+	OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error)
+	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
 	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 }
@@ -2028,14 +2027,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.OperationalNeed.Solutions(childComplexity), true
-
-	case "OperationalSolution.archived":
-		if e.complexity.OperationalSolution.Archived == nil {
-			break
+		args, err := ec.field_OperationalNeed_solutions_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
 		}
 
-		return e.complexity.OperationalSolution.Archived(childComplexity), true
+		return e.complexity.OperationalNeed.Solutions(childComplexity, args["includeNotNeeded"].(bool)), true
 
 	case "OperationalSolution.createdBy":
 		if e.complexity.OperationalSolution.CreatedBy == nil {
@@ -2107,6 +2104,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.OperationalSolution.NameOther(childComplexity), true
 
+	case "OperationalSolution.needed":
+		if e.complexity.OperationalSolution.Needed == nil {
+			break
+		}
+
+		return e.complexity.OperationalSolution.Needed(childComplexity), true
+
 	case "OperationalSolution.operationalNeedID":
 		if e.complexity.OperationalSolution.OperationalNeedID == nil {
 			break
@@ -2141,20 +2145,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalSolution.Status(childComplexity), true
-
-	case "OperationalSolutions.possibleSolutions":
-		if e.complexity.OperationalSolutions.PossibleSolutions == nil {
-			break
-		}
-
-		return e.complexity.OperationalSolutions.PossibleSolutions(childComplexity), true
-
-	case "OperationalSolutions.solutions":
-		if e.complexity.OperationalSolutions.Solutions == nil {
-			break
-		}
-
-		return e.complexity.OperationalSolutions.Solutions(childComplexity), true
 
 	case "PlanBasics.announced":
 		if e.complexity.PlanBasics.Announced == nil {
@@ -5877,6 +5867,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.NdaInfo(childComplexity), true
 
+	case "Query.operationalNeed":
+		if e.complexity.Query.OperationalNeed == nil {
+			break
+		}
+
+		args, err := ec.field_Query_operationalNeed_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.OperationalNeed(childComplexity, args["id"].(uuid.UUID)), true
+
+	case "Query.operationalSolution":
+		if e.complexity.Query.OperationalSolution == nil {
+			break
+		}
+
+		args, err := ec.field_Query_operationalSolution_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.OperationalSolution(childComplexity, args["id"].(uuid.UUID)), true
+
 	case "Query.operationalSolutions":
 		if e.complexity.Query.OperationalSolutions == nil {
 			break
@@ -5887,7 +5901,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.OperationalSolutions(childComplexity, args["operationalNeedID"].(uuid.UUID)), true
+		return e.complexity.Query.OperationalSolutions(childComplexity, args["operationalNeedID"].(uuid.UUID), args["includeNotNeeded"].(bool)), true
 
 	case "Query.planCollaboratorByID":
 		if e.complexity.Query.PlanCollaboratorByID == nil {
@@ -6199,18 +6213,12 @@ type ModelPlan {
   operationalNeeds: [OperationalNeed!]!
 }
 
-type OperationalSolutions {
-  solutions: [OperationalSolution!]!
-  possibleSolutions: [PossibleOperationalSolution!]!
-}
-
 type OperationalNeed {
     id: UUID!
     modelPlanID: UUID!
 
-    # needType: Int
     needed: Boolean # if null, it has not been answered
-    solutions: OperationalSolutions!
+    solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
 
     key: OperationalNeedKey
     name: String
@@ -7559,7 +7567,7 @@ type OperationalSolution {
     operationalNeedID: UUID!
 
     solutionType: Int
-    archived: Boolean!
+    needed: Boolean # if null, it has not been selectd
     name: String
     key: OperationalSolutionKey
     nameOther: String
@@ -7577,7 +7585,7 @@ type OperationalSolution {
 }
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-    archived: Boolean
+    needed: Boolean
     pocName: String     
     pocEmail: String
     mustStartDts: Time
@@ -7600,7 +7608,9 @@ type Query {
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
   crTdl(id: UUID!): PlanCrTdl!
-  operationalSolutions(operationalNeedID: UUID!): OperationalSolutions!
+  operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+  operationalSolution(id: UUID!): OperationalSolution!
+  operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
 }
@@ -9195,6 +9205,21 @@ func (ec *executionContext) field_Mutation_uploadNewPlanDocument_args(ctx contex
 	return args, nil
 }
 
+func (ec *executionContext) field_OperationalNeed_solutions_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeNotNeeded"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeNotNeeded"))
+		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["includeNotNeeded"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9294,6 +9319,36 @@ func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawA
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_operationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_operationalSolution_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_operationalSolutions_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9306,6 +9361,15 @@ func (ec *executionContext) field_Query_operationalSolutions_args(ctx context.Co
 		}
 	}
 	args["operationalNeedID"] = arg0
+	var arg1 bool
+	if tmp, ok := rawArgs["includeNotNeeded"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeNotNeeded"))
+		arg1, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["includeNotNeeded"] = arg1
 	return args, nil
 }
 
@@ -17117,8 +17181,8 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateOperationalSolution
 				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
 			case "solutionType":
 				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
-			case "archived":
-				return ec.fieldContext_OperationalSolution_archived(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
 			case "name":
 				return ec.fieldContext_OperationalSolution_name(ctx, field)
 			case "key":
@@ -17230,8 +17294,8 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateCustomOperationalSo
 				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
 			case "solutionType":
 				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
-			case "archived":
-				return ec.fieldContext_OperationalSolution_archived(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
 			case "name":
 				return ec.fieldContext_OperationalSolution_name(ctx, field)
 			case "key":
@@ -17343,8 +17407,8 @@ func (ec *executionContext) fieldContext_Mutation_updateCustomOperationalSolutio
 				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
 			case "solutionType":
 				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
-			case "archived":
-				return ec.fieldContext_OperationalSolution_archived(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
 			case "name":
 				return ec.fieldContext_OperationalSolution_name(ctx, field)
 			case "key":
@@ -17615,7 +17679,7 @@ func (ec *executionContext) _OperationalNeed_solutions(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.OperationalNeed().Solutions(rctx, obj)
+		return ec.resolvers.OperationalNeed().Solutions(rctx, obj, fc.Args["includeNotNeeded"].(bool))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -17627,9 +17691,9 @@ func (ec *executionContext) _OperationalNeed_solutions(ctx context.Context, fiel
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.OperationalSolutions)
+	res := resTmp.([]*models.OperationalSolution)
 	fc.Result = res
-	return ec.marshalNOperationalSolutions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalSolutions(ctx, field.Selections, res)
+	return ec.marshalNOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalNeed_solutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17640,13 +17704,52 @@ func (ec *executionContext) fieldContext_OperationalNeed_solutions(ctx context.C
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "solutions":
-				return ec.fieldContext_OperationalSolutions_solutions(ctx, field)
-			case "possibleSolutions":
-				return ec.fieldContext_OperationalSolutions_possibleSolutions(ctx, field)
+			case "id":
+				return ec.fieldContext_OperationalSolution_id(ctx, field)
+			case "operationalNeedID":
+				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
+			case "solutionType":
+				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalSolution_key(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
+			case "pocName":
+				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
+			case "pocEmail":
+				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
+			case "mustStartDts":
+				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
+			case "mustFinishDts":
+				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "status":
+				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalSolutions", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_OperationalNeed_solutions_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -18114,8 +18217,8 @@ func (ec *executionContext) fieldContext_OperationalSolution_solutionType(ctx co
 	return fc, nil
 }
 
-func (ec *executionContext) _OperationalSolution_archived(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolution) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_OperationalSolution_archived(ctx, field)
+func (ec *executionContext) _OperationalSolution_needed(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalSolution_needed(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -18128,24 +18231,21 @@ func (ec *executionContext) _OperationalSolution_archived(ctx context.Context, f
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Archived, nil
+		return obj.Needed, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(bool)
+	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_OperationalSolution_archived(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_OperationalSolution_needed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "OperationalSolution",
 		Field:      field,
@@ -18654,144 +18754,6 @@ func (ec *executionContext) fieldContext_OperationalSolution_modifiedDts(ctx con
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _OperationalSolutions_solutions(ctx context.Context, field graphql.CollectedField, obj *model.OperationalSolutions) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_OperationalSolutions_solutions(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Solutions, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.OperationalSolution)
-	fc.Result = res
-	return ec.marshalNOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_OperationalSolutions_solutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "OperationalSolutions",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalSolution_id(ctx, field)
-			case "operationalNeedID":
-				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
-			case "solutionType":
-				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
-			case "archived":
-				return ec.fieldContext_OperationalSolution_archived(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalSolution_name(ctx, field)
-			case "key":
-				return ec.fieldContext_OperationalSolution_key(ctx, field)
-			case "nameOther":
-				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
-			case "pocName":
-				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
-			case "pocEmail":
-				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
-			case "mustStartDts":
-				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
-			case "mustFinishDts":
-				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
-			case "status":
-				return ec.fieldContext_OperationalSolution_status(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _OperationalSolutions_possibleSolutions(ctx context.Context, field graphql.CollectedField, obj *model.OperationalSolutions) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_OperationalSolutions_possibleSolutions(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.PossibleSolutions, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.PossibleOperationalSolution)
-	fc.Result = res
-	return ec.marshalNPossibleOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_OperationalSolutions_possibleSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "OperationalSolutions",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PossibleOperationalSolution_id(ctx, field)
-			case "name":
-				return ec.fieldContext_PossibleOperationalSolution_name(ctx, field)
-			case "key":
-				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PossibleOperationalSolution_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PossibleOperationalSolution_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PossibleOperationalSolution_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalSolution", field.Name)
 		},
 	}
 	return fc, nil
@@ -41578,7 +41540,7 @@ func (ec *executionContext) _Query_operationalSolutions(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().OperationalSolutions(rctx, fc.Args["operationalNeedID"].(uuid.UUID))
+		return ec.resolvers.Query().OperationalSolutions(rctx, fc.Args["operationalNeedID"].(uuid.UUID), fc.Args["includeNotNeeded"].(bool))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -41590,9 +41552,9 @@ func (ec *executionContext) _Query_operationalSolutions(ctx context.Context, fie
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.OperationalSolutions)
+	res := resTmp.([]*models.OperationalSolution)
 	fc.Result = res
-	return ec.marshalNOperationalSolutions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalSolutions(ctx, field.Selections, res)
+	return ec.marshalNOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -41603,12 +41565,40 @@ func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "solutions":
-				return ec.fieldContext_OperationalSolutions_solutions(ctx, field)
-			case "possibleSolutions":
-				return ec.fieldContext_OperationalSolutions_possibleSolutions(ctx, field)
+			case "id":
+				return ec.fieldContext_OperationalSolution_id(ctx, field)
+			case "operationalNeedID":
+				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
+			case "solutionType":
+				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalSolution_key(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
+			case "pocName":
+				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
+			case "pocEmail":
+				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
+			case "mustStartDts":
+				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
+			case "mustFinishDts":
+				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "status":
+				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalSolutions", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
 		},
 	}
 	defer func() {
@@ -41619,6 +41609,176 @@ func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_operationalSolutions_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_operationalSolution(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_operationalSolution(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().OperationalSolution(rctx, fc.Args["id"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.OperationalSolution)
+	fc.Result = res
+	return ec.marshalNOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolution(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_operationalSolution(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_OperationalSolution_id(ctx, field)
+			case "operationalNeedID":
+				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
+			case "solutionType":
+				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalSolution_key(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
+			case "pocName":
+				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
+			case "pocEmail":
+				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
+			case "mustStartDts":
+				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
+			case "mustFinishDts":
+				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "status":
+				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_operationalSolution_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_operationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_operationalNeed(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().OperationalNeed(rctx, fc.Args["id"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.OperationalNeed)
+	fc.Result = res
+	return ec.marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeed(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_operationalNeed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_OperationalNeed_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalNeed_needed(ctx, field)
+			case "solutions":
+				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalNeed_key(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalNeed_name(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalNeed_nameOther(ctx, field)
+			case "section":
+				return ec.fieldContext_OperationalNeed_section(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_operationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -45794,13 +45954,10 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 
 			out.Values[i] = ec._OperationalSolution_solutionType(ctx, field, obj)
 
-		case "archived":
+		case "needed":
 
-			out.Values[i] = ec._OperationalSolution_archived(ctx, field, obj)
+			out.Values[i] = ec._OperationalSolution_needed(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "name":
 
 			out.Values[i] = ec._OperationalSolution_name(ctx, field, obj)
@@ -45858,41 +46015,6 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 
 			out.Values[i] = ec._OperationalSolution_modifiedDts(ctx, field, obj)
 
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
-var operationalSolutionsImplementors = []string{"OperationalSolutions"}
-
-func (ec *executionContext) _OperationalSolutions(ctx context.Context, sel ast.SelectionSet, obj *model.OperationalSolutions) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, operationalSolutionsImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("OperationalSolutions")
-		case "solutions":
-
-			out.Values[i] = ec._OperationalSolutions_solutions(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "possibleSolutions":
-
-			out.Values[i] = ec._OperationalSolutions_possibleSolutions(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -49938,6 +50060,52 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "operationalSolution":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_operationalSolution(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "operationalNeed":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_operationalNeed(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "auditChanges":
 			field := field
 
@@ -53840,20 +54008,6 @@ func (ec *executionContext) marshalNOperationalSolutionKey2githubᚗcomᚋcmsgov
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNOperationalSolutions2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalSolutions(ctx context.Context, sel ast.SelectionSet, v model.OperationalSolutions) graphql.Marshaler {
-	return ec._OperationalSolutions(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNOperationalSolutions2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalSolutions(ctx context.Context, sel ast.SelectionSet, v *model.OperationalSolutions) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._OperationalSolutions(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNPInformFfsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPInformFfsType(ctx context.Context, v interface{}) (model.PInformFfsType, error) {

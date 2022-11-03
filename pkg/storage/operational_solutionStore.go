@@ -14,6 +14,9 @@ import (
 //go:embed SQL/operational_solution_collection_get_by_operational_need_id.sql
 var operationalSolutionCollectionGetByOperationalNeedIDSQL string
 
+//go:embed SQL/operational_solution_and_possible_get_by_operational_need_id.sql
+var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
+
 //go:embed SQL/operational_solution_get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
 
@@ -44,6 +47,29 @@ func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.
 	arg := map[string]interface{}{
 
 		"operational_need_id": operationalNeedID,
+	}
+
+	err = stmt.Select(&solutions, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return solutions, nil
+}
+
+// OperationalSolutionAndPossibleCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
+func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
+	solutions := []*models.OperationalSolution{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+
+		"operational_need_id": operationalNeedID,
+		"includeNotNeeded":    includeNotNeeded,
 	}
 
 	err = stmt.Select(&solutions, arg) //this returns more than one

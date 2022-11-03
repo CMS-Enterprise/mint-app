@@ -2,7 +2,7 @@ SELECT
     id,
     operational_need_id,
     solution_type,
-    archived,
+    needed,
     NULL AS sol_name,
     NULL AS sol_key,
     name_other,

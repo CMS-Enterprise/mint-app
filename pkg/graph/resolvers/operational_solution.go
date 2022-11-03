@@ -5,26 +5,16 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// OperationaSolutionsGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need
-func OperationaSolutionsGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, store *storage.Store) (*model.OperationalSolutions, error) {
-	opSols := model.OperationalSolutions{}
-	sols, err := store.OperationalSolutionCollectionGetByOperationalNeedID(logger, operationalNeedID)
-	if err != nil {
-		return nil, err
-	}
-	opSols.Solutions = sols
+// OperationaSolutionsAndPossibleGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need
+func OperationaSolutionsAndPossibleGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool, store *storage.Store) ([]*models.OperationalSolution, error) {
 
-	posSols, err := store.PossibleOperationalSolutionCollectionGetByOperationalNeedID(logger, operationalNeedID) //This is every possible one, we don't exclude selected ones
-	if err != nil {
-		return nil, err
-	}
-	opSols.PossibleSolutions = posSols
-	return &opSols, nil
+	sols, err := store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger, operationalNeedID, includeNotNeeded)
+
+	return sols, err
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready
@@ -83,4 +73,9 @@ func OperationalSolutionCustomUpdateByID(logger *zap.Logger, id uuid.UUID, custo
 
 	return store.OperationalSolutionUpdateByID(logger, existing)
 
+}
+
+// OperationalSolutionGetByID returns an operational Solution by it's ID
+func OperationalSolutionGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.OperationalSolution, error) {
+	return store.OperationalSolutionGetByID(logger, id)
 }

@@ -64,3 +64,8 @@ func OperationalNeedCustomUpdateByID(logger *zap.Logger, operationNeedID uuid.UU
 	return store.OperationalNeedUpdateByID(logger, existing)
 
 }
+
+// OperationalNeedGetByID returns an operational Need by it's ID
+func OperationalNeedGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.OperationalNeed, error) {
+	return store.OperationalNeedGetByID(logger, id)
+}

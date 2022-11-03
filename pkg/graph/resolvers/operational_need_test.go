@@ -1,5 +1,7 @@
 package resolvers
 
+import "github.com/cmsgov/mint-app/pkg/models"
+
 func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("plan for need")
 
@@ -74,5 +76,21 @@ func (suite *ResolverSuite) TestOperationalNeedCustomUpdateByID() {
 	//2. Error when setting need to null
 	_, err = OperationalNeedCustomUpdateByID(suite.testConfigs.Logger, need1.ID, nil, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
+
+}
+
+func (suite *ResolverSuite) TestOperationalNeedGetByID() {
+	plan := suite.createModelPlan("plan for need")
+
+	needType := models.OpNKManageCd
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NotNil(need)
+	suite.NoError(err)
+
+	needGet, err := OperationalNeedGetByID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
+	suite.NotNil(needGet)
+	suite.NoError(err)
+
+	suite.EqualValues(needGet.ID, need.ID)
 
 }
