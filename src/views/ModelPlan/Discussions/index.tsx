@@ -47,7 +47,7 @@ import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
-import SingleDiscussionEntry from './SingleDiscussionEntry';
+import SingleDiscussion from './SingleDiscussion';
 
 import './index.scss';
 
@@ -442,7 +442,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                   //   index,
                   //   replyIndex !== discussion.replies.length
                   // )
-                  <SingleDiscussionEntry
+                  <SingleDiscussion
                     discussion={discussionReply}
                     index={index}
                     connected={replyIndex !== discussion.replies.length}
@@ -458,7 +458,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
           ) : (
             // Render only question if no replies
             // discussionComponent(discussion, index, undefined, true)
-            <SingleDiscussionEntry
+            <SingleDiscussion
               discussion={discussion}
               index={index}
               connected={false}
