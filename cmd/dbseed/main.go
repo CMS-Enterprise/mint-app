@@ -157,4 +157,40 @@ func seedData(config *viper.Viper) {
 	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, nil, nil, false, false)
 	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
 	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
+
+	sampleModelName := "Enhancing Oncology Model"
+	sampleModelPlan := createModelPlan(store, logger, sampleModelName, "MINT")
+	addCrTdl(store, logger, planWithCrTDLs, &model.PlanCrTdlCreateInput{
+		ModelPlanID:   sampleModelPlan.ID,
+		IDNumber:      "TDL-123",
+		DateInitiated: time.Now(),
+		Title:         "My TDL",
+		Note:          &tdlNote,
+	})
+	_ = planDocumentCreate(store, logger, s3Client, sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
+	addPlanCollaborator(
+		store,
+		nil,
+		nil,
+		logger,
+		sampleModelPlan,
+		&model.PlanCollaboratorCreateInput{
+			ModelPlanID: sampleModelPlan.ID,
+			EuaUserID:   "BTAL",
+			FullName:    "Betty Alpha",
+			TeamRole:    models.TeamRoleLeadership,
+			Email:       "bAlpha@local.fake",
+		})
+	updatePlanBasics(store, logger, sampleModelPlan, map[string]interface{}{
+		"modelType":       models.MTVoluntary,
+		"goal":            "Some goal",
+		"cmsCenters":      []string{"CMMI", "OTHER"},
+		"cmsOther":        "SOME OTHER CMS CENTER",
+		"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+		"completeICIP":    "2020-05-13T20:47:50.12Z",
+		"phasedIn":        true,
+		"clearanceStarts": time.Now(),
+		"highLevelNote":   "Some high level note",
+	})
+
 }
