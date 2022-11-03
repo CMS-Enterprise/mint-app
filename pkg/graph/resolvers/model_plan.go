@@ -132,6 +132,17 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return plan, nil
 }
 
+// ModelPlanGetSampleModel returns the sample model plan
+func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
+	modelName := "Enhancing Oncology Model"
+	plan, err := store.ModelPlanGetByName(logger, modelName)
+	if err != nil {
+		return nil, err
+	}
+
+	return plan, nil
+}
+
 // ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
 func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, includeAll bool) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan

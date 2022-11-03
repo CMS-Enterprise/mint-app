@@ -828,6 +828,11 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 // ModelPlan is the resolver for the modelPlan field.
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
+	sampleModelUUID := uuid.MustParse("f25d8f70-6470-47e6-a6d9-debc10f26567")
+
+	if id == sampleModelUUID {
+		return resolvers.ModelPlanGetSampleModel(logger, r.store)
+	}
 
 	return resolvers.ModelPlanGetByID(logger, id, r.store)
 }
