@@ -150,7 +150,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     crTdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
-  const editAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean =
+    !isHelpArticle && (isCollaborator || isAssessment(groups));
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
@@ -262,9 +263,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
-      {!isHelpArticle && editAccess && (
-        <ModelSubNav modelID={modelID} link="task-list" />
-      )}
+      {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 
       <SummaryBox
         heading=""
@@ -441,7 +440,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               <Grid
                 desktop={{ col: 3 }}
                 className={classnames('padding-right-4 sticky-nav', {
-                  'sticky-nav__collaborator': editAccess && !isHelpArticle
+                  'sticky-nav__collaborator': hasEditAccess
                 })}
               >
                 <SideNav
@@ -472,8 +471,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         desktop={{ col: 4 }}
                         className={classnames({
                           'sticky-nav': !isMobile,
-                          'sticky-nav__collaborator':
-                            editAccess && !isHelpArticle
+                          'sticky-nav__collaborator': hasEditAccess
                         })}
                       >
                         <ContactInfo modelID={modelID} />
