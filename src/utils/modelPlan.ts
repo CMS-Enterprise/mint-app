@@ -1527,16 +1527,20 @@ export const translateOpNeedsStatusType = (type: string) => {
   }
 };
 
-// export const translateAppealsQuestionType = (type: string) => {
-//   switch (type) {
-//     case 'appealPerformance':
-//       return i18next.t('itTools:oelProcessAppealsOptions.medicare');
-//     case 'OTHER':
-//       return i18next.t('itTools:oelProcessAppealsOptions.other');
-//     default:
-//       return '';
-//   }
-// };
+export const translateAppealsQuestionType = (type: string) => {
+  switch (type) {
+    case 'appealPerformance':
+      return i18next.t('operationsEvaluationAndLearning:performanceScores');
+    case 'appealFeedback':
+      return i18next.t('operationsEvaluationAndLearning:feedbackResults');
+    case 'appealPayments':
+      return i18next.t('operationsEvaluationAndLearning:payments');
+    case 'appealOther':
+      return i18next.t('operationsEvaluationAndLearning:others');
+    default:
+      return '';
+  }
+};
 
 /**
  * Translate the document type API enum to a human readable string

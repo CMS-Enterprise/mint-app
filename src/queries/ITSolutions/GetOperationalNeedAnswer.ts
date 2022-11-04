@@ -3,6 +3,10 @@ import { gql } from '@apollo/client';
 export default gql`
   query GetOperationalNeedAnswer(
     $id: UUID!
+    $generalCharacteristics: Boolean!
+    $participantsAndProviders: Boolean!
+    $opsEvalAndLearning: Boolean!
+    $payments: Boolean!
     $managePartCDEnrollment: Boolean!
     $collectPlanBids: Boolean!
     $planContactUpdated: Boolean!
@@ -28,17 +32,17 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
-      generalCharacteristics {
+      generalCharacteristics @include(if: $generalCharacteristics) {
         managePartCDEnrollment @include(if: $managePartCDEnrollment)
         collectPlanBids @include(if: $collectPlanBids)
         planContactUpdated @include(if: $planContactUpdated)
       }
-      participantsAndProviders {
+      participantsAndProviders @include(if: $participantsAndProviders) {
         recruitmentMethod @include(if: $recruitmentMethod)
         selectionMethod @include(if: $selectionMethod)
         communicationMethod @include(if: $communicationMethod)
       }
-      opsEvalAndLearning {
+      opsEvalAndLearning @include(if: $opsEvalAndLearning) {
         helpdeskUse @include(if: $helpdeskUse)
         iddocSupport @include(if: $iddocSupport)
         benchmarkForPerformance @include(if: $benchmarkForPerformance)
@@ -51,7 +55,7 @@ export default gql`
         dataToSendParticicipants @include(if: $dataToSendParticicipants)
         modelLearningSystems @include(if: $modelLearningSystems)
       }
-      payments {
+      payments @include(if: $payments) {
         payType @include(if: $payType)
         shouldAnyProvidersExcludedFFSSystems
           @include(if: $shouldAnyProvidersExcludedFFSSystems)

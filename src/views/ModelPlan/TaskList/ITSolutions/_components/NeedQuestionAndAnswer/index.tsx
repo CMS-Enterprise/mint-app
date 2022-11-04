@@ -7,8 +7,10 @@ import classNames from 'classnames';
 import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap from 'data/operationalNeedMap';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import {
+  translateAppealsQuestionType,
   translateBenchmarkForPerformanceType,
   translateBoolean,
   translateCommunicationType,
@@ -28,7 +30,7 @@ import './index.scss';
 
 type NeedQuestionAndAnswerProps = {
   className?: string;
-  operationalNeed: any; // TODO: import op need type
+  operationalNeed: GetOperationalNeedOperationalNeedType;
   modelID: string;
 };
 
@@ -52,7 +54,8 @@ const needsTranslations: NeedMapType = {
   translateDataToSendParticipantsType,
   translateModelLearningSystemType,
   translatePayType,
-  translateNonClaimsBasedPayType
+  translateNonClaimsBasedPayType,
+  translateAppealsQuestionType
 };
 
 const NeedQuestionAndAnswer = ({
@@ -64,12 +67,17 @@ const NeedQuestionAndAnswer = ({
 
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
 
-  const needConfig = operationalNeedMap[operationalNeed.key];
+  const needConfig = operationalNeedMap[operationalNeed.key || ''];
+  const parentField = needConfig?.parentField;
   const fieldName = needConfig?.fieldName;
 
   const queryVariables = {
     variables: {
       id: modelID,
+      generalCharacteristics: parentField === 'generalCharacteristics',
+      participantsAndProviders: parentField === 'participantsAndProviders',
+      opsEvalAndLearning: parentField === 'opsEvalAndLearning',
+      payments: parentField === 'payments',
       managePartCDEnrollment: fieldName === 'managePartCDEnrollment',
       collectPlanBids: fieldName === 'collectPlanBids',
       planContactUpdated: fieldName === 'planContactUpdated',
@@ -171,9 +179,13 @@ const NeedQuestionAndAnswer = ({
                   ))}
 
                 {needConfig.multiPart &&
+                  needConfig.multiPartQuestion &&
                   answers.map((answer: MultiPartType) => (
-                    <li className="margin-y-1" key={answer.question.toString()}>
-                      {needsTranslations[needConfig.answer](answer.answer)}
+                    <li className="margin-y-1" key={answer.question}>
+                      {needsTranslations[needConfig.multiPartQuestion!](
+                        answer.question
+                      )}{' '}
+                      - {needsTranslations[needConfig.answer](answer.answer)}
                     </li>
                   ))}
               </ul>

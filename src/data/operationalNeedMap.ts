@@ -2,9 +2,10 @@ interface NeedMap {
   route: string;
   fieldName: string | string[];
   parentField: string;
-  question: string;
-  answer: string;
-  multiPart?: boolean;
+  question: string; // Translation function name to a need question
+  answer: string; // Translation function name for the answer to a need question
+  multiPart?: boolean; // Used to idenfify if multiple question pertain to a single need
+  multiPartQuestion?: string; // Used to identify translations of each quest that pertains to this need
 }
 
 type NeedMapType = {
@@ -92,7 +93,9 @@ const operationalNeedMap: NeedMapType = {
     ],
     parentField: 'opsEvalAndLearning',
     question: 'operationsEvaluationAndLearning:participantAppeal',
-    answer: 'translateBoolean'
+    answer: 'translateBoolean',
+    multiPart: true,
+    multiPartQuestion: 'translateAppealsQuestionType'
   },
   ACQUIRE_AN_EVAL_CONT: {
     route: 'ops-eval-and-learning/evaluation',

@@ -62,6 +62,10 @@ export interface GetOperationalNeedAnswer {
 
 export interface GetOperationalNeedAnswerVariables {
   id: UUID;
+  generalCharacteristics: boolean;
+  participantsAndProviders: boolean;
+  opsEvalAndLearning: boolean;
+  payments: boolean;
   managePartCDEnrollment: boolean;
   collectPlanBids: boolean;
   planContactUpdated: boolean;
