@@ -18,9 +18,6 @@ export const HelpAndKnowledge = () => {
         <ModelPlanOverview />
       </Route>
 
-      {/* <Route path="/help-and-knowledge/sample-model-plan" exact>
-        <SampleModelPlan />
-      </Route> */}
       <Redirect
         exact
         from="/help-and-knowledge/sample-model-plan"
