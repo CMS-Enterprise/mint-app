@@ -4,6 +4,7 @@ interface NeedMap {
   parentField: string;
   question: string;
   answer: string;
+  multiPart?: boolean;
 }
 
 type NeedMapType = {

@@ -1527,6 +1527,17 @@ export const translateOpNeedsStatusType = (type: string) => {
   }
 };
 
+// export const translateAppealsQuestionType = (type: string) => {
+//   switch (type) {
+//     case 'appealPerformance':
+//       return i18next.t('itTools:oelProcessAppealsOptions.medicare');
+//     case 'OTHER':
+//       return i18next.t('itTools:oelProcessAppealsOptions.other');
+//     default:
+//       return '';
+//   }
+// };
+
 /**
  * Translate the document type API enum to a human readable string
  */

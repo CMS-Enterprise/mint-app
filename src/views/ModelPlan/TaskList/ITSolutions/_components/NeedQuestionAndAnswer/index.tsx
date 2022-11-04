@@ -32,6 +32,11 @@ type NeedQuestionAndAnswerProps = {
   modelID: string;
 };
 
+type MultiPartType = {
+  question: string;
+  answer: boolean | string;
+};
+
 type NeedMapType = {
   [key: string]: (type: any) => string;
 };
@@ -95,17 +100,19 @@ const NeedQuestionAndAnswer = ({
 
   let answers: any;
 
-  if (operationalNeed.key === 'PROCESS_PART_APPEALS') {
+  if (needConfig.multiPart) {
     answers = [];
     (fieldName as string[]).forEach((field: any) => {
-      const appealAnswer =
+      const multiAnswer =
         data?.modelPlan[
           needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
         ][field as string];
 
-      if (appealAnswer !== null && appealAnswer !== undefined) {
-        answers.push(appealAnswer);
-        // answers.push(`${field.replace('appeals')} - ${appealAnswer.toString()}`);
+      if (multiAnswer !== null && multiAnswer !== undefined) {
+        answers.push({
+          question: field,
+          answer: multiAnswer
+        });
       }
     });
   } else {
@@ -156,11 +163,19 @@ const NeedQuestionAndAnswer = ({
 
             {data && (
               <ul className="padding-left-4">
-                {answers.map((answer: string | boolean) => (
-                  <li className="margin-y-1" key={answer.toString()}>
-                    {needsTranslations[needConfig.answer](answer)}
-                  </li>
-                ))}
+                {!needConfig.multiPart &&
+                  answers.map((answer: string | boolean) => (
+                    <li className="margin-y-1" key={answer.toString()}>
+                      {needsTranslations[needConfig.answer](answer)}
+                    </li>
+                  ))}
+
+                {needConfig.multiPart &&
+                  answers.map((answer: MultiPartType) => (
+                    <li className="margin-y-1" key={answer.question.toString()}>
+                      {needsTranslations[needConfig.answer](answer.answer)}
+                    </li>
+                  ))}
               </ul>
             )}
 
