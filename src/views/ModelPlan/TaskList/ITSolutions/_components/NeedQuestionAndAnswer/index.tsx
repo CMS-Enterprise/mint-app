@@ -22,6 +22,8 @@ import {
   translateRecruitmentType
 } from 'utils/modelPlan';
 
+import { isIndenpendentOperationalNeed } from '../../util';
+
 import './index.scss';
 
 type NeedQuestionAndAnswerProps = {
@@ -85,7 +87,8 @@ const NeedQuestionAndAnswer = ({
         fieldName === 'shouldAnyProvidersExcludedFFSSystems',
       nonClaimsPayments: fieldName === 'nonClaimsPayments',
       willRecoverPayments: fieldName === 'willRecoverPayments'
-    }
+    },
+    skip: isIndenpendentOperationalNeed(operationalNeed.key)
   };
 
   const { data } = useQuery(GetOperationalNeedAnswer, queryVariables);
@@ -121,23 +124,25 @@ const NeedQuestionAndAnswer = ({
         {operationalNeed?.nameOther || operationalNeed?.name}
       </p>
 
-      <button
-        type="button"
-        onClick={() => setInfoToggle(!infoToggle)}
-        className={classNames(
-          'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1',
-          {
-            'text-bold': infoToggle
-          }
-        )}
-      >
-        {infoToggle ? (
-          <IconExpandMore className="margin-right-05" />
-        ) : (
-          <IconExpandLess className="margin-right-05 needs-question__rotate" />
-        )}
-        {t('whyNeed')}
-      </button>
+      {!isIndenpendentOperationalNeed(operationalNeed.key) && (
+        <button
+          type="button"
+          onClick={() => setInfoToggle(!infoToggle)}
+          className={classNames(
+            'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1',
+            {
+              'text-bold': infoToggle
+            }
+          )}
+        >
+          {infoToggle ? (
+            <IconExpandMore className="margin-right-05" />
+          ) : (
+            <IconExpandLess className="margin-right-05 needs-question__rotate" />
+          )}
+          {t('whyNeed')}
+        </button>
+      )}
 
       {infoToggle && (
         <div className="padding-left-1px padding-1">

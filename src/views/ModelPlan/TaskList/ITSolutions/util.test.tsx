@@ -3,7 +3,10 @@ import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 import {
@@ -11,6 +14,10 @@ import {
   filterPossibleNeeds,
   returnActionLinks
 } from './util';
+
+const operationalNeed: any = {
+  needKey: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT
+};
 
 describe('IT Solutions Util', () => {
   it('returns formatted needed solutions', async () => {
@@ -50,13 +57,25 @@ describe('IT Solutions Util', () => {
   });
 
   it('returns Action link per status value', async () => {
-    expect(returnActionLinks(OpSolutionStatus.NOT_STARTED)).toEqual(
+    expect(
+      returnActionLinks(
+        OpSolutionStatus.NOT_STARTED,
+        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        '123'
+      )
+    ).toEqual(
       <UswdsReactLink to="/">
         {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
       </UswdsReactLink>
     );
 
-    expect(returnActionLinks(OpSolutionStatus.AT_RISK)).toEqual(
+    expect(
+      returnActionLinks(
+        OpSolutionStatus.NOT_STARTED,
+        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        '123'
+      )
+    ).toEqual(
       <>
         <UswdsReactLink to="/" className="margin-right-2">
           {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
@@ -67,7 +86,13 @@ describe('IT Solutions Util', () => {
       </>
     );
 
-    expect(returnActionLinks(OperationalNeedStatus.NOT_ANSWERED)).toEqual(
+    expect(
+      returnActionLinks(
+        OpSolutionStatus.NOT_STARTED,
+        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        '123'
+      )
+    ).toEqual(
       <UswdsReactLink to="/">
         {i18next.t('itSolutions:itSolutionsTable.answer')}
       </UswdsReactLink>

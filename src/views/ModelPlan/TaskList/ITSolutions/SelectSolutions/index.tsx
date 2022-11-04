@@ -92,7 +92,7 @@ const SelectSolutions = () => {
               operationalNeedID,
               solutionType: solution.key,
               changes: {
-                needed: solution.needed,
+                needed: solution.needed || false,
                 status: OpSolutionStatus.IN_PROGRESS
               }
             }

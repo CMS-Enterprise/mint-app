@@ -37,8 +37,6 @@ const clearanceMock = [
   }
 ];
 
-// console.log(JSON.stringify(clearanceMock, null, 4));
-
 describe('ClearanceReview component', () => {
   it('renders readonly component', async () => {
     render(

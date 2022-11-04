@@ -176,11 +176,11 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status);
+          return returnActionLinks(row.original.status, row.original, modelID);
         }
       }
     ];
-  }, [t]);
+  }, [t, modelID]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -210,7 +210,7 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status);
+          return returnActionLinks(row.original.status, row.original, modelID);
         }
       }
     ];
