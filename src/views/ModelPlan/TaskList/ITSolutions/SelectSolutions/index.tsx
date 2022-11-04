@@ -231,7 +231,9 @@ const SelectSolutions = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
-                            handleFormSubmit(values);
+                            history.push(
+                              `/models/${modelID}/task-list/it-solutions`
+                            );
                           }}
                         >
                           {t('selectAnother')}

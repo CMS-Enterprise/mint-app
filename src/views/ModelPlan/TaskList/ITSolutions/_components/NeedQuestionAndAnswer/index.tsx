@@ -96,13 +96,16 @@ const NeedQuestionAndAnswer = ({
   let answers: any;
 
   if (operationalNeed.key === 'PROCESS_PART_APPEALS') {
-    [fieldName as string[]].forEach((field: any) => {
-      if (
+    answers = [];
+    (fieldName as string[]).forEach((field: any) => {
+      const appealAnswer =
         data?.modelPlan[
           needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
-        ][field]
-      ) {
-        answers = true;
+        ][field as string];
+
+      if (appealAnswer !== null && appealAnswer !== undefined) {
+        answers.push(appealAnswer);
+        // answers.push(`${field.replace('appeals')} - ${appealAnswer.toString()}`);
       }
     });
   } else {
@@ -145,7 +148,7 @@ const NeedQuestionAndAnswer = ({
       )}
 
       {infoToggle && (
-        <div className="padding-left-1px padding-1">
+        <div className="margin-left-neg-2px padding-1">
           <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
             <p className="text-bold margin-top-0">{t('youAnswered')}</p>
 
@@ -154,7 +157,7 @@ const NeedQuestionAndAnswer = ({
             {data && (
               <ul className="padding-left-4">
                 {answers.map((answer: string | boolean) => (
-                  <li key={answer.toString()}>
+                  <li className="margin-y-1" key={answer.toString()}>
                     {needsTranslations[needConfig.answer](answer)}
                   </li>
                 ))}
