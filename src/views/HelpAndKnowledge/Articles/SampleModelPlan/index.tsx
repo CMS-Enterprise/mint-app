@@ -22,7 +22,6 @@ export const SampleModelPlan = () => {
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
               {t('description')}
             </p>
-            {/* insert read only model plan here */}
           </Grid>
         </GridContainer>
       </MainContent>
