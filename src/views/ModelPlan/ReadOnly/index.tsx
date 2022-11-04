@@ -25,6 +25,7 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
@@ -85,7 +86,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
   const {
-    modelID = `${isHelpArticle ? '2cb8b1d1-cb0b-431c-9309-2765a780e25f' : ''}`,
+    modelID = `${isHelpArticle ? SAMPLE_MODEL_UUID_STRING : ''}`,
     subinfo
   } = useParams<{
     modelID: string;
