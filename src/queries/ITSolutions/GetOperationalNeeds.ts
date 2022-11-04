@@ -13,26 +13,19 @@ export default gql`
         key
         nameOther
         needed
-        solutions {
-          solutions {
-            id
-            status
-            name
-            mustStartDts
-            mustFinishDts
-            archived
-            nameOther
-            key
-            pocEmail
-            pocName
-            createdBy
-            createdDts
-          }
-          possibleSolutions {
-            id
-            name
-            key
-          }
+        solutions(includeNotNeeded: true) {
+          id
+          status
+          name
+          mustStartDts
+          mustFinishDts
+          needed
+          nameOther
+          key
+          pocEmail
+          pocName
+          createdBy
+          createdDts
         }
       }
     }
