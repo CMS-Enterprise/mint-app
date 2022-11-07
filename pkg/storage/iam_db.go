@@ -30,6 +30,9 @@ func (idb *iamDb) Connect(ctx context.Context) (driver.Conn, error) {
 	awsCreds := idb.awsSession.Config.Credentials
 	dbEndpoint := fmt.Sprintf("%s:%s", idb.config.Host, idb.config.Port)
 
+	fmt.Println("BUILDING AUTH TOKEN")
+	fmt.Println("dbEndpoint:", dbEndpoint)
+	fmt.Println("username:", idb.config.Username)
 	authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, idb.config.Username, awsCreds)
 	if err != nil {
 		return nil, err
