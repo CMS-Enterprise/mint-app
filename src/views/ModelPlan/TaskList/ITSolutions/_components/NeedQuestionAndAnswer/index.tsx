@@ -108,7 +108,7 @@ const NeedQuestionAndAnswer = ({
 
   let answers: any;
 
-  if (needConfig.multiPart) {
+  if (needConfig?.multiPart) {
     answers = [];
     (fieldName as string[]).forEach((field: any) => {
       const multiAnswer =
@@ -169,7 +169,7 @@ const NeedQuestionAndAnswer = ({
 
             <p>{t(needConfig?.question)}</p>
 
-            {data && (
+            {data && needConfig && (
               <ul className="padding-left-4">
                 {!needConfig.multiPart &&
                   answers.map((answer: string | boolean) => (
