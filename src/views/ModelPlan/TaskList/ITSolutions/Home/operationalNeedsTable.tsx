@@ -129,7 +129,7 @@ const OperationalNeedsTable = ({
           if (value === t('itSolutionsTable.selectSolution')) {
             return (
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/it-solutions/select-solutions/${row.original.id}`}
+                to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
                 className="display-flex flex-align-center"
               >
                 {value}

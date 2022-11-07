@@ -240,13 +240,7 @@ const SelectSolutions = () => {
                         </Button>
 
                         <div className="margin-top-6 margin-bottom-3">
-                          <Button
-                            type="button"
-                            className="margin-bottom-1"
-                            onClick={() => {
-                              handleFormSubmit(values);
-                            }}
-                          >
+                          <Button type="submit" className="margin-bottom-1">
                             {t('continue')}
                           </Button>
                         </div>

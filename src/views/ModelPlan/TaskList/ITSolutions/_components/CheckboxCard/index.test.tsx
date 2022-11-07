@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
 
 import { OperationalSolutionKey } from 'types/graphql-global-types';
@@ -35,8 +35,6 @@ describe('IT Solutions CheckboxCard', () => {
       await waitFor(() => {
         expect(checkbox).toBeChecked();
       });
-
-      screen.logTestingPlaygroundURL();
 
       expect(asFragment()).toMatchSnapshot();
     });

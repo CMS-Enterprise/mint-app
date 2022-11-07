@@ -19,7 +19,7 @@ const ITSolutions = () => {
             </Route>
 
             <Route
-              path="/models/:modelID/task-list/it-solutions/select-solutions/:operationalNeedID"
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions"
               exact
             >
               <SelectSolutions />
