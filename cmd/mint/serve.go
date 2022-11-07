@@ -16,7 +16,7 @@ var serveCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()
-		env, err := appconfig.NewEnvironment("ah")
+		env, err := appconfig.NewEnvironment(config.GetString(appconfig.EnvironmentKey))
 		if err != nil {
 			panic(err)
 		}
