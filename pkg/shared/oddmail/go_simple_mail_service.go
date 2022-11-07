@@ -15,6 +15,14 @@ type GoSimpleMailService struct {
 
 // NewGoSimpleMailService is a constructor for GoSimpleMailService
 func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailService, error) {
+	if !config.GetEnabled() {
+		return &GoSimpleMailService{
+			smtpServer: nil,
+			smtpClient: nil,
+			config:     &config,
+		}, nil
+	}
+
 	smtpServer := &mail.SMTPServer{
 		Authentication: config.Authentication,
 		Encryption:     config.Encryption,
@@ -59,6 +67,9 @@ func (g GoSimpleMailService) setEmailBody(email *mail.Email, contentType string,
 
 // Send uses the GoSimpleMailService to dispatch an email with the provided settings
 func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses []string, subject string, contentType string, body string) error {
+	if !g.config.GetEnabled() {
+		return nil
+	}
 	email := mail.NewMSG()
 	email.SetFrom(from).
 		SetSubject(subject)
@@ -81,6 +92,9 @@ func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses
 
 // SendEmail is a GoSimpleMail specific method allowing for dispatching an email using a mail.Email object
 func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
+	if !g.config.GetEnabled() {
+		return nil
+	}
 	return email.Send(g.smtpClient)
 }
 
