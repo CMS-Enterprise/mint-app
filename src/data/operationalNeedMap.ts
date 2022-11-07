@@ -1,4 +1,4 @@
-interface NeedMap {
+export interface NeedMap {
   route: string;
   fieldName: string | string[];
   parentField: string;

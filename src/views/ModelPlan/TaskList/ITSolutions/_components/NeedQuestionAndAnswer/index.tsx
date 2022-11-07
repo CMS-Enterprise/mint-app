@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import operationalNeedMap from 'data/operationalNeedMap';
+import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
@@ -34,6 +34,7 @@ type NeedQuestionAndAnswerProps = {
   modelID: string;
 };
 
+// Type definition for operational needs dependent on multiple questions/translations
 type MultiPartType = {
   question: string;
   answer: boolean | string;
@@ -43,6 +44,7 @@ type NeedMapType = {
   [key: string]: (type: any) => string;
 };
 
+// Collection of translations needed for operational needs questions/answers
 const needsTranslations: NeedMapType = {
   translateBoolean,
   translateRecruitmentType,
@@ -58,6 +60,44 @@ const needsTranslations: NeedMapType = {
   translateAppealsQuestionType
 };
 
+// Function to format operational need answers for both single and multipart answers
+const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {
+  let answers: any;
+
+  // If multipart, push an object to the answer array, rather than a string
+  // Object contains an question field and an answer field
+  if (needConfig?.multiPart) {
+    answers = [];
+
+    // Extracts the answer from the parent field of the GQL query return data
+    (needConfig?.fieldName as string[]).forEach((field: any) => {
+      const multiAnswer =
+        data?.modelPlan[
+          needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
+        ][field as string];
+
+      if (multiAnswer !== null && multiAnswer !== undefined) {
+        answers.push({
+          question: field,
+          answer: multiAnswer
+        });
+      }
+    });
+  } else {
+    answers =
+      data?.modelPlan[
+        needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
+      ][needConfig?.fieldName as string];
+  }
+
+  // Return all answers as an array used for standard rendering
+  if (answers?.constructor !== Array) {
+    answers = [answers];
+  }
+
+  return answers;
+};
+
 const NeedQuestionAndAnswer = ({
   className,
   operationalNeed,
@@ -65,12 +105,15 @@ const NeedQuestionAndAnswer = ({
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
 
+  // Toggle the collapsed state of operational need question/answer
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
 
+  // Config map of operational need key to route, translations, gql schema, etc
   const needConfig = operationalNeedMap[operationalNeed.key || ''];
   const parentField = needConfig?.parentField;
   const fieldName = needConfig?.fieldName;
 
+  // Conditionally pass variables if config map references field
   const queryVariables = {
     variables: {
       id: modelID,
@@ -101,53 +144,33 @@ const NeedQuestionAndAnswer = ({
       nonClaimsPayments: fieldName === 'nonClaimsPayments',
       willRecoverPayments: fieldName === 'willRecoverPayments'
     },
+    // skip if operational need requires no question/answer
     skip: isIndenpendentOperationalNeed(operationalNeed.key)
   };
 
+  // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
+  // Maybe reasearch into this further for better type safety
   const { data } = useQuery(GetOperationalNeedAnswer, queryVariables);
 
-  let answers: any;
-
-  if (needConfig?.multiPart) {
-    answers = [];
-    (fieldName as string[]).forEach((field: any) => {
-      const multiAnswer =
-        data?.modelPlan[
-          needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
-        ][field as string];
-
-      if (multiAnswer !== null && multiAnswer !== undefined) {
-        answers.push({
-          question: field,
-          answer: multiAnswer
-        });
-      }
-    });
-  } else {
-    answers =
-      data?.modelPlan[
-        needConfig?.parentField as keyof GetOperationalNeedAnswerModelPlanType
-      ][fieldName as string];
-  }
-
-  if (answers?.constructor !== Array) {
-    answers = [answers];
-  }
+  const answers = useMemo(() => {
+    return formatOperationalNeedAnswers(needConfig, data);
+  }, [needConfig, data]);
 
   return (
     <div className={classNames('padding-3 bg-base-lightest', className)}>
       <p className="text-bold margin-y-1">{t('operationalNeed')}</p>
 
-      <p className="margin-top-0 margin-bottom-3 font-body-sm">
+      <p className="margin-top-0 font-body-sm">
         {operationalNeed?.nameOther || operationalNeed?.name}
       </p>
 
       {!isIndenpendentOperationalNeed(operationalNeed.key) && (
         <button
           type="button"
+          data-testid="toggle-need-answer"
           onClick={() => setInfoToggle(!infoToggle)}
           className={classNames(
-            'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1',
+            'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
             {
               'text-bold': infoToggle
             }

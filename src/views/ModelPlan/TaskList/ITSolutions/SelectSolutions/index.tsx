@@ -36,7 +36,7 @@ import NotFound from 'views/NotFound';
 import CheckboxCard from '../_components/CheckboxCard';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-const initialValues: GetOperationalNeedOperationalNeedType = {
+export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',
   id: '',
   modelPlanID: '',
