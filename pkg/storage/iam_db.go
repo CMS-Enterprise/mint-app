@@ -8,9 +8,8 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/feature/rds/auth"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/rds/rdsutils"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 )
@@ -28,22 +27,14 @@ type iamDb struct {
 // This function helps satisfy the driver.Connector interface
 func (idb *iamDb) Connect(ctx context.Context) (driver.Conn, error) {
 	awsRegion := *idb.awsSession.Config.Region
-	// awsCreds := idb.awsSession.Config.Credentials
+	awsCreds := idb.awsSession.Config.Credentials
 	dbEndpoint := fmt.Sprintf("%s:%s", idb.config.Host, idb.config.Port)
 
 	fmt.Println("BUILDING AUTH TOKEN")
 	fmt.Println("dbEndpoint:", dbEndpoint)
 	fmt.Println("username:", idb.config.Username)
 	fmt.Println("awsRegion:", awsRegion)
-	cfg, err := config.LoadDefaultConfig(context.TODO())
-	if err != nil {
-		return nil, err
-	}
-
-	authToken, err := auth.BuildAuthToken(context.TODO(), dbEndpoint, awsRegion, idb.config.Username, cfg.Credentials)
-	if err != nil {
-		return nil, err
-	}
+	authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, idb.config.Username, awsCreds)
 	fmt.Println("authToken:", authToken)
 	fmt.Println("err:", err)
 	if err != nil {
