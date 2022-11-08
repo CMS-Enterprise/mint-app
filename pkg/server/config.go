@@ -27,8 +27,9 @@ func (s Server) NewDBConfig() storage.DBConfig {
 	s.checkRequiredConfig(appconfig.DBUsernameConfigKey)
 	s.checkRequiredConfig(appconfig.DBMaxConnections)
 
-	useIAM := s.environment.Deployed()
-	if !useIAM { // If not using IAM, fall back to using PGPASS
+	// useIAM := s.environment.Deployed()
+	useIAM := false // TODO Reintroduce this when we figure out how RDS/IAM work together.
+	if !useIAM {    // If not using IAM, fall back to using PGPASS
 		s.checkRequiredConfig(appconfig.DBPasswordConfigKey)
 	}
 	s.checkRequiredConfig(appconfig.DBSSLModeConfigKey)
