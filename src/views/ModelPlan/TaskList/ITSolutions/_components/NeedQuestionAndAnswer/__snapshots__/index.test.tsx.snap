@@ -50,7 +50,9 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         >
           In the Model Plan, you answered:
         </p>
-        <p>
+        <p
+          data-testid="need-question"
+        >
           How will you select participants? Select all that appy.
         </p>
         <ul
@@ -58,11 +60,13 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         >
           <li
             class="margin-y-1"
+            data-testid="APPLICATION_REVIEW_AND_SCORING_TOOL"
           >
             Use an Application Review and Scoring tool
           </li>
           <li
             class="margin-y-1"
+            data-testid="APPLICATION_SUPPORT_CONTRACTOR"
           >
             Get an application support contractor
           </li>

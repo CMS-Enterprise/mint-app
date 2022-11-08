@@ -190,13 +190,17 @@ const NeedQuestionAndAnswer = ({
           <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
             <p className="text-bold margin-top-0">{t('youAnswered')}</p>
 
-            <p>{t(needConfig?.question)}</p>
+            <p data-testid="need-question">{t(needConfig?.question)}</p>
 
             {data && needConfig && (
               <ul className="padding-left-4">
                 {!needConfig.multiPart &&
                   answers.map((answer: string | boolean) => (
-                    <li className="margin-y-1" key={answer.toString()}>
+                    <li
+                      className="margin-y-1"
+                      key={answer.toString()}
+                      data-testid={answer.toString()}
+                    >
                       {needsTranslations[needConfig.answer](answer)}
                     </li>
                   ))}

@@ -214,7 +214,7 @@ const OperationalNeedsTable = ({
         }
       }
     ];
-  }, [t]);
+  }, [t, modelID]);
 
   const {
     getTableProps,
@@ -279,7 +279,7 @@ const OperationalNeedsTable = ({
   }
 
   return (
-    <div className="model-plan-table" data-testid="cr-tdl-table">
+    <div className="model-plan-table" data-testid={`${type}-table`}>
       <div className="mint-header__basic">
         <GlobalClientFilter
           setGlobalFilter={setGlobalFilter}

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="tablet:grid-col-6"
+    data-testid="grid"
+  >
+    <li
+      class="usa-card"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <div
+          class="solutions-checkbox__header padding-2"
+        >
+          <div
+            class="usa-checkbox"
+            data-testid="checkbox"
+          >
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="it-solutions-rmada"
+              name="solutions[0].needed"
+              testid="it-solutions-rmada"
+              type="checkbox"
+              value="true"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="it-solutions-rmada"
+            >
+              Select a solution
+            </label>
+          </div>
+          <h3
+            class="margin-y-2"
+          >
+            Research, Measurement, Assessment, Design, and Analysis (RMADA)
+          </h3>
+          <div
+            class="margin-bottom-2 solutions-checkbox__body-text"
+          >
+            Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...
+          </div>
+          <p
+            class="text-bold"
+          >
+            Point of contact
+          </p>
+          <div
+            class="mint-divider"
+          />
+          <button
+            class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+            data-testid="button"
+            type="button"
+          >
+            About this solution
+            <svg
+              class="usa-icon margin-left-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </li>
+  </div>
+</DocumentFragment>
+`;

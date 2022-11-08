@@ -28,7 +28,8 @@ describe('IT Solutions Util', () => {
           needed: true,
           solutions: [
             {
-              name: 'Salesforce'
+              name: 'Salesforce',
+              needed: true
             }
           ]
         }
@@ -36,6 +37,7 @@ describe('IT Solutions Util', () => {
     ).toEqual([
       {
         name: 'Salesforce',
+        needed: true,
         needName: 'Advertise the model'
       }
     ]);
@@ -44,6 +46,8 @@ describe('IT Solutions Util', () => {
   it('returns formatted possible', async () => {
     const possibleNeed = {
       name: 'Advertise the model',
+      __typename: 'OperationalNeed',
+      key: OperationalNeedKey.ADVERTISE_MODEL,
       needed: false,
       solutions: [
         {
@@ -64,14 +68,14 @@ describe('IT Solutions Util', () => {
         '123'
       )
     ).toEqual(
-      <UswdsReactLink to="/">
+      <UswdsReactLink to="/models/123/task-list/ops-eval-and-learning/evaluation">
         {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
       </UswdsReactLink>
     );
 
     expect(
       returnActionLinks(
-        OpSolutionStatus.NOT_STARTED,
+        OpSolutionStatus.ONBOARDING,
         operationalNeed as GetOperationalNeedsOperationalNeedsType,
         '123'
       )
@@ -88,13 +92,13 @@ describe('IT Solutions Util', () => {
 
     expect(
       returnActionLinks(
-        OpSolutionStatus.NOT_STARTED,
+        OperationalNeedStatus.NOT_NEEDED,
         operationalNeed as GetOperationalNeedsOperationalNeedsType,
         '123'
       )
     ).toEqual(
-      <UswdsReactLink to="/">
-        {i18next.t('itSolutions:itSolutionsTable.answer')}
+      <UswdsReactLink to="/models/123/task-list/ops-eval-and-learning/evaluation">
+        {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
       </UswdsReactLink>
     );
   });
