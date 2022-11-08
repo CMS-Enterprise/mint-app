@@ -29,17 +29,28 @@ DELETE ON TABLES TO crud;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE,
 UPDATE ON SEQUENCES TO crud;
 
+-- SELECT list in both of the EXISTS queries can stay empty
 DO
 $do$
 BEGIN
-  CREATE USER app_user;
-  EXCEPTION WHEN DUPLICATE_OBJECT THEN
-  RAISE NOTICE 'not creating user app_user -- it already exists';
+  -- Create app_user_iam if it doesn't already exist
+  IF NOT EXISTS (
+    SELECT
+    FROM pg_catalog.pg_roles
+    WHERE rolname = 'app_user_iam'
+  ) THEN
+    CREATE USER app_user_iam;
+  END IF;
+
+  GRANT crud TO app_user_iam;
+
+  -- rds_iam role only exists in RDS, not locally
+  IF EXISTS (
+    SELECT 
+    FROM   pg_catalog.pg_roles
+    WHERE  rolname = 'rds_iam'
+  ) THEN
+    GRANT rds_iam TO app_user_iam;
+  END IF;
 END
 $do$;
-
-ALTER USER app_user WITH PASSWORD '${app_user_password}';
-
--- Assign the crud role (create, read, update, delete) to the
--- app_user
-GRANT crud TO app_user;
