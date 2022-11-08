@@ -403,6 +403,35 @@ func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Conte
 	return resolvers.OperationalSolutionCustomUpdateByID(logger, id, customSolutionType, changes, principal, r.store)
 }
 
+// CreatePlanDocumentSolutionLinks is the resolver to create a plan document solution link
+func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, links []*model.PlanDocumentSolutionLinkInput) ([]*models.PlanDocumentSolutionLink, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	var linksConverted []*models.PlanDocumentSolutionLink
+	for _, linkInput := range links {
+		linkConverted := &models.PlanDocumentSolutionLink{
+			SolutionID: linkInput.SolutionID,
+			DocumentID: linkInput.DocumentID,
+		}
+
+		// TODO: How else can this be done? There must be a better way.
+		linkConverted.ID = linkInput.ID
+		linkConverted.CreatedBy = linkInput.CreatedBy
+		linkConverted.CreatedDts = linkInput.CreatedDts
+		linkConverted.ModifiedBy = linkInput.ModifiedBy
+		linkConverted.ModifiedDts = linkInput.ModifiedDts
+		linksConverted = append(linksConverted, linkConverted)
+	}
+
+	return resolvers.CreatePlanDocumentSolutionLinks(logger, linksConverted, r.store)
+}
+
+// RemovePlanDocumentSolutionLinks is the resolver for the removePlanDocumentSolutionLinks field.
+func (r *mutationResolver) RemovePlanDocumentSolutionLinks(ctx context.Context, id uuid.UUID) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.RemovePlanDocumentSolutionLink(logger, id, r.store)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
 	logger := appcontext.ZLogger(ctx)

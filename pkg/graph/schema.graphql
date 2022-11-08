@@ -1431,8 +1431,8 @@ type OperationalSolution {
     name: String
     key: OperationalSolutionKey
     nameOther: String
-    
-    pocName: String     
+
+    pocName: String
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
@@ -1446,11 +1446,31 @@ type OperationalSolution {
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     archived: Boolean
-    pocName: String     
+    pocName: String
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
     status: OpSolutionStatus
+}
+
+input PlanDocumentSolutionLinkInput {
+  id: UUID!
+  solutionID: Int!
+  documentID: UUID!
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+type PlanDocumentSolutionLink {
+  id: UUID!
+  solutionID: Int!
+  documentID: UUID!
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
 }
 
 """
@@ -1564,22 +1584,28 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! 
+addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
+addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed! 
+updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! 
+addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! 
+addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution! 
+updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution!
+@hasRole(role: MINT_USER)
+
+createPlanDocumentSolutionLinks(links: [PlanDocumentSolutionLinkInput!]): [PlanDocumentSolutionLink!]
+@hasRole(role: MINT_USER)
+
+removePlanDocumentSolutionLinks(id: UUID!): Boolean!
 @hasRole(role: MINT_USER)
 }
 

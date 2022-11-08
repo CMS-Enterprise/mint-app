@@ -74,6 +74,16 @@ type PlanDocumentInput struct {
 	OptionalNotes        *string             `json:"optionalNotes"`
 }
 
+type PlanDocumentSolutionLinkInput struct {
+	ID          uuid.UUID  `json:"id"`
+	SolutionID  int        `json:"solutionID"`
+	DocumentID  uuid.UUID  `json:"documentID"`
+	CreatedBy   string     `json:"createdBy"`
+	CreatedDts  time.Time  `json:"createdDts"`
+	ModifiedBy  *string    `json:"modifiedBy"`
+	ModifiedDts *time.Time `json:"modifiedDts"`
+}
+
 type PrepareForClearance struct {
 	Status             PrepareForClearanceStatus `json:"status"`
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts"`
