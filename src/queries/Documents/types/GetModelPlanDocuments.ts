@@ -17,6 +17,7 @@ export interface GetModelPlanDocuments_modelPlan_documents {
   fileName: string;
   fileType: string;
   downloadUrl: string | null;
+  restricted: boolean;
   documentType: DocumentType;
   createdDts: Time;
   optionalNotes: string | null;

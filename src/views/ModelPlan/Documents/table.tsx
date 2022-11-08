@@ -110,6 +110,8 @@ const Table = ({
     {} as DocumentType
   );
 
+  console.log(data);
+
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
     DeleteModelPlanDocument
   );
@@ -216,6 +218,13 @@ const Table = ({
         accessor: 'createdDts',
         Cell: ({ value }: any) => {
           return DateTime.fromISO(value).toLocaleString(DateTime.DATE_SHORT);
+        }
+      },
+      {
+        Header: t('documentTable.visibility'),
+        accessor: 'restricted',
+        Cell: ({ row, value }: any) => {
+          return value ? t('restricted') : t('all');
         }
       },
       {

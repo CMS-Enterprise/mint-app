@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Label } from '@trussworks/react-uswds';
+import { Button, Fieldset, Label, Radio } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import FileUpload from 'components/FileUpload';
@@ -26,6 +26,7 @@ const DocumentUpload = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
+  const { t: h } = useTranslation('draftModelPlan');
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
@@ -43,6 +44,7 @@ const DocumentUpload = () => {
           input: {
             modelPlanID: modelID,
             fileData: file,
+            restricted: values.restricted,
             documentType: values.documentType,
             otherTypeDescription: values.otherTypeDescription,
             optionalNotes: values.optionalNotes
@@ -82,6 +84,7 @@ const DocumentUpload = () => {
         initialValues={{
           file: null,
           documentType: null,
+          restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''
         }}
@@ -220,6 +223,48 @@ const DocumentUpload = () => {
                         </div>
                       )}
                     </fieldset>
+                  </FieldGroup>
+
+                  <FieldGroup
+                    scrollElement="restricted"
+                    error={!!flatErrors.restricted}
+                  >
+                    <Label
+                      htmlFor="document-upload-restricted-yes"
+                      className="maxw-none"
+                    >
+                      {t('costQuestion')}
+                    </Label>
+
+                    <p className="margin-0 line-height-body-4">
+                      {t('costInfo')}
+                    </p>
+
+                    <FieldErrorMsg>{flatErrors.restricted}</FieldErrorMsg>
+                    <Fieldset>
+                      {[true, false].map(key => (
+                        <Field
+                          as={Radio}
+                          key={key}
+                          id={`document-upload-restricted-${key}`}
+                          name="restricted"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.restricted === key}
+                          onChange={() => {
+                            setFieldValue('restricted', key);
+                          }}
+                        />
+                      ))}
+                    </Fieldset>
+
+                    {values.restricted !== null && (
+                      <Alert type="warning" slim>
+                        {values.restricted
+                          ? t('costWarningAssessment')
+                          : t('costWarningAll')}
+                      </Alert>
+                    )}
                   </FieldGroup>
 
                   <FieldGroup

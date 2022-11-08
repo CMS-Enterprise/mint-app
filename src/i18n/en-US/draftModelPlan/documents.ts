@@ -13,6 +13,7 @@ const documents = {
     uploadDate: 'Upload date',
     actions: 'Actions',
     noDocuments: 'No documents uploaded',
+    visibility: 'Visibility',
     scanInProgress: 'Virus scan in progress...',
     noVirusFound: 'No viruses found',
     virusFound: 'Virus found',
@@ -68,7 +69,15 @@ const documents = {
   uploadButton: 'Upload document',
   dontUpload: 'Don’t upload and return to previous page',
   selectFile: 'Select file',
-  documentKind: 'What kind of document is this?'
+  documentKind: 'What kind of document is this?',
+  restricted: 'Restricted',
+  all: 'All',
+  costQuestion: 'Does this document contain cost information?',
+  costInfo:
+    'Cost information would include any content relating to budget, funding, cost, or other monetary considerations.',
+  costWarningAll: 'This document will be visible to all MINT users.',
+  costWarningAssessment:
+    'This document will only be visible to the model team and BSG Assessment Team.'
 };
 
 export default documents;
