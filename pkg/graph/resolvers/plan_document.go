@@ -48,23 +48,29 @@ func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload
 
 // PlanDocumentsReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
 func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	isCollaborator, isCollaboratorErr := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
+	if isCollaboratorErr != nil {
+		return nil, isCollaboratorErr
+	}
+
+	if !isCollaborator {
+		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return notRestrictedDocuments, nil
+	}
+
 	documents, err := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
 
 	if err != nil {
 		return nil, err
 	}
-
-	isCollaborator, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
-	if err != nil {
-		return nil, err
-	}
-
-	if !isCollaborator {
-		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
-		return notRestrictedDocuments, err
-	}
-
 	return documents, nil
+
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
