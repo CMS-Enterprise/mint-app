@@ -26,7 +26,9 @@ func (s Server) NewDBConfig() storage.DBConfig {
 	s.checkRequiredConfig(appconfig.DBNameConfigKey)
 	s.checkRequiredConfig(appconfig.DBUsernameConfigKey)
 	s.checkRequiredConfig(appconfig.DBMaxConnections)
-	if s.environment.Deployed() {
+
+	useIAM := s.environment.Deployed()
+	if !useIAM { // If not using IAM, fall back to using PGPASS
 		s.checkRequiredConfig(appconfig.DBPasswordConfigKey)
 	}
 	s.checkRequiredConfig(appconfig.DBSSLModeConfigKey)
@@ -37,6 +39,7 @@ func (s Server) NewDBConfig() storage.DBConfig {
 		Username:       s.Config.GetString(appconfig.DBUsernameConfigKey),
 		Password:       s.Config.GetString(appconfig.DBPasswordConfigKey),
 		SSLMode:        s.Config.GetString(appconfig.DBSSLModeConfigKey),
+		UseIAM:         useIAM,
 		MaxConnections: s.Config.GetInt(appconfig.DBMaxConnections),
 	}
 }
