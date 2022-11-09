@@ -1,0 +1,13 @@
+export ECR_REPO_URI=651783246143.dkr.ecr.us-east-1.amazonaws.com/jupiter
+export NEW_IMAGE_TAG=latest
+export TASK_DEFINITION_NAME=jupiter-task-definition
+export REGION=us-east-1
+export NEW_ECR_IMAGE=${ECR_REPO_URI}:${NEW_IMAGE_TAG}
+export EXECUTION_ROLE_ARN=arn:aws:iam::651783246143:role/jupiter-ecs-task-execution-role
+export CLUSTER_ARN=jupiter-cluster
+export ECS_SERVICE_NAME=jupiter-service
+export TASK_DEFINITION_ARN=arn:aws:ecs:us-east-1:651783246143:task-definition/jupiter-task-definition
+export NEW_TASK_DEFINITION_REVISION_NUMBER=9
+export OLD_TASK_DEFINITION_REVISION_NUMBER=7
+export NEW_TASK_DEFINITION=${TASK_DEFINITION_ARN}:${NEW_TASK_DEFINITION_REVISION_NUMBER}
+export OLD_TASK_DEFINITION=${TASK_DEFINITION_ARN}:${OLD_TASK_DEFINITION_REVISION_NUMBER}
