@@ -1,31 +1,35 @@
 #!/bin/bash
 
+# Expected environment variables
+# ECR_REGISTRY
+# ECR_REPO
+# NEW_IMAGE_TAG
+# TASK_FAMILY
+# AWS_REGION
+# ECS_CLUSTER
+# SERVICE_NAME
+
 # fail on any error
 set -eu 
 
-# get task definition information and save to json file
-aws ecs describe-task-definition --task-definition ${TASK_DEFINITION_NAME} --region ${REGION} > old-task-definition.json
+# Construct full ECR Image path
+ECR_IMAGE="${ECR_REGISTRY}/${ECR_REPO}:${NEW_IMAGE_TAG}"
 
-# update the image and save the task definition to a new json file
-jq '.taskDefinition.containerDefinitions[0].image |= "'"$NEW_ECR_IMAGE"'"' old-task-definition.json > new-task-definition.json
+# Get existing task definition
+TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "$AWS_REGION")
 
-# extract the container definition and save to a json file
-jq -r '.taskDefinition.containerDefinitions' new-task-definition.json > container-definition.json
+# Transform existing task definition by performing the following actions:
+# 1. Update the `containerDefinitions[0].image` to the new image we want to deploy
+# 2. Remove fields from the task definition that are not compatibile with `register-task-definition`'s --cli-input-json
+NEW_TASK_DEFINTIION=$(echo "$TASK_DEFINITION" | jq --arg IMAGE "$ECR_IMAGE" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')
 
-# register a new task definition
-aws ecs register-task-definition \
---family jupiter-task-definition \
---container-definitions=file://container-definition.json \
---execution-role-arn ${EXECUTION_ROLE_ARN} \
---network-mode awsvpc \
---requires-compatibilities "FARGATE" \
---runtime-platform cpuArchitecture=ARM64,operatingSystemFamily=LINUX \
---memory 4096 --region us-east-1 \
---cpu 2048 \
---tags  key=image,value=${ECR_REPO_URI} key=image-tag,value=${NEW_IMAGE_TAG}
+# Register the new task, capture the output as JSON
+NEW_TASK_INFO=$(aws ecs register-task-definition --region "$AWS_REGION" --cli-input-json "$NEW_TASK_DEFINTIION")
 
-# update the ecs service with the new task definition
-aws ecs update-service --cluster ${CLUSTER_ARN} --service ${ECS_SERVICE_NAME} --task-definition ${NEW_TASK_DEFINITION}
+# Grab the new revision from the output
+NEW_REVISION=$(echo "$NEW_TASK_INFO" | jq '.taskDefinition.revision')
 
-# deregister the previous task definition
-aws ecs deregister-task-definition --task-definition ${OLD_TASK_DEFINITION}
+# Update the service with the new revision
+aws ecs update-service --cluster "${ECS_CLUSTER}" \
+                       --service "${SERVICE_NAME}" \
+                       --task-definition "${TASK_FAMILY}:${NEW_REVISION}"
