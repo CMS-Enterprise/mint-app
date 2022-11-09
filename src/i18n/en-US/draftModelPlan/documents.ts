@@ -77,7 +77,13 @@ const documents = {
     'Cost information would include any content relating to budget, funding, cost, or other monetary considerations.',
   costWarningAll: 'This document will be visible to all MINT users.',
   costWarningAssessment:
-    'This document will only be visible to the model team and BSG Assessment Team.'
+    'This document will only be visible to the model team and BSG Assessment Team.',
+  validation: {
+    file: 'Choose a document to upload.',
+    documentType: 'Select the type of document you are uploading.',
+    restricted: 'Please select if this document contains cost information.',
+    otherDescr: 'Enter a document name.'
+  }
 };
 
 export default documents;

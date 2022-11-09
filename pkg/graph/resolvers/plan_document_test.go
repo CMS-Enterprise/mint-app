@@ -60,7 +60,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 			Size:        reader.Size(),
 			ContentType: "application/msword",
 		},
-		Restricted:           false,
+		Restricted:           true,
 		DocumentType:         models.DocumentTypeOther,
 		OtherTypeDescription: &otherTypeDescription,
 		OptionalNotes:        &optionalNotes,
@@ -75,7 +75,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 	suite.EqualValues(reader.Size(), document.FileSize)
 	suite.False(document.VirusScanned)
 	suite.False(document.VirusClean)
-	suite.False(document.Restricted)
+	suite.True(document.Restricted)
 	suite.EqualValues(models.DocumentTypeOther, document.DocumentType)
 	suite.EqualValues(otherTypeDescription, document.OtherTypeDescription.String)
 	suite.EqualValues(optionalNotes, document.OptionalNotes.String)

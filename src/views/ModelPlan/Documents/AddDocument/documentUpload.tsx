@@ -148,7 +148,6 @@ const DocumentUpload = () => {
                       id="FileUpload-File"
                       name="file"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        // onChange(e);
                         setFieldValue('file', e.currentTarget?.files?.[0]);
                       }}
                       accept=".pdf,.doc,.docx,.xls,.xlsx"
@@ -302,9 +301,7 @@ const DocumentUpload = () => {
                     <Button
                       type="submit"
                       onClick={() => setErrors({})}
-                      disabled={
-                        isSubmitting || !values.documentType || !values.file
-                      }
+                      disabled={isSubmitting || !values.file}
                       data-testid="upload-document"
                     >
                       {t('uploadButton')}
