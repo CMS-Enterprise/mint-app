@@ -1,11 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import configureMockStore from 'redux-mock-store';
 
-import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
 import { DocumentType } from 'types/graphql-global-types';
@@ -52,26 +49,15 @@ const mocks = [
   }
 ];
 
-const mockAuthReducer = {
-  isUserSet: true,
-  groups: [ASSESSMENT],
-  euaId: 'ABCD'
-};
-
-const mockStore = configureMockStore();
-const store = mockStore({ auth: mockAuthReducer });
-
 describe('Model Plan Documents page', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelID}/read-only/documents`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Provider store={store}>
-              <Route path="/models/:modelID/read-only/documents">
-                <ReadOnlyDocuments modelID={modelID} />
-              </Route>
-            </Provider>
+            <Route path="/models/:modelID/read-only/documents">
+              <ReadOnlyDocuments modelID={modelID} />
+            </Route>
           </MessageProvider>
         </MockedProvider>
       </MemoryRouter>
@@ -90,11 +76,9 @@ describe('Model Plan Documents page', () => {
       <MemoryRouter initialEntries={[`/models/${modelID}/read-only/documents`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Provider store={store}>
-              <Route path="/models/:modelID/read-only/documents">
-                <ReadOnlyDocuments modelID={modelID} />
-              </Route>
-            </Provider>
+            <Route path="/models/:modelID/read-only/documents">
+              <ReadOnlyDocuments modelID={modelID} />
+            </Route>
           </MessageProvider>
         </MockedProvider>
       </MemoryRouter>

@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
@@ -18,7 +17,6 @@ import {
   GetModelPlanDocuments_modelPlan_documents as DocumentType,
   GetModelPlanDocumentsVariables
 } from 'queries/Documents/types/GetModelPlanDocuments';
-import { AppState } from 'reducers/rootReducer';
 import downloadFile from 'utils/downloadFile';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateDocumentType } from 'utils/modelPlan';
@@ -28,7 +26,6 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
-import { isAssessment } from 'utils/user';
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
@@ -112,14 +109,6 @@ const Table = ({
   const [fileToRemove, setFileToRemove] = useState<DocumentType>(
     {} as DocumentType
   );
-
-  const userGroups = useSelector((state: AppState) => state.auth.groups);
-  // used to conditionally render documents if restricted
-  const restricted: boolean = !isAssessment(userGroups) && !isCollaborator;
-
-  const filteredDocuments = restricted
-    ? data.filter(document => !document.restricted)
-    : data;
 
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
     DeleteModelPlanDocument
@@ -285,7 +274,7 @@ const Table = ({
   } = useTable(
     {
       columns,
-      data: filteredDocuments,
+      data,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
