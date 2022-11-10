@@ -167,7 +167,7 @@ func seedData(config *viper.Viper) {
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
-	_ = planDocumentCreate(store, logger, s3Client, sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
+	_ = planDocumentCreate(store, logger, s3Client, sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
 	addPlanCollaborator(
 		store,
 		nil,
