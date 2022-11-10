@@ -65,6 +65,7 @@ type PlanDocumentInput struct {
 	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
+	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription"`
 	OptionalNotes        *string             `json:"optionalNotes"`
 }

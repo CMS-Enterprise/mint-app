@@ -840,6 +840,7 @@ export interface PlanDocumentInput {
   modelPlanID: UUID;
   fileData: Upload;
   documentType: DocumentType;
+  restricted: boolean;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
 }
