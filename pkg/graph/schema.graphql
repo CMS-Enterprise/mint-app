@@ -197,6 +197,7 @@ type PlanDocument {
   fileKey: String!
   virusScanned: Boolean!
   virusClean: Boolean!
+  restricted: Boolean!
   fileName: String!
   fileSize: Int!
   documentType: DocumentType!
@@ -218,6 +219,7 @@ input PlanDocumentInput {
   modelPlanID: UUID!
   fileData: Upload!
   documentType: DocumentType!
+  restricted: Boolean!
   otherTypeDescription: String
   optionalNotes: String
 }

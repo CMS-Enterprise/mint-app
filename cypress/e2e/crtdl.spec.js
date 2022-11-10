@@ -1,6 +1,6 @@
 describe('Model Plan CRsand TDLs', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('adds a cr or tdl', () => {

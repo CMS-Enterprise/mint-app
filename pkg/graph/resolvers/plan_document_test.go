@@ -22,6 +22,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 			Size:        reader.Size(),
 			ContentType: "application/msword",
 		},
+		Restricted:   false,
 		DocumentType: models.DocumentTypeConceptPaper,
 		// OtherTypeDescription is nil
 		// OptionalNotes is nil
@@ -36,6 +37,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 	suite.EqualValues(reader.Size(), document.FileSize)
 	suite.False(document.VirusScanned)
 	suite.False(document.VirusClean)
+	suite.False(document.Restricted)
 	suite.EqualValues(models.DocumentTypeConceptPaper, document.DocumentType)
 	suite.Nil(document.OtherTypeDescription.Ptr())
 	suite.Nil(document.OptionalNotes.Ptr())
@@ -58,6 +60,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 			Size:        reader.Size(),
 			ContentType: "application/msword",
 		},
+		Restricted:           true,
 		DocumentType:         models.DocumentTypeOther,
 		OtherTypeDescription: &otherTypeDescription,
 		OptionalNotes:        &optionalNotes,
@@ -72,6 +75,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 	suite.EqualValues(reader.Size(), document.FileSize)
 	suite.False(document.VirusScanned)
 	suite.False(document.VirusClean)
+	suite.True(document.Restricted)
 	suite.EqualValues(models.DocumentTypeOther, document.DocumentType)
 	suite.EqualValues(otherTypeDescription, document.OtherTypeDescription.String)
 	suite.EqualValues(optionalNotes, document.OptionalNotes.String)

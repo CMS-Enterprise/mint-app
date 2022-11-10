@@ -16,8 +16,8 @@ import (
 )
 
 const (
-	jobCodeUser       = "MINT_USER"
-	jobCodeAssessment = "MINT_ASSESSMENT"
+	jobCodeUser       = "MINT_USER_NONPROD"
+	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
 )
 
 func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
@@ -34,7 +34,7 @@ func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtv
 }
 
 func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
-	list, ok := jwt.Claims["groups"]
+	list, ok := jwt.Claims["mint-groups"]
 	if !ok {
 		return false
 	}

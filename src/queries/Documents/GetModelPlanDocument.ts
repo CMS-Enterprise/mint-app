@@ -12,6 +12,7 @@ export default gql`
       virusClean
       fileName
       fileSize
+      restricted
       documentType
       otherType
       createdDts

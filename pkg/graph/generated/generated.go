@@ -347,6 +347,7 @@ type ComplexityRoot struct {
 		ModifiedDts   func(childComplexity int) int
 		OptionalNotes func(childComplexity int) int
 		OtherType     func(childComplexity int) int
+		Restricted    func(childComplexity int) int
 		VirusClean    func(childComplexity int) int
 		VirusScanned  func(childComplexity int) int
 	}
@@ -2915,6 +2916,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDocument.OtherType(childComplexity), true
+
+	case "PlanDocument.restricted":
+		if e.complexity.PlanDocument.Restricted == nil {
+			break
+		}
+
+		return e.complexity.PlanDocument.Restricted(childComplexity), true
 
 	case "PlanDocument.virusClean":
 		if e.complexity.PlanDocument.VirusClean == nil {
@@ -6341,6 +6349,7 @@ type PlanDocument {
   fileKey: String!
   virusScanned: Boolean!
   virusClean: Boolean!
+  restricted: Boolean!
   fileName: String!
   fileSize: Int!
   documentType: DocumentType!
@@ -6362,6 +6371,7 @@ input PlanDocumentInput {
   modelPlanID: UUID!
   fileData: Upload!
   documentType: DocumentType!
+  restricted: Boolean!
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -12379,6 +12389,8 @@ func (ec *executionContext) fieldContext_ModelPlan_documents(ctx context.Context
 				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
 			case "virusClean":
 				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
 			case "fileName":
 				return ec.fieldContext_PlanDocument_fileName(ctx, field)
 			case "fileSize":
@@ -15137,6 +15149,8 @@ func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx cont
 				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
 			case "virusClean":
 				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
 			case "fileName":
 				return ec.fieldContext_PlanDocument_fileName(ctx, field)
 			case "fileSize":
@@ -23037,6 +23051,50 @@ func (ec *executionContext) _PlanDocument_virusClean(ctx context.Context, field 
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_virusClean(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDocument",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDocument_restricted(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDocument_restricted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Restricted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDocument_restricted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanDocument",
 		Field:      field,
@@ -40768,6 +40826,8 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
 			case "virusClean":
 				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
 			case "fileName":
 				return ec.fieldContext_PlanDocument_fileName(ctx, field)
 			case "fileSize":
@@ -44687,7 +44747,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "otherTypeDescription", "optionalNotes"}
+	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "restricted", "otherTypeDescription", "optionalNotes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -44715,6 +44775,14 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentType"))
 			it.DocumentType, err = ec.unmarshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "restricted":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("restricted"))
+			it.Restricted, err = ec.unmarshalNBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -46735,6 +46803,13 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 		case "virusClean":
 
 			out.Values[i] = ec._PlanDocument_virusClean(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "restricted":
+
+			out.Values[i] = ec._PlanDocument_restricted(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)

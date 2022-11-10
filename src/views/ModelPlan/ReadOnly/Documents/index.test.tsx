@@ -33,6 +33,7 @@ const mocks = [
               fileKey: null,
               virusScanned: true,
               virusClean: true,
+              restricted: false,
               fileName: null,
               fileSize: 123,
               downloadUrl: null,

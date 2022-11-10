@@ -21,6 +21,7 @@ type PlanDocument struct {
 
 	FileName             string       `json:"fileName" db:"file_name"`
 	FileSize             int          `json:"fileSize" db:"file_size"`
+	Restricted           bool         `json:"restricted" db:"restricted"`
 	DocumentType         DocumentType `json:"documentType" db:"document_type"`
 	OtherTypeDescription zero.String  `json:"otherType" db:"other_type"`
 	OptionalNotes        zero.String  `json:"optionalNotes" db:"optional_notes"`
@@ -29,7 +30,7 @@ type PlanDocument struct {
 }
 
 // NewPlanDocument returns a new Plan Document
-func NewPlanDocument(createdBy string, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, otherTypeDescription zero.String, optionalNotes zero.String) *PlanDocument {
+func NewPlanDocument(createdBy string, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, restricted bool, otherTypeDescription zero.String, optionalNotes zero.String) *PlanDocument {
 	return &PlanDocument{
 		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
 		baseStruct:           NewBaseStruct(createdBy),
@@ -39,6 +40,7 @@ func NewPlanDocument(createdBy string, modelPlanID uuid.UUID, fileType string, b
 		FileName:             fileName,
 		FileSize:             fileSize,
 		DocumentType:         documentType,
+		Restricted:           restricted,
 		OtherTypeDescription: otherTypeDescription,
 		OptionalNotes:        optionalNotes,
 

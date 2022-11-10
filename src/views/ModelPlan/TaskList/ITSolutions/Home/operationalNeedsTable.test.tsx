@@ -47,7 +47,7 @@ const returnNeeds = (needed: boolean | null) => {
                     key: OperationalSolutionKey.SALESFORCE,
                     mustStartDts: null,
                     mustFinishDts: null,
-                    needed: false,
+                    needed: true,
                     nameOther: null,
                     pocEmail: null,
                     pocName: null,

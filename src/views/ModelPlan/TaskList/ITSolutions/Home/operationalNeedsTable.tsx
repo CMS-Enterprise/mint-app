@@ -19,7 +19,11 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Alert, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Alert,
+  IconArrowForward,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
@@ -123,7 +127,15 @@ const OperationalNeedsTable = ({
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
           if (value === t('itSolutionsTable.selectSolution')) {
-            return <UswdsReactLink to="/">{value}</UswdsReactLink>;
+            return (
+              <UswdsReactLink
+                to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
+                className="display-flex flex-align-center"
+              >
+                {value}
+                <IconArrowForward className="margin-left-1" />
+              </UswdsReactLink>
+            );
           }
           return value;
         }
@@ -164,11 +176,11 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status);
+          return returnActionLinks(row.original.status, row.original, modelID);
         }
       }
     ];
-  }, [t]);
+  }, [t, modelID]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -198,11 +210,11 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status);
+          return returnActionLinks(row.original.status, row.original, modelID);
         }
       }
     ];
-  }, [t]);
+  }, [t, modelID]);
 
   const {
     getTableProps,
@@ -267,7 +279,7 @@ const OperationalNeedsTable = ({
   }
 
   return (
-    <div className="model-plan-table" data-testid="cr-tdl-table">
+    <div className="model-plan-table" data-testid={`${type}-table`}>
       <div className="mint-header__basic">
         <GlobalClientFilter
           setGlobalFilter={setGlobalFilter}

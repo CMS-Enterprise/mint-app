@@ -267,7 +267,7 @@ const NonClaimsBasedPayment = () => {
                             onClick={() =>
                               handleFormSubmit(
                                 values,
-                                `/models/${modelID}/task-list/it-tools/page-nine`
+                                `/models/${modelID}/task-list/it-solutions`
                               )
                             }
                           />

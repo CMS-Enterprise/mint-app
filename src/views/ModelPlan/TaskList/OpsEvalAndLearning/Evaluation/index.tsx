@@ -256,7 +256,7 @@ const Evaluation = () => {
                           onClick={() =>
                             handleFormSubmit(
                               values,
-                              `/models/${modelID}/task-list/it-tools/page-five`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -410,7 +410,7 @@ const Evaluation = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-six`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -481,7 +481,7 @@ const Evaluation = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-seven`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />

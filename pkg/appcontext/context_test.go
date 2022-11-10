@@ -123,8 +123,8 @@ func TestContextPrincipal(t *testing.T) {
 
 			// Assert (of AAA)
 			assert.Equal(t, tc.expectID, p.ID(), "ID")
-			assert.Equal(t, tc.expectMINT, p.AllowUSER(), "MINT_USER")
-			assert.Equal(t, tc.expectADMIN, p.AllowASSESSMENT(), "MINT_ASSESSMENT")
+			assert.Equal(t, tc.expectMINT, p.AllowUSER(), "MINT_USER_NONPROD")
+			assert.Equal(t, tc.expectADMIN, p.AllowASSESSMENT(), "MINT_ASSESSMENT_NONPROD")
 		})
 	}
 }
