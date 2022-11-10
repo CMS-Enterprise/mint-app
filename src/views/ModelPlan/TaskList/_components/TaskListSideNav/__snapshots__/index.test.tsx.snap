@@ -42,7 +42,7 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
         Related Content
       </h4>
       <button
-        class="usa-button usa-button usa-button--unstyled line-height-body-5"
+        class="usa-button usa-button usa-button--unstyled line-height-body-5 margin-bottom-1"
         data-testid="button"
         type="button"
       >
