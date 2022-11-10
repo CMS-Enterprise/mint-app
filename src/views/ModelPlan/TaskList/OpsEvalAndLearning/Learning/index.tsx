@@ -234,7 +234,7 @@ const Learning = () => {
                           onClick={() =>
                             handleFormSubmit(
                               values,
-                              `/models/${modelID}/task-list/it-tools/page-seven`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />

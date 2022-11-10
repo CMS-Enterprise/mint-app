@@ -98,12 +98,14 @@ const splitLink = split(
   authLink.concat(uploadLink)
 );
 
-const typePolicies = {};
-
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({
-    typePolicies
+    typePolicies: {
+      OperationalSolution: {
+        keyFields: ['key']
+      }
+    }
   }),
   defaultOptions: {
     watchQuery: {
