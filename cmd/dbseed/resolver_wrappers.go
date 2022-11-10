@@ -130,7 +130,7 @@ func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, in
 // planDocumentCreate is a wrapper for resolvers.PlanDocumentCreate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the document with the principal value of the Model Plan's "createdBy"
-func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *upload.S3Client, mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
+func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *upload.S3Client, mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, restricted bool, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
 	princ := &authentication.EUAPrincipal{
 		EUAID:             mp.CreatedBy,
 		JobCodeUSER:       true,
@@ -159,6 +159,7 @@ func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *uplo
 			ContentType: contentType,
 		},
 		DocumentType:         docType,
+		Restricted:           restricted,
 		OtherTypeDescription: otherTypeDescription,
 		OptionalNotes:        optionalNotes,
 	}

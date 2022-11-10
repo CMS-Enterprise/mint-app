@@ -154,9 +154,9 @@ func seedData(config *viper.Viper) {
 
 	// Seed a plan with some documents
 	planWithDocuments := createModelPlan(store, logger, "Plan with Documents", "MINT")
-	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, nil, nil, false, false)
-	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
-	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
+	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, false, nil, nil, false, false)
+	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
+	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, false, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
 
 	sampleModelName := "Enhancing Oncology Model"
 	sampleModelPlan := createModelPlan(store, logger, sampleModelName, "MINT")

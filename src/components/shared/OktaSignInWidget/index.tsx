@@ -1,7 +1,7 @@
 // src/OktaSignInWidget.js
 // okta-signin-widget has no typescript support yet.  If becomes available, install and remove disable
-
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 // @ts-expect-error
 import OktaSignIn from '@okta/okta-signin-widget';
 
@@ -13,6 +13,7 @@ type OktaSignInWidgetProps = {
 };
 
 const OktaSignInWidget = ({ onSuccess, onError }: OktaSignInWidgetProps) => {
+  const { t } = useTranslation('general');
   const widgetRef = useRef(null);
 
   useEffect(() => {
@@ -20,6 +21,11 @@ const OktaSignInWidget = ({ onSuccess, onError }: OktaSignInWidgetProps) => {
     if (widgetRef.current) {
       signIn = new OktaSignIn({
         el: widgetRef.current,
+        i18n: {
+          en: {
+            'primaryauth.title': t('oktaWidget')
+          }
+        },
         baseUrl: process.env.REACT_APP_OKTA_DOMAIN,
         clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
         authParams: {

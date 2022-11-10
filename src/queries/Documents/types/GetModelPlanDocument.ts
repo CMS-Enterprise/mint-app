@@ -20,6 +20,7 @@ export interface GetModelPlanDocument_planDocument {
   virusClean: boolean;
   fileName: string;
   fileSize: number;
+  restricted: boolean;
   documentType: DocumentType;
   otherType: string | null;
   createdDts: Time;

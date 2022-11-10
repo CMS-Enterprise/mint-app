@@ -18,4 +18,4 @@ SELECT
     modified_by,
     modified_dts
 FROM plan_document
-WHERE model_plan_id = :model_plan_id
+WHERE model_plan_id = :model_plan_id AND restricted = FALSE

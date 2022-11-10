@@ -12,6 +12,7 @@ export default gql`
         fileName
         fileType
         downloadUrl
+        restricted
         documentType
         createdDts
         optionalNotes
