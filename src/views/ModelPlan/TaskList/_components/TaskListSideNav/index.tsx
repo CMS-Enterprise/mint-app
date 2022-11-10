@@ -117,7 +117,7 @@ const TaskListSideNav = ({
             onClick={() =>
               window.open('/help-and-knowledge/model-plan-overview', '_blank')
             }
-            className="usa-button usa-button--unstyled line-height-body-5"
+            className="usa-button usa-button--unstyled line-height-body-5 margin-bottom-1"
           >
             <Trans i18nKey="modelPlanTaskList:sideNav.overview">
               indexZero
