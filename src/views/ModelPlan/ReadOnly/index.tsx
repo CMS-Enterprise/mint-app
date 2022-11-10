@@ -38,7 +38,7 @@ import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
-import { NotFoundPartial } from 'views/NotFound';
+import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -68,18 +68,22 @@ export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
 
-export type SubpageKey =
-  | 'model-basics'
-  | 'general-characteristics'
-  | 'participants-and-providers'
-  | 'beneficiaries'
-  | 'operations-evaluation-and-learning'
-  | 'payment'
-  | 'it-tools'
-  | 'team'
-  | 'discussions'
-  | 'documents'
-  | 'crs-and-tdl';
+const listOfSubpageKey = [
+  'model-basics',
+  'general-characteristics',
+  'participants-and-providers',
+  'beneficiaries',
+  'operations-evaluation-and-learning',
+  'payment',
+  'it-tools',
+  'team',
+  'discussions',
+  'documents',
+  'crs-and-tdl'
+];
+
+export type SubpageKey = typeof listOfSubpageKey[number];
+const isSubPage = (x: any): x is SubpageKey => listOfSubpageKey.includes(x);
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
@@ -256,6 +260,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
+  }
+
+  if ((isHelpArticle && subinfo === 'discussions') || !isSubPage(subinfo)) {
+    return <NotFound />;
   }
 
   return (
