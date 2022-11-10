@@ -15,12 +15,8 @@ interface SideNavProps {
 const SideNav = ({ subComponents, isHelpArticle }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
 
-  const subComponentsList = isHelpArticle
-    ? Object.keys(subComponents).filter(key => key !== 'discussions')
-    : Object.keys(subComponents);
-
   // Mapping of all sub navigation links
-  const subNavigationLinks: React.ReactNode[] = subComponentsList.map(
+  const subNavigationLinks: React.ReactNode[] = Object.keys(subComponents).map(
     (key: string) => (
       <NavLink
         to={

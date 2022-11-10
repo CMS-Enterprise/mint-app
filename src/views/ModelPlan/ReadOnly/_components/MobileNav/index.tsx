@@ -36,10 +36,6 @@ const MobileNav = ({
     }
   }, [isMobile]);
 
-  const subComponentsList = isHelpArticle
-    ? Object.keys(subComponents).filter(key => key !== 'discussions')
-    : Object.keys(subComponents);
-
   return (
     <div className="read-only-model-plan__subNav-accordion">
       <button
@@ -64,7 +60,7 @@ const MobileNav = ({
           className="read-only-model-plan__subNav__list-container bg-primary-dark"
         >
           <ul className="read-only-model-plan__subNav__list subNav">
-            {subComponentsList.map((key: string) => (
+            {Object.keys(subComponents).map((key: string) => (
               <li
                 key={key}
                 className={
