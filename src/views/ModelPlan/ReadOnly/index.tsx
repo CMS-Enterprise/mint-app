@@ -256,6 +256,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     }
   };
 
+  if (isHelpArticle) delete subComponents.discussions;
+
   const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
