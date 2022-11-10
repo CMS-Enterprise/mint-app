@@ -41,8 +41,8 @@ func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
 func validJwt() *jwtverifier.Jwt {
 	return &jwtverifier.Jwt{
 		Claims: map[string]interface{}{
-			"groups": []string{},
-			"sub":    "EASI",
+			"mint-groups": []string{},
+			"sub":         "EASI",
 		},
 	}
 }
@@ -134,7 +134,7 @@ func TestJobCodes(t *testing.T) {
 	payload := `
 	{
 		"sub":"NASA",
-		"groups":[
+		"mint-groups":[
 			"EX_SPACE",
 			"EX_HOUSTON",
 			"EX_MARS"
