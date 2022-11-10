@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import UswdsReactLink from 'components/LinkWrapper';
 import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions as GetOperationalNeedsSolutionsType
+  GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 
@@ -35,7 +35,7 @@ export const filterNeedsFormatSolutions = (
   needs
     .filter(need => need.needed)
     .forEach(need => {
-      if (need.solutions.solutions.length > 0) {
+      if (need.solutions.length > 0) {
         operationalSolutions = operationalSolutions.concat(
           formatSolutionsFromNeed(need)
         );
@@ -52,8 +52,8 @@ export const filterNeedsFormatSolutions = (
 const formatSolutionsFromNeed = (
   need: GetOperationalNeedsOperationalNeedsType
 ) => {
-  return need.solutions.solutions
-    .filter(solution => !solution.archived) // Don't display archived solutions in table
+  return need.solutions
+    .filter(solution => !solution.needed) // Don't display archived solutions in table
     .map(solution => {
       return { ...solution, needName: need.nameOther || need.name };
     });
@@ -69,7 +69,7 @@ const emptySolution = (needName: string | null, needID: string) => {
     name: '',
     mustStartDts: null,
     mustFinishDts: null,
-    archived: false,
+    needed: false,
     nameOther: null,
     key: null,
     pocEmail: null,

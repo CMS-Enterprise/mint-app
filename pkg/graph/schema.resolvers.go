@@ -68,8 +68,9 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 // Documents is the resolver for the documents field.
 func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
 
-	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, r.store, r.s3Client)
+	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
 	return documents, err
 }
 

@@ -19,18 +19,11 @@ describe('IT Solutions Util', () => {
         {
           name: 'Advertise the model',
           needed: true,
-          solutions: {
-            solutions: [
-              {
-                name: 'Salesforce'
-              }
-            ],
-            possibleSolutions: [
-              {
-                name: 'Grant Solutions'
-              }
-            ]
-          }
+          solutions: [
+            {
+              name: 'Salesforce'
+            }
+          ]
         }
       ] as GetOperationalNeedsOperationalNeedsType[])
     ).toEqual([
@@ -45,18 +38,11 @@ describe('IT Solutions Util', () => {
     const possibleNeed = {
       name: 'Advertise the model',
       needed: false,
-      solutions: {
-        solutions: [
-          {
-            name: 'Salesforce'
-          }
-        ],
-        possibleSolutions: [
-          {
-            name: 'Grant Solutions'
-          }
-        ]
-      }
+      solutions: [
+        {
+          name: 'Salesforce'
+        }
+      ]
     } as GetOperationalNeedsOperationalNeedsType;
     expect(filterPossibleNeeds([possibleNeed])).toEqual([
       { ...possibleNeed, status: OperationalNeedStatus.NOT_NEEDED }
