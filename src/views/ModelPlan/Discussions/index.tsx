@@ -18,7 +18,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import AssessmentIcon from 'components/shared/AssessmentIcon';
-import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import Expire from 'components/shared/Expire';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -44,11 +43,10 @@ import {
 import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
-import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
+import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
 import FormatDiscussion from './FormatDiscussion';
-import SingleDiscussion from './SingleDiscussion';
 
 import './index.scss';
 
@@ -351,135 +349,6 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     );
   };
 
-  const discussionComponent = (
-    discussion: DiscussionType | ReplyType,
-    index: number,
-    connected?: boolean,
-    answerQuestion?: boolean
-  ) => (
-    <div className="mint-discussions__single-discussion" key={discussion.id}>
-      <div className="display-flex">
-        {discussion.isAssessment ? (
-          <div className="display-flex flex-align-center">
-            <AssessmentIcon size={3} />{' '}
-            <span>
-              {t('assessment')} | {discussion.createdBy}
-            </span>
-          </div>
-        ) : (
-          <IconInitial
-            user={
-              collaborators.find(
-                collaborator => collaborator.euaUserID === discussion.createdBy
-              )?.fullName || ''
-            }
-            index={index}
-            className="margin-bottom-2"
-          />
-        )}
-        <span className="margin-left-2 margin-top-05 text-base">
-          {getTimeElapsed(discussion.createdDts)
-            ? getTimeElapsed(discussion.createdDts) + t('ago')
-            : t('justNow')}
-        </span>
-      </div>
-
-      <div
-        className={classNames({
-          'margin-bottom-4': answerQuestion,
-          'mint-discussions__connected': connected,
-          'mint-discussions__not-connected': !connected
-        })}
-      >
-        <p className="margin-y-0 padding-y-1">{discussion.content}</p>
-        <div className="display-flex margin-bottom-2">
-          {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-          {hasEditAccess && answerQuestion && (
-            <>
-              <IconAnnouncement className="text-primary margin-right-1" />
-              <Button
-                type="button"
-                unstyled
-                role="button"
-                onClick={() => {
-                  setDiscussionStatusMessage('');
-                  setDiscussionType('reply');
-                  setReply(discussion);
-                }}
-              >
-                {t('answer')}
-              </Button>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-
-  const formatDiscussions = (
-    discussionsContent: DiscussionType[],
-    status: DiscussionStatus
-  ) => {
-    if (status === 'ANSWERED') {
-      discussionsContent.sort(sortRepliesByDate); // Sort discusssions by the most recent reply for answered questions
-    }
-
-    return discussionsContent.map((discussion, index) => {
-      return (
-        <div
-          key={discussion.id}
-          className={classNames({
-            'margin-top-4': index > 0,
-            'margin-top-2': index === 0
-          })}
-        >
-          {discussion.replies.length > 0 ? (
-            // If discussions has replies, join together in array for rendering as a connected discussion
-            <>
-              {[discussion, ...discussion.replies].map(
-                (discussionReply: ReplyType | DiscussionType, replyIndex) => (
-                  // discussionComponent(
-                  //   discussionReply,
-                  //   index,
-                  //   replyIndex !== discussion.replies.length
-                  // )
-                  <SingleDiscussion
-                    discussion={discussionReply}
-                    index={index}
-                    connected={replyIndex !== discussion.replies.length}
-                    hasEditAccess={hasEditAccess}
-                    collaborators={collaborators}
-                    setDiscussionStatusMessage={setDiscussionStatusMessage}
-                    setDiscussionType={setDiscussionType}
-                    setReply={setReply}
-                  />
-                )
-              )}
-            </>
-          ) : (
-            // Render only question if no replies
-            // discussionComponent(discussion, index, undefined, true)
-            <SingleDiscussion
-              discussion={discussion}
-              index={index}
-              connected={false}
-              answerQuestion
-              hasEditAccess={hasEditAccess}
-              collaborators={collaborators}
-              setDiscussionStatusMessage={setDiscussionStatusMessage}
-              setDiscussionType={setDiscussionType}
-              setReply={setReply}
-            />
-          )}
-          {/* Divider to separate questions if not the last question */}
-          {index !== discussionsContent.length - 1 && (
-            <Divider className="margin-top-4" />
-          )}
-        </div>
-      );
-    });
-  };
-
   // Two main discussion accordion types - "Unanswered" and "Answered" based on enum - DiscussionStatus
   const discussionAccordion = (Object.keys(DiscussionStatus) as Array<
     keyof typeof DiscussionStatus
@@ -511,27 +380,19 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                       {questionCount.answeredQuestions !== 1 && 's'}
                     </strong>
                   ),
-                // content: formatDiscussions(
-                // discussions.filter(
-                //   discussion => discussion.status === status
-                // ),
-                //   DiscussionStatus[status]
-                // ),
-                content: discussions
-                  .filter(discussion => discussion.status === status)
-                  .map(discussionsContent => {
-                    return (
-                      <FormatDiscussion
-                        discussionsContent={discussionsContent}
-                        status={DiscussionStatus[status]}
-                        hasEditAccess={hasEditAccess}
-                        collaborators={collaborators}
-                        setDiscussionStatusMessage={setDiscussionStatusMessage}
-                        setDiscussionType={setDiscussionType}
-                        setReply={setReply}
-                      />
-                    );
-                  }),
+                content: (
+                  <FormatDiscussion
+                    discussionsContent={discussions.filter(
+                      discussion => discussion.status === status
+                    )}
+                    status={DiscussionStatus[status]}
+                    hasEditAccess={hasEditAccess}
+                    collaborators={collaborators}
+                    setDiscussionStatusMessage={setDiscussionStatusMessage}
+                    setDiscussionType={setDiscussionType}
+                    setReply={setReply}
+                  />
+                ),
                 expanded: openStatus(DiscussionStatus[status]),
                 id: status,
                 headingLevel: 'h4'

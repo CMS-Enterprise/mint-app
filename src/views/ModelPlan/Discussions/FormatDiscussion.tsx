@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
+import SectionWrapper from 'components/shared/SectionWrapper';
 import {
   GetModelPlanDiscussions_modelPlan_collaborators as CollaboratorsType,
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
@@ -31,11 +34,18 @@ const FormatDiscussion = ({
   setDiscussionType,
   setReply
 }: FormatDiscussionProps) => {
+  const { t } = useTranslation('discussions');
+
+  const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
   if (status === 'ANSWERED') {
     discussionsContent.sort(sortRepliesByDate); // Sort discusssions by the most recent reply for answered questions
   }
 
-  return discussionsContent.map((discussion, index) => {
+  const discussionsContentList = isAccordionExpanded
+    ? discussionsContent
+    : discussionsContent.slice(0, 5);
+
+  return discussionsContentList.map((discussion, index) => {
     return (
       <div
         key={discussion.id}
@@ -49,11 +59,6 @@ const FormatDiscussion = ({
           <>
             {[discussion, ...discussion.replies].map(
               (discussionReply: ReplyType | DiscussionType, replyIndex) => (
-                // discussionComponent(
-                //   discussionReply,
-                //   index,
-                //   replyIndex !== discussion.replies.length
-                // )
                 <SingleDiscussion
                   discussion={discussionReply}
                   index={index}
@@ -69,7 +74,6 @@ const FormatDiscussion = ({
           </>
         ) : (
           // Render only question if no replies
-          // discussionComponent(discussion, index, undefined, true)
           <SingleDiscussion
             discussion={discussion}
             index={index}
@@ -83,8 +87,19 @@ const FormatDiscussion = ({
           />
         )}
         {/* Divider to separate questions if not the last question */}
-        {index !== discussionsContent.length - 1 && (
+        {index !== discussionsContentList.length - 1 && (
           <Divider className="margin-top-4" />
+        )}
+        {!isAccordionExpanded && index === discussionsContentList.length - 1 && (
+          <SectionWrapper className="display-flex flex-justify-center flex-align-center margin-top-4">
+            <Button
+              type="button"
+              className="usa-button usa-button--unstyled"
+              onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
+            >
+              {t('viewMoreQuestions')}
+            </Button>
+          </SectionWrapper>
         )}
       </div>
     );
