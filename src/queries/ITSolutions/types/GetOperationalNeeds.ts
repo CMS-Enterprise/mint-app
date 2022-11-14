@@ -9,33 +9,20 @@ import { OperationalNeedKey, OpSolutionStatus, OperationalSolutionKey } from "./
 // GraphQL query operation: GetOperationalNeeds
 // ====================================================
 
-export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions {
+export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions {
   __typename: "OperationalSolution";
   id: UUID;
   status: OpSolutionStatus;
   name: string | null;
   mustStartDts: Time | null;
   mustFinishDts: Time | null;
-  archived: boolean;
+  needed: boolean | null;
   nameOther: string | null;
   key: OperationalSolutionKey | null;
   pocEmail: string | null;
   pocName: string | null;
   createdBy: string;
   createdDts: Time;
-}
-
-export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions_possibleSolutions {
-  __typename: "PossibleOperationalSolution";
-  id: number;
-  name: string;
-  key: OperationalSolutionKey;
-}
-
-export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions {
-  __typename: "OperationalSolutions";
-  solutions: GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions[];
-  possibleSolutions: GetOperationalNeeds_modelPlan_operationalNeeds_solutions_possibleSolutions[];
 }
 
 export interface GetOperationalNeeds_modelPlan_operationalNeeds {
@@ -46,7 +33,7 @@ export interface GetOperationalNeeds_modelPlan_operationalNeeds {
   key: OperationalNeedKey | null;
   nameOther: string | null;
   needed: boolean | null;
-  solutions: GetOperationalNeeds_modelPlan_operationalNeeds_solutions;
+  solutions: GetOperationalNeeds_modelPlan_operationalNeeds_solutions[];
 }
 
 export interface GetOperationalNeeds_modelPlan {

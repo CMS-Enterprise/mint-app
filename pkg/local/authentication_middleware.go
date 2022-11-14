@@ -75,8 +75,8 @@ func devUserContext(ctx context.Context, authHeader string) (context.Context, er
 
 	return appcontext.WithPrincipal(ctx, &authentication.EUAPrincipal{
 		EUAID:             config.EUA,
-		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER"),
-		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT"),
+		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
+		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
 	}), nil
 }
 

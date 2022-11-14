@@ -1,6 +1,6 @@
 describe('The Model Plan Ops Eval and Learning Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('completes a Model Plan Ops Eval and Learning form', () => {

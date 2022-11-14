@@ -415,7 +415,7 @@ export const OpsEvalAndLearningContent = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-four`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -557,7 +557,7 @@ export const OpsEvalAndLearningContent = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-four`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />

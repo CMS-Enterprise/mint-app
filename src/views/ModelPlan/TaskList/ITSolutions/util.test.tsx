@@ -3,7 +3,10 @@ import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 import {
@@ -12,6 +15,10 @@ import {
   returnActionLinks
 } from './util';
 
+const operationalNeed: any = {
+  needKey: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT
+};
+
 describe('IT Solutions Util', () => {
   it('returns formatted needed solutions', async () => {
     expect(
@@ -19,23 +26,18 @@ describe('IT Solutions Util', () => {
         {
           name: 'Advertise the model',
           needed: true,
-          solutions: {
-            solutions: [
-              {
-                name: 'Salesforce'
-              }
-            ],
-            possibleSolutions: [
-              {
-                name: 'Grant Solutions'
-              }
-            ]
-          }
+          solutions: [
+            {
+              name: 'Salesforce',
+              needed: true
+            }
+          ]
         }
       ] as GetOperationalNeedsOperationalNeedsType[])
     ).toEqual([
       {
         name: 'Salesforce',
+        needed: true,
         needName: 'Advertise the model'
       }
     ]);
@@ -44,19 +46,14 @@ describe('IT Solutions Util', () => {
   it('returns formatted possible', async () => {
     const possibleNeed = {
       name: 'Advertise the model',
+      __typename: 'OperationalNeed',
+      key: OperationalNeedKey.ADVERTISE_MODEL,
       needed: false,
-      solutions: {
-        solutions: [
-          {
-            name: 'Salesforce'
-          }
-        ],
-        possibleSolutions: [
-          {
-            name: 'Grant Solutions'
-          }
-        ]
-      }
+      solutions: [
+        {
+          name: 'Salesforce'
+        }
+      ]
     } as GetOperationalNeedsOperationalNeedsType;
     expect(filterPossibleNeeds([possibleNeed])).toEqual([
       { ...possibleNeed, status: OperationalNeedStatus.NOT_NEEDED }
@@ -64,13 +61,25 @@ describe('IT Solutions Util', () => {
   });
 
   it('returns Action link per status value', async () => {
-    expect(returnActionLinks(OpSolutionStatus.NOT_STARTED)).toEqual(
-      <UswdsReactLink to="/">
+    expect(
+      returnActionLinks(
+        OpSolutionStatus.NOT_STARTED,
+        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        '123'
+      )
+    ).toEqual(
+      <UswdsReactLink to="/models/123/task-list/ops-eval-and-learning/evaluation">
         {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
       </UswdsReactLink>
     );
 
-    expect(returnActionLinks(OpSolutionStatus.AT_RISK)).toEqual(
+    expect(
+      returnActionLinks(
+        OpSolutionStatus.ONBOARDING,
+        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        '123'
+      )
+    ).toEqual(
       <>
         <UswdsReactLink to="/" className="margin-right-2">
           {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
@@ -81,9 +90,15 @@ describe('IT Solutions Util', () => {
       </>
     );
 
-    expect(returnActionLinks(OperationalNeedStatus.NOT_ANSWERED)).toEqual(
-      <UswdsReactLink to="/">
-        {i18next.t('itSolutions:itSolutionsTable.answer')}
+    expect(
+      returnActionLinks(
+        OperationalNeedStatus.NOT_NEEDED,
+        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        '123'
+      )
+    ).toEqual(
+      <UswdsReactLink to="/models/123/task-list/ops-eval-and-learning/evaluation">
+        {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
       </UswdsReactLink>
     );
   });

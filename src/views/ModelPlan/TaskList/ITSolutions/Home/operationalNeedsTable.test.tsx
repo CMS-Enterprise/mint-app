@@ -38,34 +38,23 @@ const returnNeeds = (needed: boolean | null) => {
                 key: OperationalNeedKey.ADVERTISE_MODEL,
                 nameOther: null,
                 needed,
-                solutions: {
-                  __typename: 'OperationalSolutions',
-                  solutions: [
-                    {
-                      __typename: 'OperationalSolution',
-                      id: 3,
-                      status: OpSolutionStatus.IN_PROGRESS,
-                      name: 'Salesforce',
-                      key: OperationalSolutionKey.SALESFORCE,
-                      mustStartDts: null,
-                      mustFinishDts: null,
-                      archived: false,
-                      nameOther: null,
-                      pocEmail: null,
-                      pocName: null,
-                      createdBy: '',
-                      createdDts: ''
-                    }
-                  ],
-                  possibleSolutions: [
-                    {
-                      __typename: 'PossibleOperationalSolution',
-                      id: 4,
-                      name: 'Grant Solutions',
-                      key: OperationalSolutionKey.GRANT_SOLUTIONS
-                    }
-                  ]
-                }
+                solutions: [
+                  {
+                    __typename: 'OperationalSolution',
+                    id: 3,
+                    status: OpSolutionStatus.IN_PROGRESS,
+                    name: 'Salesforce',
+                    key: OperationalSolutionKey.SALESFORCE,
+                    mustStartDts: null,
+                    mustFinishDts: null,
+                    needed: true,
+                    nameOther: null,
+                    pocEmail: null,
+                    pocName: null,
+                    createdBy: '',
+                    createdDts: ''
+                  }
+                ]
               }
             ]
           }
