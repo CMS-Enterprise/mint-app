@@ -62,6 +62,7 @@ const FormatDiscussion = ({
                 {[discussion, ...discussion.replies].map(
                   (discussionReply: ReplyType | DiscussionType, replyIndex) => (
                     <SingleDiscussion
+                      key={discussionReply.id}
                       discussion={discussionReply}
                       index={index}
                       connected={replyIndex !== discussion.replies.length}

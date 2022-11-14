@@ -38,7 +38,7 @@ const SingleDiscussion = ({
   const { t } = useTranslation('discussions');
 
   return (
-    <div className="mint-discussions__single-discussion" key={discussion.id}>
+    <div className="mint-discussions__single-discussion">
       <div className="display-flex">
         {discussion.isAssessment ? (
           <div className="display-flex flex-align-center">
