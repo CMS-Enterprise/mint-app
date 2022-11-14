@@ -12,6 +12,34 @@ const itSolutions = {
     },
     implementationStatuses: 'Implementation statuses'
   },
+  solutionStatuses: {
+    notStarted: {
+      status: 'Not started',
+      description: 'No work has started on this service'
+    },
+    onboarding: {
+      status: 'Onboarding',
+      description:
+        'Model work is being planned (e.g., contract modification, change request, or onboarding request)'
+    },
+    backlog: {
+      status: 'Backlog',
+      description: 'Model work is on the project team’s backlog'
+    },
+    inProgress: {
+      status: 'In progress',
+      description:
+        'Model work is in progress (e.g., developement, configuration, testing, etc.)'
+    },
+    completed: {
+      status: 'Completed',
+      description: 'Model work is finished'
+    },
+    atRisk: {
+      status: 'At risk',
+      description: 'Work is delayed or blocked and could affect timelines'
+    }
+  },
   itSolutionsTable: {
     id: 'operational-needs',
     title: 'Operational Needs Table',
@@ -79,7 +107,10 @@ const itSolutions = {
   dontAdd: 'Don’t add solutions and return to tracker',
   helpChoosing: 'Need help choosing a solution?',
   helpfulLinks: 'Helpful links',
-  availableSolutions: 'Available operational solutions (opens in a new tab)'
+  availableSolutions: 'Available operational solutions (opens in a new tab)',
+  addSolution: 'Add a solution',
+  addSolutionInfo:
+    'Select which service or solution you’ll use for this operational need.'
 };
 
 export default itSolutions;

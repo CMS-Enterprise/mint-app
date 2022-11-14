@@ -47,7 +47,7 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SelectSolutions = () => {
+const AddSolution = () => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -140,13 +140,13 @@ const SelectSolutions = () => {
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
+        <Breadcrumb current>{t('addSolution')}</Breadcrumb>
       </BreadcrumbBar>
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('selectSolution')}
+            {t('addSolution')}
           </PageHeading>
 
           <p
@@ -156,7 +156,7 @@ const SelectSolutions = () => {
             {h('for')} {modelName}
           </p>
 
-          <p>{t('selectInfo')}</p>
+          <p>{t('addSolutionInfo')}</p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
@@ -289,4 +289,4 @@ const SelectSolutions = () => {
   );
 };
 
-export default SelectSolutions;
+export default AddSolution;

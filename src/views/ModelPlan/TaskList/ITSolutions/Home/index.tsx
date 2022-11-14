@@ -5,7 +5,6 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
-  IconNavigateNext,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -16,6 +15,7 @@ import Divider from 'components/shared/Divider';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import HelpBox from '../_components/HelpBox';
+import ImplementationStatuses from '../_components/ImplementationStatus';
 
 import OperationalNeedsTable from './operationalNeedsTable';
 
@@ -68,10 +68,7 @@ const ITSolutionsHome = () => {
           <li>{t('summaryBox.listItem.three')}</li>
         </ul>
 
-        <UswdsReactLink to="/" className="display-flex flex-align-center">
-          <IconNavigateNext className="margin-right-1" />
-          {t('summaryBox.implementationStatuses')}
-        </UswdsReactLink>
+        <ImplementationStatuses />
       </SummaryBox>
 
       <AskAQuestion modelID={modelID} />
