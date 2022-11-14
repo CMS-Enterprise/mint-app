@@ -90,17 +90,19 @@ const FormatDiscussion = ({
         {index !== discussionsContentList.length - 1 && (
           <Divider className="margin-top-4" />
         )}
-        {!isAccordionExpanded && index === discussionsContentList.length - 1 && (
-          <SectionWrapper className="display-flex flex-justify-center flex-align-center margin-top-4">
-            <Button
-              type="button"
-              className="usa-button usa-button--unstyled"
-              onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
-            >
-              {t('viewMoreQuestions')}
-            </Button>
-          </SectionWrapper>
-        )}
+        {!isAccordionExpanded &&
+          discussionsContent.length > 5 &&
+          index === discussionsContentList.length - 1 && (
+            <SectionWrapper className="display-flex flex-justify-center flex-align-center margin-top-4">
+              <Button
+                type="button"
+                className="usa-button usa-button--unstyled"
+                onClick={() => setIsAccordionExpanded(!isAccordionExpanded)}
+              >
+                {t('viewMoreQuestions')}
+              </Button>
+            </SectionWrapper>
+          )}
       </div>
     );
   });
