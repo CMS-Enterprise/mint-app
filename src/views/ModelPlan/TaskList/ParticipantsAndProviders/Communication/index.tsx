@@ -228,7 +228,7 @@ export const Communication = () => {
                           onClick={() =>
                             handleFormSubmit(
                               values,
-                              `/models/${modelID}/task-list/it-tools/page-three`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />

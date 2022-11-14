@@ -8,6 +8,7 @@ SELECT
     virus_clean,
     file_name,
     file_size,
+    restricted,
     document_type,
     other_type,
     optional_notes,

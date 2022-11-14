@@ -114,7 +114,6 @@ const FavoriteCard = ({
           </Grid>
           <Grid desktop={{ col: 4 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.cRTDLs`)}</p>
-            {/* TODO: Fill with CR TDL data */}
             <p className="text-bold margin-top-0 margin-bottom-0">
               {crtdlIDs.length ? (
                 crtdlIDs.join(', ')

@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -68,8 +69,9 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 // Documents is the resolver for the documents field.
 func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
 
-	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, r.store, r.s3Client)
+	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
 	return documents, err
 }
 
@@ -366,6 +368,16 @@ func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context,
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
+}
+
+// UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
+func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
+	panic(fmt.Errorf("not implemented: UpdateCustomOperationalNeedByID - updateCustomOperationalNeedByID"))
+}
+
+// AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
+func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	panic(fmt.Errorf("not implemented: AddOrUpdateOperationalSolution - addOrUpdateOperationalSolution"))
 }
 
 // AddOrUpdateCustomOperationalSolution is the resolver for the addOrUpdateCustomOperationalSolution field.

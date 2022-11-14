@@ -2,20 +2,37 @@ import React from 'react';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import operationalNeedMap from 'data/operationalNeedMap';
 import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
+
+// Used to identify if an operational need is depenedent on a task list answer
+export const isIndenpendentOperationalNeed = (
+  key: OperationalNeedKey | null
+) => {
+  if (
+    key === OperationalNeedKey.MANAGE_BEN_OVERLAP ||
+    key === OperationalNeedKey.MANAGE_PROV_OVERLAP
+  ) {
+    return true;
+  }
+  return false;
+};
 
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (
   needs: GetOperationalNeedsOperationalNeedsType[]
 ) => {
   return needs
-    .filter(need => !need.needed)
+    .filter(need => !need.needed && !isIndenpendentOperationalNeed(need.key))
     .map(need => {
       return {
         ...need,
@@ -33,7 +50,7 @@ export const filterNeedsFormatSolutions = (
 ) => {
   let operationalSolutions: GetOperationalNeedsSolutionsType[] = [];
   needs
-    .filter(need => need.needed)
+    .filter(need => need.needed || isIndenpendentOperationalNeed(need.key))
     .forEach(need => {
       if (need.solutions.length > 0) {
         operationalSolutions = operationalSolutions.concat(
@@ -53,9 +70,13 @@ const formatSolutionsFromNeed = (
   need: GetOperationalNeedsOperationalNeedsType
 ) => {
   return need.solutions
-    .filter(solution => !solution.needed) // Don't display archived solutions in table
+    .filter(solution => solution.needed) // Don't display !needed solutions in table
     .map(solution => {
-      return { ...solution, needName: need.nameOther || need.name };
+      return {
+        ...solution,
+        needName: need.nameOther || need.name,
+        needKey: need.key
+      };
     });
 };
 
@@ -79,10 +100,25 @@ const emptySolution = (needName: string | null, needID: string) => {
   } as GetOperationalNeedsSolutionsType;
 };
 
+// Used to type as solution with a need key
+interface SolutionAsNeed extends GetOperationalNeedsOperationalNeedsType {
+  needKey?: string;
+}
+
 // Returns operational need/solutions table action links according to status
 export const returnActionLinks = (
-  status: OperationalNeedStatus | OpSolutionStatus
+  status: OperationalNeedStatus | OpSolutionStatus,
+  operationalNeed: SolutionAsNeed,
+  modelID: string
 ): JSX.Element => {
+  /* eslint no-underscore-dangle: 0 */
+  const operationalNeedKey =
+    operationalNeed.__typename === 'OperationalNeed'
+      ? operationalNeed.key
+      : operationalNeed.needKey;
+
+  const operationalNeedObj = operationalNeedMap[operationalNeedKey || 'NONE'];
+
   switch (status) {
     case OpSolutionStatus.AT_RISK:
     case OpSolutionStatus.COMPLETED:
@@ -100,22 +136,34 @@ export const returnActionLinks = (
         </>
       );
     case OpSolutionStatus.NOT_STARTED:
-      return (
-        <UswdsReactLink to="/">
+      return operationalNeedObj ? (
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+        >
           {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
+      ) : (
+        <></>
       );
     case OperationalNeedStatus.NOT_NEEDED:
-      return (
-        <UswdsReactLink to="/">
+      return operationalNeedObj ? (
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+        >
           {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
         </UswdsReactLink>
+      ) : (
+        <></>
       );
     case OperationalNeedStatus.NOT_ANSWERED:
-      return (
-        <UswdsReactLink to="/">
+      return operationalNeedObj ? (
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+        >
           {i18next.t('itSolutions:itSolutionsTable.answer')}
         </UswdsReactLink>
+      ) : (
+        <></>
       );
     default:
       return <></>;

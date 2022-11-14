@@ -13,7 +13,7 @@ export default gql`
         key
         nameOther
         needed
-        solutions(includeNotNeeded: true) {
+        solutions {
           id
           status
           name

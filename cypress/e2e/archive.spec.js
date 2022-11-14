@@ -1,6 +1,6 @@
 describe('The Model Plan Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('archives a model plan', () => {

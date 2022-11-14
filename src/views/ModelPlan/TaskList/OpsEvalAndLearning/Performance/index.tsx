@@ -245,7 +245,7 @@ const Performance = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-four`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -441,7 +441,7 @@ const Performance = () => {
                       onClick={() =>
                         handleFormSubmit(
                           values,
-                          `/models/${modelID}/task-list/it-tools/page-five`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
