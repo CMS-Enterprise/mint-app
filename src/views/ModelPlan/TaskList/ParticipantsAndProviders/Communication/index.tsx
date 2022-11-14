@@ -36,8 +36,7 @@ import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/Participant
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ParticipantCommunicationType,
-  ParticipantRiskType,
-  TaskStatus
+  ParticipantRiskType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -80,8 +79,9 @@ export const Communication = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -222,7 +222,7 @@ export const Communication = () => {
                       <legend className="usa-label">
                         {t('participantCommunication')}
                       </legend>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="participants-and-providers-communication-method-warning"
                           onClick={() =>

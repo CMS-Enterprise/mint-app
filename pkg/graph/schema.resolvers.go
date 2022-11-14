@@ -293,14 +293,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
@@ -361,32 +361,11 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
 }
 
-// AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
-func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, needed, principal, r.store)
-}
-
 // AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
 func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
-}
-
-// UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
-func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
-}
-
-// AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
-func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalSolutionInsertOrUpdate(logger, operationalNeedID, solutionType, changes, principal, r.store)
 }
 
 // AddOrUpdateCustomOperationalSolution is the resolver for the addOrUpdateCustomOperationalSolution field.
@@ -403,8 +382,9 @@ func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Conte
 	return resolvers.OperationalSolutionCustomUpdateByID(logger, id, customSolutionType, changes, principal, r.store)
 }
 
-// CreatePlanDocumentSolutionLinks is the resolver to create a plan document solution link
+// CreatePlanDocumentSolutionLinks is the resolver for the createPlanDocumentSolutionLinks field.
 func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, links []*model.PlanDocumentSolutionLinkInput) ([]*models.PlanDocumentSolutionLink, error) {
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	var linksConverted []*models.PlanDocumentSolutionLink
@@ -416,26 +396,24 @@ func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, 
 
 		// TODO: How else can this be done? There must be a better way.
 		linkConverted.ID = linkInput.ID
-		linkConverted.CreatedBy = linkInput.CreatedBy
-		linkConverted.CreatedDts = linkInput.CreatedDts
-		linkConverted.ModifiedBy = linkInput.ModifiedBy
-		linkConverted.ModifiedDts = linkInput.ModifiedDts
+		linkConverted.ModelPlanID = linkInput.ModelPlanID
+		linkConverted.CreatedBy = principal.ID()
 		linksConverted = append(linksConverted, linkConverted)
 	}
 
-	return resolvers.CreatePlanDocumentSolutionLinks(logger, linksConverted, r.store)
+	return resolvers.PlanDocumentSolutionLinksCreate(logger, linksConverted, r.store)
 }
 
-// RemovePlanDocumentSolutionLinks is the resolver for the removePlanDocumentSolutionLinks field.
-func (r *mutationResolver) RemovePlanDocumentSolutionLinks(ctx context.Context, id uuid.UUID) (bool, error) {
+// RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
+func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.RemovePlanDocumentSolutionLink(logger, id, r.store)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store)
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeedID(logger, obj.ID, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -930,9 +908,23 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 }
 
 // OperationalSolutions is the resolver for the operationalSolutions field.
-func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error) {
+func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeedID(logger, operationalNeedID, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, includeNotNeeded, r.store)
+}
+
+// OperationalSolution is the resolver for the operationalSolution field.
+func (r *queryResolver) OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionGetByID(logger, id, r.store)
+}
+
+// OperationalNeed is the resolver for the operationalNeed field.
+func (r *queryResolver) OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalNeedGetByID(logger, id, r.store)
 }
 
 // AuditChanges is the resolver for the auditChanges field.
@@ -945,6 +937,12 @@ func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, prim
 func (r *queryResolver) PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PossibleOperationalNeedCollectionGet(logger, r.store)
+}
+
+// PlanDocumentSolutionLinks is the resolver for the planDocumentSolutionLinks field.
+func (r *queryResolver) PlanDocumentSolutionLinks(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDocumentSolutionLink, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentSolutionLinksGetByID(logger, modelPlanID, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

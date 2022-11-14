@@ -99,28 +99,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       What type of evaluation approach are you considering? Select all that apply.
     </legend>
     <div
-      class="usa-alert usa-alert--warning it-tools-warning"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
-      >
-        <p
-          class="usa-alert__text"
-        >
-          Changing your answer to this question may also affect your responses to questions in IT tools.  
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="button"
-            id="ops-eval-and-learning-evaluation-approach-warning"
-            type="button"
-          >
-            Go to IT tools.
-          </button>
-        </p>
-      </div>
-    </div>
-    <div
       class="mint-checkbox usa-checkbox"
     >
       <input
@@ -374,28 +352,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         What data do you need to monitor the model? Select all that apply.
       </label>
-      <div
-        class="usa-alert usa-alert--warning it-tools-warning"
-        data-testid="alert"
-      >
-        <div
-          class="usa-alert__body"
-        >
-          <p
-            class="usa-alert__text"
-          >
-            Changing your answer to this question may also affect your responses to questions in IT tools.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="ops-eval-and-learning-data-needed-warning"
-              type="button"
-            >
-              Go to IT tools.
-            </button>
-          </p>
-        </div>
-      </div>
       <p
         class="text-base margin-y-1"
       >
@@ -527,28 +483,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         What data will you send to participants? Select all that apply.
       </label>
-      <div
-        class="usa-alert usa-alert--warning it-tools-warning"
-        data-testid="alert"
-      >
-        <div
-          class="usa-alert__body"
-        >
-          <p
-            class="usa-alert__text"
-          >
-            Changing your answer to this question may also affect your responses to questions in IT tools.  
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="button"
-              id="ops-eval-and-learning-data-to-send-warning"
-              type="button"
-            >
-              Go to IT tools.
-            </button>
-          </p>
-        </div>
-      </div>
       <div
         class="margin-top-1"
       >

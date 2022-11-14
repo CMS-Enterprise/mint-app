@@ -39,6 +39,7 @@ export interface GetAllBasics_modelPlan_basics {
 export interface GetAllBasics_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  nameHistory: string[];
   basics: GetAllBasics_modelPlan_basics;
 }
 

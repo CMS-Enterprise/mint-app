@@ -3,6 +3,7 @@ const basics = {
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
   modelName: 'Model name',
+  previousNames: 'Previous model names',
   modelCategory: 'Model category',
   modelCategories: {
     accountableCare: 'Accountable Care',

@@ -7,8 +7,7 @@ import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import { GetEvaluation_modelPlan_opsEvalAndLearning as GetEvaluationType } from 'queries/OpsEvalAndLearning/types/GetEvaluation';
 import {
   CcmInvolvmentType,
-  EvaluationApproachType,
-  TaskStatus
+  EvaluationApproachType
 } from 'types/graphql-global-types';
 
 import Evaluation from '.';
@@ -45,9 +44,11 @@ const evaluationMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           opsEvalAndLearning: evaluationMockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

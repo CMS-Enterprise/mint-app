@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilters,
@@ -8,7 +8,7 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -42,6 +42,38 @@ type TableProps = {
   showDownloadButton: boolean;
 };
 
+export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
+  const { t } = useTranslation('home');
+  const [isShowingAllNames, setShowAllNames] = useState(false);
+
+  const firstThreeNames = names.slice(0, 3);
+
+  return (
+    <>
+      <p className="margin-y-0 font-body-xs line-height-sans-2">
+        {t('previously')}{' '}
+        {isShowingAllNames
+          ? `${names.join(', ')}`
+          : `${firstThreeNames.join(', ')}`}
+      </p>
+      {names.length > 3 && (
+        <Button
+          unstyled
+          type="button"
+          className="margin-top-1 font-body-xs"
+          onClick={() => {
+            setShowAllNames(!isShowingAllNames);
+          }}
+        >
+          {isShowingAllNames
+            ? t('viewLess')
+            : t('viewMore', { number: `${names.length - 3}` })}
+        </Button>
+      )}
+    </>
+  );
+};
+
 const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
   const { t } = useTranslation('home');
 
@@ -51,10 +83,21 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
         Header: t('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
+          const filteredNameHistory: string[] = row.original.nameHistory?.slice(
+            1
+          );
           return (
-            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
-              {value}
-            </UswdsReactLink>
+            <>
+              <UswdsReactLink
+                to={`/models/${row.original.id}/task-list`}
+                className="display-block"
+              >
+                {value}
+              </UswdsReactLink>
+              {filteredNameHistory && filteredNameHistory.length > 0 && (
+                <RenderFilteredNameHistory names={filteredNameHistory} />
+              )}
+            </>
           );
         }
       },

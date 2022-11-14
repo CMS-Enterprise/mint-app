@@ -46,7 +46,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 		DocumentID: document.ID,
 	}}
 
-	createdPlanDocumentSolutionLinks, err := CreatePlanDocumentSolutionLinks(
+	createdPlanDocumentSolutionLinks, err := PlanDocumentSolutionLinksCreate(
 		suite.testConfigs.Logger,
 		documentSolutionLinks,
 		suite.testConfigs.Store)
@@ -55,7 +55,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 	suite.EqualValues(1, len(createdPlanDocumentSolutionLinks))
 	suite.NoError(err)
 
-	wasPlanDocumentRemoveSuccess, err := RemovePlanDocumentSolutionLink(
+	wasPlanDocumentRemoveSuccess, err := PlanDocumentSolutionLinkRemove(
 		suite.testConfigs.Logger,
 		createdPlanDocumentSolutionLinks[0].ID,
 		suite.testConfigs.Store,

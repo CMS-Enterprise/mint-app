@@ -37,11 +37,6 @@ type NDAInfo struct {
 	AgreedDts *time.Time `json:"agreedDts"`
 }
 
-type OperationalSolutions struct {
-	Solutions         []*models.OperationalSolution         `json:"solutions"`
-	PossibleSolutions []*models.PossibleOperationalSolution `json:"possibleSolutions"`
-}
-
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`
@@ -75,13 +70,10 @@ type PlanDocumentInput struct {
 }
 
 type PlanDocumentSolutionLinkInput struct {
-	ID          uuid.UUID  `json:"id"`
-	SolutionID  int        `json:"solutionID"`
-	DocumentID  uuid.UUID  `json:"documentID"`
-	CreatedBy   string     `json:"createdBy"`
-	CreatedDts  time.Time  `json:"createdDts"`
-	ModifiedBy  *string    `json:"modifiedBy"`
-	ModifiedDts *time.Time `json:"modifiedDts"`
+	ID          uuid.UUID `json:"id"`
+	ModelPlanID uuid.UUID `json:"modelPlanID"`
+	SolutionID  int       `json:"solutionID"`
+	DocumentID  uuid.UUID `json:"documentID"`
 }
 
 type PrepareForClearance struct {
@@ -90,10 +82,10 @@ type PrepareForClearance struct {
 }
 
 type TaskListSectionLockStatus struct {
-	ModelPlanID  uuid.UUID       `json:"modelPlanID"`
-	Section      TaskListSection `json:"section"`
-	LockedBy     string          `json:"lockedBy"`
-	IsAssessment bool            `json:"isAssessment"`
+	ModelPlanID  uuid.UUID              `json:"modelPlanID"`
+	Section      models.TaskListSection `json:"section"`
+	LockedBy     string                 `json:"lockedBy"`
+	IsAssessment bool                   `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {
@@ -2780,59 +2772,6 @@ func (e *StakeholdersType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e StakeholdersType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type TaskListSection string
-
-const (
-	TaskListSectionModelBasics                     TaskListSection = "MODEL_BASICS"
-	TaskListSectionGeneralCharacteristics          TaskListSection = "GENERAL_CHARACTERISTICS"
-	TaskListSectionParticipantsAndProviders        TaskListSection = "PARTICIPANTS_AND_PROVIDERS"
-	TaskListSectionBeneficiaries                   TaskListSection = "BENEFICIARIES"
-	TaskListSectionOperationsEvaluationAndLearning TaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
-	TaskListSectionPayment                         TaskListSection = "PAYMENT"
-	TaskListSectionItTools                         TaskListSection = "IT_TOOLS"
-	TaskListSectionPrepareForClearance             TaskListSection = "PREPARE_FOR_CLEARANCE"
-)
-
-var AllTaskListSection = []TaskListSection{
-	TaskListSectionModelBasics,
-	TaskListSectionGeneralCharacteristics,
-	TaskListSectionParticipantsAndProviders,
-	TaskListSectionBeneficiaries,
-	TaskListSectionOperationsEvaluationAndLearning,
-	TaskListSectionPayment,
-	TaskListSectionItTools,
-	TaskListSectionPrepareForClearance,
-}
-
-func (e TaskListSection) IsValid() bool {
-	switch e {
-	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools, TaskListSectionPrepareForClearance:
-		return true
-	}
-	return false
-}
-
-func (e TaskListSection) String() string {
-	return string(e)
-}
-
-func (e *TaskListSection) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = TaskListSection(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid TaskListSection", str)
-	}
-	return nil
-}
-
-func (e TaskListSection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

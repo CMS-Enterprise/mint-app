@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       status
+      nameHistory(sort: DESC)
       createdBy
       createdDts
       modifiedDts

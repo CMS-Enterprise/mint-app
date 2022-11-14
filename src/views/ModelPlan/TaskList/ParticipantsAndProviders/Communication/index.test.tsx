@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
 import { GetCommunication_modelPlan_participantsAndProviders as GetCommunicationType } from 'queries/ParticipantsAndProviders/types/GetCommunication';
-import { ParticipantRiskType, TaskStatus } from 'types/graphql-global-types';
+import { ParticipantRiskType } from 'types/graphql-global-types';
 
 import Communication from './index';
 
@@ -35,9 +35,11 @@ const communicationMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: communicationMockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

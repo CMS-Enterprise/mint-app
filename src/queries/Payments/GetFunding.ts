@@ -22,8 +22,8 @@ export default gql`
         payTypeNote
         payClaims
       }
-      itTools {
-        status
+      operationalNeeds {
+        modifiedDts
       }
     }
   }

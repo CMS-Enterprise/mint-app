@@ -36,11 +36,7 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  ClaimsBasedPayType,
-  PayType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
@@ -90,8 +86,9 @@ const Recover = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -256,7 +253,7 @@ const Recover = () => {
                           {t('willRecoverPayments')}
                         </Label>
 
-                        {itToolsStarted && (
+                        {itSolutionsStarted && (
                           <ITToolsWarning
                             id="payment-recover-payment-warning"
                             onClick={() =>

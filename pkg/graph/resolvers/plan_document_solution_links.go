@@ -8,12 +8,17 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanDocumentSolutionLinks implements resolver logic to create a collection of new plan document solution links
-func CreatePlanDocumentSolutionLinks(logger *zap.Logger, planDocumentSolutionLinks []*models.PlanDocumentSolutionLink, store *storage.Store) ([]*models.PlanDocumentSolutionLink, error) {
+// PlanDocumentSolutionLinksCreate implements resolver logic to create a collection of new plan document solution links
+func PlanDocumentSolutionLinksCreate(logger *zap.Logger, planDocumentSolutionLinks []*models.PlanDocumentSolutionLink, store *storage.Store) ([]*models.PlanDocumentSolutionLink, error) {
 	return store.PlanDocumentSolutionLinksCreate(logger, planDocumentSolutionLinks)
 }
 
-// RemovePlanDocumentSolutionLink implements resolver logic to delete a plan document solution link
-func RemovePlanDocumentSolutionLink(logger *zap.Logger, id uuid.UUID, store *storage.Store) (bool, error) {
+// PlanDocumentSolutionLinkRemove implements resolver logic to delete a plan document solution link
+func PlanDocumentSolutionLinkRemove(logger *zap.Logger, id uuid.UUID, store *storage.Store) (bool, error) {
 	return store.PlanDocumentSolutionLinkRemove(logger, id)
+}
+
+// PlanDocumentSolutionLinksGetByID implements resolver logic to get plan document solution links associated with a plan ID
+func PlanDocumentSolutionLinksGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) ([]*models.PlanDocumentSolutionLink, error) {
+	return store.PlanDocumentSolutionLinksGetByID(logger, id)
 }

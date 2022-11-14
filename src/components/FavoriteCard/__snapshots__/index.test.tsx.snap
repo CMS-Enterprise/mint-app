@@ -90,6 +90,11 @@ exports[`FavoriteCard matches the snapshot 1`] = `
           </div>
         </div>
         <p
+          class="margin-y-0 font-body-xs line-height-sans-2"
+        >
+          previously  second 
+        </p>
+        <p
           class="bookmark__body-text line-height-body-4"
         >
           The goal

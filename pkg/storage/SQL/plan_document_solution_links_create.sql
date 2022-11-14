@@ -1,5 +1,6 @@
 INSERT INTO plan_document_solution_link (
     id,
+    model_plan_id,
     solution_id,
     document_id,
     created_by,
@@ -7,6 +8,7 @@ INSERT INTO plan_document_solution_link (
 )
 VALUES (
     :id,
+    :model_plan_id,
     :solution_id,
     :document_id,
     :created_by,
@@ -14,6 +16,7 @@ VALUES (
 )
 RETURNING
 id,
+model_plan_id,
 solution_id,
 document_id,
 created_by,

@@ -1,8 +1,6 @@
 package resolvers
 
-import (
-	"github.com/cmsgov/mint-app/pkg/models"
-)
+import "github.com/cmsgov/mint-app/pkg/models"
 
 func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("plan for need")
@@ -26,25 +24,6 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	suite.NotNil(firstNeed.CreatedDts)
 	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query //TODO
 	suite.Nil(firstNeed.Needed)  //Needed should not yet be set
-
-}
-
-func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdate() {
-
-	// 1. Create plan
-	plan := suite.createModelPlan("plan for need")
-
-	//2. Update need and make sure fields change. A Different Key means a different entry
-	needed := false
-	needKey := models.OpNKAcquireALearnCont
-	need, err := OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, plan.ID, needKey, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-	suite.NotNil(need)
-	suite.NotNil(need.ModifiedDts)
-
-	suite.EqualValues(need.Needed, &needed)
-	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
-	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
 
 }
 
@@ -97,5 +76,21 @@ func (suite *ResolverSuite) TestOperationalNeedCustomUpdateByID() {
 	//2. Error when setting need to null
 	_, err = OperationalNeedCustomUpdateByID(suite.testConfigs.Logger, need1.ID, nil, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
+
+}
+
+func (suite *ResolverSuite) TestOperationalNeedGetByID() {
+	plan := suite.createModelPlan("plan for need")
+
+	needType := models.OpNKManageCd
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NotNil(need)
+	suite.NoError(err)
+
+	needGet, err := OperationalNeedGetByID(suite.testConfigs.Logger, need.ID, suite.testConfigs.Store)
+	suite.NotNil(needGet)
+	suite.NoError(err)
+
+	suite.EqualValues(needGet.ID, need.ID)
 
 }

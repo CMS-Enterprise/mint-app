@@ -17,8 +17,11 @@ import (
 //go:embed SQL/plan_document_solution_links_create.sql
 var planDocumentSolutionLinksCreateSQL string
 
-//go:embed SQL/plan_document__solution_link_delete_by_id.sql
+//go:embed SQL/plan_document_solution_link_delete_by_id.sql
 var planDocumentSolutionLinkDeleteByIDSQL string
+
+//go:embed SQL/plan_document_solution_links_get_by_id.sql
+var planDocumentSolutionLinksGetByIDSQL string
 
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links
 func (s *Store) PlanDocumentSolutionLinksCreate(
@@ -79,4 +82,23 @@ func (s *Store) PlanDocumentSolutionLinkRemove(
 	}
 
 	return true, nil
+}
+
+// PlanDocumentSolutionLinksGetByID gets a list of document solution links associated with the given plan ID
+func (s *Store) PlanDocumentSolutionLinksGetByID(
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+) ([]*models.PlanDocumentSolutionLink, error) {
+	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var modelPlanLinks []*models.PlanDocumentSolutionLink
+	err = statement.Select(&modelPlanLinks, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+	}
+
+	return modelPlanLinks, nil
 }
