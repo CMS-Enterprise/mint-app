@@ -1585,7 +1585,7 @@
 		},
 		{
 			"key": "jobCodes",
-			"value": "[\"MINT_ASSESSMENT\", \"MINT_USER\"]",
+			"value": "[\"MINT_ASSESSMENT_NONPROD\", \"MINT_USER_NONPROD\"]",
 			"type": "string"
 		},
 		{
