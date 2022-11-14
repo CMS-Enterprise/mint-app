@@ -9,6 +9,7 @@ CREATE TABLE plan_document (
     virus_clean BOOLEAN NOT NULL,
     file_name ZERO_STRING NOT NULL,
     file_size INTEGER NOT NULL,
+    restricted BOOLEAN NOT NULL,
     document_type DOCUMENT_TYPE NOT NULL, --  make enum for this
     other_type ZERO_STRING,
     optional_notes ZERO_STRING,

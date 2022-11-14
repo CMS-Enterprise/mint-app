@@ -219,6 +219,13 @@ const Table = ({
         }
       },
       {
+        Header: t('documentTable.visibility'),
+        accessor: 'restricted',
+        Cell: ({ row, value }: any) => {
+          return value ? t('restricted') : t('all');
+        }
+      },
+      {
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {

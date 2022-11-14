@@ -734,6 +734,15 @@ export interface ModelPlanChanges {
   status?: ModelStatus | null;
 }
 
+export interface OperationalSolutionChanges {
+  needed?: boolean | null;
+  pocName?: string | null;
+  pocEmail?: string | null;
+  mustStartDts?: Time | null;
+  mustFinishDts?: Time | null;
+  status?: OpSolutionStatus | null;
+}
+
 /**
  * PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
@@ -840,6 +849,7 @@ export interface PlanDocumentInput {
   modelPlanID: UUID;
   fileData: Upload;
   documentType: DocumentType;
+  restricted: boolean;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
 }

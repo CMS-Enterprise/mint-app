@@ -2,7 +2,7 @@ import { TaskListSection } from '../../src/types/graphql-global-types';
 
 describe('Web Socket Connections', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('inits a ws connection and locks basics', () => {
