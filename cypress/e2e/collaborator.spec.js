@@ -1,6 +1,6 @@
 describe('The Collaborator/Team Member Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('adds a collaborator to model plan', () => {
@@ -97,7 +97,7 @@ describe('The Collaborator/Team Member Form', () => {
 
 describe('The Collaborator Access Control', () => {
   it('attempts to enter a model plan where not a collaborator', () => {
-    cy.localLogin({ name: 'ABCD', role: 'MINT_USER' });
+    cy.localLogin({ name: 'ABCD', role: 'MINT_USER_NONPROD' });
 
     cy.visit('/models');
 

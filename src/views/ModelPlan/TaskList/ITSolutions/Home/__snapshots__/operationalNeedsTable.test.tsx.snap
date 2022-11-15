@@ -4,7 +4,7 @@ exports[`IT Solutions Home matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="model-plan-table"
-    data-testid="cr-tdl-table"
+    data-testid="possibleNeeds-table"
   >
     <div
       class="mint-header__basic"
@@ -251,14 +251,7 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               class=""
               role="cell"
               style="padding-left: 0px;"
-            >
-              <a
-                class="usa-link"
-                href="/"
-              >
-                Answer question
-              </a>
-            </td>
+            />
           </tr>
         </tbody>
       </table>

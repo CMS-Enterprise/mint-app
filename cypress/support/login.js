@@ -33,31 +33,34 @@ Cypress.Commands.add('login', () => {
   cy.url().should('eq', 'http://localhost:3005/pre-decisional-notice');
 });
 
-Cypress.Commands.add('localLogin', ({ name, role = 'MINT_USER', nda }) => {
-  cy.server();
+Cypress.Commands.add(
+  'localLogin',
+  ({ name, role = 'MINT_USER_NONPROD', nda }) => {
+    cy.server();
 
-  cy.visit('/login');
+    cy.visit('/login');
 
-  cy.get('[data-testid="LocalAuth-Visit"]').click();
-  cy.get('[data-testid="LocalAuth-EUA"]').type(name);
+    cy.get('[data-testid="LocalAuth-Visit"]').click();
+    cy.get('[data-testid="LocalAuth-EUA"]').type(name);
 
-  if (role) {
-    cy.get(`input[value="${role}"]`).check();
+    if (role) {
+      cy.get(`input[value="${role}"]`).check();
+    }
+    cy.get('[data-testid="LocalAuth-Submit"]').click();
+
+    if (!nda) {
+      cy.get('#nda-check').check({ force: true }).should('be.checked');
+
+      cy.get('#nda-submit').click();
+    } else {
+      cy.get('#nda-alert').should('contain.text', 'Accepted on');
+
+      cy.get('[data-testid="nda-continue"]').click();
+    }
+
+    cy.url().should('eq', 'http://localhost:3005/');
   }
-  cy.get('[data-testid="LocalAuth-Submit"]').click();
-
-  if (!nda) {
-    cy.get('#nda-check').check({ force: true }).should('be.checked');
-
-    cy.get('#nda-submit').click();
-  } else {
-    cy.get('#nda-alert').should('contain.text', 'Accepted on');
-
-    cy.get('[data-testid="nda-continue"]').click();
-  }
-
-  cy.url().should('eq', 'http://localhost:3005/');
-});
+);
 
 Cypress.Commands.add('logout', () => {
   cy.get('[data-testid="signout-link"]').click();

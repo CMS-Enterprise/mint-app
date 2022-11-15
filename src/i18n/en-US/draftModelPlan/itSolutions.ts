@@ -61,7 +61,25 @@ const itSolutions = {
     info:
       'Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.',
     button: 'Add an operational need or IT solution'
-  }
+  },
+  selectSolution: 'Select a solution',
+  selectInfo:
+    'Select from common solutions to solve your operational need or add another solution not listed.',
+  operationalNeed: 'Operational need',
+  whyNeed: 'Why is this a part of my operational needs?',
+  youAnswered: 'In the Model Plan, you answered:',
+  changeAnswer: 'Want to change your answer? ',
+  goToQuestion: 'Go to the question.',
+  chooseSolution: 'Choose from common solutions',
+  selectThisSolution: 'Select this solution',
+  contact: 'Point of contact',
+  aboutSolution: 'About this solution',
+  selectAnother: 'Select another solution not listed',
+  continue: 'Continue',
+  dontAdd: 'Don’t add solutions and return to tracker',
+  helpChoosing: 'Need help choosing a solution?',
+  helpfulLinks: 'Helpful links',
+  availableSolutions: 'Available operational solutions (opens in a new tab)'
 };
 
 export default itSolutions;
