@@ -130,7 +130,7 @@ export const returnActionLinks = (
         <>
           <UswdsReactLink
             to="/"
-            className={`margin-right-2 ${readOnly ? 'display-block' : ''} `}
+            className={`margin-right-2${readOnly ? ' display-block' : ''}`}
           >
             {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
           </UswdsReactLink>
