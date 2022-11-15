@@ -19,6 +19,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -83,13 +84,17 @@ const Frequency = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
     UpdateModelPlanBeneficiaries
   );
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
-    redirect?: 'task-list' | 'back'
+    redirect?: 'task-list' | 'back' | string
   ) => {
     const {
       id: updateId,
@@ -286,6 +291,19 @@ const Frequency = () => {
                         <Label htmlFor="beneficiaries-overlap">
                           {t('levelOfConfidence')}
                         </Label>
+
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="plan-characteristics-collect-bids-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
                         <FieldErrorMsg>
                           {flatErrors.beneficiaryOverlap}
                         </FieldErrorMsg>

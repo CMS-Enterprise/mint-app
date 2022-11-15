@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -21,6 +21,8 @@ import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
+import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import {
@@ -28,11 +30,15 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum } from 'utils/modelPlan';
+import { sortPossibleOperationalNeeds } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
-// import NotFound from 'views/NotFound';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type OperationalSolutionFormType = {
+  key: OperationalSolutionKey | string;
+};
 
 const AddSolution = () => {
   const { modelID, operationalNeedID } = useParams<{
@@ -45,61 +51,68 @@ const AddSolution = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const formikRef = useRef<FormikProps<any>>(null);
+  const formikRef = useRef<FormikProps<OperationalSolutionFormType>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
-  // TODO: replace with query data
-  //   const possibleSolutions: any = [
-  //     {
-  //       id: 1,
-  //       key: OperationalSolutionKey.SALESFORCE,
-  //       name: 'Salesforce'
-  //     }
-  //   ];
+  const {
+    data,
+    loading,
+    error
+  } = useQuery<GetPossibleOperationalSolutionsType>(
+    GetPossibleOperationalSolutions,
+    {
+      variables: {
+        id: operationalNeedID
+      }
+    }
+  );
 
-  const loading = false;
+  const possibleOperationalSolutions = data?.possibleOperationalSolutions || [];
 
-  const additionalSolution = {
-    id: 0,
-    key: '',
-    name: ''
+  // Default formik value
+  const additionalSolution: OperationalSolutionFormType = {
+    key: ''
   };
 
   const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
     UpdateOperationalNeedSolution
   );
 
-  const handleFormSubmit = async (formikValues: any) => {
-    const { solutions } = formikValues;
+  const handleFormSubmit = async (
+    formikValues: OperationalSolutionFormType
+  ) => {
+    const { key } = formikValues;
 
-    try {
-      const response = await Promise.all(
-        solutions.map((solution: any) => {
-          return updateSolution({
-            variables: {
-              operationalNeedID,
-              solutionType: solution.key,
-              changes: {
-                needed: solution.needed || false,
-                status: OpSolutionStatus.IN_PROGRESS
-              }
-            }
-          });
-        })
-      );
-
-      const errors = response?.find(result => result.errors);
-
-      if (response && !errors) {
-        history.push(`/models/${modelID}/task-list/it-solutions`);
-      } else if (errors) {
-        formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
+    updateSolution({
+      variables: {
+        operationalNeedID,
+        solutionType: key,
+        changes: {
+          needed: true,
+          status: OpSolutionStatus.IN_PROGRESS
+        }
       }
-    } catch (errors) {
-      formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
-    }
+    })
+      .then(response => {
+        if (response && !response.errors) {
+          history.push(
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+          );
+        } else if (response.errors) {
+          formikRef?.current?.setErrors({
+            key: JSON.stringify(response.errors)
+          });
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
   };
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <>
@@ -160,7 +173,7 @@ const AddSolution = () => {
                 enableReinitialize
                 innerRef={formikRef}
               >
-                {(formikProps: FormikProps<any>) => {
+                {(formikProps: FormikProps<OperationalSolutionFormType>) => {
                   const { errors, handleSubmit, values } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
@@ -216,13 +229,15 @@ const AddSolution = () => {
                               <option key="default-select" disabled value="">
                                 {`-${h('select')}-`}
                               </option>
-                              {Object.keys(OperationalSolutionKey)
-                                .sort(sortOtherEnum)
-                                .map(type => {
+                              {[...possibleOperationalSolutions]
+                                .sort(sortPossibleOperationalNeeds)
+                                .map(solution => {
                                   return (
-                                    <option key={type} value={type || ''}>
-                                      {type}
-                                      {/* {translateDataStartsType(type)} */}
+                                    <option
+                                      key={solution.key}
+                                      value={solution.key || ''}
+                                    >
+                                      {solution.name}
                                     </option>
                                   );
                                 })}

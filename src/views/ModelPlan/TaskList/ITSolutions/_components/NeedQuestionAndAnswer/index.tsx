@@ -29,8 +29,6 @@ import {
   translateRecruitmentType
 } from 'utils/modelPlan';
 
-import { isIndenpendentOperationalNeed } from '../../util';
-
 import './index.scss';
 
 type NeedQuestionAndAnswerProps = {
@@ -174,7 +172,7 @@ const NeedQuestionAndAnswer = ({
       willRecoverPayments: fieldName === 'willRecoverPayments'
     },
     // skip if operational need requires no question/answer
-    skip: isIndenpendentOperationalNeed(operationalNeed.key) || !needConfig
+    skip: !needConfig
   };
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
@@ -193,26 +191,24 @@ const NeedQuestionAndAnswer = ({
         {operationalNeed?.nameOther || operationalNeed?.name}
       </p>
 
-      {!isIndenpendentOperationalNeed(operationalNeed.key) && (
-        <button
-          type="button"
-          data-testid="toggle-need-answer"
-          onClick={() => setInfoToggle(!infoToggle)}
-          className={classNames(
-            'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
-            {
-              'text-bold': infoToggle
-            }
-          )}
-        >
-          {infoToggle ? (
-            <IconExpandMore className="margin-right-05" />
-          ) : (
-            <IconExpandLess className="margin-right-05 needs-question__rotate" />
-          )}
-          {t('whyNeed')}
-        </button>
-      )}
+      <button
+        type="button"
+        data-testid="toggle-need-answer"
+        onClick={() => setInfoToggle(!infoToggle)}
+        className={classNames(
+          'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
+          {
+            'text-bold': infoToggle
+          }
+        )}
+      >
+        {infoToggle ? (
+          <IconExpandMore className="margin-right-05" />
+        ) : (
+          <IconExpandLess className="margin-right-05 needs-question__rotate" />
+        )}
+        {t('whyNeed')}
+      </button>
 
       {infoToggle && (
         <div className="margin-left-neg-2px padding-1">
@@ -250,7 +246,7 @@ const NeedQuestionAndAnswer = ({
             <p className="margin-bottom-0">
               {t('changeAnswer')}
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/${needConfig.route}`}
+                to={`/models/${modelID}/task-list/${needConfig?.route}`}
               >
                 {t('goToQuestion')}
               </UswdsReactLink>

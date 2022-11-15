@@ -35,7 +35,7 @@ const ITSolutions = () => {
             </Route>
 
             <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution"
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
               exact
             >
               <AddCustomSolution />

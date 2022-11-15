@@ -120,7 +120,8 @@ const itSolutions = {
   updateSolutionDetails: 'Update solution details',
   solutionName: 'Please add a name for your solution',
   solutionPOC: 'Point of contact information',
-  solutionEmail: 'Email or other contact information'
+  solutionPOCInfo: 'Point of contact',
+  solutionEmailInfo: 'Email or other contact information'
 };
 
 export default itSolutions;

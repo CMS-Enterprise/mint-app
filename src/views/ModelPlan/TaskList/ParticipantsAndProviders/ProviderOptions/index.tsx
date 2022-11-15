@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -99,13 +100,17 @@ export const ProviderOptions = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list'
+    redirect?: 'back' | 'task-list' | string
   ) => {
     const {
       id: updateId,
@@ -434,6 +439,19 @@ export const ProviderOptions = () => {
                   <Label htmlFor="participants-and-providers-provider-overlap">
                     {t('assumeRisk')}
                   </Label>
+
+                  {itSolutionsStarted && (
+                    <ITToolsWarning
+                      id="plan-characteristics-collect-bids-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-solutions`
+                        )
+                      }
+                    />
+                  )}
+
                   <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
 
                   <Label

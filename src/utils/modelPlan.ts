@@ -1633,6 +1633,23 @@ export const sortOtherEnum = (a: string, b: string) => {
   return 0;
 };
 
+// Sort possible operational needs
+export const sortPossibleOperationalNeeds = (
+  a: { name: string },
+  b: { name: string }
+) => {
+  if (a.name === 'Other new process' || b.name === 'Other new process') {
+    return 0;
+  }
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+};
+
 export const sortPayTypeEnums = (a: string, b: string) => {
   if (a < b || b === 'GRANTS') {
     return -1;

@@ -7,32 +7,16 @@ import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
+import { OpSolutionStatus } from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
-
-// Used to identify if an operational need is depenedent on a task list answer
-export const isIndenpendentOperationalNeed = (
-  key: OperationalNeedKey | null
-) => {
-  if (
-    key === OperationalNeedKey.MANAGE_BEN_OVERLAP ||
-    key === OperationalNeedKey.MANAGE_PROV_OVERLAP
-  ) {
-    return true;
-  }
-  return false;
-};
 
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (
   needs: GetOperationalNeedsOperationalNeedsType[]
 ) => {
   return needs
-    .filter(need => !need.needed && !isIndenpendentOperationalNeed(need.key))
+    .filter(need => !need.needed)
     .map(need => {
       return {
         ...need,
@@ -50,7 +34,7 @@ export const filterNeedsFormatSolutions = (
 ) => {
   let operationalSolutions: GetOperationalNeedsSolutionsType[] = [];
   needs
-    .filter(need => need.needed || isIndenpendentOperationalNeed(need.key))
+    .filter(need => need.needed)
     .forEach(need => {
       if (need.solutions.length > 0) {
         operationalSolutions = operationalSolutions.concat(

@@ -49,7 +49,7 @@ const CheckboxCard = ({
             checked={!!solution.needed}
           />
 
-          <h3 className="margin-y-2">{solution.name}</h3>
+          <h3 className="margin-y-2">{solution.nameOther || solution.name}</h3>
 
           <div className="margin-bottom-2 solutions-checkbox__body-text">
             {/* TODO: replace tempDescription with real data */}
