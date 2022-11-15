@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Tag } from '@trussworks/react-uswds';
 
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
@@ -19,6 +19,9 @@ export const SampleModelPlan = () => {
           <Grid>
             <HelpBreadcrumb text={t('title')} />
             <PageHeading>{t('title')}</PageHeading>
+            <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold">
+              {tag}
+            </Tag>
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
               {t('description')}
             </p>
