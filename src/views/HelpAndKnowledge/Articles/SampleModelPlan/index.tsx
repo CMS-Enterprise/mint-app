@@ -18,9 +18,9 @@ export const SampleModelPlan = () => {
         <GridContainer>
           <Grid>
             <HelpBreadcrumb text={t('title')} />
-            <PageHeading>{t('title')}</PageHeading>
-            <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold">
-              {tag}
+            <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
+            <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold margin-bottom-1">
+              {useTranslation('helpAndKnowledge').t('gettingStarted')}
             </Tag>
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
               {t('description')}
