@@ -254,7 +254,8 @@ const OperationalNeedsTable = ({
       autoResetPage: false,
       initialState: {
         sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
-        pageIndex: 0
+        pageIndex: 0,
+        hiddenColumns: hasEditAccess ? [] : ['Actions']
       }
     },
     useFilters,
