@@ -1536,7 +1536,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query OperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n    \n    \n  }\n}\n",
+								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n    \n    \n  }\n}\n",
 								"variables": ""
 							}
 						},
