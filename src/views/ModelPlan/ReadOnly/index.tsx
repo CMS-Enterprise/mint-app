@@ -52,6 +52,7 @@ import ReadOnlyBeneficiaries from './Beneficiaries';
 import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyOperationalNeeds from './OperationalNeeds';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 
@@ -208,7 +209,7 @@ const ReadOnly = () => {
     },
     'it-tools': {
       route: `/models/${modelID}/read-only/it-tools`,
-      component: <h1>itTools</h1>
+      component: <ReadOnlyOperationalNeeds modelID={modelID} />
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
@@ -420,7 +421,9 @@ const ReadOnly = () => {
                     <Grid
                       desktop={{
                         col:
-                          subinfo === 'documents' || subinfo === 'crs-and-tdl'
+                          subinfo === 'documents' ||
+                          subinfo === 'crs-and-tdl' ||
+                          subinfo === 'it-tools'
                             ? 12
                             : 8
                       }}
@@ -428,17 +431,19 @@ const ReadOnly = () => {
                       {subComponent.component}
                     </Grid>
                     {/* Contact info sidebar */}
-                    {subinfo !== 'documents' && subinfo !== 'crs-and-tdl' && (
-                      <Grid
-                        desktop={{ col: 4 }}
-                        className={classnames({
-                          'sticky-nav': !isMobile,
-                          'sticky-nav__collaborator': editAccess
-                        })}
-                      >
-                        <ContactInfo modelID={modelID} />
-                      </Grid>
-                    )}
+                    {subinfo !== 'documents' &&
+                      subinfo !== 'crs-and-tdl' &&
+                      subinfo !== 'it-tools' && (
+                        <Grid
+                          desktop={{ col: 4 }}
+                          className={classnames({
+                            'sticky-nav': !isMobile,
+                            'sticky-nav__collaborator': editAccess
+                          })}
+                        >
+                          <ContactInfo modelID={modelID} />
+                        </Grid>
+                      )}
                   </Grid>
                 </GridContainer>
               </div>
