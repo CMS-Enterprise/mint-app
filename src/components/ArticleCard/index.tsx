@@ -5,7 +5,8 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Tag
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
@@ -18,13 +19,15 @@ type ArticleCardProps = {
   isLink?: boolean;
   route: string;
   translation: string;
+  tag: string;
 };
 
 const ArticleCard = ({
   className,
   route,
   translation,
-  isLink = false
+  isLink = false,
+  tag
 }: ArticleCardProps) => {
   const { t } = useTranslation(translation);
   const history = useHistory();
@@ -32,7 +35,7 @@ const ArticleCard = ({
   return (
     <Card
       containerProps={{
-        className: 'radius-md shadow-2 minh-mobile'
+        className: 'radius-md shadow-2 minh-mobile padding-3'
       }}
       data-testid="article-card"
       className={classnames('desktop:grid-col-4', 'article', className, {
@@ -40,13 +43,16 @@ const ArticleCard = ({
       })}
       onClick={() => history.push(`/help-and-knowledge${route}`)}
     >
-      <CardHeader className="padding-x-3 padding-top-3">
+      <CardHeader className="padding-0">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
       </CardHeader>
-      <CardBody className="padding-top-0 article__body">
+      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold">
+        {useTranslation('helpAndKnowledge').t(tag)}
+      </Tag>
+      <CardBody className="padding-x-0 article__body">
         <p>{t('description')}</p>
       </CardBody>
-      <CardFooter className="padding-top-2 article__footer">
+      <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
         <UswdsReactLink
           to="#"
           className="usa-button usa-button--outline"
