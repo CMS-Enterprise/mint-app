@@ -67,7 +67,7 @@ type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   type: 'needs' | 'possibleNeeds';
-  readOnly?: boolean; // TODO: used to render when readonly component is developed
+  readOnly?: boolean;
 };
 
 const OperationalNeedsTable = ({

@@ -9,6 +9,7 @@ import {
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import { TaskStatus } from 'types/graphql-global-types';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
+import OperationalNeedsTable from 'views/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 import { NotFoundPartial } from 'views/NotFound';
 
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
@@ -48,6 +49,8 @@ const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
           <TaskListStatusTag status={getITSolutionsStatus(operationalNeeds)} />
         )}
       </div>
+
+      <OperationalNeedsTable modelID={modelID} type="needs" readOnly />
     </div>
   );
 };
