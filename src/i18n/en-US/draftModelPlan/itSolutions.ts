@@ -110,7 +110,17 @@ const itSolutions = {
   availableSolutions: 'Available operational solutions (opens in a new tab)',
   addSolution: 'Add a solution',
   addSolutionInfo:
-    'Select which service or solution you’ll use for this operational need.'
+    'Select which service or solution you’ll use for this operational need.',
+  howWillYouSolve: 'How will you solve this?',
+  howWillYouSolveInfo:
+    'Select an operational solution or select "Other" if you’ll solve this a different way.',
+  addSolutionButton: 'Add solution',
+  addSolutionDetails: 'Add solution details',
+  dontAddSolution: 'Don’t add and return to previous page',
+  updateSolutionDetails: 'Update solution details',
+  solutionName: 'Please add a name for your solution',
+  solutionPOC: 'Point of contact information',
+  solutionEmail: 'Email or other contact information'
 };
 
 export default itSolutions;

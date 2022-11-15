@@ -1,53 +1,42 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  CardGroup,
+  Fieldset,
   Grid,
-  IconArrowBack
+  IconArrowBack,
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
-import { Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
+import { OpSolutionStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import NotFound from 'views/NotFound';
 
-import CheckboxCard from '../_components/CheckboxCard';
+// import NotFound from 'views/NotFound';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-export const initialValues: GetOperationalNeedOperationalNeedType = {
-  __typename: 'OperationalNeed',
-  id: '',
-  modelPlanID: '',
+const initialValues = {
   name: '',
-  key: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT,
-  nameOther: '',
-  needed: false,
-  solutions: []
+  pocName: '',
+  pocEmail: ''
 };
 
-const SelectSolutions = () => {
+const AddCustomSolution = () => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -58,35 +47,23 @@ const SelectSolutions = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<any>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
-    variables: {
-      id: operationalNeedID
-    }
-  });
-
-  const operationalNeed = data?.operationalNeed || initialValues;
+  const customSolution = initialValues;
+  const loading = false;
 
   const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
     UpdateOperationalNeedSolution
   );
 
-  const handleFormSubmit = async (
-    formikValues: GetOperationalNeedOperationalNeedType
-  ) => {
+  const handleFormSubmit = async (formikValues: any) => {
     const { solutions } = formikValues;
 
     try {
       const response = await Promise.all(
-        solutions.map(solution => {
+        solutions.map((solution: any) => {
           return updateSolution({
             variables: {
               operationalNeedID,
@@ -112,9 +89,9 @@ const SelectSolutions = () => {
     }
   };
 
-  if (error) {
-    return <NotFound />;
-  }
+  //   if (error) {
+  //     return <NotFound />;
+  //   }
 
   return (
     <>
@@ -140,13 +117,13 @@ const SelectSolutions = () => {
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
+        <Breadcrumb current>{t('addSolution')}</Breadcrumb>
       </BreadcrumbBar>
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('selectSolution')}
+            {t('addSolution')}
           </PageHeading>
 
           <p
@@ -156,7 +133,7 @@ const SelectSolutions = () => {
             {h('for')} {modelName}
           </p>
 
-          <p>{t('selectInfo')}</p>
+          <p>{t('addSolutionInfo')}</p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
@@ -165,19 +142,17 @@ const SelectSolutions = () => {
             />
           </Grid>
 
-          <Grid row gap>
-            <Grid tablet={{ col: 10 }}>
+          <Grid gap>
+            <Grid tablet={{ col: 8 }}>
               <Formik
-                initialValues={operationalNeed}
+                initialValues={customSolution}
                 onSubmit={values => {
                   handleFormSubmit(values);
                 }}
                 enableReinitialize
                 innerRef={formikRef}
               >
-                {(
-                  formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
-                ) => {
+                {(formikProps: FormikProps<any>) => {
                   const { errors, handleSubmit, values } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
@@ -204,61 +179,57 @@ const SelectSolutions = () => {
 
                       <Form
                         className="margin-top-6"
-                        data-testid="it-tools-page-seven-form"
+                        data-testid="it-solutions-add-solution"
                         onSubmit={e => {
                           handleSubmit(e);
                         }}
                       >
-                        <legend className="text-bold margin-bottom-2">
-                          {t('chooseSolution')}
-                        </legend>
+                        <Fieldset disabled={loading}>
+                          <FieldGroup
+                            scrollElement="modelName"
+                            error={!!flatErrors.modelName}
+                            className="margin-top-4"
+                          >
+                            <Label htmlFor="plan-basics-model-name">
+                              {t('modelName')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.modelName}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextInput}
+                              error={!!flatErrors.modelName}
+                              id="plan-basics-model-name"
+                              maxLength={50}
+                              name="modelName"
+                            />
+                          </FieldGroup>
 
-                        {!loading && (
-                          <CardGroup>
-                            {values.solutions.map(
-                              (solution: any, index: number) => (
-                                <CheckboxCard
-                                  solution={solution}
-                                  index={index}
-                                  key={solution.name || solution.nameOther}
-                                />
-                              )
-                            )}
-                          </CardGroup>
-                        )}
-
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--outline margin-top-2"
-                          onClick={() => {
-                            history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
-                            );
-                          }}
-                        >
-                          {t('selectAnother')}
-                        </Button>
-
-                        <div className="margin-top-6 margin-bottom-3">
-                          <Button type="submit" className="margin-bottom-1">
-                            {t('continue')}
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button
+                              type="submit"
+                              className="margin-bottom-1"
+                              disabled={!values.key}
+                            >
+                              {t('addSolutionButton')}
+                            </Button>
+                          </div>
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--unstyled display-flex flex-align-center"
+                            onClick={() => {
+                              history.push(
+                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+                              );
+                            }}
+                          >
+                            <IconArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                            />
+                            {t('dontAddSolution')}
                           </Button>
-                        </div>
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled display-flex flex-align-center"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        >
-                          <IconArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                          />
-                          {t('dontAdd')}
-                        </Button>
+                        </Fieldset>
                       </Form>
                     </>
                   );
@@ -289,4 +260,4 @@ const SelectSolutions = () => {
   );
 };
 
-export default SelectSolutions;
+export default AddCustomSolution;

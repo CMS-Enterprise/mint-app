@@ -6,8 +6,13 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
+import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
+import {
+  GetOperationalNeed as GetOperationalNeedType,
+  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
+  GetOperationalNeedVariables
+} from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import {
   translateAppealsQuestionType,
@@ -30,7 +35,7 @@ import './index.scss';
 
 type NeedQuestionAndAnswerProps = {
   className?: string;
-  operationalNeed: GetOperationalNeedOperationalNeedType;
+  operationalNeedID: string;
   modelID: string;
 };
 
@@ -98,15 +103,39 @@ const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {
   return answers;
 };
 
+// Default values for fetching an operational need
+export const initialValues: GetOperationalNeedOperationalNeedType = {
+  __typename: 'OperationalNeed',
+  id: '',
+  modelPlanID: '',
+  name: '',
+  key: null,
+  nameOther: '',
+  needed: false,
+  solutions: []
+};
+
 const NeedQuestionAndAnswer = ({
   className,
-  operationalNeed,
+  operationalNeedID,
   modelID
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
 
   // Toggle the collapsed state of operational need question/answer
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
+
+  // Fetch operational need answer to question
+  const { data: need } = useQuery<
+    GetOperationalNeedType,
+    GetOperationalNeedVariables
+  >(GetOperationalNeed, {
+    variables: {
+      id: operationalNeedID
+    }
+  });
+
+  const operationalNeed = need?.operationalNeed || initialValues;
 
   // Config map of operational need key to route, translations, gql schema, etc
   const needConfig = operationalNeedMap[operationalNeed.key || ''];
@@ -145,7 +174,7 @@ const NeedQuestionAndAnswer = ({
       willRecoverPayments: fieldName === 'willRecoverPayments'
     },
     // skip if operational need requires no question/answer
-    skip: isIndenpendentOperationalNeed(operationalNeed.key)
+    skip: isIndenpendentOperationalNeed(operationalNeed.key) || !needConfig
   };
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable

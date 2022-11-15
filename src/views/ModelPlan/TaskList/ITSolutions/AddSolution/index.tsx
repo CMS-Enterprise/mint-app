@@ -1,51 +1,38 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  CardGroup,
+  Dropdown,
+  Fieldset,
   Grid,
-  IconArrowBack
+  IconArrowBack,
+  Label
 } from '@trussworks/react-uswds';
-import { Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import {
-  OperationalNeedKey,
+  OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import NotFound from 'views/NotFound';
 
-import CheckboxCard from '../_components/CheckboxCard';
+// import NotFound from 'views/NotFound';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-
-export const initialValues: GetOperationalNeedOperationalNeedType = {
-  __typename: 'OperationalNeed',
-  id: '',
-  modelPlanID: '',
-  name: '',
-  key: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT,
-  nameOther: '',
-  needed: false,
-  solutions: []
-};
 
 const AddSolution = () => {
   const { modelID, operationalNeedID } = useParams<{
@@ -58,35 +45,37 @@ const AddSolution = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<any>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
-    variables: {
-      id: operationalNeedID
-    }
-  });
+  // TODO: replace with query data
+  //   const possibleSolutions: any = [
+  //     {
+  //       id: 1,
+  //       key: OperationalSolutionKey.SALESFORCE,
+  //       name: 'Salesforce'
+  //     }
+  //   ];
 
-  const operationalNeed = data?.operationalNeed || initialValues;
+  const loading = false;
+
+  const additionalSolution = {
+    id: 0,
+    key: '',
+    name: ''
+  };
 
   const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
     UpdateOperationalNeedSolution
   );
 
-  const handleFormSubmit = async (
-    formikValues: GetOperationalNeedOperationalNeedType
-  ) => {
+  const handleFormSubmit = async (formikValues: any) => {
     const { solutions } = formikValues;
 
     try {
       const response = await Promise.all(
-        solutions.map(solution => {
+        solutions.map((solution: any) => {
           return updateSolution({
             variables: {
               operationalNeedID,
@@ -105,16 +94,12 @@ const AddSolution = () => {
       if (response && !errors) {
         history.push(`/models/${modelID}/task-list/it-solutions`);
       } else if (errors) {
-        formikRef?.current?.setErrors({ id: JSON.stringify(error) });
+        formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
       }
     } catch (errors) {
       formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
     }
   };
-
-  if (error) {
-    return <NotFound />;
-  }
 
   return (
     <>
@@ -160,24 +145,22 @@ const AddSolution = () => {
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
-              operationalNeed={operationalNeed}
+              operationalNeedID={operationalNeedID}
               modelID={modelID}
             />
           </Grid>
 
-          <Grid row gap>
-            <Grid tablet={{ col: 10 }}>
+          <Grid gap>
+            <Grid tablet={{ col: 8 }}>
               <Formik
-                initialValues={operationalNeed}
+                initialValues={additionalSolution}
                 onSubmit={values => {
                   handleFormSubmit(values);
                 }}
                 enableReinitialize
                 innerRef={formikRef}
               >
-                {(
-                  formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
-                ) => {
+                {(formikProps: FormikProps<any>) => {
                   const { errors, handleSubmit, values } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
@@ -204,61 +187,88 @@ const AddSolution = () => {
 
                       <Form
                         className="margin-top-6"
-                        data-testid="it-tools-page-seven-form"
+                        data-testid="it-solutions-add-solution"
                         onSubmit={e => {
                           handleSubmit(e);
                         }}
                       >
-                        <legend className="text-bold margin-bottom-2">
-                          {t('chooseSolution')}
-                        </legend>
+                        <Fieldset disabled={loading}>
+                          <FieldGroup
+                            scrollElement="key"
+                            error={!!flatErrors.key}
+                          >
+                            <Label htmlFor="it-solutions-key">
+                              {t('howWillYouSolve')}
+                            </Label>
 
-                        {!loading && (
-                          <CardGroup>
-                            {values.solutions.map(
-                              (solution: any, index: number) => (
-                                <CheckboxCard
-                                  solution={solution}
-                                  index={index}
-                                  key={solution.name || solution.nameOther}
-                                />
-                              )
+                            <p className="text-base margin-y-1 line-height-body-4">
+                              {t('howWillYouSolveInfo')}
+                            </p>
+
+                            <FieldErrorMsg>{flatErrors.key}</FieldErrorMsg>
+
+                            <Field
+                              as={Dropdown}
+                              id="it-solutions-key"
+                              name="key"
+                              value={values.key}
+                            >
+                              <option key="default-select" disabled value="">
+                                {`-${h('select')}-`}
+                              </option>
+                              {Object.keys(OperationalSolutionKey)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <option key={type} value={type || ''}>
+                                      {type}
+                                      {/* {translateDataStartsType(type)} */}
+                                    </option>
+                                  );
+                                })}
+                            </Field>
+
+                            {values.key ===
+                              OperationalSolutionKey.OTHER_NEW_PROCESS && (
+                              <Button
+                                type="button"
+                                className="usa-button usa-button--outline margin-top-3"
+                                onClick={() => {
+                                  history.push(
+                                    `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                  );
+                                }}
+                              >
+                                {t('addSolutionDetails')}
+                              </Button>
                             )}
-                          </CardGroup>
-                        )}
+                          </FieldGroup>
 
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--outline margin-top-2"
-                          onClick={() => {
-                            history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
-                            );
-                          }}
-                        >
-                          {t('selectAnother')}
-                        </Button>
-
-                        <div className="margin-top-6 margin-bottom-3">
-                          <Button type="submit" className="margin-bottom-1">
-                            {t('continue')}
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button
+                              type="submit"
+                              className="margin-bottom-1"
+                              disabled={!values.key}
+                            >
+                              {t('addSolutionButton')}
+                            </Button>
+                          </div>
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--unstyled display-flex flex-align-center"
+                            onClick={() => {
+                              history.push(
+                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+                              );
+                            }}
+                          >
+                            <IconArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                            />
+                            {t('dontAddSolution')}
                           </Button>
-                        </div>
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled display-flex flex-align-center"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        >
-                          <IconArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                          />
-                          {t('dontAdd')}
-                        </Button>
+                        </Fieldset>
                       </Form>
                     </>
                   );

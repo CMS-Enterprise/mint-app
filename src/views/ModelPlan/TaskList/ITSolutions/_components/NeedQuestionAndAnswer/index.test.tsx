@@ -5,35 +5,35 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
-import {
-  OperationalNeedKey,
-  OperationalSolutionKey
-} from 'types/graphql-global-types';
 
+// import {
+//   OperationalNeedKey,
+//   OperationalSolutionKey
+// } from 'types/graphql-global-types';
 import NeedQuestionAndAnswer from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '123';
 
-const operationalNeed = {
-  __typename: 'OperationalNeed' as const,
-  id: '081cb879-bd6f-4ead-b9cb-3a299de76390',
-  modelPlanID: modelID,
-  name: 'Obtain an application support contractor',
-  key: OperationalNeedKey.APP_SUPPORT_CON,
-  nameOther: null,
-  needed: true,
-  solutions: [
-    {
-      __typename: 'OperationalSolution' as const,
-      id: '00000000-0000-0000-0000-000000000000',
-      name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
-      key: OperationalSolutionKey.RMADA,
-      needed: null,
-      nameOther: null
-    }
-  ]
-};
+// const operationalNeed = {
+//   __typename: 'OperationalNeed' as const,
+//   id: '081cb879-bd6f-4ead-b9cb-3a299de76390',
+//   modelPlanID: modelID,
+//   name: 'Obtain an application support contractor',
+//   key: OperationalNeedKey.APP_SUPPORT_CON,
+//   nameOther: null,
+//   needed: true,
+//   solutions: [
+//     {
+//       __typename: 'OperationalSolution' as const,
+//       id: '00000000-0000-0000-0000-000000000000',
+//       name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+//       key: OperationalSolutionKey.RMADA,
+//       needed: null,
+//       nameOther: null
+//     }
+//   ]
+// };
 
 const mocks = [
   {
@@ -99,7 +99,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
           <MockedProvider mocks={mocks} addTypename={false}>
             <NeedQuestionAndAnswer
               modelID={modelID}
-              operationalNeed={operationalNeed}
+              operationalNeedID={operationalNeedID}
             />
           </MockedProvider>
         </Route>
@@ -130,7 +130,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
           <MockedProvider mocks={mocks} addTypename={false}>
             <NeedQuestionAndAnswer
               modelID={modelID}
-              operationalNeed={operationalNeed}
+              operationalNeedID={operationalNeedID}
             />
           </MockedProvider>
         </Route>
