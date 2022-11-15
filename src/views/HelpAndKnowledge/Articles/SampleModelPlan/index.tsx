@@ -19,9 +19,12 @@ export const SampleModelPlan = () => {
           <Grid>
             <HelpBreadcrumb text={t('title')} />
             <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
-            <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold margin-bottom-1">
+            <div
+              className="margin-bottom-1 bg-primary-lighter font-body-sm text-primary text-bold"
+              style={{ padding: '7px 11px', width: 'max-content' }}
+            >
               {useTranslation('helpAndKnowledge').t('gettingStarted')}
-            </Tag>
+            </div>
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
               {t('description')}
             </p>

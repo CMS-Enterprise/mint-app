@@ -46,7 +46,7 @@ const ArticleCard = ({
       <CardHeader className="padding-0">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
       </CardHeader>
-      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold">
+      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">
         {useTranslation('helpAndKnowledge').t(tag)}
       </Tag>
       <CardBody className="padding-x-0 article__body">
