@@ -2,6 +2,7 @@ package storage
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -26,6 +27,9 @@ var planCrTdlGetSQL string
 
 //go:embed SQL/plan_cr_tdl_collection_by_model_plan_id.sql
 var planCrTdlCollectionByModelPlanIDSQL string
+
+//go:embed SQL/plan_cr_tdl_collection_by_model_plan_id_and_date.sql
+var planCrTdlCollectionByModelPlanIDAndDateSQL string
 
 // PlanCrTdlCreate creates  returns a plan_cr_tdl object
 func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl) (*models.PlanCrTdl, error) {
@@ -121,6 +125,28 @@ func (s *Store) PlanCrTdlsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 	}
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
+	}
+
+	err = stmt.Select(&planCrTdls, arg)
+
+	if err != nil {
+		return nil, err
+	}
+	return planCrTdls, nil
+}
+
+// PlanCrTdlsGetByModelPlanID returns all plan_cr_tdls associated with a model plan
+func (s *Store) PlanCrTdlsGetByModelPlanIDAndDate(logger *zap.Logger, modelPlanID uuid.UUID, date time.Time) ([]*models.PlanCrTdl, error) {
+	planCrTdls := []*models.PlanCrTdl{}
+
+	stmt, err := s.db.PrepareNamed(planCrTdlCollectionByModelPlanIDAndDateSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"start_date":    date.Format("2006-01-02"),
+		"end_date":      date.AddDate(0, 0, 1).Format("2006-01-02"),
 	}
 
 	err = stmt.Select(&planCrTdls, arg)

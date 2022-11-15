@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
@@ -26,6 +27,9 @@ var planCollaboratorFetchByModelPlanIDSQL string
 
 //go:embed SQL/plan_collaborator_fetch_by_id.sql
 var planCollaboratorFetchByIDSQL string
+
+//go:embed SQL/plan_collaborator_fetch_by_model_plan_id_and_date.sql
+var planCollaboratorFetchByModelPlanIDAndDateSQL string
 
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
@@ -114,4 +118,27 @@ func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborato
 	}
 
 	return &collaborator, nil
+}
+
+// PlanCollaboratorsByModelPlanIDAndDate returns the plan collaborators for a given model plan id
+func (s *Store) PlanCollaboratorsByModelPlanIDAndDate(_ *zap.Logger, modelPlanID uuid.UUID, date time.Time) ([]*models.PlanCollaborator, error) {
+	var collaborators []*models.PlanCollaborator
+
+	statement, err := s.db.PrepareNamed(planCollaboratorFetchByModelPlanIDAndDateSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"start_date":    date.Format("2006-01-02"),
+		"end_date":      date.AddDate(0, 0, 1).Format("2006-01-02"),
+	}
+
+	err = statement.Select(&collaborators, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return collaborators, nil
 }
