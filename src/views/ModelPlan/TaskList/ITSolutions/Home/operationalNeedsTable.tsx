@@ -176,11 +176,16 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status, row.original, modelID);
+          return returnActionLinks(
+            row.original.status,
+            row.original,
+            modelID,
+            readOnly
+          );
         }
       }
     ];
-  }, [t, modelID]);
+  }, [t, modelID, readOnly]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -250,7 +255,7 @@ const OperationalNeedsTable = ({
       initialState: {
         sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
         pageIndex: 0,
-        hiddenColumns: hasEditAccess ? [] : ['id']
+        hiddenColumns: hasEditAccess ? ['subTasks'] : ['subTasks', 'id']
       }
     },
     useFilters,
@@ -312,7 +317,7 @@ const OperationalNeedsTable = ({
                     className="table-header"
                     scope="col"
                     style={{
-                      minWidth: '138px',
+                      minWidth: readOnly ? '160px' : '138px',
                       paddingBottom: '.5rem',
                       position: 'relative',
                       paddingLeft: index === 0 ? '.5em' : '0px'
