@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useQuery } from '@apollo/client';
 
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
@@ -23,6 +24,12 @@ const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
       }
     }
   );
+
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
