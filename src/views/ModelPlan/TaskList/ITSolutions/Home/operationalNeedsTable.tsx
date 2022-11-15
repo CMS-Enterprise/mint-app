@@ -254,8 +254,7 @@ const OperationalNeedsTable = ({
       autoResetPage: false,
       initialState: {
         sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
-        pageIndex: 0,
-        hiddenColumns: hasEditAccess ? ['subTasks'] : ['subTasks', 'id']
+        pageIndex: 0
       }
     },
     useFilters,
@@ -317,7 +316,7 @@ const OperationalNeedsTable = ({
                     className="table-header"
                     scope="col"
                     style={{
-                      minWidth: readOnly ? '160px' : '138px',
+                      minWidth: '138px',
                       paddingBottom: '.5rem',
                       position: 'relative',
                       paddingLeft: index === 0 ? '.5em' : '0px'

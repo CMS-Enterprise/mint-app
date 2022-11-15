@@ -50,7 +50,12 @@ const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
         )}
       </div>
 
-      <OperationalNeedsTable modelID={modelID} type="needs" readOnly />
+      <OperationalNeedsTable
+        modelID={modelID}
+        type="needs"
+        readOnly
+        hiddenColumns={['Subtasks']}
+      />
     </div>
   );
 };
