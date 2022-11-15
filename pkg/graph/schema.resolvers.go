@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -372,12 +371,16 @@ func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context,
 
 // UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
 func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
-	panic(fmt.Errorf("not implemented: UpdateCustomOperationalNeedByID - updateCustomOperationalNeedByID"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
 }
 
 // AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
 func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
-	panic(fmt.Errorf("not implemented: AddOrUpdateOperationalSolution - addOrUpdateOperationalSolution"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionInsertOrUpdate(logger, operationalNeedID, solutionType, changes, principal, r.store)
 }
 
 // AddOrUpdateCustomOperationalSolution is the resolver for the addOrUpdateCustomOperationalSolution field.
@@ -395,25 +398,10 @@ func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Conte
 }
 
 // CreatePlanDocumentSolutionLinks is the resolver for the createPlanDocumentSolutionLinks field.
-func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, links []*model.PlanDocumentSolutionLinkInput) ([]*models.PlanDocumentSolutionLink, error) {
+func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) ([]*models.PlanDocumentSolutionLink, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-
-	var linksConverted []*models.PlanDocumentSolutionLink
-	for _, linkInput := range links {
-		linkConverted := &models.PlanDocumentSolutionLink{
-			SolutionID: linkInput.SolutionID,
-			DocumentID: linkInput.DocumentID,
-		}
-
-		// TODO: How else can this be done? There must be a better way.
-		linkConverted.ID = linkInput.ID
-		linkConverted.ModelPlanID = linkInput.ModelPlanID
-		linkConverted.CreatedBy = principal.ID()
-		linksConverted = append(linksConverted, linkConverted)
-	}
-
-	return resolvers.PlanDocumentSolutionLinksCreate(logger, linksConverted, r.store)
+	return resolvers.PlanDocumentSolutionLinksCreate(logger, r.store, solutionID, documentIDs, principal)
 }
 
 // RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
@@ -952,9 +940,9 @@ func (r *queryResolver) PossibleOperationalNeeds(ctx context.Context) ([]*models
 }
 
 // PlanDocumentSolutionLinks is the resolver for the planDocumentSolutionLinks field.
-func (r *queryResolver) PlanDocumentSolutionLinks(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDocumentSolutionLink, error) {
+func (r *queryResolver) PlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID) ([]*models.PlanDocumentSolutionLink, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanDocumentSolutionLinksGetByID(logger, modelPlanID, r.store)
+	return resolvers.PlanDocumentSolutionLinksGetBySolutionID(logger, solutionID, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

@@ -1,7 +1,6 @@
 CREATE TABLE plan_document_solution_link (
     id UUID PRIMARY KEY NOT NULL,
-    model_plan_id UUID NOT NULL,
-    solution_id INTEGER NOT NULL,
+    solution_id UUID NOT NULL,
     document_id UUID NOT NULL,
 
     --META DATA

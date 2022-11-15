@@ -17,3 +17,10 @@ func CreateModelPlanIDQueryMap(id uuid.UUID) map[string]interface{} {
 		"model_plan_id": id,
 	}
 }
+
+// CreateSolutionIDQueryMap creates a map with key "solution_id" which maps to the passed in id
+func CreateSolutionIDQueryMap(id uuid.UUID) map[string]interface{} {
+	return map[string]interface{}{
+		"solution_id": id,
+	}
+}

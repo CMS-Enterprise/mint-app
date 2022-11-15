@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
+
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
@@ -10,7 +12,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -25,45 +26,29 @@ var planDocumentSolutionLinksGetByIDSQL string
 
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links
 func (s *Store) PlanDocumentSolutionLinksCreate(
-	logger *zap.Logger,
-	planDocumentSolutionLinks []*models.PlanDocumentSolutionLink,
+	_ *zap.Logger,
+	solutionID uuid.UUID,
+	documentIDs []uuid.UUID,
+	principal authentication.Principal,
 ) ([]*models.PlanDocumentSolutionLink, error) {
-
-	var result []*models.PlanDocumentSolutionLink
-
-	for _, link := range planDocumentSolutionLinks {
-		item, err := s.PlanDocumentSolutionLinkCreate(logger, link)
-		if err != nil {
-			return nil, err
-		}
-
-		result = append(result, item)
+	arg := map[string]interface{}{
+		"solution_id":  solutionID,
+		"document_ids": documentIDs,
+		"modified_by":  principal.ID(),
 	}
 
-	return result, nil
-}
-
-// PlanDocumentSolutionLinkCreate creates a plan document solution link
-func (s *Store) PlanDocumentSolutionLinkCreate(
-	logger *zap.Logger,
-	planDocumentSolutionLink *models.PlanDocumentSolutionLink,
-) (*models.PlanDocumentSolutionLink, error) {
-	planDocumentSolutionLink.ID = utilityUUID.ValueOrNewUUID(planDocumentSolutionLink.ID)
-	planDocumentSolutionLink.ModifiedBy = nil
-	planDocumentSolutionLink.ModifiedDts = nil
-
-	retLink := &models.PlanDocumentSolutionLink{}
+	var ret []*models.PlanDocumentSolutionLink
 	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksCreateSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, planDocumentSolutionLink)
+		return nil, err
 	}
 
-	err = statement.Get(retLink, planDocumentSolutionLink)
+	err = statement.Select(&ret, arg)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, retLink)
+		return nil, err
 	}
 
-	return retLink, nil
+	return ret, nil
 }
 
 // PlanDocumentSolutionLinkRemove deletes a plan document object by id
@@ -84,21 +69,21 @@ func (s *Store) PlanDocumentSolutionLinkRemove(
 	return true, nil
 }
 
-// PlanDocumentSolutionLinksGetByID gets a list of document solution links associated with the given plan ID
-func (s *Store) PlanDocumentSolutionLinksGetByID(
+// PlanDocumentSolutionLinksGetBySolutionID gets a list of document solution links associated with the given plan ID
+func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	logger *zap.Logger,
-	modelPlanID uuid.UUID,
+	solutionID uuid.UUID,
 ) ([]*models.PlanDocumentSolutionLink, error) {
 	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
 
-	var modelPlanLinks []*models.PlanDocumentSolutionLink
-	err = statement.Select(&modelPlanLinks, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	var solutionLinks []*models.PlanDocumentSolutionLink
+	err = statement.Select(&solutionLinks, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
 
-	return modelPlanLinks, nil
+	return solutionLinks, nil
 }

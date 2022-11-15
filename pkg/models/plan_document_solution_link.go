@@ -7,7 +7,6 @@ type PlanDocumentSolutionLink struct {
 	baseStruct
 	modelPlanRelation
 
-	SolutionID  int       `json:"solutionID" db:"solution_id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
-	DocumentID  uuid.UUID `json:"documentID" db:"document_id"`
+	SolutionID uuid.UUID `json:"solutionID" db:"solution_id"`
+	DocumentID uuid.UUID `json:"documentID" db:"document_id"`
 }

@@ -1451,17 +1451,9 @@ input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     status: OpSolutionStatus
 }
 
-input PlanDocumentSolutionLinkInput {
-id: UUID!
-modelPlanID: UUID!
-solutionID: Int!
-documentID: UUID!
-}
-
 type PlanDocumentSolutionLink {
 id: UUID!
-modelPlanID: UUID!
-solutionID: Int!
+solutionID: UUID!
 documentID: UUID!
 createdBy: String!
 createdDts: Time!
@@ -1489,7 +1481,7 @@ type Query {
   operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
-  planDocumentSolutionLinks(modelPlanID: UUID!): [PlanDocumentSolutionLink!]!
+  planDocumentSolutionLinks(solutionID: UUID!): [PlanDocumentSolutionLink!]!
 }
 
 """
@@ -1598,7 +1590,7 @@ addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionTyp
 updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-createPlanDocumentSolutionLinks(links: [PlanDocumentSolutionLinkInput!]): [PlanDocumentSolutionLink!]
+createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
 @hasRole(role: MINT_USER)
 
 removePlanDocumentSolutionLink(id: UUID!): Boolean!

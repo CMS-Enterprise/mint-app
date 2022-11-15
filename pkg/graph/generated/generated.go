@@ -156,7 +156,7 @@ type ComplexityRoot struct {
 		CreatePlanCollaborator               func(childComplexity int, input model.PlanCollaboratorCreateInput) int
 		CreatePlanCrTdl                      func(childComplexity int, input model.PlanCrTdlCreateInput) int
 		CreatePlanDiscussion                 func(childComplexity int, input model.PlanDiscussionCreateInput) int
-		CreatePlanDocumentSolutionLinks      func(childComplexity int, links []*model.PlanDocumentSolutionLinkInput) int
+		CreatePlanDocumentSolutionLinks      func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		DeleteDiscussionReply                func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator               func(childComplexity int, id uuid.UUID) int
 		DeletePlanCrTdl                      func(childComplexity int, id uuid.UUID) int
@@ -359,7 +359,6 @@ type ComplexityRoot struct {
 		CreatedDts  func(childComplexity int) int
 		DocumentID  func(childComplexity int) int
 		ID          func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
 		ModifiedBy  func(childComplexity int) int
 		ModifiedDts func(childComplexity int) int
 		SolutionID  func(childComplexity int) int
@@ -814,7 +813,7 @@ type ComplexityRoot struct {
 		OperationalSolutions      func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
 		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
-		PlanDocumentSolutionLinks func(childComplexity int, modelPlanID uuid.UUID) int
+		PlanDocumentSolutionLinks func(childComplexity int, solutionID uuid.UUID) int
 		PlanPayments              func(childComplexity int, id uuid.UUID) int
 		PossibleOperationalNeeds  func(childComplexity int) int
 		TaskListSectionLocks      func(childComplexity int, modelPlanID uuid.UUID) int
@@ -902,7 +901,7 @@ type MutationResolver interface {
 	AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error)
 	AddOrUpdateCustomOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, customSolutionType string, changes map[string]interface{}) (*models.OperationalSolution, error)
 	UpdateCustomOperationalSolutionByID(ctx context.Context, id uuid.UUID, customSolutionType *string, changes map[string]interface{}) (*models.OperationalSolution, error)
-	CreatePlanDocumentSolutionLinks(ctx context.Context, links []*model.PlanDocumentSolutionLinkInput) ([]*models.PlanDocumentSolutionLink, error)
+	CreatePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) ([]*models.PlanDocumentSolutionLink, error)
 	RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error)
 }
 type OperationalNeedResolver interface {
@@ -1070,7 +1069,7 @@ type QueryResolver interface {
 	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
 	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
-	PlanDocumentSolutionLinks(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDocumentSolutionLink, error)
+	PlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID) ([]*models.PlanDocumentSolutionLink, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1671,7 +1670,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreatePlanDocumentSolutionLinks(childComplexity, args["links"].([]*model.PlanDocumentSolutionLinkInput)), true
+		return e.complexity.Mutation.CreatePlanDocumentSolutionLinks(childComplexity, args["solutionID"].(uuid.UUID), args["documentIDs"].([]uuid.UUID)), true
 
 	case "Mutation.deleteDiscussionReply":
 		if e.complexity.Mutation.DeleteDiscussionReply == nil {
@@ -3006,13 +3005,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDocumentSolutionLink.ID(childComplexity), true
-
-	case "PlanDocumentSolutionLink.modelPlanID":
-		if e.complexity.PlanDocumentSolutionLink.ModelPlanID == nil {
-			break
-		}
-
-		return e.complexity.PlanDocumentSolutionLink.ModelPlanID(childComplexity), true
 
 	case "PlanDocumentSolutionLink.modifiedBy":
 		if e.complexity.PlanDocumentSolutionLink.ModifiedBy == nil {
@@ -6042,7 +6034,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.PlanDocumentSolutionLinks(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+		return e.complexity.Query.PlanDocumentSolutionLinks(childComplexity, args["solutionID"].(uuid.UUID)), true
 
 	case "Query.planPayments":
 		if e.complexity.Query.PlanPayments == nil {
@@ -6182,7 +6174,6 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputPlanCrTdlCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
-		ec.unmarshalInputPlanDocumentSolutionLinkInput,
 	)
 	first := true
 
@@ -7713,17 +7704,9 @@ input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     status: OpSolutionStatus
 }
 
-input PlanDocumentSolutionLinkInput {
-id: UUID!
-modelPlanID: UUID!
-solutionID: Int!
-documentID: UUID!
-}
-
 type PlanDocumentSolutionLink {
 id: UUID!
-modelPlanID: UUID!
-solutionID: Int!
+solutionID: UUID!
 documentID: UUID!
 createdBy: String!
 createdDts: Time!
@@ -7751,7 +7734,7 @@ type Query {
   operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
-  planDocumentSolutionLinks(modelPlanID: UUID!): [PlanDocumentSolutionLink!]!
+  planDocumentSolutionLinks(solutionID: UUID!): [PlanDocumentSolutionLink!]!
 }
 
 """
@@ -7860,7 +7843,7 @@ addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionTyp
 updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-createPlanDocumentSolutionLinks(links: [PlanDocumentSolutionLinkInput!]): [PlanDocumentSolutionLink!]
+createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
 @hasRole(role: MINT_USER)
 
 removePlanDocumentSolutionLink(id: UUID!): Boolean!
@@ -8831,15 +8814,24 @@ func (ec *executionContext) field_Mutation_createPlanDiscussion_args(ctx context
 func (ec *executionContext) field_Mutation_createPlanDocumentSolutionLinks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 []*model.PlanDocumentSolutionLinkInput
-	if tmp, ok := rawArgs["links"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("links"))
-		arg0, err = ec.unmarshalOPlanDocumentSolutionLinkInput2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentSolutionLinkInputᚄ(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["solutionID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("solutionID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["links"] = arg0
+	args["solutionID"] = arg0
+	var arg1 []uuid.UUID
+	if tmp, ok := rawArgs["documentIDs"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentIDs"))
+		arg1, err = ec.unmarshalNUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["documentIDs"] = arg1
 	return args, nil
 }
 
@@ -9567,14 +9559,14 @@ func (ec *executionContext) field_Query_planDocumentSolutionLinks_args(ctx conte
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["modelPlanID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+	if tmp, ok := rawArgs["solutionID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("solutionID"))
 		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["modelPlanID"] = arg0
+	args["solutionID"] = arg0
 	return args, nil
 }
 
@@ -17660,7 +17652,7 @@ func (ec *executionContext) _Mutation_createPlanDocumentSolutionLinks(ctx contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanDocumentSolutionLinks(rctx, fc.Args["links"].([]*model.PlanDocumentSolutionLinkInput))
+			return ec.resolvers.Mutation().CreatePlanDocumentSolutionLinks(rctx, fc.Args["solutionID"].(uuid.UUID), fc.Args["documentIDs"].([]uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -17707,8 +17699,6 @@ func (ec *executionContext) fieldContext_Mutation_createPlanDocumentSolutionLink
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_PlanDocumentSolutionLink_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDocumentSolutionLink_modelPlanID(ctx, field)
 			case "solutionID":
 				return ec.fieldContext_PlanDocumentSolutionLink_solutionID(ctx, field)
 			case "documentID":
@@ -23970,50 +23960,6 @@ func (ec *executionContext) fieldContext_PlanDocumentSolutionLink_id(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanDocumentSolutionLink_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocumentSolutionLink) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanDocumentSolutionLink_modelPlanID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModelPlanID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanDocumentSolutionLink_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanDocumentSolutionLink",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _PlanDocumentSolutionLink_solutionID(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocumentSolutionLink) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanDocumentSolutionLink_solutionID(ctx, field)
 	if err != nil {
@@ -24040,9 +23986,9 @@ func (ec *executionContext) _PlanDocumentSolutionLink_solutionID(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocumentSolutionLink_solutionID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -24052,7 +23998,7 @@ func (ec *executionContext) fieldContext_PlanDocumentSolutionLink_solutionID(ctx
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -42695,7 +42641,7 @@ func (ec *executionContext) _Query_planDocumentSolutionLinks(ctx context.Context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().PlanDocumentSolutionLinks(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		return ec.resolvers.Query().PlanDocumentSolutionLinks(rctx, fc.Args["solutionID"].(uuid.UUID))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -42722,8 +42668,6 @@ func (ec *executionContext) fieldContext_Query_planDocumentSolutionLinks(ctx con
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_PlanDocumentSolutionLink_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDocumentSolutionLink_modelPlanID(ctx, field)
 			case "solutionID":
 				return ec.fieldContext_PlanDocumentSolutionLink_solutionID(ctx, field)
 			case "documentID":
@@ -45580,58 +45524,6 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputPlanDocumentSolutionLinkInput(ctx context.Context, obj interface{}) (model.PlanDocumentSolutionLinkInput, error) {
-	var it model.PlanDocumentSolutionLinkInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"id", "modelPlanID", "solutionID", "documentID"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modelPlanID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "solutionID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("solutionID"))
-			it.SolutionID, err = ec.unmarshalNInt2int(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "documentID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentID"))
-			it.DocumentID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -47775,13 +47667,6 @@ func (ec *executionContext) _PlanDocumentSolutionLink(ctx context.Context, sel a
 		case "id":
 
 			out.Values[i] = ec._PlanDocumentSolutionLink_id(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "modelPlanID":
-
-			out.Values[i] = ec._PlanDocumentSolutionLink_modelPlanID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -56161,11 +56046,6 @@ func (ec *executionContext) marshalNPlanDocumentSolutionLink2ᚖgithubᚗcomᚋc
 	return ec._PlanDocumentSolutionLink(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNPlanDocumentSolutionLinkInput2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentSolutionLinkInput(ctx context.Context, v interface{}) (*model.PlanDocumentSolutionLinkInput, error) {
-	res, err := ec.unmarshalInputPlanDocumentSolutionLinkInput(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) marshalNPlanFavorite2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx context.Context, sel ast.SelectionSet, v models.PlanFavorite) graphql.Marshaler {
 	return ec._PlanFavorite(ctx, sel, &v)
 }
@@ -57279,6 +57159,38 @@ func (ec *executionContext) marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx context.Context, v interface{}) ([]uuid.UUID, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]uuid.UUID, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx context.Context, sel ast.SelectionSet, v []uuid.UUID) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, sel, v[i])
+	}
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, v interface{}) (graphql.Upload, error) {
@@ -61404,26 +61316,6 @@ func (ec *executionContext) marshalOPlanDocumentSolutionLink2ᚕᚖgithubᚗcom�
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalOPlanDocumentSolutionLinkInput2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentSolutionLinkInputᚄ(ctx context.Context, v interface{}) ([]*model.PlanDocumentSolutionLinkInput, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]*model.PlanDocumentSolutionLinkInput, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNPlanDocumentSolutionLinkInput2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentSolutionLinkInput(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
 }
 
 func (ec *executionContext) unmarshalOPpAppSupportContractorType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPpAppSupportContractorTypeᚄ(ctx context.Context, v interface{}) ([]model.PpAppSupportContractorType, error) {
