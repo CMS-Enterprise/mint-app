@@ -11,3 +11,8 @@ import (
 func PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.Logger, needType models.OperationalNeedKey, store *storage.Store) ([]*models.PossibleOperationalSolution, error) {
 	return store.PossibleOperationalSolutionCollectionGetByNeedType(logger, needType)
 }
+
+// PossibleOperationalSolutionCollectionGetAll returns all possible operational Solutions linked to Operational Need Type
+func PossibleOperationalSolutionCollectionGetAll(logger *zap.Logger, store *storage.Store) ([]*models.PossibleOperationalSolution, error) {
+	return store.PossibleOperationalSolutionCollectionGetAll(logger)
+}
