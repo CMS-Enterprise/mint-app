@@ -1,7 +1,8 @@
 WITH PlanDocumentSolutionLink AS (
     SELECT
-        unnest((:document_ids)::UUID []) AS DocumentID,
-        :solution_id AS SolutionID
+        unnest((:document_ids)::UUID[]) AS DocumentID,
+        :solution_id AS SolutionID,
+        :created_by AS CreatedBy
 )
 
 INSERT INTO plan_document_solution_link (
@@ -14,7 +15,7 @@ SELECT
     gen_random_uuid() AS id,
     PlanDocumentSolutionLink.SolutionID AS solution_id,
     PlanDocumentSolutionLink.DocumentID AS document_id,
-    :created_by AS created_by
+    PlanDocumentSolutionLink.CreatedBy AS created_by
 FROM PlanDocumentSolutionLink
 RETURNING id,
   solution_id,
