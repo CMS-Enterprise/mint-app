@@ -12,7 +12,7 @@ type HelpCardGroupType = {
 
 const HelpCardGroup = ({ className, filter }: HelpCardGroupType) => {
   const articles = filter
-    ? helpAndKnowledgeArticles.filter(article => article.tag === filter)
+    ? helpAndKnowledgeArticles.filter(article => article.type === filter)
     : helpAndKnowledgeArticles;
 
   return (
@@ -22,7 +22,7 @@ const HelpCardGroup = ({ className, filter }: HelpCardGroupType) => {
           key={article.route}
           {...article}
           isLink
-          tag={article.tag}
+          type={article.type}
         />
       ))}
     </CardGroup>
