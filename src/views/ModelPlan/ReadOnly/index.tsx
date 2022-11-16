@@ -83,7 +83,14 @@ const listOfSubpageKey = [
 ];
 
 export type SubpageKey = typeof listOfSubpageKey[number];
-const isSubpage = (x: SubpageKey): boolean => listOfSubpageKey.includes(x);
+const isSubpage = (x: SubpageKey, isHelpArticle?: boolean): boolean => {
+  if (isHelpArticle) {
+    return listOfSubpageKey
+      .filter(subpage => subpage !== 'discussions')
+      .includes(x);
+  }
+  return listOfSubpageKey.includes(x);
+};
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
@@ -264,7 +271,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFoundPartial />;
   }
 
-  if ((isHelpArticle && subinfo === 'discussions') || !isSubpage(subinfo)) {
+  if (!isSubpage(subinfo, isHelpArticle)) {
     return <NotFound />;
   }
 
