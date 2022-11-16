@@ -932,6 +932,13 @@ func (r *queryResolver) PossibleOperationalNeeds(ctx context.Context) ([]*models
 	return resolvers.PossibleOperationalNeedCollectionGet(logger, r.store)
 }
 
+// PossibleOperationalSolutions is the resolver for the possibleOperationalSolutions field.
+func (r *queryResolver) PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PossibleOperationalSolutionCollectionGetAll(logger, r.store)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()
