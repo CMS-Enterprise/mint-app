@@ -788,22 +788,23 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AuditChanges             func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CedarPersonsByCommonName func(childComplexity int, commonName string) int
-		CrTdl                    func(childComplexity int, id uuid.UUID) int
-		CurrentUser              func(childComplexity int) int
-		ExistingModelCollection  func(childComplexity int) int
-		ModelPlan                func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection      func(childComplexity int, includeAll bool) int
-		NdaInfo                  func(childComplexity int) int
-		OperationalNeed          func(childComplexity int, id uuid.UUID) int
-		OperationalSolution      func(childComplexity int, id uuid.UUID) int
-		OperationalSolutions     func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
-		PlanCollaboratorByID     func(childComplexity int, id uuid.UUID) int
-		PlanDocument             func(childComplexity int, id uuid.UUID) int
-		PlanPayments             func(childComplexity int, id uuid.UUID) int
-		PossibleOperationalNeeds func(childComplexity int) int
-		TaskListSectionLocks     func(childComplexity int, modelPlanID uuid.UUID) int
+		AuditChanges                 func(childComplexity int, tableName string, primaryKey uuid.UUID) int
+		CedarPersonsByCommonName     func(childComplexity int, commonName string) int
+		CrTdl                        func(childComplexity int, id uuid.UUID) int
+		CurrentUser                  func(childComplexity int) int
+		ExistingModelCollection      func(childComplexity int) int
+		ModelPlan                    func(childComplexity int, id uuid.UUID) int
+		ModelPlanCollection          func(childComplexity int, includeAll bool) int
+		NdaInfo                      func(childComplexity int) int
+		OperationalNeed              func(childComplexity int, id uuid.UUID) int
+		OperationalSolution          func(childComplexity int, id uuid.UUID) int
+		OperationalSolutions         func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
+		PlanCollaboratorByID         func(childComplexity int, id uuid.UUID) int
+		PlanDocument                 func(childComplexity int, id uuid.UUID) int
+		PlanPayments                 func(childComplexity int, id uuid.UUID) int
+		PossibleOperationalNeeds     func(childComplexity int) int
+		PossibleOperationalSolutions func(childComplexity int) int
+		TaskListSectionLocks         func(childComplexity int, modelPlanID uuid.UUID) int
 	}
 
 	Subscription struct {
@@ -1054,6 +1055,7 @@ type QueryResolver interface {
 	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
 	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
+	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -5954,6 +5956,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.PossibleOperationalNeeds(childComplexity), true
 
+	case "Query.possibleOperationalSolutions":
+		if e.complexity.Query.PossibleOperationalSolutions == nil {
+			break
+		}
+
+		return e.complexity.Query.PossibleOperationalSolutions(childComplexity), true
+
 	case "Query.taskListSectionLocks":
 		if e.complexity.Query.TaskListSectionLocks == nil {
 			break
@@ -7623,6 +7632,7 @@ type Query {
   operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
+  possibleOperationalSolutions: [PossibleOperationalSolution!]!
 }
 
 """
@@ -41982,6 +41992,66 @@ func (ec *executionContext) fieldContext_Query_possibleOperationalNeeds(ctx cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_possibleOperationalSolutions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().PossibleOperationalSolutions(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PossibleOperationalSolution)
+	fc.Result = res
+	return ec.marshalNPossibleOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPossibleOperationalSolutionᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PossibleOperationalSolution_id(ctx, field)
+			case "name":
+				return ec.fieldContext_PossibleOperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PossibleOperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PossibleOperationalSolution_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PossibleOperationalSolution_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PossibleOperationalSolution", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -50214,6 +50284,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_possibleOperationalNeeds(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "possibleOperationalSolutions":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_possibleOperationalSolutions(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
