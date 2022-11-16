@@ -83,14 +83,14 @@ const listOfSubpageKey = [
 ];
 
 export type SubpageKey = typeof listOfSubpageKey[number];
-const isSubPage = (x: string): x is SubpageKey => listOfSubpageKey.includes(x);
+const isSubPage = (x: SubpageKey): boolean => listOfSubpageKey.includes(x);
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
   const {
-    modelID = `${isHelpArticle ? SAMPLE_MODEL_UUID_STRING : ''}`,
+    modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
     subinfo
   } = useParams<{
     modelID: string;
