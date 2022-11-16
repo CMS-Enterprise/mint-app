@@ -26,7 +26,6 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.Nil(gc.HasComponentsOrTracks)
 	suite.Nil(gc.HasComponentsOrTracksDiffer)
 	suite.Nil(gc.HasComponentsOrTracksNote)
-	suite.Nil(gc.AlternativePaymentModel)
 	suite.Nil(gc.AlternativePaymentModelTypes)
 	suite.Nil(gc.AlternativePaymentModelNote)
 	suite.Nil(gc.KeyCharacteristics)
@@ -80,7 +79,6 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 		"hasComponentsOrTracks":        true,
 		"hasComponentsOrTracksDiffer":  "One track does something one way, the other does it another way",
 		"hasComponentsOrTracksNote":    "Look at the tracks carefully",
-		"alternativePaymentModel":      true,
 		"alternativePaymentModelTypes": []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
 		"AlternativePaymentModelNote":  "Has 2 APM types!",
 	}
@@ -92,7 +90,6 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.True(*updatedGeneralCharacteristics.HasComponentsOrTracks)
 	suite.EqualValues("One track does something one way, the other does it another way", *updatedGeneralCharacteristics.HasComponentsOrTracksDiffer)
 	suite.EqualValues("Look at the tracks carefully", *updatedGeneralCharacteristics.HasComponentsOrTracksNote)
-	suite.True(*updatedGeneralCharacteristics.AlternativePaymentModel)
 	suite.EqualValues([]string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
 	suite.EqualValues("Has 2 APM types!", *updatedGeneralCharacteristics.AlternativePaymentModelNote)
 	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)

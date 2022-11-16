@@ -10,7 +10,6 @@ SELECT
     has_components_or_tracks,
     has_components_or_tracks_differ,
     has_components_or_tracks_note,
-    alternative_payment_model,
     alternative_payment_model_types,
     alternative_payment_model_note,
     key_characteristics,

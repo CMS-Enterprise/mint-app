@@ -29,6 +29,7 @@ export enum AgreementType {
 export enum AlternativePaymentModelType {
   ADVANCED = "ADVANCED",
   MIPS = "MIPS",
+  NOT_APM = "NOT_APM",
   REGULAR = "REGULAR",
 }
 
@@ -870,7 +871,6 @@ export interface PlanGeneralCharacteristicsChanges {
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;
-  alternativePaymentModel?: boolean | null;
   alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
