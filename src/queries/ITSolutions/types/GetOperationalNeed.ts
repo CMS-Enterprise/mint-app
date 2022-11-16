@@ -15,6 +15,7 @@ export interface GetOperationalNeed_operationalNeed_solutions {
   name: string | null;
   key: OperationalSolutionKey | null;
   pocName: string | null;
+  pocEmail: string | null;
   needed: boolean | null;
   nameOther: string | null;
 }

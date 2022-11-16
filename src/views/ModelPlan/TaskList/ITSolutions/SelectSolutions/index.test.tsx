@@ -29,6 +29,7 @@ const operationalNeed: GetOperationalNeedType = {
       __typename: 'OperationalSolution',
       id: '00000000-0000-0000-0000-000000000000',
       name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+      pocEmail: '',
       key: OperationalSolutionKey.RMADA,
       needed: null,
       pocName: 'John Doe',

@@ -44,9 +44,10 @@ type OperationalSolutionFormType = {
 };
 
 const AddSolution = () => {
-  const { modelID, operationalNeedID } = useParams<{
+  const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
+    operationalSolutionID?: string;
   }>();
 
   const history = useHistory();
@@ -75,7 +76,7 @@ const AddSolution = () => {
 
   // Default formik value
   const additionalSolution: OperationalSolutionFormType = {
-    key: ''
+    key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
   };
 
   const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
@@ -268,19 +269,20 @@ const AddSolution = () => {
                             </Field>
 
                             {values.key ===
-                              OperationalSolutionKey.OTHER_NEW_PROCESS && (
-                              <Button
-                                type="button"
-                                className="usa-button usa-button--outline margin-top-3"
-                                onClick={() => {
-                                  history.push(
-                                    `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
-                                  );
-                                }}
-                              >
-                                {t('addSolutionDetails')}
-                              </Button>
-                            )}
+                              OperationalSolutionKey.OTHER_NEW_PROCESS &&
+                              !operationalSolutionID && (
+                                <Button
+                                  type="button"
+                                  className="usa-button usa-button--outline margin-top-3"
+                                  onClick={() => {
+                                    history.push(
+                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                    );
+                                  }}
+                                >
+                                  {t('addSolutionDetails')}
+                                </Button>
+                              )}
                           </FieldGroup>
 
                           <div className="margin-top-6 margin-bottom-3">

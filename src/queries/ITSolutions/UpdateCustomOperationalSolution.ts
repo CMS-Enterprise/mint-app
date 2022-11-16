@@ -12,6 +12,7 @@ export default gql`
       changes: $changes
     ) {
       id
+      nameOther
       needed
       key
     }

@@ -6,7 +6,9 @@ import {
   Card,
   Checkbox,
   Grid,
-  IconArrowForward
+  IconArrowForward,
+  IconLaunch,
+  Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
@@ -30,6 +32,7 @@ const CheckboxCard = ({
   index
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('generalReadOnly');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -37,7 +40,9 @@ const CheckboxCard = ({
 
   const history = useHistory();
 
-  const id = `it-solutions-${solution?.key?.toLowerCase()}`;
+  const id = solution?.nameOther
+    ? `it-solutions-${solution?.nameOther?.toLowerCase()}`
+    : `it-solutions-${solution?.key?.toLowerCase()}`;
 
   const tempDescription: string =
     'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
@@ -69,7 +74,19 @@ const CheckboxCard = ({
             <>
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-top-0">{solution.pocName}</p>
+              <p className="margin-y-0">{solution.pocName}</p>
+
+              <Link
+                aria-label={h('contactInfo.sendAnEmail')}
+                className="line-height-body-5"
+                href={`mailto:${solution.pocEmail}`}
+                target="_blank"
+              >
+                <div className="margin-bottom-2">
+                  {solution.pocEmail}
+                  <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
+                </div>
+              </Link>
             </>
           )}
 

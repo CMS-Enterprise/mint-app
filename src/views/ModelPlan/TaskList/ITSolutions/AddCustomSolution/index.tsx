@@ -29,7 +29,10 @@ import {
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
+import {
+  UpdateCustomOperationalSolution as UpdateCustomOperationalSolutionType,
+  UpdateCustomOperationalSolutionVariables
+} from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -45,7 +48,8 @@ type CustomOperationalSolutionFormType = Omit<
 const initialValues: CustomOperationalSolutionFormType = {
   nameOther: '',
   pocName: '',
-  pocEmail: ''
+  pocEmail: '',
+  needed: false
 };
 
 const AddCustomSolution = () => {
@@ -81,11 +85,10 @@ const AddCustomSolution = () => {
 
   const customOperationalSolution = data?.operationalSolution || initialValues;
 
-  const [
-    updateCustomSolution
-  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
-    UpdateCustomOperationalSolution
-  );
+  const [updateCustomSolution] = useMutation<
+    UpdateCustomOperationalSolutionType,
+    UpdateCustomOperationalSolutionVariables
+  >(UpdateCustomOperationalSolution);
 
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
@@ -95,9 +98,9 @@ const AddCustomSolution = () => {
     updateCustomSolution({
       variables: {
         operationalNeedID,
-        customSolutionType: nameOther,
+        customSolutionType: nameOther || '',
         changes: {
-          needed: true,
+          needed: customOperationalSolution.needed,
           status: OpSolutionStatus.IN_PROGRESS,
           pocEmail,
           pocName
@@ -105,11 +108,11 @@ const AddCustomSolution = () => {
       }
     })
       .then(response => {
-        if (response && !response.errors) {
+        if (response && !response.errors && response.data) {
           setMutationError(false);
           if (!operationalSolutionID) {
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${response.data.addOrUpdateCustomOperationalSolution.id}`
             );
           } else {
             history.goBack();

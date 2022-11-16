@@ -16,6 +16,7 @@ const solution = [
     key: OperationalSolutionKey.RMADA,
     needed: true,
     pocName: 'John Doe',
+    pocEmail: '',
     nameOther: null
   }
 ];

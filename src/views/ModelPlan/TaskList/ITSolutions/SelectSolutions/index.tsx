@@ -263,7 +263,7 @@ const SelectSolutions = () => {
                                 <CheckboxCard
                                   solution={solution}
                                   index={index}
-                                  key={solution.name || solution.nameOther}
+                                  key={solution.nameOther || solution.name}
                                 />
                               )
                             )}

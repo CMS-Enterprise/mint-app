@@ -14,6 +14,7 @@ export default gql`
         name
         key
         pocName
+        pocEmail
         needed
         nameOther
       }
