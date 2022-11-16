@@ -1620,8 +1620,7 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NOT_APPLICABLE' ||
     b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
     b === 'NOT_PLANNING_TO_SEND_DATA' ||
-    b === 'NO_LEARNING_SYSTEM' ||
-    b === 'OTHER_NEW_PROCESS'
+    b === 'NO_LEARNING_SYSTEM'
   )
     return -1;
   if (a < b || b === 'OTHER') {
@@ -1638,15 +1637,14 @@ export const sortPossibleOperationalNeeds = (
   a: { name: string },
   b: { name: string }
 ) => {
-  if (a.name === 'Other new process' || b.name === 'Other new process') {
-    return 0;
-  }
-  if (a.name < b.name) {
-    return -1;
-  }
-  if (a.name > b.name) {
-    return 1;
-  }
+  if (a.name === 'Other new process') return 1;
+
+  if (b.name === 'Other new process') return -1;
+
+  if (a.name < b.name) return -1;
+
+  if (a.name > b.name) return 1;
+
   return 0;
 };
 
