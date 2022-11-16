@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
-import helpAndKnowledgeArticles, {
-  ArticleTypeProps
-} from 'views/HelpAndKnowledge/Articles';
+import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
 
 export type ArticleRouteProps = {
   type: string;
