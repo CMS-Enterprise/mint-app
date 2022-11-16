@@ -5,11 +5,9 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Tag
+  CardHeader
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { encodeURL } from 'js-base64';
 
 import HelpTag from 'components/HelpTag';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -19,9 +17,9 @@ import './index.scss';
 
 type ArticleCardProps = {
   className?: string;
-  isLink?: boolean;
   route: string;
   translation: string;
+  isLink?: boolean;
   tag?: boolean;
 };
 
