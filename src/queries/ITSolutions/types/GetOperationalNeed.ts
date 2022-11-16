@@ -14,6 +14,7 @@ export interface GetOperationalNeed_operationalNeed_solutions {
   id: UUID;
   name: string | null;
   key: OperationalSolutionKey | null;
+  pocName: string | null;
   needed: boolean | null;
   nameOther: string | null;
 }

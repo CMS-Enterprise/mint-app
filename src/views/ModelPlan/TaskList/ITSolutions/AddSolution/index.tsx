@@ -21,6 +21,7 @@ import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
 import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
@@ -212,6 +213,7 @@ const AddSolution = () => {
                           >
                             <Label htmlFor="it-solutions-key">
                               {t('howWillYouSolve')}
+                              <RequiredAsterisk />
                             </Label>
 
                             <p className="text-base margin-y-1 line-height-body-4">
@@ -226,9 +228,7 @@ const AddSolution = () => {
                               name="key"
                               value={values.key}
                             >
-                              <option key="default-select" disabled value="">
-                                {`-${h('select')}-`}
-                              </option>
+                              <option key="default-select" disabled value="" />
                               {[...possibleOperationalSolutions]
                                 .sort(sortPossibleOperationalNeeds)
                                 .map(solution => {

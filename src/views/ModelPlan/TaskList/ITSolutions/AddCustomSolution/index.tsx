@@ -21,6 +21,7 @@ import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
@@ -140,7 +141,15 @@ const AddCustomSolution = () => {
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('addSolution')}</Breadcrumb>
+        <Breadcrumb>
+          <BreadcrumbLink
+            asCustom={UswdsReactLink}
+            to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`}
+          >
+            <span>{t('addSolution')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb current>{t('addSolutionDetails')}</Breadcrumb>
       </BreadcrumbBar>
 
       <Grid row gap>
@@ -217,6 +226,7 @@ const AddCustomSolution = () => {
                           >
                             <Label htmlFor="it-solution-custom-name">
                               {t('solutionName')}
+                              <RequiredAsterisk />
                             </Label>
 
                             <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>

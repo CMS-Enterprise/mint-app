@@ -57,7 +57,13 @@ const CheckboxCard = ({
             {/* {solution?.description} */}
           </div>
 
-          <p className="text-bold">{t('contact')}</p>
+          {solution.pocName && (
+            <>
+              <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+              <p className="margin-top-0">{solution.pocName}</p>
+            </>
+          )}
 
           <Divider />
 

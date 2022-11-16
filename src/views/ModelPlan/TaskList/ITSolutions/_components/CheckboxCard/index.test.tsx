@@ -15,6 +15,7 @@ const solution = [
     name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
     key: OperationalSolutionKey.RMADA,
     needed: true,
+    pocName: 'John Doe',
     nameOther: null
   }
 ];

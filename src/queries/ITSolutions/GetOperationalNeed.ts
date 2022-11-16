@@ -13,6 +13,7 @@ export default gql`
         id
         name
         key
+        pocName
         needed
         nameOther
       }
