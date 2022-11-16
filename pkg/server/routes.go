@@ -51,7 +51,7 @@ func (s *Server) routes(
 	oktaConfig := s.NewOktaClientConfig()
 	jwtVerifier := okta.NewJwtVerifier(oktaConfig.OktaClientID, oktaConfig.OktaIssuer)
 
-	oktaAuthenticationMiddleware, fact := okta.NewOktaAuthenticationMiddleware(
+	oktaMiddlewareFactory := okta.NewOktaMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		jwtVerifier,
 	)
@@ -60,7 +60,7 @@ func (s *Server) routes(
 		traceMiddleware, // trace all requests with an ID
 		loggerMiddleware,
 		corsMiddleware,
-		oktaAuthenticationMiddleware,
+		oktaMiddlewareFactory.NewAuthenticationMiddleware,
 	)
 
 	if s.NewLocalAuthIsEnabled() {
@@ -175,8 +175,7 @@ func (s *Server) routes(
 		}}
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.New(generated.NewExecutableSchema(gqlConfig))
-	var initFunc transport.WebsocketInitFunc
-	initFunc = fact.NewOktaWebSocketAuthenticationMiddleware(s.logger)
+	initFunc := oktaMiddlewareFactory.NewOktaWebSocketAuthenticationMiddleware(s.logger)
 	// if s.environment.Local() {
 	// 	initFunc = local.NewLocalWebSocketAuthenticationMiddleware(s.logger)
 	// } else {

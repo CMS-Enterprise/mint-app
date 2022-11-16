@@ -78,7 +78,7 @@ func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authenticati
 	}, nil
 }
 
-func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) http.Handler {
+func (f oktaMiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		logger := appcontext.ZLogger(r.Context())
 		authHeader := r.Header.Get("Authorization")
@@ -174,13 +174,13 @@ func (f oktaMiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *
 	}
 }
 
-// NewOktaAuthenticationMiddleware returns a wrapper for HandlerFunc to authorize with Okta
-func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtVerifier) (func(http.Handler) http.Handler, *oktaMiddlewareFactory) {
-	middlewareFactory := oktaMiddlewareFactory{
+// NewOktaMiddlewareFactory returns a factory creating Okta middleware functions
+func NewOktaMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier) *oktaMiddlewareFactory {
+	return &oktaMiddlewareFactory{
 		HandlerBase:       base,
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
 	}
-	return middlewareFactory.newAuthenticationMiddleware, &middlewareFactory
+	// return middlewareFactory.NewAuthenticationMiddleware, &middlewareFactory
 }
