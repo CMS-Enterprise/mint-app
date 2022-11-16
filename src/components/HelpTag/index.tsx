@@ -27,7 +27,7 @@ export default function HelpTag({ type }: ArticleTypeProps) {
   return (
     <UswdsReactLink
       to={`/help-and-knowledge/${articleType.route}`}
-      className="display-inline-block"
+      className="width-fit-content"
     >
       <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">
         {t(`${type}`)}
