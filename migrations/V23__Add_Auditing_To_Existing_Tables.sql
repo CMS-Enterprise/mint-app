@@ -4,7 +4,7 @@ SELECT audit.AUDIT_TABLE('public', 'plan_basics', 'id', 'model_plan_id', '{creat
 
 SELECT audit.AUDIT_TABLE('public', 'plan_beneficiaries', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
 
-SELECT audit.AUDIT_TABLE('public', 'plan_collaborator', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
+SELECT audit.AUDIT_TABLE('public', 'plan_collaborator', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{full_name}'::TEXT[]);
 
 SELECT audit.AUDIT_TABLE('public', 'plan_discussion', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
 

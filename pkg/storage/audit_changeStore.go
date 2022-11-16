@@ -16,6 +16,12 @@ var auditChangeCollectionByIDAndTable string
 //go:embed SQL/audit_change_collection_by_id_and_table_and_field.sql
 var auditChangeCollectionByIDAndTableAndField string
 
+//go:embed SQL/audit_change_collection_by_foreign_key_and_table_and_field_and_date.sql
+var auditChangeCollectionByForeignKeyAndTableAndDate string
+
+//go:embed SQL/audit_change_collection_by_foreign_key_and_table_and_field_and_date.sql
+var auditChangeCollectionByForeignKeyAndTableAndFieldAndDate string
+
 //go:embed SQL/audit_change_collection_by_id_and_table_and_field_and_date.sql
 var auditChangeCollectionByIDAndTableAndFieldAndDate string
 
@@ -97,6 +103,73 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndFieldAndDate(logger *zap.Log
 		"field_name": fieldName,
 		"start_date": date.Format("2006-01-02"),
 		"end_date":   date.AddDate(0, 0, 1).Format("2006-01-02"),
+	}
+
+	err = stmt.Select(&auditChanges, arg)
+	if err != nil {
+		return nil, err
+
+	}
+
+	return auditChanges, nil
+
+}
+
+func (s *Store) AuditChangeCollectionByForeignKeyAndTableAndDate(logger *zap.Logger, tableName string, foreignKey uuid.UUID, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
+	auditChanges := []*models.AuditChange{}
+	orderedQuery := auditChangeCollectionByForeignKeyAndTableAndDate
+	orderClause := "" //default to ASCENDING
+	if sortDir == models.SortDesc {
+		orderClause = " ORDER BY 1 DESC"
+	}
+
+	orderedQuery = orderedQuery + orderClause
+
+	stmt, err := s.db.PrepareNamed(orderedQuery)
+	if err != nil {
+		return nil, err
+
+	}
+
+	arg := map[string]interface{}{
+		"foreign_key": foreignKey,
+		"table_name":  tableName,
+		"start_date":  date.Format("2006-01-02"),
+		"end_date":    date.AddDate(0, 0, 1).Format("2006-01-02"),
+	}
+
+	err = stmt.Select(&auditChanges, arg)
+	if err != nil {
+		return nil, err
+
+	}
+
+	return auditChanges, nil
+
+}
+
+func (s *Store) AuditChangeCollectionByForeignKeyAndTableAndFieldAndDate(logger *zap.Logger, tableName string, foreignKey uuid.UUID, fieldName string, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
+	auditChanges := []*models.AuditChange{}
+	orderedQuery := auditChangeCollectionByForeignKeyAndTableAndFieldAndDate
+	orderClause := "" //default to ASCENDING
+	if sortDir == models.SortDesc {
+		orderClause = " ORDER BY 1 DESC"
+	}
+
+	orderedQuery = orderedQuery + orderClause
+
+	stmt, err := s.db.PrepareNamed(orderedQuery)
+	if err != nil {
+		return nil, err
+
+	}
+
+	arg := map[string]interface{}{
+		"foreign_key": foreignKey,
+		"table_name":  tableName,
+		"field_name":  fieldName,
+		"start_date":  date.Format("2006-01-02"),
+		"end_date":    date.AddDate(0, 0, 1).Format("2006-01-02"),
 	}
 
 	err = stmt.Select(&auditChanges, arg)
