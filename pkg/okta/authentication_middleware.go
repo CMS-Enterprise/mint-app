@@ -1,11 +1,13 @@
 package okta
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/http"
 	"strings"
 
+	"github.com/99designs/gqlgen/graphql/handler/transport"
 	jwtverifier "github.com/okta/okta-jwt-verifier-golang"
 	"go.uber.org/zap"
 
@@ -139,13 +141,46 @@ type oktaMiddlewareFactory struct {
 	jobCodeAssessment string
 }
 
+// NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
+// the websocket connection payload to authenticate an Okta user.
+func (f oktaMiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
+	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+		// Get the token from payload
+		all := initPayload
+		fmt.Println("ALL OF EM BABY (OKTA)", all)
+		any := initPayload["authToken"]
+		token, ok := any.(string)
+		if !ok || token == "" {
+			return nil, errors.New("authToken not found in transport payload")
+		}
+
+		// Parse auth header into JWT object
+		jwt, err := f.jwt(logger, token)
+		if err != nil {
+			fmt.Println("ERROR PARSING JWT", err)
+			// TODO How to error handle here?
+		}
+
+		// devCtx, err := devUserContext(ctx, token)
+		principal, err := f.newPrincipal(jwt)
+		if err != nil {
+			logger.Error("could not set context for okta auth", zap.Error(err))
+			return nil, err
+		}
+
+		oktaCtx := appcontext.WithPrincipal(ctx, principal)
+
+		return oktaCtx, nil
+	}
+}
+
 // NewOktaAuthenticationMiddleware returns a wrapper for HandlerFunc to authorize with Okta
-func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtVerifier) func(http.Handler) http.Handler {
+func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtVerifier) (func(http.Handler) http.Handler, *oktaMiddlewareFactory) {
 	middlewareFactory := oktaMiddlewareFactory{
 		HandlerBase:       base,
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
 	}
-	return middlewareFactory.newAuthenticationMiddleware
+	return middlewareFactory.newAuthenticationMiddleware, &middlewareFactory
 }
