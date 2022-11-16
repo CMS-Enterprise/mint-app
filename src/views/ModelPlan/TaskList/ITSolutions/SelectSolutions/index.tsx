@@ -1,8 +1,9 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -17,6 +18,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import {
   GetOperationalNeed as GetOperationalNeedType,
@@ -59,6 +61,10 @@ const SelectSolutions = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { showMessageOnNextPage } = useMessage();
+
+  const [mutationError, setMutationError] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
     null
@@ -122,12 +128,24 @@ const SelectSolutions = () => {
       const errors = response?.find(result => result?.errors);
 
       if (response && !errors) {
+        setMutationError(false);
+
+        showMessageOnNextPage(
+          <Alert type="success" slim className="margin-y-4">
+            <span className="mandatory-fields-alert__text">
+              {t('successSolutionAdded', {
+                operationalNeedName: operationalNeed.name
+              })}
+            </span>
+          </Alert>
+        );
+
         history.push(`/models/${modelID}/task-list/it-solutions`);
       } else if (errors) {
-        formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
+        setMutationError(true);
       }
     } catch (errors) {
-      formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
+      setMutationError(true);
     }
   };
 
@@ -161,6 +179,12 @@ const SelectSolutions = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
       </BreadcrumbBar>
+
+      {mutationError && (
+        <Alert type="error" slim>
+          {t('addError')}
+        </Alert>
+      )}
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>

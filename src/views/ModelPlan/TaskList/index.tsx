@@ -25,6 +25,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
@@ -215,7 +216,11 @@ const TaskList = () => {
             />
           </ErrorAlert>
         )}
-        {loading && <div className="height-viewport" />}
+        {loading && (
+          <div className="height-viewport">
+            <PageLoading />
+          </div>
+        )}
         {!loading && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>

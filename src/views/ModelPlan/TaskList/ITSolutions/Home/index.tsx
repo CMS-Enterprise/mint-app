@@ -12,6 +12,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
+import useMessage from 'hooks/useMessage';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import HelpBox from '../_components/HelpBox';
@@ -23,6 +24,8 @@ const ITSolutionsHome = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { message } = useMessage();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -44,6 +47,9 @@ const ITSolutionsHome = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
+      {message}
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {t('heading')}
       </PageHeading>

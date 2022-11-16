@@ -125,8 +125,11 @@ const itSolutions = {
   solutionEmailInfo: 'Email or other contact information',
   otherSolution: 'Other',
   updateTheseDetails: 'Update these details',
+  addError:
+    'There was an error adding your solution details. Please try again.',
   updateError:
-    'There was an error updating your solution details. Please try again.'
+    'There was an error updating your solution details. Please try again.',
+  successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}'
 };
 
 export default itSolutions;
