@@ -35,6 +35,7 @@ import {
 } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -58,21 +59,20 @@ const Overview = () => {
   const { modelName } = data?.modelPlan || {};
 
   const { id, modelType, problem, goal, testInterventions, note } =
-    data?.modelPlan?.basics || {};
+    data?.modelPlan?.basics || ({} as BasicsFormType);
 
   const [update] = useMutation<UpdatePlanBasicsType, UpdatePlanBasicsVariables>(
     UpdatePlanBasics
   );
 
-  const handleFormSubmit = (
-    formikValues: BasicsFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -138,8 +138,8 @@ const Overview = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         validationSchema={planBasicsSchema.pageTwoSchema}
@@ -263,7 +263,7 @@ const Overview = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
-                    onClick={() => handleFormSubmit(values, 'back')}
+                    onClick={() => handleFormSubmit('back')}
                   >
                     {h('back')}
                   </Button>
@@ -279,7 +279,7 @@ const Overview = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -289,7 +289,7 @@ const Overview = () => {
                 values={values}
                 onSave={() => {
                   if (Object.keys(formikRef.current!.touched).length !== 0) {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }
                 }}
                 debounceDelay={3000}

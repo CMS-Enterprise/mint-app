@@ -33,6 +33,7 @@ import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearnin
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { DataFrequencyType, DataStartsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   sortOtherEnum,
@@ -85,15 +86,14 @@ const DataSharing = () => {
     UpdatePlanOpsEvalAndLearning
   );
 
-  const handleFormSubmit = (
-    formikValues: GetDataSharingFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -103,7 +103,9 @@ const DataSharing = () => {
               `/models/${modelID}/task-list/ops-eval-and-learning/learning`
             );
           } else if (redirect === 'back') {
-            if (isCCWInvolvement(formikValues.ccmInvolvment)) {
+            if (
+              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment || [])
+            ) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
               );
@@ -179,8 +181,8 @@ const DataSharing = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -526,7 +528,7 @@ const DataSharing = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -538,7 +540,7 @@ const DataSharing = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -549,7 +551,7 @@ const DataSharing = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />
