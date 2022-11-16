@@ -1,4 +1,4 @@
-export type ArticleProps = {
+type ArticleProps = {
   name: string;
   route: string;
   translation: string;
