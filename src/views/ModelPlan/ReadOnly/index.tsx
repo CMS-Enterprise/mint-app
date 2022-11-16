@@ -83,7 +83,7 @@ const listOfSubpageKey = [
 ];
 
 export type SubpageKey = typeof listOfSubpageKey[number];
-const isSubPage = (x: any): x is SubpageKey => listOfSubpageKey.includes(x);
+const isSubPage = (x: string): x is SubpageKey => listOfSubpageKey.includes(x);
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
