@@ -3,7 +3,8 @@ CREATE TYPE TEAM_ROLE AS ENUM (
     'MODEL_TEAM',
     'LEADERSHIP',
     'LEARNING',
-    'EVALUATION'
+    'EVALUATION',
+    'IT_LEAD'
 );
 CREATE TABLE plan_collaborator (
     id UUID PRIMARY KEY NOT NULL,

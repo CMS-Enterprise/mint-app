@@ -7793,6 +7793,7 @@ enum TeamRole {
   LEADERSHIP
   LEARNING
   EVALUATION
+  IT_LEAD
 }
 
 enum ModelType
