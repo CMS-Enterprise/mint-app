@@ -2,18 +2,19 @@
 
 # Expected environment variables
 # ECR_REGISTRY
-# ECR_REPO
+# ECR_REPOSITORY
 # NEW_IMAGE_TAG
 # TASK_FAMILY
 # AWS_REGION
 # ECS_CLUSTER
 # SERVICE_NAME
+# APP_ENV
 
 # fail on any error
 set -eu 
 
 # Construct full ECR Image path
-ECR_IMAGE="${ECR_REGISTRY}/${ECR_REPO}:${NEW_IMAGE_TAG}"
+ECR_IMAGE="${ECR_REGISTRY}/${ECR_REPOSITORY}:${NEW_IMAGE_TAG}"
 
 # Get existing task definition
 TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "$AWS_REGION")
@@ -36,7 +37,7 @@ aws ecs update-service --cluster "${ECS_CLUSTER}" \
                        --task-definition "${TASK_FAMILY}:${NEW_REVISION}"
 
 # Run the healthcheck script 
-./healthcheck.sh
+./scripts/healthcheck $NEW_IMAGE_TAG
 
 # Grab the old revision from TASK_DEFINITION
 OLD_REVISION=$(echo "$TASK_DEFINITION" | jq '.taskDefinition.revision')
