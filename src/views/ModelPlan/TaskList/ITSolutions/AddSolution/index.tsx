@@ -24,7 +24,9 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
 import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
+import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
+import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import {
   OperationalSolutionKey,
@@ -80,35 +82,57 @@ const AddSolution = () => {
     UpdateOperationalNeedSolution
   );
 
+  const [
+    updateCustomSolution
+  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
+    UpdateCustomOperationalSolution
+  );
+
   const handleFormSubmit = async (
     formikValues: OperationalSolutionFormType
   ) => {
     const { key } = formikValues;
 
-    updateSolution({
-      variables: {
-        operationalNeedID,
-        solutionType: key,
-        changes: {
-          needed: true,
-          status: OpSolutionStatus.IN_PROGRESS
-        }
+    let updateMutation;
+
+    try {
+      if (key !== OperationalSolutionKey.OTHER_NEW_PROCESS) {
+        updateMutation = await updateSolution({
+          variables: {
+            operationalNeedID,
+            solutionType: key,
+            changes: {
+              needed: true,
+              status: OpSolutionStatus.IN_PROGRESS
+            }
+          }
+        });
+      } else {
+        updateMutation = await updateCustomSolution({
+          variables: {
+            operationalNeedID,
+            customSolutionType: t('otherSolution'),
+            changes: {
+              needed: true
+            }
+          }
+        });
       }
-    })
-      .then(response => {
-        if (response && !response.errors) {
-          history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
-          );
-        } else if (response.errors) {
-          formikRef?.current?.setErrors({
-            key: JSON.stringify(response.errors)
-          });
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+    } catch (errors) {
+      formikRef?.current?.setErrors({
+        key: JSON.stringify(errors)
       });
+    }
+
+    if (updateMutation && !updateMutation.errors) {
+      history.push(
+        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+      );
+    } else if (!updateMutation || updateMutation.errors) {
+      formikRef?.current?.setErrors({
+        key: JSON.stringify(updateMutation?.errors)
+      });
+    }
   };
 
   if (error) {

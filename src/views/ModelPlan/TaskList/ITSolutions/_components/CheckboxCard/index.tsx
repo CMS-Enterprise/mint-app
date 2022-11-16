@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -29,6 +30,13 @@ const CheckboxCard = ({
   index
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
+  const { modelID, operationalNeedID } = useParams<{
+    modelID: string;
+    operationalNeedID: string;
+  }>();
+
+  const history = useHistory();
+
   const id = `it-solutions-${solution?.key?.toLowerCase()}`;
 
   const tempDescription: string =
@@ -67,13 +75,28 @@ const CheckboxCard = ({
 
           <Divider />
 
-          <Button
-            type="button"
-            className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
-          >
-            {t('aboutSolution')}
-            <IconArrowForward className="margin-left-1" />
-          </Button>
+          {solution.nameOther ? (
+            <Button
+              type="button"
+              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+              onClick={() =>
+                history.push(
+                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`
+                )
+              }
+            >
+              {t('updateTheseDetails')}
+              <IconArrowForward className="margin-left-1" />
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+            >
+              {t('aboutSolution')}
+              <IconArrowForward className="margin-left-1" />
+            </Button>
+          )}
         </div>
       </Card>
     </Grid>

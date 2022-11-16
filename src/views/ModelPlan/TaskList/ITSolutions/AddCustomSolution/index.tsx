@@ -1,8 +1,9 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -42,7 +43,7 @@ type CustomOperationalSolutionFormType = Omit<
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {
-  name: '',
+  nameOther: '',
   pocName: '',
   pocEmail: ''
 };
@@ -58,6 +59,8 @@ const AddCustomSolution = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const [mutationError, setMutationError] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<CustomOperationalSolutionFormType>>(
     null
@@ -87,12 +90,12 @@ const AddCustomSolution = () => {
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
   ) => {
-    const { name, pocName, pocEmail } = formikValues;
+    const { nameOther, pocName, pocEmail } = formikValues;
 
     updateCustomSolution({
       variables: {
         operationalNeedID,
-        customSolutionType: name,
+        customSolutionType: nameOther,
         changes: {
           needed: true,
           status: OpSolutionStatus.IN_PROGRESS,
@@ -103,17 +106,20 @@ const AddCustomSolution = () => {
     })
       .then(response => {
         if (response && !response.errors) {
-          history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
-          );
+          setMutationError(false);
+          if (!operationalSolutionID) {
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+            );
+          } else {
+            history.goBack();
+          }
         } else if (response.errors) {
-          formikRef?.current?.setErrors({
-            name: JSON.stringify(response.errors)
-          });
+          setMutationError(true);
         }
       })
       .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+        setMutationError(true);
       });
   };
 
@@ -149,13 +155,25 @@ const AddCustomSolution = () => {
             <span>{t('addSolution')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('addSolutionDetails')}</Breadcrumb>
+        <Breadcrumb current>
+          {operationalSolutionID
+            ? t('updateSolutionDetails')
+            : t('addSolutionDetails')}
+        </Breadcrumb>
       </BreadcrumbBar>
+
+      {mutationError && (
+        <Alert type="error" slim>
+          {t('updateError')}
+        </Alert>
+      )}
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addSolution')}
+            {operationalSolutionID
+              ? t('updateSolutionDetails')
+              : t('addSolution')}
           </PageHeading>
 
           <p
@@ -220,23 +238,25 @@ const AddCustomSolution = () => {
                       >
                         <Fieldset disabled={loading}>
                           <FieldGroup
-                            scrollElement="name"
-                            error={!!flatErrors.name}
+                            scrollElement="nameOther"
+                            error={!!flatErrors.nameOther}
                             className="margin-top-3"
                           >
-                            <Label htmlFor="it-solution-custom-name">
+                            <Label htmlFor="it-solution-custom-name-other">
                               {t('solutionName')}
                               <RequiredAsterisk />
                             </Label>
 
-                            <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
+                            <FieldErrorMsg>
+                              {flatErrors.nameOther}
+                            </FieldErrorMsg>
 
                             <Field
                               as={TextInput}
-                              error={!!flatErrors.name}
-                              id="it-solution-custom-name"
+                              error={!!flatErrors.nameOther}
+                              id="it-solution-custom-name-other"
                               maxLength={50}
-                              name="name"
+                              name="nameOther"
                             />
                           </FieldGroup>
 
@@ -291,13 +311,11 @@ const AddCustomSolution = () => {
                             <Button
                               type="submit"
                               className="margin-bottom-1"
-                              disabled={
-                                !values.name ||
-                                !values.pocName ||
-                                !values.pocEmail
-                              }
+                              disabled={!values.nameOther}
                             >
-                              {t('addSolutionButton')}
+                              {operationalSolutionID
+                                ? t('updateSolutionDetails')
+                                : t('addSolutionButton')}
                             </Button>
                           </div>
 
@@ -305,17 +323,16 @@ const AddCustomSolution = () => {
                             type="button"
                             className="usa-button usa-button--unstyled display-flex flex-align-center"
                             onClick={() => {
-                              history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
-                              );
+                              history.goBack();
                             }}
                           >
                             <IconArrowBack
                               className="margin-right-1"
                               aria-hidden
                             />
-
-                            {t('dontAddSolution')}
+                            {operationalSolutionID
+                              ? t('dontUpdateSolution')
+                              : t('dontAddSolution')}
                           </Button>
                         </Fieldset>
                       </Form>

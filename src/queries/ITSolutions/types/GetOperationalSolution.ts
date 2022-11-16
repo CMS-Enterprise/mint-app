@@ -13,7 +13,7 @@ export interface GetOperationalSolution_operationalSolution {
   __typename: "OperationalSolution";
   id: UUID;
   key: OperationalSolutionKey | null;
-  name: string | null;
+  nameOther: string | null;
   pocName: string | null;
   pocEmail: string | null;
 }

@@ -5,7 +5,7 @@ export default gql`
     operationalSolution(id: $id) {
       id
       key
-      name
+      nameOther
       pocName
       pocEmail
     }

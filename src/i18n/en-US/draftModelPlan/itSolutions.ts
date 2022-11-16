@@ -117,11 +117,16 @@ const itSolutions = {
   addSolutionButton: 'Add solution',
   addSolutionDetails: 'Add solution details',
   dontAddSolution: 'Don’t add and return to previous page',
+  dontUpdateSolution: 'Don’t update and return to previous page',
   updateSolutionDetails: 'Update solution details',
   solutionName: 'Please add a name for your solution',
   solutionPOC: 'Point of contact information',
   solutionPOCInfo: 'Point of contact',
-  solutionEmailInfo: 'Email or other contact information'
+  solutionEmailInfo: 'Email or other contact information',
+  otherSolution: 'Other',
+  updateTheseDetails: 'Update these details',
+  updateError:
+    'There was an error updating your solution details. Please try again.'
 };
 
 export default itSolutions;
