@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/lib/pq"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
 
 	"github.com/google/uuid"
@@ -31,10 +33,12 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 	documentIDs []uuid.UUID,
 	principal authentication.Principal,
 ) ([]*models.PlanDocumentSolutionLink, error) {
+
+	docIDs := convertToStringArray(documentIDs)
 	arg := map[string]interface{}{
 		"solution_id":  solutionID,
-		"document_ids": documentIDs,
-		"modified_by":  principal.ID(),
+		"document_ids": docIDs,
+		"created_by":   principal.ID(),
 	}
 
 	var ret []*models.PlanDocumentSolutionLink
@@ -86,4 +90,16 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	}
 
 	return solutionLinks, nil
+}
+
+// convertToStringArray converts a UUID array to a string array so sqlx can understand the type
+func convertToStringArray(uuidArray []uuid.UUID) pq.StringArray {
+
+	stringArray := pq.StringArray{}
+
+	for i := 0; i < len(uuidArray); i++ {
+		stringArray = append(stringArray, uuidArray[i].String())
+	}
+	return stringArray
+
 }

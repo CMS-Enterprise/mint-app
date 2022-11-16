@@ -1,7 +1,7 @@
 WITH PlanDocumentSolutionLink AS (
     SELECT
-        unnest((:document_ids)::UUID[]) AS DocumentID,
-        :solution_id AS SolutionID,
+        unnest(cast(:document_ids AS UUID[])) AS DocumentID,
+        cast(:solution_id AS UUID) AS SolutionID,
         :created_by AS CreatedBy
 )
 
