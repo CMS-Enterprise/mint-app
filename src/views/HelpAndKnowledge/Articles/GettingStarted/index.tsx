@@ -6,6 +6,8 @@ import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
+import HelpCardGroup from '../_components/HelpCardGroup';
+
 const GettingStarted = () => {
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -14,7 +16,13 @@ const GettingStarted = () => {
       <GridContainer>
         <Grid>
           <HelpBreadcrumb text={t('gettingStarted')} />
-          <PageHeading>{t('gettingStarted')}</PageHeading>
+          <PageHeading className="margin-bottom-1">
+            {t('gettingStarted')}
+          </PageHeading>
+          <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
+            {t('gettingStartedInstructions')}
+          </p>
+          <HelpCardGroup className="margin-y-2" />
         </Grid>
       </GridContainer>
     </MainContent>
