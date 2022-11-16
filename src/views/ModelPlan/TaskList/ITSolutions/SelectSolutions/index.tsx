@@ -23,7 +23,9 @@ import {
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
+import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import {
   OperationalNeedKey,
@@ -79,6 +81,12 @@ const SelectSolutions = () => {
     UpdateOperationalNeedSolution
   );
 
+  const [
+    updateCustomSolution
+  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
+    UpdateCustomOperationalSolution
+  );
+
   const handleFormSubmit = async (
     formikValues: GetOperationalNeedOperationalNeedType
   ) => {
@@ -87,20 +95,31 @@ const SelectSolutions = () => {
     try {
       const response = await Promise.all(
         solutions.map(solution => {
-          return updateSolution({
+          if (solution.key) {
+            return updateSolution({
+              variables: {
+                operationalNeedID,
+                solutionType: solution.key,
+                changes: {
+                  needed: solution.needed || false,
+                  status: OpSolutionStatus.IN_PROGRESS
+                }
+              }
+            });
+          }
+          return updateCustomSolution({
             variables: {
               operationalNeedID,
-              solutionType: solution.key,
+              customSolutionType: solution.nameOther,
               changes: {
-                needed: solution.needed || false,
-                status: OpSolutionStatus.IN_PROGRESS
+                needed: solution.needed || false
               }
             }
           });
         })
       );
 
-      const errors = response?.find(result => result.errors);
+      const errors = response?.find(result => result?.errors);
 
       if (response && !errors) {
         history.push(`/models/${modelID}/task-list/it-solutions`);

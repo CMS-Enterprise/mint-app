@@ -62,6 +62,20 @@ const operationalNeedMap: NeedMapType = {
     question: 'participantsAndProviders:participantCommunication',
     answer: 'translateCommunicationType'
   },
+  MANAGE_PROV_OVERLAP: {
+    route: 'participants-and-providers/provder-options',
+    fieldName: 'providerOverlap',
+    parentField: 'participantsAndProviders',
+    question: 'participantsAndProviders:overlap',
+    answer: 'translateOverlapType'
+  },
+  MANAGE_BEN_OVERLAP: {
+    route: 'beneficiaries/beneficiary-frequency',
+    fieldName: 'beneficiaryOverlap',
+    parentField: 'beneficiaries',
+    question: 'beneficiaries:beneficiaryOverlap',
+    answer: 'translateOverlapType'
+  },
   HELPDESK_SUPPORT: {
     route: 'ops-eval-and-learning',
     fieldName: 'helpdeskUse',

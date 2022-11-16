@@ -24,6 +24,7 @@ import {
   translateEvaluationApproachType,
   translateModelLearningSystemType,
   translateNonClaimsBasedPayType,
+  translateOverlapType,
   translateParticipantSelectiontType,
   translatePayType,
   translateRecruitmentType
@@ -60,7 +61,8 @@ const needsTranslations: NeedMapType = {
   translateModelLearningSystemType,
   translatePayType,
   translateNonClaimsBasedPayType,
-  translateAppealsQuestionType
+  translateAppealsQuestionType,
+  translateOverlapType
 };
 
 // Function to format operational need answers for both single and multipart answers
@@ -146,6 +148,7 @@ const NeedQuestionAndAnswer = ({
       id: modelID,
       generalCharacteristics: parentField === 'generalCharacteristics',
       participantsAndProviders: parentField === 'participantsAndProviders',
+      beneficiaries: parentField === 'beneficiaries',
       opsEvalAndLearning: parentField === 'opsEvalAndLearning',
       payments: parentField === 'payments',
       managePartCDEnrollment: fieldName === 'managePartCDEnrollment',
@@ -154,6 +157,8 @@ const NeedQuestionAndAnswer = ({
       recruitmentMethod: fieldName === 'recruitmentMethod',
       selectionMethod: fieldName === 'selectionMethod',
       communicationMethod: fieldName === 'communicationMethod',
+      providerOverlap: fieldName === 'providerOverlap',
+      beneficiaryOverlap: fieldName === 'beneficiaryOverlap',
       helpdeskUse: fieldName === 'helpdeskUse',
       iddocSupport: fieldName === 'iddocSupport',
       benchmarkForPerformance: fieldName === 'benchmarkForPerformance',

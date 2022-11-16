@@ -72,7 +72,7 @@ const AddCustomSolution = () => {
       // Query will be skipped if not present, need to default to string to appease ts
       id: operationalSolutionID || ''
     },
-    skip: !!operationalSolutionID
+    skip: !operationalSolutionID
   });
 
   const customOperationalSolution = data?.operationalSolution || initialValues;

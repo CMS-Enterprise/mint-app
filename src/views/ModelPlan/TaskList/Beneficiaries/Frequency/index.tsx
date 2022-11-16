@@ -116,6 +116,8 @@ const Frequency = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -289,12 +291,12 @@ const Frequency = () => {
                         error={!!flatErrors.beneficiaryOverlap}
                       >
                         <Label htmlFor="beneficiaries-overlap">
-                          {t('levelOfConfidence')}
+                          {t('beneficiaryOverlap')}
                         </Label>
 
                         {itSolutionsStarted && (
                           <ITToolsWarning
-                            id="plan-characteristics-collect-bids-warning"
+                            id="beneficiaries-overlap-warning"
                             onClick={() =>
                               handleFormSubmit(
                                 values,
@@ -315,7 +317,7 @@ const Frequency = () => {
                                 <Field
                                   as={Radio}
                                   id={`beneficiaries-overlap-${key}`}
-                                  name="beneficiaries-overlap"
+                                  name="beneficiariesOverlap"
                                   label={translateOverlapType(key)}
                                   value={key}
                                   checked={values.beneficiaryOverlap === key}
