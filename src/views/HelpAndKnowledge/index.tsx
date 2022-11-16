@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import NotFound from 'views/NotFound';
 
@@ -20,7 +20,13 @@ export const HelpAndKnowledge = () => {
         <ModelPlanOverview />
       </Route>
 
-      <Route path="/help-and-knowledge/sample-model-plan" exact>
+      <Redirect
+        exact
+        from="/help-and-knowledge/sample-model-plan"
+        to="/help-and-knowledge/sample-model-plan/model-basics"
+      />
+
+      <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />
       </Route>
 

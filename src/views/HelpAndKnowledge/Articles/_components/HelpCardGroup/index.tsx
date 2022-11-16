@@ -7,13 +7,23 @@ import helpAndKnowledgeArticles from '../..';
 
 type HelpCardGroupType = {
   className?: string;
+  filter?: string;
 };
 
-const HelpCardGroup = ({ className }: HelpCardGroupType) => {
+const HelpCardGroup = ({ className, filter }: HelpCardGroupType) => {
+  const articles = filter
+    ? helpAndKnowledgeArticles.filter(article => article.tag === filter)
+    : helpAndKnowledgeArticles;
+
   return (
     <CardGroup className={className}>
-      {helpAndKnowledgeArticles.map(article => (
-        <ArticleCard key={article.route} {...article} isLink />
+      {articles.map(article => (
+        <ArticleCard
+          key={article.route}
+          {...article}
+          isLink
+          tag={article.tag}
+        />
       ))}
     </CardGroup>
   );
