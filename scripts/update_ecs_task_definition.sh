@@ -37,7 +37,7 @@ aws ecs update-service --cluster "${ECS_CLUSTER}" \
                        --task-definition "${TASK_FAMILY}:${NEW_REVISION}"
 
 # Run the healthcheck script 
-./scripts/healthcheck $NEW_IMAGE_TAG
+./scripts/healthcheck "$NEW_IMAGE_TAG"
 
 # Grab the old revision from TASK_DEFINITION
 OLD_REVISION=$(echo "$TASK_DEFINITION" | jq '.taskDefinition.revision')
