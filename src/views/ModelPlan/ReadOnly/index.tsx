@@ -76,7 +76,7 @@ const listOfSubpageKey = [
   'beneficiaries',
   'operations-evaluation-and-learning',
   'payment',
-  'it-tools',
+  'it-solutions',
   'team',
   'discussions',
   'documents',
@@ -233,10 +233,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       helpRoute: '/help-and-knowledge/sample-model-plan/payment',
       component: <ReadOnlyPayments modelID={modelID} />
     },
-    'it-tools': {
-      route: `/models/${modelID}/read-only/it-tools`,
+    'it-solutions': {
+      route: `/models/${modelID}/read-only/it-solutions`,
       component: <ReadOnlyOperationalNeeds modelID={modelID} />,
-      helpRoute: '/help-and-knowledge/sample-model-plan/it-tools'
+      helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
@@ -478,7 +478,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         col:
                           subinfo === 'documents' ||
                           subinfo === 'crs-and-tdl' ||
-                          subinfo === 'it-tools'
+                          subinfo === 'it-solutions'
                             ? 12
                             : 8
                       }}
@@ -488,7 +488,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     {/* Contact info sidebar */}
                     {subinfo !== 'documents' &&
                       subinfo !== 'crs-and-tdl' &&
-                      subinfo !== 'it-tools' && (
+                      subinfo !== 'it-solutions' && (
                         <Grid
                           desktop={{ col: 4 }}
                           className={classnames({
