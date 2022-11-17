@@ -7,5 +7,5 @@ SELECT
     created_dts,
     modified_by,
     modified_dts
-FROM analyzed_model_change
+FROM analyzed_audit
 WHERE id = :id;

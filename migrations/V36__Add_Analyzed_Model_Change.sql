@@ -1,4 +1,4 @@
-CREATE TABLE analyzed_model_change (
+CREATE TABLE analyzed_audit (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     date TIMESTAMP NOT NULL,
@@ -11,8 +11,8 @@ CREATE TABLE analyzed_model_change (
     modified_dts TIMESTAMP WITH TIME ZONE
 
 );
-ALTER TABLE analyzed_model_change
-ADD CONSTRAINT fk_analyzed_model_change FOREIGN KEY (model_plan_id)
+ALTER TABLE analyzed_audit
+ADD CONSTRAINT fk_analyzed_audit FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION;

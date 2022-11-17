@@ -1,4 +1,4 @@
-INSERT INTO analyzed_model_change (
+INSERT INTO analyzed_audit (
     id,
     model_plan_id,
     date,

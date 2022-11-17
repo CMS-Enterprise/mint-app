@@ -2,7 +2,6 @@ package storage
 
 import (
 	_ "embed"
-	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -34,9 +33,6 @@ var discussionReplyCreateSQL string
 
 //go:embed SQL/discussion_reply_collection_by_discussion_id.sql
 var discussionReplyCollectionByDiscussionIDSQL string
-
-//go:embed SQL/discussion_reply_collection_by_model_plan_id_and_date.sql
-var discussionReplyCollectionByModelPlanIDAndDateSQL string
 
 //go:embed SQL/discussion_reply_update.sql
 var discussionReplyUpdateSQL string
@@ -101,37 +97,6 @@ func (s *Store) DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discu
 			"Failed to fetch discusion replies",
 			zap.Error(err),
 			zap.String("discussion_id", discussionID.String()),
-		)
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     replies,
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return replies, nil
-}
-
-func (s *Store) DiscussionReplyCollectionByModelPlanAndDateID(logger *zap.Logger, modelPlanID uuid.UUID, date time.Time) ([]*models.DiscussionReply, error) {
-	replies := []*models.DiscussionReply{}
-
-	stmt, err := s.db.PrepareNamed(discussionReplyCollectionByModelPlanIDAndDateSQL)
-	if err != nil {
-		return nil, err
-	}
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-		"start_date":    date.Format("2006-01-02"),
-		"end_date":      date.AddDate(0, 0, 1).Format("2006-01-02"),
-	}
-
-	err = stmt.Select(&replies, arg) //this returns more than one
-
-	if err != nil {
-		logger.Error(
-			"Failed to fetch discusion replies",
-			zap.Error(err),
-			zap.String("model_plan_id", modelPlanID.String()),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
