@@ -42,7 +42,7 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
-  '__typename' | 'id' | 'key'
+  '__typename' | 'id' | 'key' | 'name'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {
@@ -256,6 +256,7 @@ const AddCustomSolution = () => {
 
                             <Field
                               as={TextInput}
+                              disabled={!!operationalSolutionID}
                               error={!!flatErrors.nameOther}
                               id="it-solution-custom-name-other"
                               maxLength={50}
@@ -318,7 +319,7 @@ const AddCustomSolution = () => {
                             >
                               {operationalSolutionID
                                 ? t('updateSolutionDetails')
-                                : t('addSolutionButton')}
+                                : t('addSolutionDetails')}
                             </Button>
                           </div>
 

@@ -7,7 +7,6 @@ import {
   Checkbox,
   Grid,
   IconArrowForward,
-  IconLaunch,
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -82,10 +81,7 @@ const CheckboxCard = ({
                 href={`mailto:${solution.pocEmail}`}
                 target="_blank"
               >
-                <div className="margin-bottom-2">
-                  {solution.pocEmail}
-                  <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
-                </div>
+                <div className="margin-bottom-2">{solution.pocEmail}</div>
               </Link>
             </>
           )}

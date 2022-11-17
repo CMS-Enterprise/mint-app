@@ -22,7 +22,13 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
+import {
+  GetOperationalSolution as GetOperationalSolutionType,
+  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
+  GetOperationalSolutionVariables
+} from 'queries/ITSolutions/types/GetOperationalSolution';
 import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
 import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
@@ -38,6 +44,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+import SolutionCard from '../_components/SolutionCard';
 
 type OperationalSolutionFormType = {
   key: OperationalSolutionKey | string;
@@ -64,22 +71,33 @@ const AddSolution = () => {
     loading,
     error
   } = useQuery<GetPossibleOperationalSolutionsType>(
-    GetPossibleOperationalSolutions,
-    {
-      variables: {
-        id: operationalNeedID
-      }
-    }
+    GetPossibleOperationalSolutions
   );
 
   const possibleOperationalSolutions = data?.possibleOperationalSolutions || [];
+
+  const { data: customData } = useQuery<
+    GetOperationalSolutionType,
+    GetOperationalSolutionVariables
+  >(GetOperationalSolution, {
+    variables: {
+      // Query will be skipped if not present, need to default to string to appease ts
+      id: operationalSolutionID || ''
+    },
+    skip: !operationalSolutionID,
+    fetchPolicy: 'no-cache'
+  });
+
+  const customOperationalSolution =
+    customData?.operationalSolution ||
+    ({} as GetOperationalSolutionOperationalSolutionType);
 
   // Default formik value
   const additionalSolution: OperationalSolutionFormType = {
     key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
   };
 
-  const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
+  const [addSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
     UpdateOperationalNeedSolution
   );
 
@@ -98,7 +116,7 @@ const AddSolution = () => {
 
     try {
       if (key !== OperationalSolutionKey.OTHER_NEW_PROCESS) {
-        updateMutation = await updateSolution({
+        updateMutation = await addSolution({
           variables: {
             operationalNeedID,
             solutionType: key,
@@ -112,9 +130,11 @@ const AddSolution = () => {
         updateMutation = await updateCustomSolution({
           variables: {
             operationalNeedID,
-            customSolutionType: t('otherSolution'),
+            customSolutionType:
+              customOperationalSolution?.nameOther || t('otherSolution'),
             changes: {
-              needed: true
+              needed: true,
+              status: OpSolutionStatus.IN_PROGRESS
             }
           }
         });
@@ -284,6 +304,17 @@ const AddSolution = () => {
                                 </Button>
                               )}
                           </FieldGroup>
+
+                          {operationalSolutionID && customOperationalSolution && (
+                            <>
+                              <p className="text-bold margin-top-4">
+                                {t('solution')}
+                              </p>
+                              <SolutionCard
+                                solution={customOperationalSolution}
+                              />
+                            </>
+                          )}
 
                           <div className="margin-top-6 margin-bottom-3">
                             <Button
