@@ -26,7 +26,7 @@ const SideNav = ({ subComponents, isHelpArticle }: SideNavProps) => {
         }
         key={key}
         activeClassName="usa-current"
-        className={key === 'it-tools' ? 'nav-group-border' : ''}
+        className={key === 'it-solutions' ? 'nav-group-border' : ''}
       >
         {t(`navigation.${key}`)}
       </NavLink>
