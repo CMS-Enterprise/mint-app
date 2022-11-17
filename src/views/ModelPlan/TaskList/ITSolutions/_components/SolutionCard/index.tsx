@@ -58,12 +58,14 @@ const SolutionCard = ({
                 {t('updateTheseDetails')}
               </UswdsReactLink>
 
-              <UswdsReactLink
-                className="text-red"
-                to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
-              >
-                {t('removeTheseDetails')}
-              </UswdsReactLink>
+              {(solution.pocName || solution.pocEmail) && (
+                <UswdsReactLink
+                  className="text-red"
+                  to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
+                >
+                  {t('removeTheseDetails')}
+                </UswdsReactLink>
+              )}
             </div>
           )}
         </div>

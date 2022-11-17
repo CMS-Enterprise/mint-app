@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
@@ -33,7 +33,12 @@ import {
   UpdateCustomOperationalSolution as UpdateCustomOperationalSolutionType,
   UpdateCustomOperationalSolutionVariables
 } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
+import {
+  UpdateCustomOperationalSolutionByID as UpdateCustomOperationalSolutionByIDType,
+  UpdateCustomOperationalSolutionByIDVariables
+} from 'queries/ITSolutions/types/UpdateCustomOperationalSolutionByID';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
+import UpdateCustomOperationalSolutionByID from 'queries/ITSolutions/UpdateCustomOperationalSolutionByID';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -52,12 +57,28 @@ const initialValues: CustomOperationalSolutionFormType = {
   needed: false
 };
 
+const clearFields = (
+  removeDetails: boolean,
+  customSolution:
+    | GetOperationalSolutionOperationalSolutionType
+    | CustomOperationalSolutionFormType
+) => {
+  return {
+    nameOther: customSolution.nameOther,
+    pocName: '',
+    pocEmail: '',
+    needed: customSolution.needed
+  };
+};
+
 const AddCustomSolution = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
     operationalSolutionID?: string;
   }>();
+
+  const removeDetails = useLocation().hash === '#remove-details';
 
   const history = useHistory();
 
@@ -83,47 +104,72 @@ const AddCustomSolution = () => {
     skip: !operationalSolutionID
   });
 
-  const customOperationalSolution = data?.operationalSolution || initialValues;
+  const customOperationalSolution = clearFields(
+    removeDetails,
+    data?.operationalSolution || initialValues
+  );
 
-  const [updateCustomSolution] = useMutation<
+  const [addCustomSolution] = useMutation<
     UpdateCustomOperationalSolutionType,
     UpdateCustomOperationalSolutionVariables
   >(UpdateCustomOperationalSolution);
+
+  const [updateCustomSolutionByID] = useMutation<
+    UpdateCustomOperationalSolutionByIDType,
+    UpdateCustomOperationalSolutionByIDVariables
+  >(UpdateCustomOperationalSolutionByID);
 
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
   ) => {
     const { nameOther, pocName, pocEmail } = formikValues;
 
-    updateCustomSolution({
-      variables: {
-        operationalNeedID,
-        customSolutionType: nameOther || '',
-        changes: {
-          needed: customOperationalSolution.needed,
-          status: OpSolutionStatus.IN_PROGRESS,
-          pocEmail,
-          pocName
-        }
-      }
-    })
-      .then(response => {
-        if (response && !response.errors && response.data) {
-          setMutationError(false);
-          if (!operationalSolutionID) {
-            history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${response.data.addOrUpdateCustomOperationalSolution.id}`
-            );
-          } else {
-            history.goBack();
+    let updateMutation;
+
+    try {
+      if (!operationalSolutionID) {
+        updateMutation = await addCustomSolution({
+          variables: {
+            operationalNeedID,
+            customSolutionType: nameOther || '',
+            changes: {
+              needed: customOperationalSolution.needed,
+              status: OpSolutionStatus.IN_PROGRESS,
+              pocEmail,
+              pocName
+            }
           }
-        } else if (response.errors) {
-          setMutationError(true);
-        }
-      })
-      .catch(errors => {
-        setMutationError(true);
-      });
+        });
+      } else {
+        updateMutation = await updateCustomSolutionByID({
+          variables: {
+            id: operationalSolutionID,
+            customSolutionType: nameOther || '',
+            changes: {
+              needed: customOperationalSolution.needed,
+              pocEmail,
+              pocName
+            }
+          }
+        });
+      }
+    } catch {
+      setMutationError(true);
+    }
+
+    if (updateMutation && !updateMutation.errors && updateMutation.data) {
+      setMutationError(false);
+      if (!operationalSolutionID) {
+        history.push(
+          // @ts-ignore
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`
+        );
+      } else {
+        history.goBack();
+      }
+    } else if (updateMutation?.errors) {
+      setMutationError(true);
+    }
   };
 
   return (
@@ -256,7 +302,6 @@ const AddCustomSolution = () => {
 
                             <Field
                               as={TextInput}
-                              disabled={!!operationalSolutionID}
                               error={!!flatErrors.nameOther}
                               id="it-solution-custom-name-other"
                               maxLength={50}

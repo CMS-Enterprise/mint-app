@@ -315,7 +315,8 @@ const OperationalNeedsTable = ({
                       minWidth: '138px',
                       paddingBottom: '.5rem',
                       position: 'relative',
-                      paddingLeft: index === 0 ? '.5em' : '0px'
+                      paddingLeft: index === 0 ? '.5em' : '0px',
+                      width: index === 5 ? '235px' : 'auto'
                     }}
                   >
                     <button
