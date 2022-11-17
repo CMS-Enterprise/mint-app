@@ -6,7 +6,7 @@ import HelpTag from './index';
 
 describe('HelpTag', () => {
   it('renders without errors', async () => {
-    const { asFragment, getByText, getByTestId } = render(
+    const { getByText, getByTestId } = render(
       <MemoryRouter>
         <HelpTag type="gettingStarted" />
       </MemoryRouter>
