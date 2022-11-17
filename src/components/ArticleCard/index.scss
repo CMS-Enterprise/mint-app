@@ -10,7 +10,8 @@
     &-card--isLink {
       cursor: pointer;
     }
-    &__footer {
-      bottom: 0;
+
+    &__tag {
+      width: max-content;
     }
 }

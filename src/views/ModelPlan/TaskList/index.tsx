@@ -219,131 +219,125 @@ const TaskList = () => {
         {!loading && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
-              {data && (
-                <>
-                  <PageHeading className="margin-top-4 margin-bottom-0">
-                    {t('navigation.modelPlanTaskList')}
-                  </PageHeading>
-                  <p
-                    className="margin-top-0 margin-bottom-2 font-body-lg"
-                    data-testid="model-plan-name"
-                  >
-                    {h('for')} {modelName}
-                  </p>
+              <PageHeading className="margin-top-4 margin-bottom-0">
+                {t('navigation.modelPlanTaskList')}
+              </PageHeading>
+              <p
+                className="margin-top-0 margin-bottom-2 font-body-lg"
+                data-testid="model-plan-name"
+              >
+                {h('for')} {modelName}
+              </p>
 
-                  {/* Discussion modal */}
-                  {isDiscussionOpen && (
-                    <DiscussionModalWrapper
-                      isOpen={isDiscussionOpen}
-                      closeModal={() => setIsDiscussionOpen(false)}
-                    >
-                      <Discussions modelID={modelID} />
-                    </DiscussionModalWrapper>
-                  )}
-
-                  <TaskListStatus
-                    modelID={modelID}
-                    status={status}
-                    updateLabel
-                    statusLabel
-                  />
-
-                  <DicussionBanner
-                    discussions={discussions}
-                    unansweredQuestions={unansweredQuestions}
-                    answeredQuestions={answeredQuestions}
-                    setIsDiscussionOpen={setIsDiscussionOpen}
-                  />
-
-                  {/* Document and CR TDL Banners */}
-                  <Grid row gap={2}>
-                    <Grid desktop={{ col: 6 }} className="margin-top-2">
-                      <DocumentBanner
-                        documents={documents}
-                        modelID={modelID}
-                        expand={!!documents.length || !!crTdls.length}
-                      />
-                    </Grid>
-
-                    <Grid desktop={{ col: 6 }} className="margin-top-2">
-                      <CRTDLBanner
-                        crTdls={crTdls}
-                        modelID={modelID}
-                        expand={!!documents.length || !!crTdls.length}
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <ol
-                    data-testid="task-list"
-                    className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
-                  >
-                    {Object.keys(taskListSections).map((key: string) => {
-                      return (
-                        <Fragment key={key}>
-                          <TaskListItem
-                            key={key}
-                            testId={`task-list-intake-form-${key}`}
-                            heading={t(`numberedList.${key}.heading`)}
-                            lastUpdated={
-                              taskListSections[key].modifiedDts &&
-                              formatDate(
-                                taskListSections[key].modifiedDts!,
-                                'MM/d/yyyy'
-                              )
-                            }
-                            status={taskListSections[key].status}
-                          >
-                            <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-                              <TaskListDescription>
-                                <p className="margin-top-0">
-                                  {t(`numberedList.${key}.${userRole}`)}
-                                </p>
-                                {key === 'itSolutions' &&
-                                  userRole !== 'assessment' && (
-                                    <p className="margin-top-0">
-                                      {t(`numberedList.${key}.${userRole}2`)}
-                                    </p>
-                                  )}
-                              </TaskListDescription>
-                            </div>
-                            <TaskListButton
-                              path={t(`numberedList.${key}.path`)}
-                              disabled={
-                                !!getTaskListLockedStatus(key) &&
-                                getTaskListLockedStatus(key)?.lockedBy !== euaId
-                              }
-                              status={taskListSections[key].status}
-                            />
-
-                            <TaskListLock
-                              isAssessment={
-                                !!getTaskListLockedStatus(key)?.isAssessment
-                              }
-                              collaborator={collaborators.find(
-                                collaborator =>
-                                  collaborator.euaUserID ===
-                                  getTaskListLockedStatus(key)?.lockedBy
-                              )}
-                            />
-                          </TaskListItem>
-                          {key !== 'prepareForClearance' && (
-                            <Divider className="margin-bottom-4" />
-                          )}
-                        </Fragment>
-                      );
-                    })}
-                  </ol>
-                </>
+              {/* Discussion modal */}
+              {isDiscussionOpen && (
+                <DiscussionModalWrapper
+                  isOpen={isDiscussionOpen}
+                  closeModal={() => setIsDiscussionOpen(false)}
+                >
+                  <Discussions modelID={modelID} />
+                </DiscussionModalWrapper>
               )}
+
+              <TaskListStatus
+                modelID={modelID}
+                status={status}
+                updateLabel
+                statusLabel
+              />
+
+              <DicussionBanner
+                discussions={discussions}
+                unansweredQuestions={unansweredQuestions}
+                answeredQuestions={answeredQuestions}
+                setIsDiscussionOpen={setIsDiscussionOpen}
+              />
+
+              {/* Document and CR TDL Banners */}
+              <Grid row gap={2}>
+                <Grid desktop={{ col: 6 }} className="margin-top-2">
+                  <DocumentBanner
+                    documents={documents}
+                    modelID={modelID}
+                    expand={!!documents.length || !!crTdls.length}
+                  />
+                </Grid>
+
+                <Grid desktop={{ col: 6 }} className="margin-top-2">
+                  <CRTDLBanner
+                    crTdls={crTdls}
+                    modelID={modelID}
+                    expand={!!documents.length || !!crTdls.length}
+                  />
+                </Grid>
+              </Grid>
+
+              <ol
+                data-testid="task-list"
+                className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
+              >
+                {Object.keys(taskListSections).map((key: string) => {
+                  return (
+                    <Fragment key={key}>
+                      <TaskListItem
+                        key={key}
+                        testId={`task-list-intake-form-${key}`}
+                        heading={t(`numberedList.${key}.heading`)}
+                        lastUpdated={
+                          taskListSections[key].modifiedDts &&
+                          formatDate(
+                            taskListSections[key].modifiedDts!,
+                            'MM/d/yyyy'
+                          )
+                        }
+                        status={taskListSections[key].status}
+                      >
+                        <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
+                          <TaskListDescription>
+                            <p className="margin-top-0">
+                              {t(`numberedList.${key}.${userRole}`)}
+                            </p>
+                            {key === 'itSolutions' &&
+                              userRole !== 'assessment' && (
+                                <p className="margin-top-0">
+                                  {t(`numberedList.${key}.${userRole}2`)}
+                                </p>
+                              )}
+                          </TaskListDescription>
+                        </div>
+                        <TaskListButton
+                          path={t(`numberedList.${key}.path`)}
+                          disabled={
+                            !!getTaskListLockedStatus(key) &&
+                            getTaskListLockedStatus(key)?.lockedBy !== euaId
+                          }
+                          status={taskListSections[key].status}
+                        />
+
+                        <TaskListLock
+                          isAssessment={
+                            !!getTaskListLockedStatus(key)?.isAssessment
+                          }
+                          collaborator={collaborators.find(
+                            collaborator =>
+                              collaborator.euaUserID ===
+                              getTaskListLockedStatus(key)?.lockedBy
+                          )}
+                        />
+                      </TaskListItem>
+                      {key !== 'prepareForClearance' && (
+                        <Divider className="margin-bottom-4" />
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </ol>
             </Grid>
             <Grid desktop={{ col: 3 }}>
-              {data && (
-                <TaskListSideNav
-                  modelPlan={modelPlan}
-                  collaborators={collaborators}
-                />
-              )}
+              <TaskListSideNav
+                modelPlan={modelPlan}
+                collaborators={collaborators}
+              />
             </Grid>
           </Grid>
         )}

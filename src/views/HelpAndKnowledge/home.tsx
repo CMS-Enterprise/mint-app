@@ -31,7 +31,12 @@ export const HelpAndKnowledgeHome = () => {
         <p className="margin-bottom-3">{t('instructions')}</p>
         <CardGroup className="margin-y-2">
           {helpAndKnowledgeArticles.map(article => (
-            <ArticleCard key={article.route} {...article} isLink />
+            <ArticleCard
+              key={article.route}
+              {...article}
+              isLink
+              tag={article.tag}
+            />
           ))}
         </CardGroup>
       </GridContainer>
