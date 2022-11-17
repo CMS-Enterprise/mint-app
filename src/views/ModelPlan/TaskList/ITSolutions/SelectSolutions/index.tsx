@@ -1,3 +1,8 @@
+/*
+View for selecting/toggled 'needed' bool on possible solutions and custom solutions
+Displays relevant operational need question and answers
+*/
+
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -40,6 +45,8 @@ import NotFound from 'views/NotFound';
 import CheckboxCard from '../_components/CheckboxCard';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
+// Passing in operationalNeed to Formik instead of array of solutions
+// Fomik does not take an array structure
 export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',
   id: '',
@@ -64,6 +71,7 @@ const SelectSolutions = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
+  // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
@@ -93,6 +101,7 @@ const SelectSolutions = () => {
     UpdateCustomOperationalSolution
   );
 
+  // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
     formikValues: GetOperationalNeedOperationalNeedType
   ) => {
@@ -101,6 +110,7 @@ const SelectSolutions = () => {
     try {
       const response = await Promise.all(
         solutions.map(solution => {
+          // Update possibleSolution needed bool and status
           if (solution.key) {
             return updateSolution({
               variables: {
@@ -113,6 +123,7 @@ const SelectSolutions = () => {
               }
             });
           }
+          // Update custom solution needed bool - status should already be set
           return updateCustomSolution({
             variables: {
               operationalNeedID,

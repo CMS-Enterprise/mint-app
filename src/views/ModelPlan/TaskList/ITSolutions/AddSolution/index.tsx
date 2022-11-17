@@ -1,8 +1,15 @@
-import React, { useContext, useRef } from 'react';
+/*
+View for adding an operational need solution from a list of possible solutions
+All can select 'Other' which directs to creating a custom solution
+Queries and displays SolutionCard component when a custom solution/operationalSolutionID parameter is present in url
+*/
+
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -66,6 +73,9 @@ const AddSolution = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
+  // State management for mutation errors
+  const [mutationError, setMutationError] = useState<boolean>(false);
+
   const {
     data,
     loading,
@@ -88,11 +98,12 @@ const AddSolution = () => {
     fetchPolicy: 'no-cache'
   });
 
+  // If operationalSolutionID present in url, will contain queried data for custom solution
   const customOperationalSolution =
     customData?.operationalSolution ||
     ({} as GetOperationalSolutionOperationalSolutionType);
 
-  // Default formik value
+  // Iniital/default formik value
   const additionalSolution: OperationalSolutionFormType = {
     key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
   };
@@ -115,6 +126,7 @@ const AddSolution = () => {
     let updateMutation;
 
     try {
+      // Add from list of possible solutions
       if (key !== OperationalSolutionKey.OTHER_NEW_PROCESS) {
         updateMutation = await addSolution({
           variables: {
@@ -127,6 +139,7 @@ const AddSolution = () => {
           }
         });
       } else {
+        // Update/add a custom solution
         updateMutation = await updateCustomSolution({
           variables: {
             operationalNeedID,
@@ -139,10 +152,8 @@ const AddSolution = () => {
           }
         });
       }
-    } catch (errors) {
-      formikRef?.current?.setErrors({
-        key: JSON.stringify(errors)
-      });
+    } catch {
+      setMutationError(true);
     }
 
     if (updateMutation && !updateMutation.errors) {
@@ -150,9 +161,7 @@ const AddSolution = () => {
         `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
       );
     } else if (!updateMutation || updateMutation.errors) {
-      formikRef?.current?.setErrors({
-        key: JSON.stringify(updateMutation?.errors)
-      });
+      setMutationError(true);
     }
   };
 
@@ -186,6 +195,12 @@ const AddSolution = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('addSolution')}</Breadcrumb>
       </BreadcrumbBar>
+
+      {mutationError && (
+        <Alert type="error" slim>
+          {t('updateError')}
+        </Alert>
+      )}
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
@@ -307,6 +322,7 @@ const AddSolution = () => {
                               )}
                           </FieldGroup>
 
+                          {/* If directed from custom solution creation, diplay SolutionCard */}
                           {operationalSolutionID && customOperationalSolution && (
                             <>
                               <p className="text-bold margin-top-4">

@@ -57,6 +57,7 @@ const initialValues: CustomOperationalSolutionFormType = {
   needed: false
 };
 
+// Used to clear pocName and pocEmail on page load if redirected from remove detail link
 const clearFields = (
   removeDetails: boolean,
   customSolution:
@@ -81,6 +82,7 @@ const AddCustomSolution = () => {
     operationalSolutionID?: string;
   }>();
 
+  // Hash variable to trigger removal of pocName and pocEmail
   const removeDetails = useLocation().hash === '#remove-details';
 
   const history = useHistory();
@@ -88,6 +90,7 @@ const AddCustomSolution = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
+  // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<CustomOperationalSolutionFormType>>(
@@ -107,6 +110,8 @@ const AddCustomSolution = () => {
     skip: !operationalSolutionID
   });
 
+  // Returns either existing custom soluton data, empty custom solution, or
+  // details removed from existing custom soluton
   const customOperationalSolution = clearFields(
     removeDetails,
     data?.operationalSolution || initialValues
@@ -130,6 +135,7 @@ const AddCustomSolution = () => {
     let updateMutation;
 
     try {
+      // Add a new custom solution
       if (!operationalSolutionID) {
         updateMutation = await addCustomSolution({
           variables: {
@@ -143,6 +149,7 @@ const AddCustomSolution = () => {
             }
           }
         });
+        // Update existing custom solution
       } else {
         updateMutation = await updateCustomSolutionByID({
           variables: {
@@ -164,6 +171,7 @@ const AddCustomSolution = () => {
       setMutationError(false);
       if (!operationalSolutionID) {
         history.push(
+          // If this block of code is hit, property addOrUpdateCustomOperationalSolution will always exist - ts doesn't know this
           // @ts-ignore
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`
         );

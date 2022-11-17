@@ -1,3 +1,8 @@
+/*
+SolutionCard component for rendering custom solution details
+Contains links to edit solution details or remove details
+*/
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -12,17 +17,14 @@ type SolutionCardProps = {
   solution: GetOperationalNeedSolutionsType;
 };
 
-const SolutionCard = ({
-  className,
-
-  solution
-}: SolutionCardProps) => {
-  const { t } = useTranslation('itSolutions');
-  const { t: h } = useTranslation('generalReadOnly');
+const SolutionCard = ({ className, solution }: SolutionCardProps) => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
   }>();
+
+  const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('generalReadOnly');
 
   return (
     <CardGroup className="flex-column">

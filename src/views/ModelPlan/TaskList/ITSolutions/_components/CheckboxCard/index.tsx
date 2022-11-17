@@ -1,3 +1,8 @@
+/*
+CheckboxCard component for selecting needed IT solutions
+Integrated with Formik
+*/
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -39,10 +44,10 @@ const CheckboxCard = ({
 
   const history = useHistory();
 
-  const id = solution?.nameOther
-    ? `it-solutions-${solution?.nameOther?.toLowerCase()}`
-    : `it-solutions-${solution?.key?.toLowerCase()}`;
+  // Formik checkbox id
+  const id = `it-solutions-${solution?.id}`;
 
+  // TODO: replace with real solution data once populated
   const tempDescription: string =
     'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
 
