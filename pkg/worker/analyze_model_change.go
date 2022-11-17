@@ -3,10 +3,11 @@ package worker
 import (
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 func NewAnalyzedModelChangeJob(modelPlanID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) {
@@ -74,7 +75,7 @@ func AnalyzeModelPlanChanges(modelPlanID uuid.UUID, date time.Time, store *stora
 			continue
 		}
 		change := models.Change{
-			Model:    "model_plan",
+			Table:    "model_plan",
 			Field:    "model_name",
 			Action:   "update",
 			OldValue: fields["model_name"].(map[string]interface{})["old"].(string),
@@ -89,7 +90,7 @@ func AnalyzeModelPlanChanges(modelPlanID uuid.UUID, date time.Time, store *stora
 			continue
 		}
 		change := models.Change{
-			Model:    "model_plan",
+			Table:    "model_plan",
 			Field:    "status",
 			Action:   "update",
 			OldValue: fields["model_name"].(map[string]interface{})["old"].(string),
@@ -113,7 +114,7 @@ func AnalyzeCrTdlChanges(modelPlanID uuid.UUID, date time.Time, store *storage.S
 
 	if len(crTdlChanges) > 0 {
 		change := models.Change{
-			Model:    "plan_cr_tdls",
+			Table:    "plan_cr_tdls",
 			Field:    "",
 			Action:   "update",
 			OldValue: "",
@@ -138,7 +139,7 @@ func AnalyzeCollaboratorChanges(modelPlanID uuid.UUID, date time.Time, store *st
 			continue
 		}
 		change := models.Change{
-			Model:    "plan_collaborator",
+			Table:    "plan_collaborator",
 			Field:    "name",
 			Action:   "create",
 			OldValue: fields["full_name"].(map[string]interface{})["old"].(string),
@@ -163,7 +164,7 @@ func AnalyzeDiscussionChanges(modelPlanID uuid.UUID, date time.Time, store *stor
 
 	if len(planDiscussionChanges) > 0 || len(discussionReplyChanges) > 0 {
 		change := models.Change{
-			Model:    "plan_discussion",
+			Table:    "plan_discussion",
 			Field:    "",
 			Action:   "update",
 			OldValue: "",
@@ -262,7 +263,7 @@ func AnalyzeModelPlanSectionChanges(modelPlanID uuid.UUID, date time.Time, store
 func AddContentChanges(changesSlice []models.Change, auditChange []*models.AuditChange, modelName string) []models.Change {
 	if len(auditChange) > 0 {
 		change := models.Change{
-			Model:    modelName,
+			Table:    modelName,
 			Field:    "",
 			Action:   "update",
 			OldValue: "",
@@ -281,7 +282,7 @@ func AddStatusChanges(changesSlice []models.Change, auditChange []*models.AuditC
 			continue
 		}
 		change := models.Change{
-			Model:    modelName,
+			Table:    modelName,
 			Field:    "status",
 			Action:   "update",
 			OldValue: fields["status"].(map[string]interface{})["old"].(string),

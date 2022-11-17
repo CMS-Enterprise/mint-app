@@ -16,6 +16,7 @@ func Work() {
 
 	// register jobs here
 	// e.g. mgr.Register("SomeJob", someFunc)
+	// mgr.Register("Analyze Job", NewAnalyzedModelChangeJob)
 
 	err := mgr.Run()
 	if err != nil {

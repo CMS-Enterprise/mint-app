@@ -16,7 +16,7 @@ type AnalyzedModelChange struct {
 }
 
 type Change struct {
-	Model    string
+	Table    string
 	Field    string
 	Action   string
 	OldValue string
