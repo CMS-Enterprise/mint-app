@@ -34,6 +34,7 @@ type CRTDLTableProps = {
   readOnly?: boolean;
   setCRTDLMessage: (value: string) => void;
   setCRTDLStatus: (value: CRTDLStatusType) => void;
+  isHelpArticle?: boolean;
 };
 
 type CRTDLStatusType = 'success' | 'error';
@@ -43,7 +44,8 @@ const CRTDLTable = ({
   modelID,
   readOnly,
   setCRTDLMessage,
-  setCRTDLStatus
+  setCRTDLStatus,
+  isHelpArticle
 }: CRTDLTableProps) => {
   const { t } = useTranslation('crtdl');
   const {
@@ -63,7 +65,8 @@ const CRTDLTable = ({
 
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean =
+    !isHelpArticle && (isCollaborator || isAssessment(groups));
 
   if (loading) {
     return <PageLoading />;
