@@ -60,7 +60,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 		verify: verify,
 	}
 
-	factory := NewOktaMiddlewareFactory(
+	factory := NewMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		verifier,
 	)

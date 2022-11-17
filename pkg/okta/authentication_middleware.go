@@ -22,7 +22,7 @@ const (
 	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
 )
 
-func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
+func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
 	tokenParts := strings.Split(authHeader, "Bearer ")
 	if len(tokenParts) < 2 {
 		return nil, errors.New("invalid Bearer in auth header")
@@ -57,7 +57,7 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.EUAPrincipal, error) {
+func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.EUAPrincipal, error) {
 	euaID := jwt.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
@@ -78,7 +78,8 @@ func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authenticati
 	}, nil
 }
 
-func (f oktaMiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.Handler {
+// NewAuthenticationMiddleware returns an authentication middleware function to parse a JWT and attach an appropriate principal object to the context
+func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		logger := appcontext.ZLogger(r.Context())
 		authHeader := r.Header.Get("Authorization")
@@ -134,7 +135,8 @@ type JwtVerifier interface {
 	VerifyAccessToken(jwt string) (*jwtverifier.Jwt, error)
 }
 
-type oktaMiddlewareFactory struct {
+// MiddlewareFactory provides functionality to create functions that attach EUA Principals to context objects by decoding JWT tokens
+type MiddlewareFactory struct {
 	handlers.HandlerBase
 	verifier          JwtVerifier
 	jobCodeUser       string
@@ -143,7 +145,7 @@ type oktaMiddlewareFactory struct {
 
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
 // the websocket connection payload to authenticate an Okta user.
-func (f oktaMiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
+func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
 		// Get the token from payload
 		all := initPayload
@@ -174,13 +176,12 @@ func (f oktaMiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *
 	}
 }
 
-// NewOktaMiddlewareFactory returns a factory creating Okta middleware functions
-func NewOktaMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier) *oktaMiddlewareFactory {
-	return &oktaMiddlewareFactory{
+// NewMiddlewareFactory returns a factory creating Okta middleware functions
+func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier) *MiddlewareFactory {
+	return &MiddlewareFactory{
 		HandlerBase:       base,
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
 	}
-	// return middlewareFactory.NewAuthenticationMiddleware, &middlewareFactory
 }
