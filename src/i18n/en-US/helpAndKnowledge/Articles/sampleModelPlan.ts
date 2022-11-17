@@ -1,7 +1,7 @@
 const sampleModelPlan = {
   title: 'Sample Model Plan',
   description:
-    'Want an example for how to fill out a Model Plan? Use this example from a previous model to help understand the types of answers you could include.'
+    'This is example data and may not reflect exact model decisions. Use this as a reference to better understand the type of information needed for a Model Plan.'
 };
 
 export default sampleModelPlan;

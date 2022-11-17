@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -829,6 +830,11 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 // ModelPlan is the resolver for the modelPlan field.
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
+	constants.GetSampleUUID()
+
+	if id == constants.GetSampleUUID() {
+		return resolvers.ModelPlanGetSampleModel(logger, r.store)
+	}
 
 	return resolvers.ModelPlanGetByID(logger, id, r.store)
 }
