@@ -1,4 +1,7 @@
 .solutions-checkbox {
+    &__header {
+        word-break: break-all;
+    }
     &__body-text {
         display: -webkit-box;
         -webkit-line-clamp: 3;

@@ -63,12 +63,15 @@ const clearFields = (
     | GetOperationalSolutionOperationalSolutionType
     | CustomOperationalSolutionFormType
 ) => {
-  return {
-    nameOther: customSolution.nameOther,
-    pocName: '',
-    pocEmail: '',
-    needed: customSolution.needed
-  };
+  if (removeDetails) {
+    return {
+      nameOther: customSolution.nameOther,
+      pocName: '',
+      pocEmail: '',
+      needed: customSolution.needed
+    };
+  }
+  return customSolution;
 };
 
 const AddCustomSolution = () => {

@@ -17,6 +17,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
@@ -256,7 +257,9 @@ const SelectSolutions = () => {
                           {t('chooseSolution')}
                         </legend>
 
-                        {!loading && (
+                        {loading ? (
+                          <PageLoading />
+                        ) : (
                           <CardGroup>
                             {values.solutions.map(
                               (solution: any, index: number) => (

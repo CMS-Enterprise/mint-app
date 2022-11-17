@@ -282,7 +282,9 @@ const AddSolution = () => {
                                       key={solution.key}
                                       value={solution.key || ''}
                                     >
-                                      {solution.name}
+                                      {solution.name === 'Other new process'
+                                        ? 'Other'
+                                        : solution.name}
                                     </option>
                                   );
                                 })}

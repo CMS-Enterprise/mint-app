@@ -27,8 +27,8 @@ const SolutionCard = ({
   return (
     <CardGroup className="flex-column">
       <Card className={classNames(className)}>
-        <div className="solutions-checkbox__header padding-3">
-          <h3 className="margin-bottom-2 margin-top-0">
+        <div className="padding-3">
+          <h3 className="margin-bottom-2 margin-top-0 solutions-checkbox__header ">
             {solution.nameOther || solution.name}
           </h3>
 
