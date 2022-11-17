@@ -36,6 +36,7 @@ const itSolutions = {
     viewDetails: 'View details',
     updateNeed: 'Update operational need',
     selectSolution: 'Select a solution',
+    noSolutionSelected: 'No solution selected',
     error: {
       heading: 'There is a problem',
       body: 'Failed to fetch Model Plan operational needs'

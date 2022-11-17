@@ -127,6 +127,9 @@ const OperationalNeedsTable = ({
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
           if (value === t('itSolutionsTable.selectSolution')) {
+            if (!hasEditAccess) {
+              return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
+            }
             return (
               <UswdsReactLink
                 to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
