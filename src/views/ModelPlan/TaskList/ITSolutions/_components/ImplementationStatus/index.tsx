@@ -57,7 +57,7 @@ const ImplementationStatuses = ({ className }: ImplementationStatusProps) => {
           <div className="border-left-05 border-base-dark padding-left-2 padding-y-0">
             <ul className="padding-left-2 margin-0">
               {Object.keys(implentationStatuses).map((status: string) => (
-                <li className="margin-y-1">
+                <li className="margin-y-1" key={status}>
                   <span className="text-bold">
                     {implentationStatuses[status].status}
                   </span>

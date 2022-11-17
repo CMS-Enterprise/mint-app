@@ -7,7 +7,10 @@ import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeeds_modelPlan_operationalNeeds_solutions as GetOperationalNeedsSolutionsType
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalNeedKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 
@@ -42,7 +45,7 @@ export const filterNeedsFormatSolutions = (
         );
       } else {
         operationalSolutions.push(
-          emptySolution(need.nameOther || need.name, need.id)
+          emptySolution(need.nameOther || need.name, need.id, need.key)
         );
       }
     });
@@ -65,7 +68,11 @@ const formatSolutionsFromNeed = (
 };
 
 // Utility to populate an empty solution from an operational need
-const emptySolution = (needName: string | null, needID: string) => {
+const emptySolution = (
+  needName: string | null,
+  needID: string,
+  key: OperationalNeedKey | null
+) => {
   return {
     __typename: 'OperationalSolution',
     id: needID,
@@ -76,7 +83,7 @@ const emptySolution = (needName: string | null, needID: string) => {
     mustFinishDts: null,
     needed: false,
     nameOther: null,
-    key: null,
+    key,
     pocEmail: null,
     pocName: null,
     createdBy: '',
@@ -96,10 +103,7 @@ export const returnActionLinks = (
   modelID: string
 ): JSX.Element => {
   /* eslint no-underscore-dangle: 0 */
-  const operationalNeedKey =
-    operationalNeed.__typename === 'OperationalNeed'
-      ? operationalNeed.key
-      : operationalNeed.needKey;
+  const operationalNeedKey = operationalNeed.key || operationalNeed.needKey;
 
   const operationalNeedObj = operationalNeedMap[operationalNeedKey || 'NONE'];
 
