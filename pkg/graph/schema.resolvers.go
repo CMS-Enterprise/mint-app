@@ -416,6 +416,19 @@ func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.Ope
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
 }
 
+// Documents is the resolver for the documents field.
+func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentsReadBySolutionID(
+		logger,
+		obj.ID,
+		principal,
+		r.store,
+		r.s3Client,
+	)
+}
+
 // CmsCenters is the resolver for the cmsCenters field.
 func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
 	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
@@ -978,6 +991,11 @@ func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
 	return &operationalNeedResolver{r}
 }
 
+// OperationalSolution returns generated.OperationalSolutionResolver implementation.
+func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
+	return &operationalSolutionResolver{r}
+}
+
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
 
@@ -1033,6 +1051,7 @@ type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
+type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }

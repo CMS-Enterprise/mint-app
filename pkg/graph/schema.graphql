@@ -1435,6 +1435,7 @@ type OperationalSolution {
     mustStartDts: Time
     mustFinishDts: Time
     status: OpSolutionStatus!
+    documents: [PlanDocument!]!
 
     createdBy: String!
     createdDts: Time!

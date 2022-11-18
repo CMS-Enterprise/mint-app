@@ -29,6 +29,9 @@ var planDocumentGetByIDSQL string
 //go:embed SQL/plan_document_read_by_model_plan_id.sql
 var planDocumentGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_documents_read_by_solution_id.sql
+var planDocumentsGetBySolutionIDSQL string
+
 //go:embed SQL/plan_document_read_by_model_plan_id_not_restricted.sql
 var planDocumentGetByModelPlanIDNotRestrictedSQL string
 
@@ -91,6 +94,32 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
 	statement, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var documents []*models.PlanDocument
+	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+	}
+
+	err = logIfNoRowsFetched(logger, modelPlanID, documents)
+	return documents, err
+}
+
+// PlanDocumentsReadBySolutionID reads a plan document object by solution id
+func (s *Store) PlanDocumentsReadBySolutionID(
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	statement, err := s.db.PrepareNamed(planDocumentsGetBySolutionIDSQL)
 	if err != nil {
 		return nil, err
 	}

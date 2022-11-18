@@ -44,6 +44,7 @@ type ResolverRoot interface {
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	OperationalNeed() OperationalNeedResolver
+	OperationalSolution() OperationalSolutionResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
 	PlanDiscussion() PlanDiscussionResolver
@@ -207,6 +208,7 @@ type ComplexityRoot struct {
 	OperationalSolution struct {
 		CreatedBy         func(childComplexity int) int
 		CreatedDts        func(childComplexity int) int
+		Documents         func(childComplexity int) int
 		ID                func(childComplexity int) int
 		Key               func(childComplexity int) int
 		ModifiedBy        func(childComplexity int) int
@@ -906,6 +908,9 @@ type MutationResolver interface {
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
+}
+type OperationalSolutionResolver interface {
+	Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -2088,6 +2093,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalSolution.CreatedDts(childComplexity), true
+
+	case "OperationalSolution.documents":
+		if e.complexity.OperationalSolution.Documents == nil {
+			break
+		}
+
+		return e.complexity.OperationalSolution.Documents(childComplexity), true
 
 	case "OperationalSolution.id":
 		if e.complexity.OperationalSolution.ID == nil {
@@ -7688,6 +7700,7 @@ type OperationalSolution {
     mustStartDts: Time
     mustFinishDts: Time
     status: OpSolutionStatus!
+    documents: [PlanDocument!]!
 
     createdBy: String!
     createdDts: Time!
@@ -17385,6 +17398,8 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateOperationalSolution
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
 			case "createdDts":
@@ -17498,6 +17513,8 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateCustomOperationalSo
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
 			case "createdDts":
@@ -17611,6 +17628,8 @@ func (ec *executionContext) fieldContext_Mutation_updateCustomOperationalSolutio
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
 			case "createdDts":
@@ -18085,6 +18104,8 @@ func (ec *executionContext) fieldContext_OperationalNeed_solutions(ctx context.C
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
 			case "createdDts":
@@ -18941,6 +18962,90 @@ func (ec *executionContext) fieldContext_OperationalSolution_status(ctx context.
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type OpSolutionStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _OperationalSolution_documents(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalSolution_documents(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.OperationalSolution().Documents(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PlanDocument)
+	fc.Result = res
+	return ec.marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_OperationalSolution_documents(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "OperationalSolution",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanDocument_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
+			case "fileType":
+				return ec.fieldContext_PlanDocument_fileType(ctx, field)
+			case "bucket":
+				return ec.fieldContext_PlanDocument_bucket(ctx, field)
+			case "fileKey":
+				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
+			case "virusScanned":
+				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
+			case "virusClean":
+				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "restricted":
+				return ec.fieldContext_PlanDocument_restricted(ctx, field)
+			case "fileName":
+				return ec.fieldContext_PlanDocument_fileName(ctx, field)
+			case "fileSize":
+				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
+			case "documentType":
+				return ec.fieldContext_PlanDocument_documentType(ctx, field)
+			case "otherType":
+				return ec.fieldContext_PlanDocument_otherType(ctx, field)
+			case "optionalNotes":
+				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
+			case "deletedAt":
+				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
 		},
 	}
 	return fc, nil
@@ -42294,6 +42399,8 @@ func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
 			case "createdDts":
@@ -42383,6 +42490,8 @@ func (ec *executionContext) fieldContext_Query_operationalSolution(ctx context.C
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
 			case "createdDts":
@@ -46740,14 +46849,14 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 			out.Values[i] = ec._OperationalSolution_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "operationalNeedID":
 
 			out.Values[i] = ec._OperationalSolution_operationalNeedID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "solutionType":
 
@@ -46790,21 +46899,41 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 			out.Values[i] = ec._OperationalSolution_status(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
+		case "documents":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._OperationalSolution_documents(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdBy":
 
 			out.Values[i] = ec._OperationalSolution_createdBy(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "createdDts":
 
 			out.Values[i] = ec._OperationalSolution_createdDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "modifiedBy":
 
