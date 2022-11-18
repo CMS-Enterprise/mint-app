@@ -16,9 +16,14 @@ import './index.scss';
 interface MobileNavProps {
   subComponents: subComponentsProps;
   subinfo: SubpageKey;
+  isHelpArticle: boolean | undefined;
 }
 
-const MobileNav = ({ subComponents, subinfo }: MobileNavProps) => {
+const MobileNav = ({
+  subComponents,
+  subinfo,
+  isHelpArticle
+}: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
@@ -63,7 +68,11 @@ const MobileNav = ({ subComponents, subinfo }: MobileNavProps) => {
                 }
               >
                 <NavLink
-                  to={subComponents[key].route}
+                  to={
+                    !isHelpArticle
+                      ? subComponents[key].route
+                      : subComponents[key].helpRoute
+                  }
                   key={key}
                   className={key === subinfo ? 'subNav--current' : ''}
                   onClick={() => setIsAccordionOpen(!isAccordionOpen)}

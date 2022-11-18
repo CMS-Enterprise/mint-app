@@ -13,6 +13,9 @@ import (
 //go:embed SQL/possible_operational_solution_collection_get_by_need_type.sql
 var possibleOperationalSolutionCollectionByNeedTypeSQL string
 
+//go:embed SQL/possible_operational_solution_collection_get_all.sql
+var possibleOperationalSolutionCollectionGelAllSQL string
+
 //go:embed SQL/possible_operational_solution_collection_get_by_operational_need_id.sql
 var possibleOperationalSolutionCollectionByOperationalNeedIDSQL string
 
@@ -37,6 +40,24 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(logger *zap.L
 	}
 	return posSols, nil
 
+}
+
+// PossibleOperationalSolutionCollectionGetAll returns all possible operational solutions
+func (s *Store) PossibleOperationalSolutionCollectionGetAll(logger *zap.Logger) ([]*models.PossibleOperationalSolution, error) {
+	posSols := []*models.PossibleOperationalSolution{}
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionGelAllSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{}
+
+	err = stmt.Select(&posSols, arg) // this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return posSols, nil
 }
 
 // PossibleOperationalSolutionCollectionGetByOperationalNeedID returns possible operational solutions for a given operational need

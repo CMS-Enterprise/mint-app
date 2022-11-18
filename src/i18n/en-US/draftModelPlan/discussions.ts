@@ -40,7 +40,8 @@ const discussions = {
       'There are no questions yet. When a question is asked, it will appear here.'
   },
   ariaLabel: 'Discussion Center Modal',
-  assessment: 'Model Assessment Team'
+  assessment: 'Model Assessment Team',
+  viewMoreQuestions: 'View more questions'
 };
 
 export default discussions;

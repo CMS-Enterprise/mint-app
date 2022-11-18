@@ -6,7 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.20
 	github.com/aws/aws-sdk-go v1.44.131
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
-	github.com/go-openapi/errors v0.20.2
+	github.com/go-openapi/errors v0.20.3
 	github.com/go-openapi/runtime v0.24.2
 	github.com/go-openapi/strfmt v0.21.3
 	github.com/go-openapi/swag v0.22.3
