@@ -73,8 +73,10 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
+const gqlAddressWithoutProtocol = (process.env
+  .REACT_APP_GRAPHQL_ADDRESS as string).split('://')[1];
 const wsLink = new WebSocketLink(
-  new SubscriptionClient('ws://localhost:8085/api/graph/query', {
+  new SubscriptionClient(`ws://${gqlAddressWithoutProtocol}`, {
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
     }
