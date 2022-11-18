@@ -33,6 +33,7 @@ import {
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
@@ -74,15 +75,14 @@ const IDDOC = () => {
     UpdatePlanOpsEvalAndLearning
   );
 
-  const handleFormSubmit = (
-    formikValues: IDDOCFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -155,8 +155,8 @@ const IDDOC = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -368,7 +368,7 @@ const IDDOC = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -380,7 +380,7 @@ const IDDOC = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -391,7 +391,7 @@ const IDDOC = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

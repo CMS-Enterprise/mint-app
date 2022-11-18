@@ -43,6 +43,7 @@ import {
   PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   translateNonClaimsBasedPayType
@@ -96,20 +97,21 @@ const NonClaimsBasedPayment = () => {
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
-    formikValues: NonClaimsBasedPaymentFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
-    const hasClaimsBasedPayment = formikValues.payType.includes(
+    const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
-    const hasReductionToCostSharing = formikValues.payClaims.includes(
+    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
       ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
     );
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -202,8 +204,8 @@ const NonClaimsBasedPayment = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -266,7 +268,6 @@ const NonClaimsBasedPayment = () => {
                             id="payment-nonclaims-payments-warning"
                             onClick={() =>
                               handleFormSubmit(
-                                values,
                                 `/models/${modelID}/task-list/it-solutions`
                               )
                             }
@@ -490,7 +491,7 @@ const NonClaimsBasedPayment = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -502,7 +503,7 @@ const NonClaimsBasedPayment = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -515,7 +516,7 @@ const NonClaimsBasedPayment = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

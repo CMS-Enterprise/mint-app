@@ -32,6 +32,7 @@ import {
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Involvements = () => {
@@ -70,15 +71,14 @@ const Involvements = () => {
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (
-    formikValues: InvolvementsFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -156,7 +156,7 @@ const Involvements = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -430,7 +430,7 @@ const Involvements = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -442,7 +442,7 @@ const Involvements = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -452,7 +452,7 @@ const Involvements = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

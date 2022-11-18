@@ -34,6 +34,7 @@ import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -86,20 +87,20 @@ const Milestones = () => {
 
   const [update] = useMutation<UpdatePlanBasicsVariables>(UpdatePlanBasics);
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list'
-  ) => {
-    const {
-      id: updateId,
-      __typename,
-      status: inputStatus,
-      ...changeValues
-    } = formikValues;
+  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
-        id: updateId,
-        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
+        id,
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -172,8 +173,8 @@ const Milestones = () => {
       {!loading && (
         <Formik
           initialValues={initialValues}
-          onSubmit={values => {
-            handleFormSubmit(values);
+          onSubmit={() => {
+            handleFormSubmit();
           }}
           enableReinitialize
           validationSchema={planBasicsSchema.pageThreeSchema}
@@ -456,7 +457,7 @@ const Milestones = () => {
                             if (Object.keys(err).length > 0) {
                               window.scrollTo(0, 0);
                             } else {
-                              handleFormSubmit(values, 'back');
+                              handleFormSubmit('back');
                             }
                           });
                         }
@@ -475,7 +476,7 @@ const Milestones = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit(values, 'task-list')}
+                    onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {h('saveAndReturn')}

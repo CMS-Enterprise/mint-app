@@ -35,6 +35,7 @@ import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -72,21 +73,20 @@ const AnticipateDependencies = () => {
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (
-    formikValues: AnticipateDependenciesFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
-    const hasReductionToCostSharing = formikValues.payClaims.includes(
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
       ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
     );
-    const hasNonClaimBasedPayment = formikValues.payType.includes(
+    const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -172,8 +172,8 @@ const AnticipateDependencies = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -392,7 +392,7 @@ const AnticipateDependencies = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -404,7 +404,7 @@ const AnticipateDependencies = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -417,7 +417,7 @@ const AnticipateDependencies = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />
