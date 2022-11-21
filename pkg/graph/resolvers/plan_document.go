@@ -88,8 +88,7 @@ func PlanDocumentsReadBySolutionID(
 	}
 
 	if !isCollaborator {
-		// TODO: Tommy - Don't forget this please. Come on man. Be a bruh. Bruh. Bruuuggghh.
-		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
+		notRestrictedDocuments, err := store.PlanDocumentsReadBySolutionIDNotRestricted(logger, id, s3Client)
 
 		if err != nil {
 			return nil, err

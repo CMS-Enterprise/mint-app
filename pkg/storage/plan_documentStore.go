@@ -35,6 +35,9 @@ var planDocumentsGetBySolutionIDSQL string
 //go:embed SQL/plan_document_read_by_model_plan_id_not_restricted.sql
 var planDocumentGetByModelPlanIDNotRestrictedSQL string
 
+//go:embed SQL/plan_document_read_by_solution_id_not_restricted.sql
+var planDocumentGetBySolutionIDNotRestrictedSQL string
+
 //go:embed SQL/plan_document_delete_by_id.sql
 var planDocumentDeleteByIDSQL string
 
@@ -162,6 +165,32 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	}
 
 	err = logIfNoRowsFetched(logger, modelPlanID, documents)
+	return documents, err
+}
+
+// PlanDocumentsReadBySolutionIDNotRestricted reads a plan document object by model plan id and restricted = false
+func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
+	logger *zap.Logger,
+	solutionID uuid.UUID,
+	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	statement, err := s.db.PrepareNamed(planDocumentGetBySolutionIDNotRestrictedSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var documents []*models.PlanDocument
+	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
+	}
+
+	err = logIfNoRowsFetched(logger, solutionID, documents)
 	return documents, err
 }
 
