@@ -12,10 +12,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
+	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
+	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
@@ -23,16 +26,21 @@ type AuthenticationMiddlewareTestSuite struct {
 	suite.Suite
 	logger *zap.Logger
 	config *viper.Viper
+	store  *storage.Store
 }
 
 func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
 	config := testhelpers.NewConfig()
 	logger := zap.NewNop()
+	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
+
+	store, _ := storage.NewStore(logger, NewDBConfig(), ldClient)
 
 	testSuite := &AuthenticationMiddlewareTestSuite{
 		Suite:  suite.Suite{},
 		logger: logger,
 		config: config,
+		store:  store,
 	}
 
 	suite.Run(t, testSuite)
@@ -63,6 +71,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 	factory := NewMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		verifier,
+		s.store,
 	)
 	return factory.NewAuthenticationMiddleware
 }
@@ -166,5 +175,20 @@ func TestJobCodes(t *testing.T) {
 			result := jwtGroupsContainsJobCode(jwt, tc.jobCode)
 			assert.Equal(t, tc.expected, result)
 		})
+	}
+}
+
+// NewDBConfig returns a DBConfig struct with values from appconfig
+func NewDBConfig() storage.DBConfig {
+	config := testhelpers.NewConfig()
+
+	return storage.DBConfig{
+		Host:           config.GetString(appconfig.DBHostConfigKey),
+		Port:           config.GetString(appconfig.DBPortConfigKey),
+		Database:       config.GetString(appconfig.DBNameConfigKey),
+		Username:       config.GetString(appconfig.DBUsernameConfigKey),
+		Password:       config.GetString(appconfig.DBPasswordConfigKey),
+		SSLMode:        config.GetString(appconfig.DBSSLModeConfigKey),
+		MaxConnections: config.GetInt(appconfig.DBMaxConnections),
 	}
 }

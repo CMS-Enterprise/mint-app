@@ -2,7 +2,7 @@ CREATE TABLE user_account (
     id UUID PRIMARY KEY NOT NULL,
     eua_id EUA_ID,
     idm_username ZERO_STRING,
-    commonName ZERO_STRING NOT NULL,
+    common_name ZERO_STRING NOT NULL,
     email ZERO_STRING NOT NULL
 );
 

@@ -15,6 +15,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 const (
@@ -62,6 +64,20 @@ func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.O
 	euaID := jwt.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
+	}
+	userAccount, accErr := f.Store.UserAccountGetByEUAID(euaID)
+	if accErr != nil {
+		return nil, errors.New("failed to get user information from the database")
+	}
+
+	if userAccount == nil {
+		user := models.UserAccount{
+			EuaID: &euaID,
+		}
+		_, err := f.Store.UserAccountInsertByEUAID(&user)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// the current assumption is that anyone with an appropriate
@@ -142,6 +158,7 @@ type JwtVerifier interface {
 // MiddlewareFactory provides functionality to create functions that attach EUA Principals to context objects by decoding JWT tokens
 type MiddlewareFactory struct {
 	handlers.HandlerBase
+	Store             *storage.Store
 	verifier          JwtVerifier
 	jobCodeUser       string
 	jobCodeAssessment string
@@ -182,9 +199,10 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 }
 
 // NewMiddlewareFactory returns a factory creating Okta middleware functions
-func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier) *MiddlewareFactory {
+func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier, store *storage.Store) *MiddlewareFactory {
 	return &MiddlewareFactory{
 		HandlerBase:       base,
+		Store:             store,
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
