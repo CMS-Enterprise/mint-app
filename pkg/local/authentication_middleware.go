@@ -73,10 +73,11 @@ func devUserContext(ctx context.Context, authHeader string) (context.Context, er
 		return nil, errors.New("could not parse local auth JSON")
 	}
 
-	return appcontext.WithPrincipal(ctx, &authentication.EUAPrincipal{
-		EUAID:             strings.ToUpper(config.EUA),
+	return appcontext.WithPrincipal(ctx, &authentication.OKTAPrincipal{
+		Username:          strings.ToUpper(config.EUA),
 		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
 		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
+		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
 	}), nil
 }
 

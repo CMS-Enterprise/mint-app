@@ -18,6 +18,7 @@ import (
 const (
 	jobCodeUser       = "MINT_USER_NONPROD"
 	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
+	jobCodeMAC        = "MINT MAC Users"
 )
 
 func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
@@ -55,7 +56,7 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.EUAPrincipal, error) {
+func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.OKTAPrincipal, error) {
 	euaID := jwt.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
@@ -69,10 +70,13 @@ func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authenticati
 	// need to check the claims for empowerment as each role
 	jcAssessment := jwtGroupsContainsJobCode(jwt, f.jobCodeAssessment)
 
-	return &authentication.EUAPrincipal{
-		EUAID:             strings.ToUpper(euaID),
+	jcMAC := jwtGroupsContainsJobCode(jwt, f.jobCodeMAC)
+
+	return &authentication.OKTAPrincipal{
+		Username:          strings.ToUpper(euaID),
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
 	}, nil
 }
 
@@ -137,6 +141,7 @@ type oktaMiddlewareFactory struct {
 	verifier          JwtVerifier
 	jobCodeUser       string
 	jobCodeAssessment string
+	jobCodeMAC        string
 }
 
 // NewOktaAuthenticationMiddleware returns a wrapper for HandlerFunc to authorize with Okta
@@ -146,6 +151,7 @@ func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtV
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
+		jobCodeMAC:        jobCodeMAC,
 	}
 	return middlewareFactory.newAuthenticationMiddleware
 }
