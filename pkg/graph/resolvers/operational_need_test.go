@@ -20,7 +20,7 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	suite.Nil(firstNeed.ModifiedBy)
 	suite.Nil(firstNeed.ModifiedDts)
 	suite.Nil(firstNeed.NameOther)
-	suite.EqualValues(firstNeed.CreatedBy, suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(firstNeed.CreatedBy, suite.testConfigs.Principal.Username)
 	suite.NotNil(firstNeed.CreatedDts)
 	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query //TODO
 	suite.Nil(firstNeed.Needed)  //Needed should not yet be set
@@ -51,8 +51,8 @@ func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdateCustom() {
 	suite.NotNil(need.ModifiedDts)
 
 	suite.EqualValues(need.Needed, &needed)
-	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.EUAID)
-	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(need.CreatedBy, suite.testConfigs.Principal.Username)
+	suite.EqualValues(need.ModifiedBy, &suite.testConfigs.Principal.Username)
 
 }
 
@@ -69,8 +69,8 @@ func (suite *ResolverSuite) TestOperationalNeedCustomUpdateByID() {
 	suite.NoError(err)
 	suite.EqualValues(need2.NameOther, &newNeed)
 	suite.EqualValues(need2.Needed, &needed)
-	suite.EqualValues(need2.CreatedBy, suite.testConfigs.Principal.EUAID)
-	suite.EqualValues(need2.ModifiedBy, &suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(need2.CreatedBy, suite.testConfigs.Principal.Username)
+	suite.EqualValues(need2.ModifiedBy, &suite.testConfigs.Principal.Username)
 	suite.EqualValues(need1.ID, need2.ID)
 
 	//2. Error when setting need to null

@@ -30,7 +30,7 @@ func TestAuthorizationTestSuite(t *testing.T) {
 }
 
 func (s *AuthorizationTestSuite) TestAllowsAuthenticatedRequests() {
-	principal := authentication.EUAPrincipal{EUAID: "QQQQ"}
+	principal := authentication.OKTAPrincipal{Username: "QQQQ"}
 	req := httptest.NewRequest("GET", "/", nil)
 	req = req.WithContext(appcontext.WithPrincipal(req.Context(), &principal))
 

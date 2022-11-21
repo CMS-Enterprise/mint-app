@@ -27,7 +27,7 @@ type TestConfigs struct {
 	Store     *storage.Store
 	S3Client  *upload.S3Client
 	PubSub    *pubsub.ServicePubSub
-	Principal *authentication.EUAPrincipal
+	Principal *authentication.OKTAPrincipal
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -81,7 +81,7 @@ func NewDBConfig() storage.DBConfig {
 	}
 }
 
-func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub, *authentication.EUAPrincipal) {
+func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub, *authentication.OKTAPrincipal) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
@@ -92,8 +92,8 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	}
 	ps := pubsub.NewServicePubSub()
 
-	princ := &authentication.EUAPrincipal{
-		EUAID:             userInfo.EuaUserID,
+	princ := &authentication.OKTAPrincipal{
+		Username:          userInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
 	}

@@ -20,6 +20,7 @@ import (
 const (
 	jobCodeUser       = "MINT_USER_NONPROD"
 	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
+	jobCodeMAC        = "MINT MAC Users"
 )
 
 func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
@@ -57,7 +58,7 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.EUAPrincipal, error) {
+func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.OKTAPrincipal, error) {
 	euaID := jwt.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
@@ -71,10 +72,13 @@ func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.E
 	// need to check the claims for empowerment as each role
 	jcAssessment := jwtGroupsContainsJobCode(jwt, f.jobCodeAssessment)
 
-	return &authentication.EUAPrincipal{
-		EUAID:             strings.ToUpper(euaID),
+	jcMAC := jwtGroupsContainsJobCode(jwt, f.jobCodeMAC)
+
+	return &authentication.OKTAPrincipal{
+		Username:          strings.ToUpper(euaID),
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
 	}, nil
 }
 
@@ -141,6 +145,7 @@ type MiddlewareFactory struct {
 	verifier          JwtVerifier
 	jobCodeUser       string
 	jobCodeAssessment string
+	jobCodeMAC        string
 }
 
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
@@ -183,5 +188,6 @@ func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier) *M
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
+		jobCodeMAC:        jobCodeMAC,
 	}
 }
