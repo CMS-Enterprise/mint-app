@@ -19,12 +19,12 @@ func NewAnalyzedAuditJob(modelPlanID uuid.UUID, date time.Time, store *storage.S
 		return err
 	}
 
-	changes, err := GenerateChanges(audits, store, date, logger)
+	changes, err := GenerateChanges(audits)
 	if err != nil {
 		return err
 	}
 
-	AnalyzedAudit, err := models.NewAnalyzedAudit("Faktory", modelPlanID, date, changes)
+	AnalyzedAudit, err := models.NewAnalyzedAudit("Faktory", modelPlanID, date, *changes)
 	if err != nil {
 		return err
 	}
@@ -36,37 +36,188 @@ func NewAnalyzedAuditJob(modelPlanID uuid.UUID, date time.Time, store *storage.S
 }
 
 // GenerateChanges gets all the audit changes for the specified tables
-func GenerateChanges(audits []*models.AuditChange, store *storage.Store, date time.Time, logger *zap.Logger) ([]*models.AuditChange, error) {
+func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {
 
-	tableNames := []string{
-		"model_plan",
-		"plan_cr_tdl",
-		"plan_colaborator",
-		"plan_discussion",
+	modelPlanAudits, err := AnalyzeModelPlanAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	documentsAudits, err := AnalyzeDocumentsAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	crTdlAudits, err := AnalyzeCrTdlAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	sectionsAudits, err := AnalyzeSectionsAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	colaboratorAudits, err := AnalyzeColaboratorAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	discussionAudits, err := AnalyzeDiscussionAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	analyzedModelPlan := models.AnalyzedAuditChange{
+		ModelPlan:         modelPlanAudits,
+		Documents:         documentsAudits,
+		CrTdls:            crTdlAudits,
+		PlanSections:      sectionsAudits,
+		PlanCollaborators: colaboratorAudits,
+		PlanDiscussions:   discussionAudits,
+	}
+
+	return &analyzedModelPlan, nil
+}
+
+// AnalyzeModelPlanAudits analyzes all the model plan name changes and status changes
+func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "model_plan"
+	})
+
+	nameChangeAudits := lo.Filter(filteredAudits, func(m *models.AuditChange, index int) bool {
+		keys := lo.Keys(m.Fields)
+		return lo.Contains(keys, "plan_name")
+	})
+	nameChangeAuditField := models.AuditField{
+		Old: nameChangeAudits[0].Fields["status"].Old,
+		New: nameChangeAudits[0].Fields["status"].New,
+	}
+
+	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			return m.Fields["status"].New.(string), true
+		}
+		return "", false
+	})
+
+	analyzedModelPlan := models.AnalyzedModelPlan{
+		NameChange:    nameChangeAuditField,
+		StatusChanges: statusChangeAudits,
+	}
+
+	return &analyzedModelPlan, nil
+}
+
+// AnalyzeCrTdlAudits analyzes if there were any CrTdl changes
+func AnalyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_cr_tdl"
+	})
+
+	if len(filteredAudits) > 0 {
+		return &models.AnalyzedCrTdls{
+			Activity: true,
+		}, nil
+	}
+	return nil, nil
+}
+
+// AnalyzeColaboratorAudits analyzes new collaborators to a model plan
+func AnalyzeColaboratorAudits(audits []*models.AuditChange) (*models.AnalyzedPlanCollaborators, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_colaborator"
+	})
+
+	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "full_name") {
+			return m.Fields["full_name"].New.(string), true
+		}
+		return "", false
+	})
+
+	analyzedPlanColaborators := models.AnalyzedPlanCollaborators{
+		Added: addedCollaborators,
+	}
+
+	return &analyzedPlanColaborators, nil
+
+}
+
+// AnalyzeDiscussionAudits analyzes if there was discussion activity on a model plan
+func AnalyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlanDiscussions, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_discussion"
+	})
+
+	if len(filteredAudits) > 0 {
+		return &models.AnalyzedPlanDiscussions{
+			Activity: true,
+		}, nil
+	}
+	return nil, nil
+
+}
+
+// AnalyzeDocumentsAudits analyzes how many documents had activity
+func AnalyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocuments, error) {
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return m.TableName == "plan_documents"
+	})
+
+	analyzedDocuments := models.AnalyzedDocuments{
+		Count: len(filteredAudits),
+	}
+
+	return &analyzedDocuments, nil
+}
+
+// AnalyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
+func AnalyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
+	sections := []string{
 		"plan_basics",
 		"plan_general_characteristics",
 		"plan_participants_and_providers",
 		"plan_beneficiaries",
 		"plan_ops_eval_and_learning",
-		"plan_documents",
 		"plan_payments",
 	}
-	auditChanges := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return lo.Contains(tableNames, m.TableName)
+	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
+		return lo.Contains(sections, m.TableName)
 	})
 
-	var allDiscussionReplyAuditChanges []*models.AuditChange
-	discussionAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_discussion"
-	})
+	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) string {
+		return m.TableName
+	}))
 
-	lo.ForEach(discussionAudits, func(m *models.AuditChange, _ int) {
-		replyAuditChanges, err := store.AuditChangeCollectionByForeignKeyAndTableAndDate(logger, "discussion_reply", m.PrimaryKey, date, models.SortDesc)
-		if err != nil {
-			return
+	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
+				return m.Fields["status"].New.(string), true
+			}
 		}
-		allDiscussionReplyAuditChanges = append(allDiscussionReplyAuditChanges, replyAuditChanges...)
-	})
+		return "", false
+	}))
 
-	return append(auditChanges, allDiscussionReplyAuditChanges...), nil
+	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			if m.Fields["status"].New.(string) == "READY_FOR_CLEARANCE" {
+				return m.Fields["status"].New.(string), true
+			}
+		}
+		return "", false
+	}))
+
+	analyzedPlanSections := models.AnalyzedPlanSections{
+		Updated:           updatedSections,
+		ReadyForReview:    readyForReview,
+		ReadyForClearance: readyForClearance,
+	}
+
+	return &analyzedPlanSections, nil
 }
