@@ -166,14 +166,6 @@ jobs:
           platforms: "linux/amd64"
           context: .
           build-args: "APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }},APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}"
-      # - name: Build, tag, and push image to Amazon ECR
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     ECR_REPOSITORY: mint-backend
-      #   run: ./scripts/build_and_push_backend.sh
-      # - name: Check for vulnerability scan findings
-      #   run: |
-      #     ./scripts/check_ecr_findings "easi-backend" "$GIT_HASH" "7"
       - name: Announce failure
         if: ${{ failure() }}
         run: |

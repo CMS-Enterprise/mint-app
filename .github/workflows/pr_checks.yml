@@ -1,4 +1,4 @@
-name: PR Build and Test
+name: PR Checks
 
 on:
   pull_request:
@@ -7,21 +7,12 @@ on:
 
 # This concurrency group exists with cancel-in-progress: true so that only the latest run of the workflow is executed (as its all that should matter).
 concurrency:
-  group: pr-build-and-test-${{ github.ref }}
+  group: pr-checks-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  Build_Application_Images:
-    uses: ./.github/workflows/build_application_images.yml
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      INFRA_ROLE_TO_ASSUME: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
   Run_Tests:
     uses: ./.github/workflows/run_tests.yml
-    needs: Build_Application_Images
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
