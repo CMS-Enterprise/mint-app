@@ -9,6 +9,7 @@ import (
 
 // GoSimpleMailServiceConfig is a configuration structure to define the behavior of a GoSimpleMailService
 type GoSimpleMailServiceConfig struct {
+	Enabled        bool
 	Helo           string
 	Host           string
 	ClientAddress  string
@@ -92,4 +93,9 @@ func (g *GoSimpleMailServiceConfig) GetKeepAlive() bool {
 // GetTLSConfig returns the TLSConfig configuration
 func (g *GoSimpleMailServiceConfig) GetTLSConfig() *tls.Config {
 	return g.TLSConfig
+}
+
+// GetEnabled returns the Enabled configuration
+func (g *GoSimpleMailServiceConfig) GetEnabled() bool {
+	return g.Enabled
 }
