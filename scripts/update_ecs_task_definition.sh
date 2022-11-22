@@ -34,7 +34,8 @@ NEW_REVISION=$(echo "$NEW_TASK_INFO" | jq '.taskDefinition.revision')
 # Update the service with the new revision
 aws ecs update-service --cluster "${ECS_CLUSTER}" \
                        --service "${SERVICE_NAME}" \
-                       --task-definition "${TASK_FAMILY}:${NEW_REVISION}"
+                       --task-definition "${TASK_FAMILY}:${NEW_REVISION}" \
+                       --no-cli-pager
 
 # Run the healthcheck script 
 ./scripts/healthcheck "$NEW_IMAGE_TAG"
