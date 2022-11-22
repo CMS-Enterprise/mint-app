@@ -47,17 +47,14 @@ jobs:
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: impl
-      lambda_version: 8
     secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      LD_CLIENT_ID: ${{ secrets.LD_CLIENT_ID_IMPL }}
-      OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID_IMPL }}
-      OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID_IMPL }}
-      STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET_IMPL }}
-      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME_IMPL }}
-      ECR_REGISTRY: ${{secrets.ECR_REGISTRY }}
+      LD_CLIENT_ID: ${{ secrets.LD_CLIENT_ID }}
+      OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
+      OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID }}
+      STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
 
   deploy_prod:
     if: ${{ false }} # Disabled until we're ready to deploy
@@ -65,16 +62,13 @@ jobs:
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: prod
-      lambda_version: 7
     secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      LD_CLIENT_ID: ${{ secrets.LD_CLIENT_ID_PROD }}
-      OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID_PROD }}
-      OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID_PROD }}
-      STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET_PROD }}
-      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME_PROD }}
-      ECR_REGISTRY: ${{secrets.ECR_REGISTRY }}
+      LD_CLIENT_ID: ${{ secrets.LD_CLIENT_ID }}
+      OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
+      OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID }}
+      STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
 
   
