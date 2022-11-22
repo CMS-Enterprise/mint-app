@@ -41,6 +41,7 @@ import {
   KeyCharacteristic
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   translateAlternativePaymentTypes,
@@ -97,14 +98,15 @@ const KeyCharacteristics = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: KeyCharacteristicsFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -181,8 +183,8 @@ const KeyCharacteristics = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -411,7 +413,6 @@ const KeyCharacteristics = () => {
                           id="plan-characteristics-collect-bids-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
                               `/models/${modelID}/task-list/it-solutions`
                             )
                           }
@@ -468,7 +469,6 @@ const KeyCharacteristics = () => {
                           id="plan-characteristics-manage-enrollment-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
                               `/models/${modelID}/task-list/it-solutions`
                             )
                           }
@@ -525,7 +525,6 @@ const KeyCharacteristics = () => {
                           id="plan-characteristics-contact-updated-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
                               `/models/${modelID}/task-list/it-solutions`
                             )
                           }
@@ -572,7 +571,7 @@ const KeyCharacteristics = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -584,7 +583,7 @@ const KeyCharacteristics = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -594,7 +593,7 @@ const KeyCharacteristics = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

@@ -38,6 +38,7 @@ import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/Participant
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   translateParticipantsType
@@ -88,15 +89,14 @@ export const ParticipantsAndProvidersContent = () => {
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (
-    formikValues: ParticipantsAndProvidersFormType,
-    redirect?: 'next' | 'back'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back') => {
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -165,8 +165,8 @@ export const ParticipantsAndProvidersContent = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -419,7 +419,7 @@ export const ParticipantsAndProvidersContent = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'back')}
+                        onClick={() => handleFormSubmit('back')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -447,7 +447,7 @@ export const ParticipantsAndProvidersContent = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

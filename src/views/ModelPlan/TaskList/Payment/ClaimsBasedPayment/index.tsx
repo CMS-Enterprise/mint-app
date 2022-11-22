@@ -39,6 +39,7 @@ import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   translateClaimsBasedPayType
@@ -92,14 +93,15 @@ const ClaimsBasedPayment = () => {
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
-    formikValues: ClaimsBasedPaymentFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -185,8 +187,8 @@ const ClaimsBasedPayment = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -312,7 +314,6 @@ const ClaimsBasedPayment = () => {
                             className="margin-top-neg-5"
                             onClick={() =>
                               handleFormSubmit(
-                                values,
                                 `/models/${modelID}/task-list/it-solutions`
                               )
                             }
@@ -512,7 +513,7 @@ const ClaimsBasedPayment = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -524,7 +525,7 @@ const ClaimsBasedPayment = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -537,7 +538,7 @@ const ClaimsBasedPayment = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

@@ -73,10 +73,11 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
-const gqlAddressWithoutProtocol = (process.env
-  .REACT_APP_GRAPHQL_ADDRESS as string).split('://')[1];
+const [protocol, gqlAddressWithoutProtocol] = (process.env
+  .REACT_APP_GRAPHQL_ADDRESS as string).split('://');
+const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecting over HTTPs
 const wsLink = new WebSocketLink(
-  new SubscriptionClient(`ws://${gqlAddressWithoutProtocol}`, {
+  new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
     }
