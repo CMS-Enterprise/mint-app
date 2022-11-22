@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 //go:embed SQL/user_account_get_by_euaid.sql
@@ -15,8 +15,8 @@ var userAccountGetByEUAID string
 var userAccountInsertByEUAID string
 
 // UserAccountGetByEUAID reads information about a model plan's clearance
-func (s *Store) UserAccountGetByEUAID(euaID string) (*models.UserAccount, error) {
-	user := &models.UserAccount{}
+func (s *Store) UserAccountGetByEUAID(euaID string) (*authentication.UserAccount, error) {
+	user := &authentication.UserAccount{}
 
 	statement, err := s.db.PrepareNamed(userAccountGetByEUAID)
 	if err != nil {
@@ -41,8 +41,8 @@ func (s *Store) UserAccountGetByEUAID(euaID string) (*models.UserAccount, error)
 }
 
 // UserAccountInsertByEUAID creates a new user account for a given EUAID
-func (s *Store) UserAccountInsertByEUAID(userAccount *models.UserAccount) (*models.UserAccount, error) {
-	user := &models.UserAccount{}
+func (s *Store) UserAccountInsertByEUAID(userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+	user := &authentication.UserAccount{}
 
 	if userAccount.ID == uuid.Nil {
 		userAccount.ID = uuid.New()

@@ -1,4 +1,4 @@
-package models
+package authentication
 
 import "github.com/google/uuid"
 
@@ -9,5 +9,4 @@ type UserAccount struct {
 	IdmUserName *string   `json:"idmUsername" db:"idm_username"`
 	CommonName  string    `json:"commonName" db:"common_name"`
 	Email       string    `json:"email" db:"email"`
-	// TODO work in progress
 }

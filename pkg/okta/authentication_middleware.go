@@ -15,8 +15,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 const (
@@ -65,19 +65,9 @@ func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.O
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
-	userAccount, accErr := f.Store.UserAccountGetByEUAID(euaID)
-	if accErr != nil {
-		return nil, errors.New("failed to get user information from the database")
-	}
-
-	if userAccount == nil {
-		user := models.UserAccount{
-			EuaID: &euaID,
-		}
-		_, err := f.Store.UserAccountInsertByEUAID(&user)
-		if err != nil {
-			return nil, err
-		}
+	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID) //TODO, do we need to do anything with the user? Should we pass the id around?
+	if err != nil {
+		return nil, err
 	}
 
 	// the current assumption is that anyone with an appropriate
@@ -95,6 +85,7 @@ func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.O
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
 		JobCodeMAC:        jcMAC,
+		UserAccount:       userAccount,
 	}, nil
 }
 

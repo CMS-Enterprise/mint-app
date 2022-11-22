@@ -1,6 +1,8 @@
 package authentication
 
-import "fmt"
+import (
+	"fmt"
+)
 
 const anonID = "ANON"
 
@@ -29,6 +31,8 @@ type Principal interface {
 	// AllowMAC says whether this principal
 	// is authorized to operate within MINT as a MAC user
 	AllowMAC() bool
+
+	Account() *UserAccount
 }
 
 type anonymous struct{}
@@ -63,6 +67,10 @@ func (*anonymous) AllowMAC() bool {
 	return false
 }
 
+func (*anonymous) Account() *UserAccount {
+	return nil
+}
+
 // OKTAPrincipal represents information
 // gleaned from the Okta JWT
 type OKTAPrincipal struct {
@@ -70,6 +78,7 @@ type OKTAPrincipal struct {
 	JobCodeUSER       bool
 	JobCodeASSESSMENT bool
 	JobCodeMAC        bool
+	UserAccount       *UserAccount
 }
 
 // String satisfies the fmt.Stringer interface
@@ -100,4 +109,9 @@ func (p *OKTAPrincipal) AllowASSESSMENT() bool {
 // is authorized to operate within MINT as a MAC user
 func (p *OKTAPrincipal) AllowMAC() bool {
 	return p.JobCodeMAC
+}
+
+// Account returns the user account of the context of the user who made the request
+func (p *OKTAPrincipal) Account() *UserAccount {
+	return p.UserAccount
 }
