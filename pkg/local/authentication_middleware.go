@@ -81,18 +81,13 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
 	}
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(store, princ.ID()) //TODO, do we need to do anything with the user? Should we pass the id around?
+	userAccount, err := userhelpers.GetOrCreateUserAccount(store, princ.ID(), true, "", "") //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err
 	}
+	princ.UserAccount = userAccount
 
-	return appcontext.WithPrincipal(ctx, &authentication.OKTAPrincipal{
-		Username:          strings.ToUpper(config.EUA),
-		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
-		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
-		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
-		UserAccount:       userAccount,
-	}), nil
+	return appcontext.WithPrincipal(ctx, princ), nil
 }
 
 // NewLocalWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in

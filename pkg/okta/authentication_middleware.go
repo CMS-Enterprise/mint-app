@@ -25,7 +25,13 @@ const (
 	jobCodeMAC        = "MINT MAC Users"
 )
 
-func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
+// EnhancedJwt is the JWT and the auth token
+type EnhancedJwt struct { //TODO rename this to something logical, and return it
+	JWT       *jwtverifier.Jwt
+	AuthToken string
+}
+
+func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*EnhancedJwt, error) {
 	tokenParts := strings.Split(authHeader, "Bearer ")
 	if len(tokenParts) < 2 {
 		return nil, errors.New("invalid Bearer in auth header")
@@ -35,7 +41,12 @@ func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverif
 		return nil, errors.New("empty bearer value")
 	}
 
-	return f.verifier.VerifyAccessToken(bearerToken)
+	jwt, err := f.verifier.VerifyAccessToken(bearerToken)
+	enhanced := EnhancedJwt{
+		JWT:       jwt,
+		AuthToken: bearerToken,
+	}
+	return &enhanced, err
 }
 
 func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
@@ -60,12 +71,15 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.OKTAPrincipal, error) {
-	euaID := jwt.Claims["sub"].(string)
+func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.OKTAPrincipal, error) {
+	euaID := enchanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
-	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID) //TODO, do we need to do anything with the user? Should we pass the id around?
+
+	//TODO we need to get the auth, or wrap the jwt in the auth
+	baseURL := enchanced.JWT.Claims["iss"].(string)
+	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID, false, baseURL, enchanced.AuthToken) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err
 	}
@@ -73,12 +87,12 @@ func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.O
 	// the current assumption is that anyone with an appropriate
 	// JWT provided by Okta for MINT is allowed to use MINT
 	// as a viewer/submitter
-	jcUser := jwtGroupsContainsJobCode(jwt, f.jobCodeUser)
+	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeUser)
 
-	// need to check the claims for empowerment as each role
-	jcAssessment := jwtGroupsContainsJobCode(jwt, f.jobCodeAssessment)
+	// need to check the claims for empowerment as each role6
+	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeAssessment)
 
-	jcMAC := jwtGroupsContainsJobCode(jwt, f.jobCodeMAC)
+	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeMAC)
 
 	return &authentication.OKTAPrincipal{
 		Username:          strings.ToUpper(euaID),
