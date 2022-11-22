@@ -44,6 +44,3 @@ OLD_REVISION=$(echo "$TASK_DEFINITION" | jq '.taskDefinition.revision')
 
 # deregister the previous task definition
 aws ecs deregister-task-definition --task-definition "${TASK_FAMILY}:${OLD_REVISION}"
-
-# deregister the previous task definition
-aws ecs deregister-task-definition --task-definition "${TASK_FAMILY}:${OLD_REVISION}"
