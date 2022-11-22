@@ -166,6 +166,7 @@ jobs:
           platforms: "linux/arm64"
           context: .
           build-args: "APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }},APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}"
+          ulimit: nofile=1024000:1024000
       # - name: Build, tag, and push image to Amazon ECR
       #   env:
       #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
