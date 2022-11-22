@@ -128,7 +128,7 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 	}
 
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
