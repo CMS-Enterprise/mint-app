@@ -1482,6 +1482,7 @@ type Query {
   operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
+  possibleOperationalSolutions: [PossibleOperationalSolution!]!
   planDocumentSolutionLinks(solutionID: UUID!): [PlanDocumentSolutionLink!]!
 }
 

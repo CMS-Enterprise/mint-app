@@ -1518,6 +1518,38 @@
 					"response": []
 				},
 				{
+					"name": "PossibleOperationalSolutionsGetAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query PossibleOperationalSolution{\n  \n  possibleOperationalSolutions{\n        id\n        name\n        key  \n    \n    \n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "CreatePlanDocumentSolutionLinks",
 					"request": {
 						"method": "POST",
