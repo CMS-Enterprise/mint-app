@@ -20,6 +20,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 type AuthenticationMiddlewareTestSuite struct {
@@ -51,6 +52,7 @@ func validJwt() *jwtverifier.Jwt {
 		Claims: map[string]interface{}{
 			"mint-groups": []string{},
 			"sub":         "EASI",
+			"iss":         "www.fake.com",
 		},
 	}
 }
@@ -77,6 +79,10 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 }
 
 func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
+
+	_, err := userhelpers.GetOrCreateUserAccount(s.store, "EASI", true, "", "", false)
+
+	s.NoError(err)
 
 	s.Run("a valid token sets the principal", func() {
 		authMiddleware := s.buildMiddleware(func(jwt string) (*jwtverifier.Jwt, error) {
