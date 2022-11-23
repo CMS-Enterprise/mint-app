@@ -164,8 +164,8 @@ jobs:
           platforms: "linux/amd64"
           context: .
           build-args: |
-            ARG_APPLICATION_DATETIME="${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }}"
-            ARG_APPLICATION_TS="${{ steps.calculate-build-args.outputs.APPLICATION_TS }}"
+            ARG_APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }}
+            ARG_APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}
       - name: Announce failure
         if: ${{ failure() }}
         run: |
