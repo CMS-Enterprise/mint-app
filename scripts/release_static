@@ -5,17 +5,14 @@ set -eu -o pipefail
 
 case "$APP_ENV" in
   "dev")
-    STATIC_S3_BUCKET="$STATIC_S3_BUCKET_DEV"
     MINT_URL="https://dev.mint.cms.gov"
     export REACT_APP_OKTA_DOMAIN="https://test.idp.idm.cms.gov"
     ;;
   "impl")
-    STATIC_S3_BUCKET="$STATIC_S3_BUCKET_IMPL"
     MINT_URL="https://impl.mint.cms.gov"
     export REACT_APP_OKTA_DOMAIN="https://impl.idp.idm.cms.gov"
     ;;
   "prod")
-    STATIC_S3_BUCKET="$STATIC_S3_BUCKET_PROD"
     MINT_URL="https://mint.cms.gov"
     export REACT_APP_OKTA_DOMAIN="https://idm.cms.gov"
     ;;
