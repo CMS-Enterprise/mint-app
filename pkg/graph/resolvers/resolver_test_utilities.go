@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -51,8 +52,9 @@ func createS3Client() upload.S3Client {
 
 // GetDefaults sets the dependencies for the TestConfigs struct
 func (tc *TestConfigs) GetDefaults() {
-	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
+	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
+	princ := getTestPrincipal(store, userInfo.EuaUserID)
 
 	s3Client := createS3Client()
 	tc.DBConfig = config
@@ -81,7 +83,7 @@ func NewDBConfig() storage.DBConfig {
 	}
 }
 
-func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub, *authentication.OKTAPrincipal) {
+func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
@@ -92,13 +94,22 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	}
 	ps := pubsub.NewServicePubSub()
 
+	return config, ldClient, logger, userInfo, ps
+}
+
+func getTestPrincipal(store *storage.Store, userName string) *authentication.OKTAPrincipal {
+
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
+
 	princ := &authentication.OKTAPrincipal{
-		Username:          userInfo.EuaUserID,
+		Username:          userName,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
+		JobCodeMAC:        false,
+		UserAccount:       userAccount,
 	}
+	return princ
 
-	return config, ldClient, logger, userInfo, ps, princ
 }
 
 func createAddedAsCollaboratorTemplateCacheHelper(

@@ -12,8 +12,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// NDAAgreementGetByEUA returns an EUA agreement by eua
-func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
+// NDAAgreementGetByUserID returns an EUA agreement by eua
+func NDAAgreementGetByUserID(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	nda, err := store.NDAAgreementGetByUserID(logger, principal.Account().ID)
 	info := model.NDAInfo{}
 	if err != nil {
