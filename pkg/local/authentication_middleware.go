@@ -81,7 +81,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
 	}
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(store, princ.ID(), true, "", "") //TODO, do we need to do anything with the user? Should we pass the id around?
+	userAccount, err := userhelpers.GetOrCreateUserAccount(store, princ.ID(), true, "", "", princ.JobCodeMAC) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err
 	}

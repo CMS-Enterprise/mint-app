@@ -8,23 +8,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
-//go:embed SQL/user_account_get_by_euaid.sql
-var userAccountGetByEUAID string
+//go:embed SQL/user_account_get_by_username.sql
+var userAccountGetByUsername string
 
-//go:embed SQL/user_account_insert_by_euaid.sql
-var userAccountInsertByEUAID string
+//go:embed SQL/user_account_insert_by_username.sql
+var userAccountInsertByUsername string
 
-// UserAccountGetByEUAID reads information about a model plan's clearance
-func (s *Store) UserAccountGetByEUAID(euaID string) (*authentication.UserAccount, error) {
+// UserAccountGetByUsername reads information about a model plan's clearance
+func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	statement, err := s.db.PrepareNamed(userAccountGetByEUAID)
+	statement, err := s.db.PrepareNamed(userAccountGetByUsername)
 	if err != nil {
 		return nil, err
 	}
 
 	arg := map[string]interface{}{
-		"eua_id": euaID,
+		"username": username,
 	}
 
 	err = statement.Get(user, arg)
@@ -40,15 +40,15 @@ func (s *Store) UserAccountGetByEUAID(euaID string) (*authentication.UserAccount
 	// TODO work in progress
 }
 
-// UserAccountInsertByEUAID creates a new user account for a given EUAID
-func (s *Store) UserAccountInsertByEUAID(userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
+// UserAccountInsertByUsername creates a new user account for a given EUAID
+func (s *Store) UserAccountInsertByUsername(userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
 	if userAccount.ID == uuid.Nil {
 		userAccount.ID = uuid.New()
 	}
 
-	statement, err := s.db.PrepareNamed(userAccountInsertByEUAID)
+	statement, err := s.db.PrepareNamed(userAccountInsertByUsername)
 	if err != nil {
 		return nil, err
 	}

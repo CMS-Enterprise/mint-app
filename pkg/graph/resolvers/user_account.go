@@ -10,6 +10,6 @@ import (
 // UserAccountGetByEUAID returns a user account by it's EUAID
 func UserAccountGetByEUAID(logger *zap.Logger, store *storage.Store, euaID string) (*authentication.UserAccount, error) {
 
-	return store.UserAccountGetByEUAID(euaID)
+	return store.UserAccountGetByUsername(euaID)
 
 }

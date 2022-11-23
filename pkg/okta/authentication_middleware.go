@@ -77,12 +77,7 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
 
-	//TODO we need to get the auth, or wrap the jwt in the auth
-	baseURL := enchanced.JWT.Claims["iss"].(string)
-	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID, false, baseURL, enchanced.AuthToken) //TODO, do we need to do anything with the user? Should we pass the id around?
-	if err != nil {
-		return nil, err
-	}
+	baseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
 
 	// the current assumption is that anyone with an appropriate
 	// JWT provided by Okta for MINT is allowed to use MINT
@@ -93,6 +88,11 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication
 	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeAssessment)
 
 	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeMAC)
+
+	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID, false, baseURL, enchanced.AuthToken, jcMAC) //TODO, do we need to do anything with the user? Should we pass the id around?
+	if err != nil {
+		return nil, err
+	}
 
 	return &authentication.OKTAPrincipal{
 		Username:          strings.ToUpper(euaID),

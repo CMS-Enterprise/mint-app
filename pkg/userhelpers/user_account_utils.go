@@ -22,8 +22,8 @@ type OktaAccountInfo struct {
 }
 
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
-func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool, baseURL string, token string) (*authentication.UserAccount, error) {
-	userAccount, accErr := store.UserAccountGetByEUAID(username)
+func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool, baseURL string, token string, isMacUser bool) (*authentication.UserAccount, error) {
+	userAccount, accErr := store.UserAccountGetByUsername(username)
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
 	}
@@ -49,11 +49,16 @@ func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool
 
 	if userAccount == nil {
 		user := authentication.UserAccount{
-			EuaID:      &username,
+			Username:   &username,
+			IsEUAID:    !isMacUser,
 			CommonName: accountInfo.Name,
+			Locale:     accountInfo.Locale,
 			Email:      accountInfo.Email,
+			GivenName:  accountInfo.GivenName,
+			FamilyName: accountInfo.FamilyName,
+			ZoneInfo:   accountInfo.ZoneInfo,
 		}
-		_, err := store.UserAccountInsertByEUAID(&user)
+		_, err := store.UserAccountInsertByUsername(&user)
 		if err != nil {
 			return nil, err
 		}
