@@ -58,10 +58,11 @@ func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool
 			FamilyName: accountInfo.FamilyName,
 			ZoneInfo:   accountInfo.ZoneInfo,
 		}
-		_, err := store.UserAccountInsertByUsername(&user)
+		newAccount, err := store.UserAccountInsertByUsername(&user)
 		if err != nil {
 			return nil, err
 		}
+		userAccount = newAccount
 	}
 	return userAccount, nil
 }
