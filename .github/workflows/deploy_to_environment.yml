@@ -64,44 +64,26 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
-      - name: Clean the database
-        if: contains(inputs.env, 'dev')
-        env:
-          SCRIPT_MODE: run_task
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: mint-db-clean
-          NEW_IMAGE_TAG: latest # Always built with latest
-          TASK_FAMILY: "db-clean-${{ inputs.env }}"
-          AWS_REGION: us-east-1
-        run: |
-          ./scripts/update_ecs_task_definition.sh
+      # - name: Clean the database
+      #   if: contains(inputs.env, 'dev')
+      #   run: |
+      #     ./scripts/db_lambda_invoke "easi-app-db-clean-tmp" "2" "easi-app-db-clean"
       # - name: Backup the database
       #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
       #   run: |
       #     ./scripts/rds-snapshot-app-db
-      - name: Run DB migrations
-        env:
-          SCRIPT_MODE: run_task
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: mint-db-migrate
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
-          TASK_FAMILY: "db-migrate-${{ inputs.env }}"
-          AWS_REGION: us-east-1
-        run: |
-          ./scripts/update_ecs_task_definition.sh
-      - name: Run migrations
-        env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-db-migrate
-          LAMBDA_VERSION: ${{ inputs.lambda_version }}
-          ENV: ${{ inputs.env }}
-        run: |
-          ./scripts/deploy_service "easi-app-db-migrate" "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
-          ./scripts/db_lambda_invoke "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-app-db-migrate"
+      # - name: Run migrations
+      #   env:
+      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      #     ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      #     ECR_REPOSITORY: easi-db-migrate
+      #     LAMBDA_VERSION: ${{ inputs.lambda_version }}
+      #     ENV: ${{ inputs.env }}
+      #   run: |
+      #     ./scripts/deploy_service "easi-app-db-migrate" "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
+      #     ./scripts/db_lambda_invoke "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-app-db-migrate"
       - name: Deploy ECS service
         env:
-          SCRIPT_MODE: service
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-backend
           NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
