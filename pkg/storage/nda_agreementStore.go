@@ -11,8 +11,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
-//go:embed SQL/nda_agreement_get_by_euaid.sql
-var ndaAgreementGetByEUAIDSQL string
+//go:embed SQL/nda_agreement_get_by_user_id.sql
+var ndaAgreementGetByUserIDSQL string
 
 //go:embed SQL/nda_agreement_update.sql
 var ndaAgreementUpdateSQL string
@@ -24,7 +24,7 @@ var ndaAgreementInsertSQL string
 func (s *Store) NDAAgreementGetByUserID(logger *zap.Logger, userID uuid.UUID) (*models.NDAAgreement, error) {
 	nda := models.NDAAgreement{}
 
-	statement, err := s.db.PrepareNamed(ndaAgreementGetByEUAIDSQL)
+	statement, err := s.db.PrepareNamed(ndaAgreementGetByUserIDSQL)
 	if err != nil {
 		return nil, err
 	}
