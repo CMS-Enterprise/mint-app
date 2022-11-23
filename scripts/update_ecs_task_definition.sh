@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Expected environment variables
+# Must be run with SCRIPT_MODE={service,run_task}
+
+# Expected environment variables when SCRIPT_MODE=service
 # ECR_REGISTRY
 # ECR_REPOSITORY
 # NEW_IMAGE_TAG
@@ -9,6 +11,13 @@
 # ECS_CLUSTER
 # SERVICE_NAME
 # APP_ENV
+# 
+# Expected environment variables when SCRIPT_MODE=run_task
+# ECR_REGISTRY
+# ECR_REPOSITORY
+# NEW_IMAGE_TAG
+# TASK_FAMILY
+# AWS_REGION
 
 # fail on any error
 set -eu 
@@ -31,14 +40,21 @@ NEW_TASK_INFO=$(aws ecs register-task-definition --region "$AWS_REGION" --cli-in
 # Grab the new revision from the output
 NEW_REVISION=$(echo "$NEW_TASK_INFO" | jq '.taskDefinition.revision')
 
-# Update the service with the new revision
-aws ecs update-service --cluster "${ECS_CLUSTER}" \
-                       --service "${SERVICE_NAME}" \
-                       --task-definition "${TASK_FAMILY}:${NEW_REVISION}" \
-                       --no-cli-pager
+if [[ "$SCRIPT_MODE" == "service" ]] ; then
+    # Update the service with the new revision
+    aws ecs update-service --cluster "${ECS_CLUSTER}" \
+                           --service "${SERVICE_NAME}" \
+                           --task-definition "${TASK_FAMILY}:${NEW_REVISION}" \
+                           --no-cli-pager
 
-# Run the healthcheck script 
-./scripts/healthcheck "$NEW_IMAGE_TAG"
+    # Run the healthcheck script 
+    ./scripts/healthcheck "$NEW_IMAGE_TAG"
+elif [[ "$SCRIPT_MODE" == "run_task" ]] ; then
+    RUN_RESULT=$(aws ecs run-task --task-definition "${TASK_FAMILY}":"${NEW_REVISION}" --no-cli-pager)
+    echo "${RUN_RESULT}"
+    CONTAINER_ARN=$(echo "${RUN_RESULT}" | jq -r '.tasks[0].taskArn')
+    aws ecs wait tasks-stopped --tasks "${CONTAINER_ARN}"
+fi
 
 # Grab the old revision from TASK_DEFINITION
 OLD_REVISION=$(echo "$TASK_DEFINITION" | jq '.taskDefinition.revision')
