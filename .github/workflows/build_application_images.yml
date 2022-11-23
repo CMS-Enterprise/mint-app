@@ -166,6 +166,7 @@ jobs:
           build-args: |
             ARG_APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }}
             ARG_APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}
+            ARG_APPLICATION_VERSION=${{ env.GIT_HASH }}
       - name: Announce failure
         if: ${{ failure() }}
         run: |
