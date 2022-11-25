@@ -44,8 +44,10 @@ const CheckboxCard = ({
 
   const history = useHistory();
 
-  // Formik checkbox id
-  const id = `it-solutions-${solution?.id}`;
+  // If custom solution, nameOther becoming the identifier
+  const id = solution?.nameOther
+    ? `it-solutions-${solution?.nameOther?.toLowerCase()}`
+    : `it-solutions-${solution?.key?.toLowerCase()}`;
 
   // TODO: replace with real solution data once populated
   const tempDescription: string =

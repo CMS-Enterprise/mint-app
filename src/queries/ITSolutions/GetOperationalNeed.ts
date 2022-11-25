@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetOperationalNeed($id: UUID!) {
+  query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
     operationalNeed(id: $id) {
       id
       modelPlanID
@@ -9,7 +9,7 @@ export default gql`
       key
       nameOther
       needed
-      solutions(includeNotNeeded: true) {
+      solutions(includeNotNeeded: $includeNotNeeded) {
         id
         name
         key
@@ -17,6 +17,9 @@ export default gql`
         pocEmail
         needed
         nameOther
+        mustStartDts
+        mustFinishDts
+        status
       }
     }
   }

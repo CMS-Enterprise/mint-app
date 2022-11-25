@@ -2,7 +2,10 @@ import React from 'react';
 import { act, render, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
 
-import { OperationalSolutionKey } from 'types/graphql-global-types';
+import {
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 
 import { initialValues } from '../../SelectSolutions';
 
@@ -14,6 +17,9 @@ const solution = [
     id: '00000000-0000-0000-0000-000000000000',
     name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
     key: OperationalSolutionKey.RMADA,
+    mustStartDts: null,
+    mustFinishDts: null,
+    status: OpSolutionStatus.IN_PROGRESS,
     needed: true,
     pocName: 'John Doe',
     pocEmail: '',

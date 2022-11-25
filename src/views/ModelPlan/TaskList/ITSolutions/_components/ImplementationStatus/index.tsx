@@ -14,10 +14,14 @@ interface ImplementationStatus {
 
 type ImplementationStatusProps = {
   className?: string;
+  slim?: boolean;
 };
 
 // Component for togglable information regarding IT Solution statuses and their descriptions
-const ImplementationStatuses = ({ className }: ImplementationStatusProps) => {
+const ImplementationStatuses = ({
+  className,
+  slim
+}: ImplementationStatusProps) => {
   const { t } = useTranslation('itSolutions');
 
   // Toggle the collapsed state of implementation status info
@@ -32,7 +36,7 @@ const ImplementationStatuses = ({ className }: ImplementationStatusProps) => {
   );
 
   return (
-    <Grid desktop={{ col: 6 }} className={classNames(className)}>
+    <Grid desktop={{ col: slim ? 6 : 12 }} className={classNames(className)}>
       <button
         type="button"
         data-testid="toggle-need-answer"

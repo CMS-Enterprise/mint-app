@@ -9,6 +9,7 @@ import AddCustomSolution from './AddCustomSolution';
 import AddSolution from './AddSolution';
 import ITSolutionsHome from './Home';
 import SelectSolutions from './SelectSolutions';
+import SolutionImplementation from './SolutionImplementation';
 
 const ITSolutions = () => {
   return (
@@ -39,6 +40,13 @@ const ITSolutions = () => {
               exact
             >
               <AddCustomSolution />
+            </Route>
+
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details"
+              exact
+            >
+              <SolutionImplementation />
             </Route>
 
             <Route path="*" render={() => <NotFoundPartial />} />

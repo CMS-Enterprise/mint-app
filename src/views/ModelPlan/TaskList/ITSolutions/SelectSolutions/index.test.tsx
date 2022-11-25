@@ -8,7 +8,8 @@ import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   OperationalNeedKey,
-  OperationalSolutionKey
+  OperationalSolutionKey,
+  OpSolutionStatus
 } from 'types/graphql-global-types';
 
 import SelectSolutions from '.';
@@ -31,6 +32,9 @@ const operationalNeed: GetOperationalNeedType = {
       name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
       pocEmail: '',
       key: OperationalSolutionKey.RMADA,
+      mustStartDts: null,
+      mustFinishDts: null,
+      status: OpSolutionStatus.AT_RISK,
       needed: null,
       pocName: 'John Doe',
       nameOther: null

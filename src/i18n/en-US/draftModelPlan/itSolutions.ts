@@ -131,7 +131,14 @@ const itSolutions = {
   updateError:
     'There was an error updating your solution details. Please try again.',
   successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}',
-  solution: 'Solution'
+  solution: 'Solution',
+  saveSolutions: 'Save solutions',
+  addImplementationDetails: 'Add solution implementation details',
+  addImplementationDetailsInfo:
+    'Add additional information and update the implementation status of each selected solution. If you do not know this information you may add it at a later date.',
+  mustStartBy: 'Must start by',
+  mustFinishBy: 'Must finish by',
+  whatIsStatus: 'What is the status of this solution?'
 };
 
 export default itSolutions;

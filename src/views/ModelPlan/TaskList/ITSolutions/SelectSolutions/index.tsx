@@ -30,8 +30,14 @@ import {
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
-import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
-import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
+import {
+  UpdateCustomOperationalSolution as UpdateCustomOperationalSolutionType,
+  UpdateCustomOperationalSolutionVariables
+} from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
+import {
+  UpdateOperationalNeedSolution as UpdateOperationalNeedSolutionType,
+  UpdateOperationalNeedSolutionVariables
+} from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import {
@@ -91,15 +97,15 @@ const SelectSolutions = () => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
-    UpdateOperationalNeedSolution
-  );
+  const [updateSolution] = useMutation<
+    UpdateOperationalNeedSolutionType,
+    UpdateOperationalNeedSolutionVariables
+  >(UpdateOperationalNeedSolution);
 
-  const [
-    updateCustomSolution
-  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
-    UpdateCustomOperationalSolution
-  );
+  const [updateCustomSolution] = useMutation<
+    UpdateCustomOperationalSolutionType,
+    UpdateCustomOperationalSolutionVariables
+  >(UpdateCustomOperationalSolution);
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
@@ -127,7 +133,7 @@ const SelectSolutions = () => {
           return updateCustomSolution({
             variables: {
               operationalNeedID,
-              customSolutionType: solution.nameOther,
+              customSolutionType: solution.nameOther || '',
               changes: {
                 needed: solution.needed || false
               }
@@ -139,19 +145,24 @@ const SelectSolutions = () => {
       const errors = response?.find(result => result?.errors);
 
       if (response && !errors) {
-        setMutationError(false);
-
-        showMessageOnNextPage(
-          <Alert type="success" slim className="margin-y-4">
-            <span className="mandatory-fields-alert__text">
-              {t('successSolutionAdded', {
-                operationalNeedName: operationalNeed.name
-              })}
-            </span>
-          </Alert>
-        );
-
-        history.push(`/models/${modelID}/task-list/it-solutions`);
+        if (
+          formikRef?.current?.values.solutions.find(solution => solution.needed)
+        ) {
+          showMessageOnNextPage(
+            <Alert type="success" slim className="margin-y-4">
+              <span className="mandatory-fields-alert__text">
+                {t('successSolutionAdded', {
+                  operationalNeedName: operationalNeed.name
+                })}
+              </span>
+            </Alert>
+          );
+          history.push(
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          );
+        } else {
+          history.push(`/models/${modelID}/task-list/it-solutions`);
+        }
       } else if (errors) {
         setMutationError(true);
       }
@@ -210,7 +221,7 @@ const SelectSolutions = () => {
             {h('for')} {modelName}
           </p>
 
-          <p>{t('selectInfo')}</p>
+          <p className="line-height-body-4">{t('selectInfo')}</p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer

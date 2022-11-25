@@ -215,7 +215,7 @@ const AddSolution = () => {
             {h('for')} {modelName}
           </p>
 
-          <p>{t('addSolutionInfo')}</p>
+          <p className="line-height-body-4">{t('addSolutionInfo')}</p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
@@ -330,6 +330,7 @@ const AddSolution = () => {
                               </p>
                               <SolutionCard
                                 solution={customOperationalSolution}
+                                addingCustom
                               />
                             </>
                           )}
