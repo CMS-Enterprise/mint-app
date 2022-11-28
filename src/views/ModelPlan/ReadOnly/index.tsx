@@ -53,6 +53,7 @@ import ReadOnlyBeneficiaries from './Beneficiaries';
 import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyOperationalNeeds from './OperationalNeeds';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 
@@ -75,7 +76,7 @@ const listOfSubpageKey = [
   'beneficiaries',
   'operations-evaluation-and-learning',
   'payment',
-  'it-tools',
+  'it-solutions',
   'team',
   'discussions',
   'documents',
@@ -232,10 +233,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       helpRoute: '/help-and-knowledge/sample-model-plan/payment',
       component: <ReadOnlyPayments modelID={modelID} />
     },
-    'it-tools': {
-      route: `/models/${modelID}/read-only/it-tools`,
-      helpRoute: '/help-and-knowledge/sample-model-plan/it-tools',
-      component: <h1>itTools</h1>
+    'it-solutions': {
+      route: `/models/${modelID}/read-only/it-solutions`,
+      component: <ReadOnlyOperationalNeeds modelID={modelID} />,
+      helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
@@ -475,7 +476,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     <Grid
                       desktop={{
                         col:
-                          subinfo === 'documents' || subinfo === 'crs-and-tdl'
+                          subinfo === 'documents' ||
+                          subinfo === 'crs-and-tdl' ||
+                          subinfo === 'it-solutions'
                             ? 12
                             : 8
                       }}
@@ -483,17 +486,19 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                       {subComponent.component}
                     </Grid>
                     {/* Contact info sidebar */}
-                    {subinfo !== 'documents' && subinfo !== 'crs-and-tdl' && (
-                      <Grid
-                        desktop={{ col: 4 }}
-                        className={classnames({
-                          'sticky-nav': !isMobile,
-                          'sticky-nav__collaborator': hasEditAccess
-                        })}
-                      >
-                        <ContactInfo modelID={modelID} />
-                      </Grid>
-                    )}
+                    {subinfo !== 'documents' &&
+                      subinfo !== 'crs-and-tdl' &&
+                      subinfo !== 'it-solutions' && (
+                        <Grid
+                          desktop={{ col: 4 }}
+                          className={classnames({
+                            'sticky-nav': !isMobile,
+                            'sticky-nav__collaborator': hasEditAccess
+                          })}
+                        >
+                          <ContactInfo modelID={modelID} />
+                        </Grid>
+                      )}
                   </Grid>
                 </GridContainer>
               </div>
