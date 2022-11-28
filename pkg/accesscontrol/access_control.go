@@ -77,7 +77,7 @@ func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Princ
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	} else if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaborator(logger, principal.ID(), solutionID)
+		collaborator, err := store.CheckIfCollaboratorBySolutionID(logger, principal.ID(), solutionID)
 		return collaborator, err
 
 	} else {

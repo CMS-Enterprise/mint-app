@@ -82,7 +82,7 @@ func PlanDocumentsReadBySolutionID(
 	s3Client *upload.S3Client,
 ) ([]*models.PlanDocument, error) {
 
-	isCollaborator, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
+	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, id)
 	if err != nil {
 		return nil, err
 	}
