@@ -119,7 +119,7 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 // PlanDocumentsReadBySolutionID reads a plan document object by solution id
 func (s *Store) PlanDocumentsReadBySolutionID(
 	logger *zap.Logger,
-	modelPlanID uuid.UUID,
+	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
 	statement, err := s.db.PrepareNamed(planDocumentsGetBySolutionIDSQL)
@@ -128,17 +128,17 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 	}
 
 	var documents []*models.PlanDocument
-	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(modelPlanID))
+	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
 
 	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
 
-	err = logIfNoRowsFetched(logger, modelPlanID, documents)
+	err = logIfNoRowsFetched(logger, solutionID, documents)
 	return documents, err
 }
 

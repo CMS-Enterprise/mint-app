@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1c8548ed-b441-439a-8424-4927d13193d8",
+		"_postman_id": "18b9e853-8528-4a9b-92f8-351d4b6b01b9",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -1559,6 +1559,34 @@
 							"graphql": {
 								"query": "mutation createPlanDocumentSolutionLinks ($solutionID: UUID!, $documentIDs: [UUID!]!) {\n    createPlanDocumentSolutionLinks (solutionID: $solutionID, documentIDs: $documentIDs) {\n        id\n        solutionID\n        documentID\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"solutionID\": \"\",\n  \"documentIDs\": [\n    \"\"\n  ]\n}"
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RemovePlanDocumentSolutionLink",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation removePlanDocumentSolutionLink ($id: UUID!) {\n    removePlanDocumentSolutionLink (id: $id)\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
 							}
 						},
 						"url": {

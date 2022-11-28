@@ -19,5 +19,4 @@ SELECT
     doc.modified_dts
 FROM plan_document AS doc
 INNER JOIN plan_document_solution_link AS link ON link.document_id = doc.id
-INNER JOIN operational_solution AS sol ON sol.id = link.id
-WHERE sol.id = :solution_id AND doc.restricted = FALSE
+WHERE link.solution_id = :solution_id AND doc.restricted = FALSE

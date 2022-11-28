@@ -69,6 +69,32 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 
 }
 
+// IsCollaboratorSolutionID handles the logic to assess if a user has permission to update an object by virtue of being
+// a collaborator on a model associated with a Solution by SolutionID.
+// Users with the Assessment role are automatically allowed access to update all records.
+func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, solutionID uuid.UUID) (bool, error) {
+
+	if principal.AllowASSESSMENT() {
+		return true, nil
+	} else if principal.AllowUSER() {
+		collaborator, err := store.CheckIfCollaborator(logger, principal.ID(), solutionID)
+		return collaborator, err
+
+	} else {
+		errString := "user has no roles"
+		logger.Warn(
+			errString,
+			zap.String("user", principal.ID()),
+			zap.String(
+				"SolutionID",
+				solutionID.String(),
+			),
+		)
+		return false, fmt.Errorf(errString)
+	}
+
+}
+
 // IsCollaboratorByDiscussionID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, discussionID uuid.UUID) (bool, error) {
