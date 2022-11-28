@@ -22,7 +22,11 @@ const GettingStarted = () => {
           <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
             {t('gettingStartedInstructions')}
           </p>
-          <HelpCardGroup className="margin-y-2" filter="gettingStarted" />
+          <HelpCardGroup
+            className="margin-y-2"
+            filter="gettingStarted"
+            tag={false}
+          />
         </Grid>
       </GridContainer>
     </MainContent>

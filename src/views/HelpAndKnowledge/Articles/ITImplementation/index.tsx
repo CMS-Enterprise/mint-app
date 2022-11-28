@@ -22,7 +22,11 @@ const ITImplementation = () => {
           <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
             {t('itImplementationInstructions')}
           </p>
-          <HelpCardGroup className="margin-y-2" filter="itImplementation" />
+          <HelpCardGroup
+            className="margin-y-2"
+            filter="itImplementation"
+            tag={false}
+          />
         </Grid>
       </GridContainer>
     </MainContent>
