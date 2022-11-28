@@ -106,7 +106,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       OperationalSolution: {
-        keyFields: ['key', 'nameOther']
+        keyFields: ['key', 'nameOther', 'id']
       }
     }
   }),

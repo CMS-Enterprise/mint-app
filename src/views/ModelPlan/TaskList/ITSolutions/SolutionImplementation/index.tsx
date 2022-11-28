@@ -325,7 +325,9 @@ const SolutionImplementation = () => {
                               <div key={solution.id}>
                                 <p className="text-bold">{t('solution')}</p>
 
-                                <SolutionCard solution={solution} />
+                                {console.log(solution)}
+
+                                <SolutionCard solution={solution} shadow />
 
                                 {!loading && (
                                   <>

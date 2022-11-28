@@ -305,7 +305,15 @@ const SelectSolutions = () => {
                         </Button>
 
                         <div className="margin-top-6 margin-bottom-3">
-                          <Button type="submit" className="margin-bottom-1">
+                          <Button
+                            type="submit"
+                            className="margin-bottom-1"
+                            disabled={
+                              values.solutions.filter(
+                                solution => solution.needed
+                              ).length === 0
+                            }
+                          >
                             {t('continue')}
                           </Button>
                         </div>

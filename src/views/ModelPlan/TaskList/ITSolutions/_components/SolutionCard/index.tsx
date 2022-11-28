@@ -23,19 +23,21 @@ import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolut
 
 import './index.scss';
 
-type SolutionCardType = Omit<
+export type SolutionCardType = Omit<
   GetOperationalNeedSolutionsType,
   'mustStartDts' | 'mustFinishDts' | 'status'
 >;
 
 type SolutionCardProps = {
   className?: string;
+  shadow?: boolean;
   solution: SolutionCardType;
   addingCustom?: boolean; // Used to render additional card actions/links when adding a custom solution
 };
 
 const SolutionCard = ({
   className,
+  shadow,
   solution,
   addingCustom
 }: SolutionCardProps) => {
@@ -49,7 +51,7 @@ const SolutionCard = ({
 
   return (
     <CardGroup className="flex-column">
-      <Card className={classNames('solution-card', className)}>
+      <Card className={classNames('solution-card', { shadow }, className)}>
         <div className="padding-3">
           <h3 className="margin-bottom-2 margin-top-0 solutions-checkbox__header ">
             {solution.nameOther || solution.name}
