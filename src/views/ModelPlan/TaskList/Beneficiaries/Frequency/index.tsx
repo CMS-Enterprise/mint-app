@@ -38,6 +38,7 @@ import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/typ
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { FrequencyType, OverlapType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateFrequencyType,
@@ -92,20 +93,20 @@ const Frequency = () => {
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'task-list' | 'back' | string
-  ) => {
-    const {
-      id: updateId,
-      __typename,
-      status: inputStatus,
-      ...changeValues
-    } = formikValues;
+  const handleFormSubmit = (redirect?: 'task-list' | 'back' | string) => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
-        id: updateId,
-        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
+        id,
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -178,8 +179,8 @@ const Frequency = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+        onSubmit={() => {
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -299,7 +300,6 @@ const Frequency = () => {
                             id="beneficiaries-overlap-warning"
                             onClick={() =>
                               handleFormSubmit(
-                                values,
                                 `/models/${modelID}/task-list/it-solutions`
                               )
                             }
@@ -375,7 +375,7 @@ const Frequency = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -387,7 +387,7 @@ const Frequency = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -400,7 +400,7 @@ const Frequency = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

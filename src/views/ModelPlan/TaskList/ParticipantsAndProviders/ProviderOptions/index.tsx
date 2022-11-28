@@ -43,6 +43,7 @@ import {
   ProviderLeaveType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   sortOtherEnum,
@@ -108,20 +109,20 @@ export const ProviderOptions = () => {
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list' | string
-  ) => {
-    const {
-      id: updateId,
-      __typename,
-      status: inputStatus,
-      ...changeValues
-    } = formikValues;
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
         id,
-        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -197,8 +198,8 @@ export const ProviderOptions = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+        onSubmit={() => {
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -447,7 +448,6 @@ export const ProviderOptions = () => {
                       id="participants-and-providers-provider-overlap-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
                           `/models/${modelID}/task-list/it-solutions`
                         )
                       }
@@ -521,7 +521,7 @@ export const ProviderOptions = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -533,7 +533,7 @@ export const ProviderOptions = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -543,7 +543,7 @@ export const ProviderOptions = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

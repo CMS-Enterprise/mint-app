@@ -29,6 +29,7 @@ const modelPlanTaskList = {
     relatedContent: 'Related Content',
     ariaLabelForOverview: 'Open overview for adding a system in a new tab',
     overview: 'Overview for adding a model <1>(opens in a new tab)</1>',
+    sampleModelPlan: 'Sample Model Plan <1>(opens in a new tab)</1>',
     modelTeam: 'Model team',
     editTeam: 'Edit team'
   },

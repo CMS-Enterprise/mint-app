@@ -25,6 +25,7 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
@@ -37,7 +38,7 @@ import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
-import { NotFoundPartial } from 'views/NotFound';
+import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -58,32 +59,47 @@ import ReadOnlyTeamInfo from './Team';
 import './index.scss';
 
 type subComponentProps = {
-  component: React.ReactNode;
   route: string;
+  helpRoute: string;
+  component: React.ReactNode;
 };
 
 export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
 
-export type SubpageKey =
-  | 'model-basics'
-  | 'general-characteristics'
-  | 'participants-and-providers'
-  | 'beneficiaries'
-  | 'operations-evaluation-and-learning'
-  | 'payment'
-  | 'it-tools'
-  | 'team'
-  | 'discussions'
-  | 'documents'
-  | 'crs-and-tdl';
+const listOfSubpageKey = [
+  'model-basics',
+  'general-characteristics',
+  'participants-and-providers',
+  'beneficiaries',
+  'operations-evaluation-and-learning',
+  'payment',
+  'it-tools',
+  'team',
+  'discussions',
+  'documents',
+  'crs-and-tdl'
+];
 
-const ReadOnly = () => {
+export type SubpageKey = typeof listOfSubpageKey[number];
+const isSubpage = (x: SubpageKey, isHelpArticle?: boolean): boolean => {
+  if (isHelpArticle) {
+    return listOfSubpageKey
+      .filter(subpage => subpage !== 'discussions')
+      .includes(x);
+  }
+  return listOfSubpageKey.includes(x);
+};
+
+const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
-  const { modelID, subinfo } = useParams<{
+  const {
+    modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
+    subinfo
+  } = useParams<{
     modelID: string;
     subinfo: SubpageKey;
   }>();
@@ -145,7 +161,8 @@ const ReadOnly = () => {
     crTdls
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
-  const editAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean =
+    !isHelpArticle && (isCollaborator || isAssessment(groups));
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
@@ -184,49 +201,69 @@ const ReadOnly = () => {
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
       component: <ReadOnlyModelBasics modelID={modelID} />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/general-characteristics',
       component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
     },
     'participants-and-providers': {
       route: `/models/${modelID}/read-only/participants-and-providers`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/participants-and-providers',
       component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/beneficiaries',
       component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
       component: <h1>operationsEvaluationAndLearning</h1>
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/payment',
       component: <ReadOnlyPayments modelID={modelID} />
     },
     'it-tools': {
       route: `/models/${modelID}/read-only/it-tools`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/it-tools',
       component: <h1>itTools</h1>
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/team',
       component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/discussions',
       component: <ReadOnlyDiscussions modelID={modelID} />
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
-      component: <ReadOnlyDocuments modelID={modelID} />
+      helpRoute: '/help-and-knowledge/sample-model-plan/documents',
+      component: (
+        <ReadOnlyDocuments modelID={modelID} isHelpArticle={isHelpArticle} />
+      )
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
-      component: <ReadOnlyCRTDLs modelID={modelID} />
+      helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
+      component: (
+        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
+      )
     }
   };
+
+  if (isHelpArticle) delete subComponents.discussions;
 
   const subComponent = subComponents[subinfo];
 
@@ -234,12 +271,16 @@ const ReadOnly = () => {
     return <NotFoundPartial />;
   }
 
+  if (!isSubpage(subinfo, isHelpArticle)) {
+    return <NotFound />;
+  }
+
   return (
     <MainContent
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
-      {editAccess && <ModelSubNav modelID={modelID} link="task-list" />}
+      {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 
       <SummaryBox
         heading=""
@@ -247,23 +288,28 @@ const ReadOnly = () => {
         data-testid="read-only-model-summary"
       >
         <GridContainer>
-          <div className="display-flex flex-justify">
-            <UswdsReactLink
-              to="/models"
-              className="display-flex flex-align-center margin-bottom-3"
-            >
-              <IconArrowBack className="text-primary margin-right-1" />
-              {h('back')}
-            </UswdsReactLink>
+          {!isHelpArticle && (
+            <div className="display-flex flex-justify">
+              <UswdsReactLink
+                to="/models"
+                className="display-flex flex-align-center margin-bottom-3"
+              >
+                <IconArrowBack className="text-primary margin-right-1" />
+                {h('back')}
+              </UswdsReactLink>
 
-            <FavoriteIcon
-              isFavorite={isFavorite}
-              modelPlanID={id}
-              updateFavorite={handleUpdateFavorite}
-            />
-          </div>
+              <FavoriteIcon
+                isFavorite={isFavorite}
+                modelPlanID={id}
+                updateFavorite={handleUpdateFavorite}
+              />
+            </div>
+          )}
 
-          <PageHeading className="margin-0 line-height-sans-2 minh-6">
+          <PageHeading
+            className="margin-0 line-height-sans-2 minh-6"
+            headingLevel={isHelpArticle ? 'h2' : 'h1'}
+          >
             {modelName}
           </PageHeading>
 
@@ -366,7 +412,9 @@ const ReadOnly = () => {
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0 "
                   term={
-                    crTdls ? formattedCrTdls(crTdls) : t('noAnswer.noneEntered')
+                    crTdls && crTdls.length !== 0
+                      ? formattedCrTdls(crTdls)
+                      : t('noAnswer.noneEntered')
                   }
                 />
               </Grid>
@@ -388,7 +436,11 @@ const ReadOnly = () => {
         </GridContainer>
       </SectionWrapper>
 
-      <MobileNav subComponents={subComponents} subinfo={subinfo} />
+      <MobileNav
+        subComponents={subComponents}
+        subinfo={subinfo}
+        isHelpArticle={isHelpArticle}
+      />
 
       <SectionWrapper className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
@@ -405,10 +457,13 @@ const ReadOnly = () => {
               <Grid
                 desktop={{ col: 3 }}
                 className={classnames('padding-right-4 sticky-nav', {
-                  'sticky-nav__collaborator': editAccess
+                  'sticky-nav__collaborator': hasEditAccess
                 })}
               >
-                <SideNav subComponents={subComponents} />
+                <SideNav
+                  subComponents={subComponents}
+                  isHelpArticle={isHelpArticle}
+                />
               </Grid>
             )}
 
@@ -433,7 +488,7 @@ const ReadOnly = () => {
                         desktop={{ col: 4 }}
                         className={classnames({
                           'sticky-nav': !isMobile,
-                          'sticky-nav__collaborator': editAccess
+                          'sticky-nav__collaborator': hasEditAccess
                         })}
                       >
                         <ContactInfo modelID={modelID} />
