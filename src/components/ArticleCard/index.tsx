@@ -5,8 +5,7 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Tag
+  CardHeader
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
