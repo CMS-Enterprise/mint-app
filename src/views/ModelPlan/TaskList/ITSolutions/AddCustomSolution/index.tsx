@@ -315,6 +315,7 @@ const AddCustomSolution = () => {
                               as={TextInput}
                               error={!!flatErrors.nameOther}
                               id="it-solution-custom-name-other"
+                              data-testid="it-solution-custom-name-other"
                               maxLength={50}
                               name="nameOther"
                             />
@@ -339,6 +340,7 @@ const AddCustomSolution = () => {
                               as={TextInput}
                               error={!!flatErrors.pocName}
                               id="it-solution-custom-poc-name"
+                              data-testid="it-solution-custom-poc-name"
                               maxLength={50}
                               name="pocName"
                             />
@@ -362,6 +364,7 @@ const AddCustomSolution = () => {
                               as={TextInput}
                               error={!!flatErrors.pocEmail}
                               id="it-solution-custom-poc-email"
+                              data-testid="it-solution-custom-poc-email"
                               maxLength={50}
                               name="pocEmail"
                             />

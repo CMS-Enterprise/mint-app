@@ -103,7 +103,7 @@ const AddSolution = () => {
     customData?.operationalSolution ||
     ({} as GetOperationalSolutionOperationalSolutionType);
 
-  // Iniital/default formik value
+  // Initial/default formik value
   const additionalSolution: OperationalSolutionFormType = {
     key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
   };
@@ -324,7 +324,7 @@ const AddSolution = () => {
 
                           {/* If directed from custom solution creation, diplay SolutionCard */}
                           {operationalSolutionID && customOperationalSolution && (
-                            <>
+                            <div data-testid="custom-added-solution">
                               <p className="text-bold margin-top-4">
                                 {t('solution')}
                               </p>
@@ -332,13 +332,14 @@ const AddSolution = () => {
                                 solution={customOperationalSolution}
                                 addingCustom
                               />
-                            </>
+                            </div>
                           )}
 
                           <div className="margin-top-6 margin-bottom-3">
                             <Button
                               type="submit"
                               className="margin-bottom-1"
+                              data-testid="add-solution-details-button"
                               disabled={!values.key}
                             >
                               {t('addSolutionButton')}

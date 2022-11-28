@@ -93,7 +93,10 @@ const SolutionCard = ({
           )}
 
           {addingCustom && (
-            <div className="display-flex margin-top-2">
+            <div
+              className="display-flex margin-top-2"
+              data-testid="custom-solution-card"
+            >
               <UswdsReactLink
                 className="margin-right-2"
                 to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
