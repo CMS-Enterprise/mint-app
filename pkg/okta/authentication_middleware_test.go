@@ -60,11 +60,11 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 		verify: verify,
 	}
 
-	return NewOktaAuthenticationMiddleware(
+	factory := NewMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		verifier,
 	)
-
+	return factory.NewAuthenticationMiddleware
 }
 
 func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
