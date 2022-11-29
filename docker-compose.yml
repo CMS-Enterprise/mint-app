@@ -36,12 +36,11 @@ services:
       - OKTA_ISSUER=https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
       - EMAIL_HOST=email
       - EMAIL_PORT=1025
+      - EMAIL_SENDER
       - GRT_EMAIL=success@simulator.amazonses.com
       - ACCESSIBILITY_TEAM_EMAIL=success@simluator.amazonses.com
       - EMAIL_TEMPLATE_DIR=./pkg/email/templates
       - AWS_REGION=us-west-2
-      - AWS_SES_SOURCE=no-reply-$APP_ENV@info.easi.cms.gov
-      - AWS_SES_SOURCE_ARN
       - AWS_S3_FILE_UPLOAD_BUCKET=mint-app-file-uploads
       - AWS_ACCESS_KEY_ID=1
       - AWS_SECRET_ACCESS_KEY=1

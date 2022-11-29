@@ -117,12 +117,6 @@ const DBSSLModeConfigKey = "PGSSLMODE"
 // DBMaxConnections is the maximum number of connections to the database
 const DBMaxConnections = "DB_MAX_CONNECTIONS"
 
-// AWSSESSourceARNKey is the key for the ARN for sending email
-const AWSSESSourceARNKey = "AWS_SES_SOURCE_ARN"
-
-// AWSSESSourceKey is the key for the sender for sending email
-const AWSSESSourceKey = "AWS_SES_SOURCE"
-
 // GRTEmailKey is the key for the receiving email for the GRT
 const GRTEmailKey = "GRT_EMAIL"
 
@@ -134,6 +128,9 @@ const EmailHostKey = "EMAIL_HOST"
 
 // EmailPortKey is the key for getting the email service's port
 const EmailPortKey = "EMAIL_PORT"
+
+// EmailSenderKey is the key for getting the email sender
+const EmailSenderKey = "EMAIL_SENDER"
 
 // ClientHostKey is the key for getting the client's domain name
 const ClientHostKey = "CLIENT_HOSTNAME"
