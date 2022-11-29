@@ -25,8 +25,8 @@ func TestPrincipal(t *testing.T) {
 			expectAllowAssessment: false,
 		},
 		"regular eua user": {
-			p: &EUAPrincipal{
-				EUAID:             id,
+			p: &OKTAPrincipal{
+				Username:          id,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: false,
 			},
@@ -35,8 +35,8 @@ func TestPrincipal(t *testing.T) {
 			expectAllowAssessment: false,
 		},
 		"assessment user": {
-			p: &EUAPrincipal{
-				EUAID:             id,
+			p: &OKTAPrincipal{
+				Username:          id,
 				JobCodeUSER:       false,
 				JobCodeASSESSMENT: true,
 			},
@@ -45,8 +45,8 @@ func TestPrincipal(t *testing.T) {
 			expectAllowAssessment: true,
 		},
 		"both users": {
-			p: &EUAPrincipal{
-				EUAID:             id,
+			p: &OKTAPrincipal{
+				Username:          id,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: true,
 			},

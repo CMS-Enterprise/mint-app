@@ -60,7 +60,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 
 	suite.NotNil(sol.OperationalNeedID)
 
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.EUAID)
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.ID())
 	suite.NotNil(sol.CreatedDts)
 	suite.NotNil(sol.Name)
 	suite.EqualValues(*sol.Needed, false)

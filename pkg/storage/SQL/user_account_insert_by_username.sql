@@ -1,0 +1,33 @@
+INSERT INTO user_account
+(
+    id,
+    username,
+    is_euaid,
+    common_name,
+    locale,
+    email,
+    given_name,
+    family_name,
+    zone_info
+)
+VALUES (
+    :id,
+    :username,
+    :is_euaid,
+    :common_name,
+    :locale,
+    :email,
+    :given_name,
+    :family_name,
+    :zone_info
+)
+RETURNING
+id,
+username,
+is_euaid,
+common_name,
+locale,
+email,
+given_name,
+family_name,
+zone_info;

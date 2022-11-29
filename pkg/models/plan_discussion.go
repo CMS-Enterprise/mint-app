@@ -2,8 +2,6 @@ package models
 
 import (
 	"github.com/google/uuid"
-
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // PlanDiscussion represents a discussion that a user has about a model plan
@@ -16,13 +14,13 @@ type PlanDiscussion struct {
 }
 
 // NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
-func NewPlanDiscussion(principal authentication.Principal, modelPlanID uuid.UUID, content string) *PlanDiscussion {
+func NewPlanDiscussion(principal string, isAssessment bool, modelPlanID uuid.UUID, content string) *PlanDiscussion {
 	return &PlanDiscussion{
 		Content:           content,
 		Status:            DiscussionUnAnswered,
-		IsAssessment:      principal.AllowASSESSMENT(),
+		IsAssessment:      isAssessment,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		baseStruct:        NewBaseStruct(principal.ID()),
+		baseStruct:        NewBaseStruct(principal),
 	}
 }
 
@@ -36,13 +34,13 @@ type DiscussionReply struct {
 }
 
 // NewDiscussionReply returns a new Discussion Reply
-func NewDiscussionReply(principal authentication.Principal, discussionID uuid.UUID, content string, resolution bool) *DiscussionReply {
+func NewDiscussionReply(principal string, isAssessment bool, discussionID uuid.UUID, content string, resolution bool) *DiscussionReply {
 	return &DiscussionReply{
 		Content:            content,
 		Resolution:         resolution,
-		IsAssessment:       principal.AllowASSESSMENT(),
+		IsAssessment:       isAssessment,
 		discussionRelation: NewDiscussionRelation(discussionID),
-		baseStruct:         NewBaseStruct(principal.ID()),
+		baseStruct:         NewBaseStruct(principal),
 	}
 }
 

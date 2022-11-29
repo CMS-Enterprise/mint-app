@@ -917,7 +917,7 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
+	return resolvers.NDAAgreementGetByUserID(logger, principal, r.store)
 }
 
 // CrTdl is the resolver for the crTdl field.

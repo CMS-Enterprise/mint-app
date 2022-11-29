@@ -31,8 +31,8 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 	if err != nil {
 		panic(err)
 	}
-	princ := &authentication.EUAPrincipal{
-		EUAID:             userInfo.EuaUserID,
+	princ := &authentication.OKTAPrincipal{
+		Username:          userInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -47,8 +47,8 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the model plan with the principal value of the Model Plan's "createdBy"
 func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -63,8 +63,8 @@ func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelP
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
 func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -92,8 +92,8 @@ func addPlanCollaborator(
 	mp *models.ModelPlan,
 	input *model.PlanCollaboratorCreateInput,
 ) *models.PlanCollaborator {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -116,8 +116,8 @@ func addPlanCollaborator(
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
 func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -133,8 +133,8 @@ func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, in
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the document with the principal value of the Model Plan's "createdBy"
 func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *upload.S3Client, mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, restricted bool, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -204,8 +204,8 @@ func addOperationalSolution(
 	operationalNeedID uuid.UUID,
 	changes map[string]interface{},
 ) *models.OperationalSolution {
-	principal := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	principal := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -235,8 +235,8 @@ func addPlanDocumentSolutionLinks(
 	documentIDs []uuid.UUID,
 ) []*models.PlanDocumentSolutionLink {
 
-	principal := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	principal := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
