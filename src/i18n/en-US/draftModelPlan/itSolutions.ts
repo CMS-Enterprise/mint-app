@@ -1,5 +1,6 @@
 const itSolutions = {
   heading: 'IT solutions and implementation status tracker',
+  headingReadOnly: 'IT solutions',
   breadcrumb: 'IT solutions tracker',
   summaryBox: {
     useTracker: 'Use this tracker to',
@@ -35,6 +36,7 @@ const itSolutions = {
     viewDetails: 'View details',
     updateNeed: 'Update operational need',
     selectSolution: 'Select a solution',
+    noSolutionSelected: 'No solution selected',
     error: {
       heading: 'There is a problem',
       body: 'Failed to fetch Model Plan operational needs'

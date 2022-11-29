@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -125,6 +126,16 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
 func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
 	plan, err := store.ModelPlanGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return plan, nil
+}
+
+// ModelPlanGetSampleModel returns the sample model plan
+func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
+	plan, err := store.ModelPlanGetByName(logger, constants.SampleModelName)
 	if err != nil {
 		return nil, err
 	}

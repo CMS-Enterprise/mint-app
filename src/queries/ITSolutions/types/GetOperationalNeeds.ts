@@ -33,6 +33,7 @@ export interface GetOperationalNeeds_modelPlan_operationalNeeds {
   key: OperationalNeedKey | null;
   nameOther: string | null;
   needed: boolean | null;
+  modifiedDts: Time | null;
   solutions: GetOperationalNeeds_modelPlan_operationalNeeds_solutions[];
 }
 

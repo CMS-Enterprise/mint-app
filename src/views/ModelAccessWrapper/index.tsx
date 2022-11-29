@@ -33,9 +33,11 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   // If so, has full access to both task-list and read-only
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
-  // Checking if user's location is readonly
-  // Everything with a modelID and not under the parent 'read-only' route is considered editable
-  const readOnly: boolean = pathname.split('/')[3] === 'read-only';
+  // Checking if user's location is task-list or collaborators
+  // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
+  const editable: boolean =
+    pathname.split('/')[3] === 'task-list' ||
+    pathname.split('/')[3] === 'collaborators';
 
   const { data, loading } = useQuery<
     GetIsCollaboratorType,
@@ -43,7 +45,8 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   >(GetIsCollaborator, {
     variables: {
       id: modelID
-    }
+    },
+    skip: !editable
   });
 
   const isCollaborator: boolean = data?.modelPlan?.isCollaborator || false;
@@ -55,7 +58,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       !loading &&
       modelID &&
       validModelID &&
-      !readOnly &&
+      editable &&
       !isAssessment(groups)
     ) {
       history.replace(`/models/${modelID}/read-only/model-basics`);
@@ -67,7 +70,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     loading,
     modelID,
     validModelID,
-    readOnly,
+    editable,
     groups
   ]);
 
