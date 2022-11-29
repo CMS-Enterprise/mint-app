@@ -74,7 +74,9 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
       >
         for 
       </p>
-      <p>
+      <p
+        class="line-height-body-4"
+      >
         Select from common solutions to solve your operational need or add another solution not listed.
       </p>
       <div
@@ -186,10 +188,25 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                         Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...
                       </div>
                       <p
-                        class="text-bold"
+                        class="text-bold margin-bottom-0"
                       >
                         Point of contact
                       </p>
+                      <p
+                        class="margin-y-0"
+                      >
+                        John Doe
+                      </p>
+                      <a
+                        aria-label="Send an email"
+                        class="usa-link line-height-body-5"
+                        href="mailto:"
+                        target="_blank"
+                      >
+                        <div
+                          class="margin-bottom-2"
+                        />
+                      </a>
                       <div
                         class="mint-divider"
                       />
@@ -235,6 +252,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
               <button
                 class="usa-button margin-bottom-1"
                 data-testid="button"
+                disabled=""
                 type="submit"
               >
                 Continue

@@ -13,7 +13,7 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 
-import SelectSolutions from '.';
+import SolutionImplmentation from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -36,7 +36,7 @@ const operationalNeed: GetOperationalNeedType = {
       mustStartDts: null,
       mustFinishDts: null,
       status: OpSolutionStatus.AT_RISK,
-      needed: null,
+      needed: true,
       pocName: 'John Doe',
       nameOther: null
     }
@@ -49,7 +49,7 @@ const mocks = [
       query: GetOperationalNeed,
       variables: {
         id: operationalNeedID,
-        includeNotNeeded: true
+        includeNotNeeded: false
       }
     },
     result: {
@@ -62,32 +62,23 @@ const mocks = [
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
-    const { getByText, getByRole } = render(
+    const { getByText, getAllByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
             <MessageProvider>
-              <SelectSolutions />
+              <SolutionImplmentation />
             </MessageProvider>
-          </MockedProvider>
-        </Route>
+          </Route>
+        </MockedProvider>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      const checkbox = getByRole('checkbox', {
-        name: /select a solution/i
-      });
-      expect(checkbox).not.toBeChecked();
-      userEvent.click(checkbox);
-      expect(checkbox).toBeChecked();
-    });
-
-    await waitFor(() => {
       expect(
         getByText(
           'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
@@ -95,14 +86,20 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       ).toBeInTheDocument();
     });
 
-    getByRole('button', { name: /Continue/i }).click();
+    const datePicker = getAllByTestId('date-picker-external-input')[0];
+    userEvent.type(datePicker, '12/10/2030');
 
     await waitFor(() => {
-      expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
-      ).toBeInTheDocument();
+      expect(datePicker).toHaveValue('12/10/2030');
+    });
+
+    const atRisk = getByRole('radio', { name: 'At risk' });
+    const backlog = getByRole('radio', { name: 'Backlog' });
+    userEvent.click(backlog);
+
+    await waitFor(() => {
+      expect(atRisk).not.toBeChecked();
+      expect(backlog).toBeChecked();
     });
   });
 
@@ -110,16 +107,16 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
             <MessageProvider>
-              <SelectSolutions />
+              <SolutionImplmentation />
             </MessageProvider>
-          </MockedProvider>
-        </Route>
+          </Route>
+        </MockedProvider>
       </MemoryRouter>
     );
 

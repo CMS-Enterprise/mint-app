@@ -113,62 +113,64 @@ const SelectSolutions = () => {
   ) => {
     const { solutions } = formikValues;
 
-    try {
-      const response = await Promise.all(
-        solutions.map(solution => {
-          // Update possibleSolution needed bool and status
-          if (solution.key) {
-            return updateSolution({
-              variables: {
-                operationalNeedID,
-                solutionType: solution.key,
-                changes: {
-                  needed: solution.needed || false,
-                  status: OpSolutionStatus.IN_PROGRESS
-                }
-              }
-            });
-          }
-          // Update custom solution needed bool - status should already be set
-          return updateCustomSolution({
+    await Promise.all(
+      solutions.map(solution => {
+        // Update possibleSolution needed bool and status
+        if (solution.key) {
+          return updateSolution({
             variables: {
               operationalNeedID,
-              customSolutionType: solution.nameOther || '',
+              solutionType: solution.key,
               changes: {
-                needed: solution.needed || false
+                needed: solution.needed || false,
+                status: OpSolutionStatus.IN_PROGRESS
               }
             }
           });
-        })
-      );
-
-      const errors = response?.find(result => result?.errors);
-
-      if (response && !errors) {
-        if (
-          formikRef?.current?.values.solutions.find(solution => solution.needed)
-        ) {
-          showMessageOnNextPage(
-            <Alert type="success" slim className="margin-y-4">
-              <span className="mandatory-fields-alert__text">
-                {t('successSolutionAdded', {
-                  operationalNeedName: operationalNeed.name
-                })}
-              </span>
-            </Alert>
-          );
-          history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
-          );
-        } else {
-          history.push(`/models/${modelID}/task-list/it-solutions`);
         }
-      } else if (errors) {
-        setMutationError(true);
-      }
-    } catch (errors) {
-      setMutationError(true);
-    }
+        // Update custom solution needed bool - status should already be set
+        return updateCustomSolution({
+          variables: {
+            operationalNeedID,
+            customSolutionType: solution.nameOther || '',
+            changes: {
+              needed: solution.needed || false
+            }
+          }
+        });
+      })
+    )
+      .then(response => {
+        const errors = response?.find(result => result?.errors);
+
+        if (response && !errors) {
+          if (
+            formikRef?.current?.values.solutions.find(
+              solution => solution.needed
+            )
+          ) {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('successSolutionAdded', {
+                    operationalNeedName: operationalNeed.name
+                  })}
+                </span>
+              </Alert>
+            );
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+            );
+          } else {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
+          }
+        } else if (errors) {
+          setMutationError(true);
+        }
+      })
+      .catch(err => {
+        // setMutationError(true);
+      });
   };
 
   if (error) {
