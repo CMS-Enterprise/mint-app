@@ -226,14 +226,13 @@ const KeyCharacteristics = () => {
                   error={!!flatErrors.alternativePaymentModelTypes}
                   className="margin-y-4 margin-bottom-8"
                 >
-                  <Label htmlFor="plan-characteristics-alternative-payment">
-                    {t('modelAPM')}
-                  </Label>
+                  <legend className="usa-label">{t('modelAPM')}</legend>
                   <Alert type="info" slim data-testid="mandatory-fields-alert">
                     <span className="mandatory-fields-alert__text">
                       {t('MIPSInfo')}
                     </span>
                   </Alert>
+
                   <FieldErrorMsg>
                     {flatErrors.alternativePaymentModelTypes}
                   </FieldErrorMsg>
