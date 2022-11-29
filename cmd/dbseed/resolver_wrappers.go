@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -180,4 +182,75 @@ func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *uplo
 	}
 
 	return document
+}
+
+// getOperationalNeedsByModelPlanID is a wrapper for resolvers.PossibleOperationalNeedCollectionGet
+// It will panic if an error occurs, rather than bubbling the error up
+func getOperationalNeedsByModelPlanID(logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) []*models.OperationalNeed {
+	operationalNeeds, err := resolvers.OperationalNeedCollectionGetByModelPlanID(logger, modelPlanID, store)
+	if err != nil {
+		panic(err)
+	}
+
+	return operationalNeeds
+}
+
+// addOperationalSolution is a wrapper for resolvers.OperationalSolutionInsertOrUpdate
+// It will panic if an error occurs, rather than bubbling the error up
+func addOperationalSolution(
+	store *storage.Store,
+	logger *zap.Logger,
+	mp *models.ModelPlan,
+	operationalNeedID uuid.UUID,
+	changes map[string]interface{},
+) *models.OperationalSolution {
+	principal := &authentication.EUAPrincipal{
+		EUAID:             mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	operationalSolution, err := resolvers.OperationalSolutionInsertOrUpdate(
+		logger,
+		operationalNeedID,
+		"FFS_COMPETENCY_CENTER",
+		changes,
+		principal,
+		store,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return operationalSolution
+}
+
+// addPlanDocumentSolutionLinks is a wrapper for resolvers.PlanDocumentSolutionLinksCreate
+// It will panic if an error occurs, rather than bubbling the error up
+func addPlanDocumentSolutionLinks(
+	logger *zap.Logger,
+	store *storage.Store,
+	mp *models.ModelPlan,
+	solutionID uuid.UUID,
+	documentIDs []uuid.UUID,
+) []*models.PlanDocumentSolutionLink {
+
+	principal := &authentication.EUAPrincipal{
+		EUAID:             mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	planDocumentSolutionLinks, err := resolvers.PlanDocumentSolutionLinksCreate(
+		logger,
+		store,
+		solutionID,
+		documentIDs,
+		principal,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return planDocumentSolutionLinks
 }
