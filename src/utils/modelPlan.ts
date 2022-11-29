@@ -184,6 +184,8 @@ export const translateAlternativePaymentTypes = (type: string) => {
       return i18next.t('generalCharacteristics:apmTypes.MIPSAPM');
     case 'ADVANCED':
       return i18next.t('generalCharacteristics:apmTypes.advancedAPM');
+    case 'NOT_APM':
+      return i18next.t('generalCharacteristics:apmTypes.notAPM');
     default:
       return '';
   }
