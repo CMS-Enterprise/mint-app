@@ -236,6 +236,7 @@ const KeyCharacteristics = () => {
                   <FieldErrorMsg>
                     {flatErrors.alternativePaymentModelTypes}
                   </FieldErrorMsg>
+
                   <Fieldset>
                     {Object.keys(AlternativePaymentModelType)
                       .sort(sortOtherEnum)
