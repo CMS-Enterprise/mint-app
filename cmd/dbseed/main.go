@@ -195,7 +195,7 @@ func seedData(config *viper.Viper) {
 		"highLevelNote":   "Some high level note",
 	})
 
-	operationalNeeds := getOperationalNeedsByModelPlanID(logger, store, sampleModelPlan.ID)
+	operationalNeeds := getOperationalNeedsByModelPlanID(logger, store, planWithDocuments.ID)
 	if len(operationalNeeds) < 1 {
 		panic("operational needs must be populated in order to create an operational solution")
 	}
@@ -203,7 +203,7 @@ func seedData(config *viper.Viper) {
 	operationalSolution := addOperationalSolution(
 		store,
 		logger,
-		sampleModelPlan,
+		planWithDocuments,
 		operationalNeeds[0].ID,
 		map[string]interface{}{
 			"needed":        false,
@@ -217,7 +217,7 @@ func seedData(config *viper.Viper) {
 	_ = addPlanDocumentSolutionLinks(
 		logger,
 		store,
-		sampleModelPlan,
+		planWithDocuments,
 		operationalSolution.ID,
 		[]uuid.UUID{
 			restrictedDocument.ID,
