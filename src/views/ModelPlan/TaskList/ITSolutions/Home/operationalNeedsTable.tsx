@@ -67,7 +67,7 @@ type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   type: 'needs' | 'possibleNeeds';
-  readOnly?: boolean; // TODO: used to render when readonly component is developed
+  readOnly?: boolean;
 };
 
 const OperationalNeedsTable = ({
@@ -127,6 +127,9 @@ const OperationalNeedsTable = ({
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
           if (value === t('itSolutionsTable.selectSolution')) {
+            if (!hasEditAccess) {
+              return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
+            }
             return (
               <UswdsReactLink
                 to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
@@ -176,11 +179,16 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status, row.original, modelID);
+          return returnActionLinks(
+            row.original.status,
+            row.original,
+            modelID,
+            readOnly
+          );
         }
       }
     ];
-  }, [t, modelID]);
+  }, [t, modelID, readOnly]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -250,7 +258,7 @@ const OperationalNeedsTable = ({
       initialState: {
         sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
         pageIndex: 0,
-        hiddenColumns: hasEditAccess ? [] : ['id']
+        hiddenColumns: hasEditAccess ? [] : ['Actions']
       }
     },
     useFilters,
