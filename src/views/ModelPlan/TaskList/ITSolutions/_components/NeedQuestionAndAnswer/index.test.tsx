@@ -1,6 +1,5 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -11,6 +10,7 @@ import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import NeedQuestionAndAnswer from '.';
 
@@ -22,7 +22,8 @@ const mocks = [
     request: {
       query: GetOperationalNeed,
       variables: {
-        id: operationalNeedID
+        id: operationalNeedID,
+        includeNotNeeded: true
       }
     },
     result: {
@@ -111,7 +112,7 @@ const mocks = [
 ];
 
 describe('IT Solutions NeedQuestionAndAnswer', () => {
-  xit('renders correctly', async () => {
+  it('renders correctly', async () => {
     const { getByTestId, getByText } = render(
       <MemoryRouter
         initialEntries={[
@@ -119,12 +120,12 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <MockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <NeedQuestionAndAnswer
               modelID={modelID}
               operationalNeedID={operationalNeedID}
             />
-          </MockedProvider>
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
@@ -133,7 +134,6 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     userEvent.click(toggleAnswer);
 
     await waitFor(() => {
-      expect(getByText('In the Model Plan, you answered')).toBeInTheDocument();
       expect(
         getByText('Use an Application Review and Scoring tool')
       ).toBeInTheDocument();
@@ -143,7 +143,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     });
   });
 
-  xit('matches snapshot', async () => {
+  it('matches snapshot', async () => {
     const { getByTestId, asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
@@ -151,12 +151,12 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <MockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <NeedQuestionAndAnswer
               modelID={modelID}
               operationalNeedID={operationalNeedID}
             />
-          </MockedProvider>
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
