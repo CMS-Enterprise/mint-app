@@ -37,7 +37,6 @@ func (s *Store) UserAccountGetByUsername(username string) (*authentication.UserA
 	}
 
 	return user, nil
-	// TODO work in progress
 }
 
 // UserAccountInsertByUsername creates a new user account for a given EUAID

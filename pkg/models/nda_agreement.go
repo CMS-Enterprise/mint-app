@@ -13,7 +13,6 @@ type NDAAgreement struct {
 	Agreed    bool       `json:"agreed" db:"agreed"`
 	AgreedDts *time.Time `json:"agreedDts" db:"agreed_dts"`
 
-	//TODO removing baseStruct for this temporarily
 	ID          uuid.UUID  `json:"id" db:"id"`
 	CreatedBy   uuid.UUID  `json:"createdBy" db:"created_by"`
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`

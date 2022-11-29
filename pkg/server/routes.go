@@ -116,12 +116,6 @@ func (s *Server) routes(
 	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
-	// // set up Feature Flagging utilities
-	// ldClient, err := flags.NewLaunchDarklyClient(s.NewFlagConfig())
-	// if err != nil {
-	// 	s.logger.Fatal("Failed to create LaunchDarkly client", zap.Error(err))
-	// }
-
 	var cedarLDAPClient cedarldap.Client
 	cedarLDAPClient = cedarldap.NewTranslatedClient(
 		s.Config.GetString(appconfig.CEDARAPIURL),

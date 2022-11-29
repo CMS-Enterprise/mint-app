@@ -26,7 +26,7 @@ const (
 )
 
 // EnhancedJwt is the JWT and the auth token
-type EnhancedJwt struct { //TODO rename this to something logical, and return it
+type EnhancedJwt struct {
 	JWT       *jwtverifier.Jwt
 	AuthToken string
 }

@@ -92,9 +92,6 @@ func GetUserInfoFromOkta(baseURL string, token string) (*OktaAccountInfo, error)
 	}
 
 	ret := OktaAccountInfo{}
-	err = json.Unmarshal([]byte(jsonDataFromHTTP), &ret) // TODO, add type safety, handle bad data
-
-	//TODO deserialize to another struct. Do we want another
-
+	err = json.Unmarshal([]byte(jsonDataFromHTTP), &ret)
 	return &ret, err
 }
