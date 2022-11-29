@@ -310,6 +310,7 @@ const AddSolution = () => {
                               !operationalSolutionID && (
                                 <Button
                                   type="button"
+                                  id="add-custom-solution-button"
                                   className="usa-button usa-button--outline margin-top-3"
                                   onClick={() => {
                                     history.push(
@@ -339,6 +340,7 @@ const AddSolution = () => {
                             <Button
                               type="submit"
                               className="margin-bottom-1"
+                              id="add-solution-details-button"
                               data-testid="add-solution-details-button"
                               disabled={!values.key}
                             >

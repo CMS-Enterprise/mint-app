@@ -296,6 +296,7 @@ const SelectSolutions = () => {
 
                         <Button
                           type="button"
+                          id="add-solution-not-listed"
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
                             history.push(

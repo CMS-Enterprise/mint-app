@@ -178,6 +178,7 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
                   class="usa-button margin-bottom-1"
                   data-testid="add-solution-details-button"
                   disabled=""
+                  id="add-solution-details-button"
                   type="submit"
                 >
                   Add solution

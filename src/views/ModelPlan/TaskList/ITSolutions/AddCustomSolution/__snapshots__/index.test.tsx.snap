@@ -226,6 +226,7 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                   class="usa-button margin-bottom-1"
                   data-testid="button"
                   disabled=""
+                  id="submit-custom-solution"
                   type="submit"
                 >
                   Add solution details

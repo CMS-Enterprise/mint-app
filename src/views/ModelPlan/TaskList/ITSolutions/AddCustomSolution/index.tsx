@@ -374,6 +374,7 @@ const AddCustomSolution = () => {
                             <Button
                               type="submit"
                               className="margin-bottom-1"
+                              id="submit-custom-solution"
                               disabled={!values.nameOther}
                             >
                               {operationalSolutionID

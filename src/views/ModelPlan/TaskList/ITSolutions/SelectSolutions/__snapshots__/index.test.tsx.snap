@@ -242,6 +242,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
             <button
               class="usa-button usa-button usa-button--outline margin-top-2"
               data-testid="button"
+              id="add-solution-not-listed"
               type="button"
             >
               Select another solution not listed

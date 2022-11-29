@@ -240,7 +240,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                   <label
                     class="usa-label text-bold"
                     data-testid="label"
-                    for="solution-must-start-00000000-0000-0000-0000-000000000000"
+                    for="solution-must-start-RMADA"
                   >
                     Must start by
                   </label>
@@ -276,7 +276,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                           class="usa-input usa-date-picker__external-input"
                           data-testid="date-picker-external-input"
                           error="0"
-                          id="solution-must-start-00000000-0000-0000-0000-000000000000"
+                          id="solution-must-start-RMADA"
                           maxlength="50"
                           type="text"
                           value=""
@@ -315,7 +315,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                   <label
                     class="usa-label text-bold"
                     data-testid="label"
-                    for="solution-must-finish-00000000-0000-0000-0000-000000000000"
+                    for="solution-must-finish-RMADA"
                   >
                     Must finish by
                   </label>
@@ -351,7 +351,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                           class="usa-input usa-date-picker__external-input"
                           data-testid="date-picker-external-input"
                           error="0"
-                          id="solution-must-finish-00000000-0000-0000-0000-000000000000"
+                          id="solution-must-finish-RMADA"
                           maxlength="50"
                           type="text"
                           value=""
@@ -389,7 +389,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                   <label
                     class="usa-label text-bold"
                     data-testid="label"
-                    for="solution-status-00000000-0000-0000-0000-000000000000"
+                    for="solution-status-RMADA"
                   >
                     What is the status of this solution?
                   </label>
@@ -403,14 +403,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-00000000-0000-0000-0000-000000000000-AT_RISK"
+                        id="solution-status-RMADA-AT_RISK"
                         name="solutions[0].status"
                         type="radio"
                         value="AT_RISK"
                       />
                       <label
                         class="usa-radio__label"
-                        for="solution-status-00000000-0000-0000-0000-000000000000-AT_RISK"
+                        for="solution-status-RMADA-AT_RISK"
                       >
                         At risk
                       </label>
@@ -421,14 +421,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-00000000-0000-0000-0000-000000000000-BACKLOG"
+                        id="solution-status-RMADA-BACKLOG"
                         name="solutions[0].status"
                         type="radio"
                         value="BACKLOG"
                       />
                       <label
                         class="usa-radio__label"
-                        for="solution-status-00000000-0000-0000-0000-000000000000-BACKLOG"
+                        for="solution-status-RMADA-BACKLOG"
                       >
                         Backlog
                       </label>
@@ -439,14 +439,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-00000000-0000-0000-0000-000000000000-COMPLETED"
+                        id="solution-status-RMADA-COMPLETED"
                         name="solutions[0].status"
                         type="radio"
                         value="COMPLETED"
                       />
                       <label
                         class="usa-radio__label"
-                        for="solution-status-00000000-0000-0000-0000-000000000000-COMPLETED"
+                        for="solution-status-RMADA-COMPLETED"
                       >
                         Completed
                       </label>
@@ -457,14 +457,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-00000000-0000-0000-0000-000000000000-IN_PROGRESS"
+                        id="solution-status-RMADA-IN_PROGRESS"
                         name="solutions[0].status"
                         type="radio"
                         value="IN_PROGRESS"
                       />
                       <label
                         class="usa-radio__label"
-                        for="solution-status-00000000-0000-0000-0000-000000000000-IN_PROGRESS"
+                        for="solution-status-RMADA-IN_PROGRESS"
                       >
                         In progress
                       </label>
@@ -475,14 +475,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-00000000-0000-0000-0000-000000000000-NOT_STARTED"
+                        id="solution-status-RMADA-NOT_STARTED"
                         name="solutions[0].status"
                         type="radio"
                         value="NOT_STARTED"
                       />
                       <label
                         class="usa-radio__label"
-                        for="solution-status-00000000-0000-0000-0000-000000000000-NOT_STARTED"
+                        for="solution-status-RMADA-NOT_STARTED"
                       >
                         Not started
                       </label>
@@ -493,14 +493,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-00000000-0000-0000-0000-000000000000-ONBOARDING"
+                        id="solution-status-RMADA-ONBOARDING"
                         name="solutions[0].status"
                         type="radio"
                         value="ONBOARDING"
                       />
                       <label
                         class="usa-radio__label"
-                        for="solution-status-00000000-0000-0000-0000-000000000000-ONBOARDING"
+                        for="solution-status-RMADA-ONBOARDING"
                       >
                         Onboarding
                       </label>
@@ -550,6 +550,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                 <button
                   class="usa-button"
                   data-testid="button"
+                  id="submit-solutions"
                   type="submit"
                 >
                   Save solutions

@@ -118,31 +118,16 @@ const SolutionImplementation = () => {
   ) => {
     const { solutions } = formikValues;
 
-    try {
-      const response = await Promise.all(
-        solutions.map(solution => {
-          const solutionNeeded = dontAdd ? false : solution.needed || false;
+    await Promise.all(
+      solutions.map(solution => {
+        const solutionNeeded = dontAdd ? false : solution.needed || false;
 
-          // Update possibleSolution needed bool and status
-          if (solution.key) {
-            return updateSolution({
-              variables: {
-                operationalNeedID,
-                solutionType: solution.key,
-                changes: {
-                  needed: solutionNeeded,
-                  mustStartDts: solution.mustStartDts,
-                  mustFinishDts: solution.mustFinishDts,
-                  status: solution.status
-                }
-              }
-            });
-          }
-          // Update custom solution needed bool - status should already be set
-          return updateCustomSolution({
+        // Update possibleSolution needed bool and status
+        if (solution.key) {
+          return updateSolution({
             variables: {
               operationalNeedID,
-              customSolutionType: solution.nameOther,
+              solutionType: solution.key,
               changes: {
                 needed: solutionNeeded,
                 mustStartDts: solution.mustStartDts,
@@ -151,39 +136,56 @@ const SolutionImplementation = () => {
               }
             }
           });
-        })
-      );
-
-      const errors = response?.find(result => result?.errors);
-
-      if (response && !errors) {
-        // If successfully submitting solution details
-        if (!dontAdd && !redirect) {
-          showMessageOnNextPage(
-            <Alert type="success" slim className="margin-y-4">
-              <span className="mandatory-fields-alert__text">
-                {t('successSolutionAdded', {
-                  operationalNeedName: operationalNeed.name
-                })}
-              </span>
-            </Alert>
-          );
-          history.push(`/models/${modelID}/task-list/it-solutions`);
-          // Go back but still save solution details
-        } else if (redirect === 'back') {
-          history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
-          );
-          // Dont save solution details, solutions no needed, and return to tracker
-        } else {
-          history.push(`/models/${modelID}/task-list/it-solutions`);
         }
-      } else if (errors) {
+        // Update custom solution needed bool - status should already be set
+        return updateCustomSolution({
+          variables: {
+            operationalNeedID,
+            customSolutionType: solution.nameOther,
+            changes: {
+              needed: solutionNeeded,
+              mustStartDts: solution.mustStartDts,
+              mustFinishDts: solution.mustFinishDts,
+              status: solution.status
+            }
+          }
+        });
+      })
+    )
+      .then(response => {
+        const errors = response?.find(result => result?.errors);
+
+        if (response && !errors) {
+          // If successfully submitting solution details
+          if (!dontAdd && !redirect) {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('successSolutionAdded', {
+                    operationalNeedName: operationalNeed.name
+                  })}
+                </span>
+              </Alert>
+            );
+
+            history.push(`/models/${modelID}/task-list/it-solutions`);
+            // Go back but still save solution details
+          } else if (redirect === 'back') {
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+            );
+
+            // Dont save solution details, solutions no needed, and return to tracker
+          } else {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
+          }
+        } else if (errors) {
+          setMutationError(true);
+        }
+      })
+      .catch(() => {
         setMutationError(true);
-      }
-    } catch (errors) {
-      setMutationError(true);
-    }
+      });
   };
 
   if (error) {
@@ -321,6 +323,12 @@ const SolutionImplementation = () => {
                       >
                         <Fieldset disabled={loading}>
                           {operationalNeed.solutions.map((solution, index) => {
+                            const identifier = (
+                              solution.nameOther ||
+                              solution.key ||
+                              ''
+                            ).replaceAll(' ', '-');
+
                             return (
                               <div key={solution.id}>
                                 <p className="text-bold">{t('solution')}</p>
@@ -335,7 +343,7 @@ const SolutionImplementation = () => {
                                       className="margin-top-1"
                                     >
                                       <Label
-                                        htmlFor={`solution-must-start-${solution.id}`}
+                                        htmlFor={`solution-must-start-${identifier}`}
                                         className="text-bold"
                                       >
                                         {t('mustStartBy')}
@@ -353,8 +361,8 @@ const SolutionImplementation = () => {
                                         <Field
                                           as={DatePicker}
                                           error={+!!flatErrors.mustStartDts}
-                                          id={`solution-must-start-${solution.id}`}
-                                          data-testid={`solution-must-start-${solution.id}`}
+                                          id={`solution-must-start-${identifier}`}
+                                          data-testid={`solution-must-start-${identifier}`}
                                           maxLength={50}
                                           name={`solutions[${index}].mustStartDts`}
                                           defaultValue={solution.mustStartDts}
@@ -375,7 +383,7 @@ const SolutionImplementation = () => {
                                       error={!!flatErrors.mustFinishDts}
                                     >
                                       <Label
-                                        htmlFor={`solution-must-finish-${solution.id}`}
+                                        htmlFor={`solution-must-finish-${identifier}`}
                                         className="text-bold"
                                       >
                                         {t('mustFinishBy')}
@@ -393,8 +401,8 @@ const SolutionImplementation = () => {
                                         <Field
                                           as={DatePicker}
                                           error={+!!flatErrors.mustFinishDts}
-                                          id={`solution-must-finish-${solution.id}`}
-                                          data-testid={`solution-must-finish-${solution.id}`}
+                                          id={`solution-must-finish-${identifier}`}
+                                          data-testid={`solution-must-finish-${identifier}`}
                                           maxLength={50}
                                           name={`solutions[${index}].mustFinishDts`}
                                           defaultValue={solution.mustFinishDts}
@@ -412,7 +420,7 @@ const SolutionImplementation = () => {
 
                                     <FieldGroup>
                                       <Label
-                                        htmlFor={`solution-status-${solution.id}`}
+                                        htmlFor={`solution-status-${identifier}`}
                                         className="text-bold"
                                       >
                                         {t('whatIsStatus')}
@@ -428,7 +436,7 @@ const SolutionImplementation = () => {
                                             <Field
                                               as={Radio}
                                               key={key}
-                                              id={`solution-status-${solution.id}-${key}`}
+                                              id={`solution-status-${identifier}-${key}`}
                                               name={`solutions[${index}].status`}
                                               label={translateOpNeedsStatusType(
                                                 key
@@ -473,7 +481,11 @@ const SolutionImplementation = () => {
                               {h('back')}
                             </Button>
 
-                            <Button type="submit" onClick={() => setErrors({})}>
+                            <Button
+                              type="submit"
+                              id="submit-solutions"
+                              onClick={() => setErrors({})}
+                            >
                               {t('saveSolutions')}
                             </Button>
                           </div>

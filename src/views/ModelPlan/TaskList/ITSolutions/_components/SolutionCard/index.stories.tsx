@@ -1,6 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { ComponentMeta } from '@storybook/react';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
@@ -45,11 +46,26 @@ const customSolution: SolutionCardType = {
   pocEmail: 'john.mint@oddball.io',
   needed: true
 };
+export const Default = () => (
+  <GridContainer>
+    <Grid desktop={{ col: 6 }}>
+      <SolutionCard solution={solution} shadow />
+    </Grid>
+  </GridContainer>
+);
 
-export const Default = () => <SolutionCard solution={solution} shadow />;
-
-export const Custom = () => <SolutionCard solution={customSolution} shadow />;
+export const Custom = () => (
+  <GridContainer>
+    <Grid desktop={{ col: 6 }}>
+      <SolutionCard solution={customSolution} shadow />
+    </Grid>
+  </GridContainer>
+);
 
 export const CreatingCustom = () => (
-  <SolutionCard solution={customSolution} shadow addingCustom />
+  <GridContainer>
+    <Grid desktop={{ col: 6 }}>
+      <SolutionCard solution={customSolution} shadow addingCustom />
+    </Grid>
+  </GridContainer>
 );
