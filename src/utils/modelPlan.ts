@@ -1622,7 +1622,8 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NOT_APPLICABLE' ||
     b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
     b === 'NOT_PLANNING_TO_SEND_DATA' ||
-    b === 'NO_LEARNING_SYSTEM'
+    b === 'NO_LEARNING_SYSTEM' ||
+    b === 'NOT_APM'
   )
     return -1;
   if (a < b || b === 'OTHER') {

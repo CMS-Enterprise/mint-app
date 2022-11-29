@@ -43,6 +43,7 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
+  sortOtherEnum,
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';
@@ -237,22 +238,24 @@ const KeyCharacteristics = () => {
                     {flatErrors.alternativePaymentModelTypes}
                   </FieldErrorMsg>
                   <Fieldset>
-                    {Object.keys(AlternativePaymentModelType).map(type => {
-                      return (
-                        <Fragment key={type}>
-                          <Field
-                            as={CheckboxField}
-                            id={`plan-characteristics-alternative-payment-${type}`}
-                            name="alternativePaymentModelTypes"
-                            label={translateAlternativePaymentTypes(type)}
-                            value={type}
-                            checked={values.alternativePaymentModelTypes.includes(
-                              type as AlternativePaymentModelType
-                            )}
-                          />
-                        </Fragment>
-                      );
-                    })}
+                    {Object.keys(AlternativePaymentModelType)
+                      .sort(sortOtherEnum)
+                      .map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`plan-characteristics-alternative-payment-${type}`}
+                              name="alternativePaymentModelTypes"
+                              label={translateAlternativePaymentTypes(type)}
+                              value={type}
+                              checked={values.alternativePaymentModelTypes.includes(
+                                type as AlternativePaymentModelType
+                              )}
+                            />
+                          </Fragment>
+                        );
+                      })}
                   </Fieldset>
 
                   <AddNote
