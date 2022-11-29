@@ -13,7 +13,7 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
