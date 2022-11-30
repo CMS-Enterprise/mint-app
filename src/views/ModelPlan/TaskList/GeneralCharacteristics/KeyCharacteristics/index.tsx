@@ -43,7 +43,6 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
-  sortOtherEnum,
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';
@@ -241,7 +240,7 @@ const KeyCharacteristics = () => {
 
                   <Fieldset>
                     {Object.keys(AlternativePaymentModelType)
-                      .sort(sortOtherEnum)
+                      .filter(x => x !== AlternativePaymentModelType.NOT_APM)
                       .map(type => {
                         return (
                           <Fragment key={type}>
@@ -254,10 +253,35 @@ const KeyCharacteristics = () => {
                               checked={values.alternativePaymentModelTypes.includes(
                                 type as AlternativePaymentModelType
                               )}
+                              disabled={values.alternativePaymentModelTypes.includes(
+                                AlternativePaymentModelType.NOT_APM
+                              )}
                             />
                           </Fragment>
                         );
                       })}
+                    <Field
+                      as={CheckboxField}
+                      id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
+                      name="alternativePaymentModelTypes"
+                      label={translateAlternativePaymentTypes(
+                        AlternativePaymentModelType.NOT_APM
+                      )}
+                      value={AlternativePaymentModelType.NOT_APM}
+                      checked={values.alternativePaymentModelTypes.includes(
+                        AlternativePaymentModelType.NOT_APM
+                      )}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        if (e.target.checked) {
+                          setFieldValue(
+                            'alternativePaymentModelTypes',
+                            AlternativePaymentModelType.NOT_APM
+                          );
+                        } else {
+                          setFieldValue('alternativePaymentModelTypes', []);
+                        }
+                      }}
+                    />
                   </Fieldset>
 
                   <AddNote
