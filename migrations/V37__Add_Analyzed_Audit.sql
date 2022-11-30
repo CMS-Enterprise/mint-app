@@ -1,7 +1,7 @@
 CREATE TABLE analyzed_audit (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
-    date TIMESTAMP NOT NULL,
+    date DATE NOT NULL,
     changes JSONB NOT NULL,
 
     --META DATA

@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -242,6 +243,14 @@ func (s *Server) routes(
 	).Handle())
 
 	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
+
+	// Setup faktory worker
+	worker := &worker.Worker{
+		Store:  store,
+		Logger: s.logger,
+	}
+
+	go worker.Work()
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues

@@ -3,6 +3,7 @@ package storage
 import (
 	_ "embed"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -16,8 +17,8 @@ var analyzedAuditCreate string
 //go:embed SQL/analyzed_audit_delete.sql
 var analyzedAuditDelete string
 
-//go:embed SQL/analyzed_audit_get_by_model_plan_id.sql
-var analyzedAuditGetByModelPlanID string
+//go:embed SQL/analyzed_audit_get_by_model_plan_id_and_date.sql
+var analyzedAuditGetByModelPlanIDAndDate string
 
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
 func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.AnalyzedAudit) (*models.AnalyzedAudit, error) {
@@ -66,22 +67,23 @@ func (s *Store) AnalyzedAuditDelete(logger *zap.Logger, id uuid.UUID) (*models.A
 	return &deletedAnalyzedAudit, nil
 }
 
-// AnalyzedAuditGetByModelPlanID gets and returns all AnalyzedAudits by modelPlanID
-func (s *Store) AnalyzedAuditGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.AnalyzedAudit, error) {
-	analyzedAudits := []*models.AnalyzedAudit{}
+// AnalyzedAuditGetByModelPlanIDAndDate gets and returns all AnalyzedAudits by modelPlanID
+func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPlanID uuid.UUID, date time.Time) (*models.AnalyzedAudit, error) {
+	analyzedAudit := models.AnalyzedAudit{}
 
-	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanID)
+	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDAndDate)
 	if err != nil {
 		return nil, err
 	}
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
+		"date":          date.Format("2006-01-02"),
 	}
 
-	err = stmt.Select(&analyzedAudits, arg)
+	err = stmt.Get(&analyzedAudit, arg)
 
 	if err != nil {
 		return nil, err
 	}
-	return analyzedAudits, nil
+	return &analyzedAudit, nil
 }

@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"context"
 	"time"
 
 	_ "github.com/lib/pq" // required for postgres driver in sql
@@ -10,6 +11,10 @@ import (
 )
 
 func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
+	worker := &Worker{
+		Store:  suite.testConfigs.Store,
+		Logger: suite.testConfigs.Logger,
+	}
 	// Create plan
 	plan := suite.createModelPlan("Test Plan2")
 
@@ -27,43 +32,48 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 
 	// Add sections
 	// plan_basic
-	basics, _ := resolvers.PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, _ := resolvers.PlanBasicsGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
 	// plan_general_characteristic
-	genChar, _ := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	genChar, _ := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(worker.Logger, plan.ID, worker.Store)
 	// plan_participants_and_provider
-	participant, _ := resolvers.PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	participant, _ := resolvers.PlanParticipantsAndProvidersGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
 	// plan_beneficiaries
-	beneficiary, _ := resolvers.PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	beneficiary, _ := resolvers.PlanBeneficiariesGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
 	// plan_ops_eval_and_learning
-	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
 	// plan_payments
-	payment, _ := resolvers.PlanPaymentsReadByModelPlan(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	payment, _ := resolvers.PlanPaymentsReadByModelPlan(worker.Logger, worker.Store, plan.ID)
 
 	// Update sections for ReadyForClearance
 	clearanceChanges := map[string]interface{}{
 		"status": "READY_FOR_CLEARANCE",
 	}
-	_, basicsErr := resolvers.UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, clearanceChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, basicsErr := resolvers.UpdatePlanBasics(worker.Logger, basics.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(basicsErr)
-	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(worker.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(charErr)
-	_, partErr := resolvers.PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, participant.ID, clearanceChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, partErr := resolvers.PlanParticipantsAndProvidersUpdate(worker.Logger, participant.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(partErr)
 
 	// Update sections for ReadyForReview
 	reviewChanges := map[string]interface{}{
 		"status": "READY_FOR_REVIEW",
 	}
-	_, benErr := resolvers.PlanBeneficiariesUpdate(suite.testConfigs.Logger, beneficiary.ID, reviewChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, benErr := resolvers.PlanBeneficiariesUpdate(worker.Logger, beneficiary.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(benErr)
-	_, opsErr := resolvers.PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, ops.ID, reviewChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, opsErr := resolvers.PlanOpsEvalAndLearningUpdate(worker.Logger, ops.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(opsErr)
-	_, paymentErr := resolvers.PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
+	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	analyzedAudit, err := AnalyzedAuditJob(plan.ID, time.Now(), suite.testConfigs.Store, suite.testConfigs.Logger)
+	err := worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
 	suite.NoError(err)
-	suite.NotNil(&analyzedAudit)
+
+	// Get Stored audit
+	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now())
+	suite.NoError(err)
+
+	suite.NotNil(analyzedAudit)
 
 	// ModelPlan Changes
 	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.NameChange.New)

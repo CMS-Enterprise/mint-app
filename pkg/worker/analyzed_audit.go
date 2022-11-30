@@ -1,39 +1,38 @@
 package worker
 
 import (
+	"context"
 	"time"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
-
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
-func AnalyzedAuditJob(modelPlanID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) (*models.AnalyzedAudit, error) {
-	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, modelPlanID, modelPlanID, date, models.SortDesc)
+func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
+	audits, err := w.Store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(w.Logger, args[0].(uuid.UUID), args[0].(uuid.UUID), args[1].(time.Time), models.SortDesc)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	changes, err := GenerateChanges(audits)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", modelPlanID, date, *changes)
+	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", args[0].(uuid.UUID), args[1].(time.Time), *changes)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	storedAnalyzedAudit, err := store.AnalyzedAuditCreate(logger, analyzedAudit)
+	_, err = w.Store.AnalyzedAuditCreate(w.Logger, analyzedAudit)
+
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return storedAnalyzedAudit, nil
+	return nil
 }
 
 // GenerateChanges gets all the audit changes for the specified tables

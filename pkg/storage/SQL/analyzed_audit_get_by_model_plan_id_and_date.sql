@@ -8,4 +8,5 @@ SELECT
     modified_by,
     modified_dts
 FROM analyzed_audit
-WHERE id = :id;
+WHERE model_plan_id = :model_plan_id
+    AND date = :date
