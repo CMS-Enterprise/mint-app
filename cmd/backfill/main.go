@@ -9,13 +9,23 @@ import (
 
 func main() {
 	filePath := `cmd/backfill/data/sensitive/databackfillSept.csv`
+	translationPath := `cmd/backfill/data/dataTranslation.csv`
 
 	table, err := readFile(filePath)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = translateFile(table)
+
+	translation, err := readFile(translationPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	td := TranslationsDictionary{}
+	td.convertDataTable(translation)
+
+	// entries, err := translateFile(&td, table)
+	_, err = translateFile(&td, table)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -122,9 +132,32 @@ func readFile(file string) (*DataTable, error) {
 	return &table, nil
 }
 
-func translateFile(table *DataTable) error {
+func translateFile(td *TranslationsDictionary, table *DataTable) (*[]BackfillEntry, error) {
+	entries := []BackfillEntry{}
 
-	_ = NewBackFillEntry()
+	for i := 0; i < len(table.Rows); i++ {
+		row := table.Rows[i]
+		entry := translateDataRow(&row, td)
+		entries = append(entries, *entry)
 
-	return nil
+	}
+
+	return &entries, nil
+}
+
+func translateDataRow(row *DataRow, td *TranslationsDictionary) *BackfillEntry {
+	entry := NewBackFillEntry()
+	for key, value := range row.Fields {
+
+		// translation := td[row.Fields[i]]
+		translation := td.getTranslation(key)
+
+		translateField(&entry, value, &translation)
+	}
+	return &entry
+
+}
+
+func translateField(entry *BackfillEntry, value string, translation *Translation) {
+
 }
