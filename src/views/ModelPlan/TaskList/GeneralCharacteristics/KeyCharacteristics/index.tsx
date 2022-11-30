@@ -226,7 +226,9 @@ const KeyCharacteristics = () => {
                   error={!!flatErrors.alternativePaymentModelTypes}
                   className="margin-y-4 margin-bottom-8"
                 >
-                  <legend className="usa-label">{t('modelAPM')}</legend>
+                  <legend className="usa-label maxw-none">
+                    {t('modelAPM')}
+                  </legend>
                   <Alert type="info" slim data-testid="mandatory-fields-alert">
                     <span className="mandatory-fields-alert__text">
                       {t('MIPSInfo')}
