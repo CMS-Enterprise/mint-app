@@ -29,11 +29,11 @@ func AnalyzedAuditJob(modelPlanID uuid.UUID, date time.Time, store *storage.Stor
 		return nil, err
 	}
 
-	_, err = store.AnalyzedAuditCreate(logger, analyzedAudit)
+	storedAnalyzedAudit, err := store.AnalyzedAuditCreate(logger, analyzedAudit)
 	if err != nil {
 		return nil, err
 	}
-	return analyzedAudit, nil
+	return storedAnalyzedAudit, nil
 }
 
 // GenerateChanges gets all the audit changes for the specified tables
