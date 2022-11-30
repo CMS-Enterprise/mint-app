@@ -16,11 +16,8 @@ var auditChangeCollectionByIDAndTable string
 //go:embed SQL/audit_change_collection_by_id_and_table_and_field.sql
 var auditChangeCollectionByIDAndTableAndField string
 
-//go:embed SQL/audit_change_collection_by_foreign_key_and_table_and_field_and_date.sql
-var auditChangeCollectionByForeignKeyAndTableAndDate string
-
-//go:embed SQL/audit_change_collection_by_id_and_date.sql
-var auditChangeCollectionByIDAndDate string
+//go:embed SQL/audit_change_collection_by_primary_key_or_foreign_keyand_date.sql
+var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
 func (s *Store) AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
@@ -78,10 +75,10 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, ta
 
 }
 
-// AuditChangeCollectionByForeignKeyAndTableAndDate returns changes based on tablename and foreign key from the database.
-func (s *Store) AuditChangeCollectionByForeignKeyAndTableAndDate(logger *zap.Logger, tableName string, foreignKey uuid.UUID, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
+// AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns changes based on foreign key and date from the database.
+func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap.Logger, primaryKey uuid.UUID, foreignKey uuid.UUID, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
 	auditChanges := []*models.AuditChange{}
-	orderedQuery := auditChangeCollectionByForeignKeyAndTableAndDate
+	orderedQuery := auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate
 	orderClause := "" //default to ASCENDING
 	if sortDir == models.SortDesc {
 		orderClause = " ORDER BY 1 DESC"
@@ -96,40 +93,7 @@ func (s *Store) AuditChangeCollectionByForeignKeyAndTableAndDate(logger *zap.Log
 	}
 
 	arg := map[string]interface{}{
-		"foreign_key": foreignKey,
-		"table_name":  tableName,
-		"start_date":  date.Format("2006-01-02"),
-		"end_date":    date.AddDate(0, 0, 1).Format("2006-01-02"),
-	}
-
-	err = stmt.Select(&auditChanges, arg)
-	if err != nil {
-		return nil, err
-
-	}
-
-	return auditChanges, nil
-
-}
-
-// AuditChangeCollectionByForeignKeyAndDate returns changes based on foreign key and date from the database.
-func (s *Store) AuditChangeCollectionByForeignKeyAndDate(logger *zap.Logger, foreignKey uuid.UUID, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
-	auditChanges := []*models.AuditChange{}
-	orderedQuery := auditChangeCollectionByIDAndDate
-	orderClause := "" //default to ASCENDING
-	if sortDir == models.SortDesc {
-		orderClause = " ORDER BY 1 DESC"
-	}
-
-	orderedQuery = orderedQuery + orderClause
-
-	stmt, err := s.db.PrepareNamed(orderedQuery)
-	if err != nil {
-		return nil, err
-
-	}
-
-	arg := map[string]interface{}{
+		"primary_key": primaryKey,
 		"foreign_key": foreignKey,
 		"start_date":  date.Format("2006-01-02"),
 		"end_date":    date.AddDate(0, 0, 1).Format("2006-01-02"),

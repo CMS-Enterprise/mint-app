@@ -29,7 +29,7 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 
 	if err != nil {
 		logger.Error(
-			fmt.Sprintf("Failed to create cr__tdl with error %s", err),
+			fmt.Sprintf("Failed to create analyzed_audit with error %s", err),
 			zap.String("user", AnalyzedAudit.CreatedBy),
 		)
 		return nil, err
@@ -38,7 +38,7 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 	err = stmt.Get(&retAnalyzedAudit, AnalyzedAudit)
 	if err != nil {
 		logger.Error(
-			fmt.Sprintf("Failed to cr__tdl with error %s", err),
+			fmt.Sprintf("Failed to analyzed_audit with error %s", err),
 			zap.String("user", AnalyzedAudit.CreatedBy),
 		)
 		return nil, err

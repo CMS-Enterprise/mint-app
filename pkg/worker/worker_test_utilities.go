@@ -1,4 +1,4 @@
-package resolvers
+package worker
 
 import (
 	"fmt"
@@ -53,6 +53,7 @@ func createS3Client() upload.S3Client {
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
+
 	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient

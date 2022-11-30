@@ -12,27 +12,28 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// NewAnalyzedAuditJob analyzes the given model and model relations on the specified date
-func NewAnalyzedAuditJob(modelPlanID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) error {
-	audits, err := store.AuditChangeCollectionByForeignKeyAndDate(logger, modelPlanID, date, models.SortDesc)
+// AnalyzedAuditJob analyzes the given model and model relations on the specified date
+func AnalyzedAuditJob(modelPlanID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) (*models.AnalyzedAudit, error) {
+	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, modelPlanID, modelPlanID, date, models.SortDesc)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	changes, err := GenerateChanges(audits)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	AnalyzedAudit, err := models.NewAnalyzedAudit("Faktory", modelPlanID, date, *changes)
+	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", modelPlanID, date, *changes)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_, err = store.AnalyzedAuditCreate(logger, AnalyzedAudit)
+
+	_, err = store.AnalyzedAuditCreate(logger, analyzedAudit)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return analyzedAudit, nil
 }
 
 // GenerateChanges gets all the audit changes for the specified tables
@@ -53,17 +54,17 @@ func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 		return nil, err
 	}
 
-	sectionsAudits, err := AnalyzeSectionsAudits(audits)
-	if err != nil {
-		return nil, err
-	}
-
 	colaboratorAudits, err := AnalyzeColaboratorAudits(audits)
 	if err != nil {
 		return nil, err
 	}
 
 	discussionAudits, err := AnalyzeDiscussionAudits(audits)
+	if err != nil {
+		return nil, err
+	}
+
+	sectionsAudits, err := AnalyzeSectionsAudits(audits)
 	if err != nil {
 		return nil, err
 	}
@@ -82,17 +83,24 @@ func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 
 // AnalyzeModelPlanAudits analyzes all the model plan name changes and status changes
 func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
+
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "model_plan"
 	})
 
 	nameChangeAudits := lo.Filter(filteredAudits, func(m *models.AuditChange, index int) bool {
 		keys := lo.Keys(m.Fields)
-		return lo.Contains(keys, "plan_name")
+		return lo.Contains(keys, "model_name")
+
 	})
-	nameChangeAuditField := models.AuditField{
-		Old: nameChangeAudits[0].Fields["status"].Old,
-		New: nameChangeAudits[0].Fields["status"].New,
+
+	var nameChangeAuditField models.AuditField
+
+	if len(nameChangeAudits) > 0 {
+		nameChangeAuditField = models.AuditField{
+			Old: nameChangeAudits[0].Fields["model_name"].Old,
+			New: nameChangeAudits[0].Fields["model_name"].New,
+		}
 	}
 
 	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
@@ -128,7 +136,7 @@ func AnalyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 // AnalyzeColaboratorAudits analyzes new collaborators to a model plan
 func AnalyzeColaboratorAudits(audits []*models.AuditChange) (*models.AnalyzedPlanCollaborators, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_colaborator"
+		return m.TableName == "plan_collaborator"
 	})
 
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
@@ -165,7 +173,7 @@ func AnalyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlan
 // AnalyzeDocumentsAudits analyzes how many documents had activity
 func AnalyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocuments, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_documents"
+		return m.TableName == "plan_document"
 	})
 
 	analyzedDocuments := models.AnalyzedDocuments{
@@ -197,7 +205,7 @@ func AnalyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "status") {
 			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
-				return m.Fields["status"].New.(string), true
+				return m.TableName, true
 			}
 		}
 		return "", false
@@ -207,7 +215,7 @@ func AnalyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "status") {
 			if m.Fields["status"].New.(string) == "READY_FOR_CLEARANCE" {
-				return m.Fields["status"].New.(string), true
+				return m.TableName, true
 			}
 		}
 		return "", false

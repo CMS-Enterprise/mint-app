@@ -4,7 +4,7 @@ INSERT INTO analyzed_audit (
     date,
     changes,
     created_by,
-    modified_by,
+    modified_by
 )
 VALUES (
     :id,
