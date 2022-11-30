@@ -2,7 +2,7 @@
  * Model Plan Collaborator Access Wrapper
  * Contol access to editor routes is user is not a collaborator on a model plan
  * Reroutes to readonly routes if not collaborator
- * MINT_ASSESSMENT role is granted edit access to everything
+ * MINT_ASSESSMENT_NONPROD role is granted edit access to everything
  */
 
 import React, { useEffect } from 'react';
@@ -29,13 +29,15 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
-  // Get groups to check is user has MINT_ASSESSMENT role
+  // Get groups to check is user has MINT_ASSESSMENT_NONPROD role
   // If so, has full access to both task-list and read-only
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
-  // Checking if user's location is readonly
-  // Everything with a modelID and not under the parent 'read-only' route is considered editable
-  const readOnly: boolean = pathname.split('/')[3] === 'read-only';
+  // Checking if user's location is task-list or collaborators
+  // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
+  const editable: boolean =
+    pathname.split('/')[3] === 'task-list' ||
+    pathname.split('/')[3] === 'collaborators';
 
   const { data, loading } = useQuery<
     GetIsCollaboratorType,
@@ -43,7 +45,8 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   >(GetIsCollaborator, {
     variables: {
       id: modelID
-    }
+    },
+    skip: !editable
   });
 
   const isCollaborator: boolean = data?.modelPlan?.isCollaborator || false;
@@ -55,7 +58,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       !loading &&
       modelID &&
       validModelID &&
-      !readOnly &&
+      editable &&
       !isAssessment(groups)
     ) {
       history.replace(`/models/${modelID}/read-only/model-basics`);
@@ -67,7 +70,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     loading,
     modelID,
     validModelID,
-    readOnly,
+    editable,
     groups
   ]);
 

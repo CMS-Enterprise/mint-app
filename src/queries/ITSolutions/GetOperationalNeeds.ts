@@ -13,7 +13,8 @@ export default gql`
         key
         nameOther
         needed
-        solutions(includeNotNeeded: true) {
+        modifiedDts
+        solutions {
           id
           status
           name

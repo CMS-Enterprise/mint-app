@@ -1,11 +1,13 @@
 package okta
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/http"
 	"strings"
 
+	"github.com/99designs/gqlgen/graphql/handler/transport"
 	jwtverifier "github.com/okta/okta-jwt-verifier-golang"
 	"go.uber.org/zap"
 
@@ -13,14 +15,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 const (
-	jobCodeUser       = "MINT_USER"
-	jobCodeAssessment = "MINT_ASSESSMENT"
+	jobCodeUser       = "MINT_USER_NONPROD"
+	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
+	jobCodeMAC        = "MINT MAC Users"
 )
 
-func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
+// EnhancedJwt is the JWT and the auth token
+type EnhancedJwt struct {
+	JWT       *jwtverifier.Jwt
+	AuthToken string
+}
+
+func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*EnhancedJwt, error) {
 	tokenParts := strings.Split(authHeader, "Bearer ")
 	if len(tokenParts) < 2 {
 		return nil, errors.New("invalid Bearer in auth header")
@@ -30,11 +41,16 @@ func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtv
 		return nil, errors.New("empty bearer value")
 	}
 
-	return f.verifier.VerifyAccessToken(bearerToken)
+	jwt, err := f.verifier.VerifyAccessToken(bearerToken)
+	enhanced := EnhancedJwt{
+		JWT:       jwt,
+		AuthToken: bearerToken,
+	}
+	return &enhanced, err
 }
 
 func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
-	list, ok := jwt.Claims["groups"]
+	list, ok := jwt.Claims["mint-groups"]
 	if !ok {
 		return false
 	}
@@ -55,28 +71,40 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.EUAPrincipal, error) {
-	euaID := jwt.Claims["sub"].(string)
+func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.OKTAPrincipal, error) {
+	euaID := enchanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
 
+	baseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
+
 	// the current assumption is that anyone with an appropriate
 	// JWT provided by Okta for MINT is allowed to use MINT
 	// as a viewer/submitter
-	jcUser := jwtGroupsContainsJobCode(jwt, f.jobCodeUser)
+	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeUser)
 
-	// need to check the claims for empowerment as each role
-	jcAssessment := jwtGroupsContainsJobCode(jwt, f.jobCodeAssessment)
+	// need to check the claims for empowerment as each role6
+	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeAssessment)
 
-	return &authentication.EUAPrincipal{
-		EUAID:             euaID,
+	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeMAC)
+
+	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID, false, baseURL, enchanced.AuthToken, jcMAC) //TODO, do we need to do anything with the user? Should we pass the id around?
+	if err != nil {
+		return nil, err
+	}
+
+	return &authentication.OKTAPrincipal{
+		Username:          strings.ToUpper(euaID),
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
+		UserAccount:       userAccount,
 	}, nil
 }
 
-func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) http.Handler {
+// NewAuthenticationMiddleware returns an authentication middleware function to parse a JWT and attach an appropriate principal object to the context
+func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		logger := appcontext.ZLogger(r.Context())
 		authHeader := r.Header.Get("Authorization")
@@ -132,20 +160,57 @@ type JwtVerifier interface {
 	VerifyAccessToken(jwt string) (*jwtverifier.Jwt, error)
 }
 
-type oktaMiddlewareFactory struct {
+// MiddlewareFactory provides functionality to create functions that attach EUA Principals to context objects by decoding JWT tokens
+type MiddlewareFactory struct {
 	handlers.HandlerBase
+	Store             *storage.Store
 	verifier          JwtVerifier
 	jobCodeUser       string
 	jobCodeAssessment string
+	jobCodeMAC        string
 }
 
-// NewOktaAuthenticationMiddleware returns a wrapper for HandlerFunc to authorize with Okta
-func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtVerifier) func(http.Handler) http.Handler {
-	middlewareFactory := oktaMiddlewareFactory{
+// NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
+// the websocket connection payload to authenticate an Okta user.
+func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
+	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+		// Get the token from payload
+		all := initPayload
+		fmt.Println("ALL OF EM BABY (OKTA)", all)
+		any := initPayload["authToken"]
+		token, ok := any.(string)
+		if !ok || token == "" {
+			return nil, errors.New("authToken not found in transport payload")
+		}
+
+		// Parse auth header into JWT object
+		jwt, err := f.jwt(logger, token)
+		if err != nil {
+			fmt.Println("ERROR PARSING JWT", err)
+			// TODO How to error handle here?
+		}
+
+		// devCtx, err := devUserContext(ctx, token)
+		principal, err := f.newPrincipal(jwt)
+		if err != nil {
+			logger.Error("could not set context for okta auth", zap.Error(err))
+			return nil, err
+		}
+
+		oktaCtx := appcontext.WithPrincipal(ctx, principal)
+
+		return oktaCtx, nil
+	}
+}
+
+// NewMiddlewareFactory returns a factory creating Okta middleware functions
+func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier, store *storage.Store) *MiddlewareFactory {
+	return &MiddlewareFactory{
 		HandlerBase:       base,
+		Store:             store,
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
+		jobCodeMAC:        jobCodeMAC,
 	}
-	return middlewareFactory.newAuthenticationMiddleware
 }

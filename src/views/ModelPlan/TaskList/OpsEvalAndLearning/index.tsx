@@ -46,6 +46,7 @@ import {
   StakeholdersType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   sortOtherEnum,
@@ -144,21 +145,20 @@ export const OpsEvalAndLearningContent = () => {
     UpdatePlanOpsEvalAndLearning
   );
 
-  const handleFormSubmit = (
-    formikValues: OpsEvalAndLearningFormType,
-    redirect?: 'next' | 'back' | string
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            if (formikValues.iddocSupport) {
+            if (formikRef?.current?.values.iddocSupport) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/iddoc`
               );
@@ -236,8 +236,8 @@ export const OpsEvalAndLearningContent = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -414,8 +414,7 @@ export const OpsEvalAndLearningContent = () => {
                       id="ops-eval-and-learning-help-desk-use-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-four`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -556,8 +555,7 @@ export const OpsEvalAndLearningContent = () => {
                       id="ops-eval-and-learning-iddoc-support-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-four`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -608,7 +606,7 @@ export const OpsEvalAndLearningContent = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'back')}
+                  onClick={() => handleFormSubmit('back')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -619,7 +617,7 @@ export const OpsEvalAndLearningContent = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

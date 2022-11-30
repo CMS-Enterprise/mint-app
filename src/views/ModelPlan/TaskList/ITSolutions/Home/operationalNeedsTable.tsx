@@ -19,7 +19,11 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Alert, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Alert,
+  IconArrowForward,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
@@ -63,7 +67,7 @@ type OperationalNeedsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   type: 'needs' | 'possibleNeeds';
-  readOnly?: boolean; // TODO: used to render when readonly component is developed
+  readOnly?: boolean;
 };
 
 const OperationalNeedsTable = ({
@@ -123,7 +127,18 @@ const OperationalNeedsTable = ({
           OperationalNeedsSolutionsStatus
         >): JSX.Element | string => {
           if (value === t('itSolutionsTable.selectSolution')) {
-            return <UswdsReactLink to="/">{value}</UswdsReactLink>;
+            if (!hasEditAccess) {
+              return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
+            }
+            return (
+              <UswdsReactLink
+                to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
+                className="display-flex flex-align-center"
+              >
+                {value}
+                <IconArrowForward className="margin-left-1" />
+              </UswdsReactLink>
+            );
           }
           return value;
         }
@@ -164,11 +179,16 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status);
+          return returnActionLinks(
+            row.original.status,
+            row.original,
+            modelID,
+            readOnly
+          );
         }
       }
     ];
-  }, [t]);
+  }, [t, modelID, readOnly]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -198,11 +218,11 @@ const OperationalNeedsTable = ({
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status);
+          return returnActionLinks(row.original.status, row.original, modelID);
         }
       }
     ];
-  }, [t]);
+  }, [t, modelID]);
 
   const {
     getTableProps,
@@ -238,7 +258,7 @@ const OperationalNeedsTable = ({
       initialState: {
         sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
         pageIndex: 0,
-        hiddenColumns: hasEditAccess ? [] : ['id']
+        hiddenColumns: hasEditAccess ? [] : ['Actions']
       }
     },
     useFilters,
@@ -267,7 +287,7 @@ const OperationalNeedsTable = ({
   }
 
   return (
-    <div className="model-plan-table" data-testid="cr-tdl-table">
+    <div className="model-plan-table" data-testid={`${type}-table`}>
       <div className="mint-header__basic">
         <GlobalClientFilter
           setGlobalFilter={setGlobalFilter}

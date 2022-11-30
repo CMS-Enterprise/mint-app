@@ -42,6 +42,7 @@ import {
   EvaluationApproachType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   sortOtherEnum,
@@ -104,20 +105,23 @@ const Evaluation = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: EvaluationFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            if (isCCWInvolvement(formikValues.ccmInvolvment)) {
+            if (
+              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment || [])
+            ) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
               );
@@ -199,8 +203,8 @@ const Evaluation = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -255,8 +259,7 @@ const Evaluation = () => {
                           id="ops-eval-and-learning-evaluation-approach-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
-                              `/models/${modelID}/task-list/it-tools/page-five`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -409,8 +412,7 @@ const Evaluation = () => {
                       id="ops-eval-and-learning-data-needed-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-six`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -480,8 +482,7 @@ const Evaluation = () => {
                       id="ops-eval-and-learning-data-to-send-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-seven`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -575,7 +576,7 @@ const Evaluation = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -587,7 +588,7 @@ const Evaluation = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -598,7 +599,7 @@ const Evaluation = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

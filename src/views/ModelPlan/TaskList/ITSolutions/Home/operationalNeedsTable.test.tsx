@@ -38,6 +38,7 @@ const returnNeeds = (needed: boolean | null) => {
                 key: OperationalNeedKey.ADVERTISE_MODEL,
                 nameOther: null,
                 needed,
+                modifiedDts: '2022-05-12T15:01:39.190679Z',
                 solutions: [
                   {
                     __typename: 'OperationalSolution',
@@ -47,7 +48,7 @@ const returnNeeds = (needed: boolean | null) => {
                     key: OperationalSolutionKey.SALESFORCE,
                     mustStartDts: null,
                     mustFinishDts: null,
-                    needed: false,
+                    needed: true,
                     nameOther: null,
                     pocEmail: null,
                     pocName: null,

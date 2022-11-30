@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
@@ -26,12 +27,14 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
+import { isAssessment } from 'utils/user';
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
+  isHelpArticle?: boolean;
 };
 
 type DocumentStatusType = 'success' | 'error';
@@ -40,7 +43,8 @@ const PlanDocumentsTable = ({
   hiddenColumns,
   modelID,
   setDocumentMessage,
-  setDocumentStatus
+  setDocumentStatus,
+  isHelpArticle
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
   const { error, loading, data, refetch: refetchDocuments } = useQuery<
@@ -53,6 +57,10 @@ const PlanDocumentsTable = ({
   });
 
   const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const hasEditAccess: boolean =
+    !isHelpArticle && (isCollaborator || isAssessment(groups));
 
   if (loading) {
     return <PageLoading />;
@@ -80,7 +88,7 @@ const PlanDocumentsTable = ({
       refetch={refetchDocuments}
       setDocumentMessage={setDocumentMessage}
       setDocumentStatus={setDocumentStatus}
-      isCollaborator={data?.modelPlan.isCollaborator}
+      hasEditAccess={hasEditAccess}
     />
   );
 };
@@ -93,7 +101,7 @@ type TableProps = {
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
-  isCollaborator?: boolean;
+  hasEditAccess?: boolean;
 };
 
 const Table = ({
@@ -102,7 +110,7 @@ const Table = ({
   refetch,
   setDocumentMessage,
   setDocumentStatus,
-  isCollaborator
+  hasEditAccess
 }: TableProps) => {
   const { t } = useTranslation('documents');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -219,6 +227,13 @@ const Table = ({
         }
       },
       {
+        Header: t('documentTable.visibility'),
+        accessor: 'restricted',
+        Cell: ({ row, value }: any) => {
+          return value ? t('restricted') : t('all');
+        }
+      },
+      {
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
@@ -233,7 +248,7 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                {isCollaborator && (
+                {hasEditAccess && (
                   <Button
                     type="button"
                     unstyled
@@ -256,7 +271,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, handleDownload, isCollaborator]);
+  }, [t, handleDownload, hasEditAccess]);
 
   const {
     getTableProps,

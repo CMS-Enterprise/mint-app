@@ -197,6 +197,7 @@ type PlanDocument {
   fileKey: String!
   virusScanned: Boolean!
   virusClean: Boolean!
+  restricted: Boolean!
   fileName: String!
   fileSize: Int!
   documentType: DocumentType!
@@ -218,6 +219,7 @@ input PlanDocumentInput {
   modelPlanID: UUID!
   fileData: Upload!
   documentType: DocumentType!
+  restricted: Boolean!
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -1427,12 +1429,13 @@ type OperationalSolution {
     name: String
     key: OperationalSolutionKey
     nameOther: String
-    
-    pocName: String     
+
+    pocName: String
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
     status: OpSolutionStatus!
+    documents: [PlanDocument!]!
 
     createdBy: String!
     createdDts: Time!
@@ -1442,11 +1445,21 @@ type OperationalSolution {
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     needed: Boolean
-    pocName: String     
+    pocName: String
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
     status: OpSolutionStatus
+}
+
+type PlanDocumentSolutionLink {
+id: UUID!
+solutionID: UUID!
+documentID: UUID!
+createdBy: String!
+createdDts: Time!
+modifiedBy: String
+modifiedDts: Time
 }
 
 """
@@ -1469,6 +1482,7 @@ type Query {
   operationalNeed(id: UUID!): OperationalNeed!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
+  possibleOperationalSolutions: [PossibleOperationalSolution!]!
 }
 
 """
@@ -1545,7 +1559,6 @@ updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
 agreeToNDA(agree: Boolean! = true): NDAInfo!
-@hasRole(role: MINT_USER)
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
@@ -1562,19 +1575,25 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
+addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed! 
+updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! 
+addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! 
+addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution! 
+updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution!
+@hasRole(role: MINT_USER)
+
+createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
+@hasRole(role: MINT_USER)
+
+removePlanDocumentSolutionLink(id: UUID!): Boolean!
 @hasRole(role: MINT_USER)
 }
 

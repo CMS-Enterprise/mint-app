@@ -29,15 +29,18 @@ const modelPlanTaskList = {
     relatedContent: 'Related Content',
     ariaLabelForOverview: 'Open overview for adding a system in a new tab',
     overview: 'Overview for adding a model <1>(opens in a new tab)</1>',
+    sampleModelPlan: 'Sample Model Plan <1>(opens in a new tab)</1>',
     modelTeam: 'Model team',
     editTeam: 'Edit team'
   },
   withdraw_modal: {
     header: 'Confirm you want to remove {{-requestName}}.',
-    warning: 'You will lose any information you have filled in.',
-    confirm: 'Remove request',
-    cancel: 'Cancel',
-    confirmationText_name: 'The request for {{-requestName}} has been removed',
+    warning:
+      'Nobody will be able to edit or access this plan. This action cannot be undone. Please proceed with caution.',
+    confirm: 'Remove Model Plan',
+    cancel: 'Keep Model Plan',
+    confirmationText_name:
+      'Success! {{-modelName}} has been removed from MINT.',
     confirmationText_noName: 'The request has been removed'
   },
   numberedList: {

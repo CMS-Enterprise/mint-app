@@ -42,6 +42,7 @@ import {
   PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   sortPayTypeEnums,
@@ -99,21 +100,20 @@ const FundingSource = () => {
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (
-    formikValues: FundingFormType,
-    redirect?: 'next' | 'back' | string
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
-    const hasClaimsBasedPayment = formikValues.payType.includes(
+  const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
+    const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
-    const hasNonClaimBasedPayment = formikValues.payType.includes(
+    const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -200,8 +200,8 @@ const FundingSource = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -499,8 +499,7 @@ const FundingSource = () => {
                             id="payment-pay-recipients-warning"
                             onClick={() =>
                               handleFormSubmit(
-                                values,
-                                `/models/${modelID}/task-list/it-tools/page-eight`
+                                `/models/${modelID}/task-list/it-solutions`
                               )
                             }
                           />
@@ -542,7 +541,7 @@ const FundingSource = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'back')}
+                        onClick={() => handleFormSubmit('back')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -555,7 +554,7 @@ const FundingSource = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

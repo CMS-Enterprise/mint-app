@@ -14,6 +14,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // DevUserConfig is the set of values that can be passed in a request header
@@ -22,7 +24,7 @@ type DevUserConfig struct {
 	JobCodes []string `json:"jobCodes"`
 }
 
-func authenticateMiddleware(logger *zap.Logger, next http.Handler) http.Handler {
+func authenticateMiddleware(logger *zap.Logger, next http.Handler, store *storage.Store) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		logger.Info("Using local authorization middleware")
 
@@ -33,7 +35,7 @@ func authenticateMiddleware(logger *zap.Logger, next http.Handler) http.Handler 
 		}
 
 		authHeader := r.Header["Authorization"][0]
-		ctx, err := devUserContext(r.Context(), authHeader)
+		ctx, err := devUserContext(r.Context(), authHeader, store)
 		if err != nil {
 			logger.Error("Empty dev user config JSON")
 			w.WriteHeader(http.StatusBadRequest)
@@ -51,7 +53,7 @@ func authenticateMiddleware(logger *zap.Logger, next http.Handler) http.Handler 
 	})
 }
 
-func devUserContext(ctx context.Context, authHeader string) (context.Context, error) {
+func devUserContext(ctx context.Context, authHeader string, store *storage.Store) (context.Context, error) {
 	// don't attempt to handle local auth if the Authorization Header doesn't start with "Local"
 	if !strings.HasPrefix(authHeader, "Local") {
 		return ctx, nil
@@ -72,17 +74,25 @@ func devUserContext(ctx context.Context, authHeader string) (context.Context, er
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
+	princ := &authentication.OKTAPrincipal{
+		Username:          strings.ToUpper(config.EUA),
+		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
+		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
+		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
+	}
 
-	return appcontext.WithPrincipal(ctx, &authentication.EUAPrincipal{
-		EUAID:             config.EUA,
-		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER"),
-		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT"),
-	}), nil
+	userAccount, err := userhelpers.GetOrCreateUserAccount(store, princ.ID(), true, "", "", princ.JobCodeMAC)
+	if err != nil {
+		return nil, err
+	}
+	princ.UserAccount = userAccount
+
+	return appcontext.WithPrincipal(ctx, princ), nil
 }
 
 // NewLocalWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
 // the websocket connection payload to authenticate a local user.
-func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
+func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
 		// Get the token from payload
 		all := initPayload
@@ -93,7 +103,7 @@ func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.Web
 			return nil, errors.New("authToken not found in transport payload")
 		}
 
-		devCtx, err := devUserContext(ctx, token)
+		devCtx, err := devUserContext(ctx, token, store)
 		if err != nil {
 			logger.Error("could not set context for local dev auth", zap.Error(err))
 			return nil, err
@@ -104,8 +114,8 @@ func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.Web
 }
 
 // NewLocalAuthenticationMiddleware stubs out context info for local (non-Okta) authentication
-func NewLocalAuthenticationMiddleware(logger *zap.Logger) func(http.Handler) http.Handler {
+func NewLocalAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
-		return authenticateMiddleware(logger, next)
+		return authenticateMiddleware(logger, next, store)
 	}
 }

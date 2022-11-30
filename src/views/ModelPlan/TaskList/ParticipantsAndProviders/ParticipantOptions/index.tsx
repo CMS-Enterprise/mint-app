@@ -42,6 +42,7 @@ import {
   RecruitmentType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   sortOtherEnum,
@@ -97,14 +98,15 @@ export const ParticipantOptions = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ParticipantOptionsFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -180,8 +182,8 @@ export const ParticipantOptions = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -195,6 +197,7 @@ export const ParticipantOptions = () => {
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -323,8 +326,7 @@ export const ParticipantOptions = () => {
                       id="participants-and-providers-recruitment-method-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-two`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -393,8 +395,7 @@ export const ParticipantOptions = () => {
                       id="participants-and-providers-selection-method-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-two`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -449,7 +450,7 @@ export const ParticipantOptions = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -461,7 +462,7 @@ export const ParticipantOptions = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -471,7 +472,7 @@ export const ParticipantOptions = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />
