@@ -25,7 +25,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     operational_solution,
     operational_need,
     analyzed_audit,
-    model_plan
+    model_plan,
     user_account
 	`
 
