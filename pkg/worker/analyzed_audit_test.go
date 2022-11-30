@@ -49,11 +49,11 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	suite.NoError(charErr)
 	_, partErr := resolvers.PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, participant.ID, clearanceChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(partErr)
+
 	// Update sections for ReadyForReview
 	reviewChanges := map[string]interface{}{
 		"status": "READY_FOR_REVIEW",
 	}
-
 	_, benErr := resolvers.PlanBeneficiariesUpdate(suite.testConfigs.Logger, beneficiary.ID, reviewChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(benErr)
 	_, opsErr := resolvers.PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, ops.ID, reviewChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -64,6 +64,7 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	analyzedAudit, err := AnalyzedAuditJob(plan.ID, time.Now(), suite.testConfigs.Store, suite.testConfigs.Logger)
 	suite.NoError(err)
 	suite.NotNil(&analyzedAudit)
+
 	// ModelPlan Changes
 	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.NameChange.New)
 	suite.EqualValues([]string{string(plan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
