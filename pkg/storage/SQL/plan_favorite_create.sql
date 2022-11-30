@@ -12,7 +12,6 @@ VALUES (
     :created_by,
     :modified_by
 )
-ON CONFLICT (model_plan_id, user_id) DO NOTHING
 RETURNING
 id,
 model_plan_id,

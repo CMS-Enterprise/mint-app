@@ -14,59 +14,46 @@ import (
 )
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
+// If the email service or email template service is not provided this method will not
+// 	send the collaborator a notification email
+// A plan favorite is created for the collaborating user when the user is added as a collaborator
 func CreatePlanCollaborator(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
-	store *storage.Store) (*models.PlanCollaborator, error) {
-	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
-	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-
-	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	retCollaborator, _, err := AddPlanCollaboratorAndFollow(logger, store, collaborator, modelPlan)
-	if err != nil {
-		return retCollaborator, err
-	}
-
-	err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
-	if err != nil {
-		return nil, err
-	}
-
-	return retCollaborator, nil
-}
-
-// AddPlanCollaboratorAndFollow wraps the functionality for adding a collaborator to a model plan and automatically
-// assigns that collaborator to follow that model plan
-func AddPlanCollaboratorAndFollow(
-	logger *zap.Logger,
 	store *storage.Store,
-	collaborator *models.PlanCollaborator,
-	modelPlan *models.ModelPlan,
-) (*models.PlanCollaborator, *models.PlanFavorite, error) {
-	planCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
+	checkAccess bool) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
+	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	planFavorite, err := store.PlanFavoriteCreate(
-		logger,
-		models.NewPlanFavorite(planCollaborator.CreatedBy, modelPlan.ID),
-	)
+	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
 	if err != nil {
-		return planCollaborator, nil, err
+		return nil, nil, err
 	}
 
-	return planCollaborator, planFavorite, nil
+	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	planFavorite, err := PlanFavoriteCreate(logger, principal, store, modelPlan.ID)
+	if err != nil {
+		return retCollaborator, nil, err
+	}
+
+	if emailService != nil && emailTemplateService != nil {
+		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+		if err != nil {
+			return retCollaborator, planFavorite, err
+		}
+	}
+
+	return retCollaborator, planFavorite, nil
 }
 
 func sendCollaboratorAddedEmail(

@@ -3,6 +3,8 @@ package resolvers
 import (
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -31,9 +33,21 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create an initial collaborator for the plan
-	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID, principalInfo.EuaUserID, principalInfo.CommonName, models.TeamRoleModelLead, principalInfo.Email.String())
-
-	_, _, err = AddPlanCollaboratorAndFollow(logger, store, collab, createdPlan)
+	_, _, err = CreatePlanCollaborator(
+		logger,
+		nil,
+		nil,
+		&model.PlanCollaboratorCreateInput{
+			ModelPlanID: plan.ID,
+			EuaUserID:   principal.ID(),
+			FullName:    principalInfo.CommonName,
+			TeamRole:    models.TeamRoleModelLead,
+			Email:       principalInfo.Email.String(),
+		},
+		principal,
+		store,
+		false,
+	)
 	if err != nil {
 		return nil, err
 	}

@@ -58,13 +58,14 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		).
 		AnyTimes()
 
-	collaborator, err := CreatePlanCollaborator(
+	collaborator, _, err := CreatePlanCollaborator(
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		false,
 	)
 
 	suite.NoError(err)
