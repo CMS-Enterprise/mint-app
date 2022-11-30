@@ -84,7 +84,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	}
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
 
 	// Assert that the updated fields are right
 	suite.True(*updatedGeneralCharacteristics.HasComponentsOrTracks)

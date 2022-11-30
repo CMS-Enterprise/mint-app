@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -397,10 +398,36 @@ func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Conte
 	return resolvers.OperationalSolutionCustomUpdateByID(logger, id, customSolutionType, changes, principal, r.store)
 }
 
+// CreatePlanDocumentSolutionLinks is the resolver for the createPlanDocumentSolutionLinks field.
+func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) ([]*models.PlanDocumentSolutionLink, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentSolutionLinksCreate(logger, r.store, solutionID, documentIDs, principal)
+}
+
+// RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
+func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
+}
+
+// Documents is the resolver for the documents field.
+func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentsReadBySolutionID(
+		logger,
+		obj.ID,
+		principal,
+		r.store,
+		r.s3Client,
+	)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -829,6 +856,11 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 // ModelPlan is the resolver for the modelPlan field.
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
+	constants.GetSampleUUID()
+
+	if id == constants.GetSampleUUID() {
+		return resolvers.ModelPlanGetSampleModel(logger, r.store)
+	}
 
 	return resolvers.ModelPlanGetByID(logger, id, r.store)
 }
@@ -885,7 +917,7 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
+	return resolvers.NDAAgreementGetByUserID(logger, principal, r.store)
 }
 
 // CrTdl is the resolver for the crTdl field.
@@ -966,6 +998,11 @@ func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
 	return &operationalNeedResolver{r}
 }
 
+// OperationalSolution returns generated.OperationalSolutionResolver implementation.
+func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
+	return &operationalSolutionResolver{r}
+}
+
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
 
@@ -1021,6 +1058,7 @@ type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
+type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }

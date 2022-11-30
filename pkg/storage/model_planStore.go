@@ -25,6 +25,9 @@ var modelPlanUpdateSQL string
 //go:embed SQL/model_plan_get_by_id.sql
 var modelPlanGetByIDSQL string
 
+//go:embed SQL/model_plan_get_by_name.sql
+var modelPlanGetByNameSQL string
+
 //go:embed SQL/model_plan_collection.sql
 var modelPlanCollectionSQL string
 
@@ -114,6 +117,34 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 			"Failed to fetch model plan",
 			zap.Error(err),
 			zap.String("id", id.String()),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     plan,
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return &plan, nil
+
+}
+
+// ModelPlanGetByName returns a model plan for a given ID
+func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
+	plan := models.ModelPlan{}
+	stmt, err := s.db.PrepareNamed(modelPlanGetByNameSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{"model_name": modelName}
+
+	err = stmt.Get(&plan, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plan",
+			zap.Error(err),
+			zap.String("name", modelName),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,

@@ -9,44 +9,58 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
+import HelpTag from 'components/HelpTag';
 import UswdsReactLink from 'components/LinkWrapper';
+import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
 
 import './index.scss';
 
 type ArticleCardProps = {
   className?: string;
-  isLink?: boolean;
   route: string;
   translation: string;
+  isLink?: boolean;
+  tag?: boolean;
 };
 
 const ArticleCard = ({
   className,
+  type,
   route,
   translation,
-  isLink = false
-}: ArticleCardProps) => {
+  isLink = false,
+  tag = true
+}: ArticleCardProps & ArticleTypeProps) => {
   const { t } = useTranslation(translation);
   const history = useHistory();
+
+  const clickHandler = (e: React.MouseEvent<HTMLElement>, url: string) => {
+    const target = e.target as Element;
+    if (isLink && target.getAttribute('data-testid') !== 'tag') {
+      history.push(`/help-and-knowledge${url}`);
+    }
+  };
 
   return (
     <Card
       containerProps={{
-        className: 'radius-md shadow-2 minh-mobile'
+        className: 'radius-md shadow-2 minh-mobile padding-3'
       }}
       data-testid="article-card"
       className={classnames('desktop:grid-col-4', 'article', className, {
         'article-card--isLink': isLink
       })}
-      onClick={() => history.push(`/help-and-knowledge${route}`)}
+      onClick={e => clickHandler(e, route)}
     >
-      <CardHeader className="padding-x-3 padding-top-3">
+      <CardHeader className="padding-0">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
       </CardHeader>
-      <CardBody className="padding-top-0 article__body">
+      {tag && <HelpTag type={type} />}
+
+      <CardBody className="padding-x-0 article__body">
         <p>{t('description')}</p>
       </CardBody>
-      <CardFooter className="padding-top-2 article__footer">
+      <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
         <UswdsReactLink
           to="#"
           className="usa-button usa-button--outline"
