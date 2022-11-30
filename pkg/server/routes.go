@@ -250,7 +250,9 @@ func (s *Server) routes(
 		Logger: s.logger,
 	}
 
-	go worker.Work()
+	if s.environment.Local() {
+		go worker.Work()
+	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues
