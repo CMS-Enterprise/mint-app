@@ -132,6 +132,9 @@ const EmailPortKey = "EMAIL_PORT"
 // EmailSenderKey is the key for getting the email sender
 const EmailSenderKey = "EMAIL_SENDER"
 
+// EmailEnabledKey is the key for checking if we should use email service
+const EmailEnabledKey = "EMAIL_ENABLED"
+
 // ClientHostKey is the key for getting the client's domain name
 const ClientHostKey = "CLIENT_HOSTNAME"
 
