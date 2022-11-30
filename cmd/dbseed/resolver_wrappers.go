@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -29,8 +31,8 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 	if err != nil {
 		panic(err)
 	}
-	princ := &authentication.EUAPrincipal{
-		EUAID:             userInfo.EuaUserID,
+	princ := &authentication.OKTAPrincipal{
+		Username:          userInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -45,8 +47,8 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the model plan with the principal value of the Model Plan's "createdBy"
 func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -61,8 +63,8 @@ func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelP
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
 func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -90,8 +92,8 @@ func addPlanCollaborator(
 	mp *models.ModelPlan,
 	input *model.PlanCollaboratorCreateInput,
 ) *models.PlanCollaborator {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -114,8 +116,8 @@ func addPlanCollaborator(
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
 func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -131,8 +133,8 @@ func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, in
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the document with the principal value of the Model Plan's "createdBy"
 func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *upload.S3Client, mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, restricted bool, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             mp.CreatedBy,
+	princ := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -180,4 +182,75 @@ func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *uplo
 	}
 
 	return document
+}
+
+// getOperationalNeedsByModelPlanID is a wrapper for resolvers.PossibleOperationalNeedCollectionGet
+// It will panic if an error occurs, rather than bubbling the error up
+func getOperationalNeedsByModelPlanID(logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) []*models.OperationalNeed {
+	operationalNeeds, err := resolvers.OperationalNeedCollectionGetByModelPlanID(logger, modelPlanID, store)
+	if err != nil {
+		panic(err)
+	}
+
+	return operationalNeeds
+}
+
+// addOperationalSolution is a wrapper for resolvers.OperationalSolutionInsertOrUpdate
+// It will panic if an error occurs, rather than bubbling the error up
+func addOperationalSolution(
+	store *storage.Store,
+	logger *zap.Logger,
+	mp *models.ModelPlan,
+	operationalNeedID uuid.UUID,
+	changes map[string]interface{},
+) *models.OperationalSolution {
+	principal := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	operationalSolution, err := resolvers.OperationalSolutionInsertOrUpdate(
+		logger,
+		operationalNeedID,
+		"FFS_COMPETENCY_CENTER",
+		changes,
+		principal,
+		store,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return operationalSolution
+}
+
+// addPlanDocumentSolutionLinks is a wrapper for resolvers.PlanDocumentSolutionLinksCreate
+// It will panic if an error occurs, rather than bubbling the error up
+func addPlanDocumentSolutionLinks(
+	logger *zap.Logger,
+	store *storage.Store,
+	mp *models.ModelPlan,
+	solutionID uuid.UUID,
+	documentIDs []uuid.UUID,
+) []*models.PlanDocumentSolutionLink {
+
+	principal := &authentication.OKTAPrincipal{
+		Username:          mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	planDocumentSolutionLinks, err := resolvers.PlanDocumentSolutionLinksCreate(
+		logger,
+		store,
+		solutionID,
+		documentIDs,
+		principal,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return planDocumentSolutionLinks
 }

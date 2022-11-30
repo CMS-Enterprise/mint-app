@@ -38,7 +38,7 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
 	suite.NotNil(result.ModifiedBy)
 	suite.NotNil(result.ModifiedDts)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {
@@ -61,8 +61,8 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.createPlanCollaborator(planWithCollab, "CLAB", "Clab Rater", models.TeamRoleEvaluation, "clab.rater@gmail.com")
 
 	// Get plan collection as CLAB
-	clabPrincipal := &authentication.EUAPrincipal{
-		EUAID:             "CLAB",
+	clabPrincipal := &authentication.OKTAPrincipal{
+		Username:          "CLAB",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
