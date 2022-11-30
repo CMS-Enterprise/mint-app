@@ -27,14 +27,14 @@ func CreatePlanCollaborator(
 		return nil, err
 	}
 
-	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
+	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
 	if err != nil {
 		return nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
+	retCollaborator, _, err := AddPlanCollaboratorAndFollow(logger, store, collaborator, modelPlan)
 	if err != nil {
-		return nil, err
+		return retCollaborator, err
 	}
 
 	err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
@@ -43,6 +43,30 @@ func CreatePlanCollaborator(
 	}
 
 	return retCollaborator, nil
+}
+
+// AddPlanCollaboratorAndFollow wraps the functionality for adding a collaborator to a model plan and automatically
+// assigns that collaborator to follow that model plan
+func AddPlanCollaboratorAndFollow(
+	logger *zap.Logger,
+	store *storage.Store,
+	collaborator *models.PlanCollaborator,
+	modelPlan *models.ModelPlan,
+) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	planCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	planFavorite, err := store.PlanFavoriteCreate(
+		logger,
+		models.NewPlanFavorite(planCollaborator.CreatedBy, modelPlan.ID),
+	)
+	if err != nil {
+		return planCollaborator, nil, err
+	}
+
+	return planCollaborator, planFavorite, nil
 }
 
 func sendCollaboratorAddedEmail(

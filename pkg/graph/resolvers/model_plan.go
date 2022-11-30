@@ -33,7 +33,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	// Create an initial collaborator for the plan
 	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID, principalInfo.EuaUserID, principalInfo.CommonName, models.TeamRoleModelLead, principalInfo.Email.String())
 
-	_, err = store.PlanCollaboratorCreate(logger, collab)
+	_, _, err = AddPlanCollaboratorAndFollow(logger, store, collab, createdPlan)
 	if err != nil {
 		return nil, err
 	}
