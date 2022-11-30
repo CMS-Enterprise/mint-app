@@ -133,11 +133,11 @@ func (s *Server) routes(
 
 	// Set up Oddball email Service
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	emailServiceConfig.Enabled = s.environment.Local()
+	emailServiceConfig.Enabled = s.Config.GetBool(appconfig.EmailEnabledKey)
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
-	emailServiceConfig.DefaultSender = "no-reply@mint.cms.gov"
+	emailServiceConfig.DefaultSender = s.Config.GetString(appconfig.EmailSenderKey)
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
