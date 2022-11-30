@@ -11,6 +11,7 @@ import (
 )
 
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
+// args[0] modelPlanID, args[1] date
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
 	audits, err := w.Store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(w.Logger, args[0].(uuid.UUID), args[0].(uuid.UUID), args[1].(time.Time), models.SortDesc)
 	if err != nil {
