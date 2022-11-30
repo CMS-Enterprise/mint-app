@@ -19,45 +19,45 @@ type AnalyzedAudit struct {
 
 // AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
 type AnalyzedModelPlan struct {
-	NameChange    AuditField
-	StatusChanges []string
+	NameChange    AuditField `json:"nameChange"`
+	StatusChanges []string   `json:"statusChanges"`
 }
 
 // AnalyzedDocuments represents an AnalyzedDocuments in an AnalyzedAuditChange
 type AnalyzedDocuments struct {
-	Count int
+	Count int `json:"count"`
 }
 
 // AnalyzedCrTdls represents an AnalyzedCrTdls in an AnalyzedAuditChange
 type AnalyzedCrTdls struct {
-	Activity bool
+	Activity bool `json:"activity"`
 }
 
 // AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
 type AnalyzedPlanSections struct {
-	Updated           []string
-	ReadyForReview    []string
-	ReadyForClearance []string
+	Updated           []string `json:"updated"`
+	ReadyForReview    []string `json:"readyForReview"`
+	ReadyForClearance []string `json:"readyForClearance"`
 }
 
 // AnalyzedPlanCollaborators represents an AnalyzedPlanCollaborators in an AnalyzedAuditChange
 type AnalyzedPlanCollaborators struct {
-	Added []string
+	Added []string `json:"added"`
 }
 
 // AnalyzedPlanDiscussions represents an AnalyzedPlanDiscussions in an AnalyzedAuditChange
 type AnalyzedPlanDiscussions struct {
-	Activity bool
+	Activity bool `json:"activity" db:"activity"`
 }
 
 // AnalyzedAuditChange represents Changes in an AnalyzedAudit
 type AnalyzedAuditChange struct {
-	ModelPlan         *AnalyzedModelPlan
-	Documents         *AnalyzedDocuments
-	CrTdls            *AnalyzedCrTdls
-	PlanSections      *AnalyzedPlanSections
-	PlanCollaborators *AnalyzedPlanCollaborators
-	PlanDiscussions   *AnalyzedPlanDiscussions
+	ModelPlan         *AnalyzedModelPlan         `json:"modelPlan"`
+	Documents         *AnalyzedDocuments         `json:"documents"`
+	CrTdls            *AnalyzedCrTdls            `json:"crTdls"`
+	PlanSections      *AnalyzedPlanSections      `json:"planSections"`
+	PlanCollaborators *AnalyzedPlanCollaborators `json:"planCollaborators"`
+	PlanDiscussions   *AnalyzedPlanDiscussions   `json:"planDiscussion"`
 }
 
 // NewAnalyzedAudit returns a new AnalyzedAudit object
