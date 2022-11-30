@@ -100,7 +100,8 @@ interface SolutionAsNeed extends GetOperationalNeedsOperationalNeedsType {
 export const returnActionLinks = (
   status: OperationalNeedStatus | OpSolutionStatus,
   operationalNeed: SolutionAsNeed,
-  modelID: string
+  modelID: string,
+  readOnly?: boolean
 ): JSX.Element => {
   /* eslint no-underscore-dangle: 0 */
   const operationalNeedKey = operationalNeed.key || operationalNeed.needKey;
@@ -115,7 +116,10 @@ export const returnActionLinks = (
     case OpSolutionStatus.ONBOARDING:
       return (
         <>
-          <UswdsReactLink to="/" className="margin-right-2">
+          <UswdsReactLink
+            to="/"
+            className={`margin-right-2${readOnly ? ' display-block' : ''}`}
+          >
             {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
           </UswdsReactLink>
           <UswdsReactLink to="/">

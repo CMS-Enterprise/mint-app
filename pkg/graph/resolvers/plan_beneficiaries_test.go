@@ -21,7 +21,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	}
 	updatedBeneficiary, err := PlanBeneficiariesUpdate(suite.testConfigs.Logger, b.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedBeneficiary.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedBeneficiary.ModifiedBy)
 
 	// Assert that the updated fields are right
 	suite.EqualValues(*updatedBeneficiary.TreatDualElligibleDifferent, models.TriYes)

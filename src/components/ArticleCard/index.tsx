@@ -5,32 +5,41 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Tag
+  CardHeader
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
+import HelpTag from 'components/HelpTag';
 import UswdsReactLink from 'components/LinkWrapper';
+import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
 
 import './index.scss';
 
 type ArticleCardProps = {
   className?: string;
-  isLink?: boolean;
   route: string;
   translation: string;
-  tag: string;
+  isLink?: boolean;
+  tag?: boolean;
 };
 
 const ArticleCard = ({
   className,
+  type,
   route,
   translation,
   isLink = false,
-  tag
-}: ArticleCardProps) => {
+  tag = true
+}: ArticleCardProps & ArticleTypeProps) => {
   const { t } = useTranslation(translation);
   const history = useHistory();
+
+  const clickHandler = (e: React.MouseEvent<HTMLElement>, url: string) => {
+    const target = e.target as Element;
+    if (isLink && target.getAttribute('data-testid') !== 'tag') {
+      history.push(`/help-and-knowledge${url}`);
+    }
+  };
 
   return (
     <Card
@@ -41,14 +50,13 @@ const ArticleCard = ({
       className={classnames('desktop:grid-col-4', 'article', className, {
         'article-card--isLink': isLink
       })}
-      onClick={() => history.push(`/help-and-knowledge${route}`)}
+      onClick={e => clickHandler(e, route)}
     >
       <CardHeader className="padding-0">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
       </CardHeader>
-      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">
-        {useTranslation('helpAndKnowledge').t(tag)}
-      </Tag>
+      {tag && <HelpTag type={type} />}
+
       <CardBody className="padding-x-0 article__body">
         <p>{t('description')}</p>
       </CardBody>

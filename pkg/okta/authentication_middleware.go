@@ -15,14 +15,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 const (
 	jobCodeUser       = "MINT_USER_NONPROD"
 	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
+	jobCodeMAC        = "MINT MAC Users"
 )
 
-func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
+// EnhancedJwt is the JWT and the auth token
+type EnhancedJwt struct {
+	JWT       *jwtverifier.Jwt
+	AuthToken string
+}
+
+func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*EnhancedJwt, error) {
 	tokenParts := strings.Split(authHeader, "Bearer ")
 	if len(tokenParts) < 2 {
 		return nil, errors.New("invalid Bearer in auth header")
@@ -32,7 +41,12 @@ func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverif
 		return nil, errors.New("empty bearer value")
 	}
 
-	return f.verifier.VerifyAccessToken(bearerToken)
+	jwt, err := f.verifier.VerifyAccessToken(bearerToken)
+	enhanced := EnhancedJwt{
+		JWT:       jwt,
+		AuthToken: bearerToken,
+	}
+	return &enhanced, err
 }
 
 func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
@@ -57,24 +71,35 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authentication.EUAPrincipal, error) {
-	euaID := jwt.Claims["sub"].(string)
+func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.OKTAPrincipal, error) {
+	euaID := enchanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
 
+	baseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
+
 	// the current assumption is that anyone with an appropriate
 	// JWT provided by Okta for MINT is allowed to use MINT
 	// as a viewer/submitter
-	jcUser := jwtGroupsContainsJobCode(jwt, f.jobCodeUser)
+	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeUser)
 
-	// need to check the claims for empowerment as each role
-	jcAssessment := jwtGroupsContainsJobCode(jwt, f.jobCodeAssessment)
+	// need to check the claims for empowerment as each role6
+	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeAssessment)
 
-	return &authentication.EUAPrincipal{
-		EUAID:             strings.ToUpper(euaID),
+	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeMAC)
+
+	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID, false, baseURL, enchanced.AuthToken, jcMAC) //TODO, do we need to do anything with the user? Should we pass the id around?
+	if err != nil {
+		return nil, err
+	}
+
+	return &authentication.OKTAPrincipal{
+		Username:          strings.ToUpper(euaID),
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
+		UserAccount:       userAccount,
 	}, nil
 }
 
@@ -138,9 +163,11 @@ type JwtVerifier interface {
 // MiddlewareFactory provides functionality to create functions that attach EUA Principals to context objects by decoding JWT tokens
 type MiddlewareFactory struct {
 	handlers.HandlerBase
+	Store             *storage.Store
 	verifier          JwtVerifier
 	jobCodeUser       string
 	jobCodeAssessment string
+	jobCodeMAC        string
 }
 
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
@@ -177,11 +204,13 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 }
 
 // NewMiddlewareFactory returns a factory creating Okta middleware functions
-func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier) *MiddlewareFactory {
+func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier, store *storage.Store) *MiddlewareFactory {
 	return &MiddlewareFactory{
 		HandlerBase:       base,
+		Store:             store,
 		verifier:          jwtVerifier,
 		jobCodeUser:       jobCodeUser,
 		jobCodeAssessment: jobCodeAssessment,
+		jobCodeMAC:        jobCodeMAC,
 	}
 }
