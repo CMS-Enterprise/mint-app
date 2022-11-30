@@ -87,7 +87,7 @@ func (a *AnalyzedAuditChange) Scan(src interface{}) error {
 	return nil
 }
 
-// Value let's the SQL driver transform the data to the AuditFields type
+// Value let's the SQL driver transform the data to the AnalyzedAuditChange type
 func (a AnalyzedAuditChange) Value() (driver.Value, error) {
 	j, err := json.Marshal(a)
 	return j, err
