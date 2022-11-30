@@ -60,7 +60,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	updatedBasics, err := UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedBasics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedBasics.ModifiedBy)
 	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
 	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)

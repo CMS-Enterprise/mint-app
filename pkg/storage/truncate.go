@@ -12,6 +12,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     plan_basics,
     plan_collaborator,
     plan_discussion,
+	plan_document_solution_link,
     plan_document,
     plan_general_characteristics,
 	plan_beneficiaries,
@@ -23,7 +24,8 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	plan_cr_tdl,
     operational_solution,
     operational_need,
-    model_plan
+    model_plan,
+	user_account
 	`
 
 	_, err := s.db.Exec("TRUNCATE " + tables)

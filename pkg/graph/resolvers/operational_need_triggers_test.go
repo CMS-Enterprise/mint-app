@@ -19,7 +19,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 	}
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
 
 	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NotNil(opNeeds)
@@ -44,7 +44,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 	updatedGeneralCharacteristics, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
 
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
