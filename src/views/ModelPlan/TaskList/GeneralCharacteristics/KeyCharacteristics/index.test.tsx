@@ -12,7 +12,6 @@ import KeyCharacteristics from './index';
 const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
-  alternativePaymentModel: false,
   alternativePaymentModelTypes: [],
   alternativePaymentModelNote: '',
   keyCharacteristics: [KeyCharacteristic.OTHER],
