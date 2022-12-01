@@ -4,13 +4,13 @@ import "github.com/cmsgov/mint-app/pkg/models"
 
 // BackfillEntry represents a logical collection of
 type BackfillEntry struct {
-	ModelPlan                models.ModelPlan
-	Basics                   models.PlanBasics
-	GeneralCharacteristics   models.PlanGeneralCharacteristics
-	ParticipantsAndProviders models.PlanParticipantsAndProviders
-	Beneficiaries            models.PlanBeneficiaries
-	OpsEvalAndLearning       models.PlanOpsEvalAndLearning
-	Payments                 models.PlanPayments
+	ModelPlan                    models.ModelPlan
+	PlanBasics                   models.PlanBasics
+	PlanGeneralCharacteristics   models.PlanGeneralCharacteristics
+	PlanParticipantsAndProviders models.PlanParticipantsAndProviders
+	PlanBeneficiaries            models.PlanBeneficiaries
+	PlanOpsEvalAndLearning       models.PlanOpsEvalAndLearning
+	PlanPayments                 models.PlanPayments
 
 	//	Documents   models.PlanDocument
 	// Discussions models.PlanDiscussion
@@ -23,13 +23,13 @@ type BackfillEntry struct {
 func NewBackFillEntry() BackfillEntry {
 
 	return BackfillEntry{
-		ModelPlan:                models.ModelPlan{},
-		Basics:                   models.PlanBasics{},
-		GeneralCharacteristics:   models.PlanGeneralCharacteristics{},
-		ParticipantsAndProviders: models.PlanParticipantsAndProviders{},
-		Beneficiaries:            models.PlanBeneficiaries{},
-		OpsEvalAndLearning:       models.PlanOpsEvalAndLearning{},
-		Payments:                 models.PlanPayments{},
+		ModelPlan:                    models.ModelPlan{},
+		PlanBasics:                   models.PlanBasics{},
+		PlanGeneralCharacteristics:   models.PlanGeneralCharacteristics{},
+		PlanParticipantsAndProviders: models.PlanParticipantsAndProviders{},
+		PlanBeneficiaries:            models.PlanBeneficiaries{},
+		PlanOpsEvalAndLearning:       models.PlanOpsEvalAndLearning{},
+		PlanPayments:                 models.PlanPayments{},
 	}
 
 	// return BackfillEntry{

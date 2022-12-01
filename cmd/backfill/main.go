@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 	"log"
 	"os"
+	"reflect"
 )
 
 func main() {
@@ -21,7 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	td := TranslationsDictionary{}
+	td := NewTranslationDictionary()
 	td.convertDataTable(translation)
 
 	// entries, err := translateFile(&td, table)
@@ -48,13 +50,13 @@ func NewDataTable() DataTable {
 
 // DataRow is the representation of a row of data in a Data Table
 type DataRow struct {
-	Fields map[string]string
+	Fields map[string]interface{}
 }
 
 // NewDataRow instantiates a DataRow
 func NewDataRow() DataRow {
 	return DataRow{
-		Fields: map[string]string{},
+		Fields: map[string]interface{}{},
 	}
 }
 
@@ -158,6 +160,21 @@ func translateDataRow(row *DataRow, td *TranslationsDictionary) *BackfillEntry {
 
 }
 
-func translateField(entry *BackfillEntry, value string, translation *Translation) {
+func translateField(entry *BackfillEntry, value interface{}, translation *Translation) {
+
+	VEntry := reflect.ValueOf(entry)
+	if translation.ModelName == "?" || translation.ModelName == "" {
+		log.Default().Print("translation not defined for " + translation.Header + " . Value is " + fmt.Sprint(value))
+
+	}
+	obj := reflect.Indirect(VEntry).FieldByName(translation.ModelName)
+
+	oEntry := reflect.ValueOf(obj)
+
+	field := reflect.Indirect(oEntry).FieldByName(translation.Field)
+	log.Default().Print(field)
+
+	//TODO set the fields value! --> need to do some switching or configuration to make this work...
+	// field.Set(value)
 
 }
