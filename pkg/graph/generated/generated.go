@@ -382,7 +382,6 @@ type ComplexityRoot struct {
 		AdditionalServicesInvolvedNote            func(childComplexity int) int
 		AgreementTypes                            func(childComplexity int) int
 		AgreementTypesOther                       func(childComplexity int) int
-		AlternativePaymentModel                   func(childComplexity int) int
 		AlternativePaymentModelNote               func(childComplexity int) int
 		AlternativePaymentModelTypes              func(childComplexity int) int
 		AuthorityAllowances                       func(childComplexity int) int
@@ -3122,13 +3121,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanGeneralCharacteristics.AgreementTypesOther(childComplexity), true
-
-	case "PlanGeneralCharacteristics.alternativePaymentModel":
-		if e.complexity.PlanGeneralCharacteristics.AlternativePaymentModel == nil {
-			break
-		}
-
-		return e.complexity.PlanGeneralCharacteristics.AlternativePaymentModel(childComplexity), true
 
 	case "PlanGeneralCharacteristics.alternativePaymentModelNote":
 		if e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelNote == nil {
@@ -6656,7 +6648,6 @@ type PlanGeneralCharacteristics {
   hasComponentsOrTracksNote: String
 
   # Page 2
-  alternativePaymentModel: Boolean
   alternativePaymentModelTypes: [AlternativePaymentModelType!]!
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
@@ -6735,7 +6726,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   hasComponentsOrTracksNote: String
 
   # Page 2
-  alternativePaymentModel: Boolean
   alternativePaymentModelTypes: [AlternativePaymentModelType!]
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
@@ -7908,6 +7898,7 @@ enum TeamRole {
   LEADERSHIP
   LEARNING
   EVALUATION
+  IT_LEAD
 }
 
 enum ModelType
@@ -7976,6 +7967,7 @@ enum AlternativePaymentModelType {
   REGULAR
   MIPS
   ADVANCED
+  NOT_APM
 }
 
 enum KeyCharacteristic {
@@ -11801,8 +11793,6 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
 			case "hasComponentsOrTracksNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
-			case "alternativePaymentModel":
-				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx, field)
 			case "alternativePaymentModelTypes":
 				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
 			case "alternativePaymentModelNote":
@@ -14226,8 +14216,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
 			case "hasComponentsOrTracksNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
-			case "alternativePaymentModel":
-				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx, field)
 			case "alternativePaymentModelTypes":
 				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
 			case "alternativePaymentModelNote":
@@ -25035,47 +25023,6 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_hasComponent
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanGeneralCharacteristics_alternativePaymentModel(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.AlternativePaymentModel, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*bool)
-	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanGeneralCharacteristics",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -47930,10 +47877,6 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 		case "hasComponentsOrTracksNote":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field, obj)
-
-		case "alternativePaymentModel":
-
-			out.Values[i] = ec._PlanGeneralCharacteristics_alternativePaymentModel(ctx, field, obj)
 
 		case "alternativePaymentModelTypes":
 			field := field

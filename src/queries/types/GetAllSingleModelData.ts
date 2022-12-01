@@ -135,7 +135,6 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   communityPartnersInvolved: boolean | null;
   communityPartnersInvolvedDescription: string | null;
   communityPartnersInvolvedNote: string | null;
-  alternativePaymentModel: boolean | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];

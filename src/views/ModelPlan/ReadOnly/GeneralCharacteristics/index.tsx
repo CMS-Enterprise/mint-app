@@ -55,7 +55,6 @@ const ReadOnlyGeneralCharacteristics = ({
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
-    alternativePaymentModel,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -170,11 +169,6 @@ const ReadOnlyGeneralCharacteristics = ({
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('modelAPM')}
-          copy={translateBooleanOrNull(alternativePaymentModel)}
-        />
-
-        <ReadOnlySection
-          heading={t('modelAPMType')}
           list
           listItems={alternativePaymentModelTypes?.map(
             translateAlternativePaymentTypes

@@ -396,7 +396,6 @@ type PlanGeneralCharacteristics {
   hasComponentsOrTracksNote: String
 
   # Page 2
-  alternativePaymentModel: Boolean
   alternativePaymentModelTypes: [AlternativePaymentModelType!]!
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
@@ -475,7 +474,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   hasComponentsOrTracksNote: String
 
   # Page 2
-  alternativePaymentModel: Boolean
   alternativePaymentModelTypes: [AlternativePaymentModelType!]
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
@@ -1648,6 +1646,7 @@ enum TeamRole {
   LEADERSHIP
   LEARNING
   EVALUATION
+  IT_LEAD
 }
 
 enum ModelType
@@ -1716,6 +1715,7 @@ enum AlternativePaymentModelType {
   REGULAR
   MIPS
   ADVANCED
+  NOT_APM
 }
 
 enum KeyCharacteristic {
