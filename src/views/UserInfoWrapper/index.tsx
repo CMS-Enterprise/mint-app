@@ -15,7 +15,7 @@ type UserInfoWrapperProps = {
 type oktaUserProps = {
   name?: string;
   euaId?: string;
-  'mint-groups'?: string[];
+  groups?: string[];
 };
 
 const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
@@ -34,7 +34,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       const user = {
         name: oktaUser.name,
         euaId: oktaUser.euaId || '',
-        groups: oktaUser['mint-groups'] || [],
+        groups: oktaUser.groups || [],
         acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
