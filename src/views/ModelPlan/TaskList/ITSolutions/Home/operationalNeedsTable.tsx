@@ -188,7 +188,7 @@ const OperationalNeedsTable = ({
         }
       }
     ];
-  }, [t, modelID, readOnly]);
+  }, [t, modelID, readOnly, hasEditAccess]);
 
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [

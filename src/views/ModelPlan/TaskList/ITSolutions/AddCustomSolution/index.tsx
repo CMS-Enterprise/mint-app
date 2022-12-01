@@ -143,7 +143,7 @@ const AddCustomSolution = () => {
             customSolutionType: nameOther || '',
             changes: {
               needed: customOperationalSolution.needed,
-              status: OpSolutionStatus.IN_PROGRESS,
+              status: OpSolutionStatus.NOT_STARTED,
               pocEmail,
               pocName
             }

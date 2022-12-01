@@ -134,7 +134,7 @@ const AddSolution = () => {
             solutionType: key,
             changes: {
               needed: true,
-              status: OpSolutionStatus.IN_PROGRESS
+              status: OpSolutionStatus.NOT_STARTED
             }
           }
         });
@@ -147,7 +147,7 @@ const AddSolution = () => {
               customOperationalSolution?.nameOther || t('otherSolution'),
             changes: {
               needed: true,
-              status: OpSolutionStatus.IN_PROGRESS
+              status: OpSolutionStatus.NOT_STARTED
             }
           }
         });

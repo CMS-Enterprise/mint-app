@@ -403,78 +403,6 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                     >
                       <input
                         class="usa-radio__input"
-                        id="solution-status-RMADA-AT_RISK"
-                        name="solutions[0].status"
-                        type="radio"
-                        value="AT_RISK"
-                      />
-                      <label
-                        class="usa-radio__label"
-                        for="solution-status-RMADA-AT_RISK"
-                      >
-                        At risk
-                      </label>
-                    </div>
-                    <div
-                      class="usa-radio"
-                      data-testid="radio"
-                    >
-                      <input
-                        class="usa-radio__input"
-                        id="solution-status-RMADA-BACKLOG"
-                        name="solutions[0].status"
-                        type="radio"
-                        value="BACKLOG"
-                      />
-                      <label
-                        class="usa-radio__label"
-                        for="solution-status-RMADA-BACKLOG"
-                      >
-                        Backlog
-                      </label>
-                    </div>
-                    <div
-                      class="usa-radio"
-                      data-testid="radio"
-                    >
-                      <input
-                        class="usa-radio__input"
-                        id="solution-status-RMADA-COMPLETED"
-                        name="solutions[0].status"
-                        type="radio"
-                        value="COMPLETED"
-                      />
-                      <label
-                        class="usa-radio__label"
-                        for="solution-status-RMADA-COMPLETED"
-                      >
-                        Completed
-                      </label>
-                    </div>
-                    <div
-                      class="usa-radio"
-                      data-testid="radio"
-                    >
-                      <input
-                        class="usa-radio__input"
-                        id="solution-status-RMADA-IN_PROGRESS"
-                        name="solutions[0].status"
-                        type="radio"
-                        value="IN_PROGRESS"
-                      />
-                      <label
-                        class="usa-radio__label"
-                        for="solution-status-RMADA-IN_PROGRESS"
-                      >
-                        In progress
-                      </label>
-                    </div>
-                    <div
-                      class="usa-radio"
-                      data-testid="radio"
-                    >
-                      <input
-                        class="usa-radio__input"
                         id="solution-status-RMADA-NOT_STARTED"
                         name="solutions[0].status"
                         type="radio"
@@ -503,6 +431,78 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                         for="solution-status-RMADA-ONBOARDING"
                       >
                         Onboarding
+                      </label>
+                    </div>
+                    <div
+                      class="usa-radio"
+                      data-testid="radio"
+                    >
+                      <input
+                        class="usa-radio__input"
+                        id="solution-status-RMADA-BACKLOG"
+                        name="solutions[0].status"
+                        type="radio"
+                        value="BACKLOG"
+                      />
+                      <label
+                        class="usa-radio__label"
+                        for="solution-status-RMADA-BACKLOG"
+                      >
+                        Backlog
+                      </label>
+                    </div>
+                    <div
+                      class="usa-radio"
+                      data-testid="radio"
+                    >
+                      <input
+                        class="usa-radio__input"
+                        id="solution-status-RMADA-IN_PROGRESS"
+                        name="solutions[0].status"
+                        type="radio"
+                        value="IN_PROGRESS"
+                      />
+                      <label
+                        class="usa-radio__label"
+                        for="solution-status-RMADA-IN_PROGRESS"
+                      >
+                        In progress
+                      </label>
+                    </div>
+                    <div
+                      class="usa-radio"
+                      data-testid="radio"
+                    >
+                      <input
+                        class="usa-radio__input"
+                        id="solution-status-RMADA-COMPLETED"
+                        name="solutions[0].status"
+                        type="radio"
+                        value="COMPLETED"
+                      />
+                      <label
+                        class="usa-radio__label"
+                        for="solution-status-RMADA-COMPLETED"
+                      >
+                        Completed
+                      </label>
+                    </div>
+                    <div
+                      class="usa-radio"
+                      data-testid="radio"
+                    >
+                      <input
+                        class="usa-radio__input"
+                        id="solution-status-RMADA-AT_RISK"
+                        name="solutions[0].status"
+                        type="radio"
+                        value="AT_RISK"
+                      />
+                      <label
+                        class="usa-radio__label"
+                        for="solution-status-RMADA-AT_RISK"
+                      >
+                        At risk
                       </label>
                     </div>
                   </fieldset>

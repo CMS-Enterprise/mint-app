@@ -108,34 +108,40 @@ export const returnActionLinks = (
 
   const operationalNeedObj = operationalNeedMap[operationalNeedKey || 'NONE'];
 
+  const solutionActionLinks = (
+    <>
+      <UswdsReactLink
+        to="/"
+        className={`margin-right-2${readOnly ? ' display-block' : ''}`}
+      >
+        {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
+      </UswdsReactLink>
+      <UswdsReactLink to="/">
+        {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
+      </UswdsReactLink>
+    </>
+  );
+
+  // If row is a predefined operational solution and not an operational need/custom solution, return solutionActionLinks
+  if (!operationalNeedObj) {
+    return solutionActionLinks;
+  }
+
+  // Otherwise check the status of the operational need and return the relevant link
   switch (status) {
     case OpSolutionStatus.AT_RISK:
     case OpSolutionStatus.COMPLETED:
     case OpSolutionStatus.BACKLOG:
     case OpSolutionStatus.IN_PROGRESS:
     case OpSolutionStatus.ONBOARDING:
-      return (
-        <>
-          <UswdsReactLink
-            to="/"
-            className={`margin-right-2${readOnly ? ' display-block' : ''}`}
-          >
-            {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
-          </UswdsReactLink>
-          <UswdsReactLink to="/">
-            {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
-          </UswdsReactLink>
-        </>
-      );
+      return solutionActionLinks;
     case OpSolutionStatus.NOT_STARTED:
-      return operationalNeedObj ? (
+      return (
         <UswdsReactLink
           to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
         >
           {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
-      ) : (
-        <></>
       );
     case OperationalNeedStatus.NOT_NEEDED:
       return operationalNeedObj ? (

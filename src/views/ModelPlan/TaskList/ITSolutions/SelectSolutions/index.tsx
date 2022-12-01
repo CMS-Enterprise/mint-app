@@ -123,7 +123,7 @@ const SelectSolutions = () => {
               solutionType: solution.key,
               changes: {
                 needed: solution.needed || false,
-                status: OpSolutionStatus.IN_PROGRESS
+                status: OpSolutionStatus.NOT_STARTED
               }
             }
           });

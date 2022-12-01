@@ -431,30 +431,35 @@ const SolutionImplementation = () => {
                                       </FieldErrorMsg>
 
                                       <Fieldset>
-                                        {Object.keys(OpSolutionStatus).map(
-                                          key => (
-                                            <Field
-                                              as={Radio}
-                                              key={key}
-                                              id={`solution-status-${identifier}-${key}`}
-                                              name={`solutions[${index}].status`}
-                                              label={translateOpNeedsStatusType(
+                                        {[
+                                          OpSolutionStatus.NOT_STARTED,
+                                          OpSolutionStatus.ONBOARDING,
+                                          OpSolutionStatus.BACKLOG,
+                                          OpSolutionStatus.IN_PROGRESS,
+                                          OpSolutionStatus.COMPLETED,
+                                          OpSolutionStatus.AT_RISK
+                                        ].map(key => (
+                                          <Field
+                                            as={Radio}
+                                            key={key}
+                                            id={`solution-status-${identifier}-${key}`}
+                                            name={`solutions[${index}].status`}
+                                            label={translateOpNeedsStatusType(
+                                              key
+                                            )}
+                                            value={key}
+                                            checked={
+                                              values.solutions[index]
+                                                ?.status === key
+                                            }
+                                            onChange={() => {
+                                              setFieldValue(
+                                                `solutions[${index}].status`,
                                                 key
-                                              )}
-                                              value={key}
-                                              checked={
-                                                values.solutions[index]
-                                                  ?.status === key
-                                              }
-                                              onChange={() => {
-                                                setFieldValue(
-                                                  `solutions[${index}].status`,
-                                                  key
-                                                );
-                                              }}
-                                            />
-                                          )
-                                        )}
+                                              );
+                                            }}
+                                          />
+                                        ))}
                                       </Fieldset>
                                     </FieldGroup>
 

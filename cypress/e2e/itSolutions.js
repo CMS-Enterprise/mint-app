@@ -66,8 +66,6 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.wait(500);
 
-    // cy.get('#it-solutions-my-custom-solution').should('be.checked');
-
     cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
 
     cy.contains('button', 'Continue').click();

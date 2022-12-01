@@ -49,6 +49,12 @@ const SolutionCard = ({
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
 
+  // TODO: remove once solutions have temp POC
+  const tempSolutionPOC = {
+    pocName: 'John Doe',
+    pocEmail: 'john.doe@oddball.io'
+  };
+
   return (
     <CardGroup className="flex-column">
       <Card className={classNames('solution-card', { shadow }, className)}>
@@ -57,7 +63,7 @@ const SolutionCard = ({
             {solution.nameOther || solution.name}
           </h3>
 
-          {solution.pocName && (
+          {solution.pocName ? (
             <Grid
               tablet={{ col: 6 }}
               className={classNames({ 'margin-bottom-2': solution.name })}
@@ -73,6 +79,25 @@ const SolutionCard = ({
                 target="_blank"
               >
                 <div>{solution.pocEmail}</div>
+                <IconMailOutline className="margin-left-05 text-tbottom" />
+              </Link>
+            </Grid>
+          ) : (
+            <Grid
+              tablet={{ col: 6 }}
+              className={classNames({ 'margin-bottom-2': solution.name })}
+            >
+              <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+              <p className="margin-y-0">{tempSolutionPOC.pocName}</p>
+
+              <Link
+                aria-label={h('contactInfo.sendAnEmail')}
+                className="line-height-body-5 display-flex flex-align-center"
+                href={`mailto:${tempSolutionPOC.pocEmail}`}
+                target="_blank"
+              >
+                <div>{tempSolutionPOC.pocEmail}</div>
                 <IconMailOutline className="margin-left-05 text-tbottom" />
               </Link>
             </Grid>
