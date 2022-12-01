@@ -5,7 +5,8 @@ const modelPlan = {
     leadership: 'Leadership',
     evaluation: 'Evaluation',
     learning: 'Learning',
-    modelTeam: 'Model Team'
+    modelTeam: 'Model Team',
+    itLead: 'IT Lead'
   },
   planStatuses: {
     planDraft: 'Draft model plan',

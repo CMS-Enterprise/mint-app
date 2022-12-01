@@ -9,19 +9,19 @@ import (
 func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	plan := suite.createModelPlan("Test Plan") //plan created by TEST
 
-	basicUserPrincipal := authentication.EUAPrincipal{
-		EUAID:             suite.testConfigs.Principal.EUAID,
+	basicUserPrincipal := authentication.OKTAPrincipal{
+		Username:          suite.testConfigs.Principal.Username,
 		JobCodeASSESSMENT: false, // so we don't bypass Collaborator check
 		JobCodeUSER:       true,
 	}
-	notCollab := authentication.EUAPrincipal{
-		EUAID:             "FAIL",
+	notCollab := authentication.OKTAPrincipal{
+		Username:          "FAIL",
 		JobCodeASSESSMENT: false, // so we don't bypass Collaborator check
 		JobCodeUSER:       true,
 	}
 
-	assessment := authentication.EUAPrincipal{
-		EUAID:             "FAIL",
+	assessment := authentication.OKTAPrincipal{
+		Username:          "FAIL",
 		JobCodeASSESSMENT: true, //Bypass Collaborator check
 		JobCodeUSER:       true,
 	}

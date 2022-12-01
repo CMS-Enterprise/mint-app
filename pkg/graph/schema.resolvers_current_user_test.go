@@ -30,7 +30,7 @@ func (s *GraphQLTestSuite) TestCurrentUserQuery() {
 			}
 		}`, &resp,
 		func(request *client.Request) {
-			principal := authentication.EUAPrincipal{EUAID: "ABCD"}
+			principal := authentication.OKTAPrincipal{Username: "ABCD"}
 			ctx := appcontext.WithPrincipal(context.Background(), &principal)
 			request.HTTP = request.HTTP.WithContext(ctx)
 		},

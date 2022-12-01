@@ -60,7 +60,7 @@ func HandleLocalOrOktaWebSocketAuth(logger *zap.Logger, omf *okta.MiddlewareFact
 
 		localToken := strings.HasPrefix(token, "Local ")
 		if localToken {
-			return local.NewLocalWebSocketAuthenticationMiddleware(logger)(ctx, initPayload)
+			return local.NewLocalWebSocketAuthenticationMiddleware(logger, omf.Store)(ctx, initPayload)
 		}
 		return omf.NewOktaWebSocketAuthenticationMiddleware(logger)(ctx, initPayload)
 	}
@@ -71,12 +71,28 @@ func (s *Server) routes(
 	traceMiddleware func(handler http.Handler) http.Handler,
 	loggerMiddleware func(handler http.Handler) http.Handler) {
 
+	// set up Feature Flagging utilities
+	ldClient, err := flags.NewLaunchDarklyClient(s.NewFlagConfig())
+	if err != nil {
+		s.logger.Fatal("Failed to create LaunchDarkly client", zap.Error(err))
+	}
+
+	store, storeErr := storage.NewStore(
+		s.logger,
+		s.NewDBConfig(),
+		ldClient,
+	)
+	if storeErr != nil {
+		s.logger.Fatal("Failed to create store", zap.Error(storeErr))
+	}
+
 	oktaConfig := s.NewOktaClientConfig()
 	jwtVerifier := okta.NewJwtVerifier(oktaConfig.OktaClientID, oktaConfig.OktaIssuer)
 
 	oktaMiddlewareFactory := okta.NewMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		jwtVerifier,
+		store,
 	)
 
 	s.router.Use(
@@ -87,7 +103,7 @@ func (s *Server) routes(
 	)
 
 	if s.NewLocalAuthIsEnabled() {
-		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger)
+		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger, store)
 		s.router.Use(localAuthenticationMiddleware)
 	}
 
@@ -99,12 +115,6 @@ func (s *Server) routes(
 	// endpoints that dont require authorization go directly on the main router
 	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
-
-	// set up Feature Flagging utilities
-	ldClient, err := flags.NewLaunchDarklyClient(s.NewFlagConfig())
-	if err != nil {
-		s.logger.Fatal("Failed to create LaunchDarkly client", zap.Error(err))
-	}
 
 	var cedarLDAPClient cedarldap.Client
 	cedarLDAPClient = cedarldap.NewTranslatedClient(
@@ -123,10 +133,11 @@ func (s *Server) routes(
 
 	// Set up Oddball email Service
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
+	emailServiceConfig.Enabled = s.Config.GetBool(appconfig.EmailEnabledKey)
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
-	emailServiceConfig.DefaultSender = "no-reply@mint.cms.gov"
+	emailServiceConfig.DefaultSender = s.Config.GetString(appconfig.EmailSenderKey)
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
@@ -154,15 +165,6 @@ func (s *Server) routes(
 		lambdaClient = lambda.New(lambdaSession, &aws.Config{Endpoint: &endpoint, Region: aws.String("us-west-2")})
 	} else {
 		lambdaClient = lambda.New(lambdaSession, &aws.Config{})
-	}
-
-	store, storeErr := storage.NewStore(
-		s.logger,
-		s.NewDBConfig(),
-		ldClient,
-	)
-	if storeErr != nil {
-		s.logger.Fatal("Failed to create store", zap.Error(storeErr))
 	}
 
 	serviceConfig := services.NewConfig(s.logger, ldClient)

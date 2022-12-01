@@ -87,6 +87,11 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
                 Evaluation
               </option>
               <option
+                value="IT_LEAD"
+              >
+                IT Lead
+              </option>
+              <option
                 value="LEADERSHIP"
               >
                 Leadership
