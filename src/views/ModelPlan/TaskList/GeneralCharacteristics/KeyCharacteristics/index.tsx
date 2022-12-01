@@ -13,7 +13,7 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -70,7 +70,6 @@ const KeyCharacteristics = () => {
 
   const {
     id,
-    alternativePaymentModel,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -132,7 +131,6 @@ const KeyCharacteristics = () => {
   const initialValues: KeyCharacteristicsFormType = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
-    alternativePaymentModel: alternativePaymentModel ?? null,
     alternativePaymentModelTypes: alternativePaymentModelTypes ?? [],
     alternativePaymentModelNote: alternativePaymentModelNote ?? '',
     keyCharacteristics: keyCharacteristics ?? [],
@@ -225,105 +223,69 @@ const KeyCharacteristics = () => {
                 }}
               >
                 <FieldGroup
-                  scrollElement="alternativePaymentModel"
-                  error={!!flatErrors.alternativePaymentModel}
+                  scrollElement="alternativePaymentModelTypes"
+                  error={!!flatErrors.alternativePaymentModelTypes}
                   className="margin-y-4 margin-bottom-8"
                 >
-                  <Label htmlFor="plan-characteristics-alternative-payment">
+                  <legend className="usa-label maxw-none">
                     {t('modelAPM')}
-                  </Label>
-                  <p className="text-base margin-y-1">{t('forQPP')}</p>
+                  </legend>
+                  <Alert type="info" slim data-testid="mandatory-fields-alert">
+                    <span className="mandatory-fields-alert__text">
+                      {t('MIPSInfo')}
+                    </span>
+                  </Alert>
+
                   <FieldErrorMsg>
-                    {flatErrors.alternativePaymentModel}
+                    {flatErrors.alternativePaymentModelTypes}
                   </FieldErrorMsg>
+
                   <Fieldset>
+                    {Object.keys(AlternativePaymentModelType)
+                      .filter(x => x !== AlternativePaymentModelType.NOT_APM)
+                      .map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`plan-characteristics-alternative-payment-${type}`}
+                              name="alternativePaymentModelTypes"
+                              label={translateAlternativePaymentTypes(type)}
+                              value={type}
+                              checked={values.alternativePaymentModelTypes.includes(
+                                type as AlternativePaymentModelType
+                              )}
+                              disabled={values.alternativePaymentModelTypes.includes(
+                                AlternativePaymentModelType.NOT_APM
+                              )}
+                            />
+                          </Fragment>
+                        );
+                      })}
                     <Field
-                      as={Radio}
-                      id="plan-characteristics-alternative-payment"
-                      name="alternativePaymentModel"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.alternativePaymentModel === true}
-                      onChange={() => {
-                        setFieldValue('alternativePaymentModel', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-alternative-payment-no"
-                      name="alternativePaymentModel"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.alternativePaymentModel === false}
-                      onChange={() => {
-                        setFieldValue('alternativePaymentModel', false);
+                      as={CheckboxField}
+                      id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
+                      name="alternativePaymentModelTypes"
+                      label={translateAlternativePaymentTypes(
+                        AlternativePaymentModelType.NOT_APM
+                      )}
+                      value={AlternativePaymentModelType.NOT_APM}
+                      checked={values.alternativePaymentModelTypes.includes(
+                        AlternativePaymentModelType.NOT_APM
+                      )}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        if (e.target.checked) {
+                          setFieldValue(
+                            'alternativePaymentModelTypes',
+                            AlternativePaymentModelType.NOT_APM
+                          );
+                        } else {
+                          setFieldValue('alternativePaymentModelTypes', []);
+                        }
                       }}
                     />
                   </Fieldset>
-                  {values.alternativePaymentModel && (
-                    <FieldArray
-                      name="alternativePaymentModelTypes"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label text-normal">
-                            {t('modelAPMType')}
-                          </legend>
-                          <FieldErrorMsg>
-                            {flatErrors.alternativePaymentModelTypes}
-                          </FieldErrorMsg>
 
-                          {Object.keys(AlternativePaymentModelType).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`plan-characteristics-alternative-payment-${type}`}
-                                    name="alternativePaymentModelTypes"
-                                    label={translateAlternativePaymentTypes(
-                                      type
-                                    )}
-                                    value={type}
-                                    checked={values.alternativePaymentModelTypes.includes(
-                                      type as AlternativePaymentModelType
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.alternativePaymentModelTypes.indexOf(
-                                          e.target
-                                            .value as AlternativePaymentModelType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-                                  {(type === 'MIPS' || type === 'ADVANCED') &&
-                                    values.alternativePaymentModelTypes.includes(
-                                      type as AlternativePaymentModelType
-                                    ) && (
-                                      <Alert
-                                        type="info"
-                                        slim
-                                        data-testid="mandatory-fields-alert"
-                                        className="margin-bottom-4 margin-left-4"
-                                      >
-                                        <span className="mandatory-fields-alert__text">
-                                          {t('MIPSInfo')}
-                                        </span>
-                                      </Alert>
-                                    )}
-                                </Fragment>
-                              );
-                            }
-                          )}
-                        </>
-                      )}
-                    />
-                  )}
                   <AddNote
                     id="plan-characteristics-alternative-payment-note"
                     field="alternativePaymentModelNote"

@@ -62,6 +62,8 @@ export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
       return i18next.t('modelPlan:teamRoles.evaluation');
+    case 'IT_LEAD':
+      return i18next.t('modelPlan:teamRoles.itLead');
     case 'LEADERSHIP':
       return i18next.t('modelPlan:teamRoles.leadership');
     case 'LEARNING':
@@ -184,6 +186,8 @@ export const translateAlternativePaymentTypes = (type: string) => {
       return i18next.t('generalCharacteristics:apmTypes.MIPSAPM');
     case 'ADVANCED':
       return i18next.t('generalCharacteristics:apmTypes.advancedAPM');
+    case 'NOT_APM':
+      return i18next.t('generalCharacteristics:apmTypes.notAPM');
     default:
       return '';
   }
@@ -1620,7 +1624,8 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NOT_APPLICABLE' ||
     b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
     b === 'NOT_PLANNING_TO_SEND_DATA' ||
-    b === 'NO_LEARNING_SYSTEM'
+    b === 'NO_LEARNING_SYSTEM' ||
+    b === 'NOT_APM'
   )
     return -1;
   if (a < b || b === 'OTHER') {

@@ -13,8 +13,6 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      AWS_SES_SOURCE_ARN:
-        required: true
       OKTA_TEST_PASSWORD:
         required: true
       OKTA_TEST_SECRET:
@@ -91,8 +89,6 @@ jobs:
       #   env:
       #     APP_ENV: test
       #     AWS_REGION: us-west-2 # easi app tests expect AWS_REGION instead of AWS_DEFAULT_REGION
-      #     AWS_SES_SOURCE: '"EASi Test" <no-reply-test@info.easi.cms.gov>'
-      #     AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
       #     AWS_S3_FILE_UPLOAD_BUCKET: easi-app-file-uploads
       #     CLIENT_PROTOCOL: http
       #     CLIENT_PORT: 3000
@@ -123,7 +119,7 @@ jobs:
       #     ./scripts/testsuite
       #     docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml down
       # - name: Upload backend test artifacts
-      #   uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+      #   uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
       #   with:
       #     name: backend-tests
       #     path: results
@@ -187,7 +183,6 @@ jobs:
       - name: Run e2e cypress tests
         env:
           APP_ENV: test
-          AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
           OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
@@ -196,14 +191,14 @@ jobs:
           ./scripts/run-cypress-test-docker
       - name: Upload cypress videos
         if: ${{ always() }}
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         with:
           name: cypress-videos
           path: cypress/videos
           retention-days: 14
       - name: Upload cypress screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         with:
           name: cypress-screenshots
           path: cypress/screenshots
