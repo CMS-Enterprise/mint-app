@@ -9,10 +9,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//go:embed SQL/audit_change_collection_by_id_and_table.sql
+//go:embed SQL/audit_change/collection_by_id_and_table.sql
 var auditChangeCollectionByIDAndTable string
 
-//go:embed SQL/audit_change_collection_by_id_and_table_and_field.sql
+//go:embed SQL/audit_change/collection_by_id_and_table_and_field.sql
 var auditChangeCollectionByIDAndTableAndField string
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database

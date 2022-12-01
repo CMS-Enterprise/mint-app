@@ -17,13 +17,13 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_document_solution_links_create.sql
+//go:embed SQL/plan_document_solution/links_create.sql
 var planDocumentSolutionLinksCreateSQL string
 
-//go:embed SQL/plan_document_solution_link_delete_by_id.sql
+//go:embed SQL/plan_document_solution/link_delete_by_id.sql
 var planDocumentSolutionLinkDeleteByIDSQL string
 
-//go:embed SQL/plan_document_solution_links_get_by_id.sql
+//go:embed SQL/plan_document_solution/links_get_by_id.sql
 var planDocumentSolutionLinksGetByIDSQL string
 
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links
