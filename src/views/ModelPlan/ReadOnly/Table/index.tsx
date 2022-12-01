@@ -22,7 +22,10 @@ import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import { GetAllModelPlans_modelPlanCollection as AllModelPlansType } from 'queries/ReadOnly/types/GetAllModelPlans';
+import {
+  GetAllModelPlans_modelPlanCollection as AllModelPlansType,
+  GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
+} from 'queries/ReadOnly/types/GetAllModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   translateModelCategory,
@@ -140,12 +143,15 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
       },
       {
         Header: t('allModels.tableHeading.crsAndTdls'),
-        accessor: 'crsAndTdls',
-        Cell: ({ value }: any) => {
-          if (!value) {
+        accessor: 'crTdls',
+        Cell: ({ value }: { value: CRTDLType[] }) => {
+          if (!value || value.length === 0) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return value;
+          const crtdlIDs = value
+            .map((crtdl: CRTDLType) => crtdl.idNumber)
+            .join(', ');
+          return crtdlIDs;
         }
       }
     ];
