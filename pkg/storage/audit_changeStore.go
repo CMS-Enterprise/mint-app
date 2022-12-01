@@ -16,7 +16,7 @@ var auditChangeCollectionByIDAndTable string
 //go:embed SQL/audit_change/collection_by_id_and_table_and_field.sql
 var auditChangeCollectionByIDAndTableAndField string
 
-//go:embed SQL/audit_change_collection_by_primary_key_or_foreign_keyand_date.sql
+//go:embed SQL/audit_change/collection_by_primary_key_or_foreign_keyand_date.sql
 var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
