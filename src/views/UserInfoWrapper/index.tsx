@@ -15,7 +15,7 @@ type UserInfoWrapperProps = {
 type oktaUserProps = {
   name?: string;
   euaId?: string;
-  groups?: string[];
+  'mint-groups'?: string[];
 };
 
 const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
@@ -34,7 +34,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       const user = {
         name: oktaUser.name,
         euaId: oktaUser.euaId || '',
-        groups: oktaUser.groups || [],
+        groups: oktaUser['mint-groups'] || [],
         acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
@@ -43,7 +43,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         name: authState?.idToken?.claims.name,
         euaId: authState?.idToken?.claims.preferred_username,
         // @ts-ignore
-        groups: authState?.accessToken?.claims.groups || [],
+        groups: authState?.accessToken?.claims['mint-groups'] || [],
         acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
