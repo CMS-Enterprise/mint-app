@@ -43,7 +43,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         name: authState?.idToken?.claims.name,
         euaId: authState?.idToken?.claims.preferred_username,
         // @ts-ignore
-        groups: authState?.accessToken?.claims.groups || [],
+        groups: authState?.accessToken?.claims['mint-groups'] || [],
         acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
