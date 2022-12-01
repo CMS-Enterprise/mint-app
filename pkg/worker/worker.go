@@ -4,10 +4,19 @@ import (
 	"fmt"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
+// Worker is a struct that contains all the dependencies to run worker functions
+type Worker struct {
+	Store  *storage.Store
+	Logger *zap.Logger
+}
+
 // Work creates, configues, and starts worker
-func Work() {
+func (w *Worker) Work() {
 	// create manager
 	mgr := faktory_worker.NewManager()
 	mgr.Concurrency = 20
@@ -15,7 +24,7 @@ func Work() {
 	mgr.ProcessStrictPriorityQueues("critical", "default")
 
 	// register jobs here
-	// e.g. mgr.Register("SomeJob", someFunc)
+	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
 
 	err := mgr.Run()
 	if err != nil {
