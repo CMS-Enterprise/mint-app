@@ -5,10 +5,6 @@
 # ECR_REPOSITORY
 # NEW_IMAGE_TAG
 # TASK_FAMILY
-# AWS_REGION
-# ECS_CLUSTER
-# SERVICE_NAME
-# APP_ENV
 
 # fail on any error
 set -eu 
@@ -17,7 +13,7 @@ set -eu
 ECR_IMAGE="${ECR_REGISTRY}/${ECR_REPOSITORY}:${NEW_IMAGE_TAG}"
 
 # Get existing task definition
-TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "$AWS_REGION")
+TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMILY")
 
 # Transform existing task definition by performing the following actions:
 # 1. Update the `containerDefinitions[0].image` to the new image we want to deploy
@@ -26,22 +22,11 @@ TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMI
 NEW_TASK_DEFINTIION=$(echo "$TASK_DEFINITION" | jq --arg IMAGE "$ECR_IMAGE" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities) | del(.registeredAt) | del(.registeredBy)')
 
 # Register the new task, capture the output as JSON
-NEW_TASK_INFO=$(aws ecs register-task-definition --region "$AWS_REGION" --cli-input-json "$NEW_TASK_DEFINTIION")
+NEW_TASK_INFO=$(aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEFINTIION")
 
 # Grab the new revision from the output
+# shellcheck disable=SC2034
 NEW_REVISION=$(echo "$NEW_TASK_INFO" | jq '.taskDefinition.revision')
 
-# Update the service with the new revision
-aws ecs update-service --cluster "${ECS_CLUSTER}" \
-                       --service "${SERVICE_NAME}" \
-                       --task-definition "${TASK_FAMILY}:${NEW_REVISION}" \
-                       --no-cli-pager
-
-# Run the healthcheck script 
-./scripts/healthcheck "$NEW_IMAGE_TAG"
-
-# Grab the old revision from TASK_DEFINITION
-OLD_REVISION=$(echo "$TASK_DEFINITION" | jq '.taskDefinition.revision')
-
-# deregister the previous task definition
-aws ecs deregister-task-definition --task-definition "${TASK_FAMILY}:${OLD_REVISION}"
+# Output the new revision to stdout
+echo NEW_REVISION

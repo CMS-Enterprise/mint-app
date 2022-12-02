@@ -64,10 +64,25 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
-      # - name: Clean the database
-      #   if: contains(inputs.env, 'dev')
-      #   run: |
-      #     ./scripts/db_lambda_invoke "easi-app-db-clean-tmp" "2" "easi-app-db-clean"
+      - name: Clean the database
+        if: contains(inputs.env, 'dev')
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: mint-db-clean
+          NEW_IMAGE_TAG: latest
+          TASK_FAMILY: "db-clean-${{ inputs.env }}"
+        run: |
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/run_ecs_task.sh
+      - name: Run database migrations
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: mint-db-migrate
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          TASK_FAMILY: "db-migrate-${{ inputs.env }}"
+        run: |
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/run_ecs_task.sh
       # - name: Backup the database
       #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
       #   run: |
@@ -88,12 +103,12 @@ jobs:
           ECR_REPOSITORY: mint-backend
           NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
           TASK_FAMILY: "mint-app-${{ inputs.env }}"
-          AWS_REGION: us-east-1
           ECS_CLUSTER: "${{ inputs.env }}-mint-app"
           SERVICE_NAME: mint-app
           APP_ENV: ${{ inputs.env }}
         run: |
-          ./scripts/update_ecs_task_definition.sh
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/deploy_ecs_service.sh
       - name: Build static assets and release to S3
         env:
           APP_ENV: ${{ inputs.env }}
