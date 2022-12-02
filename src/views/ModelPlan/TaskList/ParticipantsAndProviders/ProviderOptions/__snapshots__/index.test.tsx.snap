@@ -630,14 +630,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         data-testid="label"
         for="participants-and-providers-provider-overlap"
       >
-        Will the participants assume risk?
-      </label>
-      <label
-        class="usa-label text-normal"
-        data-testid="label"
-        for="participants-and-providers-provider-overlap"
-      >
-        What type of risk will the participant assume?
+        Will the providers overlap with other models?
       </label>
       <fieldset
         class="usa-fieldset"

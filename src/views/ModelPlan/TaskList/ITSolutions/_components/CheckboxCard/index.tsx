@@ -1,11 +1,18 @@
+/*
+CheckboxCard component for selecting needed IT solutions
+Integrated with Formik
+*/
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
   Checkbox,
   Grid,
-  IconArrowForward
+  IconArrowForward,
+  Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
@@ -29,8 +36,20 @@ const CheckboxCard = ({
   index
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
-  const id = `it-solutions-${solution?.key?.toLowerCase()}`;
+  const { t: h } = useTranslation('generalReadOnly');
+  const { modelID, operationalNeedID } = useParams<{
+    modelID: string;
+    operationalNeedID: string;
+  }>();
 
+  const history = useHistory();
+
+  // If custom solution, nameOther becoming the identifier
+  const id = solution?.nameOther
+    ? `it-solutions-${solution?.nameOther?.toLowerCase().replace(' ', '-')}`
+    : `it-solutions-${solution?.key?.toLowerCase().replace(' ', '-')}`;
+
+  // TODO: replace with real solution data once populated
   const tempDescription: string =
     'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
 
@@ -49,7 +68,7 @@ const CheckboxCard = ({
             checked={!!solution.needed}
           />
 
-          <h3 className="margin-y-2">{solution.name}</h3>
+          <h3 className="margin-y-2">{solution.nameOther || solution.name}</h3>
 
           <div className="margin-bottom-2 solutions-checkbox__body-text">
             {/* TODO: replace tempDescription with real data */}
@@ -57,17 +76,47 @@ const CheckboxCard = ({
             {/* {solution?.description} */}
           </div>
 
-          <p className="text-bold">{t('contact')}</p>
+          {solution.pocName && (
+            <>
+              <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+              <p className="margin-y-0">{solution.pocName}</p>
+
+              <Link
+                aria-label={h('contactInfo.sendAnEmail')}
+                className="line-height-body-5"
+                href={`mailto:${solution.pocEmail}`}
+                target="_blank"
+              >
+                <div className="margin-bottom-2">{solution.pocEmail}</div>
+              </Link>
+            </>
+          )}
 
           <Divider />
 
-          <Button
-            type="button"
-            className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
-          >
-            {t('aboutSolution')}
-            <IconArrowForward className="margin-left-1" />
-          </Button>
+          {solution.nameOther ? (
+            <Button
+              type="button"
+              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+              onClick={() =>
+                history.push(
+                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`
+                )
+              }
+            >
+              {t('updateTheseDetails')}
+              <IconArrowForward className="margin-left-1" />
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+            >
+              {t('aboutSolution')}
+              <IconArrowForward className="margin-left-1" />
+            </Button>
+          )}
         </div>
       </Card>
     </Grid>
