@@ -9,7 +9,7 @@
 # TASK_REVISION
 
 # fail on any error
-set -Eeuo pipefail
+set -Eexuo pipefail
 
 # Update the service with the new revision
 aws ecs update-service --cluster "${ECS_CLUSTER}" \
