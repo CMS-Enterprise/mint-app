@@ -227,17 +227,19 @@ const (
 	AlternativePaymentModelTypeRegular  AlternativePaymentModelType = "REGULAR"
 	AlternativePaymentModelTypeMips     AlternativePaymentModelType = "MIPS"
 	AlternativePaymentModelTypeAdvanced AlternativePaymentModelType = "ADVANCED"
+	AlternativePaymentModelTypeNotApm   AlternativePaymentModelType = "NOT_APM"
 )
 
 var AllAlternativePaymentModelType = []AlternativePaymentModelType{
 	AlternativePaymentModelTypeRegular,
 	AlternativePaymentModelTypeMips,
 	AlternativePaymentModelTypeAdvanced,
+	AlternativePaymentModelTypeNotApm,
 }
 
 func (e AlternativePaymentModelType) IsValid() bool {
 	switch e {
-	case AlternativePaymentModelTypeRegular, AlternativePaymentModelTypeMips, AlternativePaymentModelTypeAdvanced:
+	case AlternativePaymentModelTypeRegular, AlternativePaymentModelTypeMips, AlternativePaymentModelTypeAdvanced, AlternativePaymentModelTypeNotApm:
 		return true
 	}
 	return false

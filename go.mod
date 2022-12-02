@@ -23,7 +23,7 @@ require (
 	github.com/pquerna/otp v1.3.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.13.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	github.com/vektah/gqlparser/v2 v2.5.1
 	go.uber.org/zap v1.23.0
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
@@ -36,6 +36,8 @@ require github.com/gorilla/websocket v1.5.0
 require github.com/xhit/go-simple-mail/v2 v2.12.0
 
 require github.com/contribsys/faktory v1.6.0
+
+require golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 
 require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
@@ -79,6 +81,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/samber/lo v1.35.0
 	github.com/spf13/afero v1.8.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
