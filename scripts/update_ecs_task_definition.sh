@@ -25,8 +25,7 @@ NEW_TASK_DEFINTIION=$(echo "$TASK_DEFINITION" | jq --arg IMAGE "$ECR_IMAGE" '.ta
 NEW_TASK_INFO=$(aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEFINTIION")
 
 # Grab the new revision from the output
-# shellcheck disable=SC2034
 NEW_REVISION=$(echo "$NEW_TASK_INFO" | jq '.taskDefinition.revision')
 
 # Output the new revision to stdout
-echo NEW_REVISION
+echo "${NEW_REVISION}"
