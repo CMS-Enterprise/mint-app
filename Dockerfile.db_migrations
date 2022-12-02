@@ -4,6 +4,7 @@ COPY migrations/ /flyway/sql
 
 ENV FLYWAY_CONNECT_RETRIES=10
 ENV FLYWAY_CLEAN_DISABLED="true"
-ENV FLYWAY_SCHEMAS=public,audit
+ENV FLYWAY_SCHEMAS=audit,public
+ENV FLYWAY_DEFAULT_SCHEMA=public
 
 ENTRYPOINT ["flyway", "-validateMigrationNaming=true", "migrate"]
