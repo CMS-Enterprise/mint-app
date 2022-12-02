@@ -6,6 +6,7 @@ BEGIN
   RAISE NOTICE 'not creating role crud -- it already exists';
 END
 $do$;
+CREATE SCHEMA IF NOT EXISTS audit;
 REVOKE ALL ON SCHEMA audit FROM public;
 REVOKE ALL ON SCHEMA audit FROM crud;
 GRANT SELECT, TRIGGER ON ALL TABLES IN SCHEMA AUDIT TO crud;
