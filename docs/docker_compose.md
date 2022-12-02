@@ -5,7 +5,7 @@ docker-compose files exist to support different use cases and environments.
 
 | File                          | Description                                                                                                                       |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [docker-compose.yml](../docker-compose.yml)            | Base configuration for `db`, `db_migrate`, `easi` and `easi_client` services                                                      |
+| [docker-compose.yml](../docker-compose.yml)            | Base configuration for `db`, `db_migrate`, `mint` and `mint_client` services                                                      |
 | [docker-compose.override.yml](../docker-compose.override.yml)   | Additional configuration for running the above services locally. Also adds configuration for `minio` and `prince` lambda services |
 | [docker-compose.cypress_ci.yml](../docker-compose.cypress_ci.yml) | Additional configuration for running end-to-end Cypress tests in Github Actions                                                   |
 | [docker-compose.cypress_local.yml](../docker-compose.cypress_local.yml)      | Additional configuration for running end-to-end Cypress tests locally                                                             |
@@ -18,8 +18,8 @@ migration containers locally:
 
 ```console
 $ docker-compose up --detach db db_migrate
-Creating easi-app_db_1 ... done
-Creating easi-app_db_migrate_1 ... done
+Creating mint-app_db_1 ... done
+Creating mint-app_db_migrate_1 ... done
 ```
 
 By default, Docker Compose reads two files, a docker-compose.yml and an optional

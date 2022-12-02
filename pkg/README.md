@@ -1,4 +1,4 @@
-# EASi Go Packages
+# MINT Go Packages
 
 ## Application Context: `appcontext`
 

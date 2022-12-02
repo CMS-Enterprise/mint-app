@@ -1,6 +1,6 @@
-# CMS EASi Application
+# CMS MINT Application
 
-This repository contains the application code for CMS EASi (Easy Access to System Information).
+This repository contains the application code for CMS MINT (Model Innovation Tool).
 
 This application has the following main components:
 - A React frontend, using [Apollo](https://www.apollographql.com/docs/react/).
@@ -34,9 +34,9 @@ This repository has several major subfolders:
 - `.storybook` contains configuration for [Storybook](https://storybook.js.org/), which can be used for viewing and designing React components in isolation.
 - `.vscode` contains settings and suggested extensions for developing in VS Code.
 - `cmd` contains Go CLI scripts for various utilities.
-- `config/tls` contains certificates that need to be trusted by the EASi backend.
+- `config/tls` contains certificates that need to be trusted by the MINT backend.
 - `cypress` contains end-to-end/functional tests using [Cypress][https://www.cypress.io/], as well as necessary configuration.
-- `docs` contains general documentation for the EASi application; the `docs/adr` subfolder contains records of architectural decisions, while `docs/operations` contains information on operational procedures such as deploying the application.
+- `docs` contains general documentation for the MINT application; the `docs/adr` subfolder contains records of architectural decisions, while `docs/operations` contains information on operational procedures such as deploying the application.
 - `migrations` contains SQL files that together define the database schema; these are deployed using [Flyway](https://flywaydb.org/).
 - `pkg` contains the Go source code for the application's backend.
 - `public` contains static assets for the frontend.
@@ -63,8 +63,8 @@ To modify the default flags being used, edit [`src/views/FlagsWrapper/index.tsx`
 _See also:
 [ADR on how we share secrets](./docs/adr/0019-use-1password-for-sharing-secrets.md)_
 
-Truss have set up a [1Password vault](https://cmseasi.1password.com) for EASi
-engineers to securely share secrets, such as API keys. You will need to be
+Truss have set up an [EASi 1Password vault](https://cmseasi.1password.com) for EASi and
+MINT engineers to securely share secrets, such as API keys. You will need to be
 invited to generate login credentials.
 
 If you need access to a secret that is not in the EASi vault, please ask for
@@ -76,7 +76,7 @@ You may need to access cloud service to develop the application. This allows
 access to AWS resources (ex. SES Email).
 
 Follow the instructions in the infra repo
-[here](https://github.com/CMSgov/easi-infra#ctkey-wrapper). You'll need to add
+[here](https://github.com/CMSgov/mint-infra#ctkey-wrapper). You'll need to add
 the infra account environment variables to your `.envrc.local`. You can then run
 the `ctkey` command to get/set AWS environment variables.
 
@@ -122,7 +122,7 @@ Setting the `DEBUG_ROUTES` environment variable, and upon startup, this will log
 out a representation of all routes that have been registered.
 
 ```shell
-$ DEBUG_ROUTES=1 ./bin/easi serve
+$ DEBUG_ROUTES=1 ./bin/mint serve
 ...
 ROUTE: /api/v1/healthcheck
 Path regexp: ^/api/v1/healthcheck$
@@ -156,11 +156,11 @@ minio during development.
 
 ### Prince XML Lambda
 
-EASi runs [Prince XML](https://www.princexml.com/) as a Lambda function to
+MINT runs [Prince XML](https://www.princexml.com/) as a Lambda function to
 convert HTML to PDF.
 
 See the
-[easi-infra-modules](https://github.com/CMSgov/easi-infra-modules/blob/master/lambda/prince/README.md)
+[mint-infra-modules](https://github.com/CMSgov/mint-infra-modules/blob/master/lambda/prince/README.md)
 repo for instructions on how to build the lambda locally.
 
 [docker-lambda](https://github.com/lambci/docker-lambda) is used to run lambda
