@@ -40,8 +40,8 @@ type AnalyzedPlanSections struct {
 	ReadyForClearance []string `json:"readyForClearance"`
 }
 
-// AnalyzedPlanCollaborators represents an AnalyzedPlanCollaborators in an AnalyzedAuditChange
-type AnalyzedPlanCollaborators struct {
+// AnalyzedModelLeads represents an AnalyzedPlanCollaborators in an AnalyzedAuditChange
+type AnalyzedModelLeads struct {
 	Added []string `json:"added"`
 }
 
@@ -52,12 +52,12 @@ type AnalyzedPlanDiscussions struct {
 
 // AnalyzedAuditChange represents Changes in an AnalyzedAudit
 type AnalyzedAuditChange struct {
-	ModelPlan         *AnalyzedModelPlan         `json:"modelPlan"`
-	Documents         *AnalyzedDocuments         `json:"documents"`
-	CrTdls            *AnalyzedCrTdls            `json:"crTdls"`
-	PlanSections      *AnalyzedPlanSections      `json:"planSections"`
-	PlanCollaborators *AnalyzedPlanCollaborators `json:"planCollaborators"`
-	PlanDiscussions   *AnalyzedPlanDiscussions   `json:"planDiscussion"`
+	ModelPlan       *AnalyzedModelPlan       `json:"modelPlan"`
+	Documents       *AnalyzedDocuments       `json:"documents"`
+	CrTdls          *AnalyzedCrTdls          `json:"crTdls"`
+	PlanSections    *AnalyzedPlanSections    `json:"planSections"`
+	ModelLeads      *AnalyzedModelLeads      `json:"modelLeads"`
+	PlanDiscussions *AnalyzedPlanDiscussions `json:"planDiscussion"`
 }
 
 // NewAnalyzedAudit returns a new AnalyzedAudit object

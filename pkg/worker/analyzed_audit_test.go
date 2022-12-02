@@ -24,8 +24,9 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	// Add CrTdls
 	suite.createPlanCrTdl(plan, "123-456", time.Now(), "Title", "Note")
 
-	// Add collaborator
-	collaborator := suite.createPlanCollaborator(plan, "MINT", "New Colaborator", "MODEL_LEAD", "test@email.com")
+	// Add collaborator. Only model leads should be added
+	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
+	collaborator := suite.createPlanCollaborator(plan, "COLB", "New Colaborator", "MODEL_TEAM", "test@email.com")
 
 	// Add Discussion
 	suite.createPlanDiscussion(plan, "Test Comment")
@@ -85,8 +86,9 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	// CrTdl Activity
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
-	// Plan Collaborators
-	suite.True(lo.Contains(analyzedAudit.Changes.PlanCollaborators.Added, collaborator.FullName))
+	// Plan Collaborators. Only model leads should be added.
+	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLead.FullName))
+	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaborator.FullName)))
 
 	// Discussions Activity
 	suite.True(analyzedAudit.Changes.PlanDiscussions.Activity)

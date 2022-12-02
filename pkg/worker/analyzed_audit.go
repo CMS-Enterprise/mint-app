@@ -54,7 +54,7 @@ func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 		return nil, err
 	}
 
-	colaboratorAudits, err := AnalyzeColaboratorAudits(audits)
+	modelLeadAudits, err := AnalyzeModelLeads(audits)
 	if err != nil {
 		return nil, err
 	}
@@ -70,12 +70,12 @@ func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 	}
 
 	analyzedModelPlan := models.AnalyzedAuditChange{
-		ModelPlan:         modelPlanAudits,
-		Documents:         documentsAudits,
-		CrTdls:            crTdlAudits,
-		PlanSections:      sectionsAudits,
-		PlanCollaborators: colaboratorAudits,
-		PlanDiscussions:   discussionAudits,
+		ModelPlan:       modelPlanAudits,
+		Documents:       documentsAudits,
+		CrTdls:          crTdlAudits,
+		PlanSections:    sectionsAudits,
+		ModelLeads:      modelLeadAudits,
+		PlanDiscussions: discussionAudits,
 	}
 
 	return &analyzedModelPlan, nil
@@ -133,25 +133,25 @@ func AnalyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 	return nil, nil
 }
 
-// AnalyzeColaboratorAudits analyzes new collaborators to a model plan
-func AnalyzeColaboratorAudits(audits []*models.AuditChange) (*models.AnalyzedPlanCollaborators, error) {
+// AnalyzeModelLeads analyzes new collaborators to a model plan
+func AnalyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_collaborator"
 	})
 
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "full_name") {
+		if lo.Contains(keys, "full_name") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
 			return m.Fields["full_name"].New.(string), true
 		}
 		return "", false
 	})
 
-	analyzedPlanColaborators := models.AnalyzedPlanCollaborators{
+	analyzedModelLeads := models.AnalyzedModelLeads{
 		Added: addedCollaborators,
 	}
 
-	return &analyzedPlanColaborators, nil
+	return &analyzedModelLeads, nil
 
 }
 
