@@ -27,7 +27,8 @@ const draftModelPlan = {
   modelPlanStatus: 'Model Plan status',
   modelPlanCopy:
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
-  markedReady: 'Marked ready for review {{-reviewer}} on '
+  markedReady: 'Marked ready for review {{-reviewer}} on ',
+  validDate: 'Please use a valid date format.'
 };
 
 export default draftModelPlan;

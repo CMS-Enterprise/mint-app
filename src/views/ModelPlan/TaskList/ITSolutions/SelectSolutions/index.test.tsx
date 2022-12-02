@@ -4,11 +4,13 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   OperationalNeedKey,
-  OperationalSolutionKey
+  OperationalSolutionKey,
+  OpSolutionStatus
 } from 'types/graphql-global-types';
 
 import SelectSolutions from '.';
@@ -29,8 +31,13 @@ const operationalNeed: GetOperationalNeedType = {
       __typename: 'OperationalSolution',
       id: '00000000-0000-0000-0000-000000000000',
       name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+      pocEmail: '',
       key: OperationalSolutionKey.RMADA,
+      mustStartDts: null,
+      mustFinishDts: null,
+      status: OpSolutionStatus.AT_RISK,
       needed: null,
+      pocName: 'John Doe',
       nameOther: null
     }
   ]
@@ -41,7 +48,8 @@ const mocks = [
     request: {
       query: GetOperationalNeed,
       variables: {
-        id: operationalNeedID
+        id: operationalNeedID,
+        includeNotNeeded: true
       }
     },
     result: {
@@ -62,7 +70,9 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
           <MockedProvider mocks={mocks} addTypename={false}>
-            <SelectSolutions />
+            <MessageProvider>
+              <SelectSolutions />
+            </MessageProvider>
           </MockedProvider>
         </Route>
       </MemoryRouter>
@@ -105,7 +115,9 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
           <MockedProvider mocks={mocks} addTypename={false}>
-            <SelectSolutions />
+            <MessageProvider>
+              <SelectSolutions />
+            </MessageProvider>
           </MockedProvider>
         </Route>
       </MemoryRouter>

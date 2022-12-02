@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, BenchmarkForPerformanceType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, ModelLearningSystemType, PayType, NonClaimsBasedPayType } from "./../../../types/graphql-global-types";
+import { RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, OverlapType, BenchmarkForPerformanceType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, ModelLearningSystemType, PayType, NonClaimsBasedPayType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOperationalNeedAnswer
@@ -21,6 +21,12 @@ export interface GetOperationalNeedAnswer_modelPlan_participantsAndProviders {
   recruitmentMethod: RecruitmentType | null;
   selectionMethod: ParticipantSelectionType[];
   communicationMethod: ParticipantCommunicationType[];
+  providerOverlap: OverlapType | null;
+}
+
+export interface GetOperationalNeedAnswer_modelPlan_beneficiaries {
+  __typename: "PlanBeneficiaries";
+  beneficiaryOverlap: OverlapType | null;
 }
 
 export interface GetOperationalNeedAnswer_modelPlan_opsEvalAndLearning {
@@ -52,6 +58,7 @@ export interface GetOperationalNeedAnswer_modelPlan {
   modelName: string;
   generalCharacteristics: GetOperationalNeedAnswer_modelPlan_generalCharacteristics;
   participantsAndProviders: GetOperationalNeedAnswer_modelPlan_participantsAndProviders;
+  beneficiaries: GetOperationalNeedAnswer_modelPlan_beneficiaries;
   opsEvalAndLearning: GetOperationalNeedAnswer_modelPlan_opsEvalAndLearning;
   payments: GetOperationalNeedAnswer_modelPlan_payments;
 }
@@ -64,6 +71,7 @@ export interface GetOperationalNeedAnswerVariables {
   id: UUID;
   generalCharacteristics: boolean;
   participantsAndProviders: boolean;
+  beneficiaries: boolean;
   opsEvalAndLearning: boolean;
   payments: boolean;
   managePartCDEnrollment: boolean;
@@ -72,6 +80,8 @@ export interface GetOperationalNeedAnswerVariables {
   recruitmentMethod: boolean;
   selectionMethod: boolean;
   communicationMethod: boolean;
+  providerOverlap: boolean;
+  beneficiaryOverlap: boolean;
   helpdeskUse: boolean;
   iddocSupport: boolean;
   benchmarkForPerformance: boolean;

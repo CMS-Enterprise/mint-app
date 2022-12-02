@@ -6,8 +6,13 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
+import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
+import {
+  GetOperationalNeed as GetOperationalNeedType,
+  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
+  GetOperationalNeedVariables
+} from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import {
   translateAppealsQuestionType,
@@ -19,18 +24,17 @@ import {
   translateEvaluationApproachType,
   translateModelLearningSystemType,
   translateNonClaimsBasedPayType,
+  translateOverlapType,
   translateParticipantSelectiontType,
   translatePayType,
   translateRecruitmentType
 } from 'utils/modelPlan';
 
-import { isIndenpendentOperationalNeed } from '../../util';
-
 import './index.scss';
 
 type NeedQuestionAndAnswerProps = {
   className?: string;
-  operationalNeed: GetOperationalNeedOperationalNeedType;
+  operationalNeedID: string;
   modelID: string;
 };
 
@@ -57,7 +61,8 @@ const needsTranslations: NeedMapType = {
   translateModelLearningSystemType,
   translatePayType,
   translateNonClaimsBasedPayType,
-  translateAppealsQuestionType
+  translateAppealsQuestionType,
+  translateOverlapType
 };
 
 // Function to format operational need answers for both single and multipart answers
@@ -98,15 +103,39 @@ const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {
   return answers;
 };
 
+// Default values for fetching an operational need
+export const initialValues: GetOperationalNeedOperationalNeedType = {
+  __typename: 'OperationalNeed',
+  id: '',
+  modelPlanID: '',
+  name: '',
+  key: null,
+  nameOther: '',
+  needed: false,
+  solutions: []
+};
+
 const NeedQuestionAndAnswer = ({
   className,
-  operationalNeed,
+  operationalNeedID,
   modelID
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
 
   // Toggle the collapsed state of operational need question/answer
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
+
+  // Fetch operational need answer to question
+  const { data: need } = useQuery<
+    GetOperationalNeedType,
+    GetOperationalNeedVariables
+  >(GetOperationalNeed, {
+    variables: {
+      id: operationalNeedID
+    }
+  });
+
+  const operationalNeed = need?.operationalNeed || initialValues;
 
   // Config map of operational need key to route, translations, gql schema, etc
   const needConfig = operationalNeedMap[operationalNeed.key || ''];
@@ -119,6 +148,7 @@ const NeedQuestionAndAnswer = ({
       id: modelID,
       generalCharacteristics: parentField === 'generalCharacteristics',
       participantsAndProviders: parentField === 'participantsAndProviders',
+      beneficiaries: parentField === 'beneficiaries',
       opsEvalAndLearning: parentField === 'opsEvalAndLearning',
       payments: parentField === 'payments',
       managePartCDEnrollment: fieldName === 'managePartCDEnrollment',
@@ -127,6 +157,8 @@ const NeedQuestionAndAnswer = ({
       recruitmentMethod: fieldName === 'recruitmentMethod',
       selectionMethod: fieldName === 'selectionMethod',
       communicationMethod: fieldName === 'communicationMethod',
+      providerOverlap: fieldName === 'providerOverlap',
+      beneficiaryOverlap: fieldName === 'beneficiaryOverlap',
       helpdeskUse: fieldName === 'helpdeskUse',
       iddocSupport: fieldName === 'iddocSupport',
       benchmarkForPerformance: fieldName === 'benchmarkForPerformance',
@@ -145,7 +177,7 @@ const NeedQuestionAndAnswer = ({
       willRecoverPayments: fieldName === 'willRecoverPayments'
     },
     // skip if operational need requires no question/answer
-    skip: isIndenpendentOperationalNeed(operationalNeed.key)
+    skip: !needConfig
   };
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
@@ -164,26 +196,24 @@ const NeedQuestionAndAnswer = ({
         {operationalNeed?.nameOther || operationalNeed?.name}
       </p>
 
-      {!isIndenpendentOperationalNeed(operationalNeed.key) && (
-        <button
-          type="button"
-          data-testid="toggle-need-answer"
-          onClick={() => setInfoToggle(!infoToggle)}
-          className={classNames(
-            'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
-            {
-              'text-bold': infoToggle
-            }
-          )}
-        >
-          {infoToggle ? (
-            <IconExpandMore className="margin-right-05" />
-          ) : (
-            <IconExpandLess className="margin-right-05 needs-question__rotate" />
-          )}
-          {t('whyNeed')}
-        </button>
-      )}
+      <button
+        type="button"
+        data-testid="toggle-need-answer"
+        onClick={() => setInfoToggle(!infoToggle)}
+        className={classNames(
+          'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
+          {
+            'text-bold': infoToggle
+          }
+        )}
+      >
+        {infoToggle ? (
+          <IconExpandMore className="margin-right-05" />
+        ) : (
+          <IconExpandLess className="margin-right-05 needs-question__rotate" />
+        )}
+        {t('whyNeed')}
+      </button>
 
       {infoToggle && (
         <div className="margin-left-neg-2px padding-1">
@@ -221,7 +251,7 @@ const NeedQuestionAndAnswer = ({
             <p className="margin-bottom-0">
               {t('changeAnswer')}
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/${needConfig.route}`}
+                to={`/models/${modelID}/task-list/${needConfig?.route}`}
               >
                 {t('goToQuestion')}
               </UswdsReactLink>

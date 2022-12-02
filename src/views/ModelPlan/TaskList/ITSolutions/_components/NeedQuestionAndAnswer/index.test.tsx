@@ -1,48 +1,70 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
 import {
   OperationalNeedKey,
-  OperationalSolutionKey
+  OperationalSolutionKey,
+  OpSolutionStatus
 } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import NeedQuestionAndAnswer from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
-const operationalNeedID = '123';
-
-const operationalNeed = {
-  __typename: 'OperationalNeed' as const,
-  id: '081cb879-bd6f-4ead-b9cb-3a299de76390',
-  modelPlanID: modelID,
-  name: 'Obtain an application support contractor',
-  key: OperationalNeedKey.APP_SUPPORT_CON,
-  nameOther: null,
-  needed: true,
-  solutions: [
-    {
-      __typename: 'OperationalSolution' as const,
-      id: '00000000-0000-0000-0000-000000000000',
-      name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
-      key: OperationalSolutionKey.RMADA,
-      needed: null,
-      nameOther: null
-    }
-  ]
-};
+const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
 const mocks = [
   {
     request: {
+      query: GetOperationalNeed,
+      variables: {
+        id: operationalNeedID,
+        includeNotNeeded: true
+      }
+    },
+    result: {
+      data: {
+        operationalNeed: {
+          __typename: 'OperationalNeed',
+          id: operationalNeedID,
+          modelPlanID: modelID,
+          name: 'Obtain an application support contractor',
+          key: OperationalNeedKey.APP_SUPPORT_CON,
+          nameOther: null,
+          needed: true,
+          solutions: [
+            {
+              __typename: 'OperationalSolution',
+              id: '00000000-0000-0000-0000-000000000000',
+              name:
+                'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+              key: OperationalSolutionKey.RMADA,
+              pocName: null,
+              pocEmail: null,
+              needed: null,
+              nameOther: null,
+              mustStartDts: null,
+              mustFinishDts: null,
+              status: OpSolutionStatus.NOT_STARTED
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    request: {
       query: GetOperationalNeedAnswer,
+      skip: false,
       variables: {
         id: modelID,
         generalCharacteristics: false,
         participantsAndProviders: true,
+        beneficiaries: false,
         opsEvalAndLearning: false,
         payments: false,
         managePartCDEnrollment: false,
@@ -51,6 +73,8 @@ const mocks = [
         recruitmentMethod: false,
         selectionMethod: true,
         communicationMethod: false,
+        providerOverlap: false,
+        beneficiaryOverlap: false,
         helpdeskUse: false,
         iddocSupport: false,
         benchmarkForPerformance: false,
@@ -96,12 +120,12 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <MockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <NeedQuestionAndAnswer
               modelID={modelID}
-              operationalNeed={operationalNeed}
+              operationalNeedID={operationalNeedID}
             />
-          </MockedProvider>
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
@@ -127,12 +151,12 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <MockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <NeedQuestionAndAnswer
               modelID={modelID}
-              operationalNeed={operationalNeed}
+              operationalNeedID={operationalNeedID}
             />
-          </MockedProvider>
+          </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
     );
