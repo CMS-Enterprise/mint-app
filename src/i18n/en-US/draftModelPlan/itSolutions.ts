@@ -13,6 +13,34 @@ const itSolutions = {
     },
     implementationStatuses: 'Implementation statuses'
   },
+  solutionStatuses: {
+    notStarted: {
+      status: 'Not started',
+      description: 'No work has started on this service'
+    },
+    onboarding: {
+      status: 'Onboarding',
+      description:
+        'Model work is being planned (e.g., contract modification, change request, or onboarding request)'
+    },
+    backlog: {
+      status: 'Backlog',
+      description: 'Model work is on the project team’s backlog'
+    },
+    inProgress: {
+      status: 'In progress',
+      description:
+        'Model work is in progress (e.g., developement, configuration, testing, etc.)'
+    },
+    completed: {
+      status: 'Completed',
+      description: 'Model work is finished'
+    },
+    atRisk: {
+      status: 'At risk',
+      description: 'Work is delayed or blocked and could affect timelines'
+    }
+  },
   itSolutionsTable: {
     id: 'operational-needs',
     title: 'Operational Needs Table',
@@ -81,7 +109,38 @@ const itSolutions = {
   dontAdd: 'Don’t add solutions and return to tracker',
   helpChoosing: 'Need help choosing a solution?',
   helpfulLinks: 'Helpful links',
-  availableSolutions: 'Available operational solutions (opens in a new tab)'
+  availableSolutions: 'Available operational solutions (opens in a new tab)',
+  addSolution: 'Add a solution',
+  addSolutionInfo:
+    'Select which service or solution you’ll use for this operational need.',
+  howWillYouSolve: 'How will you solve this?',
+  howWillYouSolveInfo:
+    'Select an operational solution or select "Other" if you’ll solve this a different way.',
+  addSolutionButton: 'Add solution',
+  addSolutionDetails: 'Add solution details',
+  dontAddSolution: 'Don’t add and return to previous page',
+  dontUpdateSolution: 'Don’t update and return to previous page',
+  updateSolutionDetails: 'Update solution details',
+  solutionName: 'Please add a name for your solution',
+  solutionPOC: 'Point of contact information',
+  solutionPOCInfo: 'Point of contact',
+  solutionEmailInfo: 'Email or other contact information',
+  otherSolution: 'Other',
+  updateTheseDetails: 'Update these details',
+  removeTheseDetails: 'Remove these details',
+  addError:
+    'There was an error adding your solution details. Please try again.',
+  updateError:
+    'There was an error updating your solution details. Please try again.',
+  successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}',
+  solution: 'Solution',
+  saveSolutions: 'Save solutions',
+  addImplementationDetails: 'Add solution implementation details',
+  addImplementationDetailsInfo:
+    'Add additional information and update the implementation status of each selected solution. If you do not know this information you may add it at a later date.',
+  mustStartBy: 'Must start by',
+  mustFinishBy: 'Must finish by',
+  whatIsStatus: 'What is the status of this solution?'
 };
 
 export default itSolutions;

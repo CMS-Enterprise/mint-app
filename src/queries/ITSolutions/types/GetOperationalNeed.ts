@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OperationalNeedKey, OperationalSolutionKey } from "./../../../types/graphql-global-types";
+import { OperationalNeedKey, OperationalSolutionKey, OpSolutionStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOperationalNeed
@@ -14,8 +14,13 @@ export interface GetOperationalNeed_operationalNeed_solutions {
   id: UUID;
   name: string | null;
   key: OperationalSolutionKey | null;
+  pocName: string | null;
+  pocEmail: string | null;
   needed: boolean | null;
   nameOther: string | null;
+  mustStartDts: Time | null;
+  mustFinishDts: Time | null;
+  status: OpSolutionStatus;
 }
 
 export interface GetOperationalNeed_operationalNeed {
@@ -35,4 +40,5 @@ export interface GetOperationalNeed {
 
 export interface GetOperationalNeedVariables {
   id: UUID;
+  includeNotNeeded?: boolean | null;
 }

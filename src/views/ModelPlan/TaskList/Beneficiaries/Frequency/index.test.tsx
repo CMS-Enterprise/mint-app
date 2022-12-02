@@ -7,11 +7,15 @@ import getFrequency from 'queries/Beneficiaries/getFrequency';
 import { GetFrequency_modelPlan_beneficiaries as BeneficiaryFrequencyType } from 'queries/Beneficiaries/types/GetFrequency';
 import {
   FrequencyType,
+  OperationalNeedKey,
   OverlapType,
   TaskStatus
 } from 'types/graphql-global-types';
 
 import Frequency from './index';
+
+const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
@@ -31,14 +35,27 @@ const beneficiaryMock = [
   {
     request: {
       query: getFrequency,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
-          beneficiaries: mockData
+          beneficiaries: mockData,
+          operationalNeeds: [
+            {
+              __typename: 'OperationalNeed',
+              id: operationalNeedID,
+              modelPlanID: modelID,
+              name: 'Obtain an application support contractor',
+              key: OperationalNeedKey.APP_SUPPORT_CON,
+              nameOther: null,
+              needed: true,
+              modifiedDts: '',
+              solutions: []
+            }
+          ]
         }
       }
     }
