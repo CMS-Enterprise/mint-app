@@ -7,7 +7,7 @@
 # TASK_FAMILY
 
 # fail on any error
-set -eu 
+set -Eeuo pipefail
 
 # Construct full ECR Image path
 ECR_IMAGE="${ECR_REGISTRY}/${ECR_REPOSITORY}:${NEW_IMAGE_TAG}"

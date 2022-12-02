@@ -71,6 +71,8 @@ jobs:
           ECR_REPOSITORY: mint-db-clean
           NEW_IMAGE_TAG: latest
           TASK_FAMILY: "db-clean-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-app"
+          SECURITY_GROUP_NAME: "ecs-db-clean-${{ inputs.env }}"
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/run_ecs_task.sh
@@ -80,6 +82,8 @@ jobs:
           ECR_REPOSITORY: mint-db-migrate
           NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
           TASK_FAMILY: "db-migrate-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-app"
+          SECURITY_GROUP_NAME: "ecs-db-migrate-${{ inputs.env }}"
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/run_ecs_task.sh

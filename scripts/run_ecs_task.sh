@@ -8,7 +8,7 @@
 # SECURITY_GROUP_NAME
 
 # fail on any error
-set -eu 
+set -Eeuo pipefail
 
 # VPC_ID=$(aws ec2 describe-vpcs | jq -r '.Vpcs[0].VpcId')
 SG_IDS=$(aws ec2 describe-security-groups --filters="Name=group-name,Values=${SECURITY_GROUP_NAME}" --query "SecurityGroups[*].GroupId" | jq -r tostring)
