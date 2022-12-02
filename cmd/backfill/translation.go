@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"strconv"
+
+	"github.com/lib/pq"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 )
@@ -77,51 +80,125 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 		return
 
 	}
-	oEntry := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
-	if !oEntry.IsValid() {
+	bModel := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
+	// bModel := reflect.Indirect().Elem().FieldByName(t.ModelName)
+	// interF, bModel := t.getObject(entry)
+
+	// log.Default().Print(" " + fmt.Sprintf(%s,)) + " . Object name is " + fmt.Sprint(t.ModelName))
+	if !bModel.IsValid() {
 		log.Default().Print("couldn't get object for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName))
 		return
 	}
-	log.Default().Print(oEntry.Kind())
-	// oEntry := reflect.Indirect(VEntry).FieldByName(t.ModelName)
 
-	// oEntry := reflect.ValueOf(obj).Elem()
+	log.Default().Print("buisness model kind: ", bModel.Kind(), ". buisness model type: ", bModel.Type())
+	// bModel := reflect.Indirect(VEntry).FieldByName(t.ModelName)
 
-	val := reflect.ValueOf(value)
-	log.Default().Print(oEntry.Addr().Elem())
+	log.Default().Print(bModel.Addr().Elem())
 
-	field := oEntry.FieldByName(t.Field)
+	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is now a pointer
+
+	// field := bModel.FieldByName(t.Field)
 
 	if !field.IsValid() {
 		log.Default().Print("couldn't get field for for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName) + " . Field name is " + fmt.Sprint(t.Field))
 		return
 	}
-	// field := reflect.ValueOf(oEntry).FieldByName(t.Field)
+	tErr := t.setField(&field, value, bModel) //Need to pass a Refence to the struct potentially to set that field?
+	if tErr != nil {
+		entry.Errors = append(entry.Errors, *tErr) //record any setting issue here
+	}
+	log.Default().Print("Tried to set the field. It is now :", field)
 
-	// if field.CanSet() (
-	// 	field.se
+}
 
-	// )
+func (t *Translation) setField(field *reflect.Value, value interface{}, obj interface{}) *TranslationError {
 
-	//panic: reflect.Value.Addr of unaddressable value --> Handle these instances
+	val := reflect.ValueOf(value)
 	fieldKind := field.Kind()
+	fieldType := field.Type()
+	valType := val.Type()
 	log.Default().Print(fieldKind)
-	if field.CanConvert(val.Type()) {
+	if fieldKind.String() == "ptr" {
+		log.Default().Print("found")
+		// element := field.Elem()
+		log.Default().Print(t, " ", fieldType)
+		// underlyingType := element.Type()
+		// log.Default().Print(element, " ", underlyingType)
+
+	}
+	if field.CanConvert(valType) {
 		field.Set(val)
 		log.Default().Print("Converted sucessfully")
-	} else { //MOVE to A FUNCTION
-		// try convert
+	} else {
 
-		log.Default().Print(val.Type(), " CAN't Convert to needed type ", fieldKind)
+		convVal, err := t.handleConversion(field, fieldType, value, val, valType, obj)
+		if err != nil {
+			return err
+
+		}
+		if convVal.IsValid() { //TODO need to handle converstion and apply the value better
+			field.Set(convVal)
+			return nil
+		}
+
+		return &TranslationError{
+			Translation: *t,
+			Message:     fmt.Sprintf(" CAN't Convert to needed type %s", fieldKind),
+		}
+
+		// log.Default().Print(val.Type(), " CAN't Convert to needed type ", fieldKind)
 	}
 
 	log.Default().Print(field.CanSet())
 
-	// TODO function that takes an interface of type and tries to cast the value? Maybe a receiver method
-	// func setField(field, field kind, value, translation)
-	log.Default().Print(t, field, fieldKind, val)
+	return nil
 
-	//TODO set the fields value! --> need to do some switching or configuration to make this work...
-	// field.Set(value)
+}
+
+func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.Type, value interface{}, val reflect.Value, valType reflect.Type, object interface{}) (reflect.Value, *TranslationError) {
+
+	// mapstructure.Decode(val, &field)
+	//TODO FIX THIS! We need to actual handle a real field or something.... This doesn't work like this
+
+	fieldKind := field.Kind()
+
+	isPointer := fieldKind.String() == "ptr"
+	log.Default().Print("Pointer? ", isPointer)
+	conVal := reflect.Value{}
+	var tErr *TranslationError
+	switch fieldType.String() {
+	case "*string":
+		pnter := fmt.Sprint(value)
+		conVal = reflect.ValueOf(&pnter)
+
+	case "pq.StringArray":
+		conVal = reflect.ValueOf(pq.StringArray{value.(string)})
+
+	case "*bool":
+		bVal, err := strconv.ParseBool(fmt.Sprint(value))
+		//TODO need to handle yes/ no, which we don't right now
+		if err != nil {
+			tErr = &TranslationError{
+				Translation: *t,
+				Value:       value,
+				Message:     fmt.Sprintf("type conversion failed to convert to bool for type %s", fieldType),
+			}
+		}
+		conVal = reflect.ValueOf(&bVal)
+
+	case "*time.Time":
+
+		//TODO handle this
+
+	default:
+		tErr = &TranslationError{
+			Translation: *t,
+			Value:       value,
+			Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
+		}
+
+	}
+
+	return conVal, tErr
 
 }
