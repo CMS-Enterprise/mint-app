@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"reflect"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 )
@@ -59,4 +61,67 @@ func processTranslationRow(row DataRow) Translation {
 
 func (dt TranslationsDictionary) getTranslation(key string) Translation {
 	return dt[key]
+}
+
+func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
+	if value == nil || value == "" {
+		return
+	}
+	if t.Header == "Track Gainsharing Payments" {
+		log.Default().Print("this")
+	}
+
+	// VEntry := reflect.ValueOf(entry)
+	if t.ModelName == "?" || t.ModelName == "" {
+		log.Default().Print("translation not defined for " + t.Header + " . Value is " + fmt.Sprint(value))
+		return
+
+	}
+	oEntry := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
+	if !oEntry.IsValid() {
+		log.Default().Print("couldn't get object for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName))
+		return
+	}
+	log.Default().Print(oEntry.Kind())
+	// oEntry := reflect.Indirect(VEntry).FieldByName(t.ModelName)
+
+	// oEntry := reflect.ValueOf(obj).Elem()
+
+	val := reflect.ValueOf(value)
+	log.Default().Print(oEntry.Addr().Elem())
+
+	field := oEntry.FieldByName(t.Field)
+
+	if !field.IsValid() {
+		log.Default().Print("couldn't get field for for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName) + " . Field name is " + fmt.Sprint(t.Field))
+		return
+	}
+	// field := reflect.ValueOf(oEntry).FieldByName(t.Field)
+
+	// if field.CanSet() (
+	// 	field.se
+
+	// )
+
+	//panic: reflect.Value.Addr of unaddressable value --> Handle these instances
+	fieldKind := field.Kind()
+	log.Default().Print(fieldKind)
+	if field.CanConvert(val.Type()) {
+		field.Set(val)
+		log.Default().Print("Converted sucessfully")
+	} else { //MOVE to A FUNCTION
+		// try convert
+
+		log.Default().Print(val.Type(), " CAN't Convert to needed type ", fieldKind)
+	}
+
+	log.Default().Print(field.CanSet())
+
+	// TODO function that takes an interface of type and tries to cast the value? Maybe a receiver method
+	// func setField(field, field kind, value, translation)
+	log.Default().Print(t, field, fieldKind, val)
+
+	//TODO set the fields value! --> need to do some switching or configuration to make this work...
+	// field.Set(value)
+
 }

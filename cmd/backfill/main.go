@@ -3,11 +3,9 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"os"
-	"reflect"
 )
 
 func main() {
@@ -179,71 +177,9 @@ func translateDataRow(row *DataRow, td *TranslationsDictionary) *BackfillEntry {
 		// translation := td[row.Fields[i]]
 		translation := td.getTranslation(key)
 
-		translateField(&entry, value, &translation)
+		// translateField(&entry, value, &translation)
+		translation.translateField(&entry, value)
 	}
 	return &entry
-
-}
-
-func translateField(entry *BackfillEntry, value interface{}, translation *Translation) {
-	if value == nil || value == "" {
-		return
-	}
-	if translation.Header == "Track Gainsharing Payments" {
-		log.Default().Print("this")
-	}
-
-	// VEntry := reflect.ValueOf(entry)
-	if translation.ModelName == "?" || translation.ModelName == "" {
-		log.Default().Print("translation not defined for " + translation.Header + " . Value is " + fmt.Sprint(value))
-		return
-
-	}
-	oEntry := reflect.ValueOf(entry).Elem().FieldByName(translation.ModelName)
-	if !oEntry.IsValid() {
-		log.Default().Print("couldn't get object for " + translation.Header + " . Object name is " + fmt.Sprint(translation.ModelName))
-		return
-	}
-	log.Default().Print(oEntry.Kind())
-	// oEntry := reflect.Indirect(VEntry).FieldByName(translation.ModelName)
-
-	// oEntry := reflect.ValueOf(obj).Elem()
-
-	val := reflect.ValueOf(value)
-	log.Default().Print(oEntry.Addr().Elem())
-
-	field := oEntry.FieldByName(translation.Field)
-
-	if !field.IsValid() {
-		log.Default().Print("couldn't get field for for " + translation.Header + " . Object name is " + fmt.Sprint(translation.ModelName) + " . Field name is " + fmt.Sprint(translation.Field))
-		return
-	}
-	// field := reflect.ValueOf(oEntry).FieldByName(translation.Field)
-
-	// if field.CanSet() (
-	// 	field.se
-
-	// )
-
-	//panic: reflect.Value.Addr of unaddressable value --> Handle these instances
-	fieldKind := field.Kind()
-	log.Default().Print(fieldKind)
-	if field.CanConvert(val.Type()) {
-		field.Set(val)
-		log.Default().Print("Converted sucessfully")
-	} else { //MOVE to A FUNCTION
-		// try convert
-
-		log.Default().Print(val.Type(), " CAN't Convert to needed type ", fieldKind)
-	}
-
-	log.Default().Print(field.CanSet())
-
-	// TODO function that takes an interface of type and tries to cast the value? Maybe a receiver method
-	// func setField(field, field kind, value, translation)
-	log.Default().Print(translation, field, fieldKind, val)
-
-	//TODO set the fields value! --> need to do some switching or configuration to make this work...
-	// field.Set(value)
 
 }
