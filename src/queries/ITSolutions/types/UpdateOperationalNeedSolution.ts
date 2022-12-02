@@ -12,6 +12,7 @@ import { OperationalSolutionKey, OperationalSolutionChanges } from "./../../../t
 export interface UpdateOperationalNeedSolution_addOrUpdateOperationalSolution {
   __typename: "OperationalSolution";
   id: UUID;
+  nameOther: string | null;
   needed: boolean | null;
   key: OperationalSolutionKey | null;
 }

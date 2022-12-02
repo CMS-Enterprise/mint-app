@@ -23,6 +23,9 @@ export default gql`
         readyForReviewDts
         status
       }
+      operationalNeeds {
+        modifiedDts
+      }
     }
   }
 `;

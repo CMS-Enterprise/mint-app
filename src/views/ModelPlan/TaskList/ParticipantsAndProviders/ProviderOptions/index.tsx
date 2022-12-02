@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -100,11 +101,15 @@ export const ProviderOptions = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -128,6 +133,8 @@ export const ProviderOptions = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -433,16 +440,22 @@ export const ProviderOptions = () => {
                   className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="participants-and-providers-provider-overlap">
-                    {t('assumeRisk')}
+                    {t('overlap')}
                   </Label>
+
+                  {itSolutionsStarted && (
+                    <ITToolsWarning
+                      id="participants-and-providers-provider-overlap-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          `/models/${modelID}/task-list/it-solutions`
+                        )
+                      }
+                    />
+                  )}
+
                   <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
 
-                  <Label
-                    htmlFor="participants-and-providers-provider-overlap"
-                    className="text-normal"
-                  >
-                    {t('riskType')}
-                  </Label>
                   <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
                   <Fieldset>
                     {Object.keys(OverlapType)

@@ -82,7 +82,7 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: .5em;"
+              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: .5em; width: auto;"
             >
               <button
                 class="usa-button usa-button--unstyled"
@@ -117,7 +117,7 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px;"
+              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
             >
               <button
                 class="usa-button usa-button--unstyled"
@@ -152,7 +152,7 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px;"
+              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
             >
               <button
                 class="usa-button usa-button--unstyled"
