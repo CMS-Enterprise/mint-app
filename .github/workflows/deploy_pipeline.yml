@@ -28,7 +28,7 @@ jobs:
   #     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   deploy_dev:
-    needs: Run_Tests
+    # needs: Run_Tests
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: dev
