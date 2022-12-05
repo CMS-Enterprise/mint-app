@@ -46,8 +46,9 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 	// 	Port: config.Port,
 	// }
 	smtpServer := &mail.SMTPServer{
-		Host: "internal-Enterpris-SMTPProd-I20YLD1GTM6L-357506541.us-east-1.elb.amazonaws.com",
-		Port: 25,
+		Host:      "internal-Enterpris-SMTPProd-I20YLD1GTM6L-357506541.us-east-1.elb.amazonaws.com",
+		Port:      25,
+		KeepAlive: true,
 	}
 
 	smtpClient, err := smtpServer.Connect()
