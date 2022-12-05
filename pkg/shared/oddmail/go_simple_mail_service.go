@@ -83,19 +83,26 @@ func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses
 	if !g.config.GetEnabled() {
 		return nil
 	}
+	fmt.Println("Creating new message")
 	email := mail.NewMSG()
+	fmt.Println("Setting from", from)
+	fmt.Println("Setting subject", subject)
 	email.SetFrom(from).
 		SetSubject(subject)
 
+	fmt.Println("To addresses", toAddresses)
 	for _, toAddress := range toAddresses {
 		email.AddTo(toAddress)
 	}
 
+	fmt.Println("CC addresses", ccAddresses)
 	for _, ccAddress := range ccAddresses {
 		email.AddCc(ccAddress)
 	}
 
+	fmt.Println("Set email body", body)
 	err := g.setEmailBody(email, contentType, body)
+	fmt.Println("ERR", err)
 	if err != nil {
 		return err
 	}
