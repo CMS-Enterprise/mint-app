@@ -1,11 +1,9 @@
 name: Deploy Pipeline
 
-# on:
-#   push:
-#     branches:
-#       - main
-
-on: push
+on:
+  push:
+    branches:
+      - main
 
 concurrency:
   group: deploy-pipeline
@@ -19,16 +17,16 @@ jobs:
       INFRA_ROLE_TO_ASSUME: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  # Run_Tests:
-  #   uses: ./.github/workflows/run_tests.yml
-  #   needs: Build_Application_Images
-  #   secrets:
-  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  #     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  Run_Tests:
+    uses: ./.github/workflows/run_tests.yml
+    needs: Build_Application_Images
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   deploy_dev:
-    # needs: Run_Tests
+    needs: Run_Tests
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: dev
