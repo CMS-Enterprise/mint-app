@@ -2,6 +2,7 @@ package oddmail
 
 import (
 	"errors"
+	"fmt"
 
 	mail "github.com/xhit/go-simple-mail/v2"
 )
@@ -23,7 +24,7 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 		}, nil
 	}
 
-	smtpServer := &mail.SMTPServer{
+	oldServer := &mail.SMTPServer{
 		Authentication: config.Authentication,
 		Encryption:     config.Encryption,
 		Username:       config.Username,
@@ -35,6 +36,14 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 		Port:           config.Port,
 		KeepAlive:      config.KeepAlive,
 		TLSConfig:      config.TLSConfig,
+	}
+	fmt.Printf("%+v\n", oldServer)
+
+	fmt.Println("NewGoSimpleMailService() - HOST - ", config.Host)
+	fmt.Println("NewGoSimpleMailService() - PORT - ", config.Port)
+	smtpServer := &mail.SMTPServer{
+		Host: config.Host,
+		Port: config.Port,
 	}
 
 	smtpClient, err := smtpServer.Connect()
