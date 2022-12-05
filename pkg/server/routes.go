@@ -25,7 +25,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
-	mail "github.com/xhit/go-simple-mail/v2"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -140,11 +139,6 @@ func (s *Server) routes(
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
 	emailServiceConfig.DefaultSender = s.Config.GetString(appconfig.EmailSenderKey)
-
-	if s.environment.Deployed() {
-		fmt.Println("Doing an email thing!")
-		doSomeEmailThing()
-	}
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
@@ -287,22 +281,4 @@ func (s *Server) routes(
 			return nil
 		})
 	}
-}
-
-func doSomeEmailThing() {
-	fmt.Println("Testing mail on startup")
-	serv := &mail.SMTPServer{
-		Host: "internal-Enterpris-SMTPProd-I20YLD1GTM6L-357506541.us-east-1.elb.amazonaws.com",
-		Port: 25,
-	}
-
-	smtpClient, err := serv.Connect()
-	fmt.Println("ERROR CONNECTING:", err)
-
-	email := mail.NewMSG()
-	email.SetFrom("no-reply-mint-dev@cms.hhs.gov")
-	email.AddTo("clay.benson@oddball.io")
-	email.SetBody(mail.TextPlain, "This is a test from EC2")
-	err = email.Send(smtpClient)
-	fmt.Println("ERR DOING EMAIL THING:", err)
 }

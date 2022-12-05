@@ -2,7 +2,6 @@ package oddmail
 
 import (
 	"errors"
-	"fmt"
 
 	mail "github.com/xhit/go-simple-mail/v2"
 )
@@ -10,7 +9,6 @@ import (
 // GoSimpleMailService is an EmailService implementation for the GoSimpleMail library
 type GoSimpleMailService struct {
 	smtpServer *mail.SMTPServer
-	smtpClient *mail.SMTPClient
 	config     EmailServiceConfig
 }
 
@@ -19,12 +17,11 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 	if !config.GetEnabled() {
 		return &GoSimpleMailService{
 			smtpServer: nil,
-			smtpClient: nil,
 			config:     &config,
 		}, nil
 	}
 
-	oldServer := &mail.SMTPServer{
+	smtpServer := &mail.SMTPServer{
 		Authentication: config.Authentication,
 		Encryption:     config.Encryption,
 		Username:       config.Username,
@@ -37,28 +34,9 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 		KeepAlive:      config.KeepAlive,
 		TLSConfig:      config.TLSConfig,
 	}
-	fmt.Printf("%+v\n", oldServer)
-
-	fmt.Println("NewGoSimpleMailService() - HOST - ", config.Host)
-	fmt.Println("NewGoSimpleMailService() - PORT - ", config.Port)
-	// smtpServer := &mail.SMTPServer{
-	// 	Host: config.Host,
-	// 	Port: config.Port,
-	// }
-	smtpServer := &mail.SMTPServer{
-		Host:      "internal-Enterpris-SMTPProd-I20YLD1GTM6L-357506541.us-east-1.elb.amazonaws.com",
-		Port:      25,
-		KeepAlive: true,
-	}
-
-	smtpClient, err := smtpServer.Connect()
-	if err != nil {
-		return nil, err
-	}
 
 	return &GoSimpleMailService{
 		smtpServer: smtpServer,
-		smtpClient: smtpClient,
 		config:     &config,
 	}, nil
 }
@@ -84,26 +62,19 @@ func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses
 	if !g.config.GetEnabled() {
 		return nil
 	}
-	fmt.Println("Creating new message")
 	email := mail.NewMSG()
-	fmt.Println("Setting from", from)
-	fmt.Println("Setting subject", subject)
 	email.SetFrom(from).
 		SetSubject(subject)
 
-	fmt.Println("To addresses", toAddresses)
 	for _, toAddress := range toAddresses {
 		email.AddTo(toAddress)
 	}
 
-	fmt.Println("CC addresses", ccAddresses)
 	for _, ccAddress := range ccAddresses {
 		email.AddCc(ccAddress)
 	}
 
-	fmt.Println("Set email body", body)
 	err := g.setEmailBody(email, contentType, body)
-	fmt.Println("ERR", err)
 	if err != nil {
 		return err
 	}
@@ -116,7 +87,13 @@ func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
 	if !g.config.GetEnabled() {
 		return nil
 	}
-	return email.Send(g.smtpClient)
+
+	smtpClient, err := g.smtpServer.Connect()
+	if err != nil {
+		return err
+	}
+
+	return email.Send(smtpClient)
 }
 
 // GetConfig returns this service's configuration
