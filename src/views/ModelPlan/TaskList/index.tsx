@@ -106,6 +106,7 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const flags = useFlags();
+  console.log(flags);
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
@@ -286,7 +287,7 @@ const TaskList = () => {
                 className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
               >
                 {Object.keys(taskListSections).map((key: string) => {
-                  if (flags.hideItLeadExperience && key === 'itSolutions') {
+                  if (flags.hideITLeadExperience && key === 'itSolutions') {
                     return <div key={key} />;
                   }
 

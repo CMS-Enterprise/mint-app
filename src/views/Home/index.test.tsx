@@ -16,7 +16,7 @@ import Table from 'views/ModelPlan/Table';
 import Home from './index';
 
 const defaultFlags: Flags = {
-  hideItLeadExperience: false
+  hideITLeadExperience: false
 } as Flags;
 
 describe('The home page', () => {

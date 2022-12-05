@@ -29,10 +29,11 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             hash: data?.currentUser?.launchDarkly.signedHash
           },
           reactOptions: {
-            sendEventsOnFlagRead: false
+            sendEventsOnFlagRead: false,
+            useCamelCaseFlagKeys: false
           },
           flags: {
-            hideItLeadExperience: true
+            hideITLeadExperience: true
           }
         });
 

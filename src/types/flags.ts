@@ -1,5 +1,5 @@
 export type Flags = {
-  hideItLeadExperience: boolean;
+  hideITLeadExperience: boolean;
 };
 
 export type FlagsState = {

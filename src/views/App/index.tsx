@@ -150,7 +150,7 @@ const AppRoutes = () => {
         path="/models/:modelID/task-list/it-tools"
         component={ITTools}
       />
-      {!flags.hideItLeadExperience && (
+      {!flags.hideITLeadExperience && (
         <SecureRoute
           path="/models/:modelID/task-list/it-solutions"
           component={ITSolutions}
