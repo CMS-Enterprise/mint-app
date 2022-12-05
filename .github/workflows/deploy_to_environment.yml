@@ -91,16 +91,6 @@ jobs:
       #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
       #   run: |
       #     ./scripts/rds-snapshot-app-db
-      # - name: Run migrations
-      #   env:
-      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      #     ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      #     ECR_REPOSITORY: easi-db-migrate
-      #     LAMBDA_VERSION: ${{ inputs.lambda_version }}
-      #     ENV: ${{ inputs.env }}
-      #   run: |
-      #     ./scripts/deploy_service "easi-app-db-migrate" "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
-      #     ./scripts/db_lambda_invoke "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-app-db-migrate"
       - name: Deploy ECS service
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
