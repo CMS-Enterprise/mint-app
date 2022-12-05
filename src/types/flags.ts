@@ -1,10 +1,5 @@
 export type Flags = {
-  sandbox: boolean;
-  downgradeGovTeam: boolean;
-  downgrade508User: boolean;
-  downgrade508Tester: boolean;
-  systemProfile: boolean;
-  help: boolean;
+  hideItLeadExperience: boolean;
 };
 
 export type FlagsState = {

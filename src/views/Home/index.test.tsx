@@ -16,10 +16,7 @@ import Table from 'views/ModelPlan/Table';
 import Home from './index';
 
 const defaultFlags: Flags = {
-  downgrade508Tester: false,
-  downgrade508User: false,
-  downgradeGovTeam: false,
-  sandbox: true
+  hideItLeadExperience: false
 } as Flags;
 
 describe('The home page', () => {
