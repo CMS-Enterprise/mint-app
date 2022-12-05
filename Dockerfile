@@ -33,7 +33,8 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 
 CMD ["./bin/mint"]
 
-FROM gcr.io/distroless/base:latest
+# FROM gcr.io/distroless/base:latest
+FROM golang:1.18.3
 
 WORKDIR /mint/
 

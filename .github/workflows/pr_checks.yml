@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   Run_Tests:
+    if: ${{ false }}
     uses: ./.github/workflows/run_tests.yml
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
