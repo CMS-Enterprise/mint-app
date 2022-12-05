@@ -106,7 +106,6 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const flags = useFlags();
-  console.log(flags);
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
