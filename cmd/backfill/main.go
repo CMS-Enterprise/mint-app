@@ -4,14 +4,49 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 )
 
-func main() {
-	filePath := `cmd/backfill/data/sensitive/databackfillSept.csv`
-	translationPath := `cmd/backfill/data/dataTranslation.csv`
-	outputPath := `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
+const translationPath = `cmd/backfill/data/dataTranslation.csv`
+const outputPath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+
+func main() { //TODO make this a command
+
+	testing := false
+
+	if !testing {
+		transformData()
+	}
+
+	uploadData()
+}
+func uploadData() {
+
+	entries, err := getTransformedData(outputPath)
+
+	log.Default().Print(entries, err)
+
+}
+
+func getTransformedData(file string) ([]*BackfillEntry, error) {
+	f, err := os.Open(file) //nolint
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+	// remember to close the file at the end of the program
+	defer f.Close() //nolint
+
+	byteValue, _ := ioutil.ReadAll(f)
+
+	entries := []*BackfillEntry{}
+	err = json.Unmarshal(byteValue, &entries)
+	return entries, err
+}
+func transformData() {
 
 	table, err := readFile(filePath)
 
@@ -46,7 +81,6 @@ func main() {
 		panic("Can't write the file")
 	}
 	// os.WriteFile(outputPath,entries,)
-
 }
 
 // DataTable represents a table of data, (like a CSV or excel spreadshet)

@@ -5,6 +5,7 @@ import (
 	"log"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/lib/pq"
@@ -167,16 +168,29 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 	log.Default().Print("Pointer? ", isPointer)
 	conVal := reflect.Value{}
 	var tErr *TranslationError
-	switch fieldType.String() {
-	case "*string":
-		pnter := fmt.Sprint(value)
-		conVal = reflect.ValueOf(&pnter)
+	fieldTypeS := strings.TrimPrefix(fieldType.String(), "*")
+	valString := fmt.Sprint(value)
+
+	switch fieldTypeS { //TODO handle pointer and non pointer the same, just return the value as a pointer at the end if is a pointer
+	case "string":
+		conVal = valueOrPointer(valString, isPointer)
 
 	case "pq.StringArray":
-		conVal = reflect.ValueOf(pq.StringArray{value.(string)})
+		// conVal = reflect.ValueOf(pq.StringArray{value.(string)})
+		conVal = valueOrPointer(pq.StringArray{value.(string)}, isPointer)
 
-	case "*bool":
-		bVal, err := strconv.ParseBool(fmt.Sprint(value))
+	case "bool":
+		bVal, err := strconv.ParseBool(valString)
+		if err != nil {
+
+			if strings.ToLower(valString) == "yes" {
+				bVal = true
+				err = nil
+			} else if strings.ToLower(valString) == "no" {
+				bVal = false
+				err = nil
+			}
+		}
 		//TODO need to handle yes/ no, which we don't right now
 		if err != nil {
 			tErr = &TranslationError{
@@ -185,9 +199,9 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 				Message:     fmt.Sprintf("type conversion failed to convert to bool for type %s", fieldType),
 			}
 		}
-		conVal = reflect.ValueOf(&bVal)
+		conVal = valueOrPointer(bVal, isPointer)
 
-	case "*time.Time":
+	case "time.Time":
 
 		//month/date/year format from SharePoint
 		layout := "1/2/2006"
@@ -200,9 +214,7 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 			}
 
 		}
-		//TODO verify time parsing here
-
-		conVal = reflect.ValueOf(&tVal)
+		conVal = valueOrPointer(tVal, isPointer)
 
 	default:
 		tErr = &TranslationError{
@@ -214,5 +226,14 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 	}
 
 	return conVal, tErr
+
+}
+
+func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.Value {
+
+	if isPointer {
+		return reflect.ValueOf(&value)
+	}
+	return reflect.ValueOf(value)
 
 }
