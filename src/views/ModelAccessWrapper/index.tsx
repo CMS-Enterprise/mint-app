@@ -16,7 +16,7 @@ import {
   GetIsCollaboratorVariables
 } from 'queries/Collaborators/types/GetIsCollaborator';
 import { isUUID } from 'utils/modelPlan';
-import { isAssessment } from 'utils/user';
+import { isAssessment, isMAC } from 'utils/user';
 
 type ModelAccessWrapperProps = {
   children: React.ReactNode;
@@ -46,7 +46,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     variables: {
       id: modelID
     },
-    skip: !editable
+    skip: !editable || isMAC(groups)
   });
 
   const isCollaborator: boolean = data?.modelPlan?.isCollaborator || false;

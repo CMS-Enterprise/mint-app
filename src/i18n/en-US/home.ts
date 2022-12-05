@@ -30,6 +30,9 @@ const home = {
     admin: {
       heading: 'Model plans'
     },
+    mac: {
+      heading: 'Upcoming models'
+    },
     empty: {
       heading: 'You don’t have any draft model plans yet',
       body:
@@ -42,6 +45,10 @@ const home = {
       category: 'Category',
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
+      startDate: 'Model start date',
+      paymentDate: 'Payment start date',
+      keyCharacteristics: 'Key characteristics',
+      crTDLs: 'CRs and TDLs',
       status: 'Status',
       recentActivity: 'Recent activity'
     },

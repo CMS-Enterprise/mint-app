@@ -10,9 +10,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
+import JOB_CODES from 'constants/jobCodes';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
-import user from 'utils/user';
+import { isAssessment, isMAC } from 'utils/user';
 import DraftModelPlansTable from 'views/ModelPlan/Table';
 
 import WelcomeText from './WelcomeText';
@@ -26,6 +27,16 @@ const Home = () => {
   const flags = useFlags();
 
   const { message } = useMessage();
+
+  const headingType = (groups: typeof JOB_CODES) => {
+    if (isAssessment(groups)) {
+      return t('requestsTable.admin.heading');
+    }
+    if (isMAC(userGroups)) {
+      return t('requestsTable.mac.heading');
+    }
+    return t('requestsTable.basic.heading');
+  };
 
   const renderView = () => {
     if (isUserSet) {
@@ -49,7 +60,7 @@ const Home = () => {
                 </p>
                 <UswdsReactLink
                   className={classnames('usa-button', {
-                    'usa-button--outline': user.isAssessment(userGroups, flags)
+                    'usa-button--outline': isAssessment(userGroups, flags)
                   })}
                   variant="unstyled"
                   to="/models/steps-overview"
@@ -59,14 +70,11 @@ const Home = () => {
               </SummaryBox>
               <hr className="home__hr margin-top-4" aria-hidden />
               <div className="mint-header__basic">
-                <h2 className="margin-top-4">
-                  {user.isAssessment(userGroups, flags)
-                    ? t('requestsTable.admin.heading')
-                    : t('requestsTable.basic.heading')}
-                </h2>
+                <h2 className="margin-top-4">{headingType(userGroups)}</h2>
               </div>
               <DraftModelPlansTable
-                isAssessment={user.isAssessment(userGroups, flags)}
+                isAssessment={isAssessment(userGroups, flags)}
+                isMAC={isMAC(userGroups, flags)}
               />
               <SummaryBox
                 heading=""
