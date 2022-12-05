@@ -19,6 +19,7 @@ type AnalyzedAudit struct {
 
 // AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
 type AnalyzedModelPlan struct {
+	CurrentName   string     `json:"currentName"`
 	NameChange    AuditField `json:"nameChange"`
 	StatusChanges []string   `json:"statusChanges"`
 }

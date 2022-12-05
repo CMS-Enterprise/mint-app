@@ -77,6 +77,7 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	suite.NotNil(analyzedAudit)
 
 	// ModelPlan Changes
+	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.CurrentName)
 	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.NameChange.New)
 	suite.EqualValues([]string{string(plan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
 

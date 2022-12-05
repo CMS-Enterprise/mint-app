@@ -18,7 +18,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
-	changes, err := GenerateChanges(audits)
+	changes, err := w.GenerateChanges(audits, args[0].(uuid.UUID))
 	if err != nil {
 		return err
 	}
@@ -37,9 +37,9 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 }
 
 // GenerateChanges gets all the audit changes for the specified tables
-func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {
+func (w *Worker) GenerateChanges(audits []*models.AuditChange, modelPlanID uuid.UUID) (*models.AnalyzedAuditChange, error) {
 
-	modelPlanAudits, err := AnalyzeModelPlanAudits(audits)
+	modelPlanAudits, err := w.AnalyzeModelPlanAudits(audits, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,11 @@ func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 }
 
 // AnalyzeModelPlanAudits analyzes all the model plan name changes and status changes
-func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
+func (w *Worker) AnalyzeModelPlanAudits(audits []*models.AuditChange, modelPlanId uuid.UUID) (*models.AnalyzedModelPlan, error) {
+	mp, err := w.Store.ModelPlanGetByID(w.Logger, modelPlanId)
+	if err != nil {
+		return nil, err
+	}
 
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "model_plan"
@@ -112,6 +116,7 @@ func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 	})
 
 	analyzedModelPlan := models.AnalyzedModelPlan{
+		CurrentName:   mp.ModelName,
 		NameChange:    nameChangeAuditField,
 		StatusChanges: statusChangeAudits,
 	}
