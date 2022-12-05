@@ -5,6 +5,7 @@ import (
 	"log"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/lib/pq"
 
@@ -188,7 +189,20 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 
 	case "*time.Time":
 
-		//TODO handle this
+		//month/date/year format from SharePoint
+		layout := "1/2/2006"
+		tVal, err := time.Parse(layout, val.String())
+		if err != nil {
+			tErr = &TranslationError{
+				Translation: *t,
+				Value:       value,
+				Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+			}
+
+		}
+		//TODO verify time parsing here
+
+		conVal = reflect.ValueOf(&tVal)
 
 	default:
 		tErr = &TranslationError{
