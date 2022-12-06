@@ -7,8 +7,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -47,15 +49,57 @@ func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more err
 }
 
 func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
+	userName := entry.ModelPlan.CreatedBy
+	var princ authentication.Principal
+	var userInfo models.UserInfo
+	if userName == "" {
+		userName = "ANON"
+		princ = authentication.ANON
+		userInfo = models.UserInfo{
+			EuaUserID:  userName,
+			CommonName: userName,
+			Email:      "unknown@mint.cms.gov", //revisit this
+
+		}
+	} else {
+		oktaPrinc := authentication.OKTAPrincipal{
+			Username:          userName,
+			JobCodeASSESSMENT: false,
+			JobCodeUSER:       true,
+		}
+		princ = &oktaPrinc
+		userInfo = models.UserInfo{
+			EuaUserID:  userName,
+			CommonName: userName,
+			Email:      "unknown@mint.cms.gov", //revisit this, maybe we do some CEDAR or we redo everything? When we parse, should we note everything we need to look up from CEDAR or something?
+
+		}
+	}
 
 	//TODO make sure to capture all upload errors and store them somewhere
+	if entry.ModelPlan.ModelName == "" {
+		entry.ModelPlan.ModelName = "unknown" //TODO handle this and log error
+		u.Logger.Error("model name is not defined")
+	}
 
-	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, nil, nil)
+	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, &userInfo, princ)
 	if err != nil {
 		return err //TODO capture all errors and return collection? Or early return?
 
 	}
 	u.Logger.Log(zap.DebugLevel, "created modelPlan "+modelPlan.ModelName) //TODO need better logging?
+
+	retBasics, err := resolvers.PlanBasicsGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	if err != nil {
+		return err //TODO capture all errors and return collection? Or early return?
+	}
+	entry.PlanBasics.ID = retBasics.ID
+	// TODO! Should we just use the store instead of a resolver?
+	_, err = u.Store.PlanBasicsUpdate(&u.Logger, entry.PlanBasics)
+	if err != nil {
+		return err //TODO capture all errors and return collection? Or early return?
+	}
+	// basics, err := resolvers.UpdatePlanBasics(&u.Logger,)
 
 	return nil
 
