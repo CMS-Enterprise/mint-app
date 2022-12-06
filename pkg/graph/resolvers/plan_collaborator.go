@@ -41,7 +41,7 @@ func CreatePlanCollaborator(
 		return nil, nil, err
 	}
 
-	planFavorite, err := PlanFavoriteCreate(logger, principal, store, modelPlan.ID)
+	planFavorite, err := PlanFavoriteCreate(logger, principal, input.EuaUserID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
 	}
