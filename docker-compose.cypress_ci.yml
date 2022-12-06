@@ -23,10 +23,10 @@ services:
       - SERVER_CERT
       - SERVER_KEY
       - LOCAL_AUTH_ENABLED=true
-      - FLAG_SOURCE=LOCAL
-      # - FLAGDATA_FILE=/cypress/fixtures/flagdata.json
-    # volumes:
-    #   - ./cypress:/cypress # Mounted so that the backend container can access the file with LaunchDarkly flag values
+      - FLAG_SOURCE=FILE
+      - FLAGDATA_FILE=/cypress/fixtures/flagdata.json
+    volumes:
+      - ./cypress:/cypress # Mounted so that the backend container can access the file with LaunchDarkly flag values
   mint_client:
     build:
       context: .
