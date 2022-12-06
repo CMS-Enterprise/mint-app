@@ -19,6 +19,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -84,11 +85,15 @@ const Frequency = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (redirect?: 'task-list' | 'back') => {
+  const handleFormSubmit = (redirect?: 'task-list' | 'back' | string) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -112,6 +117,8 @@ const Frequency = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -285,8 +292,20 @@ const Frequency = () => {
                         error={!!flatErrors.beneficiaryOverlap}
                       >
                         <Label htmlFor="beneficiaries-overlap">
-                          {t('levelOfConfidence')}
+                          {t('beneficiaryOverlap')}
                         </Label>
+
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="beneficiaries-overlap-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
                         <FieldErrorMsg>
                           {flatErrors.beneficiaryOverlap}
                         </FieldErrorMsg>
@@ -298,7 +317,7 @@ const Frequency = () => {
                                 <Field
                                   as={Radio}
                                   id={`beneficiaries-overlap-${key}`}
-                                  name="beneficiaries-overlap"
+                                  name="beneficiariesOverlap"
                                   label={translateOverlapType(key)}
                                   value={key}
                                   checked={values.beneficiaryOverlap === key}

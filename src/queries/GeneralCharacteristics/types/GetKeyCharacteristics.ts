@@ -12,7 +12,6 @@ import { AlternativePaymentModelType, KeyCharacteristic } from "./../../../types
 export interface GetKeyCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
-  alternativePaymentModel: boolean | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];

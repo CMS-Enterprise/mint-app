@@ -15,7 +15,6 @@ export default gql`
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
-        alternativePaymentModel
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics

@@ -12,16 +12,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_participants_and_providers_create.sql
+//go:embed SQL/plan_participants_and_providers/create.sql
 var planParticipantsAndProvidersCreateSQL string
 
-//go:embed SQL/plan_participants_and_providers_update.sql
+//go:embed SQL/plan_participants_and_providers/update.sql
 var planParticipantsAndProvidersUpdateSQL string
 
-//go:embed SQL/plan_participants_and_providers_get_by_id.sql
+//go:embed SQL/plan_participants_and_providers/get_by_id.sql
 var planParticipantsAndProvidersGetByIDSQL string
 
-//go:embed SQL/plan_participants_and_providers_get_by_model_plan_id.sql
+//go:embed SQL/plan_participants_and_providers/get_by_model_plan_id.sql
 var planParticipantsAndProvidersGetByModelPlanIDSQL string
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object

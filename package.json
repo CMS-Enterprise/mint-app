@@ -114,6 +114,7 @@
     ]
   },
   "devDependencies": {
+    "@apollo/react-testing": "^4.0.0",
     "@cypress/webpack-preprocessor": "^5.12.2",
     "@storybook/addon-actions": "^6.3.1",
     "@storybook/addon-controls": "^6.3.1",
@@ -126,6 +127,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/json2csv": "^5.0.3",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
+    "apollo-link": "^1.2.14",
+    "apollo-link-error": "^1.1.13",
     "babel-loader": "8.1.0",
     "cypress": "^10.7.0",
     "cypress-otp": "^1.0.2",

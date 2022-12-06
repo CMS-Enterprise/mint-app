@@ -5,6 +5,7 @@ export default gql`
     $id: UUID!
     $generalCharacteristics: Boolean!
     $participantsAndProviders: Boolean!
+    $beneficiaries: Boolean!
     $opsEvalAndLearning: Boolean!
     $payments: Boolean!
     $managePartCDEnrollment: Boolean!
@@ -13,6 +14,8 @@ export default gql`
     $recruitmentMethod: Boolean!
     $selectionMethod: Boolean!
     $communicationMethod: Boolean!
+    $providerOverlap: Boolean!
+    $beneficiaryOverlap: Boolean!
     $helpdeskUse: Boolean!
     $iddocSupport: Boolean!
     $benchmarkForPerformance: Boolean!
@@ -41,6 +44,10 @@ export default gql`
         recruitmentMethod @include(if: $recruitmentMethod)
         selectionMethod @include(if: $selectionMethod)
         communicationMethod @include(if: $communicationMethod)
+        providerOverlap @include(if: $providerOverlap)
+      }
+      beneficiaries @include(if: $beneficiaries) {
+        beneficiaryOverlap @include(if: $beneficiaryOverlap)
       }
       opsEvalAndLearning @include(if: $opsEvalAndLearning) {
         helpdeskUse @include(if: $helpdeskUse)

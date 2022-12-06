@@ -27,7 +27,6 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: false,
   hasComponentsOrTracksDiffer: null,
   hasComponentsOrTracksNote: null,
-  alternativePaymentModel: true,
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS

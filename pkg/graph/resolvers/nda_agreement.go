@@ -12,9 +12,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// NDAAgreementGetByEUA returns an EUA agreement by eua
-func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
-	nda, err := store.NDAAgreementGetByEUA(logger, principal.ID())
+// NDAAgreementGetByUserID returns an EUA agreement by eua
+func NDAAgreementGetByUserID(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
+	nda, err := store.NDAAgreementGetByUserID(logger, principal.Account().ID)
 	info := model.NDAInfo{}
 	if err != nil {
 		return nil, err
@@ -32,16 +32,17 @@ func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal
 
 // NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
 func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
-	existing, err := store.NDAAgreementGetByEUA(logger, principal.ID())
+	user := principal.Account()
+	existing, err := store.NDAAgreementGetByUserID(logger, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
 	if existing == nil {
 		existing = &models.NDAAgreement{}
-		existing.CreatedBy = principal.ID()
-		existing.UserID = principal.ID()
+		existing.CreatedBy = user.ID
+		existing.UserID = user.ID
 	} else {
-		existing.ModifiedBy = models.StringPointer(principal.ID())
+		existing.ModifiedBy = &user.ID
 	}
 
 	if !existing.Agreed && agree { //If not currently agreed, set agreeDts to now
@@ -62,7 +63,7 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authen
 
 	} else {
 
-		existing.ModifiedBy = models.StringPointer(principal.ID())
+		existing.ModifiedBy = &user.ID
 		update, err3 := store.NDAAgreementUpdate(logger, existing)
 		if err3 != nil {
 			return nil, err3

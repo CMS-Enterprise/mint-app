@@ -88,7 +88,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.NoError(err)
 	suite.NotNil(updatedCollaborator.ModifiedBy)
 	suite.NotNil(updatedCollaborator.ModifiedDts)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedCollaborator.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedCollaborator.ModifiedBy)
 	suite.EqualValues("CLAB", updatedCollaborator.EUAUserID)
 	suite.EqualValues("Clab O' Rater", updatedCollaborator.FullName)
 	suite.EqualValues(models.TeamRoleEvaluation, updatedCollaborator.TeamRole)
@@ -164,8 +164,8 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
-	assessment := authentication.EUAPrincipal{
-		EUAID:             "FAIL",
+	assessment := authentication.OKTAPrincipal{
+		Username:          "FAIL",
 		JobCodeASSESSMENT: true,
 		JobCodeUSER:       true,
 	}
