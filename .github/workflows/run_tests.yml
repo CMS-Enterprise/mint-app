@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
           cache: 'yarn'
+      - run: yarn install --immutable
       - name: Set up go
         uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
@@ -204,6 +205,7 @@ jobs:
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
           cache: 'yarn'
+      - run: yarn install --immutable
       - name: Set up go
         uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
@@ -235,6 +237,7 @@ jobs:
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
           cache: 'yarn'
+      - run: yarn install --immutable
       # Switch to :coverage when we have improved coverage numbers
       # TODO: https://jiraent.cms.gov/browse/EASI-1993
       # - run: yarn test:coverage
@@ -254,6 +257,7 @@ jobs:
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
           cache: 'yarn'
+      - run: yarn install --immutable
       - name: Run typechecking
         id: typechecker
         # Uses GitHub environment files to store typechecker output and pass to next stage
