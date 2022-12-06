@@ -11,13 +11,13 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/plan_favorite_create.sql
+//go:embed SQL/plan_favorite/create.sql
 var planFavoriteCreateSQL string
 
-//go:embed SQL/plan_favorite_delete.sql
+//go:embed SQL/plan_favorite/delete.sql
 var planFavoriteDeleteSQL string
 
-//go:embed SQL/plan_favorite_get.sql
+//go:embed SQL/plan_favorite/get.sql
 var planFavoriteGetSQL string
 
 // PlanFavoriteCreate creates and returns a plan favorite object

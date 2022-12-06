@@ -11,13 +11,13 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
-//go:embed SQL/nda_agreement_get_by_user_id.sql
+//go:embed SQL/nda_agreement/get_by_user_id.sql
 var ndaAgreementGetByUserIDSQL string
 
-//go:embed SQL/nda_agreement_update.sql
+//go:embed SQL/nda_agreement/update.sql
 var ndaAgreementUpdateSQL string
 
-//go:embed SQL/nda_agreement_insert.sql
+//go:embed SQL/nda_agreement/insert.sql
 var ndaAgreementInsertSQL string
 
 // NDAAgreementGetByUserID returns an NDA based on a UserID

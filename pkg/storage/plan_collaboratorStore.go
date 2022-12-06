@@ -12,19 +12,19 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
-//go:embed SQL/plan_collaborator_create.sql
+//go:embed SQL/plan_collaborator/create.sql
 var planCollaboratorCreateSQL string
 
-//go:embed SQL/plan_collaborator_update.sql
+//go:embed SQL/plan_collaborator/update.sql
 var planCollaboratorUpdateSQL string
 
-//go:embed SQL/plan_collaborator_delete.sql
+//go:embed SQL/plan_collaborator/delete.sql
 var planCollaboratorDeleteSQL string
 
-//go:embed SQL/plan_collaborator_fetch_by_model_plan_id.sql
+//go:embed SQL/plan_collaborator/fetch_by_model_plan_id.sql
 var planCollaboratorFetchByModelPlanIDSQL string
 
-//go:embed SQL/plan_collaborator_fetch_by_id.sql
+//go:embed SQL/plan_collaborator/fetch_by_id.sql
 var planCollaboratorFetchByIDSQL string
 
 // PlanCollaboratorCreate creates a new plan collaborator

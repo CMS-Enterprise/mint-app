@@ -11,13 +11,13 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//go:embed SQL/analyzed_audit_create.sql
+//go:embed SQL/analyzed_audit/create.sql
 var analyzedAuditCreate string
 
-//go:embed SQL/analyzed_audit_delete.sql
+//go:embed SQL/analyzed_audit/delete.sql
 var analyzedAuditDelete string
 
-//go:embed SQL/analyzed_audit_get_by_model_plan_id_and_date.sql
+//go:embed SQL/analyzed_audit/get_by_model_plan_id_and_date.sql
 var analyzedAuditGetByModelPlanIDAndDate string
 
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
