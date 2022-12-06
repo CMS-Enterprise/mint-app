@@ -15,7 +15,7 @@ const outputPath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
 
 func main() { //TODO make this a command
 
-	testing := false
+	testing := true
 
 	if !testing {
 		transformData()
@@ -28,6 +28,8 @@ func uploadData() {
 	entries, err := getTransformedData(outputPath)
 
 	log.Default().Print(entries, err)
+	uploader := NewUploader()
+	uploader.uploadEntries(entries)
 
 }
 
