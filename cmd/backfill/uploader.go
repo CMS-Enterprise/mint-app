@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 
+	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
@@ -54,7 +56,12 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	var userInfo models.UserInfo
 	if userName == "" {
 		userName = "ANON"
-		princ = authentication.ANON
+		oktaPrinc := authentication.OKTAPrincipal{
+			Username:          userName,
+			JobCodeASSESSMENT: false,
+			JobCodeUSER:       true,
+		}
+		princ = &oktaPrinc
 		userInfo = models.UserInfo{
 			EuaUserID:  userName,
 			CommonName: userName,
@@ -94,14 +101,43 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 		return err //TODO capture all errors and return collection? Or early return?
 	}
 	entry.PlanBasics.ID = retBasics.ID
-	// TODO! Should we just use the store instead of a resolver?
-	_, err = u.Store.PlanBasicsUpdate(&u.Logger, entry.PlanBasics)
+	basicChanges := structToMap(entry.PlanBasics)
+	// basicChanges := map[string]interface{}{}
+	// mapstructure.Decode(entry.PlanBasics, &basicChanges)
+	// TODO! Should we just use the store instead of a resolver?\\
+
+	_, err = resolvers.UpdatePlanBasics(&u.Logger, entry.PlanBasics.ID, basicChanges, princ, &u.Store)
+	// _, err = u.Store.PlanBasicsUpdate(&u.Logger, entry.PlanBasics)
 	if err != nil {
 		return err //TODO capture all errors and return collection? Or early return?
 	}
 	// basics, err := resolvers.UpdatePlanBasics(&u.Logger,)
 
 	return nil
+
+}
+
+func structToMap(obj interface{}) map[string]interface{} {
+
+	mObj := map[string]interface{}{}
+
+	dec, err := mapstructure.NewDecoder(&mapstructure.DecoderConfig{
+		ErrorUnused: true,
+		TagName:     "json",
+		Result:      &mObj,
+		ZeroFields:  true,
+		Squash:      true,
+	})
+	if err != nil {
+		log.Default().Print("issue making a map decoder ")
+	}
+
+	err = dec.Decode(obj)
+	if err != nil {
+		log.Default().Print("issue decoding map ")
+	}
+
+	return mObj
 
 }
 
