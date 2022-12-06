@@ -117,7 +117,9 @@ const DraftModelPlansTable = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${row.original.id}/task-list`}
+                to={`/models/${row.original.id}/${
+                  isMAC ? 'read-only' : 'task-list'
+                }`}
                 className="display-block"
               >
                 {value}
