@@ -15,7 +15,6 @@ import {
   GetAllSingleModelData_modelPlan as SingleModelPlanType,
   GetAllSingleModelDataVariables
 } from 'queries/types/GetAllSingleModelData';
-import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import { csvFields, fieldsToUnwind } from './CsvData';
 
@@ -62,12 +61,7 @@ export const CsvExportLink = ({
 
   // Fetches all data from all model plans
   const [fetchAllModelCSVData] = useLazyQuery<GetAllModelDataType>(
-    GetAllModelPlans,
-    {
-      variables: {
-        filter: ModelPlanFilter.INCLUDE_ALL
-      }
-    }
+    GetAllModelPlans
   );
 
   // Fetches all data from a single model plan
