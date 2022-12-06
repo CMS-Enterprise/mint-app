@@ -177,8 +177,8 @@ const LDTimeout = "LD_TIMEOUT_SECONDS"
 // FlagSourceKey indicates where flags should be loaded from
 const FlagSourceKey = "FLAG_SOURCE"
 
-// FlagValuesFileKey is the key for the environment variable with the file path to a LaunchDarkly flag values file
-const FlagValuesFileKey = "FLAGDATA_FILE"
+// // FlagValuesFileKey is the key for the environment variable with the file path to a LaunchDarkly flag values file
+// const FlagValuesFileKey = "FLAGDATA_FILE"
 
 // LambdaEndpoint is the host to direct lambda requests to
 const LambdaEndpoint = "LAMBDA_ENDPOINT"
@@ -202,8 +202,8 @@ const (
 	// FlagSourceLocal is LOCAL
 	FlagSourceLocal FlagSourceOption = "LOCAL"
 
-	// FlagSourceFile is FILE (for setting LaunchDarkly flag values in a file for use when testing)
-	FlagSourceFile FlagSourceOption = "FILE"
+	// // FlagSourceFile is FILE (for setting LaunchDarkly flag values in a file for use when testing)
+	// FlagSourceFile FlagSourceOption = "FILE"
 
 	// FlagSourceLaunchDarkly is LAUNCH_DARKLY
 	FlagSourceLaunchDarkly FlagSourceOption = "LAUNCH_DARKLY"

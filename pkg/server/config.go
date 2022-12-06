@@ -108,7 +108,7 @@ func (s Server) NewFlagConfig() flags.Config {
 
 	var timeout time.Duration
 	var key string
-	var flagValuesFile string
+	// var flagValuesFile string
 
 	switch flagSource {
 	case appconfig.FlagSourceLocal:
@@ -119,22 +119,22 @@ func (s Server) NewFlagConfig() flags.Config {
 		s.checkRequiredConfig(appconfig.LDTimeout)
 		timeout = time.Duration(s.Config.GetInt(appconfig.LDTimeout)) * time.Second
 		key = s.Config.GetString(appconfig.LDKey)
-	case appconfig.FlagSourceFile:
-		s.checkRequiredConfig(appconfig.FlagValuesFileKey)
-		flagValuesFile = s.Config.GetString(appconfig.FlagValuesFileKey)
+	// case appconfig.FlagSourceFile:
+	// 	s.checkRequiredConfig(appconfig.FlagValuesFileKey)
+	// 	flagValuesFile = s.Config.GetString(appconfig.FlagValuesFileKey)
 	default:
 		opts := []appconfig.FlagSourceOption{
 			appconfig.FlagSourceLocal,
 			appconfig.FlagSourceLaunchDarkly,
-			appconfig.FlagSourceFile,
+			// appconfig.FlagSourceFile,
 		}
 		s.logger.Fatal(fmt.Sprintf("%s must be set to one of %v", appconfig.FlagSourceKey, opts))
 	}
 
 	return flags.Config{
-		Source:         flagSource,
-		Key:            key,
-		Timeout:        timeout,
-		FlagValuesFile: flagValuesFile,
+		Source:  flagSource,
+		Key:     key,
+		Timeout: timeout,
+		// FlagValuesFile: flagValuesFile,
 	}
 }
