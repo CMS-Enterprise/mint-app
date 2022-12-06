@@ -97,13 +97,14 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		).
 		AnyTimes()
 
-	collaborator, err := CreatePlanCollaborator(
+	collaborator, _, err := CreatePlanCollaborator(
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		false,
 	)
 	suite.NoError(err)
 	return collaborator

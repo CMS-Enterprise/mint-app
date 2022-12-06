@@ -90,13 +90,14 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID
 		).
 		AnyTimes()
 
-	collaborator, err := resolvers.CreatePlanCollaborator(
+	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		false,
 	)
 	suite.NoError(err)
 	return collaborator

@@ -14,7 +14,13 @@ func (suite *ResolverSuite) TestIsPlanFavorited() {
 	}
 	plan := suite.createModelPlan("My Favorite Plan")
 
-	_, err := PlanFavoriteCreate(suite.testConfigs.Logger, princ, suite.testConfigs.Store, plan.ID)
+	_, err := PlanFavoriteCreate(
+		suite.testConfigs.Logger,
+		princ,
+		suite.testConfigs.UserInfo.EuaUserID,
+		suite.testConfigs.Store,
+		plan.ID,
+	)
 
 	suite.NoError(err)
 
@@ -34,7 +40,13 @@ func (suite *ResolverSuite) TestPlanFavoriteCreate() {
 	}
 	plan := suite.createModelPlan("My Favorite Plan")
 
-	favorite, err := PlanFavoriteCreate(suite.testConfigs.Logger, princ, suite.testConfigs.Store, plan.ID)
+	favorite, err := PlanFavoriteCreate(
+		suite.testConfigs.Logger,
+		princ,
+		suite.testConfigs.UserInfo.EuaUserID,
+		suite.testConfigs.Store,
+		plan.ID,
+	)
 
 	suite.NoError(err)
 	suite.EqualValues(favorite.ModelPlanID, plan.ID)
@@ -52,7 +64,13 @@ func (suite *ResolverSuite) TestPlanFavoriteDelete() {
 	}
 	plan := suite.createModelPlan("My Favorite Plan")
 
-	favorite, err := PlanFavoriteCreate(suite.testConfigs.Logger, princ, suite.testConfigs.Store, plan.ID)
+	favorite, err := PlanFavoriteCreate(
+		suite.testConfigs.Logger,
+		princ,
+		suite.testConfigs.UserInfo.EuaUserID,
+		suite.testConfigs.Store,
+		plan.ID,
+	)
 
 	suite.NoError(err)
 
@@ -71,7 +89,13 @@ func (suite *ResolverSuite) TestPlanFavoriteGet() {
 	}
 	plan := suite.createModelPlan("My Favorite Plan")
 
-	favorite, err := PlanFavoriteCreate(suite.testConfigs.Logger, princ, suite.testConfigs.Store, plan.ID)
+	favorite, err := PlanFavoriteCreate(
+		suite.testConfigs.Logger,
+		princ,
+		suite.testConfigs.UserInfo.EuaUserID,
+		suite.testConfigs.Store,
+		plan.ID,
+	)
 	suite.NoError(err)
 
 	retFav, err := PlanFavoriteGet(suite.testConfigs.Logger, princ, suite.testConfigs.Store, favorite.ModelPlanID)

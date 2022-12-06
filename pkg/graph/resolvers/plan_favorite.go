@@ -24,9 +24,9 @@ func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, sto
 }
 
 // PlanFavoriteCreate creates a new plan favorite record in the database
-func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, userEUAID string, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 
-	favorite := models.NewPlanFavorite(principal.ID(), modelPlanID)
+	favorite := models.NewPlanFavorite(userEUAID, modelPlanID)
 
 	err := BaseStructPreCreate(logger, &favorite, principal, store, false) //you don't need to be a collaborator to favorite a model plan.
 	if err != nil {
