@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetModelPlans($includeAll: Boolean!) {
-    modelPlanCollection(includeAll: $includeAll) {
+  query GetModelPlans($filter: ModelPlanFilter!) {
+    modelPlanCollection(filter: $filter) {
       id
       modelName
       status

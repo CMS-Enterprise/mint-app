@@ -15,6 +15,7 @@ import {
   GetAllSingleModelData_modelPlan as SingleModelPlanType,
   GetAllSingleModelDataVariables
 } from 'queries/types/GetAllSingleModelData';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import { csvFields, fieldsToUnwind } from './CsvData';
 
@@ -64,7 +65,7 @@ export const CsvExportLink = ({
     GetAllModelPlans,
     {
       variables: {
-        includeAll
+        filter: ModelPlanFilter.INCLUDE_ALL
       }
     }
   );

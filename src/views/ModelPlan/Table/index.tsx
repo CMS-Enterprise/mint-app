@@ -22,6 +22,7 @@ import {
   GetModelPlans as GetDraftModelPlansType,
   GetModelPlans_modelPlanCollection as DraftModelPlanType
 } from 'queries/types/GetModelPlans';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateModelPlanStatus } from 'utils/modelPlan';
@@ -341,9 +342,25 @@ const DraftModelPlansTable = ({
   hiddenColumns,
   isAssessment
 }: DraftModelTableProps) => {
+  let queryType = ModelPlanFilter.COLLAB_ONLY;
+
+  // TODO: temp isMAC variable
+  // Will be updated whem MAC job code created
+  const isMAC = false;
+
+  if (isAssessment) {
+    queryType = ModelPlanFilter.INCLUDE_ALL;
+  } else if (isMAC) {
+    queryType = ModelPlanFilter.WITH_CR_TDLS;
+  }
+
   const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
     GetDraftModelPlans,
-    { variables: { includeAll: isAssessment } }
+    {
+      variables: {
+        filter: queryType
+      }
+    }
   );
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];

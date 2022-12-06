@@ -285,6 +285,12 @@ export enum ModelLearningSystemType {
   PARTICIPANT_COLLABORATION = "PARTICIPANT_COLLABORATION",
 }
 
+export enum ModelPlanFilter {
+  COLLAB_ONLY = "COLLAB_ONLY",
+  INCLUDE_ALL = "INCLUDE_ALL",
+  WITH_CR_TDLS = "WITH_CR_TDLS",
+}
+
 export enum ModelStatus {
   ANNOUNCED = "ANNOUNCED",
   CLEARED = "CLEARED",
