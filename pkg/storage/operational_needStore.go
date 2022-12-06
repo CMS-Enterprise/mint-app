@@ -11,28 +11,28 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/operational_need_collection_get_by_model_plan_id.sql
+//go:embed SQL/operational_need/collection_get_by_model_plan_id.sql
 var operationalNeedCollectionByModelPlanIDSQL string
 
-//go:embed SQL/operational_need_get_by_model_plan_id_and_type.sql
+//go:embed SQL/operational_need/get_by_model_plan_id_and_type.sql
 var operationalNeedGetByModelPlanIDAndTypeSQL string
 
-//go:embed SQL/operational_need_get_by_model_plan_id_and_other_type.sql
+//go:embed SQL/operational_need/get_by_model_plan_id_and_other_type.sql
 var operationalNeedGetByModelPlanIDAndOtherTypeSQL string
 
-//go:embed SQL/operational_need_get_by_id.sql
+//go:embed SQL/operational_need/get_by_id.sql
 var operationalNeedGetByIDSQL string
 
-//go:embed SQL/operational_need_update_by_id.sql
+//go:embed SQL/operational_need/update_by_id.sql
 var operationalNeedUpdateByIDSQL string
 
-//go:embed SQL/operational_need_insert_or_update.sql
+//go:embed SQL/operational_need/insert_or_update.sql
 var operationalNeedInsertOrUpdateSQL string
 
-//go:embed SQL/operational_need_insert_all_possible.sql
+//go:embed SQL/operational_need/insert_all_possible.sql
 var operationalNeedInsertAllPossibleSQL string
 
-//go:embed SQL/operational_need_insert_or_update_other.sql
+//go:embed SQL/operational_need/insert_or_update_other.sql
 var operationalNeedInsertOrUpdateOtherSQL string
 
 // OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan

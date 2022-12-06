@@ -10,13 +10,13 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/possible_operational_solution_collection_get_by_need_type.sql
+//go:embed SQL/possible_operational_solution/collection_get_by_need_type.sql
 var possibleOperationalSolutionCollectionByNeedTypeSQL string
 
-//go:embed SQL/possible_operational_solution_collection_get_all.sql
+//go:embed SQL/possible_operational_solution/collection_get_all.sql
 var possibleOperationalSolutionCollectionGelAllSQL string
 
-//go:embed SQL/possible_operational_solution_collection_get_by_operational_need_id.sql
+//go:embed SQL/possible_operational_solution/collection_get_by_operational_need_id.sql
 var possibleOperationalSolutionCollectionByOperationalNeedIDSQL string
 
 // PossibleOperationalSolutionCollectionGetByNeedType returns possible operational solutions for a given operational need

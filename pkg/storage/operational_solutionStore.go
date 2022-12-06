@@ -11,28 +11,28 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/operational_solution_collection_get_by_operational_need_id.sql
+//go:embed SQL/operational_solution/collection_get_by_operational_need_id.sql
 var operationalSolutionCollectionGetByOperationalNeedIDSQL string
 
-//go:embed SQL/operational_solution_and_possible_get_by_operational_need_id.sql
+//go:embed SQL/operational_solution/and_possible_get_by_operational_need_id.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
 
-//go:embed SQL/operational_solution_get_by_operational_need_id_and_type.sql
+//go:embed SQL/operational_solution/get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
 
-//go:embed SQL/operational_solution_get_by_operational_need_id_and_other_type.sql
+//go:embed SQL/operational_solution/get_by_operational_need_id_and_other_type.sql
 var operationalSolutionGetByOperationalNeedIDAndOtherTypeSQL string
 
-//go:embed SQL/operational_solution_get_by_id.sql
+//go:embed SQL/operational_solution/get_by_id.sql
 var operationalSolutionGetByIDSQL string
 
-//go:embed SQL/operational_solution_update_by_id.sql
+//go:embed SQL/operational_solution/update_by_id.sql
 var operationalSolutionUpdateByIDSQL string
 
-//go:embed SQL/operational_solution_insert_or_update.sql
+//go:embed SQL/operational_solution/insert_or_update.sql
 var operationalSolutionInsertOrUpdateSQL string
 
-//go:embed SQL/operational_solution_insert_or_update_other.sql
+//go:embed SQL/operational_solution/insert_or_update_other.sql
 var operationalSolutionInsertOrUpdateOtherSQL string
 
 // OperationalSolutionCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
