@@ -23,21 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
         with:
-          ref: ${{ env.GIT_HASH }}
-      - name: Configure go cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
-        with:
-          path: |
-            ~/go/pkg/mod
-          key: v1-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            v1-go-
+          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          cache: 'yarn'
       - name: Set up go
         uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
+          cache: true
       - name: Login to Docker Hub
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
@@ -202,38 +198,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
-        with:
-          ref: ${{ env.GIT_HASH }}
+        uses: actions/checkout@v3
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          cache: 'yarn'
       - name: Set up go
         uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
-      - name: Configure go cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
-        with:
-          path: |
-            ~/go/pkg/mod
-          key: v1-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            v1-go-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
+          cache: true
       # go-swagger is used for pre-commit hooks
       - name: Install go-swagger
         id: install-go-swagger
@@ -254,26 +229,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
-        with:
-          ref: ${{ env.GIT_HASH }}
+        uses: actions/checkout@v3
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
+          cache: 'yarn'
       # Switch to :coverage when we have improved coverage numbers
       # TODO: https://jiraent.cms.gov/browse/EASI-1993
       # - run: yarn test:coverage
@@ -287,26 +248,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v2.3.4
-        with:
-          ref: ${{ env.GIT_HASH }}
+        uses: actions/checkout@v3
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v2.1.5
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v2.1.6
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
+          cache: 'yarn'
       - name: Run typechecking
         id: typechecker
         # Uses GitHub environment files to store typechecker output and pass to next stage
