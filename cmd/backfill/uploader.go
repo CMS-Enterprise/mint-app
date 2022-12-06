@@ -113,6 +113,60 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	}
 	// basics, err := resolvers.UpdatePlanBasics(&u.Logger,)
 
+	retChar, err := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	if err != nil {
+		return err //TODO capture all errors and return collection? Or early return?
+	}
+	charChanges := structToMap(entry.PlanGeneralCharacteristics)
+	_, err = resolvers.UpdatePlanGeneralCharacteristics(&u.Logger, retChar.ID, charChanges, princ, &u.Store)
+	if err != nil {
+		return err
+	}
+
+	//partsAndProv
+	retParts, err := resolvers.PlanParticipantsAndProvidersGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	if err != nil {
+		return err
+	}
+	partsChanges := structToMap(entry.PlanParticipantsAndProviders)
+	_, err = resolvers.PlanParticipantsAndProvidersUpdate(&u.Logger, retParts.ID, partsChanges, princ, &u.Store)
+	if err != nil {
+		return err
+	}
+
+	//Beneficiares
+	retBene, err := resolvers.PlanBeneficiariesGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	if err != nil {
+		return err
+	}
+
+	beneChanges := structToMap(entry.PlanBeneficiaries)
+	_, err = resolvers.PlanBeneficiariesUpdate(&u.Logger, retBene.ID, beneChanges, princ, &u.Store)
+	if err != nil {
+		return err
+	}
+
+	//OpsEvalAndLearning
+	retOps, err := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	if err != nil {
+		return err
+	}
+	opsChanges := structToMap(entry.PlanOpsEvalAndLearning)
+	_, err = resolvers.PlanOpsEvalAndLearningUpdate(&u.Logger, retOps.ID, opsChanges, princ, &u.Store)
+	if err != nil {
+		return err
+	}
+
+	// Plan Payments
+	retPay, err := resolvers.PlanPaymentsReadByModelPlan(&u.Logger, &u.Store, modelPlan.ID)
+	if err != nil {
+		return err
+	}
+	payChanges := structToMap(entry.PlanPayments)
+	_, err = resolvers.PlanPaymentsUpdate(&u.Logger, &u.Store, retPay.ID, payChanges, princ)
+	if err != nil {
+		return err
+	}
 	return nil
 
 }
