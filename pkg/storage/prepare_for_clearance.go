@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 )
 
-//go:embed SQL/prepare_for_clearance_get_by_model_plan_id.sql
+//go:embed SQL/prepare_for_clearance/get_by_model_plan_id.sql
 var prepareForClearanceGetByModelPlanID string
 
 // ReadyForClearanceGetByModelPlanID reads information about a model plan's clearance

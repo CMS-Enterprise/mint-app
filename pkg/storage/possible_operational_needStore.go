@@ -9,7 +9,7 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/possible_operational_need_collection_get_by_model_plan_id.sql
+//go:embed SQL/possible_operational_need/collection_get_by_model_plan_id.sql
 var possibleOperationalNeedCollectionByModelPlanIDSQL string
 
 // PossibleOperationalNeedCollectionGetByModelPlanID returns possible operational needs that don't have an existing record for a model plan

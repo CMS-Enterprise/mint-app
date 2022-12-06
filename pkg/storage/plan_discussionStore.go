@@ -13,34 +13,34 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_discussion_create.sql
+//go:embed SQL/plan_discussion/create.sql
 var planDiscussionCreateSQL string
 
-//go:embed SQL/plan_discussion_collection_by_model_plan_id.sql
+//go:embed SQL/plan_discussion/collection_by_model_plan_id.sql
 var planDiscussionCollectionByModelPlanIDSQL string
 
-//go:embed SQL/plan_discussion_update.sql
+//go:embed SQL/plan_discussion/update.sql
 var planDiscussionUpdateSQL string
 
-//go:embed SQL/plan_discussion_delete.sql
+//go:embed SQL/plan_discussion/delete.sql
 var planDiscussionDeleteSQL string
 
-//go:embed SQL/plan_discussion_get_by_id.sql
+//go:embed SQL/plan_discussion/get_by_id.sql
 var planDiscussionGetByID string
 
-//go:embed SQL/discussion_reply_create.sql
+//go:embed SQL/discussion_reply/create.sql
 var discussionReplyCreateSQL string
 
-//go:embed SQL/discussion_reply_collection_by_discussion_id.sql
+//go:embed SQL/discussion_reply/collection_by_discussion_id.sql
 var discussionReplyCollectionByDiscussionIDSQL string
 
-//go:embed SQL/discussion_reply_update.sql
+//go:embed SQL/discussion_reply/update.sql
 var discussionReplyUpdateSQL string
 
-//go:embed SQL/discussion_reply_delete.sql
+//go:embed SQL/discussion_reply/delete.sql
 var discussionReplyDeleteSQL string
 
-//go:embed SQL/discussion_reply_get_by_id.sql
+//go:embed SQL/discussion_reply/get_by_id.sql
 var discussionReplyGetByID string
 
 // PlanDiscussionCreate creates a plan discussion
