@@ -34,6 +34,9 @@ var modelPlanCollectionSQL string
 //go:embed SQL/model_plan/collection_by_collaborator.sql
 var modelPlanCollectionByCollaboratorSQL string
 
+//go:embed SQL/model_plan/collection_with_crtdl.sql
+var modelPlanCollectionWithCRTDlSQL string
+
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
@@ -197,6 +200,35 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 	arg := map[string]interface{}{
 		"archived": archived,
 		"euaID":    euaID,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
+}
+
+// ModelPlanCollectionWithCRTDLS returns a list of all model plans for which the there are CRTDls
+func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionWithCRTDlSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"archived": archived,
 	}
 
 	err = stmt.Select(&modelPlans, arg)

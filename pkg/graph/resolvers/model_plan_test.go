@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -67,26 +68,26 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		JobCodeASSESSMENT: false,
 	}
 
-	// Assert that CLAB only sees 1 model plan with includeAll = false
-	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, false)
+	// Assert that CLAB only sees 1 model plan with collab only filter
+	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 1)
 
-	// Assert that CLAB sees all 4 model plans with includeAll = true
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, true)
+	// Assert that CLAB sees all 4 model plans with include all filter
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
 
-	// Assert that TEST only sees all 4 model plans with includeAll = false (as they're a collaborator on all of them)
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, false)
+	// Assert that TEST only sees all 4 model plans with collab only filter (as they're a collaborator on all of them)
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
 
-	// Assert that TEST sees all 4 model plans with includeAll = true
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, true)
+	// Assert that TEST sees all 4 model plans with include all filter
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
