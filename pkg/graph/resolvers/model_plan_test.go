@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"time"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -55,11 +57,13 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	// Create 3 plans without additional collaborators (TEST is the only one, by default)
 	_ = suite.createModelPlan("Test Plan")
 	_ = suite.createModelPlan("Test Plan 2")
-	_ = suite.createModelPlan("Test Plan 3")
+	planWithCRTDLs := suite.createModelPlan("Test Plan with CRTDL")
 
 	// Create a plan that has CLAB as a collaborator (along with TEST)
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
 	suite.createPlanCollaborator(planWithCollab, "CLAB", "Clab Rater", models.TeamRoleEvaluation, "clab.rater@gmail.com")
+
+	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
 
 	// Get plan collection as CLAB
 	clabPrincipal := &authentication.OKTAPrincipal{
@@ -91,6 +95,12 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
+
+	// Assert that TEST sees all 1 model plan when CRDTL is seelcted
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls)
+	suite.NoError(err)
+	suite.NotNil(result)
+	suite.Len(result, 1)
 }
 
 func (suite *ResolverSuite) TestModelPlanNameHistory() {
