@@ -12,16 +12,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_general_characteristics_create.sql
+//go:embed SQL/plan_general_characteristics/create.sql
 var planGeneralCharacteristicsCreateSQL string
 
-//go:embed SQL/plan_general_characteristics_update.sql
+//go:embed SQL/plan_general_characteristics/update.sql
 var planGeneralCharacteristicsUpdateSQL string
 
-//go:embed SQL/plan_general_characteristics_get_by_id.sql
+//go:embed SQL/plan_general_characteristics/get_by_id.sql
 var planGeneralCharacteristicsGetByIDSQL string
 
-//go:embed SQL/plan_general_characteristics_get_by_model_plan_id.sql
+//go:embed SQL/plan_general_characteristics/get_by_model_plan_id.sql
 var planGeneralCharacteristicsGetByModelPlanIDSQL string
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics

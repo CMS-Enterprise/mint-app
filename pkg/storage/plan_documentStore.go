@@ -17,31 +17,31 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_document_create.sql
+//go:embed SQL/plan_document/create.sql
 var planDocumentCreateSQL string
 
-//go:embed SQL/plan_document_update.sql
+//go:embed SQL/plan_document/update.sql
 var planDocumentUpdateSQL string
 
-//go:embed SQL/plan_document_read_by_id.sql
+//go:embed SQL/plan_document/read_by_id.sql
 var planDocumentGetByIDSQL string
 
-//go:embed SQL/plan_document_read_by_model_plan_id.sql
+//go:embed SQL/plan_document/read_by_model_plan_id.sql
 var planDocumentGetByModelPlanIDSQL string
 
-//go:embed SQL/plan_documents_read_by_solution_id.sql
+//go:embed SQL/plan_document/read_by_solution_id.sql
 var planDocumentsGetBySolutionIDSQL string
 
-//go:embed SQL/plan_document_read_by_model_plan_id_not_restricted.sql
+//go:embed SQL/plan_document/read_by_model_plan_id_not_restricted.sql
 var planDocumentGetByModelPlanIDNotRestrictedSQL string
 
-//go:embed SQL/plan_document_read_by_solution_id_not_restricted.sql
+//go:embed SQL/plan_document/read_by_solution_id_not_restricted.sql
 var planDocumentGetBySolutionIDNotRestrictedSQL string
 
-//go:embed SQL/plan_document_delete_by_id.sql
+//go:embed SQL/plan_document/delete_by_id.sql
 var planDocumentDeleteByIDSQL string
 
-//go:embed SQL/plan_document_solution_links_delete_by_document_id.sql
+//go:embed SQL/plan_document_solution/links_delete_by_document_id.sql
 var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 
 // PlanDocumentCreate creates a plan document
