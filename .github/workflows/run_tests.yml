@@ -50,8 +50,8 @@ jobs:
         uses: HatsuneMiku3939/direnv-action@v1
       - name: Get docker images
         run: docker-compose pull
-      # - name: Docker Layer Caching
-      #   uses: satackey/action-docker-layer-caching@v0.0.11
+      - name: Docker Layer Caching
+        uses: satackey/action-docker-layer-caching@v0.0.11
         # Why does this step need to be done, you ask?
         # docker-compose, by default, allows referenceing other containers in the same network by name, i.e. "minio:9005".
         # Since the tests are being run outside docker, we need to ensure that the host "minio" is reachable, just like it is in the container.
@@ -61,6 +61,7 @@ jobs:
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
       - name: Run backend server tests
         run: |
+          export FLAG_SOURCE=FILE
           scripts/dev down
           scripts/dev up:backend
           scripts/dev test:go
