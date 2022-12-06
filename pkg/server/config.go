@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appses"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -41,17 +40,6 @@ func (s Server) NewDBConfig() storage.DBConfig {
 		SSLMode:        s.Config.GetString(appconfig.DBSSLModeConfigKey),
 		UseIAM:         useIAM,
 		MaxConnections: s.Config.GetInt(appconfig.DBMaxConnections),
-	}
-}
-
-// NewSESConfig returns a new email.Config and checks required fields
-func (s Server) NewSESConfig() appses.Config {
-	s.checkRequiredConfig(appconfig.AWSSESSourceARNKey)
-	s.checkRequiredConfig(appconfig.AWSSESSourceKey)
-
-	return appses.Config{
-		SourceARN: s.Config.GetString(appconfig.AWSSESSourceARNKey),
-		Source:    s.Config.GetString(appconfig.AWSSESSourceKey),
 	}
 }
 

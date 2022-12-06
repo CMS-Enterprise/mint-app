@@ -14,25 +14,12 @@ import {
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 
-// Used to identify if an operational need is depenedent on a task list answer
-export const isIndenpendentOperationalNeed = (
-  key: OperationalNeedKey | null
-) => {
-  if (
-    key === OperationalNeedKey.MANAGE_BEN_OVERLAP ||
-    key === OperationalNeedKey.MANAGE_PROV_OVERLAP
-  ) {
-    return true;
-  }
-  return false;
-};
-
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (
   needs: GetOperationalNeedsOperationalNeedsType[]
 ) => {
   return needs
-    .filter(need => !need.needed && !isIndenpendentOperationalNeed(need.key))
+    .filter(need => !need.needed)
     .map(need => {
       return {
         ...need,
@@ -50,7 +37,7 @@ export const filterNeedsFormatSolutions = (
 ) => {
   let operationalSolutions: GetOperationalNeedsSolutionsType[] = [];
   needs
-    .filter(need => need.needed || isIndenpendentOperationalNeed(need.key))
+    .filter(need => need.needed)
     .forEach(need => {
       if (need.solutions.length > 0) {
         operationalSolutions = operationalSolutions.concat(
@@ -58,7 +45,7 @@ export const filterNeedsFormatSolutions = (
         );
       } else {
         operationalSolutions.push(
-          emptySolution(need.nameOther || need.name, need.id)
+          emptySolution(need.nameOther || need.name, need.id, need.key)
         );
       }
     });
@@ -81,7 +68,11 @@ const formatSolutionsFromNeed = (
 };
 
 // Utility to populate an empty solution from an operational need
-const emptySolution = (needName: string | null, needID: string) => {
+const emptySolution = (
+  needName: string | null,
+  needID: string,
+  key: OperationalNeedKey | null
+) => {
   return {
     __typename: 'OperationalSolution',
     id: needID,
@@ -92,7 +83,7 @@ const emptySolution = (needName: string | null, needID: string) => {
     mustFinishDts: null,
     needed: false,
     nameOther: null,
-    key: null,
+    key,
     pocEmail: null,
     pocName: null,
     createdBy: '',
@@ -113,41 +104,44 @@ export const returnActionLinks = (
   readOnly?: boolean
 ): JSX.Element => {
   /* eslint no-underscore-dangle: 0 */
-  const operationalNeedKey =
-    operationalNeed.__typename === 'OperationalNeed'
-      ? operationalNeed.key
-      : operationalNeed.needKey;
+  const operationalNeedKey = operationalNeed.key || operationalNeed.needKey;
 
   const operationalNeedObj = operationalNeedMap[operationalNeedKey || 'NONE'];
 
+  const solutionActionLinks = (
+    <>
+      <UswdsReactLink
+        to="/"
+        className={`margin-right-2${readOnly ? ' display-block' : ''}`}
+      >
+        {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
+      </UswdsReactLink>
+      <UswdsReactLink to="/">
+        {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
+      </UswdsReactLink>
+    </>
+  );
+
+  // If row is a predefined operational solution and not an operational need/custom solution, return solutionActionLinks
+  if (!operationalNeedObj) {
+    return solutionActionLinks;
+  }
+
+  // Otherwise check the status of the operational need and return the relevant link
   switch (status) {
     case OpSolutionStatus.AT_RISK:
     case OpSolutionStatus.COMPLETED:
     case OpSolutionStatus.BACKLOG:
     case OpSolutionStatus.IN_PROGRESS:
     case OpSolutionStatus.ONBOARDING:
-      return (
-        <>
-          <UswdsReactLink
-            to="/"
-            className={`margin-right-2${readOnly ? ' display-block' : ''}`}
-          >
-            {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
-          </UswdsReactLink>
-          <UswdsReactLink to="/">
-            {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
-          </UswdsReactLink>
-        </>
-      );
+      return solutionActionLinks;
     case OpSolutionStatus.NOT_STARTED:
-      return operationalNeedObj ? (
+      return (
         <UswdsReactLink
           to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
         >
           {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
-      ) : (
-        <></>
       );
     case OperationalNeedStatus.NOT_NEEDED:
       return operationalNeedObj ? (

@@ -23,21 +23,21 @@ func TestPrincipal(t *testing.T) {
 		"disempowered": {
 			appcontext.WithPrincipal(
 				context.Background(),
-				&authentication.EUAPrincipal{EUAID: "WEAK"},
+				&authentication.OKTAPrincipal{Username: "WEAK"},
 			),
 			true,
 		},
 		"submitter": {
 			appcontext.WithPrincipal(
 				context.Background(),
-				&authentication.EUAPrincipal{EUAID: "MINT", JobCodeUSER: true},
+				&authentication.OKTAPrincipal{Username: "MINT", JobCodeUSER: true},
 			),
 			false,
 		},
 		"reviewer": {
 			appcontext.WithPrincipal(
 				context.Background(),
-				&authentication.EUAPrincipal{EUAID: "BOSS", JobCodeASSESSMENT: true},
+				&authentication.OKTAPrincipal{Username: "BOSS", JobCodeASSESSMENT: true},
 			),
 			false,
 		},

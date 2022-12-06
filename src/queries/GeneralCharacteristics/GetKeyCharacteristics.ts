@@ -7,7 +7,6 @@ export default gql`
       modelName
       generalCharacteristics {
         id
-        alternativePaymentModel
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics

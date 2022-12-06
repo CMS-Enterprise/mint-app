@@ -272,7 +272,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               data-testid="label"
               for="beneficiaries-overlap"
             >
-              What is your level of confidence on this estimate?
+              Will the beneficiaries overlap with other models?
             </label>
             <fieldset
               class="usa-fieldset"
@@ -285,7 +285,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-overlap-YES_NEED_POLICIES"
-                  name="beneficiaries-overlap"
+                  name="beneficiariesOverlap"
                   type="radio"
                   value="YES_NEED_POLICIES"
                 />
@@ -303,7 +303,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-overlap-YES_NO_ISSUES"
-                  name="beneficiaries-overlap"
+                  name="beneficiariesOverlap"
                   type="radio"
                   value="YES_NO_ISSUES"
                 />
@@ -321,7 +321,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-overlap-NO"
-                  name="beneficiaries-overlap"
+                  name="beneficiariesOverlap"
                   type="radio"
                   value="NO"
                 />

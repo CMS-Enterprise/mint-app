@@ -12,16 +12,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_beneficiaries_create.sql
+//go:embed SQL/plan_beneficiaries/create.sql
 var planBeneficiariesCreateSQL string
 
-//go:embed SQL/plan_beneficiaries_update.sql
+//go:embed SQL/plan_beneficiaries/update.sql
 var planBeneficiariesUpdateSQL string
 
-//go:embed SQL/plan_beneficiaries_get_by_id.sql
+//go:embed SQL/plan_beneficiaries/get_by_id.sql
 var planBeneficiariesGetByIDSQL string
 
-//go:embed SQL/plan_beneficiaries_get_by_model_plan_id.sql
+//go:embed SQL/plan_beneficiaries/get_by_model_plan_id.sql
 var planBeneficiariesGetByModelPlanIDSQL string
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object

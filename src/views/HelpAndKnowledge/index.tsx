@@ -3,6 +3,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import NotFound from 'views/NotFound';
 
+import GettingStarted from './Articles/GettingStarted';
+import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import HelpAndKnowledgeHome from './home';
@@ -26,6 +28,14 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />
+      </Route>
+
+      <Route path="/help-and-knowledge/getting-started" exact>
+        <GettingStarted />
+      </Route>
+
+      <Route path="/help-and-knowledge/it-implementation" exact>
+        <ITImplementation />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

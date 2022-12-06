@@ -16,25 +16,25 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/model_plan_create.sql
+//go:embed SQL/model_plan/create.sql
 var modelPlanCreateSQL string
 
-//go:embed SQL/model_plan_update.sql
+//go:embed SQL/model_plan/update.sql
 var modelPlanUpdateSQL string
 
-//go:embed SQL/model_plan_get_by_id.sql
+//go:embed SQL/model_plan/get_by_id.sql
 var modelPlanGetByIDSQL string
 
-//go:embed SQL/model_plan_get_by_name.sql
+//go:embed SQL/model_plan/get_by_name.sql
 var modelPlanGetByNameSQL string
 
-//go:embed SQL/model_plan_collection.sql
+//go:embed SQL/model_plan/collection.sql
 var modelPlanCollectionSQL string
 
-//go:embed SQL/model_plan_collection_by_collaborator.sql
+//go:embed SQL/model_plan/collection_by_collaborator.sql
 var modelPlanCollectionByCollaboratorSQL string
 
-//go:embed SQL/model_plan_delete_by_id.sql
+//go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
 // ModelPlanCreate creates a model plan

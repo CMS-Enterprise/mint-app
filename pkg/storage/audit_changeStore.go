@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -9,11 +10,14 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//go:embed SQL/audit_change_collection_by_id_and_table.sql
+//go:embed SQL/audit_change/collection_by_id_and_table.sql
 var auditChangeCollectionByIDAndTable string
 
-//go:embed SQL/audit_change_collection_by_id_and_table_and_field.sql
+//go:embed SQL/audit_change/collection_by_id_and_table_and_field.sql
 var auditChangeCollectionByIDAndTableAndField string
+
+//go:embed SQL/audit_change/collection_by_primary_key_or_foreign_keyand_date.sql
+var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
 func (s *Store) AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
@@ -59,6 +63,40 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, ta
 	arg := map[string]interface{}{"primary_key": primaryKey,
 		"table_name": tableName,
 		"field_name": fieldName,
+	}
+
+	err = stmt.Select(&auditChanges, arg)
+	if err != nil {
+		return nil, err
+
+	}
+
+	return auditChanges, nil
+
+}
+
+// AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns changes based on foreign key and date from the database.
+func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap.Logger, primaryKey uuid.UUID, foreignKey uuid.UUID, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
+	auditChanges := []*models.AuditChange{}
+	orderedQuery := auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate
+	orderClause := "" //default to ASCENDING
+	if sortDir == models.SortDesc {
+		orderClause = " ORDER BY 1 DESC"
+	}
+
+	orderedQuery = orderedQuery + orderClause
+
+	stmt, err := s.db.PrepareNamed(orderedQuery)
+	if err != nil {
+		return nil, err
+
+	}
+
+	arg := map[string]interface{}{
+		"primary_key": primaryKey,
+		"foreign_key": foreignKey,
+		"start_date":  date.Format("2006-01-02"),
+		"end_date":    date.AddDate(0, 0, 1).Format("2006-01-02"),
 	}
 
 	err = stmt.Select(&auditChanges, arg)

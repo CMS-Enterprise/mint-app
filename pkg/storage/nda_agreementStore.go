@@ -5,30 +5,31 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/nda_agreement_get_by_euaid.sql
-var ndaAgreementGetByEUAIDSQL string
+//go:embed SQL/nda_agreement/get_by_user_id.sql
+var ndaAgreementGetByUserIDSQL string
 
-//go:embed SQL/nda_agreement_update.sql
+//go:embed SQL/nda_agreement/update.sql
 var ndaAgreementUpdateSQL string
 
-//go:embed SQL/nda_agreement_insert.sql
+//go:embed SQL/nda_agreement/insert.sql
 var ndaAgreementInsertSQL string
 
-// NDAAgreementGetByEUA returns an NDA based on an euaID
-func (s *Store) NDAAgreementGetByEUA(logger *zap.Logger, euaID string) (*models.NDAAgreement, error) {
+// NDAAgreementGetByUserID returns an NDA based on a UserID
+func (s *Store) NDAAgreementGetByUserID(logger *zap.Logger, userID uuid.UUID) (*models.NDAAgreement, error) {
 	nda := models.NDAAgreement{}
 
-	statement, err := s.db.PrepareNamed(ndaAgreementGetByEUAIDSQL)
+	statement, err := s.db.PrepareNamed(ndaAgreementGetByUserIDSQL)
 	if err != nil {
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"user_id": euaID,
+		"user_id": userID,
 	}
 
 	err = statement.Get(&nda, arg)
@@ -48,12 +49,12 @@ func (s *Store) NDAAgreementUpdate(logger *zap.Logger, nda *models.NDAAgreement)
 
 	statement, err := s.db.PrepareNamed(ndaAgreementUpdateSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, nda)
+		return nil, err
 	}
 
 	err = statement.Get(nda, nda)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, nda)
+		return nil, err
 	}
 
 	return nda, nil
@@ -67,12 +68,12 @@ func (s *Store) NDAAgreementCreate(logger *zap.Logger, nda *models.NDAAgreement)
 
 	statement, err := s.db.PrepareNamed(ndaAgreementInsertSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, nda)
+		return nil, err
 	}
 
 	err = statement.Get(nda, &nda)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, nda)
+		return nil, err
 	}
 
 	return nda, nil

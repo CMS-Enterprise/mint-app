@@ -19,12 +19,17 @@ exports[`RelatedArticle matches the snapshot 1`] = `
           Overview for adding a model
         </h3>
       </header>
-      <span
-        class="usa-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-        data-testid="tag"
+      <a
+        class="usa-link width-fit-content display-block "
+        href="/help-and-knowledge/getting-started"
       >
-        Getting started
-      </span>
+        <span
+          class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+          data-testid="tag"
+        >
+          Getting started
+        </span>
+      </a>
       <div
         class="usa-card__body padding-x-0 article__body"
         data-testid="CardBody"

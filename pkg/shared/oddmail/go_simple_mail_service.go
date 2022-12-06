@@ -9,7 +9,6 @@ import (
 // GoSimpleMailService is an EmailService implementation for the GoSimpleMail library
 type GoSimpleMailService struct {
 	smtpServer *mail.SMTPServer
-	smtpClient *mail.SMTPClient
 	config     EmailServiceConfig
 }
 
@@ -18,7 +17,6 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 	if !config.GetEnabled() {
 		return &GoSimpleMailService{
 			smtpServer: nil,
-			smtpClient: nil,
 			config:     &config,
 		}, nil
 	}
@@ -37,14 +35,8 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 		TLSConfig:      config.TLSConfig,
 	}
 
-	smtpClient, err := smtpServer.Connect()
-	if err != nil {
-		return nil, err
-	}
-
 	return &GoSimpleMailService{
 		smtpServer: smtpServer,
-		smtpClient: smtpClient,
 		config:     &config,
 	}, nil
 }
@@ -95,7 +87,13 @@ func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
 	if !g.config.GetEnabled() {
 		return nil
 	}
-	return email.Send(g.smtpClient)
+
+	smtpClient, err := g.smtpServer.Connect()
+	if err != nil {
+		return err
+	}
+
+	return email.Send(smtpClient)
 }
 
 // GetConfig returns this service's configuration

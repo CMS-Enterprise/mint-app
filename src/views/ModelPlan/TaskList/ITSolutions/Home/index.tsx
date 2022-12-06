@@ -5,7 +5,6 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
-  IconNavigateNext,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -13,9 +12,12 @@ import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
+import Expire from 'components/shared/Expire';
+import useMessage from 'hooks/useMessage';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import HelpBox from '../_components/HelpBox';
+import ImplementationStatuses from '../_components/ImplementationStatus';
 
 import OperationalNeedsTable from './operationalNeedsTable';
 
@@ -23,6 +25,8 @@ const ITSolutionsHome = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const { message } = useMessage();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -44,6 +48,9 @@ const ITSolutionsHome = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
+      <Expire delay={4000}>{message}</Expire>
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {t('heading')}
       </PageHeading>
@@ -68,10 +75,7 @@ const ITSolutionsHome = () => {
           <li>{t('summaryBox.listItem.three')}</li>
         </ul>
 
-        <UswdsReactLink to="/" className="display-flex flex-align-center">
-          <IconNavigateNext className="margin-right-1" />
-          {t('summaryBox.implementationStatuses')}
-        </UswdsReactLink>
+        <ImplementationStatuses slim />
       </SummaryBox>
 
       <AskAQuestion modelID={modelID} />
