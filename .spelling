@@ -209,5 +209,5 @@ faktory
 cron
 asynq
 cedarldap
-l_d_a_p_client.go
+translated_client.go
 routes.go
