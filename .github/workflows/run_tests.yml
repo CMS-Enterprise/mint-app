@@ -61,6 +61,7 @@ jobs:
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
       - name: Run backend server tests
         run: |
+          export FLAG_SOURCE=FILE
           scripts/dev down
           scripts/dev up:backend
           scripts/dev test:go

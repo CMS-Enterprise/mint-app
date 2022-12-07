@@ -28,13 +28,12 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
           options: {
             hash: data?.currentUser?.launchDarkly.signedHash
           },
+          reactOptions: {
+            sendEventsOnFlagRead: false,
+            useCamelCaseFlagKeys: false
+          },
           flags: {
-            sandbox: true,
-            downgradeGovTeam: false,
-            downgrade508User: false,
-            downgrade508Tester: false,
-            help: false,
-            systemProfile: true
+            hideITLeadExperience: true
           }
         });
 
