@@ -132,7 +132,7 @@ func (amp AnalyzedModelPlan) Humanize() []string {
 	var humanizedNameChange string
 	var humanizedStatusChanges []string
 
-	if &amp.NameChange != nil && amp.NameChange.Old != nil {
+	if amp.NameChange.Old != nil {
 		humanizedNameChange = fmt.Sprintf("The model has been renamed (previously %s)", amp.NameChange.Old.(string))
 	}
 
@@ -209,7 +209,7 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 	}
 
 	// Ready for review
-	if len(aps.ReadyForClearance) > 0 {
+	if len(aps.ReadyForReview) > 0 {
 		updatedSectionNames := lo.Map(aps.ReadyForReview, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)

@@ -6,13 +6,17 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
-	Store  *storage.Store
-	Logger *zap.Logger
+	Store                *storage.Store
+	Logger               *zap.Logger
+	EmailService         *oddmail.GoSimpleMailService
+	EmailTemplateService *email.TemplateServiceImpl
 }
 
 // Work creates, configues, and starts worker
