@@ -90,10 +90,13 @@ func (s *Server) routes(
 	oktaConfig := s.NewOktaClientConfig()
 	jwtVerifier := okta.NewJwtVerifier(oktaConfig.OktaClientID, oktaConfig.OktaIssuer)
 
+	isLocalOrTestEnvironment := s.environment.Local() || s.environment.Test()
+
 	oktaMiddlewareFactory := okta.NewMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		jwtVerifier,
 		store,
+		isLocalOrTestEnvironment,
 	)
 
 	s.router.Use(
@@ -122,7 +125,7 @@ func (s *Server) routes(
 		s.Config.GetString(appconfig.CEDARAPIURL),
 		s.Config.GetString(appconfig.CEDARAPIKey),
 	)
-	if s.environment.Local() || s.environment.Test() {
+	if isLocalOrTestEnvironment {
 		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
 	}
 

@@ -19,16 +19,73 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
+// These job codes define the environmentally specific potential codes which a user may possess
 const (
-	jobCodeUser       = "MINT_USER_NONPROD"
-	jobCodeAssessment = "MINT_ASSESSMENT_NONPROD"
-	jobCodeMAC        = "MINT MAC Users"
+	JobCodeTestUser       = "MINT_USER_NONPROD"
+	JobCodeTestAssessment = "MINT_ASSESSMENT_NONPROD"
+	JobCodeTestMACUser    = "MINT MAC Users"
+	JobCodeProdUser       = "MINT_USER"
+	JobCodeProdAssessment = "MINT_ASSESSMENT"
+	JobCodeProdMACUser    = "MINT_MAC_USER"
 )
 
 // EnhancedJwt is the JWT and the auth token
 type EnhancedJwt struct {
 	JWT       *jwtverifier.Jwt
 	AuthToken string
+}
+
+// JobCodesConfig contains a set of environment context-sensitive job codes
+type JobCodesConfig struct {
+	user       string
+	assessment string
+	macUser    string
+}
+
+// NewJobCodesConfig is a constructor to generate a JobCodesConfig
+func NewJobCodesConfig(
+	user string,
+	assessment string,
+	macUser string,
+) *JobCodesConfig {
+	return &JobCodesConfig{
+		user:       user,
+		assessment: assessment,
+		macUser:    macUser,
+	}
+}
+
+// NewProductionJobCodesConfig generates a JobCodesConfig for the production environment
+func NewProductionJobCodesConfig() *JobCodesConfig {
+	return NewJobCodesConfig(
+		JobCodeProdUser,
+		JobCodeProdAssessment,
+		JobCodeProdMACUser,
+	)
+}
+
+// NewTestJobCodesConfig generates a JobCodesConfig for the test environment
+func NewTestJobCodesConfig() *JobCodesConfig {
+	return NewJobCodesConfig(
+		JobCodeTestUser,
+		JobCodeTestAssessment,
+		JobCodeTestMACUser,
+	)
+}
+
+// GetUserJobCode returns this JobCodesConfig's user job code
+func (j *JobCodesConfig) GetUserJobCode() string {
+	return j.user
+}
+
+// GetAssessmentJobCode returns this JobCodesConfig's assessment job code
+func (j *JobCodesConfig) GetAssessmentJobCode() string {
+	return j.assessment
+}
+
+// GetMACUserJobCode returns this JobCodesConfig's MAC user job code
+func (j *JobCodesConfig) GetMACUserJobCode() string {
+	return j.macUser
 }
 
 func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*EnhancedJwt, error) {
@@ -82,14 +139,21 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication
 	// the current assumption is that anyone with an appropriate
 	// JWT provided by Okta for MINT is allowed to use MINT
 	// as a viewer/submitter
-	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeUser)
+	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetUserJobCode())
 
 	// need to check the claims for empowerment as each role6
-	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeAssessment)
+	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetAssessmentJobCode())
 
-	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodeMAC)
+	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetMACUserJobCode())
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(f.Store, euaID, false, baseURL, enchanced.AuthToken, jcMAC) //TODO, do we need to do anything with the user? Should we pass the id around?
+	userAccount, err := userhelpers.GetOrCreateUserAccount(
+		f.Store,
+		euaID,
+		false,
+		baseURL,
+		enchanced.AuthToken,
+		jcMAC,
+	) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err
 	}
@@ -163,11 +227,9 @@ type JwtVerifier interface {
 // MiddlewareFactory provides functionality to create functions that attach EUA Principals to context objects by decoding JWT tokens
 type MiddlewareFactory struct {
 	handlers.HandlerBase
-	Store             *storage.Store
-	verifier          JwtVerifier
-	jobCodeUser       string
-	jobCodeAssessment string
-	jobCodeMAC        string
+	Store    *storage.Store
+	verifier JwtVerifier
+	jobCodes JobCodesConfig
 }
 
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
@@ -204,13 +266,21 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 }
 
 // NewMiddlewareFactory returns a factory creating Okta middleware functions
-func NewMiddlewareFactory(base handlers.HandlerBase, jwtVerifier JwtVerifier, store *storage.Store) *MiddlewareFactory {
+func NewMiddlewareFactory(
+	base handlers.HandlerBase,
+	jwtVerifier JwtVerifier,
+	store *storage.Store,
+	useTestJobCodes bool,
+) *MiddlewareFactory {
+	codesConfig := *NewProductionJobCodesConfig()
+	if useTestJobCodes {
+		codesConfig = *NewTestJobCodesConfig()
+	}
+
 	return &MiddlewareFactory{
-		HandlerBase:       base,
-		Store:             store,
-		verifier:          jwtVerifier,
-		jobCodeUser:       jobCodeUser,
-		jobCodeAssessment: jobCodeAssessment,
-		jobCodeMAC:        jobCodeMAC,
+		HandlerBase: base,
+		Store:       store,
+		verifier:    jwtVerifier,
+		jobCodes:    codesConfig,
 	}
 }
