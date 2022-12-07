@@ -13,17 +13,24 @@ import (
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
 // args[0] modelPlanID, args[1] date
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
-	audits, err := w.Store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(w.Logger, args[0].(uuid.UUID), args[0].(uuid.UUID), args[1].(time.Time), models.SortDesc)
+	date := args[1].(time.Time)
+
+	mp, err := w.Store.ModelPlanGetByID(w.Logger, args[0].(uuid.UUID))
 	if err != nil {
 		return err
 	}
 
-	changes, err := w.GenerateChanges(audits, args[0].(uuid.UUID))
+	audits, err := w.Store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(w.Logger, mp.ID, mp.ID, date, models.SortDesc)
 	if err != nil {
 		return err
 	}
 
-	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", args[0].(uuid.UUID), args[1].(time.Time), *changes)
+	changes, err := GenerateChanges(audits)
+	if err != nil {
+		return err
+	}
+
+	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", mp.ID, mp.ModelName, date, *changes)
 	if err != nil {
 		return err
 	}
@@ -37,9 +44,9 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 }
 
 // GenerateChanges gets all the audit changes for the specified tables
-func (w *Worker) GenerateChanges(audits []*models.AuditChange, modelPlanID uuid.UUID) (*models.AnalyzedAuditChange, error) {
+func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {
 
-	modelPlanAudits, err := w.AnalyzeModelPlanAudits(audits, modelPlanID)
+	modelPlanAudits, err := AnalyzeModelPlanAudits(audits)
 	if err != nil {
 		return nil, err
 	}
@@ -82,11 +89,7 @@ func (w *Worker) GenerateChanges(audits []*models.AuditChange, modelPlanID uuid.
 }
 
 // AnalyzeModelPlanAudits analyzes all the model plan name changes and status changes
-func (w *Worker) AnalyzeModelPlanAudits(audits []*models.AuditChange, modelPlanId uuid.UUID) (*models.AnalyzedModelPlan, error) {
-	mp, err := w.Store.ModelPlanGetByID(w.Logger, modelPlanId)
-	if err != nil {
-		return nil, err
-	}
+func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
 
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "model_plan"
@@ -116,7 +119,6 @@ func (w *Worker) AnalyzeModelPlanAudits(audits []*models.AuditChange, modelPlanI
 	})
 
 	analyzedModelPlan := models.AnalyzedModelPlan{
-		CurrentName:   mp.ModelName,
 		NameChange:    nameChangeAuditField,
 		StatusChanges: statusChangeAudits,
 	}

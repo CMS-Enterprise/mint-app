@@ -76,8 +76,9 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 
 	suite.NotNil(analyzedAudit)
 
+	suite.EqualValues(plan.ModelName, analyzedAudit.ModelName)
+
 	// ModelPlan Changes
-	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.CurrentName)
 	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.NameChange.New)
 	suite.EqualValues([]string{string(plan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
 
@@ -111,5 +112,4 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
-
 }
