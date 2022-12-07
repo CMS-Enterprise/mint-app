@@ -37,7 +37,7 @@ import {
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
-import { isAssessment } from 'utils/user';
+import { isAssessment, isMAC } from 'utils/user';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
@@ -163,7 +163,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
   const hasEditAccess: boolean =
-    !isHelpArticle && (isCollaborator || isAssessment(groups));
+    !isHelpArticle &&
+    !isMAC(groups) &&
+    (isCollaborator || isAssessment(groups));
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);

@@ -3,11 +3,27 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, KeyCharacteristic, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlans
 // ====================================================
+
+export interface GetModelPlans_modelPlanCollection_basics {
+  __typename: "PlanBasics";
+  clearanceStarts: Time | null;
+  applicationsStart: Time | null;
+}
+
+export interface GetModelPlans_modelPlanCollection_generalCharacteristics {
+  __typename: "PlanGeneralCharacteristics";
+  keyCharacteristics: KeyCharacteristic[];
+}
+
+export interface GetModelPlans_modelPlanCollection_payments {
+  __typename: "PlanPayments";
+  paymentStartDate: Time | null;
+}
 
 export interface GetModelPlans_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
@@ -27,6 +43,11 @@ export interface GetModelPlans_modelPlanCollection_discussions {
   replies: GetModelPlans_modelPlanCollection_discussions_replies[];
 }
 
+export interface GetModelPlans_modelPlanCollection_crTdls {
+  __typename: "PlanCrTdl";
+  idNumber: string;
+}
+
 export interface GetModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
@@ -36,8 +57,12 @@ export interface GetModelPlans_modelPlanCollection {
   createdBy: string;
   createdDts: Time;
   modifiedDts: Time | null;
+  basics: GetModelPlans_modelPlanCollection_basics;
+  generalCharacteristics: GetModelPlans_modelPlanCollection_generalCharacteristics;
+  payments: GetModelPlans_modelPlanCollection_payments;
   collaborators: GetModelPlans_modelPlanCollection_collaborators[];
   discussions: GetModelPlans_modelPlanCollection_discussions[];
+  crTdls: GetModelPlans_modelPlanCollection_crTdls[];
 }
 
 export interface GetModelPlans {
@@ -46,4 +71,5 @@ export interface GetModelPlans {
 
 export interface GetModelPlansVariables {
   includeAll: boolean;
+  isMAC: boolean;
 }
