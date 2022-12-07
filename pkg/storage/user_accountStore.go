@@ -8,10 +8,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
-//go:embed SQL/user_account_get_by_username.sql
+//go:embed SQL/user_account/get_by_username.sql
 var userAccountGetByUsername string
 
-//go:embed SQL/user_account_insert_by_username.sql
+//go:embed SQL/user_account/insert_by_username.sql
 var userAccountInsertByUsername string
 
 // UserAccountGetByUsername reads information about a model plan's clearance

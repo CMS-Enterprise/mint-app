@@ -7,13 +7,13 @@ import (
 	"go.uber.org/zap"
 )
 
-//go:embed SQL/check_if_collaborator.sql
+//go:embed SQL/access_control/check_if_collaborator.sql
 var checkIfCollaboratorSQL string
 
-//go:embed SQL/check_if_collaborator_discussion_id.sql
+//go:embed SQL/access_control/check_if_collaborator_discussion_id.sql
 var checkIfCollaboratorDiscussionIDSQL string
 
-//go:embed SQL/check_if_collaborator_by_solution_id.sql
+//go:embed SQL/access_control/check_if_collaborator_by_solution_id.sql
 var checkIfCollaboratorBySolutionIDSQL string
 
 // CheckIfCollaborator returns true if the principal is a collaborator on a model plan.

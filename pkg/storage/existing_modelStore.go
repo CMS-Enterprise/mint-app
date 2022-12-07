@@ -8,7 +8,7 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/existing_model_collection_get.sql
+//go:embed SQL/existing_model/collection_get.sql
 var existingModelCollectionGetSQL string
 
 // ExistingModelCollectionGet returns a list of existing models
