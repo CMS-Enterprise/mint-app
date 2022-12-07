@@ -12,24 +12,50 @@ import (
 const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
 const translationPath = `cmd/backfill/data/dataTranslation.csv`
 const outputPath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+const userPath = `cmd/backfill/data/sensitive/possibleUsers.json`
 
 func main() { //TODO make this a command
 
-	testing := true
+	testTransform := true
 
-	if !testing {
-		transformData()
+	possibleUserList := []PossibleUser{}
+	err := readJSONFromFile(userPath, &possibleUserList)
+	if err != nil {
+		log.Fatal(err)
+	}
+	possibleUserDict := NewPossibleUserDictionary(possibleUserList)
+
+	if testTransform {
+		transformData(possibleUserDict)
 	}
 
-	uploadData()
+	uploadData(possibleUserDict)
 }
-func uploadData() {
+func uploadData(userDictionary *PossibleUserDictionary) {
 
 	entries, err := getTransformedData(outputPath)
 
 	log.Default().Print(entries, err)
-	uploader := NewUploader()
+	uploader := NewUploader(userDictionary)
 	uploader.uploadEntries(entries)
+
+}
+
+// func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.Value {
+
+func readJSONFromFile[anyType interface{}](file string, obj *anyType) error {
+
+	f, err := os.Open(file) //nolint
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	defer f.Close() //nolint
+
+	byteValue, _ := ioutil.ReadAll(f)
+	err = json.Unmarshal(byteValue, &obj)
+
+	return err
 
 }
 
@@ -48,7 +74,7 @@ func getTransformedData(file string) ([]*BackfillEntry, error) {
 	err = json.Unmarshal(byteValue, &entries)
 	return entries, err
 }
-func transformData() {
+func transformData(userDictionary *PossibleUserDictionary) {
 
 	table, err := readFile(filePath)
 
@@ -61,6 +87,7 @@ func transformData() {
 		log.Fatal(err)
 	}
 	td := NewTranslationDictionary()
+
 	td.convertDataTable(translation)
 
 	// entries, err := translateFile(&td, table)

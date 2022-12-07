@@ -22,19 +22,21 @@ import (
 
 // Uploader handles functionality for uploading data to the DB
 type Uploader struct {
-	Store  storage.Store
-	Logger zap.Logger
+	Store                  storage.Store
+	Logger                 zap.Logger
+	PossibleUserDictionary *PossibleUserDictionary
 }
 
 // NewUploader instantiates an Uploader
-func NewUploader() *Uploader { //TODO make this more configurable if needed
+func NewUploader(possibleUserDict *PossibleUserDictionary) *Uploader { //TODO make this more configurable if needed
 	config := viper.New()
 	config.AutomaticEnv()
 
 	store, logger, _, _, _ := getResolverDependencies(config)
 	return &Uploader{
-		Store:  *store,
-		Logger: *logger,
+		Store:                  *store,
+		Logger:                 *logger,
+		PossibleUserDictionary: possibleUserDict,
 	}
 
 }
@@ -51,7 +53,9 @@ func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more err
 }
 
 func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
+
 	userName := entry.ModelPlan.CreatedBy
+	user := u.PossibleUserDictionary.tryGetUserByName(userName)
 	var princ authentication.Principal
 	var userInfo models.UserInfo
 	if userName == "" {
@@ -70,18 +74,19 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 		}
 	} else {
 		oktaPrinc := authentication.OKTAPrincipal{
-			Username:          userName,
+			Username:          user.EUAID,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
 		}
 		princ = &oktaPrinc
 		userInfo = models.UserInfo{
-			EuaUserID:  userName,
-			CommonName: userName,
-			Email:      "unknown@mint.cms.gov", //revisit this, maybe we do some CEDAR or we redo everything? When we parse, should we note everything we need to look up from CEDAR or something?
+			EuaUserID:  user.EUAID,
+			CommonName: user.Name,
+			Email:      models.EmailAddress(user.Email), //revisit this, maybe we do some CEDAR or we redo everything? When we parse, should we note everything we need to look up from CEDAR or something?
 
 		}
 	}
+	entry.ModelPlan.CreatedBy = princ.ID()
 
 	//TODO make sure to capture all upload errors and store them somewhere
 	if entry.ModelPlan.ModelName == "" {
@@ -92,7 +97,6 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, &userInfo, princ)
 	if err != nil {
 		return err //TODO capture all errors and return collection? Or early return?
-
 	}
 	u.Logger.Log(zap.DebugLevel, "created modelPlan "+modelPlan.ModelName) //TODO need better logging?
 
