@@ -20,6 +20,9 @@ var planFavoriteDeleteSQL string
 //go:embed SQL/plan_favorite/get.sql
 var planFavoriteGetSQL string
 
+//go:embed SQL/plan_favorite/get_collection_by_user_id.sql
+var planFavoriteGetCollectioByEuaID string
+
 // PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
@@ -88,4 +91,25 @@ func (s *Store) PlanFavoriteGetByModelIDAndEUA(logger *zap.Logger, EUAID string,
 	}
 
 	return &retFavorite, nil
+}
+
+// PlanFavoriteGetByCollectionByEUA returns a plan favorite
+func (s *Store) PlanFavoriteGetByCollectionByEUA(logger *zap.Logger, EUAID string) ([]*models.PlanFavorite, error) {
+
+	planFavorites := []*models.PlanFavorite{}
+	stmt, err := s.db.PrepareNamed(planFavoriteGetCollectioByEuaID)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"user_id": EUAID,
+	}
+
+	err = stmt.Select(&planFavorites, arg)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return planFavorites, nil
 }

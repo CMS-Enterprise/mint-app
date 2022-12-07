@@ -87,3 +87,24 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPl
 	}
 	return &analyzedAudit, nil
 }
+
+// AnalyzedAuditGetByModelPlanIDAndDate gets and returns all AnalyzedAudits by modelPlanID
+func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelPlanIDs []uuid.UUID, date time.Time) ([]*models.AnalyzedAudit, error) {
+	analyzedAudits := []*models.AnalyzedAudit{}
+
+	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDAndDate)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"model_plan_ids": modelPlanIDs,
+		"date":           date.Format("2006-01-02"),
+	}
+
+	err = stmt.Select(&analyzedAudits, arg)
+
+	if err != nil {
+		return nil, err
+	}
+	return analyzedAudits, nil
+}

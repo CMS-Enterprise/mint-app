@@ -29,6 +29,7 @@ func (w *Worker) Work() {
 
 	// register jobs here
 	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
+	mgr.Register("DailyDigestEmailJob", w.DailyDigestJob)
 
 	err := mgr.Run()
 	if err != nil {

@@ -7,13 +7,19 @@ import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/samber/lo"
 
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 )
 
 func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
+
+	emailTemplateService, err := email.NewTemplateServiceImpl()
+	suite.NoError(err)
+
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store:                suite.testConfigs.Store,
+		Logger:               suite.testConfigs.Logger,
+		EmailTemplateService: emailTemplateService,
 	}
 	// Create plan
 	plan := suite.createModelPlan("Test Plan2")
@@ -67,7 +73,7 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err := worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
 	suite.NoError(err)
 
 	// Get Stored audit
@@ -112,4 +118,6 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
+
+	worker.DailyDigestJob(context.Background(), modelLead.EUAUserID, time.Now())
 }

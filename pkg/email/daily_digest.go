@@ -6,5 +6,8 @@ import (
 
 // DailyDigestBodyContent defines the parameters necessary for the corresponding email body
 type DailyDigestBodyContent struct {
-	AnalyzedAudits []models.AnalyzedAudit
+	AnalyzedAudits []*models.AnalyzedAudit
 }
+
+// DailyDigestSubjectContent defines the parameters necessary for the corresponding email subject
+type DailyDigestSubjectContent struct{}
