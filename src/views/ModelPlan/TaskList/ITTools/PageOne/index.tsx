@@ -67,7 +67,7 @@ const initialCharacteristicValues: GeneralCharacteristicsType = {
   id: '',
   managePartCDEnrollment: null,
   collectPlanBids: null,
-  planContactUpdated: null
+  planContractUpdated: null
 };
 
 const initialModelPlanValues: ModelPlanType = {
@@ -107,7 +107,7 @@ const ITToolsPageOne = ({
     generalCharacteristics: {
       managePartCDEnrollment,
       collectPlanBids,
-      planContactUpdated
+      planContractUpdated
     }
   } = modelPlan;
 
@@ -118,7 +118,7 @@ const ITToolsPageOne = ({
    */
   const questionOneNeedsTools: boolean = managePartCDEnrollment === true;
   const questionTwoNeedsTools: boolean = collectPlanBids === true;
-  const questionThreeNeedsTools: boolean = planContactUpdated === true;
+  const questionThreeNeedsTools: boolean = planContractUpdated === true;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -322,20 +322,20 @@ const ITToolsPageOne = ({
                           {t('partCDToolsInfo')}
                         </p>
                         <FieldErrorMsg>
-                          {flatErrors.planContactUpdated}
+                          {flatErrors.planContractUpdated}
                         </FieldErrorMsg>
 
                         <ITToolsSummary
                           question={c('updatedContact')}
                           answers={[
-                            translateBoolean(planContactUpdated || false)
+                            translateBoolean(planContractUpdated || false)
                           ]}
                           redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                          answered={planContactUpdated !== null}
+                          answered={planContractUpdated !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesNeedsAnswer')}
                           locked={characteristicsLock}
-                          scrollElememnt="planContactUpdated"
+                          scrollElememnt="planContractUpdated"
                         />
 
                         <ITToolsFormComponent

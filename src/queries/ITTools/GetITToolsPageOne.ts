@@ -9,7 +9,7 @@ export default gql`
         id
         managePartCDEnrollment
         collectPlanBids
-        planContactUpdated
+        planContractUpdated
       }
       itTools {
         id

@@ -421,8 +421,8 @@ type ComplexityRoot struct {
 		MultiplePatricipationAgreementsNeededNote func(childComplexity int) int
 		ParticipationOptions                      func(childComplexity int) int
 		ParticipationOptionsNote                  func(childComplexity int) int
-		PlanContactUpdated                        func(childComplexity int) int
-		PlanContactUpdatedNote                    func(childComplexity int) int
+		PlanContractUpdated                       func(childComplexity int) int
+		PlanContractUpdatedNote                   func(childComplexity int) int
 		ReadyForClearanceBy                       func(childComplexity int) int
 		ReadyForClearanceDts                      func(childComplexity int) int
 		ReadyForReviewBy                          func(childComplexity int) int
@@ -3395,19 +3395,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.ParticipationOptionsNote(childComplexity), true
 
-	case "PlanGeneralCharacteristics.planContactUpdated":
-		if e.complexity.PlanGeneralCharacteristics.PlanContactUpdated == nil {
+	case "PlanGeneralCharacteristics.planContractUpdated":
+		if e.complexity.PlanGeneralCharacteristics.PlanContractUpdated == nil {
 			break
 		}
 
-		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdated(childComplexity), true
+		return e.complexity.PlanGeneralCharacteristics.PlanContractUpdated(childComplexity), true
 
-	case "PlanGeneralCharacteristics.planContactUpdatedNote":
-		if e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote == nil {
+	case "PlanGeneralCharacteristics.planContractUpdatedNote":
+		if e.complexity.PlanGeneralCharacteristics.PlanContractUpdatedNote == nil {
 			break
 		}
 
-		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote(childComplexity), true
+		return e.complexity.PlanGeneralCharacteristics.PlanContractUpdatedNote(childComplexity), true
 
 	case "PlanGeneralCharacteristics.readyForClearanceBy":
 		if e.complexity.PlanGeneralCharacteristics.ReadyForClearanceBy == nil {
@@ -6657,8 +6657,8 @@ type PlanGeneralCharacteristics {
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
   managePartCDEnrollmentNote: String
-  planContactUpdated: Boolean
-  planContactUpdatedNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
 
   # Page 3
   careCoordinationInvolved: Boolean
@@ -6735,8 +6735,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
   managePartCDEnrollmentNote: String
-  planContactUpdated: Boolean
-  planContactUpdatedNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
 
   # Page 3
   careCoordinationInvolved: Boolean
@@ -8076,7 +8076,7 @@ enum ParticipantsType {
 
 enum RecruitmentType {
   LOI
-  RFA
+  APPLICATION_COLLECTION_TOOL
   NOFO
   OTHER
   NA
@@ -11811,10 +11811,10 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
 			case "managePartCDEnrollmentNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
-			case "planContactUpdated":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
-			case "planContactUpdatedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+			case "planContractUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
+			case "planContractUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
 			case "careCoordinationInvolved":
 				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
 			case "careCoordinationInvolvedDescription":
@@ -14234,10 +14234,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
 			case "managePartCDEnrollmentNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
-			case "planContactUpdated":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
-			case "planContactUpdatedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+			case "planContractUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
+			case "planContractUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
 			case "careCoordinationInvolved":
 				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
 			case "careCoordinationInvolvedDescription":
@@ -25403,8 +25403,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_managePartCD
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
+func (ec *executionContext) _PlanGeneralCharacteristics_planContractUpdated(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -25417,7 +25417,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PlanContactUpdated, nil
+		return obj.PlanContractUpdated, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -25431,7 +25431,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx c
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -25444,8 +25444,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactU
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+func (ec *executionContext) _PlanGeneralCharacteristics_planContractUpdatedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -25458,7 +25458,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PlanContactUpdatedNote, nil
+		return obj.PlanContractUpdatedNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -25472,7 +25472,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -47946,13 +47946,13 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field, obj)
 
-		case "planContactUpdated":
+		case "planContractUpdated":
 
-			out.Values[i] = ec._PlanGeneralCharacteristics_planContactUpdated(ctx, field, obj)
+			out.Values[i] = ec._PlanGeneralCharacteristics_planContractUpdated(ctx, field, obj)
 
-		case "planContactUpdatedNote":
+		case "planContractUpdatedNote":
 
-			out.Values[i] = ec._PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field, obj)
+			out.Values[i] = ec._PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field, obj)
 
 		case "careCoordinationInvolved":
 

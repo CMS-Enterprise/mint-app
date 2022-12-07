@@ -29,7 +29,7 @@ const operationalNeedMap: NeedMapType = {
   },
   UPDATE_CONTRACT: {
     route: 'characteristics/key-characteristics',
-    fieldName: 'planContactUpdated',
+    fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
     question: 'generalCharacteristics:updatedContact',
     answer: 'translateBoolean'

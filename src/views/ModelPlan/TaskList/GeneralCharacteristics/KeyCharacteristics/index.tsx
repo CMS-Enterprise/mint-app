@@ -79,8 +79,8 @@ const KeyCharacteristics = () => {
     collectPlanBidsNote,
     managePartCDEnrollment,
     managePartCDEnrollmentNote,
-    planContactUpdated,
-    planContactUpdatedNote
+    planContractUpdated,
+    planContractUpdatedNote
   } =
     data?.modelPlan?.generalCharacteristics ||
     ({} as KeyCharacteristicsFormType);
@@ -140,8 +140,8 @@ const KeyCharacteristics = () => {
     collectPlanBidsNote: collectPlanBidsNote ?? '',
     managePartCDEnrollment: managePartCDEnrollment ?? null,
     managePartCDEnrollmentNote: managePartCDEnrollmentNote ?? '',
-    planContactUpdated: planContactUpdated ?? null,
-    planContactUpdatedNote: planContactUpdatedNote ?? ''
+    planContractUpdated: planContractUpdated ?? null,
+    planContractUpdatedNote: planContractUpdatedNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -472,8 +472,8 @@ const KeyCharacteristics = () => {
                     />
 
                     <FieldGroup
-                      scrollElement="planContactUpdated"
-                      error={!!flatErrors.planContactUpdated}
+                      scrollElement="planContractUpdated"
+                      error={!!flatErrors.planContractUpdated}
                       className="margin-y-4"
                     >
                       <Label
@@ -493,29 +493,29 @@ const KeyCharacteristics = () => {
                         />
                       )}
                       <FieldErrorMsg>
-                        {flatErrors.planContactUpdated}
+                        {flatErrors.planContractUpdated}
                       </FieldErrorMsg>
                       <Fieldset>
                         <Field
                           as={Radio}
                           id="plan-characteristics-contact-updated"
-                          name="planContactUpdated"
+                          name="planContractUpdated"
                           label={h('yes')}
                           value="TRUE"
-                          checked={values.planContactUpdated === true}
+                          checked={values.planContractUpdated === true}
                           onChange={() => {
-                            setFieldValue('planContactUpdated', true);
+                            setFieldValue('planContractUpdated', true);
                           }}
                         />
                         <Field
                           as={Radio}
                           id="plan-characteristics-contact-updated-no"
-                          name="planContactUpdated"
+                          name="planContractUpdated"
                           label={h('no')}
                           value="FALSE"
-                          checked={values.planContactUpdated === false}
+                          checked={values.planContractUpdated === false}
                           onChange={() => {
-                            setFieldValue('planContactUpdated', false);
+                            setFieldValue('planContractUpdated', false);
                           }}
                         />
                       </Fieldset>
@@ -523,7 +523,7 @@ const KeyCharacteristics = () => {
 
                     <AddNote
                       id="plan-characteristics-contact-updated-note"
-                      field="planContactUpdatedNote"
+                      field="planContractUpdatedNote"
                     />
                   </>
                 )}

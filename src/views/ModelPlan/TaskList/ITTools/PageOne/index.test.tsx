@@ -32,7 +32,7 @@ const characteristicMockData: GeneralCharacteristicsType = {
   id: '456',
   managePartCDEnrollment: true,
   collectPlanBids: true,
-  planContactUpdated: true
+  planContractUpdated: true
 };
 
 const itToolsPageOneMock = [

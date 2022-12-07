@@ -64,8 +64,8 @@ const ReadOnlyGeneralCharacteristics = ({
     collectPlanBidsNote,
     managePartCDEnrollment,
     managePartCDEnrollmentNote,
-    planContactUpdated,
-    planContactUpdatedNote,
+    planContractUpdated,
+    planContractUpdatedNote,
     careCoordinationInvolved,
     careCoordinationInvolvedDescription,
     careCoordinationInvolvedNote,
@@ -198,8 +198,8 @@ const ReadOnlyGeneralCharacteristics = ({
 
         <ReadOnlySection
           heading={t('updatedContact')}
-          copy={translateBooleanOrNull(planContactUpdated)}
-          notes={planContactUpdatedNote}
+          copy={translateBooleanOrNull(planContractUpdated)}
+          notes={planContractUpdatedNote}
         />
       </div>
 

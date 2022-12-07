@@ -423,13 +423,13 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                 >
                   <p
                     class="text-bold"
-                    data-testid="has-answered-tools-question-planContactUpdated"
+                    data-testid="has-answered-tools-question-planContractUpdated"
                   >
                     You previously answered:
                   </p>
                   <p
                     class="margin-bottom-0"
-                    data-testid="tools-question-planContactUpdated"
+                    data-testid="tools-question-planContractUpdated"
                   >
                     Have you updated the plan’s contact?
                   </p>
@@ -445,7 +445,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                     Want to change your answer? 
                     <button
                       class="usa-button usa-button usa-button--unstyled"
-                      data-testid="it-tools-locked-planContactUpdated"
+                      data-testid="it-tools-locked-planContractUpdated"
                       type="button"
                     >
                       Go to question

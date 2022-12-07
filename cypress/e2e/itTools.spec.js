@@ -79,7 +79,7 @@ describe.only('The Model Plan IT Tools Form', () => {
 
     cy.itToolsRedirect(
       '#it-tools-gc-update-contract-HPMS',
-      'it-tools-redirect-planContactUpdated',
+      'it-tools-redirect-planContractUpdated',
       '#plan-characteristics-contact-updated',
       null,
       false,

@@ -405,8 +405,8 @@ type PlanGeneralCharacteristics {
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
   managePartCDEnrollmentNote: String
-  planContactUpdated: Boolean
-  planContactUpdatedNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
 
   # Page 3
   careCoordinationInvolved: Boolean
@@ -483,8 +483,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
   managePartCDEnrollmentNote: String
-  planContactUpdated: Boolean
-  planContactUpdatedNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
 
   # Page 3
   careCoordinationInvolved: Boolean
@@ -1824,7 +1824,7 @@ enum ParticipantsType {
 
 enum RecruitmentType {
   LOI
-  RFA
+  APPLICATION_COLLECTION_TOOL
   NOFO
   OTHER
   NA
