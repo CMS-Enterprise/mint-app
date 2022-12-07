@@ -13,6 +13,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -84,10 +85,19 @@ const listOfSubpageKey = [
 ];
 
 export type SubpageKey = typeof listOfSubpageKey[number];
-const isSubpage = (x: SubpageKey, isHelpArticle?: boolean): boolean => {
+const isSubpage = (
+  x: SubpageKey,
+  flags: any,
+  isHelpArticle?: boolean
+): boolean => {
   if (isHelpArticle) {
     return listOfSubpageKey
       .filter(subpage => subpage !== 'discussions')
+      .includes(x);
+  }
+  if (flags.hideITLeadExperience) {
+    return listOfSubpageKey
+      .filter(subpage => subpage !== 'it-solutions')
       .includes(x);
   }
   return listOfSubpageKey.includes(x);
@@ -97,6 +107,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
+
+  const flags = useFlags();
+
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
     subinfo
@@ -268,13 +281,17 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if (isHelpArticle) delete subComponents.discussions;
 
+  if (flags.hideITLeadExperience) {
+    delete subComponents['it-solutions'];
+  }
+
   const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
 
-  if (!isSubpage(subinfo, isHelpArticle)) {
+  if (!isSubpage(subinfo, flags, isHelpArticle)) {
     return <NotFound />;
   }
 

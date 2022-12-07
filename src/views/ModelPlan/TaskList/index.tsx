@@ -20,6 +20,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -103,6 +104,9 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
+
+  const flags = useFlags();
+
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
@@ -282,6 +286,10 @@ const TaskList = () => {
                 className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
               >
                 {Object.keys(taskListSections).map((key: string) => {
+                  if (flags.hideITLeadExperience && key === 'itSolutions') {
+                    return <div key={key} />;
+                  }
+
                   return (
                     <Fragment key={key}>
                       <TaskListItem
