@@ -197,7 +197,7 @@ const ReadOnlyGeneralCharacteristics = ({
         />
 
         <ReadOnlySection
-          heading={t('updatedContact')}
+          heading={t('updatedContract')}
           copy={translateBooleanOrNull(planContractUpdated)}
           notes={planContractUpdatedNote}
         />

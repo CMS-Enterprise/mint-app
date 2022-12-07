@@ -326,7 +326,7 @@ const ITToolsPageOne = ({
                         </FieldErrorMsg>
 
                         <ITToolsSummary
-                          question={c('updatedContact')}
+                          question={c('updatedContract')}
                           answers={[
                             translateBoolean(planContractUpdated || false)
                           ]}

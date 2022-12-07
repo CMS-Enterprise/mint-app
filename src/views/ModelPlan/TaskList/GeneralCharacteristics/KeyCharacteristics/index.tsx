@@ -480,7 +480,7 @@ const KeyCharacteristics = () => {
                         htmlFor="plan-characteristics-contact-updated"
                         className="text-normal"
                       >
-                        {t('updatedContact')}
+                        {t('updatedContract')}
                       </Label>
                       {itSolutionsStarted && (
                         <ITToolsWarning

@@ -31,7 +31,7 @@ const operationalNeedMap: NeedMapType = {
     route: 'characteristics/key-characteristics',
     fieldName: 'planContractUpdated',
     parentField: 'generalCharacteristics',
-    question: 'generalCharacteristics:updatedContact',
+    question: 'generalCharacteristics:updatedContract',
     answer: 'translateBoolean'
   },
   ADVERTISE_MODEL: {

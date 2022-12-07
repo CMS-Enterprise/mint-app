@@ -57,8 +57,8 @@ const participantsAndProviders = {
   },
   recruitParticipants: 'How will you recruit the participants?',
   recruitOptions: {
-    loi: 'LOI (Letter of interest)',
-    rfa: 'RFA (Request for applications)',
+    loi: 'LOI (Letter of intent)',
+    appCollectionTool: 'Use an application collection tool',
     recruitInfo:
       'CMMI writes, Office of General Council (OGC) reviews and approves',
     nofo:

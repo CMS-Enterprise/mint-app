@@ -431,7 +431,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                     class="margin-bottom-0"
                     data-testid="tools-question-planContractUpdated"
                   >
-                    Have you updated the plan’s contact?
+                    Have you updated the plan’s contract?
                   </p>
                   <ul
                     class="margin-y-0"
