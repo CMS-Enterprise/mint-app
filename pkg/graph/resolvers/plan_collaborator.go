@@ -14,35 +14,46 @@ import (
 )
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
+// If the email service or email template service is not provided this method will not
+// 	send the collaborator a notification email
+// A plan favorite is created for the collaborating user when the user is added as a collaborator
 func CreatePlanCollaborator(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
-	store *storage.Store) (*models.PlanCollaborator, error) {
+	store *storage.Store,
+	checkAccess bool) (*models.PlanCollaborator, *models.PlanFavorite, error) {
 	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
-	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
+	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
-		return nil, err
-	}
-
-	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
-	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	modelPlan, err := store.ModelPlanGetByID(logger, input.ModelPlanID)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return retCollaborator, nil
+	planFavorite, err := PlanFavoriteCreate(logger, principal, input.EuaUserID, store, modelPlan.ID)
+	if err != nil {
+		return retCollaborator, nil, err
+	}
+
+	if emailService != nil && emailTemplateService != nil {
+		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+		if err != nil {
+			return retCollaborator, planFavorite, err
+		}
+	}
+
+	return retCollaborator, planFavorite, nil
 }
 
 func sendCollaboratorAddedEmail(

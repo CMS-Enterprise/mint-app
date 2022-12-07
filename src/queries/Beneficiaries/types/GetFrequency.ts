@@ -23,11 +23,17 @@ export interface GetFrequency_modelPlan_beneficiaries {
   status: TaskStatus;
 }
 
+export interface GetFrequency_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
+}
+
 export interface GetFrequency_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   beneficiaries: GetFrequency_modelPlan_beneficiaries;
+  operationalNeeds: GetFrequency_modelPlan_operationalNeeds[];
 }
 
 export interface GetFrequency {

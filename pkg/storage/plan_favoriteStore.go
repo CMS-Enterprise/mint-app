@@ -11,13 +11,13 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/plan_favorite_create.sql
+//go:embed SQL/plan_favorite/create.sql
 var planFavoriteCreateSQL string
 
-//go:embed SQL/plan_favorite_delete.sql
+//go:embed SQL/plan_favorite/delete.sql
 var planFavoriteDeleteSQL string
 
-//go:embed SQL/plan_favorite_get.sql
+//go:embed SQL/plan_favorite/get.sql
 var planFavoriteGetSQL string
 
 // PlanFavoriteCreate creates and returns a plan favorite object
@@ -26,7 +26,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL)
+	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) //TODO, look to refactor this SQL to make it clearer
 
 	if err != nil {
 		logger.Error(

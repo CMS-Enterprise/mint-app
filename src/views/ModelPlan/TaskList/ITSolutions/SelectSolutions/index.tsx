@@ -1,8 +1,14 @@
-import React, { useContext, useRef } from 'react';
+/*
+View for selecting/toggled 'needed' bool on possible solutions and custom solutions
+Displays relevant operational need question and answers
+*/
+
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -17,13 +23,22 @@ import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import {
   GetOperationalNeed as GetOperationalNeedType,
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
-import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
+import {
+  UpdateCustomOperationalSolution as UpdateCustomOperationalSolutionType,
+  UpdateCustomOperationalSolutionVariables
+} from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
+import {
+  UpdateOperationalNeedSolution as UpdateOperationalNeedSolutionType,
+  UpdateOperationalNeedSolutionVariables
+} from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
+import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import {
   OperationalNeedKey,
@@ -36,6 +51,8 @@ import NotFound from 'views/NotFound';
 import CheckboxCard from '../_components/CheckboxCard';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
+// Passing in operationalNeed to Formik instead of array of solutions
+// Fomik does not take an array structure
 export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',
   id: '',
@@ -58,6 +75,11 @@ const SelectSolutions = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
+  const { showMessageOnNextPage } = useMessage();
+
+  // State management for mutation errors
+  const [mutationError, setMutationError] = useState<boolean>(false);
+
   const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
     null
   );
@@ -75,41 +97,80 @@ const SelectSolutions = () => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
-    UpdateOperationalNeedSolution
-  );
+  const [updateSolution] = useMutation<
+    UpdateOperationalNeedSolutionType,
+    UpdateOperationalNeedSolutionVariables
+  >(UpdateOperationalNeedSolution);
 
+  const [updateCustomSolution] = useMutation<
+    UpdateCustomOperationalSolutionType,
+    UpdateCustomOperationalSolutionVariables
+  >(UpdateCustomOperationalSolution);
+
+  // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
     formikValues: GetOperationalNeedOperationalNeedType
   ) => {
     const { solutions } = formikValues;
 
-    try {
-      const response = await Promise.all(
-        solutions.map(solution => {
+    await Promise.all(
+      solutions.map(solution => {
+        // Update possibleSolution needed bool and status
+        if (solution.key) {
           return updateSolution({
             variables: {
               operationalNeedID,
               solutionType: solution.key,
               changes: {
                 needed: solution.needed || false,
-                status: OpSolutionStatus.IN_PROGRESS
+                status: OpSolutionStatus.NOT_STARTED
               }
             }
           });
-        })
-      );
+        }
+        // Update custom solution needed bool - status should already be set
+        return updateCustomSolution({
+          variables: {
+            operationalNeedID,
+            customSolutionType: solution.nameOther || '',
+            changes: {
+              needed: solution.needed || false
+            }
+          }
+        });
+      })
+    )
+      .then(response => {
+        const errors = response?.find(result => result?.errors);
 
-      const errors = response?.find(result => result.errors);
-
-      if (response && !errors) {
-        history.push(`/models/${modelID}/task-list/it-solutions`);
-      } else if (errors) {
-        formikRef?.current?.setErrors({ id: JSON.stringify(error) });
-      }
-    } catch (errors) {
-      formikRef?.current?.setErrors({ id: JSON.stringify(errors) });
-    }
+        if (response && !errors) {
+          if (
+            formikRef?.current?.values.solutions.find(
+              solution => solution.needed
+            )
+          ) {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('successSolutionAdded', {
+                    operationalNeedName: operationalNeed.name
+                  })}
+                </span>
+              </Alert>
+            );
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+            );
+          } else {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
+          }
+        } else if (errors) {
+          setMutationError(true);
+        }
+      })
+      .catch(err => {
+        // setMutationError(true);
+      });
   };
 
   if (error) {
@@ -143,6 +204,12 @@ const SelectSolutions = () => {
         <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
       </BreadcrumbBar>
 
+      {mutationError && (
+        <Alert type="error" slim>
+          {t('addError')}
+        </Alert>
+      )}
+
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
@@ -156,11 +223,11 @@ const SelectSolutions = () => {
             {h('for')} {modelName}
           </p>
 
-          <p>{t('selectInfo')}</p>
+          <p className="line-height-body-4">{t('selectInfo')}</p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
-              operationalNeed={operationalNeed}
+              operationalNeedID={operationalNeedID}
               modelID={modelID}
             />
           </Grid>
@@ -220,7 +287,7 @@ const SelectSolutions = () => {
                                 <CheckboxCard
                                   solution={solution}
                                   index={index}
-                                  key={solution.name || solution.nameOther}
+                                  key={solution.nameOther || solution.name}
                                 />
                               )
                             )}
@@ -229,10 +296,11 @@ const SelectSolutions = () => {
 
                         <Button
                           type="button"
+                          id="add-solution-not-listed"
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
                             history.push(
-                              `/models/${modelID}/task-list/it-solutions`
+                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
                             );
                           }}
                         >
@@ -240,7 +308,15 @@ const SelectSolutions = () => {
                         </Button>
 
                         <div className="margin-top-6 margin-bottom-3">
-                          <Button type="submit" className="margin-bottom-1">
+                          <Button
+                            type="submit"
+                            className="margin-bottom-1"
+                            disabled={
+                              values.solutions.filter(
+                                solution => solution.needed
+                              ).length === 0
+                            }
+                          >
                             {t('continue')}
                           </Button>
                         </div>
