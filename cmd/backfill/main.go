@@ -19,6 +19,7 @@ const userPath = `cmd/backfill/data/possibleUsers.json`
 func main() { //TODO make this a command
 
 	testTransform := true
+	testUpload := true
 
 	possibleUserList := []PossibleUser{}
 	err := readJSONFromFile(userPath, &possibleUserList)
@@ -30,8 +31,10 @@ func main() { //TODO make this a command
 	if testTransform {
 		transformData(possibleUserDict)
 	}
+	if testUpload {
+		uploadData(possibleUserDict)
+	}
 
-	uploadData(possibleUserDict)
 }
 func uploadData(userDictionary *PossibleUserDictionary) {
 
@@ -93,7 +96,7 @@ func transformData(userDictionary *PossibleUserDictionary) {
 	td.convertDataTable(translation)
 
 	// entries, err := translateFile(&td, table)
-	entries, err := translateFile(&td, table)
+	entries, err := translateFile(&td, table, userDictionary)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -214,20 +217,13 @@ func readFile(file string) (*DataTable, error) {
 	return &table, nil
 }
 
-func translateFile(td *TranslationsDictionary, table *DataTable) (*[]BackfillEntry, error) {
+func translateFile(td *TranslationsDictionary, table *DataTable, userDictionary *PossibleUserDictionary) (*[]BackfillEntry, error) {
 
 	entries := []BackfillEntry{}
-	// dec, err := mapstructure.NewDecoder(&mapstructure.DecoderConfig{
-	// 	ErrorUnused: true,
-	// 	TagName:     "json",
-	// 	Result:      to,
-	// 	ZeroFields:  true,
-	// 	Squash:      true,
-	// })
 
 	for i := 0; i < len(table.Rows); i++ {
 		row := table.Rows[i]
-		entry := translateDataRow(&row, td)
+		entry := translateDataRow(&row, td, userDictionary)
 		entries = append(entries, *entry)
 
 	}
@@ -235,15 +231,12 @@ func translateFile(td *TranslationsDictionary, table *DataTable) (*[]BackfillEnt
 	return &entries, nil
 }
 
-func translateDataRow(row *DataRow, td *TranslationsDictionary) *BackfillEntry {
+func translateDataRow(row *DataRow, td *TranslationsDictionary, userDictionary *PossibleUserDictionary) *BackfillEntry {
 	entry := NewBackFillEntry()
 	for key, value := range row.Fields {
 
-		// translation := td[row.Fields[i]]
 		translation := td.getTranslation(key)
-
-		// translateField(&entry, value, &translation)
-		translation.translateField(&entry, value)
+		translation.handleTranslation(&entry, value, userDictionary)
 	}
 	return &entry
 

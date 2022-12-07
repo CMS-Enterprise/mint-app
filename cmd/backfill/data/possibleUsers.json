@@ -1,76 +1,145 @@
 [
     {
         "name": "Amy Giardina",
-        "aliases": "Amy Giardina"
+        "aliases": "Amy Giardina",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Leah Hendrick",
-        "aliases": "Leah Hendrick (she/her)"
+        "aliases": "Leah Hendrick (she/her)",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Lashawn Brooks",
-        "aliases": "Lashawn Brooks"
+        "aliases": "Lashawn Brooks",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Nicholas Minter",
-        "aliases": "Nicholas Minter (he/him)"
+        "aliases": "Nicholas Minter (he/him)",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Sarah Fogler",
-        "aliases": "Sarah Fogler"
+        "aliases": "Sarah Fogler",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Catherine Jansto",
-        "aliases": "Catherine Jansto"
+        "aliases": "Catherine Jansto",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Ilana Portnoy",
-        "aliases": "Ilana Portnoy"
+        "aliases": "Ilana Portnoy",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Corey Rosenberg",
-        "aliases": "Corey Rosenberg"
+        "aliases": "Corey Rosenberg",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Jen Lippy",
-        "aliases": "Jen Lippy (she/her)"
+        "aliases": "Jen Lippy (she/her)",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Hillary Cavanagh",
-        "aliases": "Hillary Cavanagh"
+        "aliases": "Hillary Cavanagh",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Emily Moore",
-        "aliases": "Emily Moore"
+        "aliases": "Emily Moore",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Allison Marlatt",
-        "aliases": "Allison Marlatt"
+        "aliases": "Allison Marlatt",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Kate Blackwell",
-        "aliases": "Kate Blackwell"
+        "aliases": "Kate Blackwell",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Tom Duvall",
-        "aliases": "Tom Duvall"
+        "aliases": "Tom Duvall",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Linda Streitfeld",
-        "aliases": "Linda Streitfeld"
+        "aliases": "Linda Streitfeld",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Emily Johnson",
-        "aliases": "Emily Johnson"
+        "aliases": "Emily Johnson",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Frances Devanbu",
-        "aliases": "Frances Devanbu"
+        "aliases": "Frances Devanbu",
+        "email": "tbd@tbd.tbd",
+        "euaid": "TBDT",
+        "role": "TBD",
+        "organization": "TBD"
     },
     {
         "name": "Velda L. McGhee",
         "aliases": "Velda L. McGhee",
         "email": "Velda.McGhee@cms.hhs.gov",
+        "euaid": "TBDT",
         "role": "ASSESSMENT",
         "organization": "(CMS/CMMI)"
     },
@@ -78,6 +147,7 @@
         "name": "Kristen Owens",
         "aliases": "Kristen Owens",
         "email": "Kirsten.Owens@cms.hhs.gov",
+        "euaid": "TBDT",
         "role": "ASSESSMENT",
         "organization": "(CMS/CMMI)"
     },
@@ -85,6 +155,7 @@
         "name": "Mateus Anjos",
         "aliases": "Mateus Anjos",
         "email": "Mateus.Anjos@cms.hhs.gov",
+        "euaid": "TBDT",
         "role": "ASSESSMENT",
         "organization": "(CMS/OIT)"
     },
@@ -108,6 +179,7 @@
         "name": "Tim Rader",
         "aliases": "Tim Rader",
         "email": "r.timothy.rader@cms.hhs.gov",
+        "euaid": "TBDT",
         "role": "ASSESSMENT",
         "organization": "(CMS/CMMI)"
     },
@@ -123,6 +195,8 @@
         "name": "Nadia Dolgachev",
         "aliases": "Nadia Dolgachev",
         "email": "nadia.dolgachev@cms.hhs.gov",
-        "euaid": "DBXI"
+        "euaid": "DBXI",
+        "role": "TBD",
+        "organization": "TBD"
     }
 ]

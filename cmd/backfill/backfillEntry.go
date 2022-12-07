@@ -18,6 +18,7 @@ type BackfillEntry struct {
 	PlanBeneficiaries            *models.PlanBeneficiaries
 	PlanOpsEvalAndLearning       *models.PlanOpsEvalAndLearning
 	PlanPayments                 *models.PlanPayments
+	Collaborators                []*models.PlanCollaborator
 	Errors                       []TranslationError
 }
 

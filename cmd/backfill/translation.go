@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/lib/pq"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -44,23 +45,11 @@ func (dt TranslationsDictionary) convertDataTable(table *DataTable) {
 
 func processTranslationRow(row DataRow) Translation {
 	translation := Translation{}
-	// tVal := reflect.ValueOf(translation)
 
 	err := resolvers.ApplyChanges(row.Fields, &translation)
 	if err != nil {
 		log.Fatal(err)
 	}
-	// tType := reflect.TypeOf(translation)
-
-	// for key, value := range row.Fields {
-	// 	field := tVal.FieldByName(key)
-	// 	if field.CanSet() {
-	// 		field.SetString(value)
-	// 		continue
-	// 	}
-	// 	log.Fatal("Couldn't set the translation")
-
-	// }
 	return translation
 
 }
@@ -69,15 +58,64 @@ func (dt TranslationsDictionary) getTranslation(key string) Translation {
 	return dt[key]
 }
 
+func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{}, userDictionary *PossibleUserDictionary) {
+
+	// TODO handle the null value handling
+
+	switch t.ModelName {
+	case "Collaborator":
+		valString := fmt.Sprint(value)
+		allUsers := strings.Split(valString, ";")
+		for i := 0; i < len(allUsers); i++ {
+
+			t.addCollaborator(entry, sanitizeName(allUsers[i]), userDictionary)
+		}
+	default:
+		t.translateField(entry, value)
+	}
+
+}
+
+func sanitizeName(name string) string {
+	clean := strings.TrimPrefix(name, "#")
+	//TODO check if it's a number, and if so, don't use it
+
+	// if _, err := strconv.Atoi(v); err == nil {
+	//     fmt.Printf("%q looks like a number.\n", v)
+	// }
+	return clean
+}
+func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, userDictionary *PossibleUserDictionary) {
+
+	user := userDictionary.tryGetUserByName(valString)
+	if user == nil {
+
+		tErr := &TranslationError{
+			Translation: *t,
+			Message:     fmt.Sprintf(" Can't Find user to add as collab %s", valString),
+		}
+		entry.Errors = append(entry.Errors, *tErr) //record any setting issue here
+		return
+	}
+
+	role := models.TeamRole(t.Field)
+
+	collab := models.NewPlanCollaborator(user.EUAID, uuid.UUID{}, user.EUAID, user.Name, role, user.Email)
+	entry.Collaborators = append(entry.Collaborators, collab)
+
+}
+
 func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 	if value == nil || value == "" {
 		return
 	}
-	// VEntry := reflect.ValueOf(entry)
-	if t.ModelName == "?" || t.ModelName == "" {
-		log.Default().Print("translation not defined for " + t.Header + " . Value is " + fmt.Sprint(value))
+	if t.ModelName == "?" {
+		log.Default().Print("translation not known for " + t.Header + " . Value is " + fmt.Sprint(value))
 		return
-
+	}
+	if t.ModelName == "" {
+		log.Default().Print("translation has not yet been mapped for for " + t.Header + " . Value is " + fmt.Sprint(value))
+		return
 	}
 	bModel := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
 
@@ -86,7 +124,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 		return
 	}
 
-	log.Default().Print("buisness model kind: ", bModel.Kind(), ". buisness model type: ", bModel.Type())
+	log.Default().Print("buisness model type: ", bModel.Type()) //, "buisness model kind: ", bModel.Kind(), ".")
 
 	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is a pointer
 
@@ -137,13 +175,9 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, obj inte
 
 func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.Type, value interface{}, val reflect.Value, valType reflect.Type, object interface{}) (reflect.Value, *TranslationError) {
 
-	// mapstructure.Decode(val, &field)
-	//TODO FIX THIS! We need to actual handle a real field or something.... This doesn't work like this
-
 	fieldKind := field.Kind()
 
 	isPointer := fieldKind.String() == "ptr"
-	log.Default().Print("Pointer? ", isPointer)
 	conVal := reflect.Value{}
 	var tErr *TranslationError
 	fieldTypeS := strings.TrimPrefix(fieldType.String(), "*")
