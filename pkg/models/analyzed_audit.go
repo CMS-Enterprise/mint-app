@@ -101,13 +101,13 @@ func (a AnalyzedAuditChange) Value() (driver.Value, error) {
 }
 
 // HumanizedSubset returns a subset of length size of humanized audit changes
-func (a AnalyzedAuditChange) HumanizedSubset(size uint) []string {
+func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 	humanizedAuditChanges := a.Humanize()
 	humanizedAuditChangesCount := len(humanizedAuditChanges)
 
 	if humanizedAuditChangesCount > 5 {
-		humanizedAuditChanges = lo.Subset(humanizedAuditChanges, 0, size)
-		humanizedAuditChanges = append(humanizedAuditChanges, fmt.Sprintf("+%d more changes", humanizedAuditChangesCount-int(size)))
+		humanizedAuditChanges = lo.Subset(humanizedAuditChanges, 0, uint(size))
+		humanizedAuditChanges = append(humanizedAuditChanges, fmt.Sprintf("+%d more changes", humanizedAuditChangesCount-size))
 	}
 	return humanizedAuditChanges
 }

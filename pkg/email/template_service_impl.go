@@ -52,9 +52,9 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	errDailyDigest := t.loadEmailTemplate(DailyDigetsTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
-	if errDailyDigest != nil {
-		return errDailyDigest
+	err = t.loadEmailTemplate(DailyDigetsTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
+	if err != nil {
+		return err
 	}
 
 	return nil

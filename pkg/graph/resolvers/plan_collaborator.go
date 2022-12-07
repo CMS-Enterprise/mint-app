@@ -15,7 +15,9 @@ import (
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
 // If the email service or email template service is not provided this method will not
-// 	send the collaborator a notification email
+//
+//	send the collaborator a notification email
+//
 // A plan favorite is created for the collaborating user when the user is added as a collaborator
 func CreatePlanCollaborator(
 	logger *zap.Logger,

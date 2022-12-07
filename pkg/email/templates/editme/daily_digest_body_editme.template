@@ -1552,7 +1552,7 @@
                       <table class="spacer">
                         <tbody>
                           <tr>
-                            <td height="9px" style="font-size:9px;line-height:9px;">&#xA0;</td>
+                            <td height="15px" style="font-size:15px;line-height:15px;">&#xA0;</td>
                           </tr>
                         </tbody>
                       </table>
@@ -1565,7 +1565,7 @@
                                   <th>
                                     <h3>{{$audit.ModelName}}</h3>
                                     <ul>
-                                      {{range $auditChange := $audit.AnalyzedAuditChange.HumanizedSubset}}
+                                      {{range $auditChange := $audit.Changes.HumanizedSubset 5}}
                                         <li>
                                           {{$auditChange}}
                                         </li>
@@ -1593,7 +1593,7 @@
                               <table>
                                 <tr>
                                   <th>
-                                    <a> View this Model Plan in MINT </a>
+                                    <a href="https://mint.cms.gov/models/{{$audit.ModelPlanID}}"> View this Model Plan in MINT </a>
                                   </th>
                                   <th class="expander"></th>
                                 </tr>

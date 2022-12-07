@@ -26,7 +26,6 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 
 	// Add Documents
 	suite.createPlanDocument(plan)
-
 	// Add CrTdls
 	suite.createPlanCrTdl(plan, "123-456", time.Now(), "Title", "Note")
 
@@ -118,6 +117,4 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
-
-	worker.DailyDigestJob(context.Background(), modelLead.EUAUserID, time.Now())
 }
