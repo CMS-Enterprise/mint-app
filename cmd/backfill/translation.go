@@ -11,6 +11,7 @@ import (
 	"github.com/lib/pq"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // Translation is the type used to translate the data from one source to another
@@ -72,10 +73,6 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 	if value == nil || value == "" {
 		return
 	}
-	if t.Header == "Track Gainsharing Payments" {
-		log.Default().Print("this")
-	}
-
 	// VEntry := reflect.ValueOf(entry)
 	if t.ModelName == "?" || t.ModelName == "" {
 		log.Default().Print("translation not defined for " + t.Header + " . Value is " + fmt.Sprint(value))
@@ -83,33 +80,25 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 
 	}
 	bModel := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
-	// bModel := reflect.Indirect().Elem().FieldByName(t.ModelName)
-	// interF, bModel := t.getObject(entry)
 
-	// log.Default().Print(" " + fmt.Sprintf(%s,)) + " . Object name is " + fmt.Sprint(t.ModelName))
 	if !bModel.IsValid() {
 		log.Default().Print("couldn't get object for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName))
 		return
 	}
 
 	log.Default().Print("buisness model kind: ", bModel.Kind(), ". buisness model type: ", bModel.Type())
-	// bModel := reflect.Indirect(VEntry).FieldByName(t.ModelName)
 
-	log.Default().Print(bModel.Addr().Elem())
-
-	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is now a pointer
-
-	// field := bModel.FieldByName(t.Field)
+	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is a pointer
 
 	if !field.IsValid() {
 		log.Default().Print("couldn't get field for for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName) + " . Field name is " + fmt.Sprint(t.Field))
 		return
 	}
-	tErr := t.setField(&field, value, bModel) //Need to pass a Refence to the struct potentially to set that field?
+	tErr := t.setField(&field, value, bModel) //Need to pass a Reference to the struct potentially to set that field?
 	if tErr != nil {
 		entry.Errors = append(entry.Errors, *tErr) //record any setting issue here
 	}
-	log.Default().Print("Tried to set the field. It is now :", field)
+	log.Default().Print("Set the field? ", tErr == nil, "  It is now : ", field, " Error? ", tErr)
 
 }
 
@@ -119,15 +108,7 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, obj inte
 	fieldKind := field.Kind()
 	fieldType := field.Type()
 	valType := val.Type()
-	log.Default().Print(fieldKind)
-	if fieldKind.String() == "ptr" {
-		log.Default().Print("found")
-		// element := field.Elem()
-		log.Default().Print(t, " ", fieldType)
-		// underlyingType := element.Type()
-		// log.Default().Print(element, " ", underlyingType)
 
-	}
 	if field.CanConvert(valType) {
 		field.Set(val)
 		log.Default().Print("Converted sucessfully")
@@ -145,13 +126,10 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, obj inte
 
 		return &TranslationError{
 			Translation: *t,
-			Message:     fmt.Sprintf(" CAN't Convert to needed type %s", fieldKind),
+			Message:     fmt.Sprintf(" Can't Convert to needed type %s", fieldKind),
 		}
 
-		// log.Default().Print(val.Type(), " CAN't Convert to needed type ", fieldKind)
 	}
-
-	log.Default().Print(field.CanSet())
 
 	return nil
 
@@ -204,17 +182,29 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 	case "time.Time":
 
 		//month/date/year format from SharePoint
-		layout := "1/2/2006"
-		tVal, err := time.Parse(layout, val.String())
+		layout := "1/2/2006" //just date formats look like this
+		tVal, err := time.Parse(layout, valString)
 		if err != nil {
-			tErr = &TranslationError{
-				Translation: *t,
-				Value:       value,
-				Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+			layout2 := "1/2/06 15:04"
+			tVal, err = time.Parse(layout2, valString)
+			if err != nil {
+				tErr = &TranslationError{
+					Translation: *t,
+					Value:       value,
+					Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+				}
 			}
-
 		}
 		conVal = valueOrPointer(tVal, isPointer)
+	case "models.DataStartsType": //TODO generically handle string enum types, how do we validate the input?
+		enumType := models.DataStartsType(valString)
+		conVal = valueOrPointer(enumType, isPointer) //THE DATA is not in the same format, it is more human readable
+		//"Shortly before the start date"
+		// TODO, match case, and see if it matches the enum value types...
+
+	case "models.OverlapType":
+		enumType := models.OverlapType(valString)
+		conVal = valueOrPointer(enumType, isPointer)
 
 	default:
 		tErr = &TranslationError{
@@ -224,6 +214,10 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 		}
 
 	}
+
+	// if tErr != nil && valString == "TBD" {
+	// 	//TODO handle these nil cases.
+	// }
 
 	return conVal, tErr
 

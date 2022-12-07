@@ -1,0 +1,128 @@
+[
+    {
+        "name": "Amy Giardina",
+        "aliases": "Amy Giardina"
+    },
+    {
+        "name": "Leah Hendrick",
+        "aliases": "Leah Hendrick (she/her)"
+    },
+    {
+        "name": "Lashawn Brooks",
+        "aliases": "Lashawn Brooks"
+    },
+    {
+        "name": "Nicholas Minter",
+        "aliases": "Nicholas Minter (he/him)"
+    },
+    {
+        "name": "Sarah Fogler",
+        "aliases": "Sarah Fogler"
+    },
+    {
+        "name": "Catherine Jansto",
+        "aliases": "Catherine Jansto"
+    },
+    {
+        "name": "Ilana Portnoy",
+        "aliases": "Ilana Portnoy"
+    },
+    {
+        "name": "Corey Rosenberg",
+        "aliases": "Corey Rosenberg"
+    },
+    {
+        "name": "Jen Lippy",
+        "aliases": "Jen Lippy (she/her)"
+    },
+    {
+        "name": "Hillary Cavanagh",
+        "aliases": "Hillary Cavanagh"
+    },
+    {
+        "name": "Emily Moore",
+        "aliases": "Emily Moore"
+    },
+    {
+        "name": "Allison Marlatt",
+        "aliases": "Allison Marlatt"
+    },
+    {
+        "name": "Kate Blackwell",
+        "aliases": "Kate Blackwell"
+    },
+    {
+        "name": "Tom Duvall",
+        "aliases": "Tom Duvall"
+    },
+    {
+        "name": "Linda Streitfeld",
+        "aliases": "Linda Streitfeld"
+    },
+    {
+        "name": "Emily Johnson",
+        "aliases": "Emily Johnson"
+    },
+    {
+        "name": "Frances Devanbu",
+        "aliases": "Frances Devanbu"
+    },
+    {
+        "name": "Velda L. McGhee",
+        "aliases": "Velda L. McGhee",
+        "email": "Velda.McGhee@cms.hhs.gov",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/CMMI)"
+    },
+    {
+        "name": "Kristen Owens",
+        "aliases": "Kristen Owens",
+        "email": "Kirsten.Owens@cms.hhs.gov",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/CMMI)"
+    },
+    {
+        "name": "Mateus Anjos",
+        "aliases": "Mateus Anjos",
+        "email": "Mateus.Anjos@cms.hhs.gov",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/OIT)"
+    },
+    {
+        "name": "Chinelo Johnson",
+        "aliases": "Chinelo Johnson",
+        "email": "Chinelo.Johnson@cms.hhs.gov",
+        "euaid": "JFJD",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/CMMI)"
+    },
+    {
+        "name": "Michelle Mack",
+        "aliases": "Michelle Mack",
+        "email": "Michelle.Mack@cms.hhs.gov",
+        "euaid": "M89D",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/CMMI)"
+    },
+    {
+        "name": "Tim Rader",
+        "aliases": "Tim Rader",
+        "email": "r.timothy.rader@cms.hhs.gov",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/CMMI)"
+    },
+    {
+        "name": "Zoe Hruban",
+        "aliases": "Zoe Hruban (she/her)",
+        "email": "Zoe.Hruban@cms.hhs.gov",
+        "euaid": "H74T",
+        "role": "ASSESSMENT",
+        "organization": "(CMS/CMMI)"
+    },
+    {
+        "name": "Nadia Dolgachev",
+        "aliases": "Nadia Dolgachev",
+        "email": "nadia.dolgachev@cms.hhs.gov",
+        "euaid": "DBXI"
+    }
+]

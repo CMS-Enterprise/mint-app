@@ -10,9 +10,11 @@ import (
 )
 
 const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
-const translationPath = `cmd/backfill/data/dataTranslation.csv`
+
+// const translationPath = `cmd/backfill/data/dataTranslation.csv`
+const translationFullPath = `cmd/backfill/data/dataTranslationFull.csv`
 const outputPath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
-const userPath = `cmd/backfill/data/sensitive/possibleUsers.json`
+const userPath = `cmd/backfill/data/possibleUsers.json`
 
 func main() { //TODO make this a command
 
@@ -82,7 +84,7 @@ func transformData(userDictionary *PossibleUserDictionary) {
 		log.Fatal(err)
 	}
 
-	translation, err := readFile(translationPath)
+	translation, err := readFile(translationFullPath)
 	if err != nil {
 		log.Fatal(err)
 	}
