@@ -15,8 +15,8 @@ import (
 type Worker struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
-	EmailService         *oddmail.GoSimpleMailService
-	EmailTemplateService *email.TemplateServiceImpl
+	EmailService         oddmail.EmailService
+	EmailTemplateService email.TemplateServiceImpl
 }
 
 // Work creates, configues, and starts worker
@@ -29,22 +29,10 @@ func (w *Worker) Work() {
 
 	// register jobs here
 	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
-	mgr.Register("DailyDigestEmailJob", w.DailyDigestJob)
+	mgr.Register("DailyDigestEmailJob", w.DailyDigestEmailJob)
 
 	err := mgr.Run()
 	if err != nil {
 		fmt.Println(err)
 	}
 }
-
-/*
-Put registered functions here:
-e.g.
-
-	func someFunc(ctx context.Context, args ...interface{}) error {
-		help := faktory_worker.HelperFor(ctx)
-		log.Printf("Working on job %s\n", help.Jid())
-		time.Sleep(1 * time.Second)
-		return nil
-	}
-*/

@@ -25,7 +25,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
-	changes, err := GenerateChanges(audits)
+	changes, err := generateChanges(audits)
 	if err != nil {
 		return err
 	}
@@ -43,35 +43,35 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	return nil
 }
 
-// GenerateChanges gets all the audit changes for the specified tables
-func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {
+// generateChanges gets all the audit changes for the specified tables
+func generateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {
 
-	modelPlanAudits, err := AnalyzeModelPlanAudits(audits)
+	modelPlanAudits, err := analyzeModelPlanAudits(audits)
 	if err != nil {
 		return nil, err
 	}
 
-	documentsAudits, err := AnalyzeDocumentsAudits(audits)
+	documentsAudits, err := analyzeDocumentsAudits(audits)
 	if err != nil {
 		return nil, err
 	}
 
-	crTdlAudits, err := AnalyzeCrTdlAudits(audits)
+	crTdlAudits, err := analyzeCrTdlAudits(audits)
 	if err != nil {
 		return nil, err
 	}
 
-	modelLeadAudits, err := AnalyzeModelLeads(audits)
+	modelLeadAudits, err := analyzeModelLeads(audits)
 	if err != nil {
 		return nil, err
 	}
 
-	discussionAudits, err := AnalyzeDiscussionAudits(audits)
+	discussionAudits, err := analyzeDiscussionAudits(audits)
 	if err != nil {
 		return nil, err
 	}
 
-	sectionsAudits, err := AnalyzeSectionsAudits(audits)
+	sectionsAudits, err := analyzeSectionsAudits(audits)
 	if err != nil {
 		return nil, err
 	}
@@ -88,8 +88,8 @@ func GenerateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 	return &analyzedModelPlan, nil
 }
 
-// AnalyzeModelPlanAudits analyzes all the model plan name changes and status changes
-func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
+// analyzeModelPlanAudits analyzes all the model plan name changes and status changes
+func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
 
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "model_plan"
@@ -126,8 +126,8 @@ func AnalyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 	return &analyzedModelPlan, nil
 }
 
-// AnalyzeCrTdlAudits analyzes if there were any CrTdl changes
-func AnalyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, error) {
+// analyzeCrTdlAudits analyzes if there were any CrTdl changes
+func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_cr_tdl"
 	})
@@ -140,8 +140,8 @@ func AnalyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 	return nil, nil
 }
 
-// AnalyzeModelLeads analyzes new collaborators to a model plan
-func AnalyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads, error) {
+// analyzeModelLeads analyzes new collaborators to a model plan
+func analyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_collaborator"
 	})
@@ -162,8 +162,8 @@ func AnalyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads
 
 }
 
-// AnalyzeDiscussionAudits analyzes if there was discussion activity on a model plan
-func AnalyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlanDiscussions, error) {
+// analyzeDiscussionAudits analyzes if there was discussion activity on a model plan
+func analyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlanDiscussions, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_discussion"
 	})
@@ -177,8 +177,8 @@ func AnalyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlan
 
 }
 
-// AnalyzeDocumentsAudits analyzes how many documents had activity
-func AnalyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocuments, error) {
+// analyzeDocumentsAudits analyzes how many documents had activity
+func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocuments, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_document"
 	})
@@ -190,8 +190,8 @@ func AnalyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocum
 	return &analyzedDocuments, nil
 }
 
-// AnalyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
-func AnalyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
+// analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
+func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
 	sections := []string{
 		"plan_basics",
 		"plan_general_characteristics",

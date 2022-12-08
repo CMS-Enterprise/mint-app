@@ -7,16 +7,12 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-
-	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 )
 
 // WorkerSuite is the testify suite for the worker package
@@ -56,44 +52,10 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID
 		Email:       emailAddress,
 	}
 
-	mockController := gomock.NewController(suite.T())
-	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
-
-	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
-		ClientAddress: "http://localhost:3005",
-		DefaultSender: "unit-test-execution@mint.cms.gov",
-	}
-
-	mockEmailService.
-		EXPECT().
-		GetConfig().
-		Return(emailServiceConfig).
-		AnyTimes()
-
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(mp.ModelName, mp)
-	mockEmailTemplateService.
-		EXPECT().
-		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
-		Return(testTemplate, nil).
-		AnyTimes()
-
-	mockEmailService.
-		EXPECT().
-		Send(
-			gomock.Any(),
-			gomock.Eq([]string{collaboratorInput.Email}),
-			gomock.Any(),
-			gomock.Eq(expectedSubject),
-			gomock.Any(),
-			gomock.Eq(expectedBody),
-		).
-		AnyTimes()
-
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		suite.testConfigs.Logger,
-		mockEmailService,
-		mockEmailTemplateService,
+		nil,
+		nil,
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -133,6 +95,52 @@ func (suite *WorkerSuite) createPlanDocument(mp *models.ModelPlan) *models.PlanD
 	suite.NoError(err)
 
 	return document
+}
+
+func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange *models.AuditField,
+	modelStatusChanges *[]string,
+	documentCount *int,
+	crTdlActivity *bool,
+	updatedSections *[]string,
+	reviewSections *[]string,
+	clearanceSections *[]string,
+	addedLeads *[]string, discussionActivity *bool) *models.AnalyzedAuditChange {
+
+	auditChange := models.AnalyzedAuditChange{
+		ModelPlan: &models.AnalyzedModelPlan{
+			NameChange:    *modelNameChange,
+			StatusChanges: *modelStatusChanges,
+		},
+		Documents: &models.AnalyzedDocuments{
+			Count: *documentCount,
+		},
+		CrTdls: &models.AnalyzedCrTdls{
+			Activity: *crTdlActivity,
+		},
+		PlanSections: &models.AnalyzedPlanSections{
+			Updated:           *updatedSections,
+			ReadyForReview:    *reviewSections,
+			ReadyForClearance: *clearanceSections,
+		},
+		ModelLeads: &models.AnalyzedModelLeads{
+			Added: *addedLeads,
+		},
+		PlanDiscussions: &models.AnalyzedPlanDiscussions{
+			Activity: *discussionActivity,
+		},
+	}
+
+	return &auditChange
+}
+
+func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
+	newAnalyzedAudit, err := models.NewAnalyzedAudit("TEST", mp.ID, mp.ModelName, date, changes)
+	suite.NoError(err)
+
+	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditCreate(suite.testConfigs.Logger, newAnalyzedAudit)
+	suite.NoError(err)
+
+	return analyzedAudit
 }
 
 // TestWorkerSuite runs the worker test suite

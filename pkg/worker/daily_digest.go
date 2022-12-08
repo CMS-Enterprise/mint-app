@@ -2,77 +2,83 @@ package worker
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/samber/lo"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// DailyDigestJob will generate and send an email based on a users favorited Models
-// args[0] username, args[1] date
-func (w *Worker) DailyDigestJob(ctx context.Context, args ...interface{}) error {
-	user, err := w.Store.UserAccountGetByUsername(args[0].(string))
-	if err != nil {
-		return err
-	}
-
-	if user == nil || user.Username == nil {
-		err = errors.New("User does not exist")
-		return err
-	}
-
+// DailyDigestEmailJob will generate and send an email based on a users favorited Models.
+// args[0] userID, args[1] date
+func (w *Worker) DailyDigestEmailJob(ctx context.Context, args ...interface{}) error {
+	userID := args[0].(string)
 	date := args[1].(time.Time)
 
-	planFavorites, err := w.Store.PlanFavoriteGetByCollectionByUserID(w.Logger, args[0].(string))
+	// Get the latest collaborator to get their email.
+	// TODO: get email from user_account table when it is ready
+	latestCollaborator, err := w.Store.PlanCollaboratorFetchLatestByUserID(userID)
 	if err != nil {
 		return err
 	}
-	if len(planFavorites) == 0 {
+	recipientEmail := latestCollaborator.Email
+
+	// Get all analyzedAudits based on users favorited models
+	analyzedAudits, err := getDailyDigestAnalyzedAudits(userID, date, w.Store, w.Logger)
+	if err != nil {
+		return err
+	}
+	if analyzedAudits == nil {
 		return nil
 	}
 
-	modelPlanIds := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
-		return p.ModelPlanID
-
-	})
-	if len(modelPlanIds) == 0 {
-		return nil
-	}
-
-	analyzedAudits, err := w.Store.AnalyzedAuditGetByModelPlanIDsAndDate(w.Logger, modelPlanIds, date)
+	// Generate email subject and body from template
+	emailSubject, emailBody, err := generateDailyDigestEmail(analyzedAudits, w.EmailTemplateService)
 	if err != nil {
 		return err
 	}
 
-	analyzedAudits = append(analyzedAudits, analyzedAudits[0])
-
-	emailSubject, emailBody, err := GenerateEmail(analyzedAudits, w.EmailTemplateService)
+	// Send generated email
+	err = sendDailyDigestEmail(recipientEmail, emailSubject, emailBody, w.EmailService)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("emailSubject")
-	fmt.Println(emailSubject)
-
-	fmt.Println("emailBody")
-	fmt.Println(emailBody)
-
-	// err = SendEmail(user.Email, emailSubject, emailBody, *w.EmailService)
-	// if err != nil {
-	// 	return err
-	// }
 
 	return nil
 }
 
-// GenerateEmail will geneate the daily digest email from template
-func GenerateEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService *email.TemplateServiceImpl) (string, string, error) {
+// getDailyDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
+func getDailyDigestAnalyzedAudits(userID string, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
+	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, userID)
+	if err != nil {
+		return nil, err
+	}
+	if len(planFavorites) == 0 {
+		return nil, nil
+	}
+
+	modelPlanIds := lo.Map(planFavorites, func(p *models.PlanFavorite, index int) uuid.UUID {
+		return p.ModelPlanID
+	})
+	if len(modelPlanIds) == 0 {
+		return nil, nil
+	}
+
+	analyzedAudits, err := store.AnalyzedAuditGetByModelPlanIDsAndDate(logger, modelPlanIds, date)
+	if err != nil {
+		return nil, err
+	}
+
+	return analyzedAudits, nil
+}
+
+// generateDailyDigestEmail will geneate the daily digest email from template
+func generateDailyDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService email.TemplateServiceImpl) (string, string, error) {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
 	if err != nil {
 		return "", "", err
@@ -93,8 +99,8 @@ func GenerateEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService 
 	return emailSubject, emailBody, nil
 }
 
-// SendEmail will send the daily digest email to given recipient
-func SendEmail(recipient string, subject string, body string, emailService oddmail.GoSimpleMailService) error {
+// sendDailyDigestEmail will send the daily digest email to given recipient
+func sendDailyDigestEmail(recipient string, subject string, body string, emailService oddmail.EmailService) error {
 	err := emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{recipient}, nil, subject, "text/html", body)
 	if err != nil {
 		return err

@@ -249,7 +249,7 @@ func (s *Server) routes(
 		Store:                store,
 		Logger:               s.logger,
 		EmailService:         emailService,
-		EmailTemplateService: emailTemplateService,
+		EmailTemplateService: *emailTemplateService,
 	}
 
 	if s.environment.Local() {

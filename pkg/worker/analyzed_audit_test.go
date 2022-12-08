@@ -7,19 +7,13 @@ import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 )
 
-func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
-
-	emailTemplateService, err := email.NewTemplateServiceImpl()
-	suite.NoError(err)
-
+func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	worker := &Worker{
-		Store:                suite.testConfigs.Store,
-		Logger:               suite.testConfigs.Logger,
-		EmailTemplateService: emailTemplateService,
+		Store:  suite.testConfigs.Store,
+		Logger: suite.testConfigs.Logger,
 	}
 	// Create plan
 	plan := suite.createModelPlan("Test Plan2")
@@ -72,7 +66,7 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err := worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
 	suite.NoError(err)
 
 	// Get Stored audit

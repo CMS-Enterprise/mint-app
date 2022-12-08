@@ -116,19 +116,19 @@ func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 func (a AnalyzedAuditChange) Humanize() []string {
 	var humanizedAuditChanges []string
 
-	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.Humanize()...)
-	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.Humanize()...)
-	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.Humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.humanize()...)
 
-	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.humanize())
 
 	return lo.WithoutEmpty(humanizedAuditChanges)
 }
 
-// Humanize returns AnalyzedModelPlan in human readable sentences
-func (amp AnalyzedModelPlan) Humanize() []string {
+// humanize returns AnalyzedModelPlan in human readable sentences
+func (amp AnalyzedModelPlan) humanize() []string {
 	var humanizedNameChange string
 	var humanizedStatusChanges []string
 
@@ -163,8 +163,8 @@ func (amp AnalyzedModelPlan) Humanize() []string {
 	return append(humanizedStatusChanges, humanizedNameChange)
 }
 
-// Humanize returns AnalyzedDocuments in a human readable sentence
-func (ad AnalyzedDocuments) Humanize() string {
+// humanize returns AnalyzedDocuments in a human readable sentence
+func (ad AnalyzedDocuments) humanize() string {
 	if ad.Count > 0 {
 		return fmt.Sprintf("%d new documents have been uploaded", ad.Count)
 	}
@@ -172,16 +172,16 @@ func (ad AnalyzedDocuments) Humanize() string {
 	return ""
 }
 
-// Humanize returns AnalyzedCrTdls in a human readable sentence
-func (act AnalyzedCrTdls) Humanize() string {
+// humanize returns AnalyzedCrTdls in a human readable sentence
+func (act AnalyzedCrTdls) humanize() string {
 	if act.Activity {
 		return "Updates to CR/TDLs"
 	}
 	return ""
 }
 
-// Humanize returns AnalyzedPlanSections in human readable sentences
-func (aps AnalyzedPlanSections) Humanize() []string {
+// humanize returns AnalyzedPlanSections in human readable sentences
+func (aps AnalyzedPlanSections) humanize() []string {
 	var humanizedAnalyzedPlanSections []string
 
 	// Section updates
@@ -189,9 +189,9 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 		updatedSectionNames := lo.Map(aps.Updated, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)
-			return caser.String(strings.Replace(s, "plan", "", -1))
+			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
 		})
-		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("Updates to %s", strings.Join(updatedSectionNames, ",")))
+		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("Updates to %s", strings.Join(updatedSectionNames, ", ")))
 	}
 
 	// Ready for clearance
@@ -199,12 +199,12 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 		updatedSectionNames := lo.Map(aps.ReadyForClearance, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)
-			return caser.String(strings.Replace(s, "plan", "", -1))
+			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
 		})
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s is ready for clearance", updatedSectionNames[0]))
 		} else {
-			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s are ready for clearance", strings.Join(updatedSectionNames, ",")))
+			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s are ready for clearance", strings.Join(updatedSectionNames, ", ")))
 		}
 	}
 
@@ -213,19 +213,19 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 		updatedSectionNames := lo.Map(aps.ReadyForReview, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)
-			return caser.String(strings.Replace(s, "plan", "", -1))
+			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
 		})
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s is ready for clearance", updatedSectionNames[0]))
 		} else {
-			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s are ready for clearance", strings.Join(updatedSectionNames, ",")))
+			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s are ready for clearance", strings.Join(updatedSectionNames, ", ")))
 		}
 	}
 	return humanizedAnalyzedPlanSections
 }
 
-// Humanize returns AnalyzedModelLeads in human readable sentences
-func (aml AnalyzedModelLeads) Humanize() []string {
+// humanize returns AnalyzedModelLeads in human readable sentences
+func (aml AnalyzedModelLeads) humanize() []string {
 	var humanizedAnalyzedModelLeads []string
 
 	if len(aml.Added) > 0 {
@@ -237,8 +237,8 @@ func (aml AnalyzedModelLeads) Humanize() []string {
 	return humanizedAnalyzedModelLeads
 }
 
-// Humanize returns AnalyzedPlanDiscussions in a human readable sentence
-func (aps AnalyzedPlanDiscussions) Humanize() string {
+// humanize returns AnalyzedPlanDiscussions in a human readable sentence
+func (aps AnalyzedPlanDiscussions) humanize() string {
 	if aps.Activity {
 		return "New activity in Discussions"
 	}
