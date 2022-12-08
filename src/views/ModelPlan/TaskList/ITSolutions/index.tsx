@@ -5,6 +5,7 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
+import UpdateStatus from './Home/UpdateStatus';
 import AddCustomSolution from './AddCustomSolution';
 import AddSolution from './AddSolution';
 import ITSolutionsHome from './Home';
@@ -47,6 +48,13 @@ const ITSolutions = () => {
               exact
             >
               <SolutionImplementation />
+            </Route>
+
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-status"
+              exact
+            >
+              <UpdateStatus />
             </Route>
 
             <Route path="*" render={() => <NotFoundPartial />} />
