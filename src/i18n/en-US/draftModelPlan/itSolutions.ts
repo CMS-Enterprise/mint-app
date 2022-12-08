@@ -140,7 +140,11 @@ const itSolutions = {
     'Add additional information and update the implementation status of each selected solution. If you do not know this information you may add it at a later date.',
   mustStartBy: 'Must start by',
   mustFinishBy: 'Must finish by',
-  whatIsStatus: 'What is the status of this solution?'
+  whatIsStatus: 'What is the status of this solution?',
+  updateStatus: 'Update status',
+  updateStatusInfo:
+    'Update the implementation status and deadline for this solution.',
+  updateSolution: 'Update solution'
 };
 
 export default itSolutions;
