@@ -191,7 +191,7 @@ const DraftModelPlansTable = ({
         }
       }
     ];
-  }, [t]);
+  }, [t, isMAC]);
 
   const macColumns = useMemo(() => {
     return [
