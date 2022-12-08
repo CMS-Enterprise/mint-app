@@ -18,4 +18,10 @@ describe('Logging in', () => {
 
     cy.get('h1', { timeout: 20000 }).should('have.text', 'Welcome to MINT');
   });
+
+  it('logs in with local MAC', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT MAC Users' });
+
+    cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
+  });
 });

@@ -1,6 +1,9 @@
+/* eslint-disable react/prop-types */
+
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Row,
   useFilters,
   useGlobalFilter,
   usePagination,
@@ -9,6 +12,7 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -20,11 +24,16 @@ import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } fr
 import GetDraftModelPlans from 'queries/GetModelPlans';
 import {
   GetModelPlans as GetDraftModelPlansType,
-  GetModelPlans_modelPlanCollection as DraftModelPlanType
+  GetModelPlans_modelPlanCollection as DraftModelPlanType,
+  GetModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/types/GetModelPlans';
+import { KeyCharacteristic, ModelStatus } from 'types/graphql-global-types';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
-import { translateModelPlanStatus } from 'utils/modelPlan';
+import {
+  translateKeyCharacteristics,
+  translateModelPlanStatus
+} from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -35,12 +44,6 @@ import {
 import formatRecentActivity from './formatActivity';
 
 import './index.scss';
-
-type TableProps = {
-  data: DraftModelPlanType[];
-  hiddenColumns?: string[];
-  showDownloadButton: boolean;
-};
 
 export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
   const { t } = useTranslation('home');
@@ -74,15 +77,134 @@ export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
   );
 };
 
-const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
+type TableProps = {
+  hiddenColumns?: string[];
+  isAssessment: boolean;
+  isMAC: boolean;
+};
+
+const DraftModelPlansTable = ({
+  hiddenColumns,
+  isAssessment,
+  isMAC
+}: TableProps) => {
   const { t } = useTranslation('home');
+
+  const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
+    GetDraftModelPlans,
+    { variables: { includeAll: isAssessment, isMAC } }
+  );
+
+  const data = useMemo(() => {
+    return (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
+  }, [modelPlans?.modelPlanCollection]);
 
   const columns = useMemo(() => {
     return [
       {
         Header: t('requestsTable.headers.name'),
         accessor: 'modelName',
-        Cell: ({ row, value }: any) => {
+        Cell: ({
+          row,
+          value
+        }: {
+          row: Row<DraftModelPlanType>;
+          value: string;
+        }) => {
+          const filteredNameHistory: string[] = row.original.nameHistory?.slice(
+            1
+          );
+          return (
+            <>
+              <UswdsReactLink
+                to={`/models/${row.original.id}/${
+                  isMAC ? 'read-only' : 'task-list'
+                }`}
+                className="display-block"
+              >
+                {value}
+              </UswdsReactLink>
+              {filteredNameHistory && filteredNameHistory.length > 0 && (
+                <RenderFilteredNameHistory names={filteredNameHistory} />
+              )}
+            </>
+          );
+        }
+      },
+      {
+        Header: t('requestsTable.headers.modelPoc'),
+        accessor: 'collaborators',
+        Cell: ({ value }: { value: CollaboratorsType[] }) => {
+          if (value) {
+            const leads = value.filter((item: CollaboratorsType) => {
+              return item.teamRole.toLowerCase().includes('model_lead');
+            });
+            return (
+              <>
+                {leads.map((item: CollaboratorsType, index: number) => {
+                  return `${item.fullName}${
+                    index === leads.length - 1 ? '' : ', '
+                  }`;
+                })}
+              </>
+            );
+          }
+          return '';
+        }
+      },
+      {
+        Header: t('requestsTable.headers.clearanceDate'),
+        accessor: ({ basics: { clearanceStarts } }: any) => {
+          if (clearanceStarts) {
+            return DateTime.fromISO(clearanceStarts).toLocaleString(
+              DateTime.DATE_SHORT
+            );
+          }
+          return null;
+        },
+        Cell: ({ value }: { value: string }) => {
+          if (!value) {
+            return <div>{t('requestsTable.tbd')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: t('requestsTable.headers.status'),
+        accessor: 'status',
+        Cell: ({ value }: { value: ModelStatus }) => {
+          return translateModelPlanStatus(value);
+        }
+      },
+      {
+        Header: t('requestsTable.headers.recentActivity'),
+        accessor: 'createdDts',
+        Cell: ({
+          row,
+          value
+        }: {
+          row: Row<DraftModelPlanType>;
+          value: string;
+        }) => {
+          const { discussions } = row.original;
+          return formatRecentActivity(value, discussions);
+        }
+      }
+    ];
+  }, [t, isMAC]);
+
+  const macColumns = useMemo(() => {
+    return [
+      {
+        Header: t('requestsTable.headers.name'),
+        accessor: 'modelName',
+        Cell: ({
+          row,
+          value
+        }: {
+          row: Row<DraftModelPlanType>;
+          value: string;
+        }) => {
           const filteredNameHistory: string[] = row.original.nameHistory?.slice(
             1
           );
@@ -99,6 +221,67 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
               )}
             </>
           );
+        }
+      },
+      {
+        Header: t('requestsTable.headers.startDate'),
+        accessor: ({ basics: { applicationsStart } }: any) => {
+          if (applicationsStart) {
+            return DateTime.fromISO(applicationsStart).toLocaleString(
+              DateTime.DATE_SHORT
+            );
+          }
+          return null;
+        },
+        Cell: ({ value }: { value: string | null }) => {
+          if (!value) {
+            return <div>{t('requestsTable.tbd')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: t('requestsTable.headers.paymentDate'),
+        accessor: ({ payments: { paymentStartDate } }: any) => {
+          if (paymentStartDate) {
+            return DateTime.fromISO(paymentStartDate).toLocaleString(
+              DateTime.DATE_SHORT
+            );
+          }
+          return null;
+        },
+        Cell: ({ value }: { value: string | null }) => {
+          if (!value) {
+            return <div>{t('requestsTable.tbd')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: t('requestsTable.headers.keyCharacteristics'),
+        accessor: 'generalCharacteristics.keyCharacteristics',
+        Cell: ({ value }: { value: KeyCharacteristic[] }) => {
+          if (value) {
+            return value
+              .map(characteristics =>
+                translateKeyCharacteristics(characteristics)
+              )
+              .join(', ');
+          }
+          return null;
+        }
+      },
+      {
+        Header: t('requestsTable.headers.crTDLs'),
+        accessor: 'crTdls',
+        Cell: ({ value }: { value: CRTDLType[] }) => {
+          if (!value || value.length === 0) {
+            return <div>{t('requestsTable.tbd')}</div>;
+          }
+          const crtdlIDs = value
+            .map((crtdl: CRTDLType) => crtdl.idNumber)
+            .join(', ');
+          return crtdlIDs;
         }
       },
       {
@@ -120,31 +303,6 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
             );
           }
           return '';
-        }
-      },
-      {
-        Header: t('requestsTable.headers.clearanceDate'),
-        accessor: 'clearanceDate',
-        Cell: ({ value }: any) => {
-          if (!value) {
-            return <div>{t('requestsTable.tbd')}</div>;
-          }
-          return value;
-        }
-      },
-      {
-        Header: t('requestsTable.headers.status'),
-        accessor: 'status',
-        Cell: ({ value }: any) => {
-          return translateModelPlanStatus(value);
-        }
-      },
-      {
-        Header: t('requestsTable.headers.recentActivity'),
-        accessor: 'createdDts',
-        Cell: ({ row, value }: any) => {
-          const { discussions } = row.original;
-          return formatRecentActivity(value, discussions);
         }
       }
     ];
@@ -168,7 +326,7 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
     prepareRow
   } = useTable(
     {
-      columns,
+      columns: isMAC ? macColumns : columns,
       data,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
@@ -200,6 +358,14 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
     );
   }
 
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>;
+  }
+
   return (
     <div className="model-plan-table">
       <div className="mint-header__basic">
@@ -210,7 +376,7 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
           className="margin-bottom-4"
         />
 
-        {showDownloadButton && (
+        {isAssessment && (
           <div className="flex-align-self-center">
             <CsvExportLink includeAll />
           </div>
@@ -241,10 +407,7 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
                     scope="col"
                     style={{
                       minWidth: '138px',
-                      width:
-                        ((index === 0 || index === 1) && '286px') ||
-                        (index === 2 && '175px') ||
-                        '',
+                      maxWidth: '250px',
                       paddingLeft: '0',
                       paddingBottom: '.5rem',
                       position: 'relative'
@@ -329,39 +492,6 @@ const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
         {currentTableSortDescription(headerGroups[0])}
       </div>
     </div>
-  );
-};
-
-type DraftModelTableProps = {
-  hiddenColumns?: string[];
-  isAssessment: boolean;
-};
-
-const DraftModelPlansTable = ({
-  hiddenColumns,
-  isAssessment
-}: DraftModelTableProps) => {
-  const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
-    GetDraftModelPlans,
-    { variables: { includeAll: isAssessment } }
-  );
-
-  const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
-
-  if (loading) {
-    return <PageLoading />;
-  }
-
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
-  }
-
-  return (
-    <Table
-      data={data}
-      hiddenColumns={hiddenColumns}
-      showDownloadButton={isAssessment}
-    />
   );
 };
 
