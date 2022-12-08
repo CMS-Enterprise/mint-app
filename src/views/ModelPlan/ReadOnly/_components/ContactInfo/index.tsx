@@ -11,7 +11,13 @@ import {
 } from 'queries/Collaborators/types/GetModelCollaborators';
 import { TeamRole } from 'types/graphql-global-types';
 
-const ContactInfo = ({ modelID }: { modelID: string }) => {
+const ContactInfo = ({
+  modelID,
+  isViewingTeamPage
+}: {
+  modelID: string;
+  isViewingTeamPage: boolean;
+}) => {
   const { t: h } = useTranslation('generalReadOnly');
 
   const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
@@ -56,14 +62,16 @@ const ContactInfo = ({ modelID }: { modelID: string }) => {
           );
         })}
 
-      <UswdsReactLink
-        aria-label={h('contactInfo.moreTeamMembers')}
-        className="line-height-body-5 display-flex flex-align-center "
-        to={`/models/${modelID}/read-only/team`}
-      >
-        {h('contactInfo.moreTeamMembers')}
-        <IconArrowForward className="margin-left-1" />
-      </UswdsReactLink>
+      {!isViewingTeamPage && (
+        <UswdsReactLink
+          aria-label={h('contactInfo.moreTeamMembers')}
+          className="line-height-body-5 display-flex flex-align-center "
+          to={`/models/${modelID}/read-only/team`}
+        >
+          {h('contactInfo.moreTeamMembers')}
+          <IconArrowForward className="margin-left-1" />
+        </UswdsReactLink>
+      )}
     </div>
   );
 };
