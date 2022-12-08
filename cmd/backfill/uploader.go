@@ -97,6 +97,16 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	_, uErr = u.uploadPlanBasics(entry, princ)
 	entry.addNonNullUError(uErr)
 
+	u.uploadPlanCollaborators(entry, princ)
+
+	// for _, collab := range entry.Collaborators {
+
+	// 	_, uErr = uploadPlanCollaborator(entry, princ,collab)
+
+	// 	entry.addNonNullUError(uErr)
+
+	// }
+
 	_, uErr = u.uploadPlanGeneralCharacteristics(entry, princ)
 	entry.addNonNullUError(uErr)
 
@@ -137,6 +147,43 @@ func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Pr
 	u.Logger.Log(zap.DebugLevel, "created modelPlan "+modelPlan.ModelName) //TODO need better logging?
 	return modelPlan, nil
 }
+
+func (u *Uploader) uploadPlanCollaborators(entry *BackfillEntry, princ authentication.Principal) {
+	for i, collab := range entry.Collaborators {
+		var uErr *UploadError
+		collab, uErr = u.uploadPlanCollaborator(entry, princ, collab)
+
+		entry.addNonNullUError(uErr)
+		entry.Collaborators[i] = collab //if error, replaced with null..
+
+	}
+
+}
+
+func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentication.Principal, collab *models.PlanCollaborator) (*models.PlanCollaborator, *UploadError) {
+
+	// input := model.PlanCollaboratorCreateInput{
+	// 	ModelPlanID: collab.ModelPlanID,
+	// 	EuaUserID: collab.EUAUserID,
+	// 	FullName: collab.FullName,
+	// 	TeamRole: collab.TeamRole,
+	// 	Email: collab.Email,
+
+	// }
+	// retCollab, err := resolvers.CreatePlanCollaborator(&u.Logger,nil,nil,) // this resolver does a lot... maybe just skip it for now
+	//TODO, update the collabs created by, model plan id etc
+	collab.CreatedBy = entry.ModelPlan.CreatedBy
+	collab.ModelPlanID = entry.ModelPlan.ID
+	retCollaborator, err := u.Store.PlanCollaboratorCreate(&u.Logger, collab)
+	if err != nil {
+		return nil, &UploadError{
+			Model:   "PlanCollaborator",
+			DBError: err,
+		}
+	}
+	return retCollaborator, nil
+}
+
 func (u *Uploader) uploadPlanBasics(entry *BackfillEntry, princ authentication.Principal) (*models.PlanBasics, *UploadError) {
 	retBasics, err := resolvers.PlanBasicsGetByModelPlanID(&u.Logger, entry.ModelPlan.ID, &u.Store)
 	if err != nil {
