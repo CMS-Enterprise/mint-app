@@ -515,7 +515,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                             'sticky-nav__collaborator': hasEditAccess
                           })}
                         >
-                          <ContactInfo modelID={modelID} />
+                          <ContactInfo
+                            modelID={modelID}
+                            isViewingTeamPage={subinfo === 'team'}
+                          />
                         </Grid>
                       )}
                   </Grid>
