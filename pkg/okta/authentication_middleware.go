@@ -26,7 +26,7 @@ const (
 	JobCodeTestMACUser    = "MINT MAC Users"
 	JobCodeProdUser       = "MINT_USER"
 	JobCodeProdAssessment = "MINT_ASSESSMENT"
-	JobCodeProdMACUser    = "MINT_MAC_USER"
+	JobCodeProdMACUser    = "MINT MAC Users"
 )
 
 // EnhancedJwt is the JWT and the auth token
