@@ -62,7 +62,7 @@ const participantsAndProviders = {
     recruitInfo:
       'CMMI writes, Office of General Council (OGC) reviews and approves',
     nofo:
-      'NOFO (Notice of funding opportunity for grants/cooperative agreements',
+      'NOFO (Notice of funding opportunity for grants/cooperative agreements)',
     notApplicable: 'Not applicable',
     other: 'Other'
   },
