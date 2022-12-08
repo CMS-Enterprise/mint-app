@@ -807,7 +807,7 @@ type ComplexityRoot struct {
 		CurrentUser                  func(childComplexity int) int
 		ExistingModelCollection      func(childComplexity int) int
 		ModelPlan                    func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection          func(childComplexity int, includeAll bool) int
+		ModelPlanCollection          func(childComplexity int, filter model.ModelPlanFilter) int
 		NdaInfo                      func(childComplexity int) int
 		OperationalNeed              func(childComplexity int, id uuid.UUID) int
 		OperationalSolution          func(childComplexity int, id uuid.UUID) int
@@ -1060,7 +1060,7 @@ type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
-	ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error)
+	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
@@ -5959,7 +5959,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.ModelPlanCollection(childComplexity, args["includeAll"].(bool)), true
+		return e.complexity.Query.ModelPlanCollection(childComplexity, args["filter"].(model.ModelPlanFilter)), true
 
 	case "Query.ndaInfo":
 		if e.complexity.Query.NdaInfo == nil {
@@ -7719,7 +7719,7 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  modelPlanCollection(includeAll: Boolean!): [ModelPlan!]!
+  modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
@@ -7733,6 +7733,14 @@ type Query {
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+}
+
+enum ModelPlanFilter {
+  INCLUDE_ALL,
+  COLLAB_ONLY,
+  WITH_CR_TDLS,
+
+  
 }
 
 """
@@ -9458,15 +9466,15 @@ func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs 
 func (ec *executionContext) field_Query_modelPlanCollection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["includeAll"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeAll"))
-		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+	var arg0 model.ModelPlanFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalNModelPlanFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["includeAll"] = arg0
+	args["filter"] = arg0
 	return args, nil
 }
 
@@ -41534,7 +41542,7 @@ func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["includeAll"].(bool))
+		return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["filter"].(model.ModelPlanFilter))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -53654,6 +53662,16 @@ func (ec *executionContext) marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNModelPlanFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanFilter(ctx context.Context, v interface{}) (model.ModelPlanFilter, error) {
+	var res model.ModelPlanFilter
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelPlanFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanFilter(ctx context.Context, sel ast.SelectionSet, v model.ModelPlanFilter) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (models.ModelStatus, error) {

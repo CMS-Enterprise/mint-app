@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "18b9e853-8528-4a9b-92f8-351d4b6b01b9",
+		"_postman_id": "08b67561-b006-4d82-8974-9b999501f5b2",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"_exporter_id": "20320964"
 	},
 	"item": [
 		{
@@ -73,6 +73,27 @@
 					"response": []
 				},
 				{
+					"name": "Get All Model Plans CRTDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get All Model Plans",
 					"request": {
 						"method": "POST",
@@ -80,8 +101,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($includeAll: Boolean!) {\n    modelPlanCollection(includeAll: $includeAll) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{\n    \"includeAll\": true\n}"
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
 						"url": {
