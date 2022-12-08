@@ -46,7 +46,7 @@ const generalCharacteristics = {
   pleaseDescribe: 'Please describe the other key characteristics',
   reviewPlanBids: 'Will you review and collect plan bids?',
   manageEnrollment: 'Will you manage Part C/D enrollment?',
-  updatedContact: 'Have you updated the plan’s contact?',
+  updatedContract: 'Have you updated the plan’s contract?',
   careCoordination: 'Is care coordination involved?',
   additionalServices: 'Are additional services involved?',
   communityInvolved: 'Are community partners involved?',

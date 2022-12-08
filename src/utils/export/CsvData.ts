@@ -137,8 +137,8 @@ const csvFields = [
   'generalCharacteristics.collectPlanBidsNote',
   'generalCharacteristics.managePartCDEnrollment',
   'generalCharacteristics.managePartCDEnrollmentNote',
-  'generalCharacteristics.planContactUpdated',
-  'generalCharacteristics.planContactUpdatedNote',
+  'generalCharacteristics.planContractUpdated',
+  'generalCharacteristics.planContractUpdatedNote',
   'generalCharacteristics.geographiesTargeted',
   'generalCharacteristics.geographiesTargetedTypes', // array
   'generalCharacteristics.geographiesTargetedTypesOther',

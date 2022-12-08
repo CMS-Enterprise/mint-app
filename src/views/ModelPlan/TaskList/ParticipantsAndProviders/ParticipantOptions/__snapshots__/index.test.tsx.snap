@@ -287,6 +287,24 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
+            id="participants-and-providers-recruitment-method-APPLICATION_COLLECTION_TOOL"
+            name="recruitmentMethod"
+            type="radio"
+            value="APPLICATION_COLLECTION_TOOL"
+          />
+          <label
+            class="usa-radio__label"
+            for="participants-and-providers-recruitment-method-APPLICATION_COLLECTION_TOOL"
+          >
+            Use an application collection tool
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
             id="participants-and-providers-recruitment-method-LOI"
             name="recruitmentMethod"
             type="radio"
@@ -296,7 +314,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
             class="usa-radio__label"
             for="participants-and-providers-recruitment-method-LOI"
           >
-            LOI (Letter of interest)
+            LOI (Letter of intent)
           </label>
         </div>
         <div
@@ -314,32 +332,9 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
             class="usa-radio__label"
             for="participants-and-providers-recruitment-method-NOFO"
           >
-            NOFO (Notice of funding opportunity for grants/cooperative agreements
+            NOFO (Notice of funding opportunity for grants/cooperative agreements)
           </label>
         </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="participants-and-providers-recruitment-method-RFA"
-            name="recruitmentMethod"
-            type="radio"
-            value="RFA"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-recruitment-method-RFA"
-          >
-            RFA (Request for applications)
-          </label>
-        </div>
-        <p
-          class="text-base margin-bottom-neg-05 margin-left-4 margin-top-1 line-height-body-3"
-        >
-          CMMI writes, Office of General Council (OGC) reviews and approves
-        </p>
         <div
           class="usa-radio"
           data-testid="radio"

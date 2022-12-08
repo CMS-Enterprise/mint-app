@@ -83,7 +83,7 @@ describe('IT Tools Page two', () => {
       ).toHaveTextContent('You previously answered:');
 
       expect(getByTestId('tools-answers')).toHaveTextContent(
-        'LOI (Letter of interest)'
+        'LOI (Letter of intent)'
       );
 
       expect(

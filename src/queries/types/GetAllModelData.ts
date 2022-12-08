@@ -144,8 +144,8 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;
   managePartCDEnrollmentNote: string | null;
-  planContactUpdated: boolean | null;
-  planContactUpdatedNote: string | null;
+  planContractUpdated: boolean | null;
+  planContractUpdatedNote: string | null;
   geographiesTargeted: boolean | null;
   geographiesTargetedTypes: GeographyType[];
   geographiesTargetedTypesOther: string | null;
@@ -491,8 +491,4 @@ export interface GetAllModelData_modelPlanCollection {
 
 export interface GetAllModelData {
   modelPlanCollection: GetAllModelData_modelPlanCollection[];
-}
-
-export interface GetAllModelDataVariables {
-  includeAll: boolean;
 }

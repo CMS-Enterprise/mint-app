@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, KeyCharacteristic, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelPlanFilter, ModelStatus, KeyCharacteristic, TeamRole, DiscussionStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlans
@@ -70,6 +70,6 @@ export interface GetModelPlans {
 }
 
 export interface GetModelPlansVariables {
-  includeAll: boolean;
+  filter: ModelPlanFilter;
   isMAC: boolean;
 }

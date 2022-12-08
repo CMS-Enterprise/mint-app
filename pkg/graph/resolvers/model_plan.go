@@ -158,16 +158,19 @@ func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.
 }
 
 // ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, includeAll bool) ([]*models.ModelPlan, error) {
+func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 	var err error
-	if includeAll {
+	switch filter {
+	case model.ModelPlanFilterIncludeAll:
 		modelPlans, err = store.ModelPlanCollection(logger, false)
-	} else {
+	case model.ModelPlanFilterCollabOnly:
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
-	}
-	if err != nil {
-		return nil, err
+	case model.ModelPlanFilterWithCrTdls:
+		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+	default:
+		modelPlans = nil
+		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)
 	}
 
 	return modelPlans, err

@@ -27,7 +27,11 @@ import {
   GetModelPlans_modelPlanCollection as DraftModelPlanType,
   GetModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/types/GetModelPlans';
-import { KeyCharacteristic, ModelStatus } from 'types/graphql-global-types';
+import {
+  KeyCharacteristic,
+  ModelPlanFilter,
+  ModelStatus
+} from 'types/graphql-global-types';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
@@ -90,9 +94,17 @@ const DraftModelPlansTable = ({
 }: TableProps) => {
   const { t } = useTranslation('home');
 
+  let queryType = ModelPlanFilter.COLLAB_ONLY;
+
+  if (isAssessment) {
+    queryType = ModelPlanFilter.INCLUDE_ALL;
+  } else if (isMAC) {
+    queryType = ModelPlanFilter.WITH_CR_TDLS;
+  }
+
   const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
     GetDraftModelPlans,
-    { variables: { includeAll: isAssessment, isMAC } }
+    { variables: { filter: queryType, isMAC } }
   );
 
   const data = useMemo(() => {
