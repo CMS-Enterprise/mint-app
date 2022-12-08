@@ -70,11 +70,11 @@ type RecruitmentType string
 
 // These constants represent the choices for Recruitment Type
 const (
-	RecruitmentLOI   RecruitmentType = "LOI"
-	RecruitmentRFA   RecruitmentType = "RFA"
-	RecruitmentNOFO  RecruitmentType = "NOFO"
-	RecruitmentOTHER RecruitmentType = "OTHER"
-	RecruitmentNA    RecruitmentType = "NA"
+	RecruitmentLOI           RecruitmentType = "LOI"
+	RecruitmentAPPCOLLECTION RecruitmentType = "APPLICATION_COLLECTION_TOOL"
+	RecruitmentNOFO          RecruitmentType = "NOFO"
+	RecruitmentOTHER         RecruitmentType = "OTHER"
+	RecruitmentNA            RecruitmentType = "NA"
 )
 
 // ParticipantRiskType represents the possible RiskType values

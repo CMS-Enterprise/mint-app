@@ -10,7 +10,7 @@ export default gql`
     $payments: Boolean!
     $managePartCDEnrollment: Boolean!
     $collectPlanBids: Boolean!
-    $planContactUpdated: Boolean!
+    $planContractUpdated: Boolean!
     $recruitmentMethod: Boolean!
     $selectionMethod: Boolean!
     $communicationMethod: Boolean!
@@ -38,7 +38,7 @@ export default gql`
       generalCharacteristics @include(if: $generalCharacteristics) {
         managePartCDEnrollment @include(if: $managePartCDEnrollment)
         collectPlanBids @include(if: $collectPlanBids)
-        planContactUpdated @include(if: $planContactUpdated)
+        planContractUpdated @include(if: $planContractUpdated)
       }
       participantsAndProviders @include(if: $participantsAndProviders) {
         recruitmentMethod @include(if: $recruitmentMethod)

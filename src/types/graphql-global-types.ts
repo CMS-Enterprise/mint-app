@@ -649,11 +649,11 @@ export enum ProviderLeaveType {
 }
 
 export enum RecruitmentType {
+  APPLICATION_COLLECTION_TOOL = "APPLICATION_COLLECTION_TOOL",
   LOI = "LOI",
   NA = "NA",
   NOFO = "NOFO",
   OTHER = "OTHER",
-  RFA = "RFA",
 }
 
 export enum SelectionMethodType {
@@ -887,8 +887,8 @@ export interface PlanGeneralCharacteristicsChanges {
   collectPlanBidsNote?: string | null;
   managePartCDEnrollment?: boolean | null;
   managePartCDEnrollmentNote?: string | null;
-  planContactUpdated?: boolean | null;
-  planContactUpdatedNote?: string | null;
+  planContractUpdated?: boolean | null;
+  planContractUpdatedNote?: string | null;
   careCoordinationInvolved?: boolean | null;
   careCoordinationInvolvedDescription?: string | null;
   careCoordinationInvolvedNote?: string | null;

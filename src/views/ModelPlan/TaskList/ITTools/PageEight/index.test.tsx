@@ -90,7 +90,7 @@ describe('IT Tools Page eight', () => {
     await waitFor(() => {
       expect(
         getByTestId('tools-question-modelLearningSystems')
-      ).toHaveTextContent('Will the model have a learning system?');
+      ).toHaveTextContent('Will the model have a learning strategy?');
 
       expect(
         getByTestId('has-answered-tools-question-modelLearningSystems')
@@ -127,7 +127,7 @@ describe('IT Tools Page eight', () => {
     await waitFor(() => {
       expect(
         getByTestId('tools-question-modelLearningSystems')
-      ).toHaveTextContent('Will the model have a learning system?');
+      ).toHaveTextContent('Will the model have a learning strategy?');
     });
 
     expect(asFragment()).toMatchSnapshot();
