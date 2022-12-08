@@ -86,9 +86,41 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 		}
 	}
+
+	_, uErr := u.uploadModelPlan(entry, princ, userInfo)
+	entry.addNonNullUError(uErr) //TODO, should we handle this in the function instead?
+
+	if uErr != nil {
+		return fmt.Errorf("error creating a model plan") //return early for this error
+	}
+
+	_, uErr = u.uploadPlanBasics(entry, princ)
+	entry.addNonNullUError(uErr)
+
+	_, uErr = u.uploadPlanGeneralCharacteristics(entry, princ)
+	entry.addNonNullUError(uErr)
+
+	_, uErr = u.uploadPlanGeneralCharacteristics(entry, princ)
+	entry.addNonNullUError(uErr)
+
+	_, uErr = u.uploadPlanParticipantsAndProviders(entry, princ)
+	entry.addNonNullUError(uErr)
+
+	_, uErr = u.uploadPlanBeneficiaries(entry, princ)
+	entry.addNonNullUError(uErr)
+
+	_, uErr = u.uploadPlanOpsEvalAndLearning(entry, princ)
+	entry.addNonNullUError(uErr)
+
+	_, uErr = u.uploadPlanPayments(entry, princ)
+	entry.addNonNullUError(uErr)
+	return nil
+
+}
+
+func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Principal, userInfo models.UserInfo) (*models.ModelPlan, *UploadError) {
 	entry.ModelPlan.CreatedBy = princ.ID()
 
-	//TODO make sure to capture all upload errors and store them somewhere
 	if entry.ModelPlan.ModelName == "" {
 		entry.ModelPlan.ModelName = "unknown" //TODO handle this and log error
 		u.Logger.Error("model name is not defined")
@@ -96,83 +128,136 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, &userInfo, princ)
 	if err != nil {
-		return err //TODO capture all errors and return collection? Or early return?
+		return nil, &UploadError{
+			Model:   "ModelPLan",
+			DBError: err,
+		}
 	}
+	entry.ModelPlan = modelPlan
 	u.Logger.Log(zap.DebugLevel, "created modelPlan "+modelPlan.ModelName) //TODO need better logging?
-
-	retBasics, err := resolvers.PlanBasicsGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	return modelPlan, nil
+}
+func (u *Uploader) uploadPlanBasics(entry *BackfillEntry, princ authentication.Principal) (*models.PlanBasics, *UploadError) {
+	retBasics, err := resolvers.PlanBasicsGetByModelPlanID(&u.Logger, entry.ModelPlan.ID, &u.Store)
 	if err != nil {
-		return err //TODO capture all errors and return collection? Or early return?
+		return nil, &UploadError{
+			Model:   "PlanBasics",
+			DBError: err,
+		}
 	}
 	entry.PlanBasics.ID = retBasics.ID
 	basicChanges := structToMap(entry.PlanBasics)
-	// basicChanges := map[string]interface{}{}
-	// mapstructure.Decode(entry.PlanBasics, &basicChanges)
-	// TODO! Should we just use the store instead of a resolver?\\
 
-	_, err = resolvers.UpdatePlanBasics(&u.Logger, entry.PlanBasics.ID, basicChanges, princ, &u.Store)
-	// _, err = u.Store.PlanBasicsUpdate(&u.Logger, entry.PlanBasics)
+	basics, err := resolvers.UpdatePlanBasics(&u.Logger, entry.PlanBasics.ID, basicChanges, princ, &u.Store)
 	if err != nil {
-		return err //TODO capture all errors and return collection? Or early return?
+		return nil, &UploadError{
+			Model:   "PlanBasics",
+			DBError: err,
+		}
 	}
-	// basics, err := resolvers.UpdatePlanBasics(&u.Logger,)
-
-	retChar, err := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	entry.PlanBasics = basics
+	return basics, nil
+}
+func (u *Uploader) uploadPlanGeneralCharacteristics(entry *BackfillEntry, princ authentication.Principal) (*models.PlanGeneralCharacteristics, *UploadError) {
+	retChar, err := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(&u.Logger, entry.ModelPlan.ID, &u.Store)
 	if err != nil {
-		return err //TODO capture all errors and return collection? Or early return?
+		return nil, &UploadError{
+			Model:   "PlanGeneralCharacteristics",
+			DBError: err,
+		}
 	}
 	charChanges := structToMap(entry.PlanGeneralCharacteristics)
-	_, err = resolvers.UpdatePlanGeneralCharacteristics(&u.Logger, retChar.ID, charChanges, princ, &u.Store)
+	char, err := resolvers.UpdatePlanGeneralCharacteristics(&u.Logger, retChar.ID, charChanges, princ, &u.Store)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanGeneralCharacteristics",
+			DBError: err,
+		}
 	}
+	entry.PlanGeneralCharacteristics = char
+	return char, nil
+}
 
-	//partsAndProv
-	retParts, err := resolvers.PlanParticipantsAndProvidersGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+func (u *Uploader) uploadPlanParticipantsAndProviders(entry *BackfillEntry, princ authentication.Principal) (*models.PlanParticipantsAndProviders, *UploadError) {
+
+	retParts, err := resolvers.PlanParticipantsAndProvidersGetByModelPlanID(&u.Logger, entry.ModelPlan.ID, &u.Store)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanParticipantsAndProviders",
+			DBError: err,
+		}
 	}
 	partsChanges := structToMap(entry.PlanParticipantsAndProviders)
-	_, err = resolvers.PlanParticipantsAndProvidersUpdate(&u.Logger, retParts.ID, partsChanges, princ, &u.Store)
+	planParticipantsAndProviders, err := resolvers.PlanParticipantsAndProvidersUpdate(&u.Logger, retParts.ID, partsChanges, princ, &u.Store)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanParticipantsAndProviders",
+			DBError: err,
+		}
 	}
+	entry.PlanParticipantsAndProviders = planParticipantsAndProviders
+	return planParticipantsAndProviders, nil
+}
+func (u *Uploader) uploadPlanBeneficiaries(entry *BackfillEntry, princ authentication.Principal) (*models.PlanBeneficiaries, *UploadError) {
 
-	//Beneficiares
-	retBene, err := resolvers.PlanBeneficiariesGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
+	retBene, err := resolvers.PlanBeneficiariesGetByModelPlanID(&u.Logger, entry.ModelPlan.ID, &u.Store)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanBeneficiaries",
+			DBError: err,
+		}
 	}
 
 	beneChanges := structToMap(entry.PlanBeneficiaries)
-	_, err = resolvers.PlanBeneficiariesUpdate(&u.Logger, retBene.ID, beneChanges, princ, &u.Store)
-	if err != nil {
-		return err
-	}
+	planBeneficiaries, err := resolvers.PlanBeneficiariesUpdate(&u.Logger, retBene.ID, beneChanges, princ, &u.Store)
 
-	//OpsEvalAndLearning
-	retOps, err := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(&u.Logger, modelPlan.ID, &u.Store)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanBeneficiaries",
+			DBError: err,
+		}
+	}
+	entry.PlanBeneficiaries = planBeneficiaries
+	return planBeneficiaries, nil
+}
+func (u *Uploader) uploadPlanOpsEvalAndLearning(entry *BackfillEntry, princ authentication.Principal) (*models.PlanOpsEvalAndLearning, *UploadError) {
+	retOps, err := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(&u.Logger, entry.ModelPlan.ID, &u.Store)
+	if err != nil {
+		return nil, &UploadError{
+			Model:   "PlanOpsEvalAndLearning",
+			DBError: err,
+		}
 	}
 	opsChanges := structToMap(entry.PlanOpsEvalAndLearning)
-	_, err = resolvers.PlanOpsEvalAndLearningUpdate(&u.Logger, retOps.ID, opsChanges, princ, &u.Store)
+	planOpsEvalAndLearning, err := resolvers.PlanOpsEvalAndLearningUpdate(&u.Logger, retOps.ID, opsChanges, princ, &u.Store)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanOpsEvalAndLearning",
+			DBError: err,
+		}
 	}
-
-	// Plan Payments
-	retPay, err := resolvers.PlanPaymentsReadByModelPlan(&u.Logger, &u.Store, modelPlan.ID)
+	entry.PlanOpsEvalAndLearning = planOpsEvalAndLearning
+	return planOpsEvalAndLearning, nil
+}
+func (u *Uploader) uploadPlanPayments(entry *BackfillEntry, princ authentication.Principal) (*models.PlanPayments, *UploadError) {
+	retPay, err := resolvers.PlanPaymentsReadByModelPlan(&u.Logger, &u.Store, entry.ModelPlan.ID)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanPayments",
+			DBError: err,
+		}
 	}
 	payChanges := structToMap(entry.PlanPayments)
-	_, err = resolvers.PlanPaymentsUpdate(&u.Logger, &u.Store, retPay.ID, payChanges, princ)
+	planPayments, err := resolvers.PlanPaymentsUpdate(&u.Logger, &u.Store, retPay.ID, payChanges, princ)
 	if err != nil {
-		return err
+		return nil, &UploadError{
+			Model:   "PlanPayments",
+			DBError: err,
+		}
 	}
-	return nil
 
+	entry.PlanPayments = planPayments
+	return planPayments, nil
 }
 
 func structToMap(obj interface{}) map[string]interface{} {
@@ -209,7 +294,7 @@ func getResolverDependencies(config *viper.Viper) (
 	email.TemplateService,
 ) {
 	// Create the logger
-	logger := zap.NewNop()
+	logger, _ := zap.NewDevelopment()
 
 	// Create LD Client, which is required for creating the store
 	ldClient, err := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)

@@ -94,7 +94,7 @@ func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, us
 			Translation: *t,
 			Message:     fmt.Sprintf(" Can't Find user to add as collab %s", valString),
 		}
-		entry.Errors = append(entry.Errors, *tErr) //record any setting issue here
+		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
 		return
 	}
 
@@ -124,7 +124,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 		return
 	}
 
-	log.Default().Print("buisness model type: ", bModel.Type()) //, "buisness model kind: ", bModel.Kind(), ".")
+	// log.Default().Print("buisness model type: ", bModel.Type()) //, "buisness model kind: ", bModel.Kind(), ".")
 
 	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is a pointer
 
@@ -134,7 +134,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 	}
 	tErr := t.setField(&field, value, bModel) //Need to pass a Reference to the struct potentially to set that field?
 	if tErr != nil {
-		entry.Errors = append(entry.Errors, *tErr) //record any setting issue here
+		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
 	}
 	log.Default().Print("Set the field? ", tErr == nil, "  It is now : ", field, " Error? ", tErr)
 

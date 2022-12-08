@@ -7,14 +7,16 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
 
 // const translationPath = `cmd/backfill/data/dataTranslation.csv`
 const translationFullPath = `cmd/backfill/data/dataTranslationFull.csv`
-const outputPath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+const outputTranslatePath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
 const userPath = `cmd/backfill/data/possibleUsers.json`
+const outputUploadPath = `cmd/backfill/data/sensitive/databackfillSeptUploaded.json`
 
 func main() { //TODO make this a command
 
@@ -38,11 +40,12 @@ func main() { //TODO make this a command
 }
 func uploadData(userDictionary *PossibleUserDictionary) {
 
-	entries, err := getTransformedData(outputPath)
+	entries, err := getTransformedData(outputTranslatePath)
 
 	log.Default().Print(entries, err)
 	uploader := NewUploader(userDictionary)
 	uploader.uploadEntries(entries)
+	writeObjectToJSONFile(entries, outputUploadPath)
 
 }
 
@@ -101,20 +104,40 @@ func transformData(userDictionary *PossibleUserDictionary) {
 		log.Fatal(err)
 	}
 
-	entryBytes, err := json.Marshal(entries)
+	writeObjectToJSONFile(entries, outputTranslatePath)
+
+	// entryBytes, err := json.Marshal(entries)
+	// if err != nil {
+	// 	panic("Can't serialize the entries")
+	// }
+
+	// file, err := os.Create(outputTranslatePath)
+	// if err != nil {
+
+	// 	panic("Can't create the file")
+	// }
+	// _, err = file.Write(entryBytes)
+	// if err != nil {
+	// 	panic("Can't write the file")
+	// }
+	// os.WriteFile(outputTranslatePath,entries,)
+}
+
+func writeObjectToJSONFile(object interface{}, path string) {
+	entryBytes, err := json.Marshal(object)
 	if err != nil {
-		panic("Can't serialize the entries")
+		panic("Can't serialize the object")
 	}
 
-	file, err := os.Create(outputPath)
+	file, err := os.Create(filepath.Clean(path))
 	if err != nil {
+
 		panic("Can't create the file")
 	}
 	_, err = file.Write(entryBytes)
 	if err != nil {
 		panic("Can't write the file")
 	}
-	// os.WriteFile(outputPath,entries,)
 }
 
 // DataTable represents a table of data, (like a CSV or excel spreadshet)

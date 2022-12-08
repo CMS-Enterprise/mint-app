@@ -9,6 +9,15 @@ type TranslationError struct {
 	Message     string
 }
 
+// UploadError represents an error with Uploading data to the database
+type UploadError struct {
+	Model   string
+	Field   string
+	Value   interface{}
+	Message string
+	DBError interface{}
+}
+
 // BackfillEntry represents a logical collection of
 type BackfillEntry struct {
 	ModelPlan                    *models.ModelPlan
@@ -19,7 +28,8 @@ type BackfillEntry struct {
 	PlanOpsEvalAndLearning       *models.PlanOpsEvalAndLearning
 	PlanPayments                 *models.PlanPayments
 	Collaborators                []*models.PlanCollaborator
-	Errors                       []TranslationError
+	TErrors                      []TranslationError
+	UErrors                      []UploadError
 }
 
 // NewBackFillEntry instantiates a BackfillEntry
@@ -33,6 +43,13 @@ func NewBackFillEntry() BackfillEntry {
 		PlanBeneficiaries:            &models.PlanBeneficiaries{},
 		PlanOpsEvalAndLearning:       &models.PlanOpsEvalAndLearning{},
 		PlanPayments:                 &models.PlanPayments{},
-		Errors:                       []TranslationError{},
+		TErrors:                      []TranslationError{},
+		UErrors:                      []UploadError{},
+	}
+}
+
+func (e *BackfillEntry) addNonNullUError(uErr *UploadError) {
+	if uErr != nil {
+		e.UErrors = append(e.UErrors, *uErr)
 	}
 }
