@@ -13,6 +13,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -37,7 +38,7 @@ import {
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
-import { isAssessment } from 'utils/user';
+import { isAssessment, isMAC } from 'utils/user';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
@@ -84,10 +85,19 @@ const listOfSubpageKey = [
 ];
 
 export type SubpageKey = typeof listOfSubpageKey[number];
-const isSubpage = (x: SubpageKey, isHelpArticle?: boolean): boolean => {
+const isSubpage = (
+  x: SubpageKey,
+  flags: any,
+  isHelpArticle?: boolean
+): boolean => {
   if (isHelpArticle) {
     return listOfSubpageKey
       .filter(subpage => subpage !== 'discussions')
+      .includes(x);
+  }
+  if (flags.hideITLeadExperience) {
+    return listOfSubpageKey
+      .filter(subpage => subpage !== 'it-solutions')
       .includes(x);
   }
   return listOfSubpageKey.includes(x);
@@ -97,6 +107,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
+
+  const flags = useFlags();
+
   const {
     modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
     subinfo
@@ -163,7 +176,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
   const hasEditAccess: boolean =
-    !isHelpArticle && (isCollaborator || isAssessment(groups));
+    !isHelpArticle &&
+    !isMAC(groups) &&
+    (isCollaborator || isAssessment(groups));
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
@@ -266,13 +281,17 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if (isHelpArticle) delete subComponents.discussions;
 
+  if (flags.hideITLeadExperience) {
+    delete subComponents['it-solutions'];
+  }
+
   const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
 
-  if (!isSubpage(subinfo, isHelpArticle)) {
+  if (!isSubpage(subinfo, flags, isHelpArticle)) {
     return <NotFound />;
   }
 
