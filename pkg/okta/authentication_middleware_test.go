@@ -74,6 +74,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 		handlers.NewHandlerBase(s.logger),
 		verifier,
 		s.store,
+		true,
 	)
 	return factory.NewAuthenticationMiddleware
 }
