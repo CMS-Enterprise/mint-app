@@ -208,3 +208,6 @@ favorited
 faktory
 cron
 asynq
+cedarldap
+translated_client.go
+routes.go
