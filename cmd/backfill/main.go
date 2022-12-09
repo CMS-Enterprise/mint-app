@@ -22,11 +22,24 @@ const enumTranslationPath = `cmd/backfill/data/enumTranslations.json`
 
 func main() { //TODO make this a command
 
-	testTransform := false
+	testTransform := true
 	testUpload := true
-	useEdit := true
+	useEdit := false
 
+	backfiller := getDefaultBackfiller()
+
+	if testTransform {
+		transformData(backfiller)
+	}
+	if testUpload {
+		uploadData(backfiller, useEdit)
+	}
+
+}
+
+func getDefaultBackfiller() *Backfiller {
 	possibleUserList := []PossibleUser{}
+
 	err := readJSONFromFile(userPath, &possibleUserList)
 	if err != nil {
 		log.Fatal(err)
@@ -39,18 +52,20 @@ func main() { //TODO make this a command
 		log.Fatal(err)
 	}
 	enumTranslationDict := NewEmumTranslationDictionary(enumTranslationList)
+	backfiller := NewBackfiller(nil, possibleUserDict, enumTranslationDict) //make first so each translation can have a reference
 
-	_ = NewBackfiller(nil, nil, nil) //TODO wire this up
-
-	if testTransform {
-		transformData(possibleUserDict, enumTranslationDict)
+	translation, err := readFile(translationFullPath)
+	if err != nil {
+		log.Fatal(err)
 	}
-	if testUpload {
-		uploadData(possibleUserDict, useEdit)
-	}
+	td := NewTranslationDictionary()
 
+	td.convertDataTable(translation)
+	backfiller.TDictionary = &td
+
+	return backfiller
 }
-func uploadData(userDictionary *PossibleUserDictionary, useEdit bool) {
+func uploadData(backfiller *Backfiller, useEdit bool) {
 	var path string
 
 	if useEdit {
@@ -62,7 +77,7 @@ func uploadData(userDictionary *PossibleUserDictionary, useEdit bool) {
 	entries, err := getTransformedData(path)
 
 	log.Default().Print(entries, err)
-	uploader := NewUploader(userDictionary)
+	uploader := NewUploader(backfiller)
 	uploader.uploadEntries(entries)
 	writeObjectToJSONFile(entries, outputUploadPath)
 
@@ -101,7 +116,7 @@ func getTransformedData(file string) ([]*BackfillEntry, error) {
 	err = json.Unmarshal(byteValue, &entries)
 	return entries, err
 }
-func transformData(userDictionary *PossibleUserDictionary, enumTranslationD *EmumTranslationDictionary) {
+func transformData(backfiller *Backfiller) {
 
 	table, err := readFile(filePath)
 
@@ -109,16 +124,8 @@ func transformData(userDictionary *PossibleUserDictionary, enumTranslationD *Emu
 		log.Fatal(err)
 	}
 
-	translation, err := readFile(translationFullPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	td := NewTranslationDictionary()
-
-	td.convertDataTable(translation)
-
 	// entries, err := translateFile(&td, table)
-	entries, err := translateFile(&td, table, userDictionary)
+	entries, err := backfiller.translateFile(table)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -237,34 +244,5 @@ func readFile(file string) (*DataTable, error) {
 	src := csv.NewReader(f)
 	table.processCSV(src)
 
-	// 1. translate the data to our models
-
-	// 2. Upload the data to the database
-
 	return &table, nil
-}
-
-func translateFile(td *TranslationsDictionary, table *DataTable, userDictionary *PossibleUserDictionary) (*[]BackfillEntry, error) {
-
-	entries := []BackfillEntry{}
-
-	for i := 0; i < len(table.Rows); i++ {
-		row := table.Rows[i]
-		entry := translateDataRow(&row, td, userDictionary)
-		entries = append(entries, *entry)
-
-	}
-
-	return &entries, nil
-}
-
-func translateDataRow(row *DataRow, td *TranslationsDictionary, userDictionary *PossibleUserDictionary) *BackfillEntry {
-	entry := NewBackFillEntry()
-	for key, value := range row.Fields {
-
-		translation := td.getTranslation(key)
-		translation.handleTranslation(&entry, value, userDictionary)
-	}
-	return &entry
-
 }

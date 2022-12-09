@@ -15,3 +15,28 @@ func NewBackfiller(tDict *TranslationsDictionary, uDict *PossibleUserDictionary,
 		EnumDictionary: eDict,
 	}
 }
+
+func (b *Backfiller) translateFile(table *DataTable) (*[]BackfillEntry, error) {
+
+	entries := []BackfillEntry{}
+
+	for i := 0; i < len(table.Rows); i++ {
+		row := table.Rows[i]
+		entry := b.translateDataRow(&row)
+		entries = append(entries, *entry)
+
+	}
+
+	return &entries, nil
+}
+
+func (b *Backfiller) translateDataRow(row *DataRow) *BackfillEntry {
+	entry := NewBackFillEntry()
+	for key, value := range row.Fields {
+
+		translation := b.TDictionary.getTranslation(key)
+		translation.handleTranslation(&entry, value, b)
+	}
+	return &entry
+
+}

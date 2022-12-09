@@ -58,7 +58,7 @@ func (dt TranslationsDictionary) getTranslation(key string) Translation {
 	return dt[key]
 }
 
-func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{}, userDictionary *PossibleUserDictionary) {
+func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{}, backfiller *Backfiller) {
 
 	// TODO handle the null value handling
 
@@ -68,10 +68,10 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		allUsers := strings.Split(valString, ";#")
 		for i := 0; i < len(allUsers); i++ {
 
-			t.addCollaborator(entry, sanitizeName(allUsers[i]), userDictionary)
+			t.addCollaborator(entry, sanitizeName(allUsers[i]), backfiller.UDictionary)
 		}
 	default:
-		t.translateField(entry, value)
+		t.translateField(entry, value, backfiller)
 	}
 
 }
@@ -105,9 +105,12 @@ func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, us
 
 }
 
-func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
+func (t *Translation) translateField(entry *BackfillEntry, value interface{}, backfiller *Backfiller) {
 	if value == nil || value == "" {
 		return
+	}
+	if value == "Yes, therefore overlaps would not be an issue" {
+		log.Default().Print("here")
 	}
 	if t.ModelName == "?" {
 		log.Default().Print("translation not known for " + t.Header + " . Value is " + fmt.Sprint(value))
@@ -124,15 +127,13 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 		return
 	}
 
-	// log.Default().Print("buisness model type: ", bModel.Type()) //, "buisness model kind: ", bModel.Kind(), ".")
-
 	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is a pointer
 
 	if !field.IsValid() {
 		log.Default().Print("couldn't get field for for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName) + " . Field name is " + fmt.Sprint(t.Field))
 		return
 	}
-	tErr := t.setField(&field, value, bModel) //Need to pass a Reference to the struct potentially to set that field?
+	tErr := t.setField(&field, value, backfiller)
 	if tErr != nil {
 		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
 	}
@@ -140,11 +141,10 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}) {
 
 }
 
-func (t *Translation) setField(field *reflect.Value, value interface{}, obj interface{}) *TranslationError {
+func (t *Translation) setField(field *reflect.Value, value interface{}, backfiller *Backfiller) *TranslationError {
 
 	val := reflect.ValueOf(value)
 	fieldKind := field.Kind()
-	fieldType := field.Type()
 	valType := val.Type()
 
 	if field.CanConvert(valType) {
@@ -152,12 +152,12 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, obj inte
 		log.Default().Print("Converted sucessfully")
 	} else {
 
-		convVal, err := t.handleConversion(field, fieldType, value, val, valType, obj)
+		convVal, err := t.handleConversion(field, value, backfiller)
 		if err != nil {
 			return err
 
 		}
-		if convVal.IsValid() { //TODO need to handle converstion and apply the value better
+		if convVal.IsValid() {
 			field.Set(convVal)
 			return nil
 		}
@@ -173,25 +173,24 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, obj inte
 
 }
 
-func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.Type, value interface{}, val reflect.Value, valType reflect.Type, object interface{}) (reflect.Value, *TranslationError) {
+func (t *Translation) handleConversion(field *reflect.Value, value interface{}, backfiller *Backfiller) (reflect.Value, *TranslationError) {
 
 	fieldKind := field.Kind()
+	fieldType := field.Type()
 
 	isPointer := fieldKind.String() == "ptr"
-	conVal := reflect.Value{}
+	var conVal reflect.Value
 	var tErr *TranslationError
 	fieldTypeS := strings.TrimPrefix(fieldType.String(), "*")
 	valString := fmt.Sprint(value)
 
-	switch fieldTypeS { //TODO handle pointer and non pointer the same, just return the value as a pointer at the end if is a pointer
+	switch fieldTypeS {
 	case "string":
 		conVal = valueOrPointer(valString, isPointer)
 
 	case "pq.StringArray":
 
-		pqArray := translateStringArray(valString)
-		// conVal = reflect.ValueOf(pq.StringArray{value.(string)})
-		// conVal = valueOrPointer(pq.StringArray{value.(string)}, isPointer)
+		pqArray := t.translateStringArray(valString, backfiller)
 		conVal = valueOrPointer(pqArray, isPointer)
 
 	case "bool":
@@ -216,6 +215,18 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 		}
 		conVal = valueOrPointer(bVal, isPointer)
 
+	case "int":
+
+		intVal, err := strconv.Atoi(valString)
+		if err != nil {
+			tErr = &TranslationError{
+				Translation: *t,
+				Value:       value,
+				Message:     fmt.Sprintf("type conversion failed to convert to int for type %s", fieldType),
+			}
+		}
+		conVal = valueOrPointer(intVal, isPointer)
+
 	case "time.Time":
 
 		//month/date/year format from SharePoint
@@ -233,17 +244,17 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 			}
 		}
 		conVal = valueOrPointer(tVal, isPointer)
-	case "models.DataStartsType": //TODO generically handle string enum types, how do we validate the input?
-		enumType := models.DataStartsType(valString)
-		conVal = valueOrPointer(enumType, isPointer) //THE DATA is not in the same format, it is more human readable
-		//"Shortly before the start date"
-		// TODO, match case, and see if it matches the enum value types...
-
-	case "models.OverlapType":
-		enumType := models.OverlapType(valString)
-		conVal = valueOrPointer(enumType, isPointer)
+	// case "models.DataStartsType": //TODO generically handle string enum types, how do we validate the input?
+	// 	enumType := models.DataStartsType(valString)
+	// 	conVal = valueOrPointer(enumType, isPointer) //THE DATA is not in the same format, it is more human readable
+	// case "models.OverlapType":
+	// 	enumType := models.OverlapType(valString)
+	// 	conVal = valueOrPointer(enumType, isPointer)
 
 	default:
+		translated := t.translateEnum(valString, backfiller) //TODO should we do something to see if we found a match?
+		conVal = valueOrPointer(translated, isPointer)
+
 		tErr = &TranslationError{
 			Translation: *t,
 			Value:       value,
@@ -259,19 +270,34 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 	return conVal, tErr
 
 }
-func translateStringArray(allValueString string) pq.StringArray {
+
+// func ( t *Translation)[anyType interface{}] tryTranslateEnum(string ,){
+
+// }
+func (t *Translation) translateStringArray(allValueString string, backfiller *Backfiller) pq.StringArray {
 	allVals := strings.Split(allValueString, ";#")
 	array := pq.StringArray{}
 	for _, st := range allVals {
-		enVal := translateEnum(st)
+		enVal := t.translateEnum(st, backfiller)
 		array = append(array, enVal)
 	}
 	return array
 }
 
-func translateEnum(st string) string {
-	//TODO get a table of translations, then translate this whole thing
-	return st
+func (t *Translation) translateEnum(st string, backfiller *Backfiller) string {
+
+	enumTrans := backfiller.EnumDictionary.tryGetEnumByValue(st)
+	if enumTrans == nil {
+		log.Default().Print("couldn't translate string : ", st)
+		return st
+	}
+
+	retVal := enumTrans.Enum
+	if retVal == "" {
+		log.Default().Print("enum is not defined for : ", st)
+
+	}
+	return retVal
 }
 
 func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.Value {

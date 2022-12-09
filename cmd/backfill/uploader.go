@@ -22,21 +22,21 @@ import (
 
 // Uploader handles functionality for uploading data to the DB
 type Uploader struct {
-	Store                  storage.Store
-	Logger                 zap.Logger
-	PossibleUserDictionary *PossibleUserDictionary
+	Store      storage.Store
+	Logger     zap.Logger
+	Backfiller *Backfiller
 }
 
 // NewUploader instantiates an Uploader
-func NewUploader(possibleUserDict *PossibleUserDictionary) *Uploader { //TODO make this more configurable if needed
+func NewUploader(backfiller *Backfiller) *Uploader { //TODO make this more configurable if needed
 	config := viper.New()
 	config.AutomaticEnv()
 
 	store, logger, _, _, _ := getResolverDependencies(config)
 	return &Uploader{
-		Store:                  *store,
-		Logger:                 *logger,
-		PossibleUserDictionary: possibleUserDict,
+		Store:      *store,
+		Logger:     *logger,
+		Backfiller: backfiller,
 	}
 
 }
@@ -55,7 +55,7 @@ func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more err
 func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 	userName := entry.ModelPlan.CreatedBy
-	user := u.PossibleUserDictionary.tryGetUserByName(userName)
+	user := u.Backfiller.UDictionary.tryGetUserByName(userName)
 	var princ authentication.Principal
 	var userInfo models.UserInfo
 	if userName == "" {
@@ -88,7 +88,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	}
 
 	_, uErr := u.uploadModelPlan(entry, princ, userInfo)
-	entry.addNonNullUError(uErr) //TODO, should we handle this in the function instead?
+	entry.addNonNullUError(uErr)
 
 	if uErr != nil {
 		return fmt.Errorf("error creating a model plan") //return early for this error
@@ -98,14 +98,6 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	entry.addNonNullUError(uErr)
 
 	u.uploadPlanCollaborators(entry, princ)
-
-	// for _, collab := range entry.Collaborators {
-
-	// 	_, uErr = uploadPlanCollaborator(entry, princ,collab)
-
-	// 	entry.addNonNullUError(uErr)
-
-	// }
 
 	_, uErr = u.uploadPlanGeneralCharacteristics(entry, princ)
 	entry.addNonNullUError(uErr)
