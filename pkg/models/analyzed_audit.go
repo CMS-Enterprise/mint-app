@@ -23,37 +23,15 @@ type AnalyzedAudit struct {
 	Changes   AnalyzedAuditChange `json:"changes" db:"changes"`
 }
 
-// AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
-type AnalyzedModelPlan struct {
-	NameChange    AuditField `json:"nameChange"`
-	StatusChanges []string   `json:"statusChanges"`
-}
-
-// AnalyzedDocuments represents an AnalyzedDocuments in an AnalyzedAuditChange
-type AnalyzedDocuments struct {
-	Count int `json:"count"`
-}
-
-// AnalyzedCrTdls represents an AnalyzedCrTdls in an AnalyzedAuditChange
-type AnalyzedCrTdls struct {
-	Activity bool `json:"activity"`
-}
-
-// AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
-type AnalyzedPlanSections struct {
-	Updated           []string `json:"updated"`
-	ReadyForReview    []string `json:"readyForReview"`
-	ReadyForClearance []string `json:"readyForClearance"`
-}
-
-// AnalyzedModelLeads represents an AnalyzedPlanCollaborators in an AnalyzedAuditChange
-type AnalyzedModelLeads struct {
-	Added []string `json:"added"`
-}
-
-// AnalyzedPlanDiscussions represents an AnalyzedPlanDiscussions in an AnalyzedAuditChange
-type AnalyzedPlanDiscussions struct {
-	Activity bool `json:"activity" db:"activity"`
+// NewAnalyzedAudit returns a new AnalyzedAudit object
+func NewAnalyzedAudit(createdBy string, modelPlanID uuid.UUID, modelName string, date time.Time, changes AnalyzedAuditChange) (*AnalyzedAudit, error) {
+	return &AnalyzedAudit{
+		Date:              date,
+		Changes:           changes,
+		ModelName:         modelName,
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+	}, nil
 }
 
 // AnalyzedAuditChange represents Changes in an AnalyzedAudit
@@ -64,17 +42,6 @@ type AnalyzedAuditChange struct {
 	PlanSections    *AnalyzedPlanSections    `json:"planSections"`
 	ModelLeads      *AnalyzedModelLeads      `json:"modelLeads"`
 	PlanDiscussions *AnalyzedPlanDiscussions `json:"planDiscussion"`
-}
-
-// NewAnalyzedAudit returns a new AnalyzedAudit object
-func NewAnalyzedAudit(createdBy string, modelPlanID uuid.UUID, modelName string, date time.Time, changes AnalyzedAuditChange) (*AnalyzedAudit, error) {
-	return &AnalyzedAudit{
-		Date:              date,
-		Changes:           changes,
-		ModelName:         modelName,
-		baseStruct:        NewBaseStruct(createdBy),
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-	}, nil
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
@@ -116,19 +83,25 @@ func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 func (a AnalyzedAuditChange) Humanize() []string {
 	var humanizedAuditChanges []string
 
-	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.humanize()...)
-	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.humanize()...)
-	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.Humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.Humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.Humanize()...)
 
-	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
 
 	return lo.WithoutEmpty(humanizedAuditChanges)
 }
 
-// humanize returns AnalyzedModelPlan in human readable sentences
-func (amp AnalyzedModelPlan) humanize() []string {
+// AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
+type AnalyzedModelPlan struct {
+	NameChange    AuditField `json:"nameChange"`
+	StatusChanges []string   `json:"statusChanges"`
+}
+
+// Humanize returns AnalyzedModelPlan in human readable sentences
+func (amp AnalyzedModelPlan) Humanize() []string {
 	var humanizedNameChange string
 	var humanizedStatusChanges []string
 
@@ -163,8 +136,13 @@ func (amp AnalyzedModelPlan) humanize() []string {
 	return append(humanizedStatusChanges, humanizedNameChange)
 }
 
-// humanize returns AnalyzedDocuments in a human readable sentence
-func (ad AnalyzedDocuments) humanize() string {
+// AnalyzedDocuments represents an AnalyzedDocuments in an AnalyzedAuditChange
+type AnalyzedDocuments struct {
+	Count int `json:"count"`
+}
+
+// Humanize returns AnalyzedDocuments in a human readable sentence
+func (ad AnalyzedDocuments) Humanize() string {
 	if ad.Count > 0 {
 		return fmt.Sprintf("%d new documents have been uploaded", ad.Count)
 	}
@@ -172,16 +150,28 @@ func (ad AnalyzedDocuments) humanize() string {
 	return ""
 }
 
-// humanize returns AnalyzedCrTdls in a human readable sentence
-func (act AnalyzedCrTdls) humanize() string {
+// AnalyzedCrTdls represents an AnalyzedCrTdls in an AnalyzedAuditChange
+type AnalyzedCrTdls struct {
+	Activity bool `json:"activity"`
+}
+
+// Humanize returns AnalyzedCrTdls in a human readable sentence
+func (act AnalyzedCrTdls) Humanize() string {
 	if act.Activity {
 		return "Updates to CR/TDLs"
 	}
 	return ""
 }
 
-// humanize returns AnalyzedPlanSections in human readable sentences
-func (aps AnalyzedPlanSections) humanize() []string {
+// AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
+type AnalyzedPlanSections struct {
+	Updated           []string `json:"updated"`
+	ReadyForReview    []string `json:"readyForReview"`
+	ReadyForClearance []string `json:"readyForClearance"`
+}
+
+// Humanize returns AnalyzedPlanSections in human readable sentences
+func (aps AnalyzedPlanSections) Humanize() []string {
 	var humanizedAnalyzedPlanSections []string
 
 	// Section updates
@@ -224,8 +214,13 @@ func (aps AnalyzedPlanSections) humanize() []string {
 	return humanizedAnalyzedPlanSections
 }
 
-// humanize returns AnalyzedModelLeads in human readable sentences
-func (aml AnalyzedModelLeads) humanize() []string {
+// AnalyzedModelLeads represents an AnalyzedPlanCollaborators in an AnalyzedAuditChange
+type AnalyzedModelLeads struct {
+	Added []string `json:"added"`
+}
+
+// Humanize returns AnalyzedModelLeads in human readable sentences
+func (aml AnalyzedModelLeads) Humanize() []string {
 	var humanizedAnalyzedModelLeads []string
 
 	if len(aml.Added) > 0 {
@@ -237,8 +232,13 @@ func (aml AnalyzedModelLeads) humanize() []string {
 	return humanizedAnalyzedModelLeads
 }
 
-// humanize returns AnalyzedPlanDiscussions in a human readable sentence
-func (aps AnalyzedPlanDiscussions) humanize() string {
+// AnalyzedPlanDiscussions represents an AnalyzedPlanDiscussions in an AnalyzedAuditChange
+type AnalyzedPlanDiscussions struct {
+	Activity bool `json:"activity" db:"activity"`
+}
+
+// Humanize returns AnalyzedPlanDiscussions in a human readable sentence
+func (aps AnalyzedPlanDiscussions) Humanize() string {
 	if aps.Activity {
 		return "New activity in Discussions"
 	}
