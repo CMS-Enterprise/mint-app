@@ -38,7 +38,7 @@ func (w *Worker) DailyDigestEmailJob(ctx context.Context, args ...interface{}) e
 	}
 
 	// Generate email subject and body from template
-	emailSubject, emailBody, err := generateDailyDigestEmail(analyzedAudits, w.EmailTemplateService)
+	emailSubject, emailBody, err := generateDailyDigestEmail(analyzedAudits, w.EmailTemplateService, w.EmailService)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func getDailyDigestAnalyzedAudits(userID string, date time.Time, store *storage.
 }
 
 // generateDailyDigestEmail will geneate the daily digest email from template
-func generateDailyDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService email.TemplateServiceImpl) (string, string, error) {
+func generateDailyDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService email.TemplateServiceImpl, emailService oddmail.EmailService) (string, string, error) {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
 	if err != nil {
 		return "", "", err
@@ -91,6 +91,7 @@ func generateDailyDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTempl
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
 		AnalyzedAudits: analyzedAudits,
+		ClientAddress:  emailService.GetConfig().GetClientAddress(),
 	})
 	if err != nil {
 		return "", "", err

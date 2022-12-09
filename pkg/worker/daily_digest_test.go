@@ -43,7 +43,7 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 		New: mp.ModelName,
 		Old: "Old Name",
 	}
-	modelStatusChange := []string{"READY_FOR_CLEARANCE"}
+	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlAvtivity := true
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
@@ -64,7 +64,7 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 
 	// Test generateDailyDigestEmail email to check content
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
-	emailSubject, emailBody, err := generateDailyDigestEmail(analyzedAudits, worker.EmailTemplateService)
+	emailSubject, emailBody, err := generateDailyDigestEmail(analyzedAudits, worker.EmailTemplateService, worker.EmailService)
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
@@ -88,22 +88,10 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 			gomock.Eq(emailSubject),
 			gomock.Any(),
 			gomock.Eq(emailBody),
-		).AnyTimes()
+		).MinTimes(1).MaxTimes(1)
 
 	err = worker.DailyDigestEmailJob(context.Background(), collaborator.EUAUserID, time.Now())
 
-	mockEmailService.
-		EXPECT().
-		Send(
-			gomock.Any(),
-			gomock.Eq([]string{collaborator.Email}),
-			gomock.Any(),
-			gomock.Eq(emailSubject),
-			gomock.Any(),
-			gomock.Eq(emailBody),
-		).AnyTimes()
-
 	suite.NoError(err)
 	mockController.Finish()
-
 }
