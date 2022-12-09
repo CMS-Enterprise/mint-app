@@ -5,7 +5,7 @@ Displays relevant operational need question and answers
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
@@ -64,7 +64,11 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SelectSolutions = () => {
+type SelectSolutionsProps = {
+  update?: boolean;
+};
+
+const SelectSolutions = ({ update }: SelectSolutionsProps) => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -74,8 +78,6 @@ const SelectSolutions = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
-
-  const updateSolutions = useLocation().hash === '#update-solutions';
 
   const { showMessageOnNextPage } = useMessage();
 
@@ -215,7 +217,7 @@ const SelectSolutions = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {updateSolutions ? t('updateSolutions') : t('selectSolution')}
+            {update ? t('updateSolutions') : t('selectSolution')}
           </PageHeading>
 
           <p
@@ -234,7 +236,7 @@ const SelectSolutions = () => {
             />
           </Grid>
 
-          {updateSolutions && (
+          {update && (
             <Alert type="info" slim className="margin-y-2">
               {t('updateSolutionsInfo')}
             </Alert>
@@ -322,7 +324,7 @@ const SelectSolutions = () => {
                             disabled={
                               values.solutions.filter(
                                 solution => solution.needed
-                              ).length === 0 && !updateSolutions
+                              ).length === 0 && !update
                             }
                           >
                             {t('continue')}

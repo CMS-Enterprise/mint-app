@@ -30,6 +30,13 @@ const ITSolutions = () => {
             </Route>
 
             <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-solutions"
+              exact
+            >
+              <SelectSolutions update />
+            </Route>
+
+            <Route
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
               exact
             >

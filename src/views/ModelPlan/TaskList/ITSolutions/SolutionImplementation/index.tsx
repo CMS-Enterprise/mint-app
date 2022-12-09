@@ -171,10 +171,7 @@ const SolutionImplementation = () => {
             history.push(`/models/${modelID}/task-list/it-solutions`);
             // Go back but still save solution details
           } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
-            );
-
+            history.goBack();
             // Dont save solution details, solutions no needed, and return to tracker
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
