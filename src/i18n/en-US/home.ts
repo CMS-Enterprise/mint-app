@@ -31,7 +31,10 @@ const home = {
       heading: 'Model plans'
     },
     mac: {
-      heading: 'Upcoming models'
+      heading: 'Upcoming models',
+      empty: {
+        heading: 'There are no upcoming model plans yet'
+      }
     },
     empty: {
       heading: 'You don’t have any draft model plans yet',
