@@ -1,7 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
+import {
+  Grid,
+  GridContainer,
+  IconExpandLess,
+  IconExpandMore
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -36,6 +41,7 @@ type NeedQuestionAndAnswerProps = {
   className?: string;
   operationalNeedID: string;
   modelID: string;
+  solutionMode?: boolean;
 };
 
 // Type definition for operational needs dependent on multiple questions/translations
@@ -118,7 +124,8 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
 const NeedQuestionAndAnswer = ({
   className,
   operationalNeedID,
-  modelID
+  modelID,
+  solutionMode
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -189,77 +196,90 @@ const NeedQuestionAndAnswer = ({
   }, [needConfig, data]);
 
   return (
-    <div className={classNames('padding-3 bg-base-lightest', className)}>
-      <p className="text-bold margin-y-1">{t('operationalNeed')}</p>
+    <GridContainer
+      className={classNames('padding-3 bg-base-lightest', className)}
+    >
+      <Grid row>
+        <Grid desktop={{ col: solutionMode ? 6 : 12 }}>
+          <p className="text-bold margin-y-1">{t('operationalNeed')}</p>
 
-      <p className="margin-top-0 font-body-sm">
-        {operationalNeed?.nameOther || operationalNeed?.name}
-      </p>
+          <p
+            className={classNames('margin-top-0 font-body-sm', {
+              'margin-bottom-0': solutionMode
+            })}
+          >
+            {operationalNeed?.nameOther || operationalNeed?.name}
+          </p>
+        </Grid>
 
-      <button
-        type="button"
-        data-testid="toggle-need-answer"
-        onClick={() => setInfoToggle(!infoToggle)}
-        className={classNames(
-          'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
-          {
-            'text-bold': infoToggle
-          }
-        )}
-      >
-        {infoToggle ? (
-          <IconExpandMore className="margin-right-05" />
-        ) : (
-          <IconExpandLess className="margin-right-05 needs-question__rotate" />
-        )}
-        {t('whyNeed')}
-      </button>
-
-      {infoToggle && (
-        <div className="margin-left-neg-2px padding-1">
-          <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
-            <p className="text-bold margin-top-0">{t('youAnswered')}</p>
-
-            <p data-testid="need-question">{t(needConfig?.question)}</p>
-
-            {data && needConfig && (
-              <ul className="padding-left-4">
-                {!needConfig.multiPart &&
-                  answers.map((answer: string | boolean) => (
-                    <li
-                      className="margin-y-1"
-                      key={answer.toString()}
-                      data-testid={answer.toString()}
-                    >
-                      {needsTranslations[needConfig.answer](answer)}
-                    </li>
-                  ))}
-
-                {needConfig.multiPart &&
-                  needConfig.multiPartQuestion &&
-                  answers.map((answer: MultiPartType) => (
-                    <li className="margin-y-1" key={answer.question}>
-                      {needsTranslations[needConfig.multiPartQuestion!](
-                        answer.question
-                      )}{' '}
-                      - {needsTranslations[needConfig.answer](answer.answer)}
-                    </li>
-                  ))}
-              </ul>
+        <Grid desktop={{ col: solutionMode ? 6 : 12 }}>
+          <button
+            type="button"
+            data-testid="toggle-need-answer"
+            onClick={() => setInfoToggle(!infoToggle)}
+            className={classNames(
+              'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-1',
+              {
+                'text-bold': infoToggle
+              }
             )}
+          >
+            {infoToggle ? (
+              <IconExpandMore className="margin-right-05" />
+            ) : (
+              <IconExpandLess className="margin-right-05 needs-question__rotate" />
+            )}
+            {t('whyNeed')}
+          </button>
 
-            <p className="margin-bottom-0">
-              {t('changeAnswer')}
-              <UswdsReactLink
-                to={`/models/${modelID}/task-list/${needConfig?.route}`}
-              >
-                {t('goToQuestion')}
-              </UswdsReactLink>
-            </p>
-          </div>
-        </div>
-      )}
-    </div>
+          {infoToggle && (
+            <div className="margin-left-neg-2px padding-1">
+              <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
+                <p className="text-bold margin-top-0">{t('youAnswered')}</p>
+
+                <p data-testid="need-question">{t(needConfig?.question)}</p>
+
+                {data && needConfig && (
+                  <ul className="padding-left-4">
+                    {!needConfig.multiPart &&
+                      answers.map((answer: string | boolean) => (
+                        <li
+                          className="margin-y-1"
+                          key={answer.toString()}
+                          data-testid={answer.toString()}
+                        >
+                          {needsTranslations[needConfig.answer](answer)}
+                        </li>
+                      ))}
+
+                    {needConfig.multiPart &&
+                      needConfig.multiPartQuestion &&
+                      answers.map((answer: MultiPartType) => (
+                        <li className="margin-y-1" key={answer.question}>
+                          {needsTranslations[needConfig.multiPartQuestion!](
+                            answer.question
+                          )}{' '}
+                          -{' '}
+                          {needsTranslations[needConfig.answer](answer.answer)}
+                        </li>
+                      ))}
+                  </ul>
+                )}
+
+                <p className="margin-bottom-0">
+                  {t('changeAnswer')}
+                  <UswdsReactLink
+                    to={`/models/${modelID}/task-list/${needConfig?.route}`}
+                  >
+                    {t('goToQuestion')}
+                  </UswdsReactLink>
+                </p>
+              </div>
+            </div>
+          )}
+        </Grid>
+      </Grid>
+    </GridContainer>
   );
 };
 

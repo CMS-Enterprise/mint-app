@@ -47,7 +47,13 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
-  '__typename' | 'id' | 'key' | 'name'
+  | '__typename'
+  | 'id'
+  | 'key'
+  | 'name'
+  | 'status'
+  | 'mustFinishDts'
+  | 'mustStartDts'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {

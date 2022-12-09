@@ -103,6 +103,7 @@ const SolutionCard = ({
             </Grid>
           )}
 
+          {/* Show 'About Dettails' link if not updating solution details and not a custom solution */}
           {solution.name && (
             <>
               <Divider />
@@ -117,19 +118,23 @@ const SolutionCard = ({
             </>
           )}
 
-          {addingCustom && (
+          {/* Renders links to either update solution details or remove solution details */}
+          {(addingCustom || !solution.name) && (
             <div
               className="display-flex margin-top-2"
               data-testid="custom-solution-card"
             >
               <UswdsReactLink
-                className="margin-right-2"
+                className="margin-right-2 display-flex flex-align-center"
                 to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
               >
                 {t('updateTheseDetails')}
+                {!addingCustom && (
+                  <IconArrowForward className="margin-left-1" />
+                )}
               </UswdsReactLink>
 
-              {(solution.pocName || solution.pocEmail) && (
+              {addingCustom && (solution.pocName || solution.pocEmail) && (
                 <UswdsReactLink
                   className="text-red"
                   to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
