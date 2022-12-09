@@ -145,7 +145,7 @@ jobs:
         env:
           REACT_APP_API_ADDRESS: http://easi:8080/api/v1
           REACT_APP_GRAPHQL_ADDRESS: http://easi:8080/api/graph/query
-          REACT_APP_APP_ENV: test
+          REACT_APP_APP_ENV: testing
           REACT_APP_OKTA_CLIENT_ID: 0oad9awvebnsMwWNa297
           REACT_APP_OKTA_DOMAIN: https://test.idp.idm.cms.gov
           REACT_APP_OKTA_SERVER_ID: ausd980kt2CBBzStG297
@@ -169,7 +169,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@261a7de32bda11ba01f4d75c4ed6caf3739e54be
       - name: Run e2e cypress tests
         env:
-          APP_ENV: test
+          APP_ENV: testing
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
           OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
