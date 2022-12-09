@@ -7,6 +7,8 @@ func NewEnvironment(config string) (Environment, error) {
 	switch config {
 	case localEnv.String():
 		return localEnv, nil
+	case testingEnv.String():
+		return testingEnv, nil
 	case testEnv.String():
 		return testEnv, nil
 	case devEnv.String():
