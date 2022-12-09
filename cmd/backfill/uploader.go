@@ -42,6 +42,7 @@ func NewUploader(backfiller *Backfiller) *Uploader { //TODO make this more confi
 }
 
 func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more error handling to this
+	log.Default().Print("BeginingDataUpload")
 
 	for i := 0; i < len(entries); i++ {
 
@@ -53,6 +54,7 @@ func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more err
 }
 
 func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
+	log.Default().Print("Uploading model : ", entry.ModelPlan.ModelName)
 
 	userName := entry.ModelPlan.CreatedBy
 	user := u.Backfiller.UDictionary.tryGetUserByName(userName)
@@ -170,6 +172,7 @@ func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentica
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanCollaborator",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -181,6 +184,7 @@ func (u *Uploader) uploadPlanBasics(entry *BackfillEntry, princ authentication.P
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanBasics",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -191,6 +195,7 @@ func (u *Uploader) uploadPlanBasics(entry *BackfillEntry, princ authentication.P
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanBasics",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -202,6 +207,7 @@ func (u *Uploader) uploadPlanGeneralCharacteristics(entry *BackfillEntry, princ 
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanGeneralCharacteristics",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -210,6 +216,7 @@ func (u *Uploader) uploadPlanGeneralCharacteristics(entry *BackfillEntry, princ 
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanGeneralCharacteristics",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -223,6 +230,7 @@ func (u *Uploader) uploadPlanParticipantsAndProviders(entry *BackfillEntry, prin
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanParticipantsAndProviders",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -231,6 +239,7 @@ func (u *Uploader) uploadPlanParticipantsAndProviders(entry *BackfillEntry, prin
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanParticipantsAndProviders",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -243,6 +252,7 @@ func (u *Uploader) uploadPlanBeneficiaries(entry *BackfillEntry, princ authentic
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanBeneficiaries",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -253,6 +263,7 @@ func (u *Uploader) uploadPlanBeneficiaries(entry *BackfillEntry, princ authentic
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanBeneficiaries",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -264,6 +275,7 @@ func (u *Uploader) uploadPlanOpsEvalAndLearning(entry *BackfillEntry, princ auth
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanOpsEvalAndLearning",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -272,6 +284,7 @@ func (u *Uploader) uploadPlanOpsEvalAndLearning(entry *BackfillEntry, princ auth
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanOpsEvalAndLearning",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -283,6 +296,7 @@ func (u *Uploader) uploadPlanPayments(entry *BackfillEntry, princ authentication
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanPayments",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -291,6 +305,7 @@ func (u *Uploader) uploadPlanPayments(entry *BackfillEntry, princ authentication
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "PlanPayments",
+			Message: err.Error(),
 			DBError: err,
 		}
 	}
@@ -333,7 +348,7 @@ func getResolverDependencies(config *viper.Viper) (
 	email.TemplateService,
 ) {
 	// Create the logger
-	logger, _ := zap.NewDevelopment()
+	logger := zap.NewNop()
 
 	// Create LD Client, which is required for creating the store
 	ldClient, err := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)

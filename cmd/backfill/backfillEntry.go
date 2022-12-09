@@ -1,6 +1,10 @@
 package main
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import (
+	"log"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
 // TranslationError represents an issue translating a field
 type TranslationError struct {
@@ -51,5 +55,6 @@ func NewBackFillEntry() BackfillEntry {
 func (e *BackfillEntry) addNonNullUError(uErr *UploadError) {
 	if uErr != nil {
 		e.UErrors = append(e.UErrors, *uErr)
+		log.Default().Print("Issue uploading data for model section: ", uErr.Model, ". Message: ", uErr.Message)
 	}
 }

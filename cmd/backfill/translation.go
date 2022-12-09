@@ -71,8 +71,34 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 			t.addCollaborator(entry, sanitizeName(allUsers[i]), backfiller.UDictionary)
 		}
 	default:
+		if t.ModelName == "PlanPayments" && t.Field == "PayType" { //TODO, should I handle this later and just do it for this type?
+			t.translatePayType(entry, value)
+			return
+		}
 		t.translateField(entry, value, backfiller)
 	}
+
+}
+
+func (t *Translation) translatePayType(entry *BackfillEntry, value interface{}) {
+
+	var valToAdd string
+
+	//TODO handle all headers, make sure to add the string if needed. If possible, make this more generic too
+	switch t.Header {
+	case "Claims-Based Payments":
+		valToAdd = "CLAIMS_BASED_PAYMENTS"
+	case "Grants":
+		valToAdd = "GRANTS"
+	case "Claims-Based Payment Type":
+		log.Default().Print("ClaimBasedPayment types found... values :", value)
+
+	}
+
+	if valToAdd == "" {
+		return
+	}
+	entry.PlanPayments.PayType = append(entry.PlanPayments.PayType, valToAdd)
 
 }
 
@@ -136,8 +162,9 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 	tErr := t.setField(&field, value, backfiller)
 	if tErr != nil {
 		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
+		log.Default().Print("Error setting field: ", tErr)
 	}
-	log.Default().Print("Set the field? ", tErr == nil, "  It is now : ", field, " Error? ", tErr)
+	// log.Default().Print("Set the field? ", tErr == nil, "  It is now : ", field, " Error? ", tErr)
 
 }
 
@@ -286,9 +313,9 @@ func (t *Translation) translateStringArray(allValueString string, backfiller *Ba
 
 func (t *Translation) translateEnum(st string, backfiller *Backfiller) string {
 
-	enumTrans := backfiller.EnumDictionary.tryGetEnumByValue(st)
-	if enumTrans == nil {
-		log.Default().Print("couldn't translate string : ", st)
+	enumTrans, transFound := backfiller.EnumDictionary.tryGetEnumByValue(st, t)
+	if !transFound {
+		log.Default().Print("couldn't translate string : ", st, " for Model : ", t.ModelName, ". Field : ", t.Field)
 		return st
 	}
 
@@ -296,6 +323,9 @@ func (t *Translation) translateEnum(st string, backfiller *Backfiller) string {
 	if retVal == "" {
 		log.Default().Print("enum is not defined for : ", st)
 
+	}
+	if retVal == "ADVANCED" {
+		log.Default().Print("Found ADVANCED, original string was : ", st)
 	}
 	return retVal
 }

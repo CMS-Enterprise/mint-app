@@ -75,8 +75,12 @@ func uploadData(backfiller *Backfiller, useEdit bool) {
 	}
 
 	entries, err := getTransformedData(path)
+	if err != nil {
+		log.Default().Print("Error getting data from ", path)
+		return
+	}
+	log.Default().Print("Uploading data from ", path)
 
-	log.Default().Print(entries, err)
 	uploader := NewUploader(backfiller)
 	uploader.uploadEntries(entries)
 	writeObjectToJSONFile(entries, outputUploadPath)
