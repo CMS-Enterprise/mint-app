@@ -122,7 +122,7 @@ func (s *Server) routes(
 		s.Config.GetString(appconfig.CEDARAPIURL),
 		s.Config.GetString(appconfig.CEDARAPIKey),
 	)
-	if s.environment.Local() || s.environment.Test() {
+	if s.environment.Local() || s.environment.Testing() {
 		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
 	}
 
@@ -148,7 +148,7 @@ func (s *Server) routes(
 
 	// set up S3 client
 	s3Config := s.NewS3Config()
-	if s.environment.Local() || s.environment.Test() {
+	if s.environment.Local() || s.environment.Testing() {
 		s3Config.IsLocal = true
 	}
 
@@ -161,7 +161,7 @@ func (s *Server) routes(
 	princeConfig := s.NewPrinceLambdaConfig()
 	princeLambdaName = princeConfig.FunctionName
 
-	if s.environment.Local() || s.environment.Test() {
+	if s.environment.Local() || s.environment.Testing() {
 		endpoint := princeConfig.Endpoint
 		lambdaClient = lambda.New(lambdaSession, &aws.Config{Endpoint: &endpoint, Region: aws.String("us-west-2")})
 	} else {
