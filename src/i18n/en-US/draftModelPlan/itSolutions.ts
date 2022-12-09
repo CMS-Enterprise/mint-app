@@ -143,7 +143,10 @@ const itSolutions = {
   whatIsStatus: 'What is the status of this solution?',
   solutionDetails: 'Solution details',
   solutionDetailsInfo:
-    'Update the implementation status, timing, and add any subtasks and documents to track your progress for this operational solution.'
+    'Update the implementation status, timing, and add any subtasks and documents to track your progress for this operational solution.',
+  updateSolutions: 'Update solutions for this operational need',
+  notSpecified: 'not specified',
+  updateStatusAndTiming: 'Update status and timing'
 };
 
 export default itSolutions;
