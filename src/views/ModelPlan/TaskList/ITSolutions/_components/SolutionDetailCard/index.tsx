@@ -49,9 +49,9 @@ const SolutionDetailCard = ({
           <SolutionCard solution={solution} shadow />
           <div className="margin-y-1">
             <UswdsReactLink
-              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions/#update-solutions`}
             >
-              {t('updateSolutions')}
+              {t('updateSolutionsLink')}
             </UswdsReactLink>
           </div>
         </Grid>

@@ -5,7 +5,7 @@ Displays relevant operational need question and answers
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
@@ -74,6 +74,8 @@ const SelectSolutions = () => {
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const updateSolutions = useLocation().hash === '#update-solutions';
 
   const { showMessageOnNextPage } = useMessage();
 
@@ -213,7 +215,7 @@ const SelectSolutions = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('selectSolution')}
+            {updateSolutions ? t('updateSolutions') : t('selectSolution')}
           </PageHeading>
 
           <p
@@ -225,12 +227,18 @@ const SelectSolutions = () => {
 
           <p className="line-height-body-4">{t('selectInfo')}</p>
 
-          <Grid tablet={{ col: 8 }}>
+          <Grid tablet={{ col: 8 }} className="margin-bottom-4">
             <NeedQuestionAndAnswer
               operationalNeedID={operationalNeedID}
               modelID={modelID}
             />
           </Grid>
+
+          {updateSolutions && (
+            <Alert type="info" slim className="margin-y-2">
+              {t('updateSolutionsInfo')}
+            </Alert>
+          )}
 
           <Grid row gap>
             <Grid tablet={{ col: 10 }}>
@@ -270,7 +278,7 @@ const SelectSolutions = () => {
                       )}
 
                       <Form
-                        className="margin-top-6"
+                        className="margin-top-2"
                         data-testid="it-tools-page-seven-form"
                         onSubmit={e => {
                           handleSubmit(e);
@@ -314,7 +322,7 @@ const SelectSolutions = () => {
                             disabled={
                               values.solutions.filter(
                                 solution => solution.needed
-                              ).length === 0
+                              ).length === 0 && !updateSolutions
                             }
                           >
                             {t('continue')}
