@@ -33,7 +33,9 @@ const home = {
     mac: {
       heading: 'Upcoming models',
       empty: {
-        heading: 'There are no upcoming model plans yet'
+        heading: 'There aren’t any model plans with CRs or TDLs.',
+        body:
+          'Check back later. When CR or TDL is added to a model plan, it will appear here.'
       }
     },
     empty: {

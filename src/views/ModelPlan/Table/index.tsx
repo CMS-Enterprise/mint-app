@@ -363,14 +363,20 @@ const DraftModelPlansTable = ({
   );
 
   if (data.length === 0) {
-    if (!isMAC) {
-      return (
-        <Alert type="info" heading={t('requestsTable.empty.heading')}>
-          {t('requestsTable.empty.body')}
-        </Alert>
-      );
-    }
-    return <Alert type="info" heading={t('requestsTable.mac.empty.heading')} />;
+    return (
+      <Alert
+        type="info"
+        heading={
+          isMAC
+            ? t('requestsTable.mac.empty.heading')
+            : t('requestsTable.empty.heading')
+        }
+      >
+        {isMAC
+          ? t('requestsTable.mac.empty.body')
+          : t('requestsTable.empty.body')}
+      </Alert>
+    );
   }
 
   if (loading) {
