@@ -214,7 +214,7 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 	return humanizedAnalyzedPlanSections
 }
 
-// AnalyzedModelLeads represents an AnalyzedPlanCollaborators in an AnalyzedAuditChange
+// AnalyzedModelLeads represents an AnalyzedModelLeads in an AnalyzedAuditChange
 type AnalyzedModelLeads struct {
 	Added []string `json:"added"`
 }
