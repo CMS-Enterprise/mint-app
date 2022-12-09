@@ -87,7 +87,7 @@ const SolutionDetailCard = ({
               className="usa-button usa-button--outline"
               onClick={() => {
                 history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status`
                 );
               }}
             >
