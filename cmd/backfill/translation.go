@@ -65,7 +65,7 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 	switch t.ModelName {
 	case "Collaborator":
 		valString := fmt.Sprint(value)
-		allUsers := strings.Split(valString, ";")
+		allUsers := strings.Split(valString, ";#")
 		for i := 0; i < len(allUsers); i++ {
 
 			t.addCollaborator(entry, sanitizeName(allUsers[i]), userDictionary)
@@ -188,8 +188,11 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 		conVal = valueOrPointer(valString, isPointer)
 
 	case "pq.StringArray":
+
+		pqArray := translateStringArray(valString)
 		// conVal = reflect.ValueOf(pq.StringArray{value.(string)})
-		conVal = valueOrPointer(pq.StringArray{value.(string)}, isPointer)
+		// conVal = valueOrPointer(pq.StringArray{value.(string)}, isPointer)
+		conVal = valueOrPointer(pqArray, isPointer)
 
 	case "bool":
 		bVal, err := strconv.ParseBool(valString)
@@ -255,6 +258,20 @@ func (t *Translation) handleConversion(field *reflect.Value, fieldType reflect.T
 
 	return conVal, tErr
 
+}
+func translateStringArray(allValueString string) pq.StringArray {
+	allVals := strings.Split(allValueString, ";#")
+	array := pq.StringArray{}
+	for _, st := range allVals {
+		enVal := translateEnum(st)
+		array = append(array, enVal)
+	}
+	return array
+}
+
+func translateEnum(st string) string {
+	//TODO get a table of translations, then translate this whole thing
+	return st
 }
 
 func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.Value {

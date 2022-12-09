@@ -15,13 +15,16 @@ const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
 // const translationPath = `cmd/backfill/data/dataTranslation.csv`
 const translationFullPath = `cmd/backfill/data/dataTranslationFull.csv`
 const outputTranslatePath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+const outputTranslateEditPath = `cmd/backfill/data/sensitive/databackfillSeptTranslatedEdit.json`
 const userPath = `cmd/backfill/data/possibleUsers.json`
 const outputUploadPath = `cmd/backfill/data/sensitive/databackfillSeptUploaded.json`
+const enumTranslationPath = `cmd/backfill/data/enumTranslations.json`
 
 func main() { //TODO make this a command
 
-	testTransform := true
+	testTransform := false
 	testUpload := true
+	useEdit := true
 
 	possibleUserList := []PossibleUser{}
 	err := readJSONFromFile(userPath, &possibleUserList)
@@ -30,17 +33,33 @@ func main() { //TODO make this a command
 	}
 	possibleUserDict := NewPossibleUserDictionary(possibleUserList)
 
+	enumTranslationList := []EmumTranslation{}
+	err = readJSONFromFile(enumTranslationPath, &enumTranslationList)
+	if err != nil {
+		log.Fatal(err)
+	}
+	enumTranslationDict := NewEmumTranslationDictionary(enumTranslationList)
+
+	_ = NewBackfiller(nil, nil, nil) //TODO wire this up
+
 	if testTransform {
-		transformData(possibleUserDict)
+		transformData(possibleUserDict, enumTranslationDict)
 	}
 	if testUpload {
-		uploadData(possibleUserDict)
+		uploadData(possibleUserDict, useEdit)
 	}
 
 }
-func uploadData(userDictionary *PossibleUserDictionary) {
+func uploadData(userDictionary *PossibleUserDictionary, useEdit bool) {
+	var path string
 
-	entries, err := getTransformedData(outputTranslatePath)
+	if useEdit {
+		path = outputTranslateEditPath
+	} else {
+		path = outputTranslatePath
+	}
+
+	entries, err := getTransformedData(path)
 
 	log.Default().Print(entries, err)
 	uploader := NewUploader(userDictionary)
@@ -82,7 +101,7 @@ func getTransformedData(file string) ([]*BackfillEntry, error) {
 	err = json.Unmarshal(byteValue, &entries)
 	return entries, err
 }
-func transformData(userDictionary *PossibleUserDictionary) {
+func transformData(userDictionary *PossibleUserDictionary, enumTranslationD *EmumTranslationDictionary) {
 
 	table, err := readFile(filePath)
 
@@ -106,21 +125,6 @@ func transformData(userDictionary *PossibleUserDictionary) {
 
 	writeObjectToJSONFile(entries, outputTranslatePath)
 
-	// entryBytes, err := json.Marshal(entries)
-	// if err != nil {
-	// 	panic("Can't serialize the entries")
-	// }
-
-	// file, err := os.Create(outputTranslatePath)
-	// if err != nil {
-
-	// 	panic("Can't create the file")
-	// }
-	// _, err = file.Write(entryBytes)
-	// if err != nil {
-	// 	panic("Can't write the file")
-	// }
-	// os.WriteFile(outputTranslatePath,entries,)
 }
 
 func writeObjectToJSONFile(object interface{}, path string) {
