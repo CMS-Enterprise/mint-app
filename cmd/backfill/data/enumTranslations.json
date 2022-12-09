@@ -315,6 +315,7 @@
         "dbtype": "model_type"
     },
     {
+        "value": "TBD",
         "enum": "TBD",
         "dbtype": "model_type"
     },
@@ -424,6 +425,7 @@
         "field": "keyCharacteristics"
     },
     {
+        "value": "Shared Savings Model",
         "enum": "SHARED_SAVINGS",
         "dbtype": "key_characteristic",
         "model": "PlanGeneralCharacteristics",
@@ -437,15 +439,22 @@
     },
     {
         "enum": "STATE",
-        "dbtype": "geography_type"
+        "dbtype": "geography_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedTypes"
     },
     {
+        "value": "Region (CBSA/MSA/HRR/etc.)",
         "enum": "REGION",
-        "dbtype": "geography_type"
+        "dbtype": "geography_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedTypes"
     },
     {
         "enum": "OTHER",
-        "dbtype": "geography_type"
+        "dbtype": "geography_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedTypes"
     },
     {
         "enum": "PARTICIPANTS",
@@ -464,16 +473,26 @@
         "dbtype": "geography_application"
     },
     {
+        "value": "Participant Agreement",
         "enum": "PARTICIPATION",
-        "dbtype": "agreement_type"
+        "dbtype": "agreement_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "agreementTypes",
+        "note": "Unsure"
     },
     {
+        "value": "Cooperative Agreement/Grant",
         "enum": "COOPERATIVE",
-        "dbtype": "agreement_type"
+        "dbtype": "agreement_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "agreementTypes"
     },
     {
         "enum": "OTHER",
-        "dbtype": "agreement_type"
+        "dbtype": "agreement_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "agreementTypes",
+        "outliers": "Mandatory with potential voluntary component "
     },
     {
         "value": "3021 (ACA)",
@@ -665,6 +684,7 @@
         "field": "selectionMethod"
     },
     {
+        "value": "Model team will use an Application Review and Scoring tool",
         "enum": "APPLICATION_REVIEW_AND_SCORING_TOOL",
         "dbtype": "participant_selection_type",
         "model": "PlanParticipantsAndProviders",
@@ -697,20 +717,30 @@
         "field": "selectionMethod"
     },
     {
+        "value": "Send mass e-mails to new participants",
         "enum": "MASS_EMAIL",
-        "dbtype": "participant_communication_type"
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
     },
     {
+        "value": "Manage ongoing communications with participants by using an IT tool",
         "enum": "IT_TOOL",
-        "dbtype": "participant_communication_type"
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
     },
     {
         "enum": "OTHER",
-        "dbtype": "participant_communication_type"
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
     },
     {
         "enum": "NO_COMMUNICATION",
-        "dbtype": "participant_communication_type"
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
     },
     {
         "enum": "TWO_SIDED",
@@ -729,52 +759,83 @@
         "dbtype": "participant_risk_type"
     },
     {
+        "value": "TINs",
         "enum": "TINS",
-        "dbtype": "participants_id_type"
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
     },
     {
+        "value": "NPIs",
         "enum": "NPIS",
-        "dbtype": "participants_id_type"
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
     },
     {
+        "value": "CCNs",
         "enum": "CCNS",
-        "dbtype": "participants_id_type"
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
     },
     {
         "enum": "OTHER",
-        "dbtype": "participants_id_type"
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
     },
     {
         "enum": "NO_IDENTIFIERS",
-        "dbtype": "participants_id_type"
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
     },
     {
+        "value": "Enroll prospectively (based on previous year’s interactions)",
         "enum": "PROSPECTIVELY",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
         "enum": "RETROSPECTIVELY",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
+        "value": "Enroll voluntarily",
         "enum": "VOLUNTARILY",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
+        "value": "Enroll mandatorily",
         "enum": "MANDATORILY",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
+        "value": "Use online tools to view what types of participant files and data have been uploaded and downloaded",
         "enum": "ONLINE_TOOLS",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
         "enum": "OTHER",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
         "enum": "NA",
-        "dbtype": "provider_add_type"
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
     },
     {
         "enum": "VOLUNTARILY_WITHOUT_IMPLICATIONS",
@@ -836,6 +897,7 @@
         "outliers": "TBD"
     },
     {
+        "value": "Beneficiaries",
         "enum": "BENEFICIARIES",
         "dbtype": "stakeholders_type",
         "model": "PlanOpsEvalAndLearning",
@@ -856,6 +918,7 @@
         "field": "stakeholders"
     },
     {
+        "value": "Professional organizations",
         "enum": "PROFESSIONAL_ORGANIZATIONS",
         "dbtype": "stakeholders_type",
         "model": "PlanOpsEvalAndLearning",
@@ -885,22 +948,27 @@
         "value": "One contractor to support implementation",
         "enum": "ONE",
         "dbtype": "contractor_support_type",
-        "model": "PlanOpsEvalAndLearning"
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport",
+        "outliers": "May have separate contractors for different implementation functions"
     },
     {
         "enum": "MULTIPLE",
         "dbtype": "contractor_support_type",
-        "model": "PlanOpsEvalAndLearning"
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport"
     },
     {
         "enum": "NONE",
         "dbtype": "contractor_support_type",
-        "model": "PlanOpsEvalAndLearning"
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport"
     },
     {
         "enum": "OTHER",
         "dbtype": "contractor_support_type",
-        "model": "PlanOpsEvalAndLearning"
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport"
     },
     {
         "enum": "BENEFICIARY",
@@ -923,24 +991,37 @@
         "dbtype": "monitoring_file_type"
     },
     {
+        "value": "Establish control and intervention groups",
         "enum": "CONTROL_INTERVENTION",
-        "dbtype": "evaluation_approach_type"
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
     },
     {
+        "value": "Identify a comparison/match group",
         "enum": "COMPARISON_MATCH",
-        "dbtype": "evaluation_approach_type"
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
     },
     {
+        "value": "Interrupted time series",
         "enum": "INTERRUPTED_TIME",
-        "dbtype": "evaluation_approach_type"
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
     },
     {
         "enum": "NON_MEDICARE_DATA",
-        "dbtype": "evaluation_approach_type"
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
     },
     {
         "enum": "OTHER",
-        "dbtype": "evaluation_approach_type"
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
     },
     {
         "enum": "YES_EVALUATION",
@@ -1007,32 +1088,52 @@
         "dbtype": "data_for_monitoring_type"
     },
     {
+        "value": "Baseline/historical data",
         "enum": "BASELINE_HISTORICAL_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
     },
     {
+        "value": "Claims-level data",
         "enum": "CLAIMS_LEVEL_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
     },
     {
+        "value": "Beneficiary-level data",
         "enum": "BENEFICIARY_LEVEL_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
     },
     {
+        "value": "Participant-level data",
         "enum": "PARTICIPANT_LEVEL_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
     },
     {
+        "value": "Provider-level data",
         "enum": "PROVIDER_LEVEL_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
     },
     {
         "enum": "OTHER_MIPS_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants",
+        "outliers": "Data feedback reports/dashboards"
     },
     {
         "enum": "NOT_PLANNING_TO_SEND_DATA",
-        "dbtype": "data_to_send_participants_type"
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
     },
     {
         "enum": "ANNUALLY",
@@ -1082,27 +1183,42 @@
     },
     {
         "enum": "LEARNING_CONTRACTOR",
-        "dbtype": "model_learning_system_type"
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems"
     },
     {
+        "value": "We plan to use CONNECT",
         "enum": "IT_PLATFORM_CONNECT",
-        "dbtype": "model_learning_system_type"
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems"
     },
     {
         "enum": "PARTICIPANT_COLLABORATION",
-        "dbtype": "model_learning_system_type"
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems"
     },
     {
         "enum": "EDUCATE_BENEFICIARIES",
-        "dbtype": "model_learning_system_type"
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems"
     },
     {
         "enum": "OTHER",
-        "dbtype": "model_learning_system_type"
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems",
+        "outliers": "ADVANCED"
     },
     {
         "enum": "NO_LEARNING_SYSTEM",
-        "dbtype": "model_learning_system_type"
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems",
+        "outliers": "TBD"
     },
     {
         "enum": "FULL_TIME",
