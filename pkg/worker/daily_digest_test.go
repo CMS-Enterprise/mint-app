@@ -35,14 +35,11 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 		EmailTemplateService: suite.testConfigs.EmailTemplateService,
 	}
 
-	mp := suite.createModelPlan("Test Plan2")
+	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
 
 	var analyzedAudits []*models.AnalyzedAudit
-	modelNameChange := models.AuditField{
-		New: mp.ModelName,
-		Old: "Old Name",
-	}
+	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlAvtivity := true
@@ -52,8 +49,8 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 	addedLead := []string{"New Lead"}
 	dicussionActivity := true
 
-	auditChange := *suite.createAnalyzedAuditChange(&modelNameChange, &modelStatusChange, &documentCount,
-		&crTdlAvtivity, &updatedSections, &reviewSections, &clearanceSections, &addedLead, &dicussionActivity)
+	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
+		crTdlAvtivity, updatedSections, reviewSections, clearanceSections, addedLead, dicussionActivity)
 
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now(), auditChange)
 

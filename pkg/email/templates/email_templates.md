@@ -7,7 +7,7 @@ How to create, setup, and use email templates.
 ---
 
 - Create a `{email_name}.go` file in `pkg/email`. The contents of this file will have 2 structs. One for the subject template and another for the body template.<br>
-  **NOTE**: If your body or subject do not have have any variable content you still need to create an empty struct.
+  **NOTE**: *If your body or subject does not have have any variable content you still need to create an empty struct.*
 
   ```go
     package email
@@ -41,7 +41,7 @@ For HTML email templates:
 ### Subject Template
 
 - Create a `{email_name}_sbuject.template` file in `pkg/email/templates` with you subject line as the contents. Add your struct fields as `{{.Field}}` if you have any.
-  ```plain_text
+  ```plaintext
     My super awesome email subject {{.Content}}
   ```
 
@@ -64,11 +64,23 @@ For HTML email templates:
       </style>
     </head>
     <body>
-      <table class="body">
-        .
-        .
-        .
-        .
+      <!-- Wrapper for the body of the email -->
+      <table class="body" data-made-with-foundation>
+        <tr>
+          <!-- The class, align, and <center> tag center the container -->
+          <td class="float-center" align="center" valign="top">
+            <center>
+              <!-- The content of your email goes here. -->
+              <table class="container">
+                <tr>
+                  <td>
+                    <!-- Row and Column components -->
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </td>
+        </tr>
       </table>
     </body>
   </html>

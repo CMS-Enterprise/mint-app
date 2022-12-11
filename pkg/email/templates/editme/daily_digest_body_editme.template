@@ -1509,14 +1509,6 @@
                         </tr>
                       </tbody>
                     </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table align="center" class="container float-center">
-              <tbody>
-                <tr>
-                  <td>
                     <table class="spacer">
                       <tbody>
                         <tr>
@@ -1540,15 +1532,7 @@
                         </tr>
                       </tbody>
                     </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            {{range $audit := .AnalyzedAudits}}
-              <table align="center" class="container float-center">
-                <tbody>
-                  <tr>
-                    <td>
+                    {{range $audit := .AnalyzedAudits}}
                       <table class="spacer">
                         <tbody>
                           <tr>
@@ -1602,15 +1586,7 @@
                           </tr>
                         </tbody>
                       </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            {{end}}
-            <table align="center" class="container float-center">
-              <tbody>
-                <tr>
-                  <td>
+                    {{end}}
                     <table class="row">
                       <tbody>
                         <tr>

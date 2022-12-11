@@ -36,12 +36,17 @@ func NewAnalyzedAudit(createdBy string, modelPlanID uuid.UUID, modelName string,
 
 // AnalyzedAuditChange represents Changes in an AnalyzedAudit
 type AnalyzedAuditChange struct {
-	ModelPlan       *AnalyzedModelPlan       `json:"modelPlan"`
-	Documents       *AnalyzedDocuments       `json:"documents"`
-	CrTdls          *AnalyzedCrTdls          `json:"crTdls"`
-	PlanSections    *AnalyzedPlanSections    `json:"planSections"`
-	ModelLeads      *AnalyzedModelLeads      `json:"modelLeads"`
-	PlanDiscussions *AnalyzedPlanDiscussions `json:"planDiscussion"`
+	ModelPlan       *AnalyzedModelPlan       `json:"modelPlan,omitempty"`
+	Documents       *AnalyzedDocuments       `json:"documents,omitempty"`
+	CrTdls          *AnalyzedCrTdls          `json:"crTdls,omitempty"`
+	PlanSections    *AnalyzedPlanSections    `json:"planSections,omitempty"`
+	ModelLeads      *AnalyzedModelLeads      `json:"modelLeads,omitempty"`
+	PlanDiscussions *AnalyzedPlanDiscussions `json:"planDiscussion,omitempty"`
+}
+
+// IsEmpty returns if AnalyzedAuditChange struct is empty
+func (a AnalyzedAuditChange) IsEmpty() bool {
+	return a == AnalyzedAuditChange{}
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
@@ -96,55 +101,60 @@ func (a AnalyzedAuditChange) Humanize() []string {
 
 // AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
 type AnalyzedModelPlan struct {
-	NameChange    AuditField `json:"nameChange"`
-	StatusChanges []string   `json:"statusChanges"`
+	OldName       string   `json:"nameChange,omitempty"`
+	StatusChanges []string `json:"statusChanges,omitempty"`
 }
 
 // Humanize returns AnalyzedModelPlan in human readable sentences
-func (amp AnalyzedModelPlan) Humanize() []string {
-	var humanizedNameChange string
+func (a AnalyzedModelPlan) Humanize() []string {
+	var humanizedOldName string
 	var humanizedStatusChanges []string
 
-	if amp.NameChange.Old != nil {
-		humanizedNameChange = fmt.Sprintf("The model has been renamed (previously %s)", amp.NameChange.Old.(string))
+	if a.OldName != "" {
+		humanizedOldName = fmt.Sprintf("The model has been renamed (previously %s)", a.OldName)
 	}
 
-	if len(amp.StatusChanges) > 0 {
-		humanizedStatusChanges = lo.Map(amp.StatusChanges, func(status string, index int) string {
+	if len(a.StatusChanges) > 0 {
+		humanizedStatusChanges = lo.Map(a.StatusChanges, func(status string, index int) string {
 			switch status {
-			case "PLAN_COMPLETE":
+			case string(ModelStatusPlanComplete):
 				return "The model plan is complete"
-			case "ICIP_COMPLETE":
+			case string(ModelStatusIcipComplete):
 				return "The ICIP for this model is complete"
-			case "INTERNAL_CMMI_CLEARANCE":
+			case string(ModelStatusInternalCmmiClearance):
 				return "This model is in internal (CMMI) clearance"
-			case "CMS_CLEARANCE":
+			case string(ModelStatusCmsClearance):
 				return "This model is in CMS clearance"
-			case "HHS_CLEARANCE":
+			case string(ModelStatusHhsClearance):
 				return "This model is in HHS clearance"
-			case "OMB_ASRF_CLEARANCE":
+			case string(ModelStatusOmbAsrfClearance):
 				return "This model is in OMB/ASRF clearance"
-			case "CLEARED":
+			case string(ModelStatusCleared):
 				return "This model has been cleared"
-			case "ANNOUNCED":
+			case string(ModelStatusPlanDraft):
 				return "This model has been announced"
 			default:
 				return ""
 			}
 		})
 	}
-	return append(humanizedStatusChanges, humanizedNameChange)
+	return append(humanizedStatusChanges, humanizedOldName)
+}
+
+// IsEmpty returns if AnalyzedModelPlan fields are empty
+func (a AnalyzedModelPlan) IsEmpty() bool {
+	return len(a.StatusChanges) == 0 && a.OldName == ""
 }
 
 // AnalyzedDocuments represents an AnalyzedDocuments in an AnalyzedAuditChange
 type AnalyzedDocuments struct {
-	Count int `json:"count"`
+	Count int `json:"count,omitempty"`
 }
 
 // Humanize returns AnalyzedDocuments in a human readable sentence
-func (ad AnalyzedDocuments) Humanize() string {
-	if ad.Count > 0 {
-		return fmt.Sprintf("%d new documents have been uploaded", ad.Count)
+func (a AnalyzedDocuments) Humanize() string {
+	if a.Count > 0 {
+		return fmt.Sprintf("%d new documents have been uploaded", a.Count)
 	}
 
 	return ""
@@ -152,31 +162,39 @@ func (ad AnalyzedDocuments) Humanize() string {
 
 // AnalyzedCrTdls represents an AnalyzedCrTdls in an AnalyzedAuditChange
 type AnalyzedCrTdls struct {
-	Activity bool `json:"activity"`
+	Activity bool `json:"activity,omitempty"`
 }
 
 // Humanize returns AnalyzedCrTdls in a human readable sentence
-func (act AnalyzedCrTdls) Humanize() string {
-	if act.Activity {
+func (a AnalyzedCrTdls) Humanize() string {
+	if a.Activity {
 		return "Updates to CR/TDLs"
 	}
+
 	return ""
 }
 
 // AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
 type AnalyzedPlanSections struct {
-	Updated           []string `json:"updated"`
-	ReadyForReview    []string `json:"readyForReview"`
-	ReadyForClearance []string `json:"readyForClearance"`
+	Updated           []string `json:"updated,omitempty"`
+	ReadyForReview    []string `json:"readyForReview,omitempty"`
+	ReadyForClearance []string `json:"readyForClearance,omitempty"`
+}
+
+// IsEmpty returns if AnalyzedPlanSections fields are empty
+func (a AnalyzedPlanSections) IsEmpty() bool {
+	return len(a.ReadyForClearance) == 0 &&
+		len(a.ReadyForReview) == 0 &&
+		len(a.Updated) == 0
 }
 
 // Humanize returns AnalyzedPlanSections in human readable sentences
-func (aps AnalyzedPlanSections) Humanize() []string {
+func (a AnalyzedPlanSections) Humanize() []string {
 	var humanizedAnalyzedPlanSections []string
 
 	// Section updates
-	if len(aps.Updated) > 0 {
-		updatedSectionNames := lo.Map(aps.Updated, func(name string, index int) string {
+	if len(a.Updated) > 0 {
+		updatedSectionNames := lo.Map(a.Updated, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)
 			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
@@ -185,8 +203,8 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 	}
 
 	// Ready for clearance
-	if len(aps.ReadyForClearance) > 0 {
-		updatedSectionNames := lo.Map(aps.ReadyForClearance, func(name string, index int) string {
+	if len(a.ReadyForClearance) > 0 {
+		updatedSectionNames := lo.Map(a.ReadyForClearance, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)
 			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
@@ -199,8 +217,8 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 	}
 
 	// Ready for review
-	if len(aps.ReadyForReview) > 0 {
-		updatedSectionNames := lo.Map(aps.ReadyForReview, func(name string, index int) string {
+	if len(a.ReadyForReview) > 0 {
+		updatedSectionNames := lo.Map(a.ReadyForReview, func(name string, index int) string {
 			s := strings.Replace(name, "_", " ", -1)
 			caser := cases.Title(language.AmericanEnglish)
 			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
@@ -216,15 +234,15 @@ func (aps AnalyzedPlanSections) Humanize() []string {
 
 // AnalyzedModelLeads represents an AnalyzedModelLeads in an AnalyzedAuditChange
 type AnalyzedModelLeads struct {
-	Added []string `json:"added"`
+	Added []string `json:"added,omitempty"`
 }
 
 // Humanize returns AnalyzedModelLeads in human readable sentences
-func (aml AnalyzedModelLeads) Humanize() []string {
+func (a AnalyzedModelLeads) Humanize() []string {
 	var humanizedAnalyzedModelLeads []string
 
-	if len(aml.Added) > 0 {
-		humanizedAnalyzedModelLeads = lo.Map(aml.Added, func(name string, index int) string {
+	if len(a.Added) > 0 {
+		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name string, index int) string {
 			return fmt.Sprintf("%s has been addeed as a Model Lead", name)
 		})
 	}
@@ -234,12 +252,12 @@ func (aml AnalyzedModelLeads) Humanize() []string {
 
 // AnalyzedPlanDiscussions represents an AnalyzedPlanDiscussions in an AnalyzedAuditChange
 type AnalyzedPlanDiscussions struct {
-	Activity bool `json:"activity" db:"activity"`
+	Activity bool `json:"activity,omitempty"`
 }
 
 // Humanize returns AnalyzedPlanDiscussions in a human readable sentence
-func (aps AnalyzedPlanDiscussions) Humanize() string {
-	if aps.Activity {
+func (a AnalyzedPlanDiscussions) Humanize() string {
+	if a.Activity {
 		return "New activity in Discussions"
 	}
 

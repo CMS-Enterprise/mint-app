@@ -14,8 +14,9 @@ import (
 // args[0] modelPlanID, args[1] date
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
 	date := args[1].(time.Time)
+	modelPlanID := args[0].(uuid.UUID)
 
-	mp, err := w.Store.ModelPlanGetByID(w.Logger, args[0].(uuid.UUID))
+	mp, err := w.Store.ModelPlanGetByID(w.Logger, modelPlanID)
 	if err != nil {
 		return err
 	}
@@ -25,12 +26,17 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
-	changes, err := generateChanges(audits)
+	analyzedAuditChange, err := generateChanges(audits)
 	if err != nil {
 		return err
 	}
 
-	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", mp.ID, mp.ModelName, date, *changes)
+	// Don't create if there are no changes
+	if analyzedAuditChange.IsEmpty() {
+		return nil
+	}
+
+	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", mp.ID, mp.ModelName, date, *analyzedAuditChange)
 	if err != nil {
 		return err
 	}
@@ -98,29 +104,43 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 	nameChangeAudits := lo.Filter(filteredAudits, func(m *models.AuditChange, index int) bool {
 		keys := lo.Keys(m.Fields)
 		return lo.Contains(keys, "model_name")
-
 	})
 
-	var nameChangeAuditField models.AuditField
+	var oldNameAuditField string
 
-	if len(nameChangeAudits) > 0 {
-		nameChangeAuditField = models.AuditField{
-			Old: nameChangeAudits[0].Fields["model_name"].Old,
-			New: nameChangeAudits[0].Fields["model_name"].New,
-		}
+	if len(nameChangeAudits) > 0 && nameChangeAudits[0].Fields["model_name"].Old != nil {
+		oldNameAuditField = nameChangeAudits[0].Fields["model_name"].Old.(string)
+	}
+
+	statuses := []string{
+		string(models.ModelStatusPlanComplete),
+		string(models.ModelStatusIcipComplete),
+		string(models.ModelStatusInternalCmmiClearance),
+		string(models.ModelStatusCmsClearance),
+		string(models.ModelStatusHhsClearance),
+		string(models.ModelStatusOmbAsrfClearance),
+		string(models.ModelStatusCleared),
+		string(models.ModelStatusAnnounced),
 	}
 
 	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "status") {
-			return m.Fields["status"].New.(string), true
+			status := m.Fields["status"].New.(string)
+			if lo.Contains(statuses, status) {
+				return status, true
+			}
 		}
 		return "", false
 	})
 
 	analyzedModelPlan := models.AnalyzedModelPlan{
-		NameChange:    nameChangeAuditField,
+		OldName:       oldNameAuditField,
 		StatusChanges: statusChangeAudits,
+	}
+
+	if analyzedModelPlan.IsEmpty() {
+		return nil, nil
 	}
 
 	return &analyzedModelPlan, nil
@@ -154,11 +174,13 @@ func analyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads
 		return "", false
 	})
 
-	analyzedModelLeads := models.AnalyzedModelLeads{
-		Added: addedCollaborators,
+	if len(addedCollaborators) > 0 {
+		return &models.AnalyzedModelLeads{
+			Added: addedCollaborators,
+		}, nil
 	}
 
-	return &analyzedModelLeads, nil
+	return nil, nil
 
 }
 
@@ -183,11 +205,13 @@ func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocum
 		return m.TableName == "plan_document"
 	})
 
-	analyzedDocuments := models.AnalyzedDocuments{
-		Count: len(filteredAudits),
+	if len(filteredAudits) > 0 {
+		return &models.AnalyzedDocuments{
+			Count: len(filteredAudits),
+		}, nil
 	}
 
-	return &analyzedDocuments, nil
+	return nil, nil
 }
 
 // analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
@@ -232,6 +256,10 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		Updated:           updatedSections,
 		ReadyForReview:    readyForReview,
 		ReadyForClearance: readyForClearance,
+	}
+
+	if analyzedPlanSections.IsEmpty() {
+		return nil, nil
 	}
 
 	return &analyzedPlanSections, nil

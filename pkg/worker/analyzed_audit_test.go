@@ -8,6 +8,7 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (suite *WorkerSuite) TestAnalyzedAuditJob() {
@@ -16,10 +17,20 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		Logger: suite.testConfigs.Logger,
 	}
 	// Create plan
-	plan := suite.createModelPlan("Test Plan2")
+	plan := suite.createModelPlan("Test Plan")
+
+	// Update Plan
+	changes := map[string]interface{}{
+		"modelName": "New Name",
+		"status":    models.ModelStatusOmbAsrfClearance,
+		"archived":  true,
+	}
+	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
 
 	// Add Documents
 	suite.createPlanDocument(plan)
+
 	// Add CrTdls
 	suite.createPlanCrTdl(plan, "123-456", time.Now(), "Title", "Note")
 
@@ -66,7 +77,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err := worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
 	suite.NoError(err)
 
 	// Get Stored audit
@@ -75,11 +86,11 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 
 	suite.NotNil(analyzedAudit)
 
-	suite.EqualValues(plan.ModelName, analyzedAudit.ModelName)
+	suite.EqualValues(newPlan.ModelName, analyzedAudit.ModelName)
 
 	// ModelPlan Changes
-	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.NameChange.New)
-	suite.EqualValues([]string{string(plan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
+	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.OldName)
+	suite.EqualValues([]string{string(newPlan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
 
 	// Document Changes
 	suite.EqualValues(analyzedAudit.Changes.Documents.Count, 1)
@@ -111,4 +122,17 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
+
+	// Dont create if there are no changes
+	mp := models.NewModelPlan("TEST", "NO CHANGES")
+
+	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Logger, mp)
+	suite.NoError(err)
+	suite.NotNil(noChangeMp)
+
+	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	suite.NoError(err)
+
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now())
+	suite.Error(err)
 }

@@ -97,36 +97,36 @@ func (suite *WorkerSuite) createPlanDocument(mp *models.ModelPlan) *models.PlanD
 	return document
 }
 
-func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange *models.AuditField,
-	modelStatusChanges *[]string,
-	documentCount *int,
-	crTdlActivity *bool,
-	updatedSections *[]string,
-	reviewSections *[]string,
-	clearanceSections *[]string,
-	addedLeads *[]string, discussionActivity *bool) *models.AnalyzedAuditChange {
+func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
+	modelStatusChanges []string,
+	documentCount int,
+	crTdlActivity bool,
+	updatedSections []string,
+	reviewSections []string,
+	clearanceSections []string,
+	addedLeads []string, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
 		ModelPlan: &models.AnalyzedModelPlan{
-			NameChange:    *modelNameChange,
-			StatusChanges: *modelStatusChanges,
+			OldName:       modelNameChange,
+			StatusChanges: modelStatusChanges,
 		},
 		Documents: &models.AnalyzedDocuments{
-			Count: *documentCount,
+			Count: documentCount,
 		},
 		CrTdls: &models.AnalyzedCrTdls{
-			Activity: *crTdlActivity,
+			Activity: crTdlActivity,
 		},
 		PlanSections: &models.AnalyzedPlanSections{
-			Updated:           *updatedSections,
-			ReadyForReview:    *reviewSections,
-			ReadyForClearance: *clearanceSections,
+			Updated:           updatedSections,
+			ReadyForReview:    reviewSections,
+			ReadyForClearance: clearanceSections,
 		},
 		ModelLeads: &models.AnalyzedModelLeads{
-			Added: *addedLeads,
+			Added: addedLeads,
 		},
 		PlanDiscussions: &models.AnalyzedPlanDiscussions{
-			Activity: *discussionActivity,
+			Activity: discussionActivity,
 		},
 	}
 
