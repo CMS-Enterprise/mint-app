@@ -69,7 +69,7 @@ const mocks = [
         payments: false,
         managePartCDEnrollment: false,
         collectPlanBids: false,
-        planContactUpdated: false,
+        planContractUpdated: false,
         recruitmentMethod: false,
         selectionMethod: true,
         communicationMethod: false,

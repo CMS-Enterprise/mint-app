@@ -94,6 +94,7 @@ func (s *Server) routes(
 		handlers.NewHandlerBase(s.logger),
 		jwtVerifier,
 		store,
+		!s.environment.Prod(),
 	)
 
 	s.router.Use(

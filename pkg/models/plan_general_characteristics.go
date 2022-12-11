@@ -29,8 +29,8 @@ type PlanGeneralCharacteristics struct {
 	CollectPlanBidsNote          *string        `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
 	ManagePartCDEnrollment       *bool          `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`
 	ManagePartCDEnrollmentNote   *string        `json:"managePartCDEnrollmentNote" db:"manage_part_c_d_enrollment_note"`
-	PlanContactUpdated           *bool          `json:"planContactUpdated" db:"plan_contact_updated"`
-	PlanContactUpdatedNote       *string        `json:"planContactUpdatedNote" db:"plan_contact_updated_note"`
+	PlanContractUpdated          *bool          `json:"planContractUpdated" db:"plan_contract_updated"`
+	PlanContractUpdatedNote      *string        `json:"planContractUpdatedNote" db:"plan_contract_updated_note"`
 
 	// Page 3
 	CareCoordinationInvolved              *bool   `json:"careCoordinationInvolved" db:"care_coordination_involved" statusWeight:"1"`

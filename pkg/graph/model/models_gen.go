@@ -1165,6 +1165,49 @@ func (e ModelLearningSystemType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type ModelPlanFilter string
+
+const (
+	ModelPlanFilterIncludeAll ModelPlanFilter = "INCLUDE_ALL"
+	ModelPlanFilterCollabOnly ModelPlanFilter = "COLLAB_ONLY"
+	ModelPlanFilterWithCrTdls ModelPlanFilter = "WITH_CR_TDLS"
+)
+
+var AllModelPlanFilter = []ModelPlanFilter{
+	ModelPlanFilterIncludeAll,
+	ModelPlanFilterCollabOnly,
+	ModelPlanFilterWithCrTdls,
+}
+
+func (e ModelPlanFilter) IsValid() bool {
+	switch e {
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls:
+		return true
+	}
+	return false
+}
+
+func (e ModelPlanFilter) String() string {
+	return string(e)
+}
+
+func (e *ModelPlanFilter) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelPlanFilter(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelPlanFilter", str)
+	}
+	return nil
+}
+
+func (e ModelPlanFilter) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type MonitoringFileType string
 
 const (
