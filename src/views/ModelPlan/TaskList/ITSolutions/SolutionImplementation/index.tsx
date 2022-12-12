@@ -69,7 +69,7 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
 const SolutionImplementation = ({
   isUpdatingStatus = false
 }: {
-  isUpdatingStatus: boolean;
+  isUpdatingStatus?: boolean;
 }) => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
