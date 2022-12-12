@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
@@ -22,6 +23,7 @@ type Server struct {
 	logger      *zap.Logger
 	environment appconfig.Environment
 	pubsub      pubsub.PubSub
+	Worker      worker.Worker
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -66,12 +68,11 @@ func NewServer(config *viper.Viper) *Server {
 }
 
 // Serve runs the server
-func Serve(config *viper.Viper) {
-	s := NewServer(config)
+func (s *Server) Serve() {
 
-	useTLS := config.GetBool("USE_TLS")
+	useTLS := s.Config.GetBool("USE_TLS")
 	if useTLS {
-		serverCert, err := tls.X509KeyPair([]byte(config.GetString("SERVER_CERT")), []byte(config.GetString("SERVER_KEY")))
+		serverCert, err := tls.X509KeyPair([]byte(s.Config.GetString("SERVER_CERT")), []byte(s.Config.GetString("SERVER_KEY")))
 		if err != nil {
 			s.logger.Fatal("Failed to parse key pair", zap.Error(err))
 		}

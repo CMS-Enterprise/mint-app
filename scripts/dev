@@ -122,6 +122,9 @@ def up(frontend_included, *args, debug:false, wait:false)
     "COMPOSE_HTTP_TIMEOUT" => "120",
     "AIR_CONFIG" =>conf,
   }
+  # login to faktory docker
+  sh("docker login docker.contribsys.com -u #{ENV.fetch('FAKTORY_DOCKERHUB_USERNAME')} -p #{ENV.fetch('FAKTORY_DOCKERHUB_PASSWORD')}")
+
   command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
 
   if args.any?

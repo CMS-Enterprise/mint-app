@@ -94,13 +94,12 @@ services:
       - "1085:1080"
       - "1030:1025"
   faktory:
-    image: contribsys/faktory:latest
-    command: /faktory -b :7419 -w :7420 -e production
+    image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
       - 7419:7419
       - 7420:7420
     environment:
-      - FAKTORY_PASSWORD
+      - FAKTORY_ENV
     volumes:
       - faktory:/var/lib/faktory
     restart: always

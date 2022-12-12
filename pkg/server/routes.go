@@ -253,9 +253,7 @@ func (s *Server) routes(
 		EmailTemplateService: *emailTemplateService,
 	}
 
-	if s.environment.Local() {
-		go worker.Work()
-	}
+	s.Worker = *worker
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues
