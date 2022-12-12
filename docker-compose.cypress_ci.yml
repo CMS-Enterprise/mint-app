@@ -18,7 +18,7 @@ services:
   mint:
     image: '${ECR_REGISTRY}/mint-backend:${IMAGE_TAG}'
     environment:
-      - APP_ENV=test
+      - APP_ENV=testing
       - EMAIL_TEMPLATE_DIR=/mint/templates
       - SERVER_CERT
       - SERVER_KEY

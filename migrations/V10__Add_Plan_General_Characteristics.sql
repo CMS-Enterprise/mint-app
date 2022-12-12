@@ -74,8 +74,8 @@ CREATE TABLE plan_general_characteristics (
     collect_plan_bids_note ZERO_STRING,
     manage_part_c_d_enrollment BOOLEAN,
     manage_part_c_d_enrollment_note ZERO_STRING,
-    plan_contact_updated BOOLEAN,
-    plan_contact_updated_note ZERO_STRING,
+    plan_contract_updated BOOLEAN,
+    plan_contract_updated_note ZERO_STRING,
 
     -- Page 3
     care_coordination_involved BOOLEAN,

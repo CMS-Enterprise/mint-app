@@ -160,7 +160,7 @@ const NeedQuestionAndAnswer = ({
       payments: parentField === 'payments',
       managePartCDEnrollment: fieldName === 'managePartCDEnrollment',
       collectPlanBids: fieldName === 'collectPlanBids',
-      planContactUpdated: fieldName === 'planContactUpdated',
+      planContractUpdated: fieldName === 'planContractUpdated',
       recruitmentMethod: fieldName === 'recruitmentMethod',
       selectionMethod: fieldName === 'selectionMethod',
       communicationMethod: fieldName === 'communicationMethod',

@@ -8,6 +8,10 @@ case "$APP_ENV" in
     MINT_URL="https://dev.mint.cms.gov"
     export REACT_APP_OKTA_DOMAIN="https://test.idp.idm.cms.gov"
     ;;
+  "test")
+    MINT_URL="https://test.mint.cms.gov"
+    export REACT_APP_OKTA_DOMAIN="https://test.idp.idm.cms.gov"
+    ;;
   "impl")
     MINT_URL="https://impl.mint.cms.gov"
     export REACT_APP_OKTA_DOMAIN="https://impl.idp.idm.cms.gov"
