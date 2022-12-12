@@ -39,8 +39,22 @@ jobs:
       STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
 
-  deploy_impl:
+  deploy_test:
     needs: deploy_dev
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: dev
+    secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      LD_CLIENT_ID: ${{ secrets.LD_CLIENT_ID }}
+      OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
+      OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID }}
+      STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+
+  deploy_impl:
+    needs: deploy_test
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: impl
