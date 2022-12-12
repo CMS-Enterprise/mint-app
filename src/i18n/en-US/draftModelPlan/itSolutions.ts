@@ -144,7 +144,8 @@ const itSolutions = {
   updateStatus: 'Update status',
   updateStatusInfo:
     'Update the implementation status and deadline for this solution.',
-  updateSolution: 'Update solution'
+  updateSolution: 'Update solution',
+  dontAddandReturnToSolutionDetails:
+    'Don’t update and return to solution details'
 };
-
 export default itSolutions;
