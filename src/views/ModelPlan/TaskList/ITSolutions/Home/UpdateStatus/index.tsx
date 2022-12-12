@@ -66,7 +66,7 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SolutionImplementation = () => {
+const UpdateStatus = () => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -527,4 +527,4 @@ const SolutionImplementation = () => {
   );
 };
 
-export default SolutionImplementation;
+export default UpdateStatus;
