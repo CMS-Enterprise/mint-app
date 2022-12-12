@@ -64,6 +64,7 @@
         "dbtype": "tri_state_answer"
     },
     {
+        "value": "TBD",
         "enum": "TBD",
         "dbtype": "tri_state_answer"
     },
@@ -108,6 +109,7 @@
         "dbtype": "frequency_type"
     },
     {
+        "value": "Quarterly",
         "enum": "QUARTERLY",
         "dbtype": "frequency_type"
     },
@@ -270,41 +272,41 @@
         "enum": "PATIENT_CARE_MODELS_GROUP",
         "dbtype": "cmmi_group",
         "model": "PlanBasics",
-        "field": "cmmiGroups"
+        "field": "cMMIGroups"
     },
     {
         "enum": "POLICY_AND_PROGRAMS_GROUP",
         "dbtype": "cmmi_group",
         "model": "PlanBasics",
-        "field": "cmmiGroups"
+        "field": "cMMIGroups"
     },
     {
         "value": "Preventive and Population Health Care Models Group (PPHCMG)",
         "enum": "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP",
         "dbtype": "cmmi_group",
         "model": "PlanBasics",
-        "field": "cmmiGroups"
+        "field": "cMMIGroups"
     },
     {
         "value": "Seamless Care Models Group (SCMG)",
         "enum": "SEAMLESS_CARE_MODELS_GROUP",
         "dbtype": "cmmi_group",
         "model": "PlanBasics",
-        "field": "cmmiGroups"
+        "field": "cMMIGroups"
     },
     {
         "value": "State Innovations Group (SIG)",
         "enum": "STATE_INNOVATIONS_GROUP",
         "dbtype": "cmmi_group",
         "model": "PlanBasics",
-        "field": "cmmiGroups"
+        "field": "cMMIGroups"
     },
     {
         "value": "TBD",
         "enum": "TBD",
         "dbtype": "cmmi_group",
         "model": "PlanBasics",
-        "field": "cmmiGroups"
+        "field": "cMMIGroups"
     },
     {
         "enum": "VOLUNTARY",
@@ -457,20 +459,29 @@
         "field": "geographiesTargetedTypes"
     },
     {
+        "value": "Participants",
         "enum": "PARTICIPANTS",
-        "dbtype": "geography_application"
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
     },
     {
         "enum": "PROVIDERS",
-        "dbtype": "geography_application"
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
     },
     {
         "enum": "BENEFICIARIES",
-        "dbtype": "geography_application"
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
     },
     {
         "enum": "OTHER",
-        "dbtype": "geography_application"
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
     },
     {
         "value": "Participant Agreement",
@@ -497,19 +508,27 @@
     {
         "value": "3021 (ACA)",
         "enum": "ACA",
-        "dbtype": "authority_allowance"
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
     },
     {
         "enum": "CONGRESSIONALLY_MANDATED",
-        "dbtype": "authority_allowance"
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
     },
     {
         "enum": "SSA_PART_B",
-        "dbtype": "authority_allowance"
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
     },
     {
         "enum": "OTHER",
-        "dbtype": "authority_allowance"
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
     },
     {
         "enum": "FRAUD_ABUSE",
@@ -953,6 +972,7 @@
         "outliers": "May have separate contractors for different implementation functions"
     },
     {
+        "value": "May have separate contractors for different implementation functions",
         "enum": "MULTIPLE",
         "dbtype": "contractor_support_type",
         "model": "PlanOpsEvalAndLearning",
@@ -979,7 +999,7 @@
         "dbtype": "monitoring_file_type"
     },
     {
-        "enum": "PART_A",
+        "enum": "PROVIDER",
         "dbtype": "monitoring_file_type"
     },
     {
@@ -1313,6 +1333,7 @@
         "field": "payRecipients"
     },
     {
+        "value": "States",
         "enum": "STATES",
         "dbtype": "pp_pay_recipient",
         "model": "PlanPayments",
@@ -1347,123 +1368,160 @@
         "value": "Adjustments to FFS Payments",
         "enum": "ADJUSTMENTS_TO_FFS_PAYMENTS",
         "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments",
         "note": "Might be mapped wrong"
     },
     {
         "enum": "CARE_MANAGEMENT_HOME_VISITS",
-        "dbtype": "pp_claims_based_pay_type"
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "REDUCTIONS_TO_BENEFICIARY_COST_SHARING",
-        "dbtype": "pp_claims_based_pay_type"
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS",
-        "dbtype": "pp_claims_based_pay_type"
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE",
-        "dbtype": "pp_claims_based_pay_type"
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE",
-        "dbtype": "pp_claims_based_pay_type"
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "OTHER",
-        "dbtype": "pp_claims_based_pay_type"
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
     },
     {
+        "value": "Advanced Payment",
         "enum": "ADVANCED_PAYMENT",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "BUNDLED_EPISODE_OF_CARE",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "CAPITATION_POPULATION_BASED_FULL",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "CAPITATION_POPULATION_BASED_PARTIAL",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
+        "value": "Care Coordination/Management Fee",
         "enum": "CARE_COORDINATION_MANAGEMENT_FEE",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "GLOBAL_BUDGET",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "GRANTS",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
+        "value": "Incentive Payment",
         "enum": "INCENTIVE_PAYMENT",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "MAPD_SHARED_SAVINGS",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
+        "value": "Shared Savings Program",
         "enum": "SHARED_SAVINGS",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "OTHER",
-        "dbtype": "pp_non_claim_based_payment_type"
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "Performance-Based Payments"
     },
     {
         "enum": "LOW",
-        "dbtype": "pp_complexity_calculation_level_type"
+        "dbtype": "pp_complexity_calculation_level_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "MIDDLE",
-        "dbtype": "pp_complexity_calculation_level_type"
+        "dbtype": "pp_complexity_calculation_level_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "HIGH",
-        "dbtype": "pp_complexity_calculation_level_type"
+        "dbtype": "pp_complexity_calculation_level_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "ANNUALLY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "BIANNUALLY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
+        "value": "Quarterly",
         "enum": "QUARTERLY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "MONTHLY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "SEMIMONTHLY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "WEEKLY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
+        "value": "Daily",
         "enum": "DAILY",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "OTHER",
-        "dbtype": "pp_anticipated_payment_frequency_type"
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "MARX",
-        "dbtype": "gc_part_c_d_type"
+        "dbtype": "gc_part_c_d_type",
+        "model": "PlanPayments"
     },
     {
         "enum": "OTHER",

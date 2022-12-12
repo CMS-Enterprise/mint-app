@@ -20,8 +20,9 @@ type EmumTranslation struct {
 // EmumTranslationDictionary is a mapping of enumTranslations
 type EmumTranslationDictionary map[string]*EmumTranslation
 
+// Key represents the data to return a key
 func (et *EmumTranslation) Key() string {
-	return et.Model + strings.Title(et.Field) + et.Value
+	return strings.ToLower(et.Model + et.Field + et.Value) //Make case insensitive
 }
 
 // NewEmumTranslationDictionary converts an array of Enum Translations to a Dictionary
@@ -35,19 +36,19 @@ func NewEmumTranslationDictionary(enumTranslations []EmumTranslation) *EmumTrans
 
 func (etd EmumTranslationDictionary) tryGetEnumByValue(value string, translation *Translation) (*EmumTranslation, bool) {
 
-	key := translation.ModelName + translation.Field + value
+	key := strings.ToLower(translation.ModelName + translation.Field + value)
 
 	enumVal, found := etd[key]
 	// dictionary := pd.(map[string])
 
 	if enumVal == nil {
 
-		enumKey, found := lo.FindKeyBy(etd, func(i string, enumTrans *EmumTranslation) bool {
+		enumKey, found2 := lo.FindKeyBy(etd, func(i string, enumTrans *EmumTranslation) bool {
 			//TODO revist this and make sure we retun the correct value
 
 			return strings.Contains(enumTrans.Outliers, value) && enumTrans.Model == translation.ModelName && enumTrans.Field == translation.Field
 		})
-		if found {
+		if found2 {
 			enumVal = etd[enumKey]
 		}
 

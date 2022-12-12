@@ -75,12 +75,56 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 			t.translatePayType(entry, value)
 			return
 		}
+		if t.Header == "Resembles Existing Model" {
+
+			t.translateResemblesExisting(entry, value)
+
+		}
+		// if t.ModelName == "PlanPayments" && t.Field == "NonClaimsPayments" { //TODO, should I handle this later and just do it for this type?
+		// 	t.translateNonClaimsPaymentType(entry, value)
+		// 	return
+		// }
+
 		t.translateField(entry, value, backfiller)
 	}
 
 }
+func (t *Translation) translateResemblesExisting(entry *BackfillEntry, value interface{}) {
+	resembles := value != ""
+
+	entry.PlanGeneralCharacteristics.ResemblesExistingModel = &resembles
+	if resembles {
+		allVals := strings.Split(fmt.Sprint(value), ";#")
+		array := pq.StringArray{}
+		for _, st := range allVals {
+			array = append(array, st)
+		}
+		entry.PlanGeneralCharacteristics.ResemblesExistingModelWhich = array
+
+	}
+
+}
+
+// func (t *Translation) translateNonClaimsPaymentType(entry *BackfillEntry, value interface{}) {
+
+// 	if value == "FALSE" {
+// 		return //ONLY ADD if it is true
+// 	}
+
+// 	var valToAdd string
+// 	switch t.Header {
+// 	}
+// 	if valToAdd == "" {
+// 		return
+// 	}
+
+// 	entry.PlanPayments.NonClaimsPayments = append(entry.PlanPayments.NonClaimsPayments, valToAdd)
+// }
 
 func (t *Translation) translatePayType(entry *BackfillEntry, value interface{}) {
+	if value == "FALSE" {
+		return //ONLY ADD if it is true
+	}
 
 	var valToAdd string
 
@@ -142,6 +186,10 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 		log.Default().Print("translation not known for " + t.Header + " . Value is " + fmt.Sprint(value))
 		return
 	}
+	if t.ModelName == "NOT_NEEED" {
+		log.Default().Print("translation not needed for " + t.Header + " . Value is " + fmt.Sprint(value) + " . Note : " + t.Note)
+		return
+	}
 	if t.ModelName == "" {
 		log.Default().Print("translation has not yet been mapped for for " + t.Header + " . Value is " + fmt.Sprint(value))
 		return
@@ -185,6 +233,7 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 
 		}
 		if convVal.IsValid() {
+
 			field.Set(convVal)
 			return nil
 		}
@@ -232,7 +281,6 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 				err = nil
 			}
 		}
-		//TODO need to handle yes/ no, which we don't right now
 		if err != nil {
 			tErr = &TranslationError{
 				Translation: *t,
@@ -271,28 +319,33 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 			}
 		}
 		conVal = valueOrPointer(tVal, isPointer)
-	// case "models.DataStartsType": //TODO generically handle string enum types, how do we validate the input?
-	// 	enumType := models.DataStartsType(valString)
-	// 	conVal = valueOrPointer(enumType, isPointer) //THE DATA is not in the same format, it is more human readable
-	// case "models.OverlapType":
-	// 	enumType := models.OverlapType(valString)
-	// 	conVal = valueOrPointer(enumType, isPointer)
 
 	default:
-		translated := t.translateEnum(valString, backfiller) //TODO should we do something to see if we found a match?
-		conVal = valueOrPointer(translated, isPointer)
+		translatedString, isTranslated := t.translateEnum(valString, backfiller) //TODO should we do something to see if we found a match?
 
-		tErr = &TranslationError{
-			Translation: *t,
-			Value:       value,
-			Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
+		//TODO handle TBD
+		if !isTranslated {
+			if valString == "TBD" {
+				tErr = &TranslationError{
+					Translation: *t,
+					Value:       value,
+					Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
+				}
+			} else {
+				tErr = &TranslationError{
+					Translation: *t,
+					Value:       value,
+					Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
+				}
+			}
 		}
+		//TODO cast the value as the field value
+
+		conVal = valueOrPointerOfType(translatedString, isPointer, fieldTypeS)
+
+		// conVal = valueOrPointer(translatedString, isPointer)
 
 	}
-
-	// if tErr != nil && valString == "TBD" {
-	// 	//TODO handle these nil cases.
-	// }
 
 	return conVal, tErr
 
@@ -305,18 +358,18 @@ func (t *Translation) translateStringArray(allValueString string, backfiller *Ba
 	allVals := strings.Split(allValueString, ";#")
 	array := pq.StringArray{}
 	for _, st := range allVals {
-		enVal := t.translateEnum(st, backfiller)
+		enVal, _ := t.translateEnum(st, backfiller)
 		array = append(array, enVal)
 	}
 	return array
 }
 
-func (t *Translation) translateEnum(st string, backfiller *Backfiller) string {
+func (t *Translation) translateEnum(st string, backfiller *Backfiller) (string, bool) {
 
 	enumTrans, transFound := backfiller.EnumDictionary.tryGetEnumByValue(st, t)
 	if !transFound {
 		log.Default().Print("couldn't translate string : ", st, " for Model : ", t.ModelName, ". Field : ", t.Field)
-		return st
+		return st, transFound
 	}
 
 	retVal := enumTrans.Enum
@@ -327,7 +380,7 @@ func (t *Translation) translateEnum(st string, backfiller *Backfiller) string {
 	if retVal == "ADVANCED" {
 		log.Default().Print("Found ADVANCED, original string was : ", st)
 	}
-	return retVal
+	return retVal, transFound
 }
 
 func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.Value {
@@ -337,4 +390,40 @@ func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.
 	}
 	return reflect.ValueOf(value)
 
+}
+
+// func valueOrPointerOfType[enumType ~string](field enumType, transEnum interface{}, isPointer bool) reflect.Value {
+
+// 	typedString := transEnum.(enumType)
+
+// 	return valueOrPointer(typedString, isPointer)
+
+// }
+
+func valueOrPointerOfType(transEnum string, isPointer bool, fieldType string) reflect.Value {
+	var refVal reflect.Value
+
+	switch fieldType {
+
+	case "models.ModelType":
+		refVal = valueOrPointer(models.ModelType(transEnum), isPointer)
+	case "models.OverlapType":
+		refVal = valueOrPointer(models.OverlapType(transEnum), isPointer)
+	case "models.ModelCategory":
+		refVal = valueOrPointer(models.ModelCategory(transEnum), isPointer)
+	case "models.ParticipantRiskType":
+		refVal = valueOrPointer(models.ParticipantRiskType(transEnum), isPointer)
+	case "models.BenchmarkForPerformanceType":
+		refVal = valueOrPointer(models.BenchmarkForPerformanceType(transEnum), isPointer)
+	case "models.DataStartsType":
+		refVal = valueOrPointer(models.DataStartsType(transEnum), isPointer)
+	case "models.RecruitmentType":
+		refVal = valueOrPointer(models.RecruitmentType(transEnum), isPointer)
+	case "models.ComplexityCalculationLevelType":
+		refVal = valueOrPointer(models.ComplexityCalculationLevelType(transEnum), isPointer)
+	default:
+		log.Default().Print("unhandled enumType: ", fieldType)
+		return valueOrPointer(transEnum, isPointer)
+	}
+	return refVal
 }
