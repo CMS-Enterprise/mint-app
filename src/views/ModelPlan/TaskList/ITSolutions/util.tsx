@@ -62,7 +62,8 @@ const formatSolutionsFromNeed = (
       return {
         ...solution,
         needName: need.nameOther || need.name,
-        needKey: need.key
+        needKey: need.key,
+        needID: need.id
       };
     });
 };
@@ -94,6 +95,7 @@ const emptySolution = (
 // Used to type as solution with a need key
 interface SolutionAsNeed extends GetOperationalNeedsOperationalNeedsType {
   needKey?: string;
+  needID: string;
 }
 
 // Returns operational need/solutions table action links according to status
@@ -111,7 +113,7 @@ export const returnActionLinks = (
   const solutionActionLinks = (
     <>
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/update-status`}
+        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
         {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
