@@ -140,19 +140,13 @@ const SolutionDetails = () => {
         {loading ? (
           <PageLoading />
         ) : (
-          <SolutionDetailCard
-            solution={solution}
-            operationalNeedID={operationalNeedID}
-            modelID={modelID}
-          />
-        )}
-      </Grid>
-
-      <Grid tablet={{ col: 12 }}>
-        {loading ? (
-          <PageLoading />
-        ) : (
           <>
+            <SolutionDetailCard
+              solution={solution}
+              operationalNeedID={operationalNeedID}
+              modelID={modelID}
+            />
+
             {/* TODO: remove temp subtask data */}
             <Subtasks
               subtasks={[
@@ -177,51 +171,46 @@ const SolutionDetails = () => {
             />
 
             <SubtaskLinks className="margin-top-3" />
-          </>
-        )}
-      </Grid>
 
-      <Grid tablet={{ col: 12 }}>
-        {loading ? (
-          <PageLoading />
-        ) : (
-          <div className="margin-top-6">
-            <h3 className="margin-bottom-0">{t('documents')}</h3>
-            <PlanDocumentsTable
-              className="margin-top-neg-2"
-              modelID={modelID}
-              setDocumentMessage={setDocumentMessage}
-              setDocumentStatus={setDocumentStatus}
-            />
+            {/* Documents table and link */}
+            <div className="margin-top-6">
+              <h3 className="margin-bottom-0">{t('documents')}</h3>
+              <PlanDocumentsTable
+                className="margin-top-neg-2"
+                modelID={modelID}
+                setDocumentMessage={setDocumentMessage}
+                setDocumentStatus={setDocumentStatus}
+              />
 
-            <div className="display-flex margin-y-4">
-              {/* Link existing documents */}
-              <Button
-                type="button"
-                id="link-documents"
-                className="usa-button usa-button--outline"
-                onClick={() => {
-                  history.push(
-                    `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
-                  );
-                }}
-              >
-                {t(`links.linkDocuments`)}
-              </Button>
+              <div className="display-flex margin-y-4">
+                {/* Link existing documents */}
+                <Button
+                  type="button"
+                  id="link-documents"
+                  className="usa-button usa-button--outline"
+                  onClick={() => {
+                    history.push(
+                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+                    );
+                  }}
+                >
+                  {t(`links.linkDocuments`)}
+                </Button>
 
-              {/* Upload document */}
-              <Button
-                type="button"
-                id="upload-document"
-                className="usa-button usa-button--outline"
-                onClick={() => {
-                  history.push(`/models/${modelID}/documents/add-document`);
-                }}
-              >
-                {t(`links.uploadDocuments`)}
-              </Button>
+                {/* Upload document */}
+                <Button
+                  type="button"
+                  id="upload-document"
+                  className="usa-button usa-button--outline"
+                  onClick={() => {
+                    history.push(`/models/${modelID}/documents/add-document`);
+                  }}
+                >
+                  {t(`links.uploadDocuments`)}
+                </Button>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </Grid>
     </>
