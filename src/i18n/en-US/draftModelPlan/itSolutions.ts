@@ -157,7 +157,14 @@ const itSolutions = {
     header: 'Subtasks',
     todo: 'To do',
     inProgress: 'In progress',
-    done: 'Done'
+    done: 'Done',
+    addSubtasks: 'Add subtasks',
+    manageSubtasks: 'Manage subtasks'
+  },
+  documents: 'Documents',
+  links: {
+    linkDocuments: 'Link existing documents',
+    uploadDocuments: 'Upload a document'
   }
 };
 

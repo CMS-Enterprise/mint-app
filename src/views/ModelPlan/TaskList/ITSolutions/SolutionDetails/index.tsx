@@ -3,14 +3,16 @@ View for selecting/toggled 'needed' bool on possible solutions and custom soluti
 Displays relevant operational need question and answers
 */
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
   Grid
 } from '@trussworks/react-uswds';
 
@@ -18,6 +20,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Expire from 'components/shared/Expire';
 // import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -30,12 +33,15 @@ import {
 //   OpSolutionStatus
 // } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
+import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
 // import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 // import SolutionCard from '../_components/SolutionCard';
 import SolutionDetailCard from '../_components/SolutionDetailCard';
-import Subtasks from '../_components/Subtasks';
+// TODO: remove manual SubtaskStatus enum once generated from BE
+import Subtasks, { SubtaskLinks, SubtaskStatus } from '../_components/Subtasks';
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -44,12 +50,15 @@ const SolutionDetails = () => {
     operationalSolutionID: string;
   }>();
 
-  //   const history = useHistory();
-
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  //   const { showMessageOnNextPage } = useMessage();
+  const history = useHistory();
+
+  const [documentMessage, setDocumentMessage] = useState('');
+  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
+    'error'
+  );
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -97,6 +106,21 @@ const SolutionDetails = () => {
         <Breadcrumb current>{t('solutionDetails')}</Breadcrumb>
       </BreadcrumbBar>
 
+      {documentMessage && (
+        <Expire delay={4000}>
+          <Alert
+            type={documentStatus}
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+          >
+            <span className="mandatory-fields-alert__text">
+              {documentMessage}
+            </span>
+          </Alert>
+        </Expire>
+      )}
+
       <Grid row gap className="margin-bottom-4">
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
@@ -135,7 +159,76 @@ const SolutionDetails = () => {
         {loading ? (
           <PageLoading />
         ) : (
-          <Subtasks subtasks={[]} className="margin-top-6" />
+          <>
+            {/* TODO: remove temp subtask data */}
+            <Subtasks
+              subtasks={[
+                {
+                  name: 'Review requirements document',
+                  status: SubtaskStatus.TO_DO
+                },
+                {
+                  name: 'Review onboarding materials',
+                  status: SubtaskStatus.TO_DO
+                },
+                {
+                  name: 'Write onboarding request',
+                  status: SubtaskStatus.IN_PROGRESS
+                },
+                {
+                  name: 'Gather recipient data',
+                  status: SubtaskStatus.DONE
+                }
+              ]}
+              className="margin-top-6"
+            />
+
+            <SubtaskLinks className="margin-top-3" />
+          </>
+        )}
+      </Grid>
+
+      <Grid tablet={{ col: 12 }}>
+        {loading ? (
+          <PageLoading />
+        ) : (
+          <div className="margin-top-6">
+            <h3 className="margin-bottom-0">{t('documents')}</h3>
+            <PlanDocumentsTable
+              className="margin-top-neg-2"
+              modelID={modelID}
+              setDocumentMessage={setDocumentMessage}
+              setDocumentStatus={setDocumentStatus}
+            />
+
+            <div className="display-flex margin-y-4">
+              {/* Link existing documents */}
+              <Button
+                type="button"
+                id="link-documents"
+                className="usa-button usa-button--outline"
+                onClick={() => {
+                  history.push(
+                    `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+                  );
+                }}
+              >
+                {t(`links.linkDocuments`)}
+              </Button>
+
+              {/* Upload document */}
+              <Button
+                type="button"
+                id="upload-document"
+                className="usa-button usa-button--outline"
+                onClick={() => {
+                  history.push(`/models/${modelID}/documents/add-document`);
+                }}
+              >
+                {t(`links.uploadDocuments`)}
+              </Button>
+            </div>
+          </div>
         )}
       </Grid>
     </>
