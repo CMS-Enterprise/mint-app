@@ -216,7 +216,7 @@ const SolutionImplementation = () => {
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
+        <Breadcrumb current>{t('updateStatus')}</Breadcrumb>
       </BreadcrumbBar>
 
       {mutationError && (
@@ -228,7 +228,7 @@ const SolutionImplementation = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addImplementationDetails')}
+            {t('updateStatus')}
           </PageHeading>
 
           <p
@@ -238,9 +238,7 @@ const SolutionImplementation = () => {
             {h('for')} {modelName}
           </p>
 
-          <p className="line-height-body-4">
-            {t('addImplementationDetailsInfo')}
-          </p>
+          <p className="line-height-body-4">{t('updateStatusInfo')}</p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
@@ -477,21 +475,11 @@ const SolutionImplementation = () => {
 
                           <div className="margin-top-6 margin-bottom-3">
                             <Button
-                              type="button"
-                              className="usa-button usa-button--outline margin-bottom-1"
-                              onClick={() => {
-                                handleFormSubmit(values, 'back');
-                              }}
-                            >
-                              {h('back')}
-                            </Button>
-
-                            <Button
                               type="submit"
                               id="submit-solutions"
                               onClick={() => setErrors({})}
                             >
-                              {t('saveSolutions')}
+                              {t('updateSolution')}
                             </Button>
                           </div>
 
@@ -506,7 +494,7 @@ const SolutionImplementation = () => {
                               className="margin-right-1"
                               aria-hidden
                             />
-                            {t('dontAdd')}
+                            {t('dontAddandReturnToSolutionDetails')}
                           </Button>
                         </Fieldset>
                       </Form>
