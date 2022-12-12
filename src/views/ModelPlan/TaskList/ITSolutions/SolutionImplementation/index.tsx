@@ -486,22 +486,26 @@ const SolutionImplementation = ({
                           })}
 
                           <div className="margin-top-6 margin-bottom-3">
-                            <Button
-                              type="button"
-                              className="usa-button usa-button--outline margin-bottom-1"
-                              onClick={() => {
-                                handleFormSubmit(values, 'back');
-                              }}
-                            >
-                              {h('back')}
-                            </Button>
+                            {!isUpdatingStatus && (
+                              <Button
+                                type="button"
+                                className="usa-button usa-button--outline margin-bottom-1"
+                                onClick={() => {
+                                  handleFormSubmit(values, 'back');
+                                }}
+                              >
+                                {h('back')}
+                              </Button>
+                            )}
 
                             <Button
                               type="submit"
                               id="submit-solutions"
                               onClick={() => setErrors({})}
                             >
-                              {t('saveSolutions')}
+                              {isUpdatingStatus
+                                ? t('updateSolution')
+                                : t('saveSolutions')}
                             </Button>
                           </div>
 
@@ -516,7 +520,9 @@ const SolutionImplementation = ({
                               className="margin-right-1"
                               aria-hidden
                             />
-                            {t('dontAdd')}
+                            {isUpdatingStatus
+                              ? t('dontAddandReturnToSolutionDetails')
+                              : t('dontAdd')}
                           </Button>
                         </Fieldset>
                       </Form>
