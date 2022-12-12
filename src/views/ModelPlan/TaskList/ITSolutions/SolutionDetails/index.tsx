@@ -35,6 +35,7 @@ import NotFound from 'views/NotFound';
 // import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 // import SolutionCard from '../_components/SolutionCard';
 import SolutionDetailCard from '../_components/SolutionDetailCard';
+import Subtasks from '../_components/Subtasks';
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -127,6 +128,14 @@ const SolutionDetails = () => {
             operationalNeedID={operationalNeedID}
             modelID={modelID}
           />
+        )}
+      </Grid>
+
+      <Grid tablet={{ col: 12 }}>
+        {loading ? (
+          <PageLoading />
+        ) : (
+          <Subtasks subtasks={[]} className="margin-top-6" />
         )}
       </Grid>
     </>

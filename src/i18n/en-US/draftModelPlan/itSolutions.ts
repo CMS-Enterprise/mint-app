@@ -152,7 +152,13 @@ const itSolutions = {
     'Update the implementation status, timing, and add any subtasks and documents to track your progress for this operational solution.',
   updateSolutionsLink: 'Update solutions for this operational need',
   notSpecified: 'not specified',
-  updateStatusAndTiming: 'Update status and timing'
+  updateStatusAndTiming: 'Update status and timing',
+  subtasks: {
+    header: 'Subtasks',
+    todo: 'To do',
+    inProgress: 'In progress',
+    done: 'Done'
+  }
 };
 
 export default itSolutions;
