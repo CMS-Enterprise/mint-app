@@ -533,15 +533,22 @@
     },
     {
         "enum": "FRAUD_ABUSE",
-        "dbtype": "waiver_type"
+        "dbtype": "waiver_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "waiversRequiredTypes"
     },
     {
+        "value": "Program/payment (Note: CMMI writes, OGC advises, full clearance process is required)",
         "enum": "PROGRAM_PAYMENT",
-        "dbtype": "waiver_type"
+        "dbtype": "waiver_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "waiversRequiredTypes"
     },
     {
         "enum": "MEDICAID",
-        "dbtype": "waiver_type"
+        "dbtype": "waiver_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "waiversRequiredTypes"
     },
     {
         "enum": "HISTORICAL",
@@ -1437,6 +1444,7 @@
         "field": "nonClaimsPayments"
     },
     {
+        "value": "Global Budget",
         "enum": "GLOBAL_BUDGET",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
