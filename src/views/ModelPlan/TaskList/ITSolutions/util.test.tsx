@@ -13,7 +13,8 @@ import { GetOperationalNeedsTableType } from './Home/operationalNeedsTable';
 import {
   filterNeedsFormatSolutions,
   filterPossibleNeeds,
-  returnActionLinks
+  returnActionLinks,
+  SolutionAsNeed
 } from './util';
 
 const modelID = 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06';
@@ -69,8 +70,13 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.NOT_STARTED,
+<<<<<<< HEAD
         operationalNeed as GetOperationalNeedsTableType,
         modelID
+=======
+        operationalNeed as SolutionAsNeed,
+        '123'
+>>>>>>> b64fa8b2 (exported SolutionAsNeed and imported into test)
       )
     ).toEqual(
       <UswdsReactLink
@@ -83,16 +89,25 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.ONBOARDING,
+<<<<<<< HEAD
         operationalNeed as GetOperationalNeedsTableType,
         modelID
+=======
+        operationalNeed as SolutionAsNeed,
+        '123'
+>>>>>>> b64fa8b2 (exported SolutionAsNeed and imported into test)
       )
     ).toEqual(
       <>
         <UswdsReactLink
+<<<<<<< HEAD
           to={{
             pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status/${operationalNeed.id}`,
             state: { fromSolutionDetails: false }
           }}
+=======
+          to="/models/123/task-list/it-solutions/1234-4321/update-status"
+>>>>>>> b64fa8b2 (exported SolutionAsNeed and imported into test)
           className="margin-right-2"
         >
           {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
@@ -108,8 +123,13 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OperationalNeedStatus.NOT_NEEDED,
+<<<<<<< HEAD
         operationalNeed as GetOperationalNeedsTableType,
         modelID
+=======
+        operationalNeed as SolutionAsNeed,
+        '123'
+>>>>>>> b64fa8b2 (exported SolutionAsNeed and imported into test)
       )
     ).toEqual(
       <UswdsReactLink
