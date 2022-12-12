@@ -78,7 +78,10 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		if t.Header == "Resembles Existing Model" {
 
 			t.translateResemblesExisting(entry, value)
-
+			return
+		}
+		if t.Header == "Is APM Model" {
+			t.translateIsAPM(entry, value)
 		}
 		// if t.ModelName == "PlanPayments" && t.Field == "NonClaimsPayments" { //TODO, should I handle this later and just do it for this type?
 		// 	t.translateNonClaimsPaymentType(entry, value)
@@ -88,6 +91,12 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		t.translateField(entry, value, backfiller)
 	}
 
+}
+func (t *Translation) translateIsAPM(entry *BackfillEntry, value interface{}) {
+	if value == "NO" || value == "no" || value == "false" {
+		entry.PlanGeneralCharacteristics.AlternativePaymentModelTypes = append(entry.PlanGeneralCharacteristics.AlternativePaymentModelTypes, "NOT_APM")
+		return //ONLY ADD if it is true
+	}
 }
 func (t *Translation) translateResemblesExisting(entry *BackfillEntry, value interface{}) {
 	resembles := value != ""
@@ -104,22 +113,6 @@ func (t *Translation) translateResemblesExisting(entry *BackfillEntry, value int
 	}
 
 }
-
-// func (t *Translation) translateNonClaimsPaymentType(entry *BackfillEntry, value interface{}) {
-
-// 	if value == "FALSE" {
-// 		return //ONLY ADD if it is true
-// 	}
-
-// 	var valToAdd string
-// 	switch t.Header {
-// 	}
-// 	if valToAdd == "" {
-// 		return
-// 	}
-
-// 	entry.PlanPayments.NonClaimsPayments = append(entry.PlanPayments.NonClaimsPayments, valToAdd)
-// }
 
 func (t *Translation) translatePayType(entry *BackfillEntry, value interface{}) {
 	if value == "FALSE" {
@@ -212,7 +205,6 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
 		log.Default().Print("Error setting field: ", tErr)
 	}
-	// log.Default().Print("Set the field? ", tErr == nil, "  It is now : ", field, " Error? ", tErr)
 
 }
 
@@ -325,7 +317,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 
 		//TODO handle TBD
 		if !isTranslated {
-			if valString == "TBD" {
+			if strings.ToLower(valString) == "tbd" {
 				tErr = &TranslationError{
 					Translation: *t,
 					Value:       value,
@@ -338,6 +330,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 					Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
 				}
 			}
+
 		}
 		//TODO cast the value as the field value
 

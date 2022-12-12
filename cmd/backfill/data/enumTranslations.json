@@ -466,6 +466,7 @@
         "field": "geographiesTargetedAppliedTo"
     },
     {
+        "value": "Providers",
         "enum": "PROVIDERS",
         "dbtype": "geography_application",
         "model": "PlanGeneralCharacteristics",
@@ -1405,61 +1406,74 @@
         "value": "Advanced Payment",
         "enum": "ADVANCED_PAYMENT",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "enum": "BUNDLED_EPISODE_OF_CARE",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
+        "value": "Capitation/Population Based - Full",
         "enum": "CAPITATION_POPULATION_BASED_FULL",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
+        "value": "Capitation/Population Based - Partial",
         "enum": "CAPITATION_POPULATION_BASED_PARTIAL",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "value": "Care Coordination/Management Fee",
         "enum": "CARE_COORDINATION_MANAGEMENT_FEE",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "enum": "GLOBAL_BUDGET",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "enum": "GRANTS",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "value": "Incentive Payment",
         "enum": "INCENTIVE_PAYMENT",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "enum": "MAPD_SHARED_SAVINGS",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "value": "Shared Savings Program",
         "enum": "SHARED_SAVINGS",
         "dbtype": "pp_non_claim_based_payment_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
     },
     {
         "enum": "OTHER",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
-        "field": "Performance-Based Payments"
+        "field": "nonClaimsPayments",
+        "outliers": "Performance-Based Payments"
     },
     {
         "enum": "LOW",
@@ -1479,44 +1493,53 @@
     {
         "enum": "ANNUALLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "enum": "BIANNUALLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "value": "Quarterly",
         "enum": "QUARTERLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
+        "value": "Monthly",
         "enum": "MONTHLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "enum": "SEMIMONTHLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "enum": "WEEKLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "value": "Daily",
         "enum": "DAILY",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "enum": "OTHER",
         "dbtype": "pp_anticipated_payment_frequency_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
     },
     {
         "enum": "MARX",
