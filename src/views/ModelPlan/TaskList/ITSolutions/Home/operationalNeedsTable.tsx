@@ -61,6 +61,7 @@ import {
 interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
   status: OperationalNeedsSolutionsStatus;
+  needID: string;
 }
 
 type OperationalNeedsTableProps = {
