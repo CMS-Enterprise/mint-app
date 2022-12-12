@@ -37,6 +37,7 @@ For HTML email templates:
 - Add [foundation-email.css ](https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css) to your template.
 - Use `<table>` components from [Foundation Email](https://get.foundation/emails/docs/css-guide.html) to make responsive emails and inline CSS.
 - Use [Foundations inliner tool](https://get.foundation/emails/inliner.html) to inline CSS.
+  - **TODO:** *Automate inlining with a CLI tool*
 
 ### Subject Template
 
