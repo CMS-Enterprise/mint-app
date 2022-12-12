@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
+import { formatDate } from 'utils/date';
 
 import NeedQuestionAndAnswer from '../NeedQuestionAndAnswer';
 import OperationalNeedsStatusTag from '../NeedsStatus';
@@ -61,7 +62,9 @@ const SolutionDetailCard = ({
               <p className="margin-0 text-bold">{t('mustStartBy')}</p>
 
               <p className="margin-y-1">
-                {solution.mustStartDts || t('notSpecified')}
+                {solution.mustStartDts
+                  ? formatDate(solution.mustStartDts)
+                  : t('notSpecified')}
               </p>
             </Grid>
 
@@ -69,7 +72,9 @@ const SolutionDetailCard = ({
               <p className="margin-0 text-bold">{t('mustFinishBy')}</p>
 
               <p className="margin-y-1">
-                {solution.mustFinishDts || t('notSpecified')}
+                {solution.mustFinishDts
+                  ? formatDate(solution.mustFinishDts)
+                  : t('notSpecified')}
               </p>
             </Grid>
           </Grid>

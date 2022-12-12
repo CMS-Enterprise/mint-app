@@ -112,6 +112,7 @@ const itSolutions = {
   selectAnother: 'Select another solution not listed',
   continue: 'Continue',
   dontAdd: 'Don’t add solutions and return to tracker',
+  dontUpdate: 'Don’t update solutions and return to tracker',
   helpChoosing: 'Need help choosing a solution?',
   helpfulLinks: 'Helpful links',
   availableSolutions: 'Available operational solutions (opens in a new tab)',

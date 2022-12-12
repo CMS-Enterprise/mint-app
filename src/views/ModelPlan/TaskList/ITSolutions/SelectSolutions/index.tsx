@@ -163,7 +163,9 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
               </Alert>
             );
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
+                update ? 'update-status' : 'solution-implementation-details'
+              }`
             );
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
@@ -343,7 +345,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {t('dontAdd')}
+                          {update ? t('dontUpdate') : t('dontAdd')}
                         </Button>
                       </Form>
                     </>

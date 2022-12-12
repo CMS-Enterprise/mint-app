@@ -120,29 +120,32 @@ const SolutionCard = ({
 
           {/* Renders links to either update solution details or remove solution details */}
           {(addingCustom || !solution.name) && (
-            <div
-              className="display-flex margin-top-2"
-              data-testid="custom-solution-card"
-            >
-              <UswdsReactLink
-                className="margin-right-2 display-flex flex-align-center"
-                to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
+            <>
+              {!addingCustom && <Divider className="margin-top-2" />}
+              <div
+                className="display-flex margin-top-2"
+                data-testid="custom-solution-card"
               >
-                {t('updateTheseDetails')}
-                {!addingCustom && (
-                  <IconArrowForward className="margin-left-1" />
-                )}
-              </UswdsReactLink>
-
-              {addingCustom && (solution.pocName || solution.pocEmail) && (
                 <UswdsReactLink
-                  className="text-red"
-                  to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
+                  className="margin-right-2 display-flex flex-align-center"
+                  to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
                 >
-                  {t('removeTheseDetails')}
+                  {t('updateTheseDetails')}
+                  {!addingCustom && (
+                    <IconArrowForward className="margin-left-1" />
+                  )}
                 </UswdsReactLink>
-              )}
-            </div>
+
+                {addingCustom && (solution.pocName || solution.pocEmail) && (
+                  <UswdsReactLink
+                    className="text-red"
+                    to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
+                  >
+                    {t('removeTheseDetails')}
+                  </UswdsReactLink>
+                )}
+              </div>
+            </>
           )}
         </div>
       </Card>
