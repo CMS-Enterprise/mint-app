@@ -1,4 +1,4 @@
 #! /usr/bin/env bash
 
 # Pass positional arguments from pre-commit with "$@"
-yarn run eslint "$@" -c .eslintrc --fix
+yarn run eslint "$@" -c .eslintrc --fix --max-warnings=0
