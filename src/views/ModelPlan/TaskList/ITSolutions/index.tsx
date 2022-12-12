@@ -5,7 +5,6 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
-import UpdateStatus from './Home/UpdateStatus';
 import AddCustomSolution from './AddCustomSolution';
 import AddSolution from './AddSolution';
 import ITSolutionsHome from './Home';
