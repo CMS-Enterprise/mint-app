@@ -14,7 +14,7 @@ var testCmd = &cobra.Command{
 	Short: "Test the MINT application",
 	Long:  `Test the MINT application`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := os.Setenv("APP_ENV", "test")
+		err := os.Setenv("APP_ENV", "testing")
 		if err != nil {
 			fmt.Printf("Failed to set APP_ENV: %v", err)
 		}

@@ -9,6 +9,9 @@ case "$APP_ENV" in
   "dev")
     MINT_URL="https://dev.mint.cms.gov"
     ;;
+  "test")
+    MINT_URL="https://test.mint.cms.gov"
+    ;;
   "impl")
     MINT_URL="https://impl.mint.cms.gov"
     ;;
@@ -17,7 +20,7 @@ case "$APP_ENV" in
     ;;
   *)
     echo "APP_ENV value not recognized: ${APP_ENV:-unset}"
-    echo "Allowed values: 'dev', 'impl', 'prod'"
+    echo "Allowed values: 'dev', 'impl', 'test', 'prod'"
     exit 1
     ;;
 esac

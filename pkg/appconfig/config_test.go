@@ -51,6 +51,12 @@ func (s *ConfigTestSuite) TestLocal() {
 	s.True(env.Local())
 }
 
+func (s *ConfigTestSuite) TestTesting() {
+	env, _ := NewEnvironment("testing")
+
+	s.True(env.Testing())
+}
+
 func (s *ConfigTestSuite) TestTest() {
 	env, _ := NewEnvironment("test")
 
@@ -79,8 +85,11 @@ func (s *ConfigTestSuite) TestDeployed() {
 	s.Run("local isn't deployed environment", func() {
 		s.False(localEnv.Deployed())
 	})
-	s.Run("test isn't deployed environment", func() {
-		s.False(testEnv.Deployed())
+	s.Run("testing isn't deployed environment", func() {
+		s.False(testingEnv.Deployed())
+	})
+	s.Run("test is deployed environment", func() {
+		s.True(testEnv.Deployed())
 	})
 	s.Run("dev is deployed environment", func() {
 		s.True(devEnv.Deployed())
