@@ -12,11 +12,13 @@ import { OperationalNeedStatus } from './_components/NeedsStatus';
 import {
   filterNeedsFormatSolutions,
   filterPossibleNeeds,
-  returnActionLinks
+  returnActionLinks,
+  SolutionAsNeed
 } from './util';
 
 const operationalNeed: any = {
-  needKey: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT
+  needKey: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT,
+  needID: '1234-4321'
 };
 
 describe('IT Solutions Util', () => {
@@ -64,7 +66,7 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.NOT_STARTED,
-        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        operationalNeed as SolutionAsNeed,
         '123'
       )
     ).toEqual(
@@ -76,12 +78,15 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.ONBOARDING,
-        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        operationalNeed as SolutionAsNeed,
         '123'
       )
     ).toEqual(
       <>
-        <UswdsReactLink to="/" className="margin-right-2">
+        <UswdsReactLink
+          to="/models/123/task-list/it-solutions/1234-4321/update-status"
+          className="margin-right-2"
+        >
           {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
         </UswdsReactLink>
         <UswdsReactLink to="/">
@@ -93,7 +98,7 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OperationalNeedStatus.NOT_NEEDED,
-        operationalNeed as GetOperationalNeedsOperationalNeedsType,
+        operationalNeed as SolutionAsNeed,
         '123'
       )
     ).toEqual(
