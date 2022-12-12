@@ -16,8 +16,8 @@ export default gql`
         collectPlanBidsNote
         managePartCDEnrollment
         managePartCDEnrollmentNote
-        planContactUpdated
-        planContactUpdatedNote
+        planContractUpdated
+        planContractUpdatedNote
       }
       operationalNeeds {
         modifiedDts

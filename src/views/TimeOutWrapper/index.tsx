@@ -83,9 +83,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
       const isSessionExpired = now - expirationTime > 0;
       setTimeRemainingArr(formatSessionTimeRemaining(expirationTime - now));
       if (isSessionExpired) {
-        oktaAuth.signOut({
-          postLogoutRedirectUri: `${window.location.origin}/login`
-        });
+        oktaAuth.signOut();
       }
     },
     authState?.isAuthenticated && isModalOpen ? 1000 : null

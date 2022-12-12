@@ -882,10 +882,10 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 }
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
-func (r *queryResolver) ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error) {
+func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollection(logger, principal, r.store, includeAll)
+	return resolvers.ModelPlanCollection(logger, principal, r.store, filter)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.

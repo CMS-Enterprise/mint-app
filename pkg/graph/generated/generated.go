@@ -421,8 +421,8 @@ type ComplexityRoot struct {
 		MultiplePatricipationAgreementsNeededNote func(childComplexity int) int
 		ParticipationOptions                      func(childComplexity int) int
 		ParticipationOptionsNote                  func(childComplexity int) int
-		PlanContactUpdated                        func(childComplexity int) int
-		PlanContactUpdatedNote                    func(childComplexity int) int
+		PlanContractUpdated                       func(childComplexity int) int
+		PlanContractUpdatedNote                   func(childComplexity int) int
 		ReadyForClearanceBy                       func(childComplexity int) int
 		ReadyForClearanceDts                      func(childComplexity int) int
 		ReadyForReviewBy                          func(childComplexity int) int
@@ -807,7 +807,7 @@ type ComplexityRoot struct {
 		CurrentUser                  func(childComplexity int) int
 		ExistingModelCollection      func(childComplexity int) int
 		ModelPlan                    func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection          func(childComplexity int, includeAll bool) int
+		ModelPlanCollection          func(childComplexity int, filter model.ModelPlanFilter) int
 		NdaInfo                      func(childComplexity int) int
 		OperationalNeed              func(childComplexity int, id uuid.UUID) int
 		OperationalSolution          func(childComplexity int, id uuid.UUID) int
@@ -1060,7 +1060,7 @@ type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
-	ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error)
+	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
@@ -3395,19 +3395,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.ParticipationOptionsNote(childComplexity), true
 
-	case "PlanGeneralCharacteristics.planContactUpdated":
-		if e.complexity.PlanGeneralCharacteristics.PlanContactUpdated == nil {
+	case "PlanGeneralCharacteristics.planContractUpdated":
+		if e.complexity.PlanGeneralCharacteristics.PlanContractUpdated == nil {
 			break
 		}
 
-		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdated(childComplexity), true
+		return e.complexity.PlanGeneralCharacteristics.PlanContractUpdated(childComplexity), true
 
-	case "PlanGeneralCharacteristics.planContactUpdatedNote":
-		if e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote == nil {
+	case "PlanGeneralCharacteristics.planContractUpdatedNote":
+		if e.complexity.PlanGeneralCharacteristics.PlanContractUpdatedNote == nil {
 			break
 		}
 
-		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote(childComplexity), true
+		return e.complexity.PlanGeneralCharacteristics.PlanContractUpdatedNote(childComplexity), true
 
 	case "PlanGeneralCharacteristics.readyForClearanceBy":
 		if e.complexity.PlanGeneralCharacteristics.ReadyForClearanceBy == nil {
@@ -5959,7 +5959,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.ModelPlanCollection(childComplexity, args["includeAll"].(bool)), true
+		return e.complexity.Query.ModelPlanCollection(childComplexity, args["filter"].(model.ModelPlanFilter)), true
 
 	case "Query.ndaInfo":
 		if e.complexity.Query.NdaInfo == nil {
@@ -6657,8 +6657,8 @@ type PlanGeneralCharacteristics {
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
   managePartCDEnrollmentNote: String
-  planContactUpdated: Boolean
-  planContactUpdatedNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
 
   # Page 3
   careCoordinationInvolved: Boolean
@@ -6735,8 +6735,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
   managePartCDEnrollmentNote: String
-  planContactUpdated: Boolean
-  planContactUpdatedNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
 
   # Page 3
   careCoordinationInvolved: Boolean
@@ -7719,7 +7719,7 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  modelPlanCollection(includeAll: Boolean!): [ModelPlan!]!
+  modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
@@ -7733,6 +7733,14 @@ type Query {
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+}
+
+enum ModelPlanFilter {
+  INCLUDE_ALL,
+  COLLAB_ONLY,
+  WITH_CR_TDLS,
+
+  
 }
 
 """
@@ -8076,7 +8084,7 @@ enum ParticipantsType {
 
 enum RecruitmentType {
   LOI
-  RFA
+  APPLICATION_COLLECTION_TOOL
   NOFO
   OTHER
   NA
@@ -9458,15 +9466,15 @@ func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs 
 func (ec *executionContext) field_Query_modelPlanCollection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["includeAll"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeAll"))
-		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+	var arg0 model.ModelPlanFilter
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalNModelPlanFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["includeAll"] = arg0
+	args["filter"] = arg0
 	return args, nil
 }
 
@@ -11811,10 +11819,10 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
 			case "managePartCDEnrollmentNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
-			case "planContactUpdated":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
-			case "planContactUpdatedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+			case "planContractUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
+			case "planContractUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
 			case "careCoordinationInvolved":
 				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
 			case "careCoordinationInvolvedDescription":
@@ -14234,10 +14242,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
 			case "managePartCDEnrollmentNote":
 				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
-			case "planContactUpdated":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
-			case "planContactUpdatedNote":
-				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+			case "planContractUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
+			case "planContractUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
 			case "careCoordinationInvolved":
 				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
 			case "careCoordinationInvolvedDescription":
@@ -25403,8 +25411,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_managePartCD
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
+func (ec *executionContext) _PlanGeneralCharacteristics_planContractUpdated(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -25417,7 +25425,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PlanContactUpdated, nil
+		return obj.PlanContractUpdated, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -25431,7 +25439,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx c
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContractUpdated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -25444,8 +25452,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactU
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+func (ec *executionContext) _PlanGeneralCharacteristics_planContractUpdatedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -25458,7 +25466,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PlanContactUpdatedNote, nil
+		return obj.PlanContractUpdatedNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -25472,7 +25480,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContractUpdatedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -41534,7 +41542,7 @@ func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["includeAll"].(bool))
+		return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["filter"].(model.ModelPlanFilter))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -47946,13 +47954,13 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field, obj)
 
-		case "planContactUpdated":
+		case "planContractUpdated":
 
-			out.Values[i] = ec._PlanGeneralCharacteristics_planContactUpdated(ctx, field, obj)
+			out.Values[i] = ec._PlanGeneralCharacteristics_planContractUpdated(ctx, field, obj)
 
-		case "planContactUpdatedNote":
+		case "planContractUpdatedNote":
 
-			out.Values[i] = ec._PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field, obj)
+			out.Values[i] = ec._PlanGeneralCharacteristics_planContractUpdatedNote(ctx, field, obj)
 
 		case "careCoordinationInvolved":
 
@@ -53654,6 +53662,16 @@ func (ec *executionContext) marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNModelPlanFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanFilter(ctx context.Context, v interface{}) (model.ModelPlanFilter, error) {
+	var res model.ModelPlanFilter
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelPlanFilter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanFilter(ctx context.Context, sel ast.SelectionSet, v model.ModelPlanFilter) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (models.ModelStatus, error) {

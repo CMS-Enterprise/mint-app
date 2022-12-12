@@ -1,4 +1,4 @@
-# EASi React Frontend
+# MINT React Frontend
 
 ## Folder Layout
 

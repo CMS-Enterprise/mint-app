@@ -22,6 +22,7 @@ import {
   GetAllModelPlans as GetAllModelPlansType,
   GetAllModelPlans_modelPlanCollection as AllModelPlansType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import Table from '../ReadOnly/Table';
 
@@ -32,7 +33,12 @@ const ModelPlan = () => {
   const { t: h } = useTranslation('home');
 
   const { error, data, refetch } = useQuery<GetAllModelPlansType>(
-    GetAllModelPlans
+    GetAllModelPlans,
+    {
+      variables: {
+        filter: ModelPlanFilter.INCLUDE_ALL
+      }
+    }
   );
 
   const modelPlans = (data?.modelPlanCollection ?? []) as AllModelPlansType[];

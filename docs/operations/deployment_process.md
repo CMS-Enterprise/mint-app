@@ -1,8 +1,8 @@
-# Deploying the EASi Application
+# Deploying the MINT Application
 
-EASi code changes are deployed automatically through GitHub Actions. After a merge or commit to `master`, the `build` workflow will trigger; see [`.github/workflows/build.yml`](../.github/workflows/build.yml). This will run a series of checks and tests; if all pass, the application will be automatically deployed to the [dev environment](https://dev.easi.cms.gov). If this succeeds, engineers are then allowed to deploy the application to the [impl](https://impl.easi.cms.gov), and then [prod](https://easi.cms.gov) environments.
+MINT code changes are deployed automatically through GitHub Actions. After a merge or commit to `master`, the `build` workflow will trigger; see [`.github/workflows/build.yml`](../.github/workflows/build.yml). This will run a series of checks and tests; if all pass, the application will be automatically deployed to the [dev environment](https://dev.mint.cms.gov). If this succeeds, engineers are then allowed to deploy the application to the [impl](https://impl.mint.cms.gov), and then [prod](https://mint.cms.gov) environments.
 
-Once a deployment to dev is successful, GitHub will prompt reviewers to approve a deployment to production. Any member of the `CMSgov/oddball-easi` team can approve a production deployment. (The required reviewers for each environment can be viewed in the repo's [environments page](https://github.com/CMSgov/easi-app/settings/environments).) Once a reviewer approves the deployment, the workflow will run the deployment script for that environment.
+Once a deployment to dev is successful, GitHub will prompt reviewers to approve a deployment to production. Any member of the `CMSgov/oddball-mint` team can approve a production deployment. (The required reviewers for each environment can be viewed in the repo's [environments page](https://github.com/CMSgov/mint-app/settings/environments).) Once a reviewer approves the deployment, the workflow will run the deployment script for that environment.
 
 ## Approving a Deployment
 
@@ -10,10 +10,10 @@ When deploying to the impl and prod environments, it's important to test any new
 
 ## Checking the Deployed Version
 
-The `easi-app` backend has a health check endpoint at `/api/v1/healthcheck`, which returns (among other things) the Git hash of the deployed code. This can be used to verify that the code currently running in AWS matches the code committed in GitHub.
+The `mint-app` backend has a health check endpoint at `/api/v1/healthcheck`, which returns (among other things) the Git hash of the deployed code. This can be used to verify that the code currently running in AWS matches the code committed in GitHub.
 
 ```bash
-$ curl https://easi.cms.gov/api/v1/healthcheck
+$ curl https://mint.cms.gov/api/v1/healthcheck
 
 {"status":"pass","datetime":"2021-11-02 17:05:19+00:00","version":"d99f8e842ae7acc2d22b17016710ec95f34c6a15","timestamp":"1635872719"}
 ```

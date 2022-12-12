@@ -30,8 +30,8 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;
   managePartCDEnrollmentNote: string | null;
-  planContactUpdated: boolean | null;
-  planContactUpdatedNote: string | null;
+  planContractUpdated: boolean | null;
+  planContractUpdatedNote: string | null;
   careCoordinationInvolved: boolean | null;
   careCoordinationInvolvedDescription: string | null;
   careCoordinationInvolvedNote: string | null;

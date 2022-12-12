@@ -14,7 +14,7 @@ export interface GetITToolPageOne_modelPlan_generalCharacteristics {
   id: UUID;
   managePartCDEnrollment: boolean | null;
   collectPlanBids: boolean | null;
-  planContactUpdated: boolean | null;
+  planContractUpdated: boolean | null;
 }
 
 export interface GetITToolPageOne_modelPlan_itTools {
