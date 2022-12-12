@@ -66,7 +66,11 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SolutionImplementation = () => {
+const SolutionImplementation = ({
+  isUpdatingStatus = false
+}: {
+  isUpdatingStatus: boolean;
+}) => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -216,7 +220,9 @@ const SolutionImplementation = () => {
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
+        <Breadcrumb current>
+          {isUpdatingStatus ? t('updateStatus') : t('selectSolution')}
+        </Breadcrumb>
       </BreadcrumbBar>
 
       {mutationError && (
@@ -228,7 +234,9 @@ const SolutionImplementation = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addImplementationDetails')}
+            {isUpdatingStatus
+              ? t('updateStatus')
+              : t('addImplementationDetails')}
           </PageHeading>
 
           <p
@@ -239,7 +247,9 @@ const SolutionImplementation = () => {
           </p>
 
           <p className="line-height-body-4">
-            {t('addImplementationDetailsInfo')}
+            {isUpdatingStatus
+              ? t('updateStatusInfo')
+              : t('addImplementationDetailsInfo')}
           </p>
 
           <Grid tablet={{ col: 8 }}>
