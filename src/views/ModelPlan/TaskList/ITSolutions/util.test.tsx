@@ -9,11 +9,11 @@ import {
 } from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
+import { GetOperationalNeedsTableType } from './Home/operationalNeedsTable';
 import {
   filterNeedsFormatSolutions,
   filterPossibleNeeds,
-  returnActionLinks,
-  SolutionAsNeed
+  returnActionLinks
 } from './util';
 
 const operationalNeed: any = {
@@ -66,7 +66,7 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.NOT_STARTED,
-        operationalNeed as SolutionAsNeed,
+        operationalNeed as GetOperationalNeedsTableType,
         '123'
       )
     ).toEqual(
@@ -78,7 +78,7 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.ONBOARDING,
-        operationalNeed as SolutionAsNeed,
+        operationalNeed as GetOperationalNeedsTableType,
         '123'
       )
     ).toEqual(
@@ -98,7 +98,7 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OperationalNeedStatus.NOT_NEEDED,
-        operationalNeed as SolutionAsNeed,
+        operationalNeed as GetOperationalNeedsTableType,
         '123'
       )
     ).toEqual(

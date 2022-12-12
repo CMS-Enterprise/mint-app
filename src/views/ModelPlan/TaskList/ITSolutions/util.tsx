@@ -93,8 +93,7 @@ const emptySolution = (
 };
 
 // Used to type as solution with a need key
-export interface SolutionAsNeed
-  extends GetOperationalNeedsOperationalNeedsType {
+interface SolutionAsNeed extends GetOperationalNeedsOperationalNeedsType {
   needKey?: string;
   needID: string;
 }
