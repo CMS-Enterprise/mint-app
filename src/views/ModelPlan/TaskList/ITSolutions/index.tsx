@@ -55,7 +55,7 @@ const ITSolutions = () => {
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details"
               exact
             >
-              <SolutionImplementation isUpdatingStatus={false} />
+              <SolutionImplementation />
             </Route>
 
             <Route
