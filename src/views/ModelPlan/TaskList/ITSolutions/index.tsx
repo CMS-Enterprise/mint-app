@@ -47,14 +47,14 @@ const ITSolutions = () => {
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details"
               exact
             >
-              <SolutionImplementation />
+              <SolutionImplementation isUpdatingStatus={false} />
             </Route>
 
             <Route
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-status"
               exact
             >
-              <UpdateStatus />
+              <SolutionImplementation isUpdatingStatus />
             </Route>
 
             <Route path="*" render={() => <NotFoundPartial />} />
