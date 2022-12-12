@@ -21,24 +21,17 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Expire from 'components/shared/Expire';
-// import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
-// import {
-//   OperationalNeedKey,
-//   OpSolutionStatus
-// } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
 import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
-// import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-// import SolutionCard from '../_components/SolutionCard';
 import SolutionDetailCard from '../_components/SolutionDetailCard';
 // TODO: remove manual SubtaskStatus enum once generated from BE
 import Subtasks, { SubtaskLinks, SubtaskStatus } from '../_components/Subtasks';
