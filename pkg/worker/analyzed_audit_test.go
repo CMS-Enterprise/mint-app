@@ -8,15 +8,25 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
+func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	worker := &Worker{
 		Store:  suite.testConfigs.Store,
 		Logger: suite.testConfigs.Logger,
 	}
 	// Create plan
-	plan := suite.createModelPlan("Test Plan2")
+	plan := suite.createModelPlan("Test Plan")
+
+	// Update Plan
+	changes := map[string]interface{}{
+		"modelName": "New Name",
+		"status":    models.ModelStatusOmbAsrfClearance,
+		"archived":  true,
+	}
+	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
 
 	// Add Documents
 	suite.createPlanDocument(plan)
@@ -24,8 +34,9 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	// Add CrTdls
 	suite.createPlanCrTdl(plan, "123-456", time.Now(), "Title", "Note")
 
-	// Add collaborator
-	collaborator := suite.createPlanCollaborator(plan, "MINT", "New Colaborator", "MODEL_LEAD", "test@email.com")
+	// Add collaborator. Only model leads should be added
+	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
+	collaborator := suite.createPlanCollaborator(plan, "COLB", "New Colaborator", "MODEL_TEAM", "test@email.com")
 
 	// Add Discussion
 	suite.createPlanDiscussion(plan, "Test Comment")
@@ -66,7 +77,7 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err := worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
 	suite.NoError(err)
 
 	// Get Stored audit
@@ -75,9 +86,11 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 
 	suite.NotNil(analyzedAudit)
 
+	suite.EqualValues(newPlan.ModelName, analyzedAudit.ModelName)
+
 	// ModelPlan Changes
-	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.NameChange.New)
-	suite.EqualValues([]string{string(plan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
+	suite.EqualValues(plan.ModelName, analyzedAudit.Changes.ModelPlan.OldName)
+	suite.EqualValues([]string{string(newPlan.Status)}, analyzedAudit.Changes.ModelPlan.StatusChanges)
 
 	// Document Changes
 	suite.EqualValues(analyzedAudit.Changes.Documents.Count, 1)
@@ -85,8 +98,9 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	// CrTdl Activity
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
-	// Plan Collaborators
-	suite.True(lo.Contains(analyzedAudit.Changes.PlanCollaborators.Added, collaborator.FullName))
+	// Plan Collaborators. Only model leads should be added.
+	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLead.FullName))
+	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaborator.FullName)))
 
 	// Discussions Activity
 	suite.True(analyzedAudit.Changes.PlanDiscussions.Activity)
@@ -109,4 +123,16 @@ func (suite *WorkerSuite) TestNewAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
 
+	// Dont create if there are no changes
+	mp := models.NewModelPlan("TEST", "NO CHANGES")
+
+	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Logger, mp)
+	suite.NoError(err)
+	suite.NotNil(noChangeMp)
+
+	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	suite.NoError(err)
+
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now())
+	suite.Error(err)
 }
