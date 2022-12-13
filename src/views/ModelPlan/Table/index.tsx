@@ -362,6 +362,14 @@ const DraftModelPlansTable = ({
     usePagination
   );
 
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>;
+  }
+
   if (data.length === 0) {
     return (
       <Alert
@@ -377,14 +385,6 @@ const DraftModelPlansTable = ({
           : t('requestsTable.empty.body')}
       </Alert>
     );
-  }
-
-  if (loading) {
-    return <PageLoading />;
-  }
-
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
   }
 
   return (
