@@ -246,14 +246,10 @@ func (s *Server) routes(
 	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
 
 	// Setup faktory worker
-	worker := &worker.Worker{
-		Store:                store,
-		Logger:               s.logger,
-		EmailService:         emailService,
-		EmailTemplateService: *emailTemplateService,
+	s.Worker = &worker.Worker{
+		Store:  store,
+		Logger: s.logger,
 	}
-
-	s.Worker = *worker
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues

@@ -95,6 +95,15 @@ def wait_for_success(message, command)
   puts " ✨ done ✨"
 end
 
+def login_faktory_docker
+  username = ENV['FAKTORY_DOCKERHUB_USERNAME']
+  password = ENV['FAKTORY_DOCKERHUB_PASSWORD']
+
+  return false unless username && password
+
+  system("echo #{password} | docker login docker.contribsys.com -u #{username} --password-stdin")
+end
+
 desc "Check to see if the app's prerequisites are installed"
 task :prereqs do
   @needed.each do |executable, install_with|
@@ -122,10 +131,12 @@ def up(frontend_included, *args, debug:false, wait:false)
     "COMPOSE_HTTP_TIMEOUT" => "120",
     "AIR_CONFIG" =>conf,
   }
-  # login to faktory docker
-  sh("docker login docker.contribsys.com -u #{ENV.fetch('FAKTORY_DOCKERHUB_USERNAME')} -p #{ENV.fetch('FAKTORY_DOCKERHUB_PASSWORD')}")
+  compose_files = ['docker-compose.yml', 'docker-compose.override.yml']
 
-  command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
+  # login to faktory docker, add faktory compose if successful
+  compose_files << 'docker-compose.faktory.yml' if login_faktory_docker
+
+  command = "docker-compose -f #{compose_files.join(' -f ')} #{"--profile frontend" if frontend_included } up --build"
 
   if args.any?
     command = "#{command} #{args.join(' ')}"

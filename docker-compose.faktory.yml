@@ -1,0 +1,15 @@
+---
+version: '3.7'
+services:
+  faktory:
+    image: docker.contribsys.com/contribsys/faktory-ent:latest
+    ports:
+      - 7419:7419
+      - 7420:7420
+    environment:
+      - FAKTORY_ENV
+    volumes:
+      - faktory:/var/lib/faktory
+    restart: always
+volumes:
+  faktory:

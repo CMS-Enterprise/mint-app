@@ -23,7 +23,7 @@ type Server struct {
 	logger      *zap.Logger
 	environment appconfig.Environment
 	pubsub      pubsub.PubSub
-	Worker      worker.Worker
+	Worker      *worker.Worker
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

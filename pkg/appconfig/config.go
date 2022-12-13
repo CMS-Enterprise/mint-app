@@ -208,6 +208,9 @@ const OktaClientID = "OKTA_CLIENT_ID"
 // OktaIssuer is the okta issuer
 const OktaIssuer = "OKTA_ISSUER"
 
+// FaktoryProcessJobs if jobs should be processed
+const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
+
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 
