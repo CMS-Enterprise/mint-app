@@ -26,6 +26,7 @@ func main() { //TODO make this a command
 	testUpload := true
 	useEdit := false
 	useDecember13 := true
+	testUserInfo := true
 
 	//Default vars
 	filePath := `cmd/backfill/data/sensitive/databackfillSept.csv`
@@ -51,6 +52,12 @@ func main() { //TODO make this a command
 		}
 		uploadData(backfiller, transformedDataPath, outputUploadPath)
 	}
+	if testUserInfo {
+		getUserInfo()
+	}
+}
+
+func getUserInfo() {
 
 }
 
