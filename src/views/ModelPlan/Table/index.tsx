@@ -362,20 +362,29 @@ const DraftModelPlansTable = ({
     usePagination
   );
 
-  if (data.length === 0) {
-    return (
-      <Alert type="info" heading={t('requestsTable.empty.heading')}>
-        {t('requestsTable.empty.body')}
-      </Alert>
-    );
-  }
-
   if (loading) {
     return <PageLoading />;
   }
 
   if (error) {
     return <div>{JSON.stringify(error)}</div>;
+  }
+
+  if (data.length === 0) {
+    return (
+      <Alert
+        type="info"
+        heading={
+          isMAC
+            ? t('requestsTable.mac.empty.heading')
+            : t('requestsTable.empty.heading')
+        }
+      >
+        {isMAC
+          ? t('requestsTable.mac.empty.body')
+          : t('requestsTable.empty.body')}
+      </Alert>
+    );
   }
 
   return (
