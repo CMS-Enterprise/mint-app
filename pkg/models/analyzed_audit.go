@@ -72,6 +72,12 @@ func (a AnalyzedAuditChange) Value() (driver.Value, error) {
 	return j, err
 }
 
+const (
+	// AnalyzedAuditChangeMoreChanges is human readable sentence template
+	// if there are more changes than requested
+	AnalyzedAuditChangeMoreChanges = "+%d more changes"
+)
+
 // HumanizedSubset returns a subset of length size of humanized audit changes
 func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 	humanizedAuditChanges := a.Humanize()
@@ -79,7 +85,8 @@ func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 
 	if humanizedAuditChangesCount > 5 {
 		humanizedAuditChanges = lo.Subset(humanizedAuditChanges, 0, uint(size))
-		humanizedAuditChanges = append(humanizedAuditChanges, fmt.Sprintf("+%d more changes", humanizedAuditChangesCount-size))
+		humanizedAuditChanges = append(humanizedAuditChanges,
+			fmt.Sprintf(AnalyzedAuditChangeMoreChanges, humanizedAuditChangesCount-size))
 	}
 	return humanizedAuditChanges
 }
@@ -105,34 +112,72 @@ type AnalyzedModelPlan struct {
 	StatusChanges []string `json:"statusChanges,omitempty"`
 }
 
+const (
+	// AnalyzedModelHumanizedOldName is human readable
+	// sentence template of AnalyzedModelPlan.OldName
+	AnalyzedModelHumanizedOldName = "The model has been renamed (previously %s)"
+
+	// AnalyzedModelHumanizedPlanComplete is human readable
+	// sentence template of Complete status shange
+	AnalyzedModelHumanizedPlanComplete = "The model plan is complete"
+
+	// AnalyzedModelHumanizedIcipComplete is human readable
+	// sentence template of ICIP status change
+	AnalyzedModelHumanizedIcipComplete = "The ICIP for this model is complete"
+
+	// AnalyzedModelHumanizedInternalCmmiClearance is human readable
+	// sentence template of CMMI status change
+	AnalyzedModelHumanizedInternalCmmiClearance = "This model is in internal (CMMI) clearance"
+
+	// AnalyzedModelHumanizedCmsClearance is human readable
+	// sentence template of CMS clearance status change
+	AnalyzedModelHumanizedCmsClearance = "This model is in CMS clearance"
+
+	// AnalyzedModelHumanizedHhsClearance is human readable
+	// sentence template of HHS status change
+	AnalyzedModelHumanizedHhsClearance = "This model is in HHS clearance"
+
+	// AnalyzedModelHumanizedOmbAsrfClearance is human readable
+	// sentence template of OMB/ASRF status change
+	AnalyzedModelHumanizedOmbAsrfClearance = "This model is in OMB/ASRF clearance"
+
+	// AnalyzedModelHumanizedCleared is human readable
+	// sentence template of Cleared status change
+	AnalyzedModelHumanizedCleared = "This model has been cleared"
+
+	// AnalyzedModelHumanizedPlanDraft is human readable
+	// sentence template of Draft status change
+	AnalyzedModelHumanizedPlanDraft = "This model has been announced"
+)
+
 // Humanize returns AnalyzedModelPlan in human readable sentences
 func (a AnalyzedModelPlan) Humanize() []string {
 	var humanizedOldName string
 	var humanizedStatusChanges []string
 
 	if a.OldName != "" {
-		humanizedOldName = fmt.Sprintf("The model has been renamed (previously %s)", a.OldName)
+		humanizedOldName = fmt.Sprintf(AnalyzedModelHumanizedOldName, a.OldName)
 	}
 
 	if len(a.StatusChanges) > 0 {
 		humanizedStatusChanges = lo.Map(a.StatusChanges, func(status string, index int) string {
 			switch status {
 			case string(ModelStatusPlanComplete):
-				return "The model plan is complete"
+				return AnalyzedModelHumanizedPlanComplete
 			case string(ModelStatusIcipComplete):
-				return "The ICIP for this model is complete"
+				return AnalyzedModelHumanizedIcipComplete
 			case string(ModelStatusInternalCmmiClearance):
-				return "This model is in internal (CMMI) clearance"
+				return AnalyzedModelHumanizedInternalCmmiClearance
 			case string(ModelStatusCmsClearance):
-				return "This model is in CMS clearance"
+				return AnalyzedModelHumanizedCmsClearance
 			case string(ModelStatusHhsClearance):
-				return "This model is in HHS clearance"
+				return AnalyzedModelHumanizedHhsClearance
 			case string(ModelStatusOmbAsrfClearance):
-				return "This model is in OMB/ASRF clearance"
+				return AnalyzedModelHumanizedOmbAsrfClearance
 			case string(ModelStatusCleared):
-				return "This model has been cleared"
+				return AnalyzedModelHumanizedCleared
 			case string(ModelStatusPlanDraft):
-				return "This model has been announced"
+				return AnalyzedModelHumanizedPlanDraft
 			default:
 				return ""
 			}
@@ -151,10 +196,16 @@ type AnalyzedDocuments struct {
 	Count int `json:"count,omitempty"`
 }
 
+const (
+	// AnalyzedDocumentsHumanizedCount is human readable
+	// sentence template of AnalyzedDocument.Count
+	AnalyzedDocumentsHumanizedCount = "%d new documents have been uploaded"
+)
+
 // Humanize returns AnalyzedDocuments in a human readable sentence
 func (a AnalyzedDocuments) Humanize() string {
 	if a.Count > 0 {
-		return fmt.Sprintf("%d new documents have been uploaded", a.Count)
+		return fmt.Sprintf(AnalyzedDocumentsHumanizedCount, a.Count)
 	}
 
 	return ""
@@ -181,6 +232,28 @@ type AnalyzedPlanSections struct {
 	ReadyForClearance []string `json:"readyForClearance,omitempty"`
 }
 
+const (
+	// AnalyzedPlanSectionsHumanizedUpdated is human readable
+	// sentence template of AnalyzedPlanSections.Updated
+	AnalyzedPlanSectionsHumanizedUpdated = "Updates to %s"
+
+	// AnalyzedPlanSectionsHumanizedReview is human readable
+	// sentence template of a singule AnalyzedPlanSections.ReadyForReview
+	AnalyzedPlanSectionsHumanizedReview = "%s is ready for review"
+
+	// AnalyzedPlanSectionsHumanizedReviews is human readable
+	// sentence template of multiple AnalyzedPlanSections.ReadyForReview
+	AnalyzedPlanSectionsHumanizedReviews = "%s are ready for review"
+
+	// AnalyzedPlanSectionsHumanizedClearance is human readable
+	// sentence template of a single AnalyzedPlanSections.ReadyForClearance
+	AnalyzedPlanSectionsHumanizedClearance = "%s is ready for clearance"
+
+	// AnalyzedPlanSectionsHumanizedClearances is human readable
+	// sentence template of multiple AnalyzedPlanSections.ReadyForClearance
+	AnalyzedPlanSectionsHumanizedClearances = "%s are ready for clearance"
+)
+
 // IsEmpty returns if AnalyzedPlanSections fields are empty
 func (a AnalyzedPlanSections) IsEmpty() bool {
 	return len(a.ReadyForClearance) == 0 &&
@@ -199,7 +272,8 @@ func (a AnalyzedPlanSections) Humanize() []string {
 			caser := cases.Title(language.AmericanEnglish)
 			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
 		})
-		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("Updates to %s", strings.Join(updatedSectionNames, ", ")))
+		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
+			fmt.Sprintf(AnalyzedPlanSectionsHumanizedUpdated, strings.Join(updatedSectionNames, ", ")))
 	}
 
 	// Ready for clearance
@@ -210,9 +284,11 @@ func (a AnalyzedPlanSections) Humanize() []string {
 			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
 		})
 		if len(updatedSectionNames) == 1 {
-			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s is ready for clearance", updatedSectionNames[0]))
+			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
+				fmt.Sprintf(AnalyzedPlanSectionsHumanizedClearance, updatedSectionNames[0]))
 		} else {
-			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s are ready for clearance", strings.Join(updatedSectionNames, ", ")))
+			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
+				fmt.Sprintf(AnalyzedPlanSectionsHumanizedClearances, strings.Join(updatedSectionNames, ", ")))
 		}
 	}
 
@@ -224,9 +300,11 @@ func (a AnalyzedPlanSections) Humanize() []string {
 			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
 		})
 		if len(updatedSectionNames) == 1 {
-			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s is ready for clearance", updatedSectionNames[0]))
+			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
+				fmt.Sprintf(AnalyzedPlanSectionsHumanizedReview, updatedSectionNames[0]))
 		} else {
-			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, fmt.Sprintf("%s are ready for clearance", strings.Join(updatedSectionNames, ", ")))
+			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
+				fmt.Sprintf(AnalyzedPlanSectionsHumanizedReviews, strings.Join(updatedSectionNames, ", ")))
 		}
 	}
 	return humanizedAnalyzedPlanSections
@@ -237,13 +315,19 @@ type AnalyzedModelLeads struct {
 	Added []string `json:"added,omitempty"`
 }
 
+const (
+	// AnalyzedModelLeadsHumanizedAdded is human readable
+	// sentence template of AnalyzedModelLeads.Added
+	AnalyzedModelLeadsHumanizedAdded = "%s has been addeed as a Model Lead"
+)
+
 // Humanize returns AnalyzedModelLeads in human readable sentences
 func (a AnalyzedModelLeads) Humanize() []string {
 	var humanizedAnalyzedModelLeads []string
 
 	if len(a.Added) > 0 {
 		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name string, index int) string {
-			return fmt.Sprintf("%s has been addeed as a Model Lead", name)
+			return fmt.Sprintf(AnalyzedModelLeadsHumanizedAdded, name)
 		})
 	}
 
@@ -255,10 +339,16 @@ type AnalyzedPlanDiscussions struct {
 	Activity bool `json:"activity,omitempty"`
 }
 
+const (
+	// AnalyzedPlanDiscussionsHumanizedActivity is human readable
+	// sentence template of AnalyzedPlanDiscussions.Activity
+	AnalyzedPlanDiscussionsHumanizedActivity = "New activity in Discussions"
+)
+
 // Humanize returns AnalyzedPlanDiscussions in a human readable sentence
 func (a AnalyzedPlanDiscussions) Humanize() string {
 	if a.Activity {
-		return "New activity in Discussions"
+		return AnalyzedPlanDiscussionsHumanizedActivity
 	}
 
 	return ""
