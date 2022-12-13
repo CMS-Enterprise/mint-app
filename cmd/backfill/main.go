@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/csv"
 	"encoding/json"
 	"io"
@@ -8,6 +9,12 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/spf13/viper"
+
+	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
@@ -19,14 +26,20 @@ import (
 const translationFullPath = `cmd/backfill/data/dataTranslationFull.csv`
 const userPath = `cmd/backfill/data/possibleUsers.json`
 const enumTranslationPath = `cmd/backfill/data/enumTranslations.json`
+const userInfoOutPut = `cmd/backfill/data/sensitive/userInfoOutput.json`
 
 func main() { //TODO make this a command
-
-	testTransform := true
-	testUpload := true
+	testTransform := false
+	testUpload := false
 	useEdit := false
-	useDecember13 := true
-	testUserInfo := true
+	useDecember13 := false
+	testUserInfo := false
+
+	testTransform = true
+	// testUpload = true
+	// useEdit = false
+	// useDecember13 = true
+	// testUserInfo = true
 
 	//Default vars
 	filePath := `cmd/backfill/data/sensitive/databackfillSept.csv`
@@ -53,14 +66,63 @@ func main() { //TODO make this a command
 		uploadData(backfiller, transformedDataPath, outputUploadPath)
 	}
 	if testUserInfo {
-		getUserInfo()
+		getAllUsersInfo()
 	}
 }
 
-func getUserInfo() {
+// UserInfoErr represents errors obtained when fetching a users info
+type UserInfoErr struct {
+	UserName string
+	Message  string
+	Error    interface{}
+}
+
+func getAllUsersInfo() {
+	config := viper.New()
+	config.AutomaticEnv()
+
+	cedarLDAPClient := cedarldap.NewTranslatedClient(
+		config.GetString(appconfig.CEDARAPIURL),
+		config.GetString(appconfig.CEDARAPIKey),
+	)
+	fetchErrors := []UserInfoErr{}
+	// "Amy Giardina", "Siobhan Yilmaz",
+	userNames := []string{
+
+		"Amy",
+		"Giardina",
+		"Siobhan Yilmaz",
+		// `Velda L. McGhe`, `Kristen Owen`, `Mateus Anjo`, `Chinelo Johnso`, `Michelle Mac`, `Tim Rade`, `Zoe Hruba`, `Alexandra Chon`, `Eileen Witherspoo`, `Hillary Cavanaug`, `Leah Hendric`, `Nicholas Minte`, `Sarah Fogle`, `Amy Giardin`, `Lauren McDevit`, `Emily Moor`, `Julia Marcu`, `Maria Abrica Gome`, `Elvedin Bijeli`, `Kathy Chane`, `Nora Lewi`, `Alexandria Brow`, `Patricia Markovic`, `Rachel Roilan`, `Emily Johnso`, `Jennifer Brow`, `Sage Har`, `Tonya Saffe`, `Lynn Miescie`, `Ally Marlat`, `Patrick Holde`, `Sarah Kinne`, `Isaac Devoi`, `Nour Sulta`, `Leilani Ogujiofo`, `Kendra Glasgo`, `Jing X`, `Katherine Verlande`, `Karin Blee`, `Susannah Woodma`, `Sarah Lewi`, `Nancy Chiles Shaffe`, `Siobhan Yilma`, `Jennifer Moron`, `Andrew Phili`, `Bonnie Gewante`, `Frankie Devanb`, `Linda Streitfel`, `Kevin Koeni`, `Danielle Draye`, `Anya Scott-Wallac`,
+		// `Velda L. McGhee`, `Kristen Owens`, `Mateus Anjos`, `Chinelo Johnson`, `Michelle Mack`, `Tim Rader`, `Zoe Hruban`, `Alexandra Chong`, `Eileen Witherspoon`, `Hillary Cavanaugh`, `Leah Hendrick`, `Nicholas Minter`, `Sarah Fogler`, `Amy Giardina`, `Lauren McDevitt`, `Emily Moore`, `Julia Marcus`, `Maria Abrica Gomez`, `Elvedin Bijelic`, `Kathy Chaney`, `Nora Lewis`, `Alexandria Brown`, `Patricia Markovich`, `Rachel Roiland`, `Emily Johnson`, `Jennifer Brown`, `Sage Hart`, `Tonya Saffer`, `Lynn Miescier`, `Ally Marlatt`, `Patrick Holden`, `Sarah Kinney`, `Isaac Devoid`, `Nour Sultan`, `Leilani Ogujiofor`, `Kendra Glasgow`, `Jing Xu`, `Katherine Verlander`, `Karin Bleeg`, `Susannah Woodman`, `Sarah Lewis`, `Nancy Chiles Shaffer`, `Siobhan Yilmaz`, `Jennifer Morone`, `Andrew Philip`, `Bonnie Gewanter`, `Frankie Devanbu`, `Linda Streitfeld`, `Kevin Koenig`, `Danielle Drayer`, `Anya Scott-Wallace`,
+		// "Velda L. McGhee", "Kristen Owens", "Mateus Anjos", "Chinelo Johnson", "Michelle Mack", "Tim Rader", "Zoe Hruban", "Alexandra Chong", "Eileen Witherspoon", "Hillary Cavanaugh", "Leah Hendrick", "Nicholas Minter", "Sarah Fogler", "Amy Giardina", "Lauren McDevitt", "Emily Moore", "Julia Marcus", "Maria Abrica Gomez", "Elvedin Bijelic", "Kathy Chaney", "Nora Lewis", "Alexandria Brown", "Patricia Markovich", "Rachel Roiland", "Emily Johnson", "Jennifer Brown", "Sage Hart", "Tonya Saffer", "Lynn Miescier", "Ally Marlatt", "Patrick Holden", "Sarah Kinney", "Isaac Devoid", "Nour Sultan", "Leilani Ogujiofor", "Kendra Glasgow", "Jing Xu", "Katherine Verlander", "Karin Bleeg", "Susannah Woodman", "Sarah Lewis", "Nancy Chiles Shaffer", "Siobhan Yilmaz", "Jennifer Morone", "Andrew Philip", "Bonnie Gewanter", "Frankie Devanbu", "Linda Streitfeld", "Kevin Koenig", "Danielle Drayer", "Anya Scott-Wallace",
+	}
+	allUserInfo := []*models.UserInfo{}
+
+	firstInfo, err := cedarLDAPClient.SearchCommonNameContains(context.Background(), "steven wade")
+	log.Default().Print(firstInfo, err)
+	for _, name := range userNames {
+		userInforArr, err := getUserInfo(name, cedarLDAPClient)
+		if err != nil {
+			fetchErrors = append(fetchErrors, UserInfoErr{
+				UserName: name,
+				Message:  err.Error(),
+				Error:    err,
+			})
+			continue //TODO handle the error
+		}
+		allUserInfo = append(allUserInfo, userInforArr[0]) //TODO make sure the first is the best.
+	}
+	writeObjectToJSONFile(allUserInfo, userInfoOutPut)
+	writeObjectToJSONFile(fetchErrors, userInfoOutPut+"Errors.json")
 
 }
 
+func getUserInfo(name string, client cedarldap.Client) ([]*models.UserInfo, error) {
+	userInfoArr, err := client.SearchCommonNameContains(context.Background(), name)
+
+	return userInfoArr, err
+
+}
 func getDefaultBackfiller() *Backfiller {
 	possibleUserList := []PossibleUser{}
 
