@@ -219,15 +219,15 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 		log.Default().Print("Converted sucessfully")
 	} else {
 
-		convVal, err := t.handleConversion(field, value, backfiller)
-		if err != nil {
+		convVal, err, setAnyways := t.handleConversion(field, value, backfiller)
+		if err != nil && !setAnyways {
 			return err
 
 		}
 		if convVal.IsValid() {
 
 			field.Set(convVal)
-			return nil
+			return err //return the error if we chose to ignore it and still set
 		}
 
 		return &TranslationError{
@@ -241,7 +241,7 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 
 }
 
-func (t *Translation) handleConversion(field *reflect.Value, value interface{}, backfiller *Backfiller) (reflect.Value, *TranslationError) {
+func (t *Translation) handleConversion(field *reflect.Value, value interface{}, backfiller *Backfiller) (reflect.Value, *TranslationError, bool) {
 
 	fieldKind := field.Kind()
 	fieldType := field.Type()
@@ -251,6 +251,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 	var tErr *TranslationError
 	fieldTypeS := strings.TrimPrefix(fieldType.String(), "*")
 	valString := fmt.Sprint(value)
+	setRegardlessOfError := false
 
 	switch fieldTypeS {
 	case "string":
@@ -258,7 +259,10 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 
 	case "pq.StringArray":
 
-		pqArray := t.translateStringArray(valString, backfiller)
+		pqArray, err := t.translateStringArray(valString, backfiller)
+		tErr = err //If any value is undefiend don't set anything
+		setRegardlessOfError = true
+
 		conVal = valueOrPointer(pqArray, isPointer)
 
 	case "bool":
@@ -340,21 +344,39 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 
 	}
 
-	return conVal, tErr
+	return conVal, tErr, setRegardlessOfError
 
 }
 
 // func ( t *Translation)[anyType interface{}] tryTranslateEnum(string ,){
 
 // }
-func (t *Translation) translateStringArray(allValueString string, backfiller *Backfiller) pq.StringArray {
+func (t *Translation) translateStringArray(allValueString string, backfiller *Backfiller) (pq.StringArray, *TranslationError) {
 	allVals := strings.Split(allValueString, ";#")
+	var err *TranslationError
 	array := pq.StringArray{}
-	for _, st := range allVals {
-		enVal, _ := t.translateEnum(st, backfiller)
-		array = append(array, enVal)
+	err = &TranslationError{
+		Translation: *t,
+		Value:       allValueString,
+		Message:     "No translation found for strings: ",
 	}
-	return array
+	errTranslating := false
+	for _, st := range allVals {
+		enVal, translated := t.translateEnum(st, backfiller)
+		if translated {
+			array = append(array, enVal)
+		} else {
+			errTranslating = true
+			err.Message = err.Message + st + " | "
+
+		}
+
+	}
+	if errTranslating {
+		return array, err
+	}
+
+	return array, nil
 }
 
 func (t *Translation) translateEnum(st string, backfiller *Backfiller) (string, bool) {
@@ -384,14 +406,6 @@ func valueOrPointer[anyType interface{}](value anyType, isPointer bool) reflect.
 	return reflect.ValueOf(value)
 
 }
-
-// func valueOrPointerOfType[enumType ~string](field enumType, transEnum interface{}, isPointer bool) reflect.Value {
-
-// 	typedString := transEnum.(enumType)
-
-// 	return valueOrPointer(typedString, isPointer)
-
-// }
 
 func valueOrPointerOfType(transEnum string, isPointer bool, fieldType string) reflect.Value {
 	var refVal reflect.Value

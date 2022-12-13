@@ -10,14 +10,14 @@ import (
 	"path/filepath"
 )
 
-const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
+// const filePath = `cmd/backfill/data/sensitive/databackfillSept.csv`
+// const outputTranslatePath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+// const outputTranslateEditPath = `cmd/backfill/data/sensitive/databackfillSeptTranslatedEdit.json`
+// const outputUploadPath = `cmd/backfill/data/sensitive/databackfillSeptUploaded.json`
 
 // const translationPath = `cmd/backfill/data/dataTranslation.csv`
 const translationFullPath = `cmd/backfill/data/dataTranslationFull.csv`
-const outputTranslatePath = `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
-const outputTranslateEditPath = `cmd/backfill/data/sensitive/databackfillSeptTranslatedEdit.json`
 const userPath = `cmd/backfill/data/possibleUsers.json`
-const outputUploadPath = `cmd/backfill/data/sensitive/databackfillSeptUploaded.json`
 const enumTranslationPath = `cmd/backfill/data/enumTranslations.json`
 
 func main() { //TODO make this a command
@@ -25,14 +25,31 @@ func main() { //TODO make this a command
 	testTransform := true
 	testUpload := true
 	useEdit := false
+	useDecember13 := true
+
+	//Default vars
+	filePath := `cmd/backfill/data/sensitive/databackfillSept.csv`
+	outputTranslatePath := `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
+	outputTranslateEditPath := `cmd/backfill/data/sensitive/databackfillSeptTranslatedEdit.json`
+	outputUploadPath := `cmd/backfill/data/sensitive/databackfillSeptUploaded.json`
+
+	if useDecember13 {
+		filePath = "cmd/backfill/data/sensitive/dataBackfillDec13.csv"
+		outputTranslatePath = `cmd/backfill/data/sensitive/databackfillDec13Translated.json`
+		outputUploadPath = `cmd/backfill/data/sensitive/databackfillDec13Uploaded.json`
+	}
 
 	backfiller := getDefaultBackfiller()
 
 	if testTransform {
-		transformData(backfiller)
+		transformData(backfiller, filePath, outputTranslatePath)
 	}
 	if testUpload {
-		uploadData(backfiller, useEdit)
+		transformedDataPath := outputTranslatePath
+		if useEdit {
+			transformedDataPath = outputTranslateEditPath
+		}
+		uploadData(backfiller, transformedDataPath, outputUploadPath)
 	}
 
 }
@@ -65,25 +82,25 @@ func getDefaultBackfiller() *Backfiller {
 
 	return backfiller
 }
-func uploadData(backfiller *Backfiller, useEdit bool) {
-	var path string
+func uploadData(backfiller *Backfiller, transformDataPath string, outputUploadPath string) {
 
-	if useEdit {
-		path = outputTranslateEditPath
-	} else {
-		path = outputTranslatePath
-	}
-
-	entries, err := getTransformedData(path)
+	entries, err := getTransformedData(transformDataPath)
 	if err != nil {
-		log.Default().Print("Error getting data from ", path)
+		log.Default().Print("Error getting data from ", transformDataPath)
 		return
 	}
-	log.Default().Print("Uploading data from ", path)
+	log.Default().Print("Uploading data from ", transformDataPath)
 
 	uploader := NewUploader(backfiller)
 	uploader.uploadEntries(entries)
 	writeObjectToJSONFile(entries, outputUploadPath)
+
+	var tErrs []UploadError
+	for _, entry := range entries {
+		tErrs = append(tErrs, entry.UErrors...)
+	}
+
+	writeObjectToJSONFile(tErrs, outputUploadPath+"UploadErrs.json")
 
 }
 
@@ -120,9 +137,9 @@ func getTransformedData(file string) ([]*BackfillEntry, error) {
 	err = json.Unmarshal(byteValue, &entries)
 	return entries, err
 }
-func transformData(backfiller *Backfiller) {
+func transformData(backfiller *Backfiller, rawDataPath string, outputTranslatePath string) {
 
-	table, err := readFile(filePath)
+	table, err := readFile(rawDataPath)
 
 	if err != nil {
 		log.Fatal(err)
@@ -135,6 +152,15 @@ func transformData(backfiller *Backfiller) {
 	}
 
 	writeObjectToJSONFile(entries, outputTranslatePath)
+	var tErrs []TranslationError
+	for _, entry := range *entries {
+		tErrs = append(tErrs, entry.TErrors...)
+	}
+
+	// tErrs := lo.Map[[]TranslationError](entries, func(entry *BackfillEntry, index int)[]TranslationError {
+	// 	return entry.TErrors
+	// })
+	writeObjectToJSONFile(tErrs, outputTranslatePath+"TErrs.json")
 
 }
 
