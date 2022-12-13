@@ -4,6 +4,9 @@ import (
 	"context"
 	"time"
 
+	faktory "github.com/contribsys/faktory/client"
+	faktory_worker "github.com/contribsys/faktory_worker_go"
+
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
@@ -46,6 +49,28 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+// AnalyzedAuditBatchJob batches all the daily AnalyzedAuditJobs. When all are complete it will fire a callback
+// args[0] date
+func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{}) error {
+	date := args[1].(time.Time)
+	helper := faktory_worker.HelperFor(ctx)
+
+	return helper.With(func(cl *faktory.Client) error {
+		batch := faktory.NewBatch(cl)
+		batch.Description = "Analyze models audits by date"
+		batch.Success = faktory.NewJob("AnalyzedAuditBatchJobSuccess", date)
+
+		return nil
+
+	})
+}
+
+// AnalyzedAuditBatchJobSuccess is the callback function for AnalyzedAuditBatchJob
+// args[0] date
+func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	return nil
 }
 
