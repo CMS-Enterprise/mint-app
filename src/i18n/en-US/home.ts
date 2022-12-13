@@ -30,6 +30,14 @@ const home = {
     admin: {
       heading: 'Model plans'
     },
+    mac: {
+      heading: 'Upcoming models',
+      empty: {
+        heading: 'There aren’t any model plans with CRs or TDLs.',
+        body:
+          'Check back later. When CR or TDL is added to a model plan, it will appear here.'
+      }
+    },
     empty: {
       heading: 'You don’t have any draft model plans yet',
       body:
@@ -42,6 +50,10 @@ const home = {
       category: 'Category',
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
+      startDate: 'Model start date',
+      paymentDate: 'Payment start date',
+      keyCharacteristics: 'Key characteristics',
+      crTDLs: 'CRs and TDLs',
       status: 'Status',
       recentActivity: 'Recent activity'
     },

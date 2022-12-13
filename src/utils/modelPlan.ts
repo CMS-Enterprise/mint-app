@@ -548,8 +548,10 @@ export const translateRecruitmentType = (type: string) => {
   switch (type) {
     case 'LOI':
       return i18next.t('participantsAndProviders:recruitOptions.loi');
-    case 'RFA':
-      return i18next.t('participantsAndProviders:recruitOptions.rfa');
+    case 'APPLICATION_COLLECTION_TOOL':
+      return i18next.t(
+        'participantsAndProviders:recruitOptions.appCollectionTool'
+      );
     case 'NOFO':
       return i18next.t('participantsAndProviders:recruitOptions.nofo');
     case 'OTHER':

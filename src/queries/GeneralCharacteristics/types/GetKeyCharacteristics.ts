@@ -21,8 +21,8 @@ export interface GetKeyCharacteristics_modelPlan_generalCharacteristics {
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;
   managePartCDEnrollmentNote: string | null;
-  planContactUpdated: boolean | null;
-  planContactUpdatedNote: string | null;
+  planContractUpdated: boolean | null;
+  planContractUpdatedNote: string | null;
 }
 
 export interface GetKeyCharacteristics_modelPlan_operationalNeeds {

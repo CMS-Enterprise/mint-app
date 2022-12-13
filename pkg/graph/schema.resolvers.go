@@ -166,7 +166,16 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanCollaborator(logger, r.emailService, r.emailTemplateService, &input, principal, r.store)
+	planCollaborator, _, err := resolvers.CreatePlanCollaborator(
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		&input,
+		principal,
+		r.store,
+		true,
+	)
+	return planCollaborator, err
 }
 
 // UpdatePlanCollaborator is the resolver for the updatePlanCollaborator field.
@@ -332,7 +341,7 @@ func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.N
 func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanFavoriteCreate(logger, principal, r.store, modelPlanID)
+	return resolvers.PlanFavoriteCreate(logger, principal, principal.ID(), r.store, modelPlanID)
 }
 
 // DeletePlanFavorite is the resolver for the deletePlanFavorite field.
@@ -873,10 +882,10 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 }
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
-func (r *queryResolver) ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error) {
+func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollection(logger, principal, r.store, includeAll)
+	return resolvers.ModelPlanCollection(logger, principal, r.store, filter)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.

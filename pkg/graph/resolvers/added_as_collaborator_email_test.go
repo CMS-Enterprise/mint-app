@@ -55,13 +55,14 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	_, err := CreatePlanCollaborator(
+	_, _, err := CreatePlanCollaborator(
 		s.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		collaboratorInput,
 		s.testConfigs.Principal,
 		s.testConfigs.Store,
+		false,
 	)
 	s.NoError(err)
 	mockController.Finish()

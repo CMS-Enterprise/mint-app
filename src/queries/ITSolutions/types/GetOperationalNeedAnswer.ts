@@ -13,7 +13,7 @@ export interface GetOperationalNeedAnswer_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   managePartCDEnrollment: boolean | null;
   collectPlanBids: boolean | null;
-  planContactUpdated: boolean | null;
+  planContractUpdated: boolean | null;
 }
 
 export interface GetOperationalNeedAnswer_modelPlan_participantsAndProviders {
@@ -76,7 +76,7 @@ export interface GetOperationalNeedAnswerVariables {
   payments: boolean;
   managePartCDEnrollment: boolean;
   collectPlanBids: boolean;
-  planContactUpdated: boolean;
+  planContractUpdated: boolean;
   recruitmentMethod: boolean;
   selectionMethod: boolean;
   communicationMethod: boolean;

@@ -21,8 +21,8 @@ const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   collectPlanBidsNote: '',
   managePartCDEnrollment: false,
   managePartCDEnrollmentNote: '',
-  planContactUpdated: false,
-  planContactUpdatedNote: ''
+  planContractUpdated: false,
+  planContractUpdatedNote: ''
 };
 
 const keyCharacteristicsMock = [

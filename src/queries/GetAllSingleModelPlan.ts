@@ -133,8 +133,8 @@ export default gql`
         collectPlanBidsNote
         managePartCDEnrollment
         managePartCDEnrollmentNote
-        planContactUpdated
-        planContactUpdatedNote
+        planContractUpdated
+        planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
         geographiesTargetedTypesOther

@@ -320,7 +320,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                     class="margin-bottom-0"
                     data-testid="tools-question-modelLearningSystems"
                   >
-                    Will the model have a learning system?
+                    Will the model have a learning strategy?
                   </p>
                   <div
                     class="text-base"
@@ -480,7 +480,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                     class="margin-bottom-0"
                     data-testid="tools-question-modelLearningSystems"
                   >
-                    Will the model have a learning system?
+                    Will the model have a learning strategy?
                   </p>
                   <div
                     class="text-base"

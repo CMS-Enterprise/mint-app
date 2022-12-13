@@ -63,7 +63,11 @@ export const CharacteristicsContent = () => {
   const {
     data: modelData,
     error: modelError
-  } = useQuery<GetDraftModelPlansType>(GetDraftModelPlans);
+  } = useQuery<GetDraftModelPlansType>(GetDraftModelPlans, {
+    variables: {
+      isMAC: false
+    }
+  });
 
   const {
     data: existingModelData,

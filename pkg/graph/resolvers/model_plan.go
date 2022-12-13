@@ -3,6 +3,8 @@ package resolvers
 import (
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -31,9 +33,21 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create an initial collaborator for the plan
-	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID, principalInfo.EuaUserID, principalInfo.CommonName, models.TeamRoleModelLead, principalInfo.Email.String())
-
-	_, err = store.PlanCollaboratorCreate(logger, collab)
+	_, _, err = CreatePlanCollaborator(
+		logger,
+		nil,
+		nil,
+		&model.PlanCollaboratorCreateInput{
+			ModelPlanID: plan.ID,
+			EuaUserID:   principal.ID(),
+			FullName:    principalInfo.CommonName,
+			TeamRole:    models.TeamRoleModelLead,
+			Email:       principalInfo.Email.String(),
+		},
+		principal,
+		store,
+		false,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -144,16 +158,19 @@ func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.
 }
 
 // ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, includeAll bool) ([]*models.ModelPlan, error) {
+func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 	var err error
-	if includeAll {
+	switch filter {
+	case model.ModelPlanFilterIncludeAll:
 		modelPlans, err = store.ModelPlanCollection(logger, false)
-	} else {
+	case model.ModelPlanFilterCollabOnly:
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
-	}
-	if err != nil {
-		return nil, err
+	case model.ModelPlanFilterWithCrTdls:
+		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+	default:
+		modelPlans = nil
+		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)
 	}
 
 	return modelPlans, err

@@ -35,16 +35,12 @@ import {
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
-import {
-  CreateModelPlanReply as CreateModelPlanReplyType
-  // CreateModelPlanReply_createDiscussionReply as ReplyType
-} from 'queries/types/CreateModelPlanReply';
-// import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
+import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions } from 'utils/modelPlan';
-import { isAssessment } from 'utils/user';
+import { isAssessment, isMAC } from 'utils/user';
 
 import FormatDiscussion from './FormatDiscussion';
 
@@ -78,7 +74,8 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
-  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean =
+    (isCollaborator || isAssessment(groups)) && !isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);

@@ -98,13 +98,14 @@ func addPlanCollaborator(
 		JobCodeASSESSMENT: false,
 	}
 
-	collaborator, err := resolvers.CreatePlanCollaborator(
+	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		logger,
 		emailService,
 		emailTemplateService,
 		input,
 		princ,
 		store,
+		true,
 	)
 	if err != nil {
 		panic(err)
