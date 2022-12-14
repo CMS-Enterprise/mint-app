@@ -19,6 +19,7 @@ import {
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   translateAppealsQuestionType,
   translateBenchmarkForPerformanceType,
@@ -35,14 +36,9 @@ import {
   translateRecruitmentType
 } from 'utils/modelPlan';
 
-import './index.scss';
+import SolutionCard from '../SolutionCard';
 
-type NeedQuestionAndAnswerProps = {
-  className?: string;
-  operationalNeedID: string;
-  modelID: string;
-  solutionMode?: boolean;
-};
+import './index.scss';
 
 // Type definition for operational needs dependent on multiple questions/translations
 type MultiPartType = {
@@ -121,11 +117,20 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
+type NeedQuestionAndAnswerProps = {
+  className?: string;
+  operationalNeedID: string;
+  modelID: string;
+  expanded?: boolean;
+  solution?: GetOperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
+};
+
 const NeedQuestionAndAnswer = ({
   className,
   operationalNeedID,
   modelID,
-  solutionMode
+  expanded,
+  solution
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -200,19 +205,19 @@ const NeedQuestionAndAnswer = ({
       className={classNames('padding-3 bg-base-lightest', className)}
     >
       <Grid row>
-        <Grid desktop={{ col: solutionMode ? 6 : 12 }}>
+        <Grid desktop={{ col: expanded ? 6 : 12 }}>
           <p className="text-bold margin-y-1">{t('operationalNeed')}</p>
 
           <p
             className={classNames('margin-top-0 font-body-sm', {
-              'margin-bottom-0': solutionMode
+              'margin-bottom-0': expanded
             })}
           >
             {operationalNeed?.nameOther || operationalNeed?.name}
           </p>
         </Grid>
 
-        <Grid desktop={{ col: solutionMode ? 6 : 12 }}>
+        <Grid desktop={{ col: expanded ? 6 : 12 }}>
           <button
             type="button"
             data-testid="toggle-need-answer"
@@ -275,6 +280,14 @@ const NeedQuestionAndAnswer = ({
                   </UswdsReactLink>
                 </p>
               </div>
+            </div>
+          )}
+
+          {/* Renders a solution card if solution data present */}
+          {solution && (
+            <div>
+              <p className="text-bold margin-top-4">{t('solution')}</p>
+              <SolutionCard solution={solution} />
             </div>
           )}
         </Grid>

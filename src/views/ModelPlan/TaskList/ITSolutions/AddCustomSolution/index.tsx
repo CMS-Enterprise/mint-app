@@ -23,6 +23,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
@@ -105,6 +106,8 @@ const AddCustomSolution = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
+  const { showMessageOnNextPage } = useMessage();
+
   const { data, loading } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
@@ -175,6 +178,7 @@ const AddCustomSolution = () => {
 
     if (updateMutation && !updateMutation.errors && updateMutation.data) {
       setMutationError(false);
+
       if (!operationalSolutionID) {
         history.push(
           // If this block of code is hit, property addOrUpdateCustomOperationalSolution will always exist - ts doesn't know this
@@ -182,6 +186,13 @@ const AddCustomSolution = () => {
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`
         );
       } else {
+        showMessageOnNextPage(
+          <Alert type="success" slim className="margin-y-4">
+            <span className="mandatory-fields-alert__text">
+              {t('successSolutionUpdated')}
+            </span>
+          </Alert>
+        );
         history.goBack();
       }
     } else if (updateMutation?.errors) {

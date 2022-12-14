@@ -35,7 +35,7 @@ const SolutionDetailCard = ({
       <NeedQuestionAndAnswer
         operationalNeedID={operationalNeedID}
         modelID={modelID}
-        solutionMode
+        expanded
       />
 
       <div className="padding-x-3 padding-top-0">

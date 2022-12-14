@@ -102,7 +102,15 @@ const Subtasks = ({ subtasks, className }: SubtasksProps) => {
                 </p>
               </div>
 
-              <div className="border-top">{todoSubtasks}</div>
+              <div className="border-top">
+                {subtasks.length === 0 ? (
+                  <div className="padding-x-1 margin-y-105">
+                    {t('subtasks.noSubtasks')}
+                  </div>
+                ) : (
+                  todoSubtasks
+                )}
+              </div>
             </div>
           </Grid>
 

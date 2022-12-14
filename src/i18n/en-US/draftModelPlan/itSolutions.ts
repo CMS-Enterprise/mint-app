@@ -139,6 +139,7 @@ const itSolutions = {
   updateError:
     'There was an error updating your solution details. Please try again.',
   successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}',
+  successSolutionUpdated: 'Success! Your solution details have been updated.',
   solution: 'Solution',
   saveSolutions: 'Save solutions',
   addImplementationDetails: 'Add solution implementation details',
@@ -159,7 +160,8 @@ const itSolutions = {
     inProgress: 'In progress',
     done: 'Done',
     addSubtasks: 'Add subtasks',
-    manageSubtasks: 'Manage subtasks'
+    manageSubtasks: 'Manage subtasks',
+    noSubtasks: 'No subtasks added yet'
   },
   documents: 'Documents',
   links: {

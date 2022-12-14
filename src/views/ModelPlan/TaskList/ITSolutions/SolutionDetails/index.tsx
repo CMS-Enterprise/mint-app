@@ -1,6 +1,6 @@
 /*
-View for selecting/toggled 'needed' bool on possible solutions and custom solutions
-Displays relevant operational need question and answers
+View for displaying solution details, subtasks and linked solution documents
+Links to views for updating solutions, adding subtasks, and documents
 */
 
 import React, { useContext, useState } from 'react';
@@ -21,6 +21,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Expire from 'components/shared/Expire';
+import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
@@ -47,6 +48,8 @@ const SolutionDetails = () => {
   const { t: h } = useTranslation('draftModelPlan');
 
   const history = useHistory();
+
+  const { message } = useMessage();
 
   const [documentMessage, setDocumentMessage] = useState('');
   const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
@@ -98,6 +101,8 @@ const SolutionDetails = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('solutionDetails')}</Breadcrumb>
       </BreadcrumbBar>
+
+      {message}
 
       {documentMessage && (
         <Expire delay={4000}>
