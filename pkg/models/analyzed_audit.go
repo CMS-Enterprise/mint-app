@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"strings"
 	"time"
 
@@ -94,14 +95,29 @@ func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 // Humanize returns AnalyzedAuditChanges in human readable sentences
 func (a AnalyzedAuditChange) Humanize() []string {
 	var humanizedAuditChanges []string
+	values := reflect.ValueOf(a)
+	fields := values.Type()
 
-	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.Humanize()...)
-	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.Humanize()...)
-	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.Humanize()...)
+	for i := 0; i < values.NumField(); i++ {
+		if values.Field(i).IsNil() {
+			continue
+		}
 
-	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
+		switch fields.Field(i).Type {
+		case reflect.TypeOf((*AnalyzedModelPlan)(nil)):
+			humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.Humanize()...)
+		case reflect.TypeOf((*AnalyzedPlanSections)(nil)):
+			humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.Humanize()...)
+		case reflect.TypeOf((*AnalyzedModelLeads)(nil)):
+			humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.Humanize()...)
+		case reflect.TypeOf((*AnalyzedDocuments)(nil)):
+			humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
+		case reflect.TypeOf((*AnalyzedCrTdls)(nil)):
+			humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
+		case reflect.TypeOf((*AnalyzedPlanDiscussions)(nil)):
+			humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
+		}
+	}
 
 	return lo.WithoutEmpty(humanizedAuditChanges)
 }

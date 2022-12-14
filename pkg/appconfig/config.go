@@ -211,6 +211,9 @@ const OktaIssuer = "OKTA_ISSUER"
 // FaktoryProcessJobs if jobs should be processed
 const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
 
+// FaktoryConnections number of connections for a manager
+const FaktoryConnections = "FAKTORY_CONNECTIONS"
+
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 

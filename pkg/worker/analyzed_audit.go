@@ -6,18 +6,30 @@ import (
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
-
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+/*
+######################
+# AnalyzedAudit Jobs #
+######################
+*/
+
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
-// args[0] modelPlanID, args[1] date
+// args[0] date, args[1] modelPlanID
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
-	date := args[1].(time.Time)
-	modelPlanID := args[0].(uuid.UUID)
+
+	date, err := time.Parse(time.RFC3339, args[0].(string))
+	if err != nil {
+		return err
+	}
+	modelPlanID, err := uuid.Parse(args[1].(string))
+	if err != nil {
+		return err
+	}
 
 	mp, err := w.Store.ModelPlanGetByID(w.Logger, modelPlanID)
 	if err != nil {
@@ -55,24 +67,53 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 // AnalyzedAuditBatchJob batches all the daily AnalyzedAuditJobs. When all are complete it will fire a callback
 // args[0] date
 func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{}) error {
-	date := args[1].(time.Time)
+	date := args[0]
+	modelPlans, err := w.Store.ModelPlanFavoritedCollection(w.Logger, false)
+	if err != nil {
+		return err
+	}
 	helper := faktory_worker.HelperFor(ctx)
 
+	// Create batch of AnalyzedAuditJob jobs
 	return helper.With(func(cl *faktory.Client) error {
 		batch := faktory.NewBatch(cl)
 		batch.Description = "Analyze models audits by date"
 		batch.Success = faktory.NewJob("AnalyzedAuditBatchJobSuccess", date)
+		batch.Success.Queue = criticalQueue
 
-		return nil
-
+		return batch.Jobs(func() error {
+			for _, mp := range modelPlans {
+				job := faktory.NewJob("AnalyzedAuditJob", mp.ID, date)
+				job.Queue = criticalQueue
+				err = batch.Push(job)
+				if err != nil {
+					return err
+				}
+			}
+			return nil
+		})
 	})
 }
 
 // AnalyzedAuditBatchJobSuccess is the callback function for AnalyzedAuditBatchJob
 // args[0] date
 func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	return nil
+	date := args[0]
+	help := faktory_worker.HelperFor(ctx)
+
+	// Kick off DailyDigestEmailBatchJob
+	return help.With(func(cl *faktory.Client) error {
+		job := faktory.NewJob("DailyDigestEmailBatchJob", date)
+		job.Queue = criticalQueue
+		return cl.Push(job)
+	})
 }
+
+/*
+##############################
+# AnalyzedAudit Jobs Helpers #
+##############################
+*/
 
 // generateChanges gets all the audit changes for the specified tables
 func generateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {

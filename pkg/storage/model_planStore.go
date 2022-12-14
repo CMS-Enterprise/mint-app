@@ -40,6 +40,9 @@ var modelPlanCollectionWithCRTDlSQL string
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
+//go:embed SQL/model_plan/collection_ids_favorited.sql
+var modelPlanFavoritedIDs string
+
 // ModelPlanCreate creates a model plan
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	// func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
@@ -261,4 +264,33 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 
 	return sqlResult, nil
+}
+
+// ModelPlanFavoritedCollection returns a collection of all model plans that are favorited
+func (s *Store) ModelPlanFavoritedCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(modelPlanFavoritedIDs)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"archived": archived,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
 }

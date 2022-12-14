@@ -100,6 +100,7 @@ def login_faktory_docker
   password = ENV['FAKTORY_DOCKERHUB_PASSWORD']
 
   return false unless username && password
+  return false unless YAML.load(ENV['FAKTORY_PROCESS_JOBS'])
 
   system("echo #{password} | docker login docker.contribsys.com -u #{username} --password-stdin")
 end

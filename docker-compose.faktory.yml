@@ -10,6 +10,9 @@ services:
       - FAKTORY_ENV
     volumes:
       - faktory:/var/lib/faktory
+      - type: bind
+        source: ./.faktory/conf.d
+        target: /root/.faktory/conf.d
     restart: always
 volumes:
   faktory:
