@@ -287,28 +287,41 @@
         "field": "ModelCategory"
     },
     {
+        "value": "CMMI",
         "enum": "CMMI",
-        "dbtype": "cms_center"
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
     },
     {
         "enum": "CENTER_FOR_MEDICARE",
-        "dbtype": "cms_center"
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
     },
     {
         "enum": "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE",
-        "dbtype": "cms_center"
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
     },
     {
         "enum": "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY",
-        "dbtype": "cms_center"
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
     },
     {
         "enum": "CENTER_FOR_PROGRAM_INTEGRITY",
-        "dbtype": "cms_center"
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
     },
     {
         "enum": "OTHER",
-        "dbtype": "cms_center"
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
     },
     {
         "value": "Patient Care Models Group (PCMG)",
@@ -458,12 +471,14 @@
         "field": "keyCharacteristics"
     },
     {
+        "value": "Preventative Model",
         "enum": "PREVENTATIVE",
         "dbtype": "key_characteristic",
         "model": "PlanGeneralCharacteristics",
         "field": "keyCharacteristics"
     },
     {
+        "value": "Service Delivery Model",
         "enum": "SERVICE_DELIVERY",
         "dbtype": "key_characteristic",
         "model": "PlanGeneralCharacteristics",
@@ -480,9 +495,11 @@
         "enum": "OTHER",
         "dbtype": "key_characteristic",
         "model": "PlanGeneralCharacteristics",
-        "field": "keyCharacteristics"
+        "field": "keyCharacteristics",
+        "outliers": "Capacity building model"
     },
     {
+        "value": "State",
         "enum": "STATE",
         "dbtype": "geography_type",
         "model": "PlanGeneralCharacteristics",
@@ -516,12 +533,14 @@
         "field": "geographiesTargetedAppliedTo"
     },
     {
+        "value": "Beneficiaries",
         "enum": "BENEFICIARIES",
         "dbtype": "geography_application",
         "model": "PlanGeneralCharacteristics",
         "field": "geographiesTargetedAppliedTo"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "geography_application",
         "model": "PlanGeneralCharacteristics",
@@ -575,6 +594,7 @@
         "field": "authorityAllowances"
     },
     {
+        "value": "Fraud and Abuse (Note: Federal Waiver team writes);#Program/payment (Note: CMMI writes, OGC advises, full clearance process is required)",
         "enum": "FRAUD_ABUSE",
         "dbtype": "waiver_type",
         "model": "PlanGeneralCharacteristics",
@@ -588,6 +608,7 @@
         "field": "waiversRequiredTypes"
     },
     {
+        "value": "Medicaid (1115, Other)",
         "enum": "MEDICAID",
         "dbtype": "waiver_type",
         "model": "PlanGeneralCharacteristics",
@@ -709,6 +730,7 @@
         "field": "participants"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "participants_type",
         "model": "PlanParticipantsAndProviders",
@@ -768,12 +790,15 @@
         "field": "selectionMethod"
     },
     {
+        "value": "Rulemaking",
         "enum": "BASIC_CRITERIA",
         "dbtype": "participant_selection_type",
         "model": "PlanParticipantsAndProviders",
-        "field": "selectionMethod"
+        "field": "selectionMethod",
+        "outliers": "Rulemaking"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "participant_selection_type",
         "model": "PlanParticipantsAndProviders",
@@ -801,10 +826,12 @@
         "field": "communicationMethod"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "participant_communication_type",
         "model": "PlanParticipantsAndProviders",
-        "field": "communicationMethod"
+        "field": "communicationMethod",
+        "outliers": "Automate communication between systems using APIs"
     },
     {
         "enum": "NO_COMMUNICATION",
@@ -1023,7 +1050,8 @@
         "enum": "OTHER",
         "dbtype": "stakeholders_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "stakeholders"
+        "field": "stakeholders",
+        "outliers": "Payors"
     },
     {
         "value": "One contractor to support implementation",
@@ -1205,6 +1233,7 @@
         "field": "dataToSendParticicipants"
     },
     {
+        "value": "Other - MIPS data",
         "enum": "OTHER_MIPS_DATA",
         "dbtype": "data_to_send_participants_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1212,6 +1241,7 @@
         "outliers": "Data feedback reports/dashboards"
     },
     {
+        "value": "No data will be sent",
         "enum": "NOT_PLANNING_TO_SEND_DATA",
         "dbtype": "data_to_send_participants_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1277,18 +1307,22 @@
         "field": "modelLearningSystems"
     },
     {
+        "value": "We plan to promote peer-to-peer learning with most model participants",
         "enum": "PARTICIPANT_COLLABORATION",
         "dbtype": "model_learning_system_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "modelLearningSystems"
+        "field": "modelLearningSystems",
+        "outliers": "We plan to promote peer-to-peer learning with most model participants"
     },
     {
         "enum": "EDUCATE_BENEFICIARIES",
         "dbtype": "model_learning_system_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "modelLearningSystems"
+        "field": "modelLearningSystems",
+        "outliers": "Yes"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "model_learning_system_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1333,35 +1367,111 @@
     },
     {
         "enum": "DURING_APPLICATION_PERIOD",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
+        "value": "Shortly before the start date",
         "enum": "SHORTLY_BEFORE_THE_START_DATE",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
+        "value": "Early in the first performance year",
         "enum": "EARLY_IN_THE_FIRST_PERFORMANCE_YEAR",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
+        "value": "Later in the first performance year",
         "enum": "LATER_IN_THE_FIRST_PERFORMANCE_YEAR",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
         "enum": "IN_THE_SUBSEQUENT_PERFORMANCE_YEAR",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
+        "value": "At some other point in time",
         "enum": "AT_SOME_OTHER_POINT_IN_TIME",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
+        "value": "Not planning to collect data",
         "enum": "NOT_PLANNING_TO_DO_THIS",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
-        "dbtype": "data_starts_type"
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "enum": "DURING_APPLICATION_PERIOD",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Shortly before the start date",
+        "enum": "SHORTLY_BEFORE_THE_START_DATE",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Early in the first performance year",
+        "enum": "EARLY_IN_THE_FIRST_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Later in the first performance year",
+        "enum": "LATER_IN_THE_FIRST_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "enum": "IN_THE_SUBSEQUENT_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "At some other point in time",
+        "enum": "AT_SOME_OTHER_POINT_IN_TIME",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Not planning to collect data",
+        "enum": "NOT_PLANNING_TO_DO_THIS",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
     },
     {
         "value": "3021",
@@ -1480,6 +1590,7 @@
         "field": "nonClaimsPayments"
     },
     {
+        "value": "Bundled/Episode of Care",
         "enum": "BUNDLED_EPISODE_OF_CARE",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
@@ -1514,6 +1625,7 @@
         "field": "nonClaimsPayments"
     },
     {
+        "value": "Grants",
         "enum": "GRANTS",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
@@ -1530,16 +1642,19 @@
         "enum": "MAPD_SHARED_SAVINGS",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
-        "field": "nonClaimsPayments"
+        "field": "nonClaimsPayments",
+        "outliers": "Payment for respite (new service)"
     },
     {
         "value": "Shared Savings Program",
         "enum": "SHARED_SAVINGS",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
-        "field": "nonClaimsPayments"
+        "field": "nonClaimsPayments",
+        "outliers": "Chronic disease care management reward"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_non_claim_based_payment_type",
         "model": "PlanPayments",
@@ -1567,6 +1682,7 @@
         "field": "ExpectedCalculationComplexityLevel"
     },
     {
+        "value": "Annually",
         "enum": "ANNUALLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
         "model": "PlanPayments",
@@ -1593,12 +1709,14 @@
         "field": "anticipatedPaymentFrequency"
     },
     {
+        "value": "Semi-monthly",
         "enum": "SEMIMONTHLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
         "model": "PlanPayments",
         "field": "anticipatedPaymentFrequency"
     },
     {
+        "value": "Weekly",
         "enum": "WEEKLY",
         "dbtype": "pp_anticipated_payment_frequency_type",
         "model": "PlanPayments",

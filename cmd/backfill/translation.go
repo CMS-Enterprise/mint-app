@@ -87,6 +87,20 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		}
 		if t.Header == "Is APM Model" {
 			t.translateIsAPM(entry, value)
+			return
+		}
+		if t.Header == "Helpdesk" {
+			t.translateHelpdesk(entry, value)
+			return
+		}
+		if t.Header == "Learning System" {
+			t.handleLearningSystem(entry, value)
+			return
+		}
+		if t.Header == "Uses ACO" {
+			t.handleUsesACO(entry, value)
+			return
+
 		}
 		// if t.ModelName == "PlanPayments" && t.Field == "NonClaimsPayments" { //TODO, should I handle this later and just do it for this type?
 		// 	t.translateNonClaimsPaymentType(entry, value)
@@ -96,6 +110,42 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		t.translateField(entry, value, backfiller)
 	}
 
+}
+
+func (t *Translation) handleUsesACO(entry *BackfillEntry, value interface{}) {
+	if value == "Uses ACO" {
+		tBool := true
+		entry.PlanOpsEvalAndLearning.IddocSupport = &tBool
+		return
+	}
+	if value != "" {
+		entry.TErrors = append(entry.TErrors, TranslationError{
+			Translation: *t,
+			Value:       value,
+			Type:        "unhandled-convservion",
+			Message:     "value not handled for ACO conversion",
+		})
+	}
+}
+
+func (t *Translation) handleLearningSystem(entry *BackfillEntry, value interface{}) {
+	if value == "No" || value == "no" || value == "false" || value == "FALSE" {
+		entry.PlanOpsEvalAndLearning.ModelLearningSystems = append(entry.PlanOpsEvalAndLearning.ModelLearningSystems, "NO_LEARNING_SYSTEM") //TODO verify this isn't squashed
+		return
+	}
+}
+
+func (t *Translation) translateHelpdesk(entry *BackfillEntry, value interface{}) {
+	if value == "NO" || value == "no" || value == "false" || value == "FALSE" {
+		fBool := false
+		entry.PlanOpsEvalAndLearning.HelpdeskUse = &fBool
+		return
+	}
+	if value == "TBD" || value == "tbd" || value == "" {
+		return //Don't need to set anything here
+	}
+	sVal := fmt.Sprint(value)
+	entry.PlanOpsEvalAndLearning.HelpdeskUseNote = &sVal
 }
 func (t *Translation) translateIsAPM(entry *BackfillEntry, value interface{}) {
 	if value == "NO" || value == "no" || value == "false" {
