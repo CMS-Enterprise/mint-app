@@ -95,7 +95,7 @@ func TestContextPrincipal(t *testing.T) {
 			expectADMIN: false,
 		},
 		"regular user": {
-			ctx: WithPrincipal(context.Background(), &authentication.OKTAPrincipal{
+			ctx: WithPrincipal(context.Background(), &authentication.ApplicationPrincipal{
 				Username:          submitterID,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: false,
@@ -105,7 +105,7 @@ func TestContextPrincipal(t *testing.T) {
 			expectADMIN: false,
 		},
 		"admin User": {
-			ctx: WithPrincipal(context.Background(), &authentication.OKTAPrincipal{
+			ctx: WithPrincipal(context.Background(), &authentication.ApplicationPrincipal{
 				Username:          reviewerID,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: true,

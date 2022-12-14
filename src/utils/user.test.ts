@@ -33,6 +33,18 @@ describe('user', () => {
         expect(isAssessment(groups, defaultFlags)).toBe(false);
       });
     });
+
+    describe('launchdarkly downgrade', () => {
+      const groups = [BASIC, ASSESSMENT];
+      it('returns true', () => {
+        expect(
+          isAssessment(groups, {
+            downgradeAssessmentTeam: true,
+            hideITLeadExperience: false
+          })
+        ).toBe(false);
+      });
+    });
   });
 
   describe('isBasicUser', () => {

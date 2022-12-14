@@ -15,13 +15,13 @@ import (
 // PreUpdateSuite is the testify suite for the resolver package
 type PreUpdateSuite struct {
 	suite.Suite
-	Principal *authentication.OKTAPrincipal
+	Principal *authentication.ApplicationPrincipal
 }
 
 // TestPreUpdateSuite runs the resolver test suite
 func TestPreUpdateSuite(t *testing.T) {
 	css := new(PreUpdateSuite)
-	css.Principal = &authentication.OKTAPrincipal{
+	css.Principal = &authentication.ApplicationPrincipal{
 		Username:          "FAKE",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,

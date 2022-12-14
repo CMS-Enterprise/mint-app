@@ -66,7 +66,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
 
 	// Get plan collection as CLAB
-	clabPrincipal := &authentication.OKTAPrincipal{
+	clabPrincipal := &authentication.ApplicationPrincipal{
 		Username:          "CLAB",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
