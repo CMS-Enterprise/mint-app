@@ -76,7 +76,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 	testData := ldtestdata.DataSource()
 	testData.Update(testData.Flag(flags.DowngradeAssessmentTeamKey).BooleanFlag().VariationForAll(false))
 	ldConfig := ld.Config{
-		DataSource: ldtestdata.DataSource(),
+		DataSource: testData,
 	}
 	ldClient, err := ld.MakeCustomClient("fake", ldConfig, 0)
 	s.NoError(err)
