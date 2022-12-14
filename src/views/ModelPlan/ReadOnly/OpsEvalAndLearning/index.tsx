@@ -42,7 +42,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
   }
 
   const {
-    // Page 1 - OpsEvalAndLearningContent
+    // OpsEvalAndLearningContent
     agencyOrStateHelp,
     agencyOrStateHelpOther,
     agencyOrStateHelpNote,
@@ -57,8 +57,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     contractorSupportNote,
     iddocSupport,
     iddocSupportNote,
-
-    // Page 2 - IDDOC
+    // IDDOC
     technicalContactsIdentified,
     technicalContactsIdentifiedDetail,
     technicalContactsIdentifiedNote,
@@ -67,8 +66,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     icdOwner,
     draftIcdDueDate,
     icdNote,
-
-    // Page 3 - IDDOCTesting
+    // IDDOCTesting
     uatNeeds,
     stcNeeds,
     testingTimelines,
@@ -77,8 +75,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     dataMonitoringFileOther,
     dataResponseType,
     dataResponseFileFrequency,
-
-    // Page 4 - IDDOCMonitoring
+    // IDDOCMonitoring
     dataFullTimeOrIncremental,
     eftSetUp,
     unsolicitedAdjustmentsIncluded,
@@ -86,8 +83,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     produceBenefitEnhancementFiles,
     fileNamingConventions,
     dataMonitoringNote,
-
-    // Page 5 - Perfomance
+    // Performance
     benchmarkForPerformance,
     benchmarkForPerformanceNote,
     computePerformanceScores,
@@ -102,8 +98,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     appealPayments,
     appealOther,
     appealNote,
-
-    // Page 6 - Evaluation (need iddoc in this?)
+    // Evaluation
     evaluationApproaches,
     evaluationApproachOther,
     evalutaionApproachNote,
@@ -118,8 +113,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     dataToSendParticicipantsNote,
     shareCclfData,
     shareCclfDataNote,
-
-    // Page 7 - CCW and Quality
+    // CCW and Quality
     sendFilesBetweenCcw,
     sendFilesBetweenCcwNote,
     appToSendFilesToKnown,
@@ -131,8 +125,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     developNewQualityMeasuresNote,
     qualityPerformanceImpactsPayment,
     qualityPerformanceImpactsPaymentNote,
-
-    // Page 8 - Data Sharing
+    // Data Sharing
     dataSharingStarts,
     dataSharingStartsOther,
     dataSharingFrequency,
@@ -146,8 +139,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
     qualityReportingStarts,
     qualityReportingStartsOther,
     qualityReportingStartsNote,
-
-    // Page 9 - Learning
+    // Learning
     modelLearningSystems,
     modelLearningSystemsOther,
     modelLearningSystemsNote,
@@ -301,7 +293,6 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           copy={computePerformanceScores ? h('yes') : h('no')}
           notes={computePerformanceScoresNote}
         />
-        {/* TODO: What is right way to handle risk adj note? three booleans and only one set of note/other */}
         <ReadOnlySection
           heading={t('performanceScores')}
           copy={riskAdjustPerformance ? h('yes') : h('no')}
@@ -319,7 +310,6 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           copy={riskAdjustOther ? h('yes') : h('no')}
           notes={riskAdjustNote}
         />
-        {/* TODO: same as risk adj, what is right way to handle this note? */}
         <ReadOnlySection
           heading={t('performanceScores')}
           copy={appealPerformance ? h('yes') : h('no')}
