@@ -9,6 +9,7 @@ import (
 // TranslationError represents an issue translating a field
 type TranslationError struct {
 	Translation Translation
+	Type        string
 	Value       interface{}
 	Message     string
 }

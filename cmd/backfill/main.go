@@ -32,7 +32,7 @@ func main() { //TODO make this a command
 	testTransform := false
 	testUpload := false
 	useEdit := false
-	useDecember13 := false
+	useDecember13 := true
 	testUserInfo := false
 
 	testTransform = true
@@ -249,6 +249,10 @@ func writeObjectToJSONFile(object interface{}, path string) {
 		panic("Can't write the file")
 	}
 }
+
+// func writeObjectArrayToCSVFile(object []interface{}, path string){
+
+// }
 
 // DataTable represents a table of data, (like a CSV or excel spreadshet)
 type DataTable struct {

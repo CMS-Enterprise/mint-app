@@ -129,6 +129,27 @@
         "value": "Yes, and we expect to develop policies to manage the overlaps",
         "enum": "YES_NEED_POLICIES",
         "dbtype": "overlap_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "ProviderOverlap"
+    },
+    {
+        "value": "Yes, therefore overlaps would not be an issue",
+        "enum": "YES_NO_ISSUES",
+        "dbtype": "overlap_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "ProviderOverlap"
+    },
+    {
+        "value": "No, and we expect to develop policies to manage the overlaps",
+        "enum": "NO",
+        "dbtype": "overlap_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "ProviderOverlap"
+    },
+    {
+        "value": "Yes, and we expect to develop policies to manage the overlaps",
+        "enum": "YES_NEED_POLICIES",
+        "dbtype": "overlap_type",
         "model": "PlanBeneficiaries",
         "field": "beneficiaryOverlap"
     },
@@ -208,40 +229,62 @@
         "dbtype": "team_role"
     },
     {
+        "value": "Accountable Care",
         "enum": "ACCOUNTABLE_CARE",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
         "enum": "DEMONSTRATION",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
+        "value": "Episode-based Payment Initiatives",
         "enum": "EPISODE_BASED_PAYMENT_INITIATIVES",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
         "enum": "INIT_MEDICAID_CHIP_POP",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
         "enum": "INIT__MEDICARE_MEDICAID_ENROLLEES",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
+        "value": "Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models",
         "enum": "INIT_ACCEL_DEV_AND_TEST",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
         "enum": "INIT_SPEED_ADOPT_BEST_PRACTICE",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
+        "value": "Primary Care Transformation",
         "enum": "PRIMARY_CARE_TRANSFORMATION",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
         "enum": "UNKNOWN",
-        "dbtype": "model_category"
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
     },
     {
         "enum": "CMMI",
@@ -770,20 +813,31 @@
         "field": "communicationMethod"
     },
     {
+        "value": "Two-sided",
         "enum": "TWO_SIDED",
-        "dbtype": "participant_risk_type"
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
     },
     {
+        "value": "One-sided",
         "enum": "ONE_SIDED",
-        "dbtype": "participant_risk_type"
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
     },
     {
+        "value": "Capitation",
         "enum": "CAPITATION",
-        "dbtype": "participant_risk_type"
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
     },
     {
         "enum": "OTHER",
-        "dbtype": "participant_risk_type"
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
     },
     {
         "value": "TINs",
@@ -1257,16 +1311,25 @@
         "dbtype": "data_full_time_or_incremental_type"
     },
     {
+        "value": "Yes, and we will reconcile actual performance against it",
         "enum": "YES_RECONCILE",
-        "dbtype": "benchmark_for_performance_type"
+        "dbtype": "benchmark_for_performance_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "BenchmarkForPerformance"
     },
     {
+        "value": "Yes, but we will not reconcile actual performance against it",
         "enum": "YES_NO_RECONCILE",
-        "dbtype": "benchmark_for_performance_type"
+        "dbtype": "benchmark_for_performance_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "BenchmarkForPerformance"
     },
     {
+        "value": "No",
         "enum": "NO",
-        "dbtype": "benchmark_for_performance_type"
+        "dbtype": "benchmark_for_performance_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "BenchmarkForPerformance"
     },
     {
         "enum": "DURING_APPLICATION_PERIOD",
@@ -1486,17 +1549,22 @@
     {
         "enum": "LOW",
         "dbtype": "pp_complexity_calculation_level_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "ExpectedCalculationComplexityLevel"
     },
     {
+        "value": "Middle-level",
         "enum": "MIDDLE",
         "dbtype": "pp_complexity_calculation_level_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "ExpectedCalculationComplexityLevel"
     },
     {
+        "value": "High-level",
         "enum": "HIGH",
         "dbtype": "pp_complexity_calculation_level_type",
-        "model": "PlanPayments"
+        "model": "PlanPayments",
+        "field": "ExpectedCalculationComplexityLevel"
     },
     {
         "enum": "ANNUALLY",

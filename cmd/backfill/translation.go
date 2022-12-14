@@ -68,7 +68,12 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		allUsers := strings.Split(valString, ";#")
 		for i := 0; i < len(allUsers); i++ {
 
-			t.addCollaborator(entry, sanitizeName(allUsers[i]), backfiller.UDictionary)
+			name, valid := sanitizeName(allUsers[i])
+			if !valid {
+				return
+			}
+
+			t.addCollaborator(entry, name, backfiller.UDictionary)
 		}
 	default:
 		if t.ModelName == "PlanPayments" && t.Field == "PayType" { //TODO, should I handle this later and just do it for this type?
@@ -139,14 +144,16 @@ func (t *Translation) translatePayType(entry *BackfillEntry, value interface{}) 
 
 }
 
-func sanitizeName(name string) string {
+func sanitizeName(name string) (string, bool) {
 	clean := strings.TrimPrefix(name, "#")
 	//TODO check if it's a number, and if so, don't use it
+	valid := true
 
-	// if _, err := strconv.Atoi(v); err == nil {
-	//     fmt.Printf("%q looks like a number.\n", v)
-	// }
-	return clean
+	if _, err := strconv.Atoi(name); err == nil {
+		fmt.Printf("%q is a number, so not a collborator.", name)
+		valid = false
+	}
+	return clean, valid
 }
 func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, userDictionary *PossibleUserDictionary) {
 
@@ -155,6 +162,8 @@ func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, us
 
 		tErr := &TranslationError{
 			Translation: *t,
+			Value:       valString,
+			Type:        "collab",
 			Message:     fmt.Sprintf(" Can't Find user to add as collab %s", valString),
 		}
 		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
@@ -232,7 +241,8 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 
 		return &TranslationError{
 			Translation: *t,
-			Message:     fmt.Sprintf(" Can't Convert to needed type %s", fieldKind),
+			Type:        "conversion",
+			Message:     fmt.Sprintf(" Can't Convert to needed type %s. Conversion not valid", fieldKind),
 		}
 
 	}
@@ -280,6 +290,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 		if err != nil {
 			tErr = &TranslationError{
 				Translation: *t,
+				Type:        "bool-conversion",
 				Value:       value,
 				Message:     fmt.Sprintf("type conversion failed to convert to bool for type %s", fieldType),
 			}
@@ -292,6 +303,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 		if err != nil {
 			tErr = &TranslationError{
 				Translation: *t,
+				Type:        "int-conversion",
 				Value:       value,
 				Message:     fmt.Sprintf("type conversion failed to convert to int for type %s", fieldType),
 			}
@@ -309,6 +321,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 			if err != nil {
 				tErr = &TranslationError{
 					Translation: *t,
+					Type:        "time-conversion",
 					Value:       value,
 					Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
 				}
@@ -324,12 +337,14 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 			if strings.ToLower(valString) == "tbd" {
 				tErr = &TranslationError{
 					Translation: *t,
+					Type:        "tbd-conversion",
 					Value:       value,
 					Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
 				}
 			} else {
 				tErr = &TranslationError{
 					Translation: *t,
+					Type:        "unhandled-conversion",
 					Value:       value,
 					Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
 				}
@@ -357,6 +372,7 @@ func (t *Translation) translateStringArray(allValueString string, backfiller *Ba
 	array := pq.StringArray{}
 	err = &TranslationError{
 		Translation: *t,
+		Type:        "stringArray-conversion",
 		Value:       allValueString,
 		Message:     "No translation found for strings: ",
 	}
