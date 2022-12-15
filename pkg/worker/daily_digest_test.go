@@ -52,10 +52,10 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
 		crTdlAvtivity, updatedSections, reviewSections, clearanceSections, addedLead, dicussionActivity)
 
-	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now(), auditChange)
+	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
 	// Test getDailyDigestAnalyzedAudits
-	analyzedAudits, err := getDailyDigestAnalyzedAudits(collaborator.EUAUserID, time.Now(), worker.Store, worker.Logger)
+	analyzedAudits, err := getDailyDigestAnalyzedAudits(collaborator.EUAUserID, time.Now().UTC(), worker.Store, worker.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 
@@ -87,7 +87,7 @@ func (suite *WorkerSuite) TestDailyDigestEmail() {
 			gomock.Eq(emailBody),
 		).MinTimes(1).MaxTimes(1)
 
-	err = worker.DailyDigestEmailJob(context.Background(), collaborator.EUAUserID, time.Now())
+	err = worker.DailyDigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.EUAUserID)
 
 	suite.NoError(err)
 	mockController.Finish()

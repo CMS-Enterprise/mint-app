@@ -67,6 +67,7 @@ services:
       - USE_TLS
       - FAKTORY_URL
       - FAKTORY_PROCESS_JOBS
+      - FAKTORY_CONNECTIONS
 
     depends_on:
       db_migrate:

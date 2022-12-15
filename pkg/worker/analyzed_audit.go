@@ -21,8 +21,7 @@ import (
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
 // args[0] date, args[1] modelPlanID
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
-
-	date, err := time.Parse(time.RFC3339, args[0].(string))
+	date, err := time.Parse("2006-01-02", args[0].(string))
 	if err != nil {
 		return err
 	}
@@ -83,7 +82,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 
 		return batch.Jobs(func() error {
 			for _, mp := range modelPlans {
-				job := faktory.NewJob("AnalyzedAuditJob", mp.ID, date)
+				job := faktory.NewJob("AnalyzedAuditJob", date, mp.ID)
 				job.Queue = criticalQueue
 				err = batch.Push(job)
 				if err != nil {

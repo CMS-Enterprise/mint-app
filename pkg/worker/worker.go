@@ -1,12 +1,9 @@
 package worker
 
 import (
-	"strconv"
-
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -19,6 +16,7 @@ type Worker struct {
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl
 	Manager              *faktory_worker.Manager
+	Connections          int
 }
 
 const (
@@ -35,12 +33,8 @@ const (
 // Work creates, configues, and starts worker
 func (w *Worker) Work() {
 	// Setup Monager
-	connections, err := strconv.Atoi(appconfig.FaktoryProcessJobs)
-	if err != nil {
-		panic(err)
-	}
 
-	w.Manager.Concurrency = connections
+	w.Manager.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence
 	w.Manager.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, emailQueue)
@@ -56,7 +50,7 @@ func (w *Worker) Work() {
 	w.Manager.Register("DailyDigestEmailBatchJobSuccess", w.DailyDigestEmailBatchJobSuccess)
 	w.Manager.Register("DailyDigestEmailJob", w.DailyDigestEmailJob)
 
-	err = w.Manager.Run()
+	err := w.Manager.Run()
 	if err != nil {
 		panic(err)
 	}

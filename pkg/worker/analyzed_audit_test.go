@@ -32,7 +32,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.createPlanDocument(plan)
 
 	// Add CrTdls
-	suite.createPlanCrTdl(plan, "123-456", time.Now(), "Title", "Note")
+	suite.createPlanCrTdl(plan, "123-456", time.Now().UTC(), "Title", "Note")
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
@@ -77,11 +77,11 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), plan.ID.String())
 	suite.NoError(err)
 
 	// Get Stored audit
-	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now())
+	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now().UTC())
 	suite.NoError(err)
 
 	suite.NotNil(analyzedAudit)
@@ -130,9 +130,9 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
-	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().AddDate(0, 0, 1).Format("2006-01-02"), plan.ID.String())
 	suite.NoError(err)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now())
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC().AddDate(0, 0, 1))
 	suite.Error(err)
 }

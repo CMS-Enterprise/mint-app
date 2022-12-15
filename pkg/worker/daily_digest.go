@@ -25,7 +25,7 @@ import (
 
 // DailyDigestCronJob is the job the cron schedule calls
 func (w *Worker) DailyDigestCronJob(ctx context.Context, args ...interface{}) error {
-	date := time.Now()
+	date := time.Now().UTC().Format("2006-01-02")
 
 	// Call AnalyzedAuditBatchJob
 	helper := faktory_worker.HelperFor(ctx)
@@ -40,10 +40,7 @@ func (w *Worker) DailyDigestCronJob(ctx context.Context, args ...interface{}) er
 // DailyDigestEmailBatchJob is the batch job for DailyDigestEmailJobs
 // args[0] date
 func (w *Worker) DailyDigestEmailBatchJob(ctx context.Context, args ...interface{}) error {
-	date, err := time.Parse(time.RFC3339, args[0].(string))
-	if err != nil {
-		return err
-	}
+	date := args[0].(string)
 
 	helper := faktory_worker.HelperFor(ctx)
 
@@ -84,7 +81,7 @@ func (w *Worker) DailyDigestEmailBatchJobSuccess(ctx context.Context, args ...in
 // DailyDigestEmailJob will generate and send an email based on a users favorited Models.
 // args[0] date, args[1] userID
 func (w *Worker) DailyDigestEmailJob(ctx context.Context, args ...interface{}) error {
-	date, err := time.Parse(time.RFC3339, args[0].(string))
+	date, err := time.Parse("2006-01-02", args[0].(string))
 	if err != nil {
 		return err
 	}
@@ -104,7 +101,8 @@ func (w *Worker) DailyDigestEmailJob(ctx context.Context, args ...interface{}) e
 	if err != nil {
 		return err
 	}
-	if analyzedAudits == nil {
+
+	if len(analyzedAudits) == 0 {
 		return nil
 	}
 
