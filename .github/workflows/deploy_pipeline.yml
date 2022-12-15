@@ -9,24 +9,30 @@ concurrency:
   group: deploy-pipeline
 
 jobs:
-  Build_Application_Images:
+  cache_dependencies:
+    uses: ./.github/workflows/cache_dependencies.yml
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  build_application_images:
     uses: ./.github/workflows/build_application_images.yml
+    needs: cache_dependencies
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       INFRA_ROLE_TO_ASSUME: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  Run_Tests:
+  run_tests:
     uses: ./.github/workflows/run_tests.yml
-    needs: Build_Application_Images
+    needs: build_application_images
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   deploy_dev:
-    needs: Run_Tests
+    needs: run_tests
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: dev
