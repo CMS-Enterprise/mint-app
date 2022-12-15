@@ -174,16 +174,11 @@ const itSolutions = {
   updateStatusInfo:
     'Update the implementation status and deadline for this solution.',
   updateSolution: 'Update solution',
-<<<<<<< HEAD
   dontUpdateandReturnToSolutionDetails:
     'Don’t update and return to solution details',
   dontUpdateandReturnToTracker: 'Don’t update and return to tracker',
   successStatusUpdated: 'Success! {{-operationalNeedName}} status updated.',
   errorStatusUpdated:
     'There was an issue updating the status for {{-operationalNeedName}}. Please try again.'
-=======
-  dontAddandReturnToSolutionDetails:
-    'Don’t update and return to solution details'
->>>>>>> 598fbccb (add new copy)
 };
 export default itSolutions;
