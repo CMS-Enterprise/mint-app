@@ -161,7 +161,7 @@ const SolutionImplementation = ({
 
         if (response && !errors) {
           // If successfully submitting solution details
-          if (!dontAdd && !redirect) {
+          if (!dontAdd && !redirect && !isUpdatingStatus) {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
@@ -171,16 +171,25 @@ const SolutionImplementation = ({
                 </span>
               </Alert>
             );
-            if (isUpdatingStatus) {
-              history.goBack();
-            } else {
-              history.push(`/models/${modelID}/task-list/it-solutions`);
-            }
+            history.push(`/models/${modelID}/task-list/it-solutions`);
             // Go back but still save solution details
           } else if (redirect === 'back') {
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
             );
+
+            // If isUpdatingStatus, go to previous page, otherwise, go to tracker
+          } else if (isUpdatingStatus) {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('successStatusUpdated', {
+                    operationalNeedName: operationalNeed.name
+                  })}
+                </span>
+              </Alert>
+            );
+            history.goBack();
 
             // Dont save solution details, solutions no needed, and return to tracker
           } else {
