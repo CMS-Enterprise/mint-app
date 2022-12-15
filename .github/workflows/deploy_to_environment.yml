@@ -42,25 +42,17 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.GIT_HASH }}
       - name: Set up node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.MINT_APP_NODE_VERSION }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
+          node-version-file: '.nvmrc'
+          cache: yarn
+      - name: Install yarn dependencies
+        run: yarn install --immutable
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
