@@ -171,8 +171,11 @@ const SolutionImplementation = ({
                 </span>
               </Alert>
             );
-
-            history.push(`/models/${modelID}/task-list/it-solutions`);
+            if (isUpdatingStatus) {
+              history.goBack();
+            } else {
+              history.push(`/models/${modelID}/task-list/it-solutions`);
+            }
             // Go back but still save solution details
           } else if (redirect === 'back') {
             history.push(
