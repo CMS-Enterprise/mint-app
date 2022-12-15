@@ -113,16 +113,31 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 }
 
 func (t *Translation) handleUsesACO(entry *BackfillEntry, value interface{}) {
-	if value == "Uses ACO" {
+	if value == "Uses ACO" || value == "Yes" || value == "ACO-OS (supports design, development, and O&M)" {
 		tBool := true
 		entry.PlanOpsEvalAndLearning.IddocSupport = &tBool
 		return
 	}
+	if value == "No" {
+		fBool := false
+		entry.PlanOpsEvalAndLearning.IddocSupport = &fBool
+		return
+	}
+	if value == "TBD" {
+		entry.TErrors = append(entry.TErrors, TranslationError{
+			Translation: *t,
+			Value:       value,
+			Type:        "information-TBD",
+			Message:     "TBD for ACO conversion",
+		})
+		return
+	}
+
 	if value != "" {
 		entry.TErrors = append(entry.TErrors, TranslationError{
 			Translation: *t,
 			Value:       value,
-			Type:        "unhandled-convservion",
+			Type:        "unhandled-conversion",
 			Message:     "value not handled for ACO conversion",
 		})
 	}
@@ -242,6 +257,15 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 		log.Default().Print("translation not needed for " + t.Header + " . Value is " + fmt.Sprint(value) + " . Note : " + t.Note)
 		return
 	}
+	if t.ModelName == "MANUAL_ENTRY" {
+		entry.TErrors = append(entry.TErrors, TranslationError{
+			Translation: *t,
+			Type:        "manual-interention",
+			Value:       value,
+			Message:     "this field required manual translation",
+		})
+
+	}
 	if t.ModelName == "" {
 		log.Default().Print("translation has not yet been mapped for for " + t.Header + " . Value is " + fmt.Sprint(value))
 		return
@@ -254,12 +278,21 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 	}
 
 	field := reflect.Indirect(bModel).FieldByName(t.Field) //indirect because this is a pointer
+	var otherfield reflect.Value
+
+	if t.OtherField != "" {
+		otherfield = reflect.Indirect(bModel).FieldByName(t.OtherField) //indirect because this is a pointer
+		if !otherfield.IsValid() {
+			log.Default().Print("couldn't get other field for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName) + " . Field name is " + fmt.Sprint(t.Field))
+			return
+		}
+	}
 
 	if !field.IsValid() {
 		log.Default().Print("couldn't get field for for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName) + " . Field name is " + fmt.Sprint(t.Field))
 		return
 	}
-	tErr := t.setField(&field, value, backfiller)
+	tErr := t.setField(&field, &otherfield, value, backfiller)
 	if tErr != nil {
 		entry.TErrors = append(entry.TErrors, *tErr) //record any setting issue here
 		log.Default().Print("Error setting field: ", tErr)
@@ -267,7 +300,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 
 }
 
-func (t *Translation) setField(field *reflect.Value, value interface{}, backfiller *Backfiller) *TranslationError {
+func (t *Translation) setField(field *reflect.Value, otherField *reflect.Value, value interface{}, backfiller *Backfiller) *TranslationError {
 
 	val := reflect.ValueOf(value)
 	fieldKind := field.Kind()
@@ -278,7 +311,7 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 		log.Default().Print("Converted sucessfully")
 	} else {
 
-		convVal, err, setAnyways := t.handleConversion(field, value, backfiller)
+		convVal, otherVal, err, setAnyways := t.handleConversion(field, otherField, value, backfiller)
 		if err != nil && !setAnyways {
 			return err
 
@@ -286,6 +319,11 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 		if convVal.IsValid() {
 
 			field.Set(convVal)
+			if otherVal != nil {
+				if otherVal.IsValid() {
+					otherField.Set(*otherVal)
+				}
+			}
 			return err //return the error if we chose to ignore it and still set
 		}
 
@@ -301,7 +339,7 @@ func (t *Translation) setField(field *reflect.Value, value interface{}, backfill
 
 }
 
-func (t *Translation) handleConversion(field *reflect.Value, value interface{}, backfiller *Backfiller) (reflect.Value, *TranslationError, bool) {
+func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect.Value, value interface{}, backfiller *Backfiller) (reflect.Value, *reflect.Value, *TranslationError, bool) {
 
 	fieldKind := field.Kind()
 	fieldType := field.Type()
@@ -312,6 +350,7 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 	fieldTypeS := strings.TrimPrefix(fieldType.String(), "*")
 	valString := fmt.Sprint(value)
 	setRegardlessOfError := false
+	var otherVal *reflect.Value
 
 	switch fieldTypeS {
 	case "string":
@@ -319,11 +358,17 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 
 	case "pq.StringArray":
 
-		pqArray, err := t.translateStringArray(valString, backfiller)
+		pqArray, otherVals, err := t.translateStringArray(valString, backfiller)
 		tErr = err //If any value is undefiend don't set anything
 		setRegardlessOfError = true
 
 		conVal = valueOrPointer(pqArray, isPointer)
+		if otherVals != nil && otherField != nil {
+			isOtherPointer := otherField.Kind().String() == "ptr"
+
+			other := valueOrPointer(otherVals, isOtherPointer)
+			otherVal = &other
+		}
 
 	case "bool":
 		bVal, err := strconv.ParseBool(valString)
@@ -391,6 +436,13 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 					Value:       value,
 					Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
 				}
+			}
+			otherEnum, otherExists := t.translateEnum("Other", backfiller)
+			if otherExists && otherField != nil {
+				translatedString = otherEnum
+				isOtherPointer := otherField.Kind().String() == "ptr"
+				other := valueOrPointer(valString, isOtherPointer)
+				otherVal = &other
 			} else {
 				tErr = &TranslationError{
 					Translation: *t,
@@ -409,16 +461,19 @@ func (t *Translation) handleConversion(field *reflect.Value, value interface{}, 
 
 	}
 
-	return conVal, tErr, setRegardlessOfError
+	return conVal, otherVal, tErr, setRegardlessOfError
 
 }
 
 // func ( t *Translation)[anyType interface{}] tryTranslateEnum(string ,){
 
 // }
-func (t *Translation) translateStringArray(allValueString string, backfiller *Backfiller) (pq.StringArray, *TranslationError) {
+func (t *Translation) translateStringArray(allValueString string, backfiller *Backfiller) (pq.StringArray, *string, *TranslationError) {
 	allVals := strings.Split(allValueString, ";#")
 	var err *TranslationError
+	var others string
+	var otherEnum string
+	otherEntryExists := false
 	array := pq.StringArray{}
 	err = &TranslationError{
 		Translation: *t,
@@ -432,17 +487,31 @@ func (t *Translation) translateStringArray(allValueString string, backfiller *Ba
 		if translated {
 			array = append(array, enVal)
 		} else {
-			errTranslating = true
-			err.Message = err.Message + st + " | "
+			otherString, otherExists := t.translateEnum("Other", backfiller) //Is other a valid entry? If so note it
+			if otherExists {
+				otherEnum = otherString
+				otherEntryExists = true
+				if others == "" {
+					others = st
+				} else {
+					others = others + " | " + st
+				}
 
+			} else {
+				errTranslating = true
+				err.Message = err.Message + st + " | "
+			}
 		}
 
 	}
+	if otherEntryExists {
+		array = append(array, otherEnum)
+	}
 	if errTranslating {
-		return array, err
+		return array, &others, err
 	}
 
-	return array, nil
+	return array, &others, nil
 }
 
 func (t *Translation) translateEnum(st string, backfiller *Backfiller) (string, bool) {
