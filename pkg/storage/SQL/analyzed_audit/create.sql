@@ -1,6 +1,7 @@
 INSERT INTO analyzed_audit (
     id,
     model_plan_id,
+    model_name,
     date,
     changes,
     created_by,
@@ -9,6 +10,7 @@ INSERT INTO analyzed_audit (
 VALUES (
     :id,
     :model_plan_id,
+    :model_name,
     :date,
     :changes,
     :created_by,
@@ -17,6 +19,7 @@ VALUES (
 RETURNING
 id,
 model_plan_id,
+model_name,
 date,
 changes,
 created_by,
