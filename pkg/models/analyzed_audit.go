@@ -213,15 +213,24 @@ type AnalyzedDocuments struct {
 }
 
 const (
+	// AnalyzedDocumentsHumanizedCounts is human readable
+	// sentence template of multiple AnalyzedDocument.Count
+	AnalyzedDocumentsHumanizedCounts = "%d new documents have been uploaded"
+
 	// AnalyzedDocumentsHumanizedCount is human readable
-	// sentence template of AnalyzedDocument.Count
-	AnalyzedDocumentsHumanizedCount = "%d new documents have been uploaded"
+	// sentence template of a singular AnalyzedDocument.Count
+	AnalyzedDocumentsHumanizedCount = "%d new document has been uploaded"
 )
 
 // Humanize returns AnalyzedDocuments in a human readable sentence
 func (a AnalyzedDocuments) Humanize() string {
 	if a.Count > 0 {
+		if a.Count > 1 {
+			return fmt.Sprintf(AnalyzedDocumentsHumanizedCounts, a.Count)
+		}
+
 		return fmt.Sprintf(AnalyzedDocumentsHumanizedCount, a.Count)
+
 	}
 
 	return ""
