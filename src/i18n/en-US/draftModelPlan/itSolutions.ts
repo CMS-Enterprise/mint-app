@@ -146,6 +146,9 @@ const itSolutions = {
     'Update the implementation status and deadline for this solution.',
   updateSolution: 'Update solution',
   dontAddandReturnToSolutionDetails:
-    'Don’t update and return to solution details'
+    'Don’t update and return to solution details',
+  successStatusUpdated: 'Success! {{-operationalNeedName}} status updated.',
+  errorStatusUpdated:
+    'There was an issue updating the status for {{-operationalNeedName}}. Please try again.'
 };
 export default itSolutions;
