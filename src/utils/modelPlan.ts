@@ -1674,8 +1674,10 @@ export const isUUID = (uuid: string) =>
 /* i.e. Steve Rogers == SR */
 export const getUserInitials = (user: string) =>
   user
-    ?.match(/(\b\S)?/g)
-    ?.join('')
-    ?.match(/(^\S|\S$)?/g)
-    ?.join('')
-    ?.toUpperCase();
+    ?.split(' ')
+    .map(name => returnValidLetter(name?.charAt(0)).toUpperCase())
+    .join('');
+
+// Check if a single character is a valid letter
+export const returnValidLetter = (str: string) =>
+  str.length === 1 && str.match(/[a-z]/i) ? str : '';

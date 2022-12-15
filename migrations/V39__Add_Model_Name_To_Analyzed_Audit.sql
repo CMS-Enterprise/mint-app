@@ -1,0 +1,2 @@
+ALTER TABLE analyzed_audit
+ADD COLUMN model_name ZERO_STRING NOT NULL;

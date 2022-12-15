@@ -6,13 +6,17 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
-	Store  *storage.Store
-	Logger *zap.Logger
+	Store                *storage.Store
+	Logger               *zap.Logger
+	EmailService         oddmail.EmailService
+	EmailTemplateService email.TemplateServiceImpl
 }
 
 // Work creates, configues, and starts worker
@@ -25,21 +29,10 @@ func (w *Worker) Work() {
 
 	// register jobs here
 	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
+	mgr.Register("DailyDigestEmailJob", w.DailyDigestEmailJob)
 
 	err := mgr.Run()
 	if err != nil {
 		fmt.Println(err)
 	}
 }
-
-/*
-Put registered functions here:
-e.g.
-
-	func someFunc(ctx context.Context, args ...interface{}) error {
-		help := faktory_worker.HelperFor(ctx)
-		log.Printf("Working on job %s\n", help.Jid())
-		time.Sleep(1 * time.Second)
-		return nil
-	}
-*/

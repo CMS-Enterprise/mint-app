@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -19,6 +20,9 @@ var analyzedAuditDelete string
 
 //go:embed SQL/analyzed_audit/get_by_model_plan_id_and_date.sql
 var analyzedAuditGetByModelPlanIDAndDate string
+
+//go:embed SQL/analyzed_audit/get_collection_by_model_plan_ids_and_date.sql
+var analyzedAuditGetByModelPlanIDsAndDate string
 
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
 func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.AnalyzedAudit) (*models.AnalyzedAudit, error) {
@@ -86,4 +90,25 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(logger *zap.Logger, modelPl
 		return nil, err
 	}
 	return &analyzedAudit, nil
+}
+
+// AnalyzedAuditGetByModelPlanIDsAndDate gets and returns all AnalyzedAudits by modelPlanIDs and date
+func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelPlanIDs []uuid.UUID, date time.Time) ([]*models.AnalyzedAudit, error) {
+	analyzedAudits := []*models.AnalyzedAudit{}
+
+	stmt, err := s.db.PrepareNamed(analyzedAuditGetByModelPlanIDsAndDate)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"model_plan_ids": pq.Array(modelPlanIDs),
+		"date":           date.Format("2006-01-02"),
+	}
+
+	err = stmt.Select(&analyzedAudits, arg)
+
+	if err != nil {
+		return nil, err
+	}
+	return analyzedAudits, nil
 }
