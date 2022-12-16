@@ -30,7 +30,7 @@ const userInfoOutPut = `cmd/backfill/data/sensitive/userInfoOutput.json`
 
 func main() { //TODO make this a command
 	testTransform := false
-	testUpload := false
+	testUpload := true
 	useEdit := false
 	useDecember13 := true
 	testUserInfo := false

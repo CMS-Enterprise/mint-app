@@ -45,8 +45,8 @@ Created By,ModelPlan,CreatedBy,TRUE,,
 Current Model Participation,PlanParticipantsAndProviders,ParticipantsCurrentlyInModels,TRUE,,
 Current Model Participation-Notes,PlanParticipantsAndProviders,ParticipantsCurrentlyInModelsNote,TRUE,,
 Data Collection Starts,PlanOpsEvalAndLearning,DataCollectionStarts,TRUE,,
-Data Monitoring,PlanOpsEvalAndLearning,DataMonitoringFileTypes,FALSE,"DataMonitoringFileTypes, DataResponseType, DataResponseFileFrequency, DataFullTimeOrIncremental, EftSetUp, UnsolicitedAdjustmentsIncluded, DataFlowDiagramsNeeded, ProduceBenefitEnhancementFiles, FileNamingConventions ",DataMonitoringFileOther
-Data Monitoring-Notes,PlanOpsEvalAndLearning,DataMonitoringNote,TRUE,,
+Data Monitoring,PlanOpsEvalAndLearning,DataNeededForMonitoring,FALSE,"DataMonitoringFileTypes, DataResponseType, DataResponseFileFrequency, DataFullTimeOrIncremental, EftSetUp, UnsolicitedAdjustmentsIncluded, DataFlowDiagramsNeeded, ProduceBenefitEnhancementFiles, FileNamingConventions, this is more about the data then the type",DataNeededForMonitoringOther
+Data Monitoring-Notes,PlanOpsEvalAndLearning,DataNeededForMonitoringNote,TRUE,,
 Data Sharing Starts,PlanOpsEvalAndLearning,DataSharingStarts,TRUE,,
 Different Tracks,PlanGeneralCharacteristics,HasComponentsOrTracks,TRUE,,
 Different Tracks-Notes,PlanGeneralCharacteristics,HasComponentsOrTracksNote,TRUE,,

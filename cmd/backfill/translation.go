@@ -453,20 +453,27 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 
 		//TODO handle TBD
 		if !isTranslated {
-			if strings.ToLower(valString) == "tbd" {
-				tErr = &TranslationError{
-					Translation: *t,
-					Type:        "tbd-conversion",
-					Value:       value,
-					Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
-				}
-			}
+			// if strings.ToLower(valString) == "tbd" {
+			// 	tErr = &TranslationError{ //TODO! This needs to be handled after translating, not before...
+			// 		Translation: *t,
+			// 		Type:        "tbd-conversion",
+			// 		Value:       value,
+			// 		Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
+			// 	}
+			// }
 			otherEnum, otherExists := t.translateEnum("Other", backfiller)
 			if otherExists && otherField != nil {
 				translatedString = otherEnum
 				isOtherPointer := otherField.Kind().String() == "ptr"
 				other := valueOrPointer(valString, isOtherPointer)
 				otherVal = &other
+			} else if strings.ToLower(valString) == "tbd" {
+				tErr = &TranslationError{ //TODO! This needs to be handled after translating, not before...
+					Translation: *t,
+					Type:        "tbd-conversion",
+					Value:       value,
+					Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
+				}
 			} else {
 				tErr = &TranslationError{
 					Translation: *t,
@@ -475,13 +482,9 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 					Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
 				}
 			}
-
 		}
-		//TODO cast the value as the field value
 
-		conVal = valueOrPointerOfType(translatedString, isPointer, fieldTypeS) //TODO SHOULD WE pass entry and translation around so we can add the error?
-
-		// conVal = valueOrPointer(translatedString, isPointer)
+		conVal = valueOrPointerOfType(translatedString, isPointer, fieldTypeS)
 
 	}
 

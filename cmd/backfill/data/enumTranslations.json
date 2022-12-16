@@ -761,10 +761,11 @@
     },
     {
         "value": "RFA (Request for Applications) (Note: CMMI writes, OGC reviews and approves)",
-        "enum": "RFA",
+        "enum": "APPLICATION_COLLECTION_TOOL",
         "dbtype": "recruitment_type",
         "model": "PlanParticipantsAndProviders",
-        "field": "RecruitmentMethod"
+        "field": "RecruitmentMethod",
+        "note": "THIS WAS RFA, but was removed"
     },
     {
         "value": "NOFO (Notice of Funding Opportunity, for grants/cooperative agreements) (Note: OAGM reviews and approves)",
@@ -1120,24 +1121,34 @@
     },
     {
         "enum": "BENEFICIARY",
-        "dbtype": "monitoring_file_type"
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "PROVIDER",
-        "dbtype": "monitoring_file_type"
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "PROVIDER",
-        "dbtype": "monitoring_file_type"
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "PART_B",
-        "dbtype": "monitoring_file_type"
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "value": "Other",
         "enum": "OTHER",
-        "dbtype": "monitoring_file_type"
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "value": "Establish control and intervention groups",
@@ -1194,80 +1205,80 @@
         "enum": "SITE_VISITS",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Medicare claims",
         "enum": "MEDICARE_CLAIMS",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Medicaid claims",
         "enum": "MEDICAID_CLAIMS",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "enum": "ENCOUNTER_DATA",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "enum": "NO_PAY_CLAIMS",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Quality Claims-based measures",
         "enum": "QUALITY_CLAIMS_BASED_MEASURES",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Quality reported measures",
         "enum": "QUALITY_REPORTED_MEASURES",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "enum": "CLINICAL_DATA",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Non-clinical data (e.g., surveys)",
         "enum": "NON_CLINICAL_DATA",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Non-medical data (e.g., housing, nutrition)",
         "enum": "NON_MEDICAL_DATA",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Other",
         "enum": "OTHER",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "enum": "NOT_PLANNING_TO_COLLECT_DATA",
         "dbtype": "data_for_monitoring_type",
         "model": "PlanOpsEvalAndLearning",
-        "field": "DataMonitoringFileTypes"
+        "field": "DataNeededForMonitoring"
     },
     {
         "value": "Baseline/historical data",
