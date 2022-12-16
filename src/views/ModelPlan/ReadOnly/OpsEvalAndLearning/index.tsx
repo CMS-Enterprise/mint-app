@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import GettAllOpsEvalAndLearning from 'queries/ReadOnly/GettAllOpsEvalAndLearning';
 import { GetAllOpsEvalAndLearning as AllOpsEvalAndLeardningTypes } from 'queries/ReadOnly/types/GetAllOpsEvalAndLearning';
 import { DataStartsType } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 import {
   translateAgencyOrStateHelpType,
   translateBenchmarkForPerformanceType,
@@ -27,6 +28,7 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
+  const { t: readOnly } = useTranslation('readOnlyModelPlan');
 
   const { data, loading, error } = useQuery<AllOpsEvalAndLeardningTypes>(
     GettAllOpsEvalAndLearning,
@@ -153,14 +155,14 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
       data-testid="read-only-model-plan--ops-eval-and-learning"
     >
       <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
+        <h2 className="margin-top-0 margin-bottom-4 flex-2">{t('heading')}</h2>
         {status && <TaskListStatusTag status={status} />}
       </div>
 
       {/* // OpsEvalAndLearningContent */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
-          heading={t('anotherAgency')} // TODO: May want a separate readonly i18n b/c of "select all that apply"
+          heading={readOnly('opsEvalAndLearning.anotherAgency')}
           list
           listItems={agencyOrStateHelp?.map(translateAgencyOrStateHelpType)}
           listOtherItem={agencyOrStateHelpOther}
@@ -189,41 +191,55 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           heading={t('whatContractorsHow')}
           copy={contractorSupportHow}
         />
+      </div>
+
+      {/* IDDOC */}
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
         <ReadOnlySection
           heading={t('iddocSupport')}
           copy={iddocSupport ? h('yes') : h('no')}
           notes={iddocSupportNote}
         />
-      </div>
-
-      {/* IDDOC */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('technicalContacts')}
-          copy={technicalContactsIdentified ? h('yes') : h('no')}
-          notes={technicalContactsIdentifiedNote}
-        />
-        {technicalContactsIdentified && (
-          <ReadOnlySection
-            heading={h('pleaseSpecify')} // TODO: This should maybe something other than "Please Specify" ("Technical Contact Details"?)
-            copy={technicalContactsIdentifiedDetail}
-          />
-        )}
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('technicalContacts')}
+              copy={technicalContactsIdentified ? h('yes') : h('no')}
+              notes={technicalContactsIdentifiedNote} // TODO: fix this
+            />
+          </div>
+          {/* Only display specification div if "yes" was selected for technical contacts question above */}
+          {technicalContactsIdentified && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={h('pleaseSpecify')}
+                copy={technicalContactsIdentifiedDetail}
+              />
+            </div>
+          )}
+        </div>
         <ReadOnlySection
           heading={t('participantInformation')}
           copy={captureParticipantInfo ? h('yes') : h('no')}
           notes={captureParticipantInfoNote}
         />
+      </div>
+
+      {/* Interface Control Document - ICD */}
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
         <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
         <ReadOnlySection
           heading={t('draftIDC')}
-          copy={draftIcdDueDate}
+          copy={draftIcdDueDate && formatDate(draftIcdDueDate, 'MM/dd/yyyy')}
           notes={icdNote}
         />
       </div>
 
       {/* IDDOCTesting */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
         <ReadOnlySection heading={t('uatNeeds')} copy={uatNeeds} />
         <ReadOnlySection heading={t('stcNeeds')} copy={stcNeeds} />
         <ReadOnlySection
@@ -231,43 +247,58 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           copy={testingTimelines}
           notes={testingNote}
         />
+      </div>
+
+      {/* IDDOCMonitoring */}
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
         <ReadOnlySection
           heading={t('fileTypes')}
           list
           listItems={dataMonitoringFileTypes?.map(
+            // TODO: this is showing blanks instead of translation, fix
             translateDataForMonitoringType
           )}
           listOtherItem={dataMonitoringFileOther}
-          notes={dataMonitoringNote}
         />
         <ReadOnlySection heading={t('responseTypes')} copy={dataResponseType} />
         <ReadOnlySection
           heading={t('fileFrequency')}
           copy={dataResponseFileFrequency}
         />
-      </div>
-
-      {/* IDDOCMonitoring */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('timeFrequency')}
-          copy={
-            dataFullTimeOrIncremental &&
-            translateDataFullTimeOrIncrementalType(dataFullTimeOrIncremental)
-          }
-        />
-        <ReadOnlySection
-          heading={t('eftAndConnectivity')}
-          copy={eftSetUp ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('adjustments')}
-          copy={unsolicitedAdjustmentsIncluded ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('diagrams')}
-          copy={dataFlowDiagramsNeeded ? h('yes') : h('no')}
-        />
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('timeFrequency')}
+              copy={
+                dataFullTimeOrIncremental &&
+                translateDataFullTimeOrIncrementalType(
+                  dataFullTimeOrIncremental
+                )
+              }
+            />
+          </div>
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('eftAndConnectivity')}
+              copy={eftSetUp ? h('yes') : h('no')}
+            />
+          </div>
+        </div>
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('adjustments')}
+              copy={unsolicitedAdjustmentsIncluded ? h('yes') : h('no')}
+            />
+          </div>
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('diagrams')}
+              copy={dataFlowDiagramsNeeded ? h('yes') : h('no')}
+            />
+          </div>
+        </div>
         <ReadOnlySection
           heading={t('benefitEnhancement')}
           copy={produceBenefitEnhancementFiles ? h('yes') : h('no')}
@@ -275,6 +306,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('namingConventions')}
           copy={fileNamingConventions}
+          notes={dataMonitoringNote}
         />
       </div>
 
@@ -293,60 +325,88 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           copy={computePerformanceScores ? h('yes') : h('no')}
           notes={computePerformanceScoresNote}
         />
-        <ReadOnlySection
-          heading={t('performanceScores')}
-          copy={riskAdjustPerformance ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('feedbackResults')}
-          copy={riskAdjustFeedback ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('payments')}
-          copy={riskAdjustPayments ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('others')}
-          copy={riskAdjustOther ? h('yes') : h('no')}
-          notes={riskAdjustNote}
-        />
-        <ReadOnlySection
-          heading={t('performanceScores')}
-          copy={appealPerformance ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('feedbackResults')}
-          copy={appealFeedback ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('payments')}
-          copy={appealPayments ? h('yes') : h('no')}
-        />
-        <ReadOnlySection
-          heading={t('others')}
-          copy={appealOther ? h('yes') : h('no')}
-          notes={appealNote}
-        />
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.riskAdj.performanceScores')}
+              copy={riskAdjustPerformance ? h('yes') : h('no')}
+            />
+          </div>
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.riskAdj.feedbackResults')}
+              copy={riskAdjustFeedback ? h('yes') : h('no')}
+            />
+          </div>
+        </div>
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.riskAdj.payments')}
+              copy={riskAdjustPayments ? h('yes') : h('no')}
+              notes={riskAdjustNote} // TODO: fix this
+            />
+          </div>
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.riskAdj.others')}
+              copy={riskAdjustOther ? h('yes') : h('no')}
+            />
+          </div>
+        </div>
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.appeal.performanceScores')}
+              copy={appealPerformance ? h('yes') : h('no')}
+            />
+          </div>
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.appeal.feedbackResults')}
+              copy={appealFeedback ? h('yes') : h('no')}
+            />
+          </div>
+        </div>
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.appeal.payments')}
+              copy={appealPayments ? h('yes') : h('no')}
+              notes={appealNote} // TODO: fix this
+            />
+          </div>
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={readOnly('opsEvalAndLearning.appeal.others')}
+              copy={appealOther ? h('yes') : h('no')}
+            />
+          </div>
+        </div>
+        {/* TODO: <ReadOnlySection heading="Notes" notes={appealNote} /> */}
       </div>
 
       {/* Evaluation */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
-          heading={t('evaluationApproach')} // TODO: May want a separate readonly i18n b/c of "select all that apply"
+          heading={readOnly('opsEvalAndLearning.evaluationApproach')}
           list
           listItems={evaluationApproaches?.map(translateEvaluationApproachType)}
           listOtherItem={evaluationApproachOther}
           notes={evalutaionApproachNote}
         />
         <ReadOnlySection
-          heading={t('ccw')} // TODO: May want a separate readonly i18n b/c of "select all that apply"
+          heading={t('ccw')}
           list
           listItems={ccmInvolvment?.map(translateCcmInvolvmentType)}
           listOtherItem={ccmInvolvmentOther}
           notes={ccmInvolvmentNote}
         />
         <ReadOnlySection
-          heading={t('dataNeeded')} // TODO: May want a separate readonly i18n b/c of "select all that apply"
+          heading={readOnly('opsEvalAndLearning.dataNeeded')}
           list
           listItems={dataNeededForMonitoring?.map(
             translateDataForMonitoringType
@@ -355,12 +415,12 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           notes={dataNeededForMonitoringNote}
         />
         <ReadOnlySection
-          heading={t('dataToSend')} // TODO: May want a separate readonly i18n b/c of "select all that apply"
+          heading={readOnly('opsEvalAndLearning.dataToSend')}
           list
           listItems={dataToSendParticicipants?.map(
             translateDataToSendParticipantsType
           )}
-          listOtherItem={dataToSendParticicipantsOther}
+          listOtherItem={dataToSendParticicipantsOther} // TODO: this doesnt display, fix
           notes={dataToSendParticicipantsNote}
         />
         <ReadOnlySection
@@ -372,27 +432,41 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
 
       {/* CCWAndQuality */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
         <ReadOnlySection
           heading={t('ccwSendFiles')}
           copy={sendFilesBetweenCcw ? h('yes') : h('no')}
           notes={sendFilesBetweenCcwNote}
         />
-        <ReadOnlySection
-          heading={t('fileTransfers')}
-          copy={appToSendFilesToKnown ? h('yes') : h('no')}
-          notes={appToSendFilesToNote}
-        />
-        {appToSendFilesToKnown && (
-          <ReadOnlySection
-            heading={h('pleaseSpecify')} // TODO: This should maybe something other than "Please Specify" ("Which applications"?)
-            copy={appToSendFilesToWhich}
-          />
-        )}
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('fileTransfers')}
+              copy={appToSendFilesToKnown ? h('yes') : h('no')}
+              notes={appToSendFilesToNote} // TODO: fix this
+            />
+          </div>
+          {/* Only display specification div if "yes" was selected for file transfer question above */}
+          {appToSendFilesToKnown && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={h('pleaseSpecify')}
+                copy={appToSendFilesToWhich}
+              />
+            </div>
+          )}
+        </div>
+
         <ReadOnlySection
           heading={t('distributeFiles')}
           copy={useCcwForFileDistribiutionToParticipants ? h('yes') : h('no')}
           notes={useCcwForFileDistribiutionToParticipantsNote}
         />
+      </div>
+
+      {/* Quality */}
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
         <ReadOnlySection
           heading={t('validatedQuality')}
           copy={developNewQualityMeasures ? h('yes') : h('no')}
@@ -407,6 +481,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
 
       {/* DataSharing */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <h3>{readOnly('opsEvalAndLearning.headings.data')}</h3>
         <ReadOnlySection
           heading={t('dataSharing')}
           copy={
@@ -417,13 +492,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
                 )} \u2014  ${dataSharingStartsOther}`
               : translateDataStartsType(dataSharingStarts))
           }
-          notes={dataSharingStartsNote}
         />
         <ReadOnlySection
-          heading={t('reportingTiming')}
+          heading={t('dataSharingHowOften')}
           list
           listItems={dataSharingFrequency?.map(translateDataFrequencyType)}
           listOtherItem={dataSharingFrequencyOther}
+          notes={dataSharingStartsNote}
         />
         <ReadOnlySection
           heading={t('dataCollection')}
