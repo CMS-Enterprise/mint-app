@@ -42,6 +42,7 @@
         "field": "beneficiaries"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "beneficiaries_type",
         "model": "PlanBeneficiaries",
@@ -122,6 +123,7 @@
         "dbtype": "frequency_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "frequency_type"
     },
@@ -318,6 +320,7 @@
         "field": "CMSCenters"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "cms_center",
         "model": "PlanBasics",
@@ -402,6 +405,7 @@
         "dbtype": "document_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "document_type"
     },
@@ -522,6 +526,7 @@
         "field": "geographiesTargetedTypes"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "geography_type",
         "model": "PlanGeneralCharacteristics",
@@ -646,6 +651,7 @@
         "dbtype": "selection_method_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "selection_method_type"
     },
@@ -886,6 +892,7 @@
         "field": "riskType"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "participant_risk_type",
         "model": "PlanParticipantsAndProviders",
@@ -913,6 +920,7 @@
         "field": "participantsIds"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "participants_id_type",
         "model": "PlanParticipantsAndProviders",
@@ -959,6 +967,7 @@
         "field": "providerAddMethod"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "provider_add_type",
         "model": "PlanParticipantsAndProviders",
@@ -987,6 +996,7 @@
         "dbtype": "provider_leave_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "provider_leave_type"
     },
@@ -1023,6 +1033,7 @@
         "field": "agencyOrStateHelp"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "agency_or_state_help_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1072,6 +1083,7 @@
         "field": "stakeholders"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "stakeholders_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1100,6 +1112,7 @@
         "field": "contractorSupport"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "contractor_support_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1122,6 +1135,7 @@
         "dbtype": "monitoring_file_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "monitoring_file_type"
     },
@@ -1153,6 +1167,7 @@
         "field": "evaluationApproaches"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "evaluation_approach_type",
         "model": "PlanOpsEvalAndLearning",
@@ -1171,6 +1186,7 @@
         "dbtype": "ccm_involvment_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "ccm_involvment_type"
     },
@@ -1304,6 +1320,15 @@
         "field": "dataToSendParticicipants"
     },
     {
+        "value": "Other",
+        "enum": "OTHER_MIPS_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants",
+        "outliers": "Data feedback reports/dashboards",
+        "note": "DOUBLE CHECK THIS!!!"
+    },
+    {
         "enum": "ANNUALLY",
         "dbtype": "data_frequency_type",
         "model": "PlanPayments"
@@ -1340,6 +1365,7 @@
         "model": "PlanPayments"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "data_frequency_type",
         "model": "PlanPayments"
@@ -1544,6 +1570,7 @@
         "field": "fundingSource"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_funding_source",
         "model": "PlanPayments",
@@ -1577,6 +1604,7 @@
         "field": "payRecipients"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_pay_recipient",
         "model": "PlanPayments",
@@ -1634,6 +1662,7 @@
         "model": "PlanPayments"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_claims_based_pay_type",
         "model": "PlanPayments"
@@ -1786,6 +1815,7 @@
         "field": "anticipatedPaymentFrequency"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_anticipated_payment_frequency_type",
         "model": "PlanPayments",
@@ -1797,6 +1827,7 @@
         "model": "PlanPayments"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "gc_part_c_d_type"
     },
@@ -1805,6 +1836,7 @@
         "dbtype": "gc_collect_bids_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "gc_collect_bids_type"
     },
@@ -1813,6 +1845,7 @@
         "dbtype": "gc_update_contract_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "gc_update_contract_type"
     },
@@ -1825,6 +1858,7 @@
         "dbtype": "pp_to_advertise_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_to_advertise_type"
     },
@@ -1841,6 +1875,7 @@
         "dbtype": "pp_collect_score_review_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_collect_score_review_type"
     },
@@ -1849,6 +1884,7 @@
         "dbtype": "pp_app_support_contractor_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_app_support_contractor_type"
     },
@@ -1865,6 +1901,7 @@
         "dbtype": "pp_communicate_with_participant_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_communicate_with_participant_type"
     },
@@ -1873,6 +1910,7 @@
         "dbtype": "pp_manage_provider_overlap_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "pp_manage_provider_overlap_type"
     },
@@ -1885,6 +1923,7 @@
         "dbtype": "b_manage_beneficiary_overlap_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "b_manage_beneficiary_overlap_type"
     },
@@ -1901,6 +1940,7 @@
         "dbtype": "oel_helpdesk_support_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_helpdesk_support_type"
     },
@@ -1917,6 +1957,7 @@
         "dbtype": "oel_manage_aco_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_manage_aco_type"
     },
@@ -1929,6 +1970,7 @@
         "dbtype": "oel_performance_benchmark_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_performance_benchmark_type"
     },
@@ -1937,6 +1979,7 @@
         "dbtype": "oel_process_appeals_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_process_appeals_type"
     },
@@ -1945,6 +1988,7 @@
         "dbtype": "oel_evaluation_contractor_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_evaluation_contractor_type"
     },
@@ -1969,6 +2013,7 @@
         "dbtype": "oel_collect_data_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_collect_data_type"
     },
@@ -1985,6 +2030,7 @@
         "dbtype": "oel_obtain_data_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_obtain_data_type"
     },
@@ -1997,6 +2043,7 @@
         "dbtype": "oel_claims_based_measures_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_claims_based_measures_type"
     },
@@ -2009,6 +2056,7 @@
         "dbtype": "oel_quality_scores_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_quality_scores_type"
     },
@@ -2029,6 +2077,7 @@
         "dbtype": "oel_send_reports_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_send_reports_type"
     },
@@ -2041,6 +2090,7 @@
         "dbtype": "oel_learning_contractor_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_learning_contractor_type"
     },
@@ -2049,6 +2099,7 @@
         "dbtype": "oel_participant_collaboration_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_participant_collaboration_type"
     },
@@ -2057,6 +2108,7 @@
         "dbtype": "oel_educate_beneficiaries_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "oel_educate_beneficiaries_type"
     },
@@ -2069,6 +2121,7 @@
         "dbtype": "p_make_claims_payments_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "p_make_claims_payments_type"
     },
@@ -2077,6 +2130,7 @@
         "dbtype": "p_inform_ffs_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "p_inform_ffs_type"
     },
@@ -2097,6 +2151,7 @@
         "dbtype": "p_non_claims_based_payments_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "p_non_claims_based_payments_type"
     },
@@ -2105,6 +2160,7 @@
         "dbtype": "p_shared_savings_plan_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "p_shared_savings_plan_type"
     },
@@ -2121,10 +2177,12 @@
         "dbtype": "p_recover_payments_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "p_recover_payments_type"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "operational_need_key"
     },
@@ -2269,6 +2327,7 @@
         "dbtype": "task_list_section"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "operational_solution_key"
     },
