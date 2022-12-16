@@ -18,6 +18,7 @@ import {
   translateDataToSendParticipantsType,
   translateEvaluationApproachType,
   translateModelLearningSystemType,
+  translateMonitoringFileType,
   translateStakeholdersType
 } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
@@ -202,11 +203,14 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           notes={iddocSupportNote}
         />
         <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
+          <div
+            className={
+              technicalContactsIdentified ? 'desktop:width-card-lg' : ''
+            }
+          >
             <ReadOnlySection
               heading={t('technicalContacts')}
               copy={technicalContactsIdentified ? h('yes') : h('no')}
-              notes={technicalContactsIdentifiedNote} // TODO: fix this
             />
           </div>
           {/* Only display specification div if "yes" was selected for technical contacts question above */}
@@ -219,6 +223,12 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
             </div>
           )}
         </div>
+        {/* This is a slight "hack" of this component in order to get around the heading being required */}
+        <ReadOnlySection
+          heading={h('note')}
+          copy={technicalContactsIdentifiedNote}
+        />
+
         <ReadOnlySection
           heading={t('participantInformation')}
           copy={captureParticipantInfo ? h('yes') : h('no')}
@@ -255,10 +265,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('fileTypes')}
           list
-          listItems={dataMonitoringFileTypes?.map(
-            // TODO: this is showing blanks instead of translation, fix
-            translateDataForMonitoringType
-          )}
+          listItems={dataMonitoringFileTypes?.map(translateMonitoringFileType)}
           listOtherItem={dataMonitoringFileOther}
         />
         <ReadOnlySection heading={t('responseTypes')} copy={dataResponseType} />
@@ -345,7 +352,6 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.riskAdj.payments')}
               copy={riskAdjustPayments ? h('yes') : h('no')}
-              notes={riskAdjustNote} // TODO: fix this
             />
           </div>
           <div className="desktop:width-card-lg">
@@ -355,6 +361,8 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
             />
           </div>
         </div>
+        {/* This is a slight "hack" of this component in order to get around the heading being required */}
+        <ReadOnlySection heading={h('note')} copy={riskAdjustNote} />
 
         <div className="desktop:display-flex flex-justify">
           <div className="desktop:width-card-lg">
@@ -376,7 +384,6 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.appeal.payments')}
               copy={appealPayments ? h('yes') : h('no')}
-              notes={appealNote} // TODO: fix this
             />
           </div>
           <div className="desktop:width-card-lg">
@@ -386,7 +393,8 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
             />
           </div>
         </div>
-        {/* TODO: <ReadOnlySection heading="Notes" notes={appealNote} /> */}
+        {/* This is a slight "hack" of this component in order to get around the heading being required */}
+        <ReadOnlySection heading={h('note')} copy={appealNote} />
       </div>
 
       {/* Evaluation */}
@@ -420,7 +428,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           listItems={dataToSendParticicipants?.map(
             translateDataToSendParticipantsType
           )}
-          listOtherItem={dataToSendParticicipantsOther} // TODO: this doesnt display, fix
+          listOtherItem={dataToSendParticicipantsOther}
           notes={dataToSendParticicipantsNote}
         />
         <ReadOnlySection
@@ -439,11 +447,10 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
           notes={sendFilesBetweenCcwNote}
         />
         <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
+          <div className={appToSendFilesToKnown ? 'desktop:width-card-lg' : ''}>
             <ReadOnlySection
               heading={t('fileTransfers')}
               copy={appToSendFilesToKnown ? h('yes') : h('no')}
-              notes={appToSendFilesToNote} // TODO: fix this
             />
           </div>
           {/* Only display specification div if "yes" was selected for file transfer question above */}
@@ -456,6 +463,8 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
             </div>
           )}
         </div>
+        {/* This is a slight "hack" of this component in order to get around the heading being required */}
+        <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
 
         <ReadOnlySection
           heading={t('distributeFiles')}
