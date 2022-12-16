@@ -131,7 +131,7 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt, ldClient *ld.LDClient) (*authentication.ApplicationPrincipal, error) {
+func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.ApplicationPrincipal, error) {
 	euaID := enchanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
@@ -143,6 +143,8 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt, ldClient *ld.LDC
 	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetMACUserJobCode())
 
 	// Create a LaunchDarkly user
+	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
+	// actually depends on tha authentication.ApplicationPrincipal
 	key := flags.UserKeyForID(euaID)
 	ldUser := lduser.
 		NewUserBuilder(key).
@@ -150,7 +152,7 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt, ldClient *ld.LDC
 		Build()
 
 	// Fetch whether or not we should downgrade the assessment team job code, and properly downgrade if necessary
-	downgradeAssessment, err := ldClient.BoolVariation(flags.DowngradeAssessmentTeamKey, ldUser, false)
+	downgradeAssessment, err := f.ldClient.BoolVariation(flags.DowngradeAssessmentTeamKey, ldUser, false)
 	if err != nil {
 		return nil, err
 	}
@@ -200,7 +202,7 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 			return
 		}
 
-		principal, err := f.newPrincipal(jwt, f.ldClient)
+		principal, err := f.newPrincipal(jwt)
 		if err != nil {
 			f.WriteErrorResponse(
 				r.Context(),
@@ -267,7 +269,7 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 		}
 
 		// devCtx, err := devUserContext(ctx, token)
-		principal, err := f.newPrincipal(jwt, f.ldClient)
+		principal, err := f.newPrincipal(jwt)
 		if err != nil {
 			logger.Error("could not set context for okta auth", zap.Error(err))
 			return nil, err
