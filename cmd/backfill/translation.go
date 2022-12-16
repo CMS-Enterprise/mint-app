@@ -137,7 +137,7 @@ func (t *Translation) handleUsesACO(entry *BackfillEntry, value interface{}) {
 		entry.TErrors = append(entry.TErrors, TranslationError{
 			Translation: *t,
 			Value:       value,
-			Type:        "unhandled-conversion",
+			Type:        "unhandled-conversion-ACO",
 			Message:     "value not handled for ACO conversion",
 		})
 	}
@@ -320,7 +320,16 @@ func (t *Translation) setField(field *reflect.Value, otherField *reflect.Value, 
 
 			field.Set(convVal)
 			if otherVal != nil {
-				if otherVal.IsValid() {
+				if otherVal.IsValid() { //TODO verify otherfield is not zero either
+					if !otherField.IsValid() {
+						return &TranslationError{
+							Translation: *t,
+							Type:        "other-field-not-valid",
+							Value:       otherVal.String(),
+							Message:     "Couldn't set other field because the field isn't valid",
+						}
+					}
+
 					otherField.Set(*otherVal)
 				}
 			}
@@ -366,7 +375,7 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 		if otherVals != nil && otherField != nil {
 			isOtherPointer := otherField.Kind().String() == "ptr"
 
-			other := valueOrPointer(otherVals, isOtherPointer)
+			other := valueOrPointer(*otherVals, isOtherPointer)
 			otherVal = &other
 		}
 
@@ -383,11 +392,16 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 			}
 		}
 		if err != nil {
-			tErr = &TranslationError{
-				Translation: *t,
-				Type:        "bool-conversion",
-				Value:       value,
-				Message:     fmt.Sprintf("type conversion failed to convert to bool for type %s", fieldType),
+			wasTBD := t.errIfTBD(valString, fieldTypeS)
+			if wasTBD != nil {
+				tErr = wasTBD
+			} else {
+				tErr = &TranslationError{
+					Translation: *t,
+					Type:        "bool-conversion",
+					Value:       value,
+					Message:     fmt.Sprintf("type conversion failed to convert to bool for type %s", fieldType),
+				}
 			}
 		}
 		conVal = valueOrPointer(bVal, isPointer)
@@ -396,11 +410,16 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 
 		intVal, err := strconv.Atoi(valString)
 		if err != nil {
-			tErr = &TranslationError{
-				Translation: *t,
-				Type:        "int-conversion",
-				Value:       value,
-				Message:     fmt.Sprintf("type conversion failed to convert to int for type %s", fieldType),
+			wasTBD := t.errIfTBD(valString, fieldTypeS)
+			if wasTBD != nil {
+				tErr = wasTBD
+			} else {
+				tErr = &TranslationError{
+					Translation: *t,
+					Type:        "int-conversion",
+					Value:       value,
+					Message:     fmt.Sprintf("type conversion failed to convert to int for type %s", fieldType),
+				}
 			}
 		}
 		conVal = valueOrPointer(intVal, isPointer)
@@ -414,11 +433,16 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 			layout2 := "1/2/06 15:04"
 			tVal, err = time.Parse(layout2, valString)
 			if err != nil {
-				tErr = &TranslationError{
-					Translation: *t,
-					Type:        "time-conversion",
-					Value:       value,
-					Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+				wasTBD := t.errIfTBD(valString, fieldTypeS)
+				if wasTBD != nil {
+					tErr = wasTBD
+				} else {
+					tErr = &TranslationError{
+						Translation: *t,
+						Type:        "time-conversion",
+						Value:       value,
+						Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+					}
 				}
 			}
 		}
@@ -455,7 +479,7 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 		}
 		//TODO cast the value as the field value
 
-		conVal = valueOrPointerOfType(translatedString, isPointer, fieldTypeS)
+		conVal = valueOrPointerOfType(translatedString, isPointer, fieldTypeS) //TODO SHOULD WE pass entry and translation around so we can add the error?
 
 		// conVal = valueOrPointer(translatedString, isPointer)
 
@@ -465,9 +489,18 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 
 }
 
-// func ( t *Translation)[anyType interface{}] tryTranslateEnum(string ,){
+func (t *Translation) errIfTBD(valString string, fieldType string) *TranslationError {
+	if valString == "TBD" || valString == "tbd" {
+		return &TranslationError{
+			Translation: *t,
+			Type:        "tbd-information",
+			Value:       valString,
+			Message:     "value set as TBD. Leaving entry null for " + fieldType,
+		}
+	}
+	return nil
 
-// }
+}
 func (t *Translation) translateStringArray(allValueString string, backfiller *Backfiller) (pq.StringArray, *string, *TranslationError) {
 	allVals := strings.Split(allValueString, ";#")
 	var err *TranslationError
@@ -479,7 +512,7 @@ func (t *Translation) translateStringArray(allValueString string, backfiller *Ba
 		Translation: *t,
 		Type:        "stringArray-conversion",
 		Value:       allValueString,
-		Message:     "No translation found for strings: ",
+		Message:     "No translation found, and no 'other' value. Strings: ",
 	}
 	errTranslating := false
 	for _, st := range allVals {
@@ -504,14 +537,20 @@ func (t *Translation) translateStringArray(allValueString string, backfiller *Ba
 		}
 
 	}
+	var retOthers *string
 	if otherEntryExists {
 		array = append(array, otherEnum)
+		retOthers = &others
 	}
 	if errTranslating {
-		return array, &others, err
+		tbdErr := t.errIfTBD(fmt.Sprint(err.Value), "pq.StringArray")
+		if tbdErr != nil {
+			err = tbdErr
+		}
+		return array, retOthers, err
 	}
 
-	return array, &others, nil
+	return array, retOthers, nil
 }
 
 func (t *Translation) translateEnum(st string, backfiller *Backfiller) (string, bool) {

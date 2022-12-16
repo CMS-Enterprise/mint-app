@@ -365,17 +365,25 @@
         "field": "cMMIGroups"
     },
     {
+        "value": "Voluntary",
         "enum": "VOLUNTARY",
-        "dbtype": "model_type"
+        "dbtype": "model_type",
+        "model": "PlanBasics",
+        "field": "ModelType"
     },
     {
+        "value": "Mandatory",
         "enum": "MANDATORY",
-        "dbtype": "model_type"
+        "dbtype": "model_type",
+        "model": "PlanBasics",
+        "field": "ModelType"
     },
     {
         "value": "TBD",
         "enum": "TBD",
-        "dbtype": "model_type"
+        "dbtype": "model_type",
+        "model": "PlanBasics",
+        "field": "ModelType"
     },
     {
         "enum": "CONCEPT_PAPER",
@@ -492,6 +500,7 @@
         "field": "keyCharacteristics"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "key_characteristic",
         "model": "PlanGeneralCharacteristics",
@@ -562,6 +571,7 @@
         "field": "agreementTypes"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "agreement_type",
         "model": "PlanGeneralCharacteristics",
@@ -588,13 +598,14 @@
         "field": "authorityAllowances"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
         "dbtype": "authority_allowance",
         "model": "PlanGeneralCharacteristics",
         "field": "authorityAllowances"
     },
     {
-        "value": "Fraud and Abuse (Note: Federal Waiver team writes);#Program/payment (Note: CMMI writes, OGC advises, full clearance process is required)",
+        "value": "Fraud and Abuse (Note: Federal Waiver team writes)",
         "enum": "FRAUD_ABUSE",
         "dbtype": "waiver_type",
         "model": "PlanGeneralCharacteristics",
@@ -738,23 +749,37 @@
     },
     {
         "enum": "LOI",
-        "dbtype": "recruitment_type"
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
     },
     {
+        "value": "RFA (Request for Applications) (Note: CMMI writes, OGC reviews and approves)",
         "enum": "RFA",
-        "dbtype": "recruitment_type"
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
     },
     {
+        "value": "NOFO (Notice of Funding Opportunity, for grants/cooperative agreements) (Note: OAGM reviews and approves)",
         "enum": "NOFO",
-        "dbtype": "recruitment_type"
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
-        "dbtype": "recruitment_type"
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
     },
     {
+        "value": "N/A, it is mandatory",
         "enum": "NA",
-        "dbtype": "recruitment_type"
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
     },
     {
         "value": "Model team will review applications",
@@ -1151,51 +1176,82 @@
     },
     {
         "enum": "SITE_VISITS",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Medicare claims",
         "enum": "MEDICARE_CLAIMS",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Medicaid claims",
         "enum": "MEDICAID_CLAIMS",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "ENCOUNTER_DATA",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "NO_PAY_CLAIMS",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Quality Claims-based measures",
         "enum": "QUALITY_CLAIMS_BASED_MEASURES",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Quality reported measures",
         "enum": "QUALITY_REPORTED_MEASURES",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "CLINICAL_DATA",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Non-clinical data (e.g., surveys)",
         "enum": "NON_CLINICAL_DATA",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Non-medical data (e.g., housing, nutrition)",
         "enum": "NON_MEDICAL_DATA",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
+        "value": "Other",
         "enum": "OTHER",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "enum": "NOT_PLANNING_TO_COLLECT_DATA",
-        "dbtype": "data_for_monitoring_type"
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
     },
     {
         "value": "Baseline/historical data",
