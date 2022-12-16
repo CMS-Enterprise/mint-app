@@ -246,14 +246,19 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 	if value == nil || value == "" {
 		return
 	}
-	if value == "Yes, therefore overlaps would not be an issue" {
-		log.Default().Print("here")
-	}
+
 	if t.ModelName == "?" {
+		entry.TErrors = append(entry.TErrors, TranslationError{
+			Translation: *t,
+			Type:        "unknown-mapping",
+			Value:       value,
+			Message:     "this field has data but the mapping is unknown",
+		})
 		log.Default().Print("translation not known for " + t.Header + " . Value is " + fmt.Sprint(value))
 		return
 	}
 	if t.ModelName == "NOT_NEEED" {
+
 		log.Default().Print("translation not needed for " + t.Header + " . Value is " + fmt.Sprint(value) + " . Note : " + t.Note)
 		return
 	}
@@ -264,6 +269,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 			Value:       value,
 			Message:     "this field required manual translation",
 		})
+		return
 
 	}
 	if t.ModelName == "" {
@@ -273,6 +279,12 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 	bModel := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
 
 	if !bModel.IsValid() {
+		entry.TErrors = append(entry.TErrors, TranslationError{
+			Translation: *t,
+			Type:        "invalid-object",
+			Value:       value,
+			Message:     "couldn't get object for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName),
+		})
 		log.Default().Print("couldn't get object for " + t.Header + " . Object name is " + fmt.Sprint(t.ModelName))
 		return
 	}
@@ -308,7 +320,7 @@ func (t *Translation) setField(field *reflect.Value, otherField *reflect.Value, 
 
 	if field.CanConvert(valType) {
 		field.Set(val)
-		log.Default().Print("Converted sucessfully")
+		// fmt.Printf("Converted sucessfully")
 	} else {
 
 		convVal, otherVal, err, setAnyways := t.handleConversion(field, otherField, value, backfiller)

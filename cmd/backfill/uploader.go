@@ -42,7 +42,7 @@ func NewUploader(backfiller *Backfiller) *Uploader { //TODO make this more confi
 }
 
 func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more error handling to this
-	log.Default().Print("BeginingDataUpload")
+	fmt.Printf("BeginingDataUpload \n")
 
 	for i := 0; i < len(entries); i++ {
 
@@ -54,7 +54,7 @@ func (u *Uploader) uploadEntries(entries []*BackfillEntry) { //TODO add more err
 }
 
 func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
-	log.Default().Print("Uploading model : ", entry.ModelPlan.ModelName)
+	fmt.Printf("Uploading model : %q \n", entry.ModelPlan.ModelName)
 
 	userName := entry.ModelPlan.CreatedBy
 	user := u.Backfiller.UDictionary.tryGetUserByName(userName)
