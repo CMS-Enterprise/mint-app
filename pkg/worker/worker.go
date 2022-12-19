@@ -17,6 +17,7 @@ type Worker struct {
 	EmailTemplateService email.TemplateServiceImpl
 	Manager              *faktory_worker.Manager
 	Connections          int
+	ProcessJobs          bool
 }
 
 const (
@@ -32,8 +33,12 @@ const (
 
 // Work creates, configues, and starts worker
 func (w *Worker) Work() {
-	// Setup Monager
 
+	if !w.ProcessJobs {
+		return
+	}
+
+	// Setup Monager
 	w.Manager.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence

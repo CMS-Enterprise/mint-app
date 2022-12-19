@@ -95,14 +95,14 @@ def wait_for_success(message, command)
   puts " ✨ done ✨"
 end
 
-def login_faktory_docker
-  username = ENV['FAKTORY_DOCKERHUB_USERNAME']
-  password = ENV['FAKTORY_DOCKERHUB_PASSWORD']
+def contribsys_docker_login
+  attempt = `docker pull docker.contribsys.com/contribsys/faktory-ent:latest 2>&1 >/dev/null | tail -n 1`
 
-  return false unless username && password
-  return false unless YAML.load(ENV['FAKTORY_PROCESS_JOBS'])
+  if attempt.include?('no basic auth credentials')
+    puts '🔐 Login to docker.contribsys.com (creds are in 1Password) 🔐'
+    return system('docker login docker.contribsys.com', exception: true)
+  end
 
-  system("echo #{password} | docker login docker.contribsys.com -u #{username} --password-stdin")
 end
 
 desc "Check to see if the app's prerequisites are installed"
@@ -132,12 +132,10 @@ def up(frontend_included, *args, debug:false, wait:false)
     "COMPOSE_HTTP_TIMEOUT" => "120",
     "AIR_CONFIG" =>conf,
   }
-  compose_files = ['docker-compose.yml', 'docker-compose.override.yml']
 
-  # login to faktory docker, add faktory compose if successful
-  compose_files << 'docker-compose.faktory.yml' if login_faktory_docker
+  contribsys_docker_login
 
-  command = "docker-compose -f #{compose_files.join(' -f ')} #{"--profile frontend" if frontend_included } up --build"
+  command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
 
   if args.any?
     command = "#{command} #{args.join(' ')}"

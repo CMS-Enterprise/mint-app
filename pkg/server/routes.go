@@ -255,6 +255,7 @@ func (s *Server) routes(
 		EmailTemplateService: *emailTemplateService,
 		Manager:              faktory_worker.NewManager(),
 		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
+		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs),
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
