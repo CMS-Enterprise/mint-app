@@ -7,7 +7,7 @@ import (
 // IsPlanFavorited checks if a model plan is a favorite.
 func (suite *ResolverSuite) TestIsPlanFavorited() {
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
@@ -33,7 +33,7 @@ func (suite *ResolverSuite) TestIsPlanFavorited() {
 // PlanFavoriteCreate creates a new plan favorite record in the database
 func (suite *ResolverSuite) TestPlanFavoriteCreate() {
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
@@ -57,7 +57,7 @@ func (suite *ResolverSuite) TestPlanFavoriteCreate() {
 // PlanFavoriteDelete deletes a plan favorite record in the database
 func (suite *ResolverSuite) TestPlanFavoriteDelete() {
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
@@ -82,7 +82,7 @@ func (suite *ResolverSuite) TestPlanFavoriteDelete() {
 
 // PlanFavoriteGet returns a plan favorite record
 func (suite *ResolverSuite) TestPlanFavoriteGet() {
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,

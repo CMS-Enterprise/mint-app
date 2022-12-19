@@ -186,7 +186,7 @@ const operationsEvaluationAndLearning = {
     beneficiary: 'Beneficiary-level data',
     participant: 'Participant-level data',
     provider: 'Provider-level data',
-    other: 'Other-MIPS data',
+    other: 'Other',
     notPlanning: 'Not planning to send data'
   },
   claimLineFeed:
