@@ -632,32 +632,48 @@
     },
     {
         "enum": "HISTORICAL",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
         "enum": "PROSPECTIVE",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
+        "value": "Select retrospective",
         "enum": "RETROSPECTIVE",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
         "enum": "VOLUNTARY",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
+        "value": "Beneficiary would sign up through their provider",
         "enum": "PROVIDER_SIGN_UP",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
         "value": "Other",
         "enum": "OTHER",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
         "enum": "NA",
-        "dbtype": "selection_method_type"
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
     },
     {
         "value": "Medicare providers",
