@@ -2,6 +2,9 @@ import { ASSESSMENT, BASIC, MAC } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
 export const isAssessment = (groups: Array<String> = [], flags?: Flags) => {
+  if (flags?.downgradeAssessmentTeam) {
+    return false;
+  }
   if (groups.includes(ASSESSMENT)) {
     return true;
   }
