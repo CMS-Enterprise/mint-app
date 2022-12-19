@@ -9,54 +9,111 @@ on:
         required: true
       DOCKERHUB_TOKEN:
         required: true
-
+      CONTRIBSYS_REPO_USERNAME:
+        required: true
+      CONTRIBSYS_REPO_PASSWORD:
+        required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  DOCKER_BUILDKIT: 1
+  POSTGRES_PASSWORD: mysecretpassword
+  POSTGRES_USER: postgres
+  POSTGRES_DB: postgres
+  MINIO_ADDRESS: http://localhost:9005
+  MINIO_KEY: minioadmin
+  S3_BUCKET: mint-app-file-uploads
 
 jobs:
   server_test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14.4
+        env:
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        ports:
+          - 5437:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 1s
+          --health-timeout 1s
+          --health-retries 5
+
+      minio:
+        image: minio/minio:edge-cicd
+        ports:
+          - '9005:9000'
+        options: >-
+          --health-cmd "curl -s http://localhost:9000/minio/health/live"
+          --health-interval 1s
+          --health-timeout 1s
+          --health-retries 5
+
+      faktory:
+        image: docker.contribsys.com/contribsys/faktory-ent:latest
+        credentials:
+          username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
+          password: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
+        ports:
+          - '7419:7419'
+        options: >-
+          --health-cmd "wget -nv -t1 --spider http://localhost:7420/stats"
+          --health-interval 1s
+          --health-timeout 1s
+          --health-retries 5
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+
+      - name: Migrate Database
+        uses: joshuaavalon/flyway-action@v1
         with:
-          ref: ${{ env.GIT_HASH }}
+          url: jdbc:postgresql://postgres:5432/${{ env.POSTGRES_DB }}
+          user: ${{ env.POSTGRES_USER }}
+          password: ${{ env.POSTGRES_PASSWORD }}
+          locations: filesystem:./migrations
+        env:
+          FLYWAY_SCHEMAS: public
+          FLYWAY_DEFAULT_SCHEMA: public
+
+      - name: Make MINIO Bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ env.MINIO_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.MINIO_KEY }}
+          AWS_DEFAULT_REGION: us-west-2
+        run: >-
+          aws --endpoint-url ${{ env.MINIO_ADDRESS }}
+          s3 mb s3://${{ env.S3_BUCKET }}
+
       - name: Set up go
         uses: actions/setup-go@v3
         with:
           go-version-file: 'go.mod'
           cache: true
+
       - name: Install go modules
         run: go mod download
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Set env vars with direnv
         uses: HatsuneMiku3939/direnv-action@v1
-      - name: Get docker images
-        run: docker-compose pull
-        # Why does this step need to be done, you ask?
-        # docker-compose, by default, allows referenceing other containers in the same network by name, i.e. "minio:9005".
-        # Since the tests are being run outside docker, we need to ensure that the host "minio" is reachable, just like it is in the container.
-        # There's probably a better way to ensure that discrepencies like this don't occur, but this is what is easiest to implement right now, and hey...
-        # Who doesn't like reading a comment like this?
-      - name: Add "minio" to /etc/hosts
-        run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
+
+      - name: Get number of CPU cores
+        uses: SimenB/github-actions-cpu-cores@v1
+        id: cpu-cores
+
       - name: Run backend server tests
         run: |
-          export FLAG_SOURCE=FILE
-          scripts/dev down
-          scripts/dev up:backend
-          scripts/dev test:go
-      - name: Docker Compose Down
-        if: always() # Always spin down the container
-        run: |
-          scripts/dev down
+          go test -short -count=1 -p=${{ steps.cpu-cores.outputs.count }} ./...
+
+      - name: Logout Contribsys Docker Repo
+        run: docker logout docker.contribsys.com
+        if: always()
+
       # Leaving this commented out for now, but we should consider uploading these artifacts if they're
       # actually useful!
       # - name: Upload backend test artifacts
@@ -65,6 +122,7 @@ jobs:
       #     name: backend-tests
       #     path: results
       #     retention-days: 14
+
       - name: Announce failure
         if: ${{ failure() }}
         run: |
