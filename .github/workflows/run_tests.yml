@@ -1,13 +1,17 @@
 name: Run Tests
 
 on:
-  push:
+  workflow_call:
     secrets:
       SLACK_WEBHOOK_URL:
         required: true
       DOCKERHUB_USERNAME:
         required: true
       DOCKERHUB_TOKEN:
+        required: true
+      CONTRIBSYS_REPO_USERNAME:
+        required: true
+      CONTRIBSYS_REPO_PASSWORD:
         required: true
 
 env:
@@ -120,7 +124,7 @@ jobs:
       #     retention-days: 14
 
       - name: Announce failure
-        if: ${{ false }}
+        if: ${{ failure() }}
         run: |
           ./scripts/github-action-announce-broken-branch
 
