@@ -523,7 +523,11 @@ const SolutionImplementation = ({
                             type="button"
                             className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
                             onClick={() => {
-                              handleFormSubmit(values, null, true);
+                              if (isUpdatingStatus) {
+                                history.goBack();
+                              } else {
+                                handleFormSubmit(values, null, true);
+                              }
                             }}
                           >
                             <IconArrowBack
