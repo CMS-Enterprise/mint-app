@@ -155,7 +155,7 @@ const SolutionImplementation = ({
 
         if (response && !errors) {
           // If successfully submitting solution details
-          if (!dontAdd && !redirect && !isUpdatingStatus) {
+          if (!dontAdd && !redirect) {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
