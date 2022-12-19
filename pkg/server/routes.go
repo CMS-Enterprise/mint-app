@@ -95,6 +95,7 @@ func (s *Server) routes(
 		jwtVerifier,
 		store,
 		!s.environment.Prod(),
+		ldClient,
 	)
 
 	s.router.Use(
