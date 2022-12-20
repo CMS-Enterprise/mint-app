@@ -7740,7 +7740,7 @@ enum ModelPlanFilter {
   COLLAB_ONLY,
   WITH_CR_TDLS,
 
-  
+
 }
 
 """
@@ -8563,6 +8563,11 @@ enum Role {
   A MINT assessment team user
   """
   MINT_ASSESSMENT
+
+  """
+  A MINT MAC user
+  """
+  MINT_MAC
 }
 
 enum ActionType {
