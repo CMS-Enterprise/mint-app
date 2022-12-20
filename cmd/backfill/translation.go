@@ -117,7 +117,7 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 				Translation: *t,
 				Type:        "verify-translation",
 				Value:       cleanString,
-				Message:     "attempted to set by lowest value. Please verify translation",
+				Message:     "attempted to set by lowest value. Please verify translation (" + fmt.Sprint(lowerInt) + ").",
 			})
 			return
 		}
@@ -132,7 +132,7 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 				Translation: *t,
 				Type:        "verify-translation",
 				Value:       cleanString,
-				Message:     "attempted to set by lowest value. Please verify translation",
+				Message:     "attempted to set by lowest value. Please verify translation (" + fmt.Sprint(lowerInt) + ").",
 			})
 			return
 		}
