@@ -838,7 +838,6 @@
         "field": "selectionMethod"
     },
     {
-        "value": "Rulemaking",
         "enum": "BASIC_CRITERIA",
         "dbtype": "participant_selection_type",
         "model": "PlanParticipantsAndProviders",
