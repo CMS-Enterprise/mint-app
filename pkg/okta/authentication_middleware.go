@@ -10,10 +10,13 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	jwtverifier "github.com/okta/okta-jwt-verifier-golang"
 	"go.uber.org/zap"
+	"gopkg.in/launchdarkly/go-sdk-common.v2/lduser"
+	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -128,29 +131,41 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.OKTAPrincipal, error) {
+func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.ApplicationPrincipal, error) {
 	euaID := enchanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
 
-	baseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
-
-	// the current assumption is that anyone with an appropriate
-	// JWT provided by Okta for MINT is allowed to use MINT
-	// as a viewer/submitter
+	// Get job codes out of the JWT
 	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetUserJobCode())
-
-	// need to check the claims for empowerment as each role6
 	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetAssessmentJobCode())
-
 	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetMACUserJobCode())
 
+	// Create a LaunchDarkly user
+	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
+	// actually depends on tha authentication.ApplicationPrincipal
+	key := flags.UserKeyForID(euaID)
+	ldUser := lduser.
+		NewUserBuilder(key).
+		Anonymous(false).
+		Build()
+
+	// Fetch whether or not we should downgrade the assessment team job code, and properly downgrade if necessary
+	downgradeAssessment, err := f.ldClient.BoolVariation(flags.DowngradeAssessmentTeamKey, ldUser, false)
+	if err != nil {
+		return nil, err
+	}
+	if downgradeAssessment {
+		jcAssessment = false
+	}
+
+	oktaBaseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
 	userAccount, err := userhelpers.GetOrCreateUserAccount(
 		f.Store,
 		euaID,
 		false,
-		baseURL,
+		oktaBaseURL,
 		enchanced.AuthToken,
 		jcMAC,
 	) //TODO, do we need to do anything with the user? Should we pass the id around?
@@ -158,7 +173,7 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication
 		return nil, err
 	}
 
-	return &authentication.OKTAPrincipal{
+	return &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(euaID),
 		JobCodeUSER:       jcUser,
 		JobCodeASSESSMENT: jcAssessment,
@@ -230,6 +245,7 @@ type MiddlewareFactory struct {
 	Store    *storage.Store
 	verifier JwtVerifier
 	jobCodes JobCodesConfig
+	ldClient *ld.LDClient
 }
 
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
@@ -271,6 +287,7 @@ func NewMiddlewareFactory(
 	jwtVerifier JwtVerifier,
 	store *storage.Store,
 	useTestJobCodes bool,
+	ldClient *ld.LDClient,
 ) *MiddlewareFactory {
 	codesConfig := *NewProductionJobCodesConfig()
 	if useTestJobCodes {
@@ -282,5 +299,6 @@ func NewMiddlewareFactory(
 		Store:       store,
 		verifier:    jwtVerifier,
 		jobCodes:    codesConfig,
+		ldClient:    ldClient,
 	}
 }
