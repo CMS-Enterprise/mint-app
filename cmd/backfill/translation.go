@@ -522,16 +522,7 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 	default:
 		translatedString, isTranslated := t.translateEnum(valString, backfiller) //TODO should we do something to see if we found a match?
 
-		//TODO handle TBD
 		if !isTranslated {
-			// if strings.ToLower(valString) == "tbd" {
-			// 	tErr = &TranslationError{ //TODO! This needs to be handled after translating, not before...
-			// 		Translation: *t,
-			// 		Type:        "tbd-conversion",
-			// 		Value:       value,
-			// 		Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
-			// 	}
-			// }
 			otherEnum, otherExists := t.translateEnum("Other", backfiller)
 			if otherExists && otherField != nil {
 				translatedString = otherEnum

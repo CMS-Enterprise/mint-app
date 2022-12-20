@@ -98,10 +98,10 @@ Notify FFS-Notes,PlanPayments,ShouldAnyProviderExcludedFFSSystemsNote,TRUE,,
 Number Of Participants,MANUAL_ENTRY,ExpectedNumberOfParticipants,TRUE,PlanParticipantsAndProviders        ExpectedNumberOfParticipants THERE IS A CONFIDENCE NOTE FIELD,
 Number Of Participants-Notes,PlanParticipantsAndProviders,ConfidenceNote,,"This looks like it is the best option for mapping this data, it is a note regarding the confidence of the  number of participants",
 Obstacles Anticipated,PlanOpsEvalAndLearning,AnticipatedChallenges,TRUE,,
-Other Agency State,PlanOpsEvalAndLearning,AgencyOrStateHelp,TRUE,,
+Other Agency State,PlanOpsEvalAndLearning,AgencyOrStateHelp,TRUE,AgencyOrStateHelpOther,
 Other Agency State-Notes,PlanOpsEvalAndLearning,AgencyOrStateHelpNote,TRUE,,
 Paricipant Assumes Risk,PlanParticipantsAndProviders,ParticipantAssumeRisk,TRUE,,
-Paricipant Risk Type,PlanParticipantsAndProviders,RiskType,TRUE,,
+Paricipant Risk Type,PlanParticipantsAndProviders,RiskType,TRUE,,RiskOther
 Participant Communication,PlanParticipantsAndProviders,CommunicationMethod,TRUE,,CommunicationMethodOther
 Participant Communication-Notes,PlanParticipantsAndProviders,CommunicationNote,TRUE,,
 Participant Coordination,PlanParticipantsAndProviders,CoordinateWork,TRUE,,
@@ -111,7 +111,7 @@ Participant Data-Notes,PlanOpsEvalAndLearning,DataToSendParticicipantsNote,TRUE,
 Participant ID Type,PlanParticipantsAndProviders,ParticipantsIds,FALSE,Multiselect,
 Participant ID Type-Notes,PlanParticipantsAndProviders,ParticipantsIDSNote,TRUE,,
 Participant IDs,NOT_NEEED,ParticipantsIds,FALSE,"Not NEEDED, the ID type field gives us the data we need",
-Participant Management,PlanParticipantsAndProviders,ProviderAddMethod,TRUE,,
+Participant Management,PlanParticipantsAndProviders,ProviderAddMethod,TRUE,,ProviderAddMethodOther
 Participant Management-Notes,PlanParticipantsAndProviders,ProviderAddMethodNote,TRUE,,
 Participant Recruitment,PlanParticipantsAndProviders,RecruitmentMethod,TRUE,,RecruitmentOther
 Participant Recruitment-Notes,PlanParticipantsAndProviders,RecruitmentNote,TRUE,,
@@ -162,9 +162,9 @@ RREG Evaluation,PlanOpsEvalAndLearning,EvaluationApproaches,TRUE,,
 RREG Evaluation-Notes,PlanOpsEvalAndLearning,EvalutaionApproachNote,TRUE,,
 Rulemaking Required,PlanGeneralCharacteristics,RulemakingRequired,TRUE,,
 Rulemaking Required-Notes,PlanGeneralCharacteristics,RulemakingRequiredNote,TRUE,,
-Stakeholder Communication,PlanOpsEvalAndLearning,Stakeholders,TRUE,,
+Stakeholder Communication,PlanOpsEvalAndLearning,Stakeholders,TRUE,,StakeholdersOther
 Stakeholder Communication-Notes,PlanOpsEvalAndLearning,StakeholdersNote,TRUE,,
-Support Contractors,PlanOpsEvalAndLearning,ContractorSupport,TRUE,other fields capture things in MINT for this,
+Support Contractors,PlanOpsEvalAndLearning,ContractorSupport,TRUE,other fields capture things in MINT for this,ContractorSupportOther
 Support Contractors-Notes,PlanOpsEvalAndLearning,ContractorSupportNote,TRUE,,
 Targeted At Specific Geographies,PlanGeneralCharacteristics,GeographiesTargeted,TRUE,,
 Targeted At Specific Geographies-Notes,PlanGeneralCharacteristics,GeographiesTargetedNote,TRUE,This might be used for actually specifying the actual geographies,
