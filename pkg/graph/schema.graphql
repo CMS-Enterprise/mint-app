@@ -1565,7 +1565,7 @@ updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
 agreeToNDA(agree: Boolean! = true): NDAInfo!
-@hasRole(role: MINT_MAC)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
@@ -2292,6 +2292,8 @@ enum OperationalSolutionKey{
   RMADA_CONTRACTOR
 }
 directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
