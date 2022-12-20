@@ -55,6 +55,7 @@ import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
 import ReadOnlyOperationalNeeds from './OperationalNeeds';
+import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 
@@ -241,7 +242,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
-      component: <h1>operationsEvaluationAndLearning</h1>
+      component: <ReadOnlyOpsEvalAndLearning modelID={modelID} />
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
