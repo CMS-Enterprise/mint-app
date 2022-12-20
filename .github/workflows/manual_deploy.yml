@@ -20,14 +20,8 @@ on:
         description: Confirm that you want to deploy to production
 
 jobs:
-  cache_dependencies:
-    uses: ./.github/workflows/cache_dependencies.yml
-    secrets:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
   build_application_images:
     uses: ./.github/workflows/build_application_images.yml
-    needs: cache_dependencies
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
