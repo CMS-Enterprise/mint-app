@@ -46,11 +46,13 @@ func main() { //TODO make this a command
 	outputTranslatePath := `cmd/backfill/data/sensitive/databackfillSeptTranslated.json`
 	outputTranslateEditPath := `cmd/backfill/data/sensitive/databackfillSeptTranslatedEdit.json`
 	outputUploadPath := `cmd/backfill/data/sensitive/databackfillSeptUploaded.json`
+	outputUploadWorklistPath := `cmd/backfill/data/sensitive/databackfillSeptUploadedWorklist.json`
 
 	if useDecember13 {
 		filePath = "cmd/backfill/data/sensitive/dataBackfillDec13.csv"
 		outputTranslatePath = `cmd/backfill/data/sensitive/databackfillDec13Translated.json`
 		outputUploadPath = `cmd/backfill/data/sensitive/databackfillDec13Uploaded.json`
+		outputUploadWorklistPath = `cmd/backfill/data/sensitive/databackfillDec13UploadedWorklist.json`
 	}
 
 	backfiller := getDefaultBackfiller()
@@ -63,7 +65,7 @@ func main() { //TODO make this a command
 		if useEdit {
 			transformedDataPath = outputTranslateEditPath
 		}
-		uploadData(backfiller, transformedDataPath, outputUploadPath)
+		uploadData(backfiller, transformedDataPath, outputUploadPath, outputUploadWorklistPath)
 	}
 	if testUserInfo {
 		getAllUsersInfo()
@@ -89,12 +91,8 @@ func getAllUsersInfo() {
 	// "Amy Giardina", "Siobhan Yilmaz",
 	userNames := []string{
 
-		"Amy",
-		"Giardina",
+		"Amy Giardina",
 		"Siobhan Yilmaz",
-		// `Velda L. McGhe`, `Kristen Owen`, `Mateus Anjo`, `Chinelo Johnso`, `Michelle Mac`, `Tim Rade`, `Zoe Hruba`, `Alexandra Chon`, `Eileen Witherspoo`, `Hillary Cavanaug`, `Leah Hendric`, `Nicholas Minte`, `Sarah Fogle`, `Amy Giardin`, `Lauren McDevit`, `Emily Moor`, `Julia Marcu`, `Maria Abrica Gome`, `Elvedin Bijeli`, `Kathy Chane`, `Nora Lewi`, `Alexandria Brow`, `Patricia Markovic`, `Rachel Roilan`, `Emily Johnso`, `Jennifer Brow`, `Sage Har`, `Tonya Saffe`, `Lynn Miescie`, `Ally Marlat`, `Patrick Holde`, `Sarah Kinne`, `Isaac Devoi`, `Nour Sulta`, `Leilani Ogujiofo`, `Kendra Glasgo`, `Jing X`, `Katherine Verlande`, `Karin Blee`, `Susannah Woodma`, `Sarah Lewi`, `Nancy Chiles Shaffe`, `Siobhan Yilma`, `Jennifer Moron`, `Andrew Phili`, `Bonnie Gewante`, `Frankie Devanb`, `Linda Streitfel`, `Kevin Koeni`, `Danielle Draye`, `Anya Scott-Wallac`,
-		// `Velda L. McGhee`, `Kristen Owens`, `Mateus Anjos`, `Chinelo Johnson`, `Michelle Mack`, `Tim Rader`, `Zoe Hruban`, `Alexandra Chong`, `Eileen Witherspoon`, `Hillary Cavanaugh`, `Leah Hendrick`, `Nicholas Minter`, `Sarah Fogler`, `Amy Giardina`, `Lauren McDevitt`, `Emily Moore`, `Julia Marcus`, `Maria Abrica Gomez`, `Elvedin Bijelic`, `Kathy Chaney`, `Nora Lewis`, `Alexandria Brown`, `Patricia Markovich`, `Rachel Roiland`, `Emily Johnson`, `Jennifer Brown`, `Sage Hart`, `Tonya Saffer`, `Lynn Miescier`, `Ally Marlatt`, `Patrick Holden`, `Sarah Kinney`, `Isaac Devoid`, `Nour Sultan`, `Leilani Ogujiofor`, `Kendra Glasgow`, `Jing Xu`, `Katherine Verlander`, `Karin Bleeg`, `Susannah Woodman`, `Sarah Lewis`, `Nancy Chiles Shaffer`, `Siobhan Yilmaz`, `Jennifer Morone`, `Andrew Philip`, `Bonnie Gewanter`, `Frankie Devanbu`, `Linda Streitfeld`, `Kevin Koenig`, `Danielle Drayer`, `Anya Scott-Wallace`,
-		// "Velda L. McGhee", "Kristen Owens", "Mateus Anjos", "Chinelo Johnson", "Michelle Mack", "Tim Rader", "Zoe Hruban", "Alexandra Chong", "Eileen Witherspoon", "Hillary Cavanaugh", "Leah Hendrick", "Nicholas Minter", "Sarah Fogler", "Amy Giardina", "Lauren McDevitt", "Emily Moore", "Julia Marcus", "Maria Abrica Gomez", "Elvedin Bijelic", "Kathy Chaney", "Nora Lewis", "Alexandria Brown", "Patricia Markovich", "Rachel Roiland", "Emily Johnson", "Jennifer Brown", "Sage Hart", "Tonya Saffer", "Lynn Miescier", "Ally Marlatt", "Patrick Holden", "Sarah Kinney", "Isaac Devoid", "Nour Sultan", "Leilani Ogujiofor", "Kendra Glasgow", "Jing Xu", "Katherine Verlander", "Karin Bleeg", "Susannah Woodman", "Sarah Lewis", "Nancy Chiles Shaffer", "Siobhan Yilmaz", "Jennifer Morone", "Andrew Philip", "Bonnie Gewanter", "Frankie Devanbu", "Linda Streitfeld", "Kevin Koenig", "Danielle Drayer", "Anya Scott-Wallace",
 	}
 	allUserInfo := []*models.UserInfo{}
 
@@ -108,9 +106,9 @@ func getAllUsersInfo() {
 				Message:  err.Error(),
 				Error:    err,
 			})
-			continue //TODO handle the error
+			continue
 		}
-		allUserInfo = append(allUserInfo, userInforArr[0]) //TODO make sure the first is the best.
+		allUserInfo = append(allUserInfo, userInforArr[0])
 	}
 	writeObjectToJSONFile(allUserInfo, userInfoOutPut)
 	writeObjectToJSONFile(fetchErrors, userInfoOutPut+"Errors.json")
@@ -151,7 +149,7 @@ func getDefaultBackfiller() *Backfiller {
 
 	return backfiller
 }
-func uploadData(backfiller *Backfiller, transformDataPath string, outputUploadPath string) {
+func uploadData(backfiller *Backfiller, transformDataPath string, outputUploadPath string, outputUploadWorklistPath string) {
 
 	entries, err := getTransformedData(transformDataPath)
 	if err != nil {
@@ -164,12 +162,20 @@ func uploadData(backfiller *Backfiller, transformDataPath string, outputUploadPa
 	uploader.uploadEntries(entries)
 	writeObjectToJSONFile(entries, outputUploadPath)
 
-	var tErrs []UploadError
+	var UErrs []UploadError
 	for _, entry := range entries {
-		tErrs = append(tErrs, entry.UErrors...)
+		UErrs = append(UErrs, entry.UErrors...)
 	}
 
-	writeObjectToJSONFile(tErrs, outputUploadPath+"UploadErrs.json")
+	writeObjectToJSONFile(UErrs, outputUploadPath+"UploadErrs.json")
+
+	var WorklistEntries []UploadWorklist
+	for _, entry := range entries {
+		wklist := entry.convertTErrorsToWorklistEntries()
+		WorklistEntries = append(WorklistEntries, wklist...)
+	}
+
+	writeObjectToJSONFile(WorklistEntries, outputUploadWorklistPath)
 
 }
 

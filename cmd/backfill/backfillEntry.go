@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -12,6 +14,13 @@ type TranslationError struct {
 	Type        string
 	Value       interface{}
 	Message     string
+}
+
+// UploadWorklist represents information and data to be handled in a worklist manually
+type UploadWorklist struct {
+	TranslationError
+	ModelName   string
+	ModelPlanID uuid.UUID
 }
 
 // UploadError represents an error with Uploading data to the database
@@ -58,4 +67,24 @@ func (e *BackfillEntry) addNonNullUError(uErr *UploadError) {
 		e.UErrors = append(e.UErrors, *uErr)
 		log.Default().Print("Issue uploading data for model section: ", uErr.Model, ". Message: ", uErr.Message)
 	}
+}
+
+func (e *BackfillEntry) convertTErrorsToWorklistEntries() []UploadWorklist {
+	wklist := []UploadWorklist{}
+
+	for _, tErr := range e.TErrors {
+		wklistEntry := e.convertTErrorToWorklistEntry(tErr)
+		wklist = append(wklist, wklistEntry)
+	}
+	return wklist
+}
+
+func (e *BackfillEntry) convertTErrorToWorklistEntry(tErr TranslationError) UploadWorklist {
+
+	wklistEntry := UploadWorklist{
+		TranslationError: tErr,
+		ModelName:        e.ModelPlan.ModelName,
+		ModelPlanID:      e.ModelPlan.ID,
+	}
+	return wklistEntry
 }
