@@ -25,7 +25,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Install yarn dependencies
-        run: yarn install --immutable
+        run: yarn install --immutable --prefer-offline
       - name: Set up go
         uses: actions/setup-go@v3
         with:
