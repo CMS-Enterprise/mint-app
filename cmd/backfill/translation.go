@@ -105,19 +105,73 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		if t.Header == "Uses ACO" {
 			t.handleUsesACO(entry, cleanString)
 			return
-
 		}
-		// if t.ModelName == "PlanPayments" && t.Field == "NonClaimsPayments" { //TODO, should I handle this later and just do it for this type?
-		// 	t.translateNonClaimsPaymentType(entry, value)
-		// 	return
-		// }
+		if t.Header == "Population Size" { //TODO extract lower value int if possible, also add an information note to verify entry
+			lowerInt, err := t.parseLowerIntVal(entry, cleanString)
+			if err != nil {
+				entry.TErrors = append(entry.TErrors, *err)
+				return
+			}
+			entry.PlanBeneficiaries.NumberPeopleImpacted = lowerInt
+			entry.TErrors = append(entry.TErrors, TranslationError{
+				Translation: *t,
+				Type:        "verify-translation",
+				Value:       cleanString,
+				Message:     "attempted to set by lowest value. Please verify translation",
+			})
+			return
+		}
+		if t.Header == "Number Of Participants" { //TODO extract lower value int if possible, also add an information note to verify entry
+			lowerInt, err := t.parseLowerIntVal(entry, cleanString)
+			if err != nil {
+				entry.TErrors = append(entry.TErrors, *err)
+				return
+			}
+			entry.PlanParticipantsAndProviders.ExpectedNumberOfParticipants = lowerInt
+			entry.TErrors = append(entry.TErrors, TranslationError{
+				Translation: *t,
+				Type:        "verify-translation",
+				Value:       cleanString,
+				Message:     "attempted to set by lowest value. Please verify translation",
+			})
+			return
+		}
 
 		t.translateField(entry, cleanString, backfiller)
 	}
 
 }
 
-func (t *Translation) handleUsesACO(entry *BackfillEntry, value interface{}) {
+func (t *Translation) parseLowerIntVal(entry *BackfillEntry, valString string) (*int, *TranslationError) {
+	tbdErr := t.errIfTBD(valString, "int")
+	if tbdErr != nil {
+		return nil, tbdErr
+	}
+	splitString := strings.Split(valString, " ")
+	var intString string
+	if len(splitString) > 1 && (splitString[0] == "About" || splitString[0] == "Above") { //Get the part of the string to parse
+		intString = splitString[1]
+	} else if len(splitString) == 1 {
+		intString = splitString[0]
+	}
+	intParts := strings.Split(intString, "-") //get the first part of the range
+	lowestPart := intParts[0]
+	lowestPart = strings.ReplaceAll(lowestPart, ",", "")
+
+	convertedInt, err := strconv.Atoi(lowestPart)
+	if err != nil {
+		return nil, &TranslationError{
+			Translation: *t,
+			Type:        "failed to convert to lowest integer",
+			Value:       valString,
+			Message:     "could not convert value to lowest integer. Manual Intervention needed",
+		}
+	}
+	return &convertedInt, nil
+
+}
+
+func (t *Translation) handleUsesACO(entry *BackfillEntry, value string) {
 	if value == "Uses ACO" || value == "Yes" || value == "ACO-OS (supports design, development, and O&M)" {
 		tBool := true
 		entry.PlanOpsEvalAndLearning.IddocSupport = &tBool
