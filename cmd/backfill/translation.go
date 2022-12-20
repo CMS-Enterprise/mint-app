@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/icza/gox/stringsx"
 	"github.com/lib/pq"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -59,13 +60,17 @@ func (dt TranslationsDictionary) getTranslation(key string) Translation {
 }
 
 func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{}, backfiller *Backfiller) {
+	valString := fmt.Sprint(value)
+	cleanString := stringsx.Clean(valString)
+	if cleanString == "" {
+		return
+	}
 
 	// TODO handle the null value handling
 
 	switch t.ModelName {
 	case "Collaborator":
-		valString := fmt.Sprint(value)
-		allUsers := strings.Split(valString, ";#")
+		allUsers := strings.Split(cleanString, ";#")
 		for i := 0; i < len(allUsers); i++ {
 
 			name, valid := sanitizeName(allUsers[i])
@@ -77,28 +82,28 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		}
 	default:
 		if t.ModelName == "PlanPayments" && t.Field == "PayType" { //TODO, should I handle this later and just do it for this type?
-			t.translatePayType(entry, value)
+			t.translatePayType(entry, cleanString)
 			return
 		}
 		if t.Header == "Resembles Existing Model" {
 
-			t.translateResemblesExisting(entry, value)
+			t.translateResemblesExisting(entry, cleanString)
 			return
 		}
 		if t.Header == "Is APM Model" {
-			t.translateIsAPM(entry, value)
+			t.translateIsAPM(entry, cleanString)
 			return
 		}
 		if t.Header == "Helpdesk" {
-			t.translateHelpdesk(entry, value)
+			t.translateHelpdesk(entry, cleanString)
 			return
 		}
 		if t.Header == "Learning System" {
-			t.handleLearningSystem(entry, value)
+			t.handleLearningSystem(entry, cleanString)
 			return
 		}
 		if t.Header == "Uses ACO" {
-			t.handleUsesACO(entry, value)
+			t.handleUsesACO(entry, cleanString)
 			return
 
 		}
@@ -107,7 +112,7 @@ func (t *Translation) handleTranslation(entry *BackfillEntry, value interface{},
 		// 	return
 		// }
 
-		t.translateField(entry, value, backfiller)
+		t.translateField(entry, cleanString, backfiller)
 	}
 
 }
@@ -150,7 +155,7 @@ func (t *Translation) handleLearningSystem(entry *BackfillEntry, value interface
 	}
 }
 
-func (t *Translation) translateHelpdesk(entry *BackfillEntry, value interface{}) {
+func (t *Translation) translateHelpdesk(entry *BackfillEntry, value string) {
 	if value == "NO" || value == "no" || value == "false" || value == "FALSE" {
 		fBool := false
 		entry.PlanOpsEvalAndLearning.HelpdeskUse = &fBool
@@ -159,21 +164,20 @@ func (t *Translation) translateHelpdesk(entry *BackfillEntry, value interface{})
 	if value == "TBD" || value == "tbd" || value == "" {
 		return //Don't need to set anything here
 	}
-	sVal := fmt.Sprint(value)
-	entry.PlanOpsEvalAndLearning.HelpdeskUseNote = &sVal
+	entry.PlanOpsEvalAndLearning.HelpdeskUseNote = &value
 }
-func (t *Translation) translateIsAPM(entry *BackfillEntry, value interface{}) {
+func (t *Translation) translateIsAPM(entry *BackfillEntry, value string) {
 	if value == "NO" || value == "no" || value == "false" {
 		entry.PlanGeneralCharacteristics.AlternativePaymentModelTypes = append(entry.PlanGeneralCharacteristics.AlternativePaymentModelTypes, "NOT_APM")
 		return //ONLY ADD if it is true
 	}
 }
-func (t *Translation) translateResemblesExisting(entry *BackfillEntry, value interface{}) {
+func (t *Translation) translateResemblesExisting(entry *BackfillEntry, value string) {
 	resembles := value != ""
 
 	entry.PlanGeneralCharacteristics.ResemblesExistingModel = &resembles
 	if resembles {
-		allVals := strings.Split(fmt.Sprint(value), ";#")
+		allVals := strings.Split(value, ";#")
 		array := pq.StringArray{}
 		for _, st := range allVals {
 			array = append(array, st)
@@ -242,8 +246,8 @@ func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, us
 
 }
 
-func (t *Translation) translateField(entry *BackfillEntry, value interface{}, backfiller *Backfiller) {
-	if value == nil || value == "" {
+func (t *Translation) translateField(entry *BackfillEntry, value string, backfiller *Backfiller) {
+	if value == "" {
 		return
 	}
 
@@ -254,12 +258,12 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 			Value:       value,
 			Message:     "this field has data but the mapping is unknown",
 		})
-		log.Default().Print("translation not known for " + t.Header + " . Value is " + fmt.Sprint(value))
+		log.Default().Print("translation not known for " + t.Header + " . Value is " + value)
 		return
 	}
 	if t.ModelName == "NOT_NEEED" {
 
-		log.Default().Print("translation not needed for " + t.Header + " . Value is " + fmt.Sprint(value) + " . Note : " + t.Note)
+		log.Default().Print("translation not needed for " + t.Header + " . Value is " + value + " . Note : " + t.Note)
 		return
 	}
 	if t.ModelName == "MANUAL_ENTRY" {
@@ -273,7 +277,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 
 	}
 	if t.ModelName == "" {
-		log.Default().Print("translation has not yet been mapped for for " + t.Header + " . Value is " + fmt.Sprint(value))
+		log.Default().Print("translation has not yet been mapped for for " + t.Header + " . Value is " + value)
 		return
 	}
 	bModel := reflect.ValueOf(entry).Elem().FieldByName(t.ModelName)
@@ -312,7 +316,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value interface{}, ba
 
 }
 
-func (t *Translation) setField(field *reflect.Value, otherField *reflect.Value, value interface{}, backfiller *Backfiller) *TranslationError {
+func (t *Translation) setField(field *reflect.Value, otherField *reflect.Value, value string, backfiller *Backfiller) *TranslationError {
 
 	val := reflect.ValueOf(value)
 	fieldKind := field.Kind()
@@ -360,7 +364,7 @@ func (t *Translation) setField(field *reflect.Value, otherField *reflect.Value, 
 
 }
 
-func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect.Value, value interface{}, backfiller *Backfiller) (reflect.Value, *reflect.Value, *TranslationError, bool) {
+func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect.Value, valString string, backfiller *Backfiller) (reflect.Value, *reflect.Value, *TranslationError, bool) {
 
 	fieldKind := field.Kind()
 	fieldType := field.Type()
@@ -369,13 +373,14 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 	var conVal reflect.Value
 	var tErr *TranslationError
 	fieldTypeS := strings.TrimPrefix(fieldType.String(), "*")
-	valString := fmt.Sprint(value)
+	// valString := fmt.Sprint(value)
 	setRegardlessOfError := false
 	var otherVal *reflect.Value
 
 	switch fieldTypeS {
 	case "string":
-		conVal = valueOrPointer(valString, isPointer)
+		cleanedString := stringsx.Clean(valString)
+		conVal = valueOrPointer(cleanedString, isPointer)
 
 	case "pq.StringArray":
 
@@ -411,7 +416,7 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 				tErr = &TranslationError{
 					Translation: *t,
 					Type:        "bool-conversion",
-					Value:       value,
+					Value:       valString,
 					Message:     fmt.Sprintf("type conversion failed to convert to bool for type %s", fieldType),
 				}
 			}
@@ -429,7 +434,7 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 				tErr = &TranslationError{
 					Translation: *t,
 					Type:        "int-conversion",
-					Value:       value,
+					Value:       valString,
 					Message:     fmt.Sprintf("type conversion failed to convert to int for type %s", fieldType),
 				}
 			}
@@ -452,7 +457,7 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 					tErr = &TranslationError{
 						Translation: *t,
 						Type:        "time-conversion",
-						Value:       value,
+						Value:       valString,
 						Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
 					}
 				}
@@ -483,14 +488,14 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 				tErr = &TranslationError{ //TODO! This needs to be handled after translating, not before...
 					Translation: *t,
 					Type:        "tbd-conversion",
-					Value:       value,
+					Value:       valString,
 					Message:     fmt.Sprintf(" tbd is not a valid entry for field %s", t.Field),
 				}
 			} else {
 				tErr = &TranslationError{
 					Translation: *t,
 					Type:        "unhandled-conversion",
-					Value:       value,
+					Value:       valString,
 					Message:     fmt.Sprintf("type conversion not handled for type %s", fieldType),
 				}
 			}

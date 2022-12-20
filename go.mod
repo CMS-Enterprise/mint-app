@@ -38,6 +38,7 @@ require github.com/xhit/go-simple-mail/v2 v2.12.0
 require github.com/contribsys/faktory v1.6.0
 
 require (
+	github.com/icza/gox v0.0.0-20221026131554-a08a8cdc726a
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 	gopkg.in/ghodss/yaml.v1 v1.0.0 // indirect
 )
