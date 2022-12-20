@@ -36,7 +36,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		Content:     "This is a test comment",
 	}
 
-	regularUserPrincipal := &authentication.OKTAPrincipal{
+	regularUserPrincipal := &authentication.ApplicationPrincipal{
 		Username:          "TEST",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
@@ -123,7 +123,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 		Resolution:   true,
 	}
 
-	regularUserPrincipal := &authentication.OKTAPrincipal{
+	regularUserPrincipal := &authentication.ApplicationPrincipal{
 		Username:          "TEST",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,

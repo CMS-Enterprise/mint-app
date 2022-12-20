@@ -13,8 +13,6 @@ on:
         required: true
 
 env:
-  EASI_APP_NODE_VERSION: "16.14.0"
-  EASI_APP_GO_VERSION: "1.18.3"
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -23,67 +21,21 @@ permissions:
   contents: read
 
 jobs:
-  pre_deps:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
-        with:
-          ref: ${{ env.GIT_HASH }}
-      - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
-        with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
-      - name: Set up go
-        uses: actions/setup-go@d0a58c1c4d2b25278816e339b944508c875f3613
-        with:
-          go-version: ${{ env.EASI_APP_GO_VERSION }}
-      - name: Configure go cache
-        id: go-cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
-        with:
-          path: |
-            ~/go/pkg/mod
-          key: v1-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            v1-go-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
-      - name: Install yarn dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
-      - name: Install go modules
-        if: steps.go-cache.outputs.cache-hit != 'true'
-        run: go mod download
-      - name: Announce failure
-        if: ${{ failure() }}
-        run: |
-          ./scripts/github-action-announce-broken-branch
-
   anti_virus:
     runs-on: ubuntu-latest
     container:
       image: clamav/clamav:0.104.0
     steps:
       - name: Check out code
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.GIT_HASH }}
-      - run: clamscan --version
-      - run: mkdir -p /store && chown clamav /store
-      - run: freshclam --config-file /etc/clamav/freshclam.conf --datadir=/store
-      - run: clamscan --recursive --infected --detect-pua=yes --max-scansize=300M --max-filesize=100M --max-recursion=30 --max-files=50000 --tempdir=/tmp --database=/store .
+      - name: Run clamscan
+        run: |
+          clamscan --version
+          mkdir -p /store && chown clamav /store
+          freshclam --config-file /etc/clamav/freshclam.conf --datadir=/store
+          clamscan --recursive --infected --detect-pua=yes --max-scansize=300M --max-filesize=100M --max-recursion=30 --max-files=50000 --tempdir=/tmp --database=/store .
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -102,7 +54,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1
@@ -138,7 +90,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1
@@ -174,7 +126,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1

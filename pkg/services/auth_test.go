@@ -10,8 +10,8 @@ import (
 
 func (s *ServicesTestSuite) TestHasRole() {
 	fnAuth := HasRole
-	userPrincipal := authentication.OKTAPrincipal{Username: "FAKE", JobCodeUSER: true, JobCodeASSESSMENT: false}
-	assessmentPrincipal := authentication.OKTAPrincipal{Username: "FAKE", JobCodeUSER: false, JobCodeASSESSMENT: true}
+	userPrincipal := authentication.ApplicationPrincipal{Username: "FAKE", JobCodeUSER: true, JobCodeASSESSMENT: false}
+	assessmentPrincipal := authentication.ApplicationPrincipal{Username: "FAKE", JobCodeUSER: false, JobCodeASSESSMENT: true}
 
 	testCases := map[string]struct {
 		ctx     context.Context

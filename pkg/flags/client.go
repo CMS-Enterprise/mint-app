@@ -16,6 +16,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 )
 
+// DowngradeAssessmentTeamKey is the Flag Key in LaunchDarkly for downgrading assessment team users
+const DowngradeAssessmentTeamKey = "downgradeAssessmentTeam"
+
 // Config has all the parts for creating a new LD Client
 type Config struct {
 	Source         appconfig.FlagSourceOption
