@@ -2,7 +2,8 @@ package emailTemplates
 
 import (
 	"bytes"
-	"html/template"
+	htmlTemplate "html/template"
+	textTemplate "text/template"
 )
 
 // EmailTemplate is a struct to define an email template and generate emails from it
@@ -25,7 +26,17 @@ func NewEmailTemplate(
 	}
 }
 
-func (e *EmailTemplate) executeTemplate(tpl *template.Template, data interface{}) (string, error) {
+func (e *EmailTemplate) executeHTMLTemplate(tpl *htmlTemplate.Template, data interface{}) (string, error) {
+	var buffer bytes.Buffer
+	err := tpl.Execute(&buffer, data)
+	if err != nil {
+		return "", err
+	}
+
+	return buffer.String(), nil
+}
+
+func (e *EmailTemplate) executeTextTemplate(tpl *textTemplate.Template, data interface{}) (string, error) {
 	var buffer bytes.Buffer
 	err := tpl.Execute(&buffer, data)
 	if err != nil {
@@ -37,20 +48,20 @@ func (e *EmailTemplate) executeTemplate(tpl *template.Template, data interface{}
 
 // GetExecutedSubject gets the subject portion of an email template executed with the data provided
 func (e *EmailTemplate) GetExecutedSubject(data interface{}) (string, error) {
-	subjectTemplate, err := e.templateCache.Get(e.subjectTemplateName)
+	subjectTemplate, err := e.templateCache.GetTextTemplate(e.subjectTemplateName)
 	if err != nil {
 		return "", err
 	}
 
-	return e.executeTemplate(subjectTemplate, data)
+	return e.executeTextTemplate(subjectTemplate, data)
 }
 
 // GetExecutedBody gets the body portion of an email template executed with the data provided
 func (e *EmailTemplate) GetExecutedBody(data interface{}) (string, error) {
-	bodyTemplate, err := e.templateCache.Get(e.bodyTemplateName)
+	bodyTemplate, err := e.templateCache.GetHTMLTemplate(e.bodyTemplateName)
 	if err != nil {
 		return "", err
 	}
 
-	return e.executeTemplate(bodyTemplate, data)
+	return e.executeHTMLTemplate(bodyTemplate, data)
 }
