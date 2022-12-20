@@ -102,13 +102,9 @@ jobs:
       - name: Set env vars with direnv
         uses: HatsuneMiku3939/direnv-action@v1
 
-      - name: Get number of CPU cores
-        uses: SimenB/github-actions-cpu-cores@v1
-        id: cpu-cores
-
       - name: Run backend server tests
         run: |
-          go test -short -count=1 -p=${{ steps.cpu-cores.outputs.count }} ./...
+          go test -short -count=1 -p=1 ./...
 
       - name: Logout Contribsys Docker Repo
         run: docker logout docker.contribsys.com
@@ -142,7 +138,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Install yarn dependencies
-        run: yarn install --immutable --prefer-offline
+        run: yarn install --immutable
       - name: Build frontend code
         env:
           REACT_APP_API_ADDRESS: http://easi:8080/api/v1
