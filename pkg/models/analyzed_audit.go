@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"reflect"
 	"strings"
 	"time"
 
@@ -95,29 +94,14 @@ func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 // Humanize returns AnalyzedAuditChanges in human readable sentences
 func (a AnalyzedAuditChange) Humanize() []string {
 	var humanizedAuditChanges []string
-	values := reflect.ValueOf(a)
-	fields := values.Type()
 
-	for i := 0; i < values.NumField(); i++ {
-		if values.Field(i).IsNil() {
-			continue
-		}
+	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.Humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.Humanize()...)
+	humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.Humanize()...)
 
-		switch fields.Field(i).Type {
-		case reflect.TypeOf((*AnalyzedModelPlan)(nil)):
-			humanizedAuditChanges = append(humanizedAuditChanges, a.ModelPlan.Humanize()...)
-		case reflect.TypeOf((*AnalyzedPlanSections)(nil)):
-			humanizedAuditChanges = append(humanizedAuditChanges, a.PlanSections.Humanize()...)
-		case reflect.TypeOf((*AnalyzedModelLeads)(nil)):
-			humanizedAuditChanges = append(humanizedAuditChanges, a.ModelLeads.Humanize()...)
-		case reflect.TypeOf((*AnalyzedDocuments)(nil)):
-			humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
-		case reflect.TypeOf((*AnalyzedCrTdls)(nil)):
-			humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
-		case reflect.TypeOf((*AnalyzedPlanDiscussions)(nil)):
-			humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
-		}
-	}
+	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
 
 	return lo.WithoutEmpty(humanizedAuditChanges)
 }
@@ -167,7 +151,11 @@ const (
 )
 
 // Humanize returns AnalyzedModelPlan in human readable sentences
-func (a AnalyzedModelPlan) Humanize() []string {
+func (a *AnalyzedModelPlan) Humanize() []string {
+	if a == nil {
+		return nil
+	}
+
 	var humanizedOldName string
 	var humanizedStatusChanges []string
 
@@ -199,6 +187,7 @@ func (a AnalyzedModelPlan) Humanize() []string {
 			}
 		})
 	}
+
 	return append(humanizedStatusChanges, humanizedOldName)
 }
 
@@ -223,7 +212,11 @@ const (
 )
 
 // Humanize returns AnalyzedDocuments in a human readable sentence
-func (a AnalyzedDocuments) Humanize() string {
+func (a *AnalyzedDocuments) Humanize() string {
+	if a == nil {
+		return ""
+	}
+
 	if a.Count > 0 {
 		if a.Count > 1 {
 			return fmt.Sprintf(AnalyzedDocumentsHumanizedCounts, a.Count)
@@ -242,7 +235,11 @@ type AnalyzedCrTdls struct {
 }
 
 // Humanize returns AnalyzedCrTdls in a human readable sentence
-func (a AnalyzedCrTdls) Humanize() string {
+func (a *AnalyzedCrTdls) Humanize() string {
+	if a == nil {
+		return ""
+	}
+
 	if a.Activity {
 		return "Updates to CR/TDLs"
 	}
@@ -287,7 +284,11 @@ func (a AnalyzedPlanSections) IsEmpty() bool {
 }
 
 // Humanize returns AnalyzedPlanSections in human readable sentences
-func (a AnalyzedPlanSections) Humanize() []string {
+func (a *AnalyzedPlanSections) Humanize() []string {
+	if a == nil {
+		return nil
+	}
+
 	var humanizedAnalyzedPlanSections []string
 
 	// Section updates
@@ -347,8 +348,12 @@ const (
 )
 
 // Humanize returns AnalyzedModelLeads in human readable sentences
-func (a AnalyzedModelLeads) Humanize() []string {
+func (a *AnalyzedModelLeads) Humanize() []string {
 	var humanizedAnalyzedModelLeads []string
+
+	if a == nil {
+		return humanizedAnalyzedModelLeads
+	}
 
 	if len(a.Added) > 0 {
 		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name string, index int) string {
@@ -371,7 +376,11 @@ const (
 )
 
 // Humanize returns AnalyzedPlanDiscussions in a human readable sentence
-func (a AnalyzedPlanDiscussions) Humanize() string {
+func (a *AnalyzedPlanDiscussions) Humanize() string {
+	if a == nil {
+		return ""
+	}
+
 	if a.Activity {
 		return AnalyzedPlanDiscussionsHumanizedActivity
 	}
