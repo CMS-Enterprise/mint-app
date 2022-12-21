@@ -36,7 +36,7 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
-	plan, err := resolvers.ModelPlanCreate(logger, modelName, store, userInfo, princ)
+	plan, err := resolvers.ModelPlanCreate(logger, modelName, store, princ)
 	if err != nil {
 		panic(err)
 	}
