@@ -7,4 +7,4 @@ ENV FLYWAY_CLEAN_DISABLED="true"
 ENV FLYWAY_SCHEMAS=public
 ENV FLYWAY_DEFAULT_SCHEMA=public
 
-ENTRYPOINT ["flyway", "-validateMigrationNaming=true", "migrate"]
+ENTRYPOINT ["flyway", "-validateMigrationNaming=true", "-q", "migrate" ]

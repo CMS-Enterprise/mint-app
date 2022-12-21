@@ -11,15 +11,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cache_dependencies:
-    uses: ./.github/workflows/cache_dependencies.yml
-    secrets:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
   run_tests:
     uses: ./.github/workflows/run_tests.yml
-    needs: cache_dependencies
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTRIBSYS_REPO_USERNAME: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
+      CONTRIBSYS_REPO_PASSWORD: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
