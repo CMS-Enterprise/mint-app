@@ -14,6 +14,9 @@ type TimeOutWrapperProps = {
   children: React.ReactNode;
 };
 
+// TimeOutWrapper handles all of the logic for tracking user activity and conditionally rendering a timeout modal
+// if idle time reaches a certain threshold.
+// This component effectively doesn't do anything when using local auth.
 const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   const isLocalAuth =
     isLocalAuthEnabled() &&
@@ -38,7 +41,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
       }
     },
     onPrompt: () => {
-      if (authState?.isAuthenticated) {
+      if (!isLocalAuth && authState?.isAuthenticated) {
         setTimeRemainingArr(formatSessionTimeRemaining(fiveMinutes));
         setIsModalOpen(true);
       }
