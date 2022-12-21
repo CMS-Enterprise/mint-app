@@ -142,12 +142,8 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	principalInfo, err := r.service.FetchUserInfo(ctx, principal.ID())
-	if err != nil { //if can't get user info, use EUAID as commonName
-		tempPrincipalInfo := models.UserInfo{
-			EuaUserID:  principal.ID(),
-			CommonName: principal.ID(),
-		}
-		principalInfo = &tempPrincipalInfo
+	if err != nil { //if can't get user info, error as this will note fully create the model plan
+		return nil, err
 	}
 
 	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo, principal)
