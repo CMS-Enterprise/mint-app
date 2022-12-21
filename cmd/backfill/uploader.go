@@ -62,7 +62,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	var userInfo models.UserInfo
 	if userName == "" {
 		userName = "ANON"
-		oktaPrinc := authentication.OKTAPrincipal{
+		oktaPrinc := authentication.ApplicationPrincipal{
 			Username:          userName,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
@@ -75,7 +75,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 		}
 	} else {
-		oktaPrinc := authentication.OKTAPrincipal{
+		oktaPrinc := authentication.ApplicationPrincipal{
 			Username:          user.EUAID,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
