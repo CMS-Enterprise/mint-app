@@ -28,7 +28,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
 
   const [timeRemainingArr, setTimeRemainingArr] = useState([0, 'second']);
 
-  const fiveMinutes = Duration.fromObject({ seconds: 15 }).as('milliseconds');
+  const fiveMinutes = Duration.fromObject({ minutes: 5 }).as('milliseconds');
 
   // Since 5 minutes is used for the `promptTimeout` AND the `timeout`, you effectively have 10 minutes before you're logged out due to inactivity.
   // 5 of those minutes will be uninterrupted, the other 5 will be when the prompt is up.
