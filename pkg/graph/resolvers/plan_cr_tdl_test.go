@@ -10,7 +10,7 @@ import (
 // TestPlanCrTdlCreate tests creating a new plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
@@ -40,7 +40,7 @@ func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 // TestPlanCrTdlUpdate tests updateing a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
@@ -67,7 +67,7 @@ func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 // TestPlanCrTdlDelete tests deleting a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCrTdlDelete() {
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          suite.testConfigs.UserInfo.EuaUserID,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,

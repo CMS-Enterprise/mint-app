@@ -28,7 +28,7 @@ type TestConfigs struct {
 	Store     *storage.Store
 	S3Client  *upload.S3Client
 	PubSub    *pubsub.ServicePubSub
-	Principal *authentication.OKTAPrincipal
+	Principal *authentication.ApplicationPrincipal
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -97,11 +97,11 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	return config, ldClient, logger, userInfo, ps
 }
 
-func getTestPrincipal(store *storage.Store, userName string) *authentication.OKTAPrincipal {
+func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
 	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
 
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
@@ -116,15 +116,15 @@ func createAddedAsCollaboratorTemplateCacheHelper(
 	planName string,
 	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
 	templateCache := emailTemplates.NewTemplateCache()
-	_ = templateCache.LoadTemplateFromString("testSubject", "{{.ModelName}}")
-	_ = templateCache.LoadTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}")
+	_ = templateCache.LoadTextTemplateFromString("testSubject", "{{.ModelName}}'s Test")
+	_ = templateCache.LoadHTMLTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}")
 	testTemplate := emailTemplates.NewEmailTemplate(
 		templateCache,
 		"testSubject",
 		"testBody",
 	)
 
-	expectedSubject := planName
+	expectedSubject := fmt.Sprintf("%s's Test", planName)
 	expectedBody := fmt.Sprintf("%s %s", planName, plan.ID.String())
 	return testTemplate, expectedSubject, expectedBody
 }

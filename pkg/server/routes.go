@@ -95,6 +95,7 @@ func (s *Server) routes(
 		jwtVerifier,
 		store,
 		!s.environment.Prod(),
+		ldClient,
 	)
 
 	s.router.Use(
@@ -247,8 +248,10 @@ func (s *Server) routes(
 
 	// Setup faktory worker
 	worker := &worker.Worker{
-		Store:  store,
-		Logger: s.logger,
+		Store:                store,
+		Logger:               s.logger,
+		EmailService:         emailService,
+		EmailTemplateService: *emailTemplateService,
 	}
 
 	if s.environment.Local() {

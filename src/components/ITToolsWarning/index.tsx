@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import './index.scss';
 
@@ -13,6 +14,12 @@ interface ITToolsWarningType {
 
 const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
   const { t } = useTranslation('itSolutions');
+
+  const flags = useFlags();
+
+  if (flags.hideITLeadExperience) {
+    return <></>;
+  }
 
   return (
     <Alert type="warning" className={classNames('it-tools-warning', className)}>

@@ -164,7 +164,7 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
-	assessment := authentication.OKTAPrincipal{
+	assessment := authentication.ApplicationPrincipal{
 		Username:          "FAIL",
 		JobCodeASSESSMENT: true,
 		JobCodeUSER:       true,

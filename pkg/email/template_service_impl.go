@@ -16,6 +16,15 @@ var addedAsCollaboratorSubjectTemplate string
 //go:embed templates/added_as_collaborator_body.template
 var addedAsCollaboratorBodyTemplate string
 
+// DailyDigetsTemplateName is the template name definition for the corresponding email template
+const DailyDigetsTemplateName string = "daily_digest"
+
+//go:embed templates/daily_digest_subject.template
+var dailyDigestSubjectTemplate string
+
+//go:embed templates/daily_digest_body.template
+var dailyDigestBodyTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -43,6 +52,11 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
+	err = t.loadEmailTemplate(DailyDigetsTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -55,12 +69,12 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	subjectEmailTemplateName := emailTemplateName + "_subject"
 	bodyEmailTemplateName := emailTemplateName + "_body"
 
-	err := t.templateCache.LoadTemplateFromString(subjectEmailTemplateName, subjectTemplate)
+	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
 	if err != nil {
 		return err
 	}
 
-	err = t.templateCache.LoadTemplateFromString(bodyEmailTemplateName, bodyTemplate)
+	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate)
 	if err != nil {
 		return err
 	}

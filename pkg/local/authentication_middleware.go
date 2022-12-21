@@ -74,7 +74,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
-	princ := &authentication.OKTAPrincipal{
+	princ := &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(config.EUA),
 		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
 		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),

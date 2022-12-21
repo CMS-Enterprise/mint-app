@@ -71,9 +71,10 @@ func (*anonymous) Account() *UserAccount {
 	return nil
 }
 
-// OKTAPrincipal represents information
-// gleaned from the Okta JWT
-type OKTAPrincipal struct {
+// ApplicationPrincipal represents information
+// gleaned from the Okta JWT _after_ LaunchDarkly downgrade
+// logic has been applied.
+type ApplicationPrincipal struct {
 	Username          string
 	JobCodeUSER       bool
 	JobCodeASSESSMENT bool
@@ -82,36 +83,36 @@ type OKTAPrincipal struct {
 }
 
 // String satisfies the fmt.Stringer interface
-func (p *OKTAPrincipal) String() string {
+func (p *ApplicationPrincipal) String() string {
 	return fmt.Sprintf("EUAPrincipal: %s", p.Username)
 }
 
 // ID returns the EUA ID
 // for the given Principal
-func (p *OKTAPrincipal) ID() string {
+func (p *ApplicationPrincipal) ID() string {
 	return p.Username
 }
 
 // AllowUSER says whether this principal
 // is authorized to operate within MINT
-func (p *OKTAPrincipal) AllowUSER() bool {
+func (p *ApplicationPrincipal) AllowUSER() bool {
 	return p.JobCodeUSER
 }
 
 // AllowASSESSMENT says whether this principal
 // is authorized to operate as part of
 // the Assessment Team within MINT
-func (p *OKTAPrincipal) AllowASSESSMENT() bool {
+func (p *ApplicationPrincipal) AllowASSESSMENT() bool {
 	return p.JobCodeASSESSMENT
 }
 
 // AllowMAC says whether this principal
 // is authorized to operate within MINT as a MAC user
-func (p *OKTAPrincipal) AllowMAC() bool {
+func (p *ApplicationPrincipal) AllowMAC() bool {
 	return p.JobCodeMAC
 }
 
 // Account returns the user account of the context of the user who made the request
-func (p *OKTAPrincipal) Account() *UserAccount {
+func (p *ApplicationPrincipal) Account() *UserAccount {
 	return p.UserAccount
 }
