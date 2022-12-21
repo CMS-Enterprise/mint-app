@@ -26,10 +26,9 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   const { authState, oktaAuth } = useOktaAuth();
   const { t } = useTranslation();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [timeRemainingArr, setTimeRemainingArr] = useState([0, 'second']);
 
-  const fiveMinutes = Duration.fromObject({ minutes: 5 }).as('milliseconds');
+  const fiveMinutes = Duration.fromObject({ seconds: 15 }).as('milliseconds');
 
   // Since 5 minutes is used for the `promptTimeout` AND the `timeout`, you effectively have 10 minutes before you're logged out due to inactivity.
   // 5 of those minutes will be uninterrupted, the other 5 will be when the prompt is up.
@@ -43,7 +42,6 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
     onPrompt: () => {
       if (!isLocalAuth && authState?.isAuthenticated) {
         setTimeRemainingArr(formatSessionTimeRemaining(fiveMinutes));
-        setIsModalOpen(true);
       }
     },
     promptTimeout: fiveMinutes,
@@ -88,7 +86,6 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   };
 
   const handleModalExit = async () => {
-    setIsModalOpen(false);
     idleTimer.reset();
     forceRenew();
   };
@@ -101,7 +98,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
         formatSessionTimeRemaining(idleTimer.getRemainingTime())
       );
     },
-    authState?.isAuthenticated && isModalOpen ? 1000 : null
+    authState?.isAuthenticated && idleTimer.isPrompted() ? 1000 : null
   );
 
   // If user is authenticated and has a token, renew it forever one
@@ -134,7 +131,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
 
   return (
     <>
-      <Modal isOpen={isModalOpen} closeModal={handleModalExit}>
+      <Modal isOpen={idleTimer.isPrompted()} closeModal={handleModalExit}>
         <h3
           className="margin-top-0"
           role="timer"
