@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Migrate Database
-        uses: joshuaavalon/flyway-action@v1
+        uses: joshuaavalon/flyway-action@v3.0.0 # flyway-action 3.0.0 uses flyway v9, which should (if we do our jobs) match what's in Dockerfile.db_clean and Dockerfile.db_migrations
         with:
           url: jdbc:postgresql://postgres:5432/${{ env.POSTGRES_DB }}
           user: ${{ env.POSTGRES_USER }}
