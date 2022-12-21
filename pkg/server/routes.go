@@ -200,7 +200,18 @@ func (s *Server) routes(
 			}
 			return next(ctx)
 
+		},
+		HasAnyRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, roles []model.Role) (res interface{}, err error) {
+			hasRole, err := services.HasAnyRole(ctx, roles)
+			if err != nil {
+				return nil, err
+			}
+			if !hasRole {
+				return nil, errors.New("not authorized")
+			}
+			return next(ctx)
 		}}
+
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.New(generated.NewExecutableSchema(gqlConfig))
 
