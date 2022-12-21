@@ -15,7 +15,7 @@ func HasAnyRole(ctx context.Context, roles []model.Role) (bool, error) {
 	for _, role := range roles {
 		userHasRole, err := HasRole(ctx, role)
 		if err != nil {
-			return userHasRole, err
+			return false, err
 		}
 
 		if userHasRole {
