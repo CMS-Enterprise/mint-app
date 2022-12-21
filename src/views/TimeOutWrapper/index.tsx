@@ -51,9 +51,13 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   });
 
   const forceRenew = async () => {
-    const tokenManager = await oktaAuth.tokenManager;
-    tokenManager.renew('idToken');
-    tokenManager.renew('accessToken');
+    // If not using local auth, and we've got an authenticated user with an access token, attempt to refresh it
+    // Otherwise, do nothing
+    if (!isLocalAuth && authState?.isAuthenticated && authState.accessToken) {
+      const tokenManager = await oktaAuth.tokenManager;
+      tokenManager.renew('idToken');
+      tokenManager.renew('accessToken');
+    }
   };
 
   /**
