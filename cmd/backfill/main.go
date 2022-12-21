@@ -24,7 +24,7 @@ import (
 
 // const translationPath = `cmd/backfill/data/dataTranslation.csv`
 const translationFullPath = `cmd/backfill/data/dataTranslationFull.csv`
-const userPath = `cmd/backfill/data/possibleUsers.json`
+const userPath = `cmd/backfill/data/sensitive/possibleUsers.json`
 const enumTranslationPath = `cmd/backfill/data/enumTranslations.json`
 const userInfoOutPut = `cmd/backfill/data/sensitive/userInfoOutput.json`
 

@@ -98,7 +98,7 @@ Notify FFS-Notes,PlanPayments,ShouldAnyProviderExcludedFFSSystemsNote,TRUE,,
 Number Of Participants,MANUAL_ENTRY,ExpectedNumberOfParticipants,TRUE,PlanParticipantsAndProviders        ExpectedNumberOfParticipants THERE IS A CONFIDENCE NOTE FIELD,
 Number Of Participants-Notes,PlanParticipantsAndProviders,ConfidenceNote,,"This looks like it is the best option for mapping this data, it is a note regarding the confidence of the  number of participants",
 Obstacles Anticipated,PlanOpsEvalAndLearning,AnticipatedChallenges,TRUE,,
-Other Agency State,PlanOpsEvalAndLearning,AgencyOrStateHelp,TRUE,AgencyOrStateHelpOther,
+Other Agency State,PlanOpsEvalAndLearning,AgencyOrStateHelp,TRUE,,AgencyOrStateHelpOther
 Other Agency State-Notes,PlanOpsEvalAndLearning,AgencyOrStateHelpNote,TRUE,,
 Paricipant Assumes Risk,PlanParticipantsAndProviders,ParticipantAssumeRisk,TRUE,,
 Paricipant Risk Type,PlanParticipantsAndProviders,RiskType,TRUE,,RiskOther
