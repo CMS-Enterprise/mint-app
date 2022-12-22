@@ -17,7 +17,7 @@ func (w *Worker) DigestCronJob(ctx context.Context, args ...interface{}) error {
 
 	return helper.With(func(cl *faktory.Client) error {
 		job := faktory.NewJob("AnalyzedAuditBatchJob", date)
-		job.Queue = "critical"
+		job.Queue = criticalQueue
 		return cl.Push(job)
 	})
 }
