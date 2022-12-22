@@ -2,45 +2,76 @@ package emailTemplates
 
 import (
 	"fmt"
-	"html/template"
+	htmlTemplate "html/template"
+	textTemplate "text/template"
 
 	"github.com/go-openapi/errors"
 )
 
-// TemplateCache stores a set of constructed template object models
+// TemplateCache stores a set of constructed htmlTemplate object models
 type TemplateCache struct {
-	cache map[string]*template.Template
+	htmlTemplateCache map[string]*htmlTemplate.Template
+	textTemplateCache map[string]*textTemplate.Template
 }
 
 // NewTemplateCache creates a new TemplateCache instance
 func NewTemplateCache() *TemplateCache {
-	templateCache := make(map[string]*template.Template)
-	return &TemplateCache{cache: templateCache}
+	return &TemplateCache{
+		htmlTemplateCache: make(map[string]*htmlTemplate.Template),
+		textTemplateCache: make(map[string]*textTemplate.Template),
+	}
 }
 
-// Get returns an instance of a cached template by name
-func (t *TemplateCache) Get(templateName string) (*template.Template, error) {
-	tpl, found := t.cache[templateName]
+// GetHTMLTemplate returns an instance of a cached htmlTemplate by name
+func (t *TemplateCache) GetHTMLTemplate(templateName string) (*htmlTemplate.Template, error) {
+	tpl, found := t.htmlTemplateCache[templateName]
 
 	if !found {
-		return nil, errors.NotFound("Template not found", templateName)
+		return nil, errors.NotFound("html template not found", templateName)
 	}
 
 	return tpl, nil
 }
 
-// LoadTemplateFromString parses a string into an object model and stores it in the cache
-func (t *TemplateCache) LoadTemplateFromString(templateName string, raw string) error {
-	_, templateExists := t.cache[templateName]
-	if templateExists {
-		return fmt.Errorf("template [%s] already exists in cache", templateName)
+// GetTextTemplate returns an instance of a cached textTemplate by name
+func (t *TemplateCache) GetTextTemplate(templateName string) (*textTemplate.Template, error) {
+	tpl, found := t.textTemplateCache[templateName]
+
+	if !found {
+		return nil, errors.NotFound("text template not found", templateName)
 	}
 
-	tpl, err := template.New(templateName).Parse(raw)
+	return tpl, nil
+}
+
+// LoadHTMLTemplateFromString parses a string into an object model and stores it in the htmlTemplateCache
+func (t *TemplateCache) LoadHTMLTemplateFromString(templateName string, raw string) error {
+	_, templateExists := t.htmlTemplateCache[templateName]
+	if templateExists {
+		return fmt.Errorf("htmlTemplate [%s] already exists in htmlTemplateCache", templateName)
+	}
+
+	tpl, err := htmlTemplate.New(templateName).Parse(raw)
 	if err != nil {
 		return err
 	}
 
-	t.cache[templateName] = tpl
+	t.htmlTemplateCache[templateName] = tpl
+	return nil
+}
+
+// LoadTextTemplateFromString parses a string into an object model and stores it in the textTemplateCache
+func (t *TemplateCache) LoadTextTemplateFromString(templateName string, raw string) error {
+	_, templateExists := t.textTemplateCache[templateName]
+	if templateExists {
+		return fmt.Errorf("htmlTemplate [%s] already exists in textTemplateCache", templateName)
+	}
+
+	tpl, err := textTemplate.New(templateName).Parse(raw)
+	if err != nil {
+		return err
+	}
+
+	t.textTemplateCache[templateName] = tpl
 	return nil
 }

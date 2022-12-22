@@ -10,6 +10,22 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
+// HasAnyRole authorizes a user as having any in a collection of given roles
+func HasAnyRole(ctx context.Context, roles []model.Role) (bool, error) {
+	for _, role := range roles {
+		userHasRole, err := HasRole(ctx, role)
+		if err != nil {
+			return false, err
+		}
+
+		if userHasRole {
+			return true, nil
+		}
+	}
+
+	return false, nil
+}
+
 // HasRole authorizes a user as having a given role
 func HasRole(ctx context.Context, role model.Role) (bool, error) {
 	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
