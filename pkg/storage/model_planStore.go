@@ -40,8 +40,8 @@ var modelPlanCollectionWithCRTDlSQL string
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
-//go:embed SQL/model_plan/collection_ids_favorited.sql
-var modelPlanFavoritedIDs string
+//go:embed SQL/model_plan/collection_where_favorited.sql
+var modelPlansFavorited string
 
 // ModelPlanCreate creates a model plan
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
@@ -270,7 +270,7 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 func (s *Store) ModelPlanFavoritedCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
-	stmt, err := s.db.PrepareNamed(modelPlanFavoritedIDs)
+	stmt, err := s.db.PrepareNamed(modelPlansFavorited)
 	if err != nil {
 		return nil, err
 	}
