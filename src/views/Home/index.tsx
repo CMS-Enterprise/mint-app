@@ -47,8 +47,10 @@ const Home = () => {
             {message}
 
             <Grid>
-              <PageHeading>{t('title')}</PageHeading>
-              <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
+              <PageHeading className="margin-bottom-1">
+                {t('title')}
+              </PageHeading>
+              <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-6">
                 {t('subheading')}
               </p>
               {!isMAC(userGroups) && (
