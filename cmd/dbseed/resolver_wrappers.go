@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"os"
 	"path/filepath"
 
@@ -9,6 +8,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"go.uber.org/zap"
 
@@ -17,7 +17,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
-	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -26,16 +25,8 @@ import (
 // createModelPlan is a wrapper for resolvers.ModelPlanCreate
 // It will panic if an error occurs, rather than bubbling the error up
 func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string, euaID string) *models.ModelPlan {
-	localLDAP := local.NewCedarLdapClient(logger)
-	userInfo, err := localLDAP.FetchUserInfo(context.TODO(), euaID)
-	if err != nil {
-		panic(err)
-	}
-	princ := &authentication.ApplicationPrincipal{
-		Username:          userInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+
+	princ := getTestPrincipal(store, euaID)
 	plan, err := resolvers.ModelPlanCreate(logger, modelName, store, princ)
 	if err != nil {
 		panic(err)
@@ -47,11 +38,7 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the model plan with the principal value of the Model Plan's "createdBy"
 func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	princ := getTestPrincipal(store, mp.CreatedBy)
 	updated, err := resolvers.ModelPlanUpdate(logger, mp.ID, changes, princ, store)
 	if err != nil {
 		panic(err)
@@ -63,11 +50,7 @@ func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelP
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
 func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	princ := getTestPrincipal(store, mp.CreatedBy)
 
 	basics, err := resolvers.PlanBasicsGetByModelPlanID(logger, mp.ID, store)
 	if err != nil {
@@ -92,11 +75,7 @@ func addPlanCollaborator(
 	mp *models.ModelPlan,
 	input *model.PlanCollaboratorCreateInput,
 ) *models.PlanCollaborator {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	princ := getTestPrincipal(store, mp.CreatedBy)
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
 		logger,
@@ -117,11 +96,7 @@ func addPlanCollaborator(
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
 func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	princ := getTestPrincipal(store, mp.CreatedBy)
 
 	collaborator, err := resolvers.PlanCrTdlCreate(logger, input, princ, store)
 	if err != nil {
@@ -134,11 +109,7 @@ func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, in
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the document with the principal value of the Model Plan's "createdBy"
 func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *upload.S3Client, mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, restricted bool, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	princ := getTestPrincipal(store, mp.CreatedBy)
 
 	path, err := filepath.Abs(filePath)
 	if err != nil {
@@ -205,11 +176,7 @@ func addOperationalSolution(
 	operationalNeedID uuid.UUID,
 	changes map[string]interface{},
 ) *models.OperationalSolution {
-	principal := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	principal := getTestPrincipal(store, mp.CreatedBy)
 
 	operationalSolution, err := resolvers.OperationalSolutionInsertOrUpdate(
 		logger,
@@ -236,11 +203,7 @@ func addPlanDocumentSolutionLinks(
 	documentIDs []uuid.UUID,
 ) []*models.PlanDocumentSolutionLink {
 
-	principal := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	principal := getTestPrincipal(store, mp.CreatedBy)
 
 	planDocumentSolutionLinks, err := resolvers.PlanDocumentSolutionLinksCreate(
 		logger,
@@ -254,4 +217,19 @@ func addPlanDocumentSolutionLinks(
 		panic(err)
 	}
 	return planDocumentSolutionLinks
+}
+
+func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
+
+	princ := &authentication.ApplicationPrincipal{
+		Username:          userName,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+		JobCodeMAC:        false,
+		UserAccount:       userAccount,
+	}
+	return princ
+
 }
