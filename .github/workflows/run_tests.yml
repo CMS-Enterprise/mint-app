@@ -100,7 +100,10 @@ jobs:
         run: go mod download
 
       - name: Set env vars with direnv
-        uses: HatsuneMiku3939/direnv-action@v1
+        run: |
+          curl -sfL https://direnv.net/install.sh | bash
+          direnv allow
+          direnv export gha >> "$GITHUB_ENV"
 
       - name: Run backend server tests
         run: |
