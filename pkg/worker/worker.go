@@ -1,8 +1,9 @@
 package worker
 
 import (
-	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
+
+	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -15,7 +16,6 @@ type Worker struct {
 	Logger               *zap.Logger
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl
-	Manager              *faktory_worker.Manager
 	Connections          int
 	ProcessJobs          bool
 }
@@ -33,29 +33,30 @@ const (
 
 // Work creates, configues, and starts worker
 func (w *Worker) Work() {
-
 	if !w.ProcessJobs {
 		return
 	}
 
+	mgr := faktory_worker.NewManager()
+
 	// Setup Monager
-	w.Manager.Concurrency = w.Connections
+	mgr.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence
-	w.Manager.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, emailQueue)
+	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, emailQueue)
 
 	// register jobs here
-	w.Manager.Register("DailyDigestCronJob", w.DailyDigestCronJob)
+	mgr.Register("DailyDigestCronJob", w.DigestCronJob)
 
-	w.Manager.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
-	w.Manager.Register("AnalyzedAuditBatchJob", w.AnalyzedAuditBatchJob)
-	w.Manager.Register("AnalyzedAuditBatchJobSuccess", w.AnalyzedAuditBatchJobSuccess)
+	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
+	mgr.Register("AnalyzedAuditBatchJob", w.AnalyzedAuditBatchJob)
+	mgr.Register("AnalyzedAuditBatchJobSuccess", w.AnalyzedAuditBatchJobSuccess)
 
-	w.Manager.Register("DailyDigestEmailBatchJob", w.DailyDigestEmailBatchJob)
-	w.Manager.Register("DailyDigestEmailBatchJobSuccess", w.DailyDigestEmailBatchJobSuccess)
-	w.Manager.Register("DailyDigestEmailJob", w.DailyDigestEmailJob)
+	mgr.Register("DigestEmailBatchJob", w.DigestEmailBatchJob)
+	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
+	mgr.Register("DigestEmailJob", w.DigestEmailJob)
 
-	err := w.Manager.Run()
+	err := mgr.Run()
 	if err != nil {
 		panic(err)
 	}

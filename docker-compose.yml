@@ -100,8 +100,6 @@ services:
     ports:
       - 7419:7419
       - 7420:7420
-    environment:
-      - FAKTORY_ENV
     volumes:
       - faktory:/var/lib/faktory
       - type: bind

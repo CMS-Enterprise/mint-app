@@ -10,8 +10,6 @@ import (
 	"strings"
 	"time"
 
-	faktory_worker "github.com/contribsys/faktory_worker_go"
-
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/worker"
 
@@ -254,9 +252,8 @@ func (s *Server) routes(
 		Logger:               s.logger,
 		EmailService:         emailService,
 		EmailTemplateService: *emailTemplateService,
-		Manager:              faktory_worker.NewManager(),
 		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
-		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs),
+		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
