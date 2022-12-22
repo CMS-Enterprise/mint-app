@@ -95,6 +95,16 @@ def wait_for_success(message, command)
   puts " ✨ done ✨"
 end
 
+def contribsys_docker_login
+  attempt = `docker pull docker.contribsys.com/contribsys/faktory-ent:latest 2>&1 >/dev/null | tail -n 1`
+
+  if attempt.include?('no basic auth credentials')
+    puts '🔐 Login to docker.contribsys.com (creds are in 1Password) 🔐'
+    return system('docker login docker.contribsys.com', exception: true)
+  end
+
+end
+
 desc "Check to see if the app's prerequisites are installed"
 task :prereqs do
   @needed.each do |executable, install_with|
@@ -122,6 +132,9 @@ def up(frontend_included, *args, debug:false, wait:false)
     "COMPOSE_HTTP_TIMEOUT" => "120",
     "AIR_CONFIG" =>conf,
   }
+
+  contribsys_docker_login
+
   command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
 
   if args.any?
