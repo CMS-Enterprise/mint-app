@@ -5,7 +5,6 @@ import (
 	"time"
 
 	faktory "github.com/contribsys/faktory/client"
-	faktory_server "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
 	"github.com/samber/lo"
@@ -102,8 +101,8 @@ func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...inter
 	help := faktory_worker.HelperFor(ctx)
 
 	// Kick off DigestEmailBatchJob
-	return help.With(func(cl *faktory_server.Client) error {
-		job := faktory_server.NewJob("DigestEmailBatchJob", date)
+	return help.With(func(cl *faktory.Client) error {
+		job := faktory.NewJob("DigestEmailBatchJob", date)
 		job.Queue = criticalQueue
 		return cl.Push(job)
 	})
