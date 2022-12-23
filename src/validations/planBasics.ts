@@ -65,10 +65,6 @@ const planBasicsSchema = {
           .required('Select a CMMI Group')
       })
     })
-  }),
-
-  pageThreeSchema: Yup.object().shape({
-    phasedIn: Yup.boolean().nullable().required('Please answer question')
   })
 };
 

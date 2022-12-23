@@ -36,7 +36,6 @@ import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
-import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
@@ -177,7 +176,6 @@ const Milestones = () => {
             handleFormSubmit();
           }}
           enableReinitialize
-          validationSchema={planBasicsSchema.pageThreeSchema}
           validateOnBlur={false}
           validateOnChange={false}
           validateOnMount={false}
