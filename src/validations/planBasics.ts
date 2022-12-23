@@ -67,10 +67,6 @@ const planBasicsSchema = {
     })
   }),
 
-  pageTwoSchema: Yup.object().shape({
-    modelType: Yup.string().nullable().required('A model type is required')
-  }),
-
   pageThreeSchema: Yup.object().shape({
     phasedIn: Yup.boolean().nullable().required('Please answer question')
   })
