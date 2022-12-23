@@ -32,6 +32,7 @@
     "@types/redux-saga-routines": "^3.1.0",
     "@types/text-encoding": "^0.0.35",
     "@types/yup": "^0.29.11",
+    "@uiw/react-md-editor": "^3.20.1",
     "apollo": "^2.33.7",
     "apollo-upload-client": "^17.0.0",
     "axios": "^0.21.3",

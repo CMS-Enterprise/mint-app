@@ -12,6 +12,7 @@ import {
   Label,
   Radio
 } from '@trussworks/react-uswds';
+import MDEditor, { commands } from '@uiw/react-md-editor';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -104,6 +105,26 @@ const Overview = () => {
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
+
+  const MdInput = ({ field, form, ...props }) => {
+    return (
+      <MDEditor
+        data-color-mode="light" // Always use light theme, defaults to "system" value
+        commands={[
+          commands.title1,
+          commands.title2,
+          commands.bold,
+          commands.italic,
+          commands.orderedListCommand,
+          commands.unorderedListCommand
+        ]}
+        extraCommands={[]}
+        {...field}
+        onChange={e => form.setFieldValue(field.name, e)} // override field.onChange (this MUST go after {...field})
+        textareaProps={props}
+      />
+    );
+  };
 
   return (
     <div data-testid="model-plan-overview">
@@ -232,8 +253,9 @@ const Overview = () => {
                   className="margin-top-4"
                 >
                   <Field
-                    as={TextAreaField}
-                    className="height-15"
+                    component={MdInput}
+                    // component={TextAreaField}
+                    // className="height-15"
                     error={flatErrors.goal}
                     id="ModelType-Goal"
                     name="goal"
