@@ -35,7 +35,7 @@ require github.com/gorilla/websocket v1.5.0
 
 require github.com/xhit/go-simple-mail/v2 v2.12.0
 
-require github.com/contribsys/faktory v1.6.0
+require github.com/contribsys/faktory v1.6.2
 
 require (
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
