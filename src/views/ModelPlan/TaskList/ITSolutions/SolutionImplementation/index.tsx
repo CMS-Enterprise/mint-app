@@ -77,7 +77,7 @@ const SolutionImplementation = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const { showMessageOnNextPage } = useMessage();
+  const { showMessageOnNextPage, message } = useMessage();
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
@@ -471,6 +471,14 @@ const SolutionImplementation = () => {
                               </div>
                             );
                           })}
+
+                          {message && (
+                            <Alert type="warning" slim className="margin-top-6">
+                              {t('solutionRemoveWarning', {
+                                solutions: message
+                              })}
+                            </Alert>
+                          )}
 
                           <div className="margin-top-6 margin-bottom-3">
                             <Button

@@ -73,7 +73,13 @@ type SubtaskLinksType = {
 };
 
 // Additional links beneath subtask table for adding and managing subtasks
-export const SubtaskLinks = ({ className }: { className?: string }) => {
+export const SubtaskLinks = ({
+  className,
+  subtasks
+}: {
+  className?: string;
+  subtasks: SubtaskType[];
+}) => {
   const { t } = useTranslation('itSolutions');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
@@ -89,21 +95,26 @@ export const SubtaskLinks = ({ className }: { className?: string }) => {
 
   return (
     <div className={classNames(className, 'display-flex')}>
-      {Object.keys(subtaskLinks).map(link => (
-        <Button
-          key={link}
-          type="button"
-          id={subtaskLinks[link]}
-          className="usa-button usa-button--outline"
-          onClick={() => {
-            history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${subtaskLinks[link]}`
-            );
-          }}
-        >
-          {t(`subtasks.${link}`)}
-        </Button>
-      ))}
+      {Object.keys(subtaskLinks).map(link => {
+        if (subtasks.length === 0 && link === 'manageSubtasks')
+          return <React.Fragment key="none" />;
+
+        return (
+          <Button
+            key={link}
+            type="button"
+            id={subtaskLinks[link]}
+            className="usa-button usa-button--outline"
+            onClick={() => {
+              history.push(
+                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${subtaskLinks[link]}`
+              );
+            }}
+          >
+            {t(`subtasks.${link}`)}
+          </Button>
+        );
+      })}
     </div>
   );
 };

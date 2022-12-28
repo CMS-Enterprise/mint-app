@@ -71,6 +71,26 @@ const SolutionDetails = () => {
     data?.operationalSolution ||
     ({} as GetOperationalSolutionOperationalSolutionType);
 
+  // TODO: remove temp subtasks
+  const tempSubtasks = [
+    {
+      name: 'Review requirements document',
+      status: SubtaskStatus.TO_DO
+    },
+    {
+      name: 'Review onboarding materials',
+      status: SubtaskStatus.TO_DO
+    },
+    {
+      name: 'Write onboarding request',
+      status: SubtaskStatus.IN_PROGRESS
+    },
+    {
+      name: 'Gather recipient data',
+      status: SubtaskStatus.DONE
+    }
+  ];
+
   if (error) {
     return <NotFound />;
   }
@@ -153,29 +173,10 @@ const SolutionDetails = () => {
             />
 
             {/* TODO: remove temp subtask data */}
-            <Subtasks
-              subtasks={[
-                {
-                  name: 'Review requirements document',
-                  status: SubtaskStatus.TO_DO
-                },
-                {
-                  name: 'Review onboarding materials',
-                  status: SubtaskStatus.TO_DO
-                },
-                {
-                  name: 'Write onboarding request',
-                  status: SubtaskStatus.IN_PROGRESS
-                },
-                {
-                  name: 'Gather recipient data',
-                  status: SubtaskStatus.DONE
-                }
-              ]}
-              className="margin-top-6"
-            />
+            <Subtasks subtasks={tempSubtasks} className="margin-top-6" />
 
-            <SubtaskLinks className="margin-top-3" />
+            {/* TODO: remove temp subtask data */}
+            <SubtaskLinks className="margin-top-3" subtasks={tempSubtasks} />
 
             {/* Documents table and link */}
             <div className="margin-top-6">

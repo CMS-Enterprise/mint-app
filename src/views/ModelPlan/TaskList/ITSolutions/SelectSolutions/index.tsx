@@ -117,6 +117,11 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
   ) => {
     const { solutions } = formikValues;
 
+    const removedSolutions: string = checkRemovedSolutions(
+      operationalNeed,
+      formikValues
+    );
+
     await Promise.all(
       solutions.map(solution => {
         // Update possibleSolution needed bool and status
@@ -153,15 +158,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
               solution => solution.needed
             )
           ) {
-            showMessageOnNextPage(
-              <Alert type="success" slim className="margin-y-4">
-                <span className="mandatory-fields-alert__text">
-                  {t('successSolutionAdded', {
-                    operationalNeedName: operationalNeed.name
-                  })}
-                </span>
-              </Alert>
-            );
+            showMessageOnNextPage(removedSolutions);
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
                 update ? 'update-status' : 'solution-implementation-details'
@@ -375,6 +372,32 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
       </Grid>
     </>
   );
+};
+
+const checkRemovedSolutions = (
+  operationalNeed: GetOperationalNeedOperationalNeedType,
+  updatedNeed: GetOperationalNeedOperationalNeedType
+) => {
+  const removedSolutions: string[] = [];
+
+  updatedNeed.solutions.forEach(solution => {
+    const originalNeedSolution = operationalNeed.solutions.find(
+      originalSolution =>
+        (originalSolution.nameOther &&
+          originalSolution.nameOther === solution.nameOther) ||
+        originalSolution.id === solution.id
+    );
+
+    if (originalNeedSolution?.needed === true && solution.needed === false) {
+      removedSolutions.push(
+        // One of these values will never be null - ts doesn't recognize this
+        // @ts-ignore
+        originalNeedSolution.nameOther || originalNeedSolution.name
+      );
+    }
+  });
+
+  return removedSolutions.join(',');
 };
 
 export default SelectSolutions;
