@@ -17,23 +17,54 @@ type SubtaskType = {
   status: SubtaskStatus;
 };
 
-type SubtasksProps = {
-  subtasks: SubtaskType[];
-  className?: string;
+// Used for label translations
+const columnTypes = {
+  todo: SubtaskStatus.TO_DO,
+  inProgress: SubtaskStatus.IN_PROGRESS,
+  done: SubtaskStatus.DONE
 };
 
 // Returns ul list component with subtask name
-const filterSubtasks = (subtasks: SubtaskType[], status: SubtaskStatus) => (
-  <ul>
-    {subtasks
-      .filter((subtask: SubtaskType) => subtask.status === status)
-      .map((subtask: SubtaskType) => (
-        <li key={subtask.name} className="margin-y-1">
-          {subtask.name}
-        </li>
-      ))}
-  </ul>
-);
+const SubtaskColumns = (
+  subtasks: SubtaskType[],
+  status: keyof typeof columnTypes
+): JSX.Element => {
+  const { t } = useTranslation('itSolutions');
+
+  return (
+    <Grid
+      desktop={{ col: 4 }}
+      className={classNames({ 'border-right': status !== 'done' })}
+    >
+      <div className="border-bottom">
+        <p className="text-bold padding-x-1 margin-y-105">
+          {t(`subtasks.${status}`)}
+        </p>
+      </div>
+
+      <div className="border-top">
+        {subtasks.length === 0 &&
+        columnTypes[status] === SubtaskStatus.TO_DO ? (
+          <div className="padding-x-1 margin-y-105">
+            {t('subtasks.noSubtasks')}
+          </div>
+        ) : (
+          <ul>
+            {subtasks
+              .filter(
+                (subtask: SubtaskType) => subtask.status === columnTypes[status]
+              )
+              .map((subtask: SubtaskType) => (
+                <li key={subtask.name} className="margin-y-1">
+                  {subtask.name}
+                </li>
+              ))}
+          </ul>
+        )}
+      </div>
+    </Grid>
+  );
+};
 
 type SubtaskLinksType = {
   [key: string]: string;
@@ -41,7 +72,7 @@ type SubtaskLinksType = {
   manageSubtasks: 'manage-subtasks';
 };
 
-// Addtional links beneath subtask table for adding and managing subtasks
+// Additional links beneath subtask table for adding and managing subtasks
 export const SubtaskLinks = ({ className }: { className?: string }) => {
   const { t } = useTranslation('itSolutions');
   const { modelID, operationalNeedID } = useParams<{
@@ -77,15 +108,19 @@ export const SubtaskLinks = ({ className }: { className?: string }) => {
   );
 };
 
+type SubtasksProps = {
+  subtasks: SubtaskType[];
+  className?: string;
+};
+
 const Subtasks = ({ subtasks, className }: SubtasksProps) => {
   const { t } = useTranslation('itSolutions');
 
-  const todoSubtasks = filterSubtasks(subtasks, SubtaskStatus.TO_DO);
-  const inProgressSubtasks = filterSubtasks(
-    subtasks,
-    SubtaskStatus.IN_PROGRESS
-  );
-  const doneSubtasks = filterSubtasks(subtasks, SubtaskStatus.DONE);
+  const TodoSubtasks = SubtaskColumns(subtasks, 'todo');
+
+  const InProgressSubtasks = SubtaskColumns(subtasks, 'inProgress');
+
+  const DoneSubtasks = SubtaskColumns(subtasks, 'done');
 
   return (
     <div className={classNames(className)}>
@@ -94,49 +129,14 @@ const Subtasks = ({ subtasks, className }: SubtasksProps) => {
       <GridContainer className="padding-0">
         <Grid row className="border">
           {/* TO_DO Subtasks */}
-          <Grid desktop={{ col: 4 }} className="border-right">
-            <div>
-              <div className="border-bottom">
-                <p className="text-bold padding-x-1 margin-y-105">
-                  {t('subtasks.todo')}
-                </p>
-              </div>
-
-              <div className="border-top">
-                {subtasks.length === 0 ? (
-                  <div className="padding-x-1 margin-y-105">
-                    {t('subtasks.noSubtasks')}
-                  </div>
-                ) : (
-                  todoSubtasks
-                )}
-              </div>
-            </div>
-          </Grid>
+          {TodoSubtasks}
 
           {/* IN_PROGRESS Subtasks */}
-          <Grid desktop={{ col: 4 }} className="border-right">
-            <div>
-              <div className="border-bottom">
-                <p className="text-bold padding-x-1 margin-y-105">
-                  {t('subtasks.inProgress')}
-                </p>
-              </div>
-              <div className="border-top">{inProgressSubtasks}</div>
-            </div>
-          </Grid>
+
+          {InProgressSubtasks}
 
           {/* DONE Subtasks */}
-          <Grid desktop={{ col: 4 }}>
-            <div>
-              <div className="border-bottom">
-                <p className="text-bold padding-x-1 margin-y-105">
-                  {t('subtasks.done')}
-                </p>
-              </div>
-              <div className="border-top">{doneSubtasks}</div>
-            </div>
-          </Grid>
+          {DoneSubtasks}
         </Grid>
       </GridContainer>
     </div>
