@@ -1488,7 +1488,7 @@ enum ModelPlanFilter {
   COLLAB_ONLY,
   WITH_CR_TDLS,
 
-  
+
 }
 
 """
@@ -1565,6 +1565,7 @@ updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
 agreeToNDA(agree: Boolean! = true): NDAInfo!
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
@@ -2292,6 +2293,8 @@ enum OperationalSolutionKey{
 }
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
+
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
   model: String
@@ -2311,6 +2314,11 @@ enum Role {
   A MINT assessment team user
   """
   MINT_ASSESSMENT
+
+  """
+  A MINT MAC user
+  """
+  MINT_MAC
 }
 
 enum ActionType {

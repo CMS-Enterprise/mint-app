@@ -13,10 +13,12 @@ import (
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
+	"gopkg.in/launchdarkly/go-server-sdk.v5/testhelpers/ldtestdata"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
@@ -70,11 +72,21 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 		verify: verify,
 	}
 
+	// Create dummy LD Client for use in the middleware factory
+	testData := ldtestdata.DataSource()
+	testData.Update(testData.Flag(flags.DowngradeAssessmentTeamKey).BooleanFlag().VariationForAll(false))
+	ldConfig := ld.Config{
+		DataSource: testData,
+	}
+	ldClient, err := ld.MakeCustomClient("fake", ldConfig, 0)
+	s.NoError(err)
+
 	factory := NewMiddlewareFactory(
 		handlers.NewHandlerBase(s.logger),
 		verifier,
 		s.store,
 		true,
+		ldClient,
 	)
 	return factory.NewAuthenticationMiddleware
 }

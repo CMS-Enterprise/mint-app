@@ -14,6 +14,10 @@ var serveCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()
-		server.Serve(config)
+
+		app := server.NewServer(config)
+
+		go app.Worker.Work()
+		app.Serve()
 	},
 }

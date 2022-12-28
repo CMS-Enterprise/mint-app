@@ -66,6 +66,8 @@ services:
       - SERVER_KEY
       - USE_TLS
       - FAKTORY_URL
+      - FAKTORY_PROCESS_JOBS
+      - FAKTORY_CONNECTIONS
 
     depends_on:
       db_migrate:
@@ -94,15 +96,15 @@ services:
       - "1085:1080"
       - "1030:1025"
   faktory:
-    image: contribsys/faktory:latest
-    command: /faktory -b :7419 -w :7420 -e production
+    image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
       - 7419:7419
       - 7420:7420
-    environment:
-      - FAKTORY_PASSWORD
     volumes:
       - faktory:/var/lib/faktory
+      - type: bind
+        source: ./.faktory/conf.d
+        target: /root/.faktory/conf.d
     restart: always
 volumes:
   faktory:

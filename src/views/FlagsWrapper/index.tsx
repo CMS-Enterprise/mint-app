@@ -33,7 +33,8 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             useCamelCaseFlagKeys: false
           },
           flags: {
-            hideITLeadExperience: true
+            hideITLeadExperience: true,
+            downgradeAssessmentTeam: false
           }
         });
 

@@ -95,6 +95,7 @@ func (s *Server) routes(
 		jwtVerifier,
 		store,
 		!s.environment.Prod(),
+		ldClient,
 	)
 
 	s.router.Use(
@@ -199,7 +200,18 @@ func (s *Server) routes(
 			}
 			return next(ctx)
 
+		},
+		HasAnyRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, roles []model.Role) (res interface{}, err error) {
+			hasRole, err := services.HasAnyRole(ctx, roles)
+			if err != nil {
+				return nil, err
+			}
+			if !hasRole {
+				return nil, errors.New("not authorized")
+			}
+			return next(ctx)
 		}}
+
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.New(generated.NewExecutableSchema(gqlConfig))
 
@@ -246,15 +258,13 @@ func (s *Server) routes(
 	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
 
 	// Setup faktory worker
-	worker := &worker.Worker{
+	s.Worker = &worker.Worker{
 		Store:                store,
 		Logger:               s.logger,
 		EmailService:         emailService,
 		EmailTemplateService: *emailTemplateService,
-	}
-
-	if s.environment.Local() {
-		go worker.Work()
+		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
+		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {

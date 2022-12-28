@@ -69,12 +69,12 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	subjectEmailTemplateName := emailTemplateName + "_subject"
 	bodyEmailTemplateName := emailTemplateName + "_body"
 
-	err := t.templateCache.LoadTemplateFromString(subjectEmailTemplateName, subjectTemplate)
+	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
 	if err != nil {
 		return err
 	}
 
-	err = t.templateCache.LoadTemplateFromString(bodyEmailTemplateName, bodyTemplate)
+	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate)
 	if err != nil {
 		return err
 	}
