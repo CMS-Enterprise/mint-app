@@ -17,6 +17,8 @@ const (
 	loggerKey contextKey = iota
 	traceKey
 	principalKey
+	jwtKey
+	authTokenKey
 )
 
 // WithLogger returns a context with the given logger
@@ -66,4 +68,30 @@ func Principal(c context.Context) authentication.Principal {
 		return p
 	}
 	return authentication.ANON
+}
+
+// WithAuthToken decorates the context with the given authToken
+func WithAuthToken(c context.Context, token string) context.Context {
+	return context.WithValue(c, authTokenKey, token)
+}
+
+// AuthToken returns the auth token defaulting to nil if not provided
+func AuthToken(c context.Context) *string {
+	if token, ok := c.Value(authTokenKey).(string); ok {
+		return &token
+	}
+	return nil
+}
+
+// WithJWT returns the context decorated with the jwt
+func WithJWT(c context.Context, jwt authentication.EnhancedJwt) context.Context {
+	return context.WithValue(c, jwtKey, jwt)
+}
+
+// JWT returns the enhanced JWT defaulting to nil if not present.
+func JWT(c context.Context) *authentication.EnhancedJwt {
+	if jwt, ok := c.Value(authTokenKey).(authentication.EnhancedJwt); ok {
+		return &jwt
+	}
+	return nil
 }

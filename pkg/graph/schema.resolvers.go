@@ -157,6 +157,16 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
+	// response, err := r.service.FetchUserInfo(ctx,input.EuaUserID)
+
+	// userAccount, err := userhelpers.GetOrCreateUserAccount( //TODO how to handle this generically for cedar vs OKTA?
+	// 	r.store,
+	// 	input.EuaUserID,
+	// 	false,
+	// 	oktaBaseURL,
+	// 	enchanced.AuthToken,
+	// 	false, //we can't add MACs as collaboratores
+	// )
 
 	planCollaborator, _, err := resolvers.CreatePlanCollaborator(
 		logger,

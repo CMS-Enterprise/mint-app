@@ -32,12 +32,6 @@ const (
 	JobCodeProdMACUser    = "MINT MAC Users"
 )
 
-// EnhancedJwt is the JWT and the auth token
-type EnhancedJwt struct {
-	JWT       *jwtverifier.Jwt
-	AuthToken string
-}
-
 // JobCodesConfig contains a set of environment context-sensitive job codes
 type JobCodesConfig struct {
 	user       string
@@ -91,7 +85,7 @@ func (j *JobCodesConfig) GetMACUserJobCode() string {
 	return j.macUser
 }
 
-func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*EnhancedJwt, error) {
+func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*authentication.EnhancedJwt, error) {
 	tokenParts := strings.Split(authHeader, "Bearer ")
 	if len(tokenParts) < 2 {
 		return nil, errors.New("invalid Bearer in auth header")
@@ -102,7 +96,7 @@ func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*Enhanced
 	}
 
 	jwt, err := f.verifier.VerifyAccessToken(bearerToken)
-	enhanced := EnhancedJwt{
+	enhanced := authentication.EnhancedJwt{
 		JWT:       jwt,
 		AuthToken: bearerToken,
 	}
@@ -131,7 +125,7 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.ApplicationPrincipal, error) {
+func (f MiddlewareFactory) newPrincipal(enchanced *authentication.EnhancedJwt) (*authentication.ApplicationPrincipal, error) {
 	euaID := enchanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
@@ -201,6 +195,8 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 			)
 			return
 		}
+		ctx := r.Context()
+		ctx = appcontext.WithJWT(ctx, *jwt)
 
 		principal, err := f.newPrincipal(jwt)
 		if err != nil {
@@ -213,9 +209,9 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 		}
 		logger = logger.With(zap.String("user", principal.ID())).With(zap.Bool("assessment", principal.AllowASSESSMENT()))
 
-		ctx := r.Context()
 		ctx = appcontext.WithPrincipal(ctx, principal)
 		ctx = appcontext.WithLogger(ctx, logger)
+		ctx = appcontext.WithAuthToken(ctx, jwt.AuthToken)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
