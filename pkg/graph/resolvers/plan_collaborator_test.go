@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -59,6 +61,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		AnyTimes()
 
 	collaborator, _, err := CreatePlanCollaborator(
+		context.Background(),
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
@@ -66,6 +69,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
+		suite.stubFetchUserInfo,
 	)
 
 	suite.NoError(err)

@@ -2,6 +2,7 @@ package worker
 
 import (
 	"bytes"
+	"context"
 	"testing"
 	"time"
 
@@ -22,6 +23,16 @@ type WorkerSuite struct {
 	testConfigs *TestConfigs
 }
 
+func (suite *WorkerSuite) stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
+	return &models.UserInfo{
+		EuaUserID:  username,
+		FirstName:  username,
+		LastName:   "Doe",
+		CommonName: username + " Doe",
+		Email:      models.NewEmailAddress(username + ".doe@local.fake"),
+	}, nil
+}
+
 // SetupTest clears the database between each test
 func (suite *WorkerSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
@@ -34,7 +45,7 @@ func (suite *WorkerSuite) SetupTest() {
 }
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := resolvers.ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal)
+	mp, err := resolvers.ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, suite.stubFetchUserInfo)
 	suite.NoError(err)
 	return mp
 }
@@ -59,6 +70,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID
 	}
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
+		context.Background(),
 		suite.testConfigs.Logger,
 		nil,
 		nil,
@@ -66,6 +78,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
+		suite.stubFetchUserInfo,
 	)
 	suite.NoError(err)
 	return collaborator

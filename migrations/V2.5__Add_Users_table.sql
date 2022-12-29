@@ -7,7 +7,8 @@ CREATE TABLE user_account (
     email ZERO_STRING NOT NULL,
     given_name ZERO_STRING NOT NULL,
     family_name ZERO_STRING NOT NULL,
-    zone_info ZERO_STRING NOT NULL
+    zone_info ZERO_STRING NOT NULL,
+    has_logged_in BOOLEAN NOT NULL
 );
 
 ALTER TABLE user_account

@@ -1,12 +1,14 @@
 package userhelpers
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"net/http"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
@@ -49,14 +51,60 @@ func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool
 
 	if userAccount == nil {
 		user := authentication.UserAccount{
-			Username:   &username,
-			IsEUAID:    !isMacUser,
-			CommonName: accountInfo.Name,
-			Locale:     accountInfo.Locale,
-			Email:      accountInfo.Email,
-			GivenName:  accountInfo.GivenName,
-			FamilyName: accountInfo.FamilyName,
-			ZoneInfo:   accountInfo.ZoneInfo,
+			Username:    &username,
+			IsEUAID:     !isMacUser,
+			CommonName:  accountInfo.Name,
+			Locale:      accountInfo.Locale,
+			Email:       accountInfo.Email,
+			GivenName:   accountInfo.GivenName,
+			FamilyName:  accountInfo.FamilyName,
+			ZoneInfo:    accountInfo.ZoneInfo,
+			HasLoggedIn: true,
+		}
+		newAccount, err := store.UserAccountInsertByUsername(&user)
+		if err != nil {
+			return nil, err
+		}
+		userAccount = newAccount
+	}
+	return userAccount, nil
+}
+
+// GetOrCreateUserAccountDelegate will return an account if it exists, or create and return a new one if not, getting information from delegate function
+func GetOrCreateUserAccountDelegate(ctx context.Context, store *storage.Store, username string, getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*authentication.UserAccount, error) {
+	userAccount, accErr := store.UserAccountGetByUsername(username)
+	if accErr != nil {
+		return nil, errors.New("failed to get user information from the database")
+	}
+	if userAccount != nil {
+		return userAccount, nil
+	}
+	accountInfo := &OktaAccountInfo{}
+
+	userinfo, err := getAccountInformation(ctx, username)
+	if err != nil {
+		return nil, err
+	}
+
+	accountInfo.Name = userinfo.CommonName
+	accountInfo.Locale = "UNKNOWN"
+	accountInfo.Email = userinfo.Email.String()
+	accountInfo.PreferredUsername = userinfo.EuaUserID
+	accountInfo.GivenName = userinfo.FirstName
+	accountInfo.FamilyName = userinfo.LastName
+	accountInfo.ZoneInfo = "UNKNOWN"
+
+	if userAccount == nil {
+		user := authentication.UserAccount{
+			Username:    &username,
+			IsEUAID:     true, //TODO verify this
+			CommonName:  accountInfo.Name,
+			Locale:      accountInfo.Locale,
+			Email:       accountInfo.Email,
+			GivenName:   accountInfo.GivenName,
+			FamilyName:  accountInfo.FamilyName,
+			ZoneInfo:    accountInfo.ZoneInfo,
+			HasLoggedIn: false, //TODO, need to verify this,
 		}
 		newAccount, err := store.UserAccountInsertByUsername(&user)
 		if err != nil {

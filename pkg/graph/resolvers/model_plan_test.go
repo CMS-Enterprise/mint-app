@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"context"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -10,7 +11,7 @@ import (
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal)
+	result, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, suite.stubFetchUserInfo)
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)
