@@ -17,7 +17,7 @@ import NeedQuestionAndAnswer from '.';
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
-const mocks = [
+const needQuestionAndAnswerMock = [
   {
     request: {
       query: GetOperationalNeed,
@@ -111,6 +111,8 @@ const mocks = [
   }
 ];
 
+export default needQuestionAndAnswerMock;
+
 describe('IT Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
     const { getByTestId, getByText } = render(
@@ -120,7 +122,10 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider
+            mocks={needQuestionAndAnswerMock}
+            addTypename={false}
+          >
             <NeedQuestionAndAnswer
               modelID={modelID}
               operationalNeedID={operationalNeedID}
@@ -151,7 +156,10 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider
+            mocks={needQuestionAndAnswerMock}
+            addTypename={false}
+          >
             <NeedQuestionAndAnswer
               modelID={modelID}
               operationalNeedID={operationalNeedID}

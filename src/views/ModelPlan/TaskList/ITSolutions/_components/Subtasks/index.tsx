@@ -42,7 +42,7 @@ const SubtaskColumns = (
         </p>
       </div>
 
-      <div className="border-top">
+      <div className="border-top" data-testid={status}>
         {subtasks.length === 0 &&
         columnTypes[status] === SubtaskStatus.TO_DO ? (
           <div className="padding-x-1 margin-y-105">
