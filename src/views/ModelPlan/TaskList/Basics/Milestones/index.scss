@@ -4,5 +4,9 @@
     grid-gap: units(3);
     align-items: flex-end;
     flex-wrap: wrap;
+
+    & > div {
+      flex: 1;
+    }
   }
 }
