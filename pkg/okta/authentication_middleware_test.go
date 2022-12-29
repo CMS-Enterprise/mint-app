@@ -1,6 +1,7 @@
 package okta
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -93,7 +94,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 
 func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 
-	_, err := userhelpers.GetOrCreateUserAccount(s.store, "EASI", true, "", "", false)
+	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), s.store, "EASI", true, false)
 
 	s.NoError(err)
 

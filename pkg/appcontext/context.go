@@ -90,7 +90,7 @@ func WithJWT(c context.Context, jwt authentication.EnhancedJwt) context.Context 
 
 // JWT returns the enhanced JWT defaulting to nil if not present.
 func JWT(c context.Context) *authentication.EnhancedJwt {
-	if jwt, ok := c.Value(authTokenKey).(authentication.EnhancedJwt); ok {
+	if jwt, ok := c.Value(jwtKey).(authentication.EnhancedJwt); ok {
 		return &jwt
 	}
 	return nil

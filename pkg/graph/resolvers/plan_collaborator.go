@@ -47,7 +47,7 @@ func CreatePlanCollaborator(
 	if err != nil {
 		return nil, nil, err
 	}
-	// ctx := context.TODO() //TODO pass the actual context
+
 	_, err = userhelpers.GetOrCreateUserAccountDelegate(ctx, store, retCollaborator.EUAUserID, getAccountInformation)
 	if err != nil {
 		return retCollaborator, nil, err

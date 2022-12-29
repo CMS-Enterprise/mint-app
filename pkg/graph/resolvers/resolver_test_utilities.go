@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
@@ -99,7 +100,7 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 
 func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, userName, true, false)
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,

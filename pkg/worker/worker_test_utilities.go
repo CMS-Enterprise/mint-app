@@ -1,6 +1,8 @@
 package worker
 
 import (
+	"context"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
@@ -99,7 +101,7 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 
 func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, userName, true, false)
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,

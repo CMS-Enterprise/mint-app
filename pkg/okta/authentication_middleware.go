@@ -125,16 +125,18 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(enchanced *authentication.EnhancedJwt) (*authentication.ApplicationPrincipal, error) {
-	euaID := enchanced.JWT.Claims["sub"].(string)
+func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.ApplicationPrincipal, error) {
+
+	enhanced := appcontext.JWT(ctx)
+	euaID := enhanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
 
 	// Get job codes out of the JWT
-	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetUserJobCode())
-	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetAssessmentJobCode())
-	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetMACUserJobCode())
+	jcUser := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
+	jcAssessment := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetAssessmentJobCode())
+	jcMAC := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMACUserJobCode())
 
 	// Create a LaunchDarkly user
 	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
@@ -154,13 +156,12 @@ func (f MiddlewareFactory) newPrincipal(enchanced *authentication.EnhancedJwt) (
 		jcAssessment = false
 	}
 
-	oktaBaseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
+	// oktaBaseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
 	userAccount, err := userhelpers.GetOrCreateUserAccount(
+		ctx,
 		f.Store,
 		euaID,
 		false,
-		oktaBaseURL,
-		enchanced.AuthToken,
 		jcMAC,
 	) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
@@ -198,7 +199,7 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 		ctx := r.Context()
 		ctx = appcontext.WithJWT(ctx, *jwt)
 
-		principal, err := f.newPrincipal(jwt)
+		principal, err := f.newPrincipal(ctx)
 		if err != nil {
 			f.WriteErrorResponse(
 				r.Context(),
@@ -263,9 +264,10 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 			fmt.Println("ERROR PARSING JWT", err)
 			// TODO How to error handle here?
 		}
+		ctx = appcontext.WithJWT(ctx, *jwt)
 
 		// devCtx, err := devUserContext(ctx, token)
-		principal, err := f.newPrincipal(jwt)
+		principal, err := f.newPrincipal(ctx)
 		if err != nil {
 			logger.Error("could not set context for okta auth", zap.Error(err))
 			return nil, err

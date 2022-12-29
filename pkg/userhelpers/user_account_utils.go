@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -24,7 +25,7 @@ type OktaAccountInfo struct {
 }
 
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
-func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool, baseURL string, token string, isMacUser bool) (*authentication.UserAccount, error) {
+func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username string, useLocal bool, isMacUser bool) (*authentication.UserAccount, error) {
 	userAccount, accErr := store.UserAccountGetByUsername(username)
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
@@ -42,7 +43,8 @@ func GetOrCreateUserAccount(store *storage.Store, username string, useLocal bool
 		accountInfo.FamilyName = "Doe"
 		accountInfo.ZoneInfo = "America/Los_Angeles"
 	} else {
-		oktaInfo, err := GetUserInfoFromOkta(baseURL, token)
+		// oktaInfo, err := GetUserInfoFromOkta(baseURL, token)
+		oktaInfo, err := GetUserInfoFromOkta(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -116,12 +118,16 @@ func GetOrCreateUserAccountDelegate(ctx context.Context, store *storage.Store, u
 }
 
 // GetUserInfoFromOkta uses the Okta endpoint to retun OktaAccountInfo
-func GetUserInfoFromOkta(baseURL string, token string) (*OktaAccountInfo, error) {
+func GetUserInfoFromOkta(ctx context.Context) (*OktaAccountInfo, error) {
 	userEndpoint := "/v1/userinfo" //TODO: it would be better to actually get the endpoint from the token, but not currently given to the front end
 	authPrefix := "Bearer "
-
-	url := baseURL + userEndpoint
-	authorization := authPrefix + token
+	enhancedJWT := appcontext.JWT(ctx)
+	oktaBaseURL, err := enhancedJWT.GetOktaBaseURL()
+	if err != nil {
+		return nil, err
+	}
+	url := *oktaBaseURL + userEndpoint
+	authorization := authPrefix + enhancedJWT.AuthToken
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
