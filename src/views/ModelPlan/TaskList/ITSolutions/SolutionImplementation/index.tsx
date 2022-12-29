@@ -230,6 +230,14 @@ const SolutionImplementation = ({
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
+        <Breadcrumb>
+          <BreadcrumbLink
+            asCustom={UswdsReactLink}
+            to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+          >
+            <span>{t('breadcrumb')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
         <Breadcrumb current>
           {isUpdatingStatus ? t('updateStatus') : t('selectSolution')}
         </Breadcrumb>
