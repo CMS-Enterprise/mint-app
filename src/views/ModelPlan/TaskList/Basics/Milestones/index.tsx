@@ -229,7 +229,7 @@ const Milestones = () => {
                 )}
 
                 <Form
-                  className="tablet:grid-col-6 milestone-form margin-top-6"
+                  className="desktop:grid-col-7 milestone-form margin-top-6"
                   onSubmit={e => {
                     handleSubmit(e);
                     window.scrollTo(0, 0);
