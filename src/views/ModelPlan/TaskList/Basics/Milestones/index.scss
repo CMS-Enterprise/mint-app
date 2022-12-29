@@ -1,12 +1,8 @@
 .milestone-form {
-  .fieldGroup__wrapper {
-    display: flex;
-    grid-gap: units(3);
-    align-items: flex-end;
-    flex-wrap: wrap;
-
-    & > div {
-      flex: 1;
-    }
+  .datepicker__wrapper {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: units(3);
   }
+
 }

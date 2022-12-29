@@ -239,16 +239,18 @@ const Milestones = () => {
                     {t('highLevelTimeline')}
                   </PageHeading>
 
-                  <MINTDatePicker
-                    fieldName="completeICIP"
-                    id="Milestone-completeICIP"
-                    label={t('completeICIP')}
-                    placeHolder
-                    handleOnBlur={handleOnBlur}
-                    formikValue={values.completeICIP}
-                    value={completeICIP}
-                    error={flatErrors.completeICIP}
-                  />
+                  <div className="datepicker__wrapper">
+                    <MINTDatePicker
+                      fieldName="completeICIP"
+                      id="Milestone-completeICIP"
+                      label={t('completeICIP')}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.completeICIP}
+                      value={completeICIP}
+                      error={flatErrors.completeICIP}
+                    />
+                  </div>
 
                   <legend className="usa-label ">{t('clearance')}</legend>
 
@@ -256,7 +258,7 @@ const Milestones = () => {
                     {t('clearanceInfo')}
                   </p>
 
-                  <div className="fieldGroup__wrapper">
+                  <div className="datepicker__wrapper">
                     <MINTDatePicker
                       fieldName="clearanceStarts"
                       id="Milestone-clearanceStarts"
@@ -291,23 +293,25 @@ const Milestones = () => {
                     </Alert>
                   )}
 
-                  <MINTDatePicker
-                    fieldName="announced"
-                    className="margin-top-4"
-                    id="Milestone-announced"
-                    label={t('annouceModel')}
-                    placeHolder
-                    handleOnBlur={handleOnBlur}
-                    formikValue={values.announced}
-                    value={announced}
-                    error={flatErrors.announced}
-                  />
+                  <div className="datepicker__wrapper">
+                    <MINTDatePicker
+                      fieldName="announced"
+                      className="margin-top-4"
+                      id="Milestone-announced"
+                      label={t('annouceModel')}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.announced}
+                      value={announced}
+                      error={flatErrors.announced}
+                    />
+                  </div>
 
                   <legend className="usa-label margin-bottom-neg-2">
                     {t('applicationPeriod')}
                   </legend>
 
-                  <div className="fieldGroup__wrapper">
+                  <div className="datepicker__wrapper">
                     <MINTDatePicker
                       fieldName="applicationsStart"
                       id="Milestone-applicationsStart"
@@ -346,7 +350,7 @@ const Milestones = () => {
                     {t('demonstrationPerformance')}
                   </legend>
 
-                  <div className="fieldGroup__wrapper">
+                  <div className="datepicker__wrapper">
                     <MINTDatePicker
                       fieldName="performancePeriodStarts"
                       id="Milestone-performancePeriodStarts"
@@ -381,17 +385,19 @@ const Milestones = () => {
                     </Alert>
                   )}
 
-                  <MINTDatePicker
-                    fieldName="wrapUpEnds"
-                    className="margin-top-4"
-                    id="Milestone-wrapUpEnds"
-                    label={t('annouceModel')}
-                    placeHolder
-                    handleOnBlur={handleOnBlur}
-                    formikValue={values.wrapUpEnds}
-                    value={wrapUpEnds}
-                    error={flatErrors.wrapUpEnds}
-                  />
+                  <div className="datepicker__wrapper">
+                    <MINTDatePicker
+                      fieldName="wrapUpEnds"
+                      className="margin-top-4"
+                      id="Milestone-wrapUpEnds"
+                      label={t('annouceModel')}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.wrapUpEnds}
+                      value={wrapUpEnds}
+                      error={flatErrors.wrapUpEnds}
+                    />
+                  </div>
 
                   <AddNote id="ModelType-HighLevelNote" field="highLevelNote" />
 
