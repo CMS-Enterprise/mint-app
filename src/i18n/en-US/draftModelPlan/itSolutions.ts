@@ -173,6 +173,7 @@ const itSolutions = {
   updateStatus: 'Update status',
   updateStatusInfo:
     'Update the implementation status and deadline for this solution.',
+  solutionDetails: 'Solution details',
   updateSolution: 'Update solution',
   dontUpdateandReturnToSolutionDetails:
     'Don’t update and return to solution details',
