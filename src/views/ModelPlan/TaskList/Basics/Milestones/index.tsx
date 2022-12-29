@@ -293,7 +293,7 @@ const Milestones = () => {
 
                   <MINTDatePicker
                     fieldName="announced"
-                    className="margin-top-4 width-card-lg"
+                    className="margin-top-4"
                     id="Milestone-announced"
                     label={t('annouceModel')}
                     placeHolder
@@ -383,7 +383,7 @@ const Milestones = () => {
 
                   <MINTDatePicker
                     fieldName="wrapUpEnds"
-                    className="margin-top-4 width-card-lg"
+                    className="margin-top-4"
                     id="Milestone-wrapUpEnds"
                     label={t('annouceModel')}
                     placeHolder
