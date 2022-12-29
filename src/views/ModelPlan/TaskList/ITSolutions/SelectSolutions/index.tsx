@@ -156,7 +156,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
           if (
             formikRef?.current?.values.solutions.find(
               solution => solution.needed
-            )
+            ) ||
+            update
           ) {
             showMessageOnNextPage(removedSolutions);
             history.push(
