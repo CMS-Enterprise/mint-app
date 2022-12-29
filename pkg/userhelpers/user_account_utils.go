@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -30,8 +32,9 @@ func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username 
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
 	}
-	if userAccount != nil {
+	if userAccount != nil && userAccount.HasLoggedIn {
 		return userAccount, nil
+		//update  information
 	}
 	accountInfo := &OktaAccountInfo{}
 	if useLocal {
@@ -50,26 +53,32 @@ func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username 
 		}
 		accountInfo = oktaInfo
 	}
-
 	if userAccount == nil {
-		user := authentication.UserAccount{
-			Username:    &username,
-			IsEUAID:     !isMacUser,
-			CommonName:  accountInfo.Name,
-			Locale:      accountInfo.Locale,
-			Email:       accountInfo.Email,
-			GivenName:   accountInfo.GivenName,
-			FamilyName:  accountInfo.FamilyName,
-			ZoneInfo:    accountInfo.ZoneInfo,
-			HasLoggedIn: true,
-		}
-		newAccount, err := store.UserAccountInsertByUsername(&user)
+		userAccount = &authentication.UserAccount{}
+	}
+	userAccount.Username = &username
+	userAccount.IsEUAID = !isMacUser
+	userAccount.CommonName = accountInfo.Name
+	userAccount.Locale = accountInfo.Locale
+	userAccount.Email = accountInfo.Email
+	userAccount.GivenName = accountInfo.GivenName
+	userAccount.FamilyName = accountInfo.FamilyName
+	userAccount.ZoneInfo = accountInfo.ZoneInfo
+	userAccount.HasLoggedIn = true
+
+	if userAccount.ID == uuid.Nil {
+		newAccount, err := store.UserAccountInsertByUsername(userAccount)
 		if err != nil {
 			return nil, err
 		}
-		userAccount = newAccount
+		return newAccount, nil
 	}
-	return userAccount, nil
+
+	updatedAccount, err := store.UserAccountUpdateByUserName(userAccount)
+	if err != nil {
+		return nil, err
+	}
+	return updatedAccount, nil
 }
 
 // GetOrCreateUserAccountDelegate will return an account if it exists, or create and return a new one if not, getting information from delegate function
