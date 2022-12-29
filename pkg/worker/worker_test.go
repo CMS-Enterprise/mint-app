@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
+	faktory "github.com/contribsys/faktory/client"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -25,10 +26,15 @@ type WorkerSuite struct {
 func (suite *WorkerSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
 	assert.NoError(suite.T(), err)
+	// Flush faktory after each test
+	client, err := faktory.Open()
+	assert.NoError(suite.T(), err)
+	err = client.Flush()
+	assert.NoError(suite.T(), err)
 }
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := resolvers.ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
+	mp, err := resolvers.ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal)
 	suite.NoError(err)
 	return mp
 }
@@ -147,5 +153,6 @@ func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Ti
 func TestWorkerSuite(t *testing.T) {
 	rs := new(WorkerSuite)
 	rs.testConfigs = GetDefaultTestConfigs()
+	t.Setenv("FAKTORY_URL", "tcp://localhost:7419")
 	suite.Run(t, rs)
 }

@@ -4,7 +4,8 @@ import (
 	"context"
 	"time"
 
-	_ "github.com/lib/pq" // required for postgres driver in sql
+	faktory "github.com/contribsys/faktory/client"
+	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -32,7 +33,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.createPlanDocument(plan)
 
 	// Add CrTdls
-	suite.createPlanCrTdl(plan, "123-456", time.Now(), "Title", "Note")
+	suite.createPlanCrTdl(plan, "123-456", time.Now().UTC(), "Title", "Note")
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
@@ -77,11 +78,11 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), plan.ID.String())
 	suite.NoError(err)
 
 	// Get Stored audit
-	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now())
+	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now().UTC())
 	suite.NoError(err)
 
 	suite.NotNil(analyzedAudit)
@@ -130,9 +131,146 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
-	err = worker.AnalyzedAuditJob(context.Background(), plan.ID, time.Now())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().AddDate(0, 0, 1).Format("2006-01-02"), plan.ID.String())
 	suite.NoError(err)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now())
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC().AddDate(0, 0, 1))
 	suite.Error(err)
+}
+
+// Faktory integration tests
+func (suite *WorkerSuite) TestAnalyzedAuditBatchJobIntegration() {
+	worker := &Worker{
+		Store:  suite.testConfigs.Store,
+		Logger: suite.testConfigs.Logger,
+	}
+
+	date := time.Now().UTC().Format("2006-01-02")
+	// Create Plans
+	mp1 := suite.createModelPlan("Test Plan")
+	mp2 := suite.createModelPlan("Test Plan 2")
+	modelPlanIds := []string{mp1.ID.String(), mp2.ID.String()}
+
+	pool, err := faktory.NewPool(10)
+	suite.NoError(err)
+	perf := faktory_worker.NewTestExecutor(pool)
+
+	// Test when AnalyzedAuditBatchJob runs it enqueues
+	// the correct number of AnalyzedAuditJobs (1 job per plan (2))
+	cronJob := faktory.NewJob("AnalyzedAuditBatchJob", date)
+	cronJob.Queue = criticalQueue
+
+	err = perf.Execute(cronJob, worker.AnalyzedAuditBatchJob)
+	suite.NoError(err)
+
+	err = pool.With(func(cl *faktory.Client) error {
+		queues, err2 := cl.QueueSizes()
+		suite.NoError(err2)
+		suite.True(queues[criticalQueue] == 2)
+
+		// Check jobs arguments equal are corrrect modelPlanId and date
+		job1, err2 := cl.Fetch(criticalQueue)
+
+		// Get Batch ID
+		batchID := job1.Custom["bid"].(string)
+
+		suite.NoError(err2)
+		suite.Equal(criticalQueue, job1.Queue)
+		suite.Equal(date, job1.Args[0].(string))
+		suite.True(lo.Contains(modelPlanIds, job1.Args[1].(string)))
+
+		job2, err2 := cl.Fetch(criticalQueue)
+		suite.NoError(err2)
+		suite.Equal(criticalQueue, job2.Queue)
+		suite.Equal(date, job2.Args[0].(string))
+		suite.True(lo.Contains(modelPlanIds, job2.Args[1].(string)))
+
+		// Check Batch Job
+		batchStatusPending, err2 := cl.BatchStatus(batchID)
+		suite.NoError(err2)
+		// pending
+		suite.Equal("", batchStatusPending.CompleteState)
+		// complete jobs
+		err = cl.Ack(job1.Jid)
+		suite.NoError(err2)
+		err = cl.Ack(job2.Jid)
+		suite.NoError(err2)
+
+		// Check callback
+		batchStatusComplete, err2 := cl.BatchStatus(batchID)
+		suite.NoError(err2)
+		suite.Equal("2", batchStatusComplete.CompleteState)
+
+		callbackJob, err2 := cl.Fetch(criticalQueue)
+		suite.NoError(err2)
+		suite.Equal("AnalyzedAuditBatchJobSuccess", callbackJob.Type)
+
+		// AnalyzedAuditBatchJobSuccess should enquueue DigestEmailBatchJob
+		pool, err2 := faktory.NewPool(5)
+		suite.NoError(err2)
+		perf := faktory_worker.NewTestExecutor(pool)
+		err = perf.Execute(callbackJob, worker.AnalyzedAuditBatchJobSuccess)
+		suite.NoError(err2)
+		err = cl.Ack(callbackJob.Jid)
+		suite.NoError(err2)
+
+		emailBatchJob, err2 := cl.Fetch(criticalQueue)
+		suite.NoError(err2)
+		suite.Equal("DigestEmailBatchJob", emailBatchJob.Type)
+
+		return err2
+	})
+
+	suite.NoError(err)
+}
+
+func (suite *WorkerSuite) TestAnalyzedAuditJobIntegration() {
+	worker := &Worker{
+		Store:  suite.testConfigs.Store,
+		Logger: suite.testConfigs.Logger,
+	}
+
+	date := time.Now().UTC().Format("2006-01-02")
+	// Create Plan
+	mp1 := suite.createModelPlan("Test Plan")
+
+	pool, err := faktory.NewPool(5)
+
+	// Test when AnalyzedAuditJob runs it enqueues
+	// the with the correct args
+	job := faktory.NewJob("AnalyzedAuditJob", date, mp1.ID)
+	job.Queue = criticalQueue
+
+	err = pool.With(func(cl *faktory.Client) error {
+		err2 := cl.Push(job)
+		suite.NoError(err2)
+
+		queues, err2 := cl.QueueSizes()
+		suite.NoError(err2)
+		suite.True(queues[criticalQueue] == 1)
+
+		// Check jobs arguments equal are corrrect modelPlanId and date
+		job1, err2 := cl.Fetch(criticalQueue)
+
+		suite.NoError(err2)
+		suite.Equal(criticalQueue, job1.Queue)
+		suite.Equal(date, job1.Args[0].(string))
+		suite.Equal(mp1.ID.String(), job1.Args[1].(string))
+
+		// Test job run
+		pool, err2 := faktory.NewPool(5)
+		suite.NoError(err2)
+		perf := faktory_worker.NewTestExecutor(pool)
+
+		err = perf.Execute(job1, worker.AnalyzedAuditJob)
+		suite.NoError(err2)
+
+		return err2
+	})
+	suite.NoError(err)
+
+	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Logger, mp1.ID, time.Now().UTC())
+	suite.NoError(err)
+
+	suite.NotEmpty(analyzedAudit)
 }
