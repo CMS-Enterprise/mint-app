@@ -324,7 +324,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                             disabled={
                               values.solutions.filter(
                                 solution => solution.needed
-                              ).length === 0 && !update
+                              ).length === 0
                             }
                           >
                             {t('continue')}

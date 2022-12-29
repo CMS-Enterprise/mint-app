@@ -3,7 +3,7 @@
 exports[`IT Solutions SolutionCard matches snapshot 1`] = `
 <DocumentFragment>
   <ul
-    class="usa-card-group flex-column"
+    class="usa-card-group flex-column flex-no-wrap"
     data-testid="CardGroup"
   >
     <li

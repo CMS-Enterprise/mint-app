@@ -181,6 +181,7 @@ const SolutionDetails = () => {
             {/* Documents table and link */}
             <div className="margin-top-6">
               <h3 className="margin-bottom-0">{t('documents')}</h3>
+
               <PlanDocumentsTable
                 className="margin-top-neg-2"
                 modelID={modelID}

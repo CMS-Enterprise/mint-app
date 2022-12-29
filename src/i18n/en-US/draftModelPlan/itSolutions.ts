@@ -139,7 +139,7 @@ const itSolutions = {
   updateError:
     'There was an error updating your solution details. Please try again.',
   solutionRemoveWarning:
-    'Saving these selections will delete the {{-solutions}} solution page that is associated with this operational need.',
+    'Saving these selections will delete the {{-solutions}} solution page/s that is associated with this operational need.',
   successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}',
   successSolutionUpdated: 'Success! Your solution details have been updated.',
   solution: 'Solution',

@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 
 import AddCustomSolution from '.';
@@ -55,9 +56,11 @@ describe('AddCustomSolution', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
-          <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
-            <AddCustomSolution />
-          </MockedProvider>
+          <MessageProvider>
+            <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
+              <AddCustomSolution />
+            </MockedProvider>
+          </MessageProvider>
         </Route>
       </MemoryRouter>
     );
@@ -88,9 +91,11 @@ describe('AddCustomSolution', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
-          <MockedProvider mocks={returnMockedData(true)} addTypename={false}>
-            <AddCustomSolution />
-          </MockedProvider>
+          <MessageProvider>
+            <MockedProvider mocks={returnMockedData(true)} addTypename={false}>
+              <AddCustomSolution />
+            </MockedProvider>
+          </MessageProvider>
         </Route>
       </MemoryRouter>
     );
@@ -115,9 +120,11 @@ describe('AddCustomSolution', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
-          <MockedProvider mocks={returnMockedData(true)} addTypename={false}>
-            <AddCustomSolution />
-          </MockedProvider>
+          <MessageProvider>
+            <MockedProvider mocks={returnMockedData(true)} addTypename={false}>
+              <AddCustomSolution />
+            </MockedProvider>
+          </MessageProvider>
         </Route>
       </MemoryRouter>
     );
@@ -142,9 +149,11 @@ describe('AddCustomSolution', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
-          <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
-            <AddCustomSolution />
-          </MockedProvider>
+          <MessageProvider>
+            <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
+              <AddCustomSolution />
+            </MockedProvider>
+          </MessageProvider>
         </Route>
       </MemoryRouter>
     );

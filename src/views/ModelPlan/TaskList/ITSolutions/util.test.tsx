@@ -16,8 +16,12 @@ import {
   returnActionLinks
 } from './util';
 
+const modelID = 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06';
+
 const operationalNeed: any = {
-  needKey: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT
+  needKey: OperationalNeedKey.ACQUIRE_AN_EVAL_CONT,
+  needID: '0b9e42ff-05b3-45c1-9464-5041307d1671',
+  id: 'b7290d2c-0eae-4df4-8657-b22b5df3159e'
 };
 
 describe('IT Solutions Util', () => {
@@ -66,10 +70,12 @@ describe('IT Solutions Util', () => {
       returnActionLinks(
         OpSolutionStatus.NOT_STARTED,
         operationalNeed as GetOperationalNeedsTableType,
-        '123'
+        modelID
       )
     ).toEqual(
-      <UswdsReactLink to="/models/123/task-list/ops-eval-and-learning/evaluation">
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+      >
         {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
       </UswdsReactLink>
     );
@@ -78,14 +84,19 @@ describe('IT Solutions Util', () => {
       returnActionLinks(
         OpSolutionStatus.ONBOARDING,
         operationalNeed as GetOperationalNeedsTableType,
-        '123'
+        modelID
       )
     ).toEqual(
       <>
-        <UswdsReactLink to="/" className="margin-right-2">
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status`}
+          className="margin-right-2"
+        >
           {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
         </UswdsReactLink>
-        <UswdsReactLink to="/">
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+        >
           {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
         </UswdsReactLink>
       </>
@@ -95,10 +106,12 @@ describe('IT Solutions Util', () => {
       returnActionLinks(
         OperationalNeedStatus.NOT_NEEDED,
         operationalNeed as GetOperationalNeedsTableType,
-        '123'
+        modelID
       )
     ).toEqual(
-      <UswdsReactLink to="/models/123/task-list/ops-eval-and-learning/evaluation">
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+      >
         {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
       </UswdsReactLink>
     );
