@@ -113,7 +113,7 @@ export const returnActionLinks = (
   const solutionActionLinks = (
     <>
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status`}
+        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status/${operationalNeed.id}`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
         {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
