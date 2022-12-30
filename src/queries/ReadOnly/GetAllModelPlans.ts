@@ -1,12 +1,14 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetAllModelPlans {
-    modelPlanCollection {
+  query GetAllModelPlans($filter: ModelPlanFilter!) {
+    modelPlanCollection(filter: $filter) {
       id
       modelName
+      nameHistory(sort: DESC)
       status
       isFavorite
+      isCollaborator
       basics {
         applicationsStart
         modelCategory
@@ -15,6 +17,10 @@ export default gql`
       collaborators {
         fullName
         teamRole
+      }
+      crTdls {
+        id
+        idNumber
       }
     }
   }

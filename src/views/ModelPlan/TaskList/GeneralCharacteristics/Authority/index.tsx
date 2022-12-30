@@ -36,6 +36,7 @@ import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharac
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import { AuthorityAllowance, WaiverType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateAuthorityAllowance,
@@ -89,15 +90,20 @@ const Authority = () => {
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -128,7 +134,7 @@ const Authority = () => {
     waiversRequired: waiversRequired ?? null,
     waiversRequiredTypes: waiversRequiredTypes ?? [],
     waiversRequiredNote: waiversRequiredNote ?? '',
-    status: sanitizeStatus(status)
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -169,7 +175,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -453,7 +459,7 @@ const Authority = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -465,7 +471,7 @@ const Authority = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -475,7 +481,7 @@ const Authority = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

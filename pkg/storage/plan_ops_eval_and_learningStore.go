@@ -12,16 +12,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_ops_eval_and_learning_create.sql
+//go:embed SQL/plan_ops_eval_and_learning/create.sql
 var planOpsEvalAndLearningCreateSQL string
 
-//go:embed SQL/plan_ops_eval_and_learning_update.sql
+//go:embed SQL/plan_ops_eval_and_learning/update.sql
 var planOpsEvalAndLearningUpdateSQL string
 
-//go:embed SQL/plan_ops_eval_and_learning_get_by_id.sql
+//go:embed SQL/plan_ops_eval_and_learning/get_by_id.sql
 var planOpsEvalAndLearningGetByIDSQL string
 
-//go:embed SQL/plan_ops_eval_and_learning_get_by_model_plan_id.sql
+//go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id.sql
 var planOpsEvalAndLearningGetByModelPlanIDSQL string
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object

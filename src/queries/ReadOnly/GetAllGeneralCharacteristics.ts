@@ -3,7 +3,9 @@ import { gql } from '@apollo/client';
 export default gql`
   query GetAllGeneralCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
+      id
       generalCharacteristics {
+        id
         isNewModel
         existingModel
         resemblesExistingModel
@@ -13,7 +15,6 @@ export default gql`
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
-        alternativePaymentModel
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -23,8 +24,8 @@ export default gql`
         collectPlanBidsNote
         managePartCDEnrollment
         managePartCDEnrollmentNote
-        planContactUpdated
-        planContactUpdatedNote
+        planContractUpdated
+        planContractUpdatedNote
         careCoordinationInvolved
         careCoordinationInvolvedDescription
         careCoordinationInvolvedNote

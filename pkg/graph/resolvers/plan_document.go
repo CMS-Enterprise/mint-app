@@ -2,8 +2,10 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/accesscontrol"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -12,40 +14,26 @@ import (
 	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
-func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocument) (*model.PlanDocumentPayload, error) {
-	presignedURL, urlErr := s3Client.NewGetPresignedURL(document.FileKey)
-	if urlErr != nil {
-		return nil, urlErr
-	}
-
-	payload := model.PlanDocumentPayload{
-		Document:     document,
-		PresignedURL: presignedURL,
-	}
-
-	return &payload, nil
-}
-
-// PlanDocumentCreate implements resolver logic to create a plan document object
-func PlanDocumentCreate(
-	logger *zap.Logger,
-	document *models.PlanDocument,
-	documentURL *string,
-	principal authentication.Principal,
-	store *storage.Store,
-	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
+// PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
+func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
+	document := models.NewPlanDocument(principal.ID(), input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes))
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, documentURL, s3Client)
+	err = s3Client.UploadFile(input.FileData.File, document.FileKey)
+	if err != nil {
+		return &models.PlanDocument{}, err
+	}
+
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, s3Client)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
 
-	return createDocumentPayload(s3Client, document)
+	return document, nil
 }
 
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
@@ -59,44 +47,67 @@ func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload
 }
 
 // PlanDocumentsReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
-func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
-	documents, err := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
+func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	isCollaborator, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
 	if err != nil {
 		return nil, err
 	}
 
+	if !isCollaborator {
+		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return notRestrictedDocuments, nil
+	}
+
+	documents, docErr := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
+
+	if docErr != nil {
+		return nil, docErr
+	}
+	return documents, nil
+
+}
+
+// PlanDocumentsReadBySolutionID implements resolver logic to fetch a plan document object by solution ID
+func PlanDocumentsReadBySolutionID(
+	logger *zap.Logger,
+	id uuid.UUID,
+	principal authentication.Principal,
+	store *storage.Store,
+	s3Client *upload.S3Client,
+) ([]*models.PlanDocument, error) {
+
+	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, id)
+	if err != nil {
+		return nil, err
+	}
+
+	if !isCollaborator {
+		notRestrictedDocuments, err := store.PlanDocumentsReadBySolutionIDNotRestricted(logger, id, s3Client)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return notRestrictedDocuments, nil
+	}
+
+	documents, docErr := store.PlanDocumentsReadBySolutionID(logger, id, s3Client)
+
+	if docErr != nil {
+		return nil, docErr
+	}
 	return documents, nil
 }
 
-// PlanDocumentUpdate implements resolver logic to update a plan milestones object
-func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (*model.PlanDocumentPayload, error) {
-
-	existingdoc, err := store.PlanDocumentRead(logger, s3Client, input.ID)
-	if err != nil {
-		return nil, err
-	}
-	input.ModelPlanID = existingdoc.ModelPlanID
-
-	err = BaseStructPreUpdate(logger, input, nil, principal, store, false, true)
-	if err != nil {
-		return nil, err
-	}
-	// //TODO convert to use Apply Changes and Base Struct pre-update
-
-	document, err := store.PlanDocumentUpdate(logger, input)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, input)
-	}
-
-	return createDocumentPayload(s3Client, document)
-}
-
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (int, error) {
-	euaid := principal.ID()
-	input.ModifiedBy = &euaid
-
-	existingdoc, err := store.PlanDocumentRead(logger, s3Client, input.ID)
+func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
+	existingdoc, err := store.PlanDocumentRead(logger, s3Client, id)
 	if err != nil {
 		return 0, err
 	}
@@ -105,7 +116,7 @@ func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 		return 0, err
 	}
 
-	sqlResult, err := store.PlanDocumentDelete(logger, input.ID)
+	sqlResult, err := store.PlanDocumentDelete(logger, id)
 	if err != nil {
 		return 0, err
 	}

@@ -13,7 +13,7 @@ import (
 
 // CreatePlanDiscussion implements resolver logic to create a plan Discussion object
 func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-	planDiscussion := models.NewPlanDiscussion(principal.ID(), input.ModelPlanID, input.Content)
+	planDiscussion := models.NewPlanDiscussion(principal.ID(), principal.AllowASSESSMENT(), input.ModelPlanID, input.Content)
 
 	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
 	if err != nil {
@@ -58,7 +58,7 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreateInput, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	discussionReply := models.NewDiscussionReply(principal.ID(), input.DiscussionID, input.Content, input.Resolution)
+	discussionReply := models.NewDiscussionReply(principal.ID(), principal.AllowASSESSMENT(), input.DiscussionID, input.Content, input.Resolution)
 
 	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
 	if err != nil {

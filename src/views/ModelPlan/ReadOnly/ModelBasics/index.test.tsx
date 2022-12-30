@@ -18,6 +18,7 @@ import ReadOnlyModelBasics from './index';
 
 const basicMockData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
+  id: '123',
   modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
   cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
   cmsOther: 'The Center for Awesomeness',
@@ -57,6 +58,7 @@ const mocks = [
       data: {
         modelPlan: {
           id: modelID,
+          nameHistory: ['First Name', 'Second Name'],
           basics: basicMockData
         }
       }
@@ -82,6 +84,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(
         screen.getByTestId('read-only-model-plan--model-basics')
       ).toBeInTheDocument();
+      expect(screen.getByText('Second Name')).toBeInTheDocument();
       expect(
         screen.getByText(
           translateModelCategory(ModelCategory.PRIMARY_CARE_TRANSFORMATION)
@@ -108,6 +111,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(screen.getByTestId('other-entry')).toHaveTextContent(
         'The Center for Awesomeness'
       );
+      expect(screen.getByText('Second Name')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

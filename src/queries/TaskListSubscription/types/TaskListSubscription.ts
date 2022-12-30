@@ -14,6 +14,7 @@ export interface TaskListSubscription_onLockTaskListSectionContext_lockStatus {
   modelPlanID: UUID;
   section: TaskListSection;
   lockedBy: string;
+  isAssessment: boolean;
 }
 
 export interface TaskListSubscription_onLockTaskListSectionContext {

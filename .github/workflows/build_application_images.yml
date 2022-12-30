@@ -7,81 +7,35 @@ on:
         required: true
       DOCKERHUB_TOKEN:
         required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
+      INFRA_ROLE_TO_ASSUME:
         required: true
       SLACK_WEBHOOK_URL:
         required: true
 
 env:
-  EASI_APP_NODE_VERSION: "16.14.0"
-  EASI_APP_GO_VERSION: "1.18.3"
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-jobs:
-  pre_deps:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-        with:
-          ref: ${{ env.GIT_HASH }}
-      - name: Set up node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
-        with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
-      - name: Set up go
-        uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
-        with:
-          go-version: ${{ env.EASI_APP_GO_VERSION }}
-      - name: Configure go cache
-        id: go-cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
-        with:
-          path: |
-            ~/go/pkg/mod
-          key: v1-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            v1-go-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
-      - name: Install yarn dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
-      - name: Install go modules
-        if: steps.go-cache.outputs.cache-hit != 'true'
-        run: go mod download
-      - name: Announce failure
-        if: ${{ failure() }}
-        run: |
-          ./scripts/github-action-announce-broken-branch
+permissions:
+  id-token: write
+  contents: read
 
+jobs:
   anti_virus:
     runs-on: ubuntu-latest
     container:
       image: clamav/clamav:0.104.0
     steps:
       - name: Check out code
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.GIT_HASH }}
-      - run: clamscan --version
-      - run: mkdir -p /store && chown clamav /store
-      - run: freshclam --config-file /etc/clamav/freshclam.conf --datadir=/store
-      - run: clamscan --recursive --infected --detect-pua=yes --max-scansize=300M --max-filesize=100M --max-recursion=30 --max-files=50000 --tempdir=/tmp --database=/store .
+      - name: Run clamscan
+        run: |
+          clamscan --version
+          mkdir -p /store && chown clamav /store
+          freshclam --config-file /etc/clamav/freshclam.conf --datadir=/store
+          clamscan --recursive --infected --detect-pua=yes --max-scansize=300M --max-filesize=100M --max-recursion=30 --max-files=50000 --tempdir=/tmp --database=/store .
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -89,82 +43,118 @@ jobs:
 
   build_db_migrate_image:
     runs-on: ubuntu-latest
-    if: ${{ false }} # Disabled until we have a way to push our builds to ECR
     steps:
       - name: Check out code
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-        with:
-          ref: ${{ env.GIT_HASH }}
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: Login to Docker Hub
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
+          role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@9149ade017c57f86dea2f76a01f8b2d5bd06b10f
-      - name: Build, tag, and push image to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build and push
+        uses: docker/build-push-action@v3
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
+        with:
+          push: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.GIT_HASH }}
+          file: "Dockerfile.db_migrations"
+          platforms: "linux/amd64"
+          context: .
+      - name: Announce failure
+        if: ${{ failure() }}
         run: |
-          IMAGE_FOUND=$(./scripts/find_ecr_image.sh ${{ env.ECR_REPOSITORY }} ${{ env.GIT_HASH }})
-          if [[ $IMAGE_FOUND == 1 ]]; then
-            echo "Image found, skipping build"
-          else
-            docker image build --quiet --no-cache --tag "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH" --file Dockerfile.db_migrations .
-            docker image push "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
-          fi
+          ./scripts/github-action-announce-broken-branch
+
+  build_db_clean_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: mint-db-clean
+        with:
+          push: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest # Always tag with latest, since this image doesn't contain any build-specific contents
+          file: "Dockerfile.db_clean"
+          platforms: "linux/amd64"
+          context: .
       - name: Announce failure
         if: ${{ failure() }}
         run: |
           ./scripts/github-action-announce-broken-branch
 
   build_server_image:
-    if: ${{ false }} # Disabled until we have a way to push our builds to ECR
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-        with:
-          ref: ${{ env.GIT_HASH }}
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: Login to Docker Hub
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
+          role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@9149ade017c57f86dea2f76a01f8b2d5bd06b10f
-      - name: Build, tag, and push image to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Calculate build args
+        id: calculate-build-args
+        run: |
+          APPLICATION_DATETIME="$(date --rfc-3339='seconds' --utc)"
+          APPLICATION_TS="$(date --date="$APPLICATION_DATETIME" '+%s')"
+          echo "APPLICATION_DATETIME=${APPLICATION_DATETIME}" >> $GITHUB_OUTPUT
+          echo "APPLICATION_TS=${APPLICATION_TS}" >> $GITHUB_OUTPUT
+      - name: Build and push
+        uses: docker/build-push-action@v3
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-backend
-        run: |
-          IMAGE_FOUND=$(./scripts/find_ecr_image.sh ${{ env.ECR_REPOSITORY }} ${{ env.GIT_HASH }})
-          if [[ $IMAGE_FOUND == 1 ]]; then
-            echo "Image found, skipping build"
-          else
-            APPLICATION_DATETIME="$(date --rfc-3339='seconds' --utc)"
-            APPLICATION_TS="$(date --date="$APPLICATION_DATETIME" '+%s')"
-            docker image build --quiet --build-arg ARG_APPLICATION_VERSION="$GIT_HASH" --build-arg ARG_APPLICATION_DATETIME="$APPLICATION_DATETIME" --build-arg ARG_APPLICATION_TS="$APPLICATION_TS" --no-cache --tag "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH" .
-            docker image push "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
-          fi
-      - name: Check for vulnerability scan findings
-        run: |
-          ./scripts/check_ecr_findings "easi-backend" "$GIT_HASH" "7"
+          ECR_REPOSITORY: mint-backend
+        with:
+          push: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.GIT_HASH }}
+          file: "Dockerfile"
+          platforms: "linux/amd64"
+          context: .
+          build-args: |
+            ARG_APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }}
+            ARG_APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}
+            ARG_APPLICATION_VERSION=${{ env.GIT_HASH }}
       - name: Announce failure
         if: ${{ failure() }}
         run: |

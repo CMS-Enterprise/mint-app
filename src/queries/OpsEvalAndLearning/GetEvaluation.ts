@@ -24,8 +24,8 @@ export default gql`
         shareCclfData
         shareCclfDataNote
       }
-      itTools {
-        status
+      operationalNeeds {
+        modifiedDts
       }
     }
   }

@@ -7,11 +7,14 @@ import { Button } from '@trussworks/react-uswds';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import IconInitial from 'components/shared/IconInitial';
+import useMessage from 'hooks/useMessage';
 import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
+import CsvExportLink from 'utils/export/CsvExportLink';
 
 const TaskListSideNav = ({
   modelPlan,
@@ -23,6 +26,7 @@ const TaskListSideNav = ({
   const { id: modelID } = modelPlan;
   const history = useHistory();
   const { t } = useTranslation('modelPlanTaskList');
+  const { showMessageOnNextPage } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [update] = useMutation<ArchiveModelPlanVariables>(ArchiveModelPlan);
@@ -36,6 +40,22 @@ const TaskListSideNav = ({
     })
       .then(response => {
         if (!response?.errors) {
+          showMessageOnNextPage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  {t('withdraw_modal.confirmationText_name', {
+                    modelName: modelPlan.modelName
+                  })}
+                </span>
+              </Alert>
+            </>
+          );
           history.push(`/`);
         }
       })
@@ -47,15 +67,17 @@ const TaskListSideNav = ({
   const renderModal = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
+        <PageHeading headingLevel="h2" className="margin-y-0">
           {t('withdraw_modal.header', {
             requestName: modelPlan.modelName
           })}
         </PageHeading>
-        <p>{t('withdraw_modal.warning')}</p>
+        <p className="margin-top-2 margin-bottom-3">
+          {t('withdraw_modal.warning')}
+        </p>
         <Button
           type="button"
-          className="margin-right-4"
+          className="margin-right-4 bg-error"
           onClick={() => archiveModelPlan()}
         >
           {t('withdraw_modal.confirm')}
@@ -74,15 +96,12 @@ const TaskListSideNav = ({
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
-        <UswdsReactLink to="/" className="display-block margin-bottom-1">
+        <UswdsReactLink to="/" className="display-block">
           {t('sideNav.saveAndExit')}
         </UswdsReactLink>
-        <UswdsReactLink
-          to={`/models/${modelID}/read-only/model-basics`}
-          className="display-block margin-bottom-1"
-        >
-          {t('sideNav.view')}
-        </UswdsReactLink>
+        <div className="flex-align-self-center margin-y-2">
+          <CsvExportLink modelPlanID={modelID} includeAll={false} />
+        </div>
         <Button
           className="line-height-body-5 test-withdraw-request"
           type="button"
@@ -93,18 +112,30 @@ const TaskListSideNav = ({
         </Button>
         <div className="margin-top-4 margin-bottom-7">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
-          <UswdsReactLink
-            aria-label={t('sideNav.ariaLabelForOverview')}
-            className="line-height-body-5"
-            to="/"
-            variant="external"
-            target="_blank"
+          <Button
+            type="button"
+            onClick={() =>
+              window.open('/help-and-knowledge/model-plan-overview', '_blank')
+            }
+            className="usa-button usa-button--unstyled line-height-body-5 margin-bottom-1"
           >
             <Trans i18nKey="modelPlanTaskList:sideNav.overview">
               indexZero
               <span aria-hidden /> indexTwo
             </Trans>
-          </UswdsReactLink>
+          </Button>
+          <Button
+            type="button"
+            onClick={() =>
+              window.open('/help-and-knowledge/sample-model-plan', '_blank')
+            }
+            className="usa-button usa-button--unstyled line-height-body-5"
+          >
+            <Trans i18nKey="modelPlanTaskList:sideNav.sampleModelPlan">
+              indexZero
+              <span aria-hidden /> indexTwo
+            </Trans>
+          </Button>
         </div>
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>

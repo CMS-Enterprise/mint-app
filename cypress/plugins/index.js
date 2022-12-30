@@ -32,7 +32,7 @@ function createApolloClient(euaId) {
       fetch,
       headers: {
         // need job code to be able to issue LCID
-        Authorization: `Local {"euaId":"${euaId}", "favorLocalAuth":true, "jobCodes":["MINT_USER"]}`
+        Authorization: `Local {"euaId":"${euaId}", "favorLocalAuth":true, "jobCodes":["MINT_USER_NONPROD"]}`
       }
     })
   });

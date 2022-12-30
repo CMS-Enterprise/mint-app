@@ -22,6 +22,7 @@ export interface GetModelPlanInfo_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  nameHistory: string[];
   basics: GetModelPlanInfo_modelPlan_basics;
 }
 

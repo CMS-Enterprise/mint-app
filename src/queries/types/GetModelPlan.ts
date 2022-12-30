@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, TaskStatus, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, TaskStatus, DiscussionStatus, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -12,7 +12,9 @@ import { ModelStatus, TaskStatus, DiscussionStatus } from "./../../types/graphql
 export interface GetModelPlan_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
+  clearanceStarts: Time | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -20,6 +22,12 @@ export interface GetModelPlan_modelPlan_documents {
   __typename: "PlanDocument";
   id: UUID;
   fileName: string;
+}
+
+export interface GetModelPlan_modelPlan_crTdls {
+  __typename: "PlanCrTdl";
+  id: UUID;
+  idNumber: string;
 }
 
 export interface GetModelPlan_modelPlan_discussions_replies {
@@ -49,6 +57,7 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -59,6 +68,7 @@ export interface GetModelPlan_modelPlan_participantsAndProviders {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -69,6 +79,7 @@ export interface GetModelPlan_modelPlan_beneficiaries {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -79,6 +90,7 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
@@ -89,17 +101,20 @@ export interface GetModelPlan_modelPlan_payments {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
 
-export interface GetModelPlan_modelPlan_itTools {
-  __typename: "PlanITTools";
+export interface GetModelPlan_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
   id: UUID;
-  createdBy: string;
-  createdDts: Time;
-  modifiedBy: string | null;
   modifiedDts: Time | null;
-  status: TaskStatus;
+}
+
+export interface GetModelPlan_modelPlan_prepareForClearance {
+  __typename: "PrepareForClearance";
+  status: PrepareForClearanceStatus;
+  modifiedDts: Time | null;
 }
 
 export interface GetModelPlan_modelPlan {
@@ -111,13 +126,15 @@ export interface GetModelPlan_modelPlan {
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics;
   documents: GetModelPlan_modelPlan_documents[];
+  crTdls: GetModelPlan_modelPlan_crTdls[];
   discussions: GetModelPlan_modelPlan_discussions[];
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
   participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
   beneficiaries: GetModelPlan_modelPlan_beneficiaries;
   opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
   payments: GetModelPlan_modelPlan_payments;
-  itTools: GetModelPlan_modelPlan_itTools;
+  operationalNeeds: GetModelPlan_modelPlan_operationalNeeds[];
+  prepareForClearance: GetModelPlan_modelPlan_prepareForClearance;
 }
 
 export interface GetModelPlan {

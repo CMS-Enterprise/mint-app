@@ -4,6 +4,7 @@ import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -22,6 +23,31 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	suite.EqualValues(plan.ID, result.ModelPlanID)
 	suite.EqualValues(input.Content, result.Content)
 	suite.EqualValues(models.DiscussionUnAnswered, result.Status)
+	suite.True(result.IsAssessment) // default principal for the test suite is an assessment user
+	suite.Nil(result.ModifiedBy)
+	suite.Nil(result.ModifiedDts)
+}
+
+func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
+	plan := suite.createModelPlan("Test Plan")
+
+	input := &model.PlanDiscussionCreateInput{
+		ModelPlanID: plan.ID,
+		Content:     "This is a test comment",
+	}
+
+	regularUserPrincipal := &authentication.ApplicationPrincipal{
+		Username:          "TEST",
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(result.ID)
+	suite.EqualValues(plan.ID, result.ModelPlanID)
+	suite.EqualValues(input.Content, result.Content)
+	suite.EqualValues(models.DiscussionUnAnswered, result.Status)
+	suite.False(result.IsAssessment)
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
 }
@@ -41,7 +67,7 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
@@ -84,6 +110,31 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	suite.EqualValues(discussion.ID, result.DiscussionID)
 	suite.EqualValues(input.Content, result.Content)
 	suite.EqualValues(input.Resolution, result.Resolution)
+	suite.True(result.IsAssessment) // default principal for the test suite is an assessment user
+}
+
+func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+
+	input := &model.DiscussionReplyCreateInput{
+		DiscussionID: discussion.ID,
+		Content:      "This is a test reply",
+		Resolution:   true,
+	}
+
+	regularUserPrincipal := &authentication.ApplicationPrincipal{
+		Username:          "TEST",
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(result.ID)
+	suite.EqualValues(discussion.ID, result.DiscussionID)
+	suite.EqualValues(input.Content, result.Content)
+	suite.EqualValues(input.Resolution, result.Resolution)
+	suite.False(result.IsAssessment)
 }
 
 func (suite *ResolverSuite) TestUpdateDiscussionReply() {
@@ -104,7 +155,7 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["resolution"], result.Resolution)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {

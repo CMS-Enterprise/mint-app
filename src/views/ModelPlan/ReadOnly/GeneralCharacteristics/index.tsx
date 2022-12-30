@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
@@ -8,19 +8,29 @@ import {
   translateAgreementTypes,
   translateAlternativePaymentTypes,
   translateAuthorityAllowance,
+  translateBooleanOrNull,
   translateGeographyApplication,
   translateGeographyTypes,
   translateKeyCharacteristics,
+  translateNewModel,
   translateWaiverTypes
 } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
+const ReadOnlyGeneralCharacteristics = ({
+  modelID,
+  clearance
+}: ReadOnlyProps) => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
+  const { t: p } = useTranslation('prepareForClearance');
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<GetAllGeneralCharacteristicsTypes>(
     GetAllGeneralCharacteristics,
@@ -45,7 +55,6 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
     hasComponentsOrTracks,
     hasComponentsOrTracksDiffer,
     hasComponentsOrTracksNote,
-    alternativePaymentModel,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -55,8 +64,8 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
     collectPlanBidsNote,
     managePartCDEnrollment,
     managePartCDEnrollmentNote,
-    planContactUpdated,
-    planContactUpdatedNote,
+    planContractUpdated,
+    planContractUpdatedNote,
     careCoordinationInvolved,
     careCoordinationInvolvedDescription,
     careCoordinationInvolvedNote,
@@ -96,24 +105,36 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
       data-testid="read-only-model-plan--general-characteristics"
     >
       <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
+        <h2 className="margin-top-0 margin-bottom-4">
+          {clearance ? t('clearanceHeading') : t('heading')}
+        </h2>
         {status && <TaskListStatusTag status={status} />}
       </div>
+
+      {clearance && (
+        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
+          {p('forModelPlan', {
+            modelName
+          })}
+        </p>
+      )}
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('isNewModel')}
-          copy={isNewModel ? t('newModel') : t('newTrack')}
+          copy={translateNewModel(isNewModel)}
         />
 
-        <ReadOnlySection
-          heading={t('whichExistingModel')}
-          copy={existingModel}
-        />
+        {!isNewModel && (
+          <ReadOnlySection
+            heading={t('whichExistingModel')}
+            copy={existingModel}
+          />
+        )}
 
         <ReadOnlySection
           heading={t('resembleModel')}
-          copy={resemblesExistingModel ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(resemblesExistingModel)}
         />
 
         <ReadOnlySection
@@ -130,12 +151,12 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('differentComponents')}
-          copy={hasComponentsOrTracks ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(hasComponentsOrTracks)}
         />
 
         <ReadOnlySection
           heading={t('differentComponents')}
-          copy={hasComponentsOrTracks ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(hasComponentsOrTracks)}
         />
 
         <ReadOnlySection
@@ -148,11 +169,6 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('modelAPM')}
-          copy={alternativePaymentModel ? h('yes') : h('no')}
-        />
-
-        <ReadOnlySection
-          heading={t('modelAPMType')}
           list
           listItems={alternativePaymentModelTypes?.map(
             translateAlternativePaymentTypes
@@ -170,20 +186,20 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('reviewPlanBids')}
-          copy={collectPlanBids ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(collectPlanBids)}
           notes={collectPlanBidsNote}
         />
 
         <ReadOnlySection
           heading={t('manageEnrollment')}
-          copy={managePartCDEnrollment ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(managePartCDEnrollment)}
           notes={managePartCDEnrollmentNote}
         />
 
         <ReadOnlySection
-          heading={t('updatedContact')}
-          copy={planContactUpdated ? h('yes') : h('no')}
-          notes={planContactUpdatedNote}
+          heading={t('updatedContract')}
+          copy={translateBooleanOrNull(planContractUpdated)}
+          notes={planContractUpdatedNote}
         />
       </div>
 
@@ -192,7 +208,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('careCoordination')}
-              copy={careCoordinationInvolved ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(careCoordinationInvolved)}
             />
           </div>
           {careCoordinationInvolved && (
@@ -215,7 +231,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('additionalServices')}
-              copy={additionalServicesInvolved ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(additionalServicesInvolved)}
             />
           </div>
           {additionalServicesInvolved && (
@@ -238,7 +254,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('communityInvolved')}
-              copy={communityPartnersInvolved ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(communityPartnersInvolved)}
             />
           </div>
           {communityPartnersInvolved && (
@@ -261,7 +277,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('specificGeographies')}
-          copy={geographiesTargeted ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(geographiesTargeted)}
         />
 
         <ReadOnlySection
@@ -283,7 +299,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('participationOptions')}
-          copy={participationOptions ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(participationOptions)}
           notes={participationOptionsNote}
         />
 
@@ -296,7 +312,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('moreParticipation')}
-          copy={multiplePatricipationAgreementsNeeded ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(multiplePatricipationAgreementsNeeded)}
           notes={multiplePatricipationAgreementsNeededNote}
         />
       </div>
@@ -305,7 +321,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('rulemakingRequired')}
-              copy={rulemakingRequired ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(rulemakingRequired)}
             />
           </div>
 
@@ -337,7 +353,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('waiversRequired')}
-              copy={waiversRequired ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(waiversRequired)}
             />
           </div>
 

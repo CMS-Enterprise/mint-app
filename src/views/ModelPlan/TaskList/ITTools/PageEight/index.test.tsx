@@ -13,6 +13,7 @@ import {
   ModelLearningSystemType,
   OelEducateBeneficiariesType
 } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageEight from '.';
 
@@ -73,7 +74,10 @@ describe('IT Tools Page eight', () => {
       >
         <MockedProvider mocks={itToolsPageEightMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-eight">
-            <ITToolsPageEight />
+            <ITToolsPageEight
+              opsEvalAndLearningLock={LockStatus.LOCKED}
+              paymentsLock={LockStatus.LOCKED}
+            />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -86,7 +90,7 @@ describe('IT Tools Page eight', () => {
     await waitFor(() => {
       expect(
         getByTestId('tools-question-modelLearningSystems')
-      ).toHaveTextContent('Will the model have a learning system?');
+      ).toHaveTextContent('Will the model have a learning strategy?');
 
       expect(
         getByTestId('has-answered-tools-question-modelLearningSystems')
@@ -111,7 +115,10 @@ describe('IT Tools Page eight', () => {
       >
         <MockedProvider mocks={itToolsPageEightMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-eight">
-            <ITToolsPageEight />
+            <ITToolsPageEight
+              opsEvalAndLearningLock={LockStatus.LOCKED}
+              paymentsLock={LockStatus.LOCKED}
+            />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -120,7 +127,7 @@ describe('IT Tools Page eight', () => {
     await waitFor(() => {
       expect(
         getByTestId('tools-question-modelLearningSystems')
-      ).toHaveTextContent('Will the model have a learning system?');
+      ).toHaveTextContent('Will the model have a learning strategy?');
     });
 
     expect(asFragment()).toMatchSnapshot();

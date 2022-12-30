@@ -1,6 +1,6 @@
 describe('The Model Plan Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('archives a model plan', () => {
@@ -8,7 +8,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Remove your Model Plan').click();
 
-    cy.contains('button', 'Remove request').click();
+    cy.contains('button', 'Remove Model Plan').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.eq('/');

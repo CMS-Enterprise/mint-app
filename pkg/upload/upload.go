@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"io"
 	"mime"
 	"net/url"
 	"os"
@@ -16,6 +17,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 )
@@ -139,7 +141,45 @@ func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 	return "", nil
 }
 
+// SetTagValueForKey sets the tag value and returns an error if any was encountered.
+func (c S3Client) SetTagValueForKey(key string, tagName string, tagValue string) error {
+	input := &s3.PutObjectTaggingInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+		Tagging: &s3.Tagging{
+			TagSet: []*s3.Tag{
+				{
+					Key:   aws.String(tagName),
+					Value: aws.String(tagValue),
+				},
+			},
+		},
+	}
+	_, taggingErr := c.client.PutObjectTagging(input)
+	if taggingErr != nil {
+		return taggingErr
+	}
+
+	return nil
+}
+
 // GetBucket returns a *string containing the S3 Bucket as defined by the S3Configuration
 func (c S3Client) GetBucket() *string {
 	return aws.String(c.config.Bucket)
+}
+
+// UploadFile uploads a io.Reader to the bucket configured in the S3Client
+func (c S3Client) UploadFile(file io.Reader, key string) error {
+	uploader := s3manager.NewUploaderWithClient(c.client)
+
+	_, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+		Body:   file,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

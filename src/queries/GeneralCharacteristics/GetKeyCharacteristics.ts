@@ -7,7 +7,6 @@ export default gql`
       modelName
       generalCharacteristics {
         id
-        alternativePaymentModel
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -17,11 +16,11 @@ export default gql`
         collectPlanBidsNote
         managePartCDEnrollment
         managePartCDEnrollmentNote
-        planContactUpdated
-        planContactUpdatedNote
+        planContractUpdated
+        planContractUpdatedNote
       }
-      itTools {
-        status
+      operationalNeeds {
+        modifiedDts
       }
     }
   }

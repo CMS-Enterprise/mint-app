@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
@@ -10,6 +10,7 @@ import {
   RecruitmentType
 } from 'types/graphql-global-types';
 import {
+  translateBooleanOrNull,
   translateCommunicationType,
   translateConfidenceType,
   translateOverlapType,
@@ -21,14 +22,21 @@ import {
   translateRecruitmentType,
   translateRiskType
 } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
+const ReadOnlyParticipantsAndProviders = ({
+  modelID,
+  clearance
+}: ReadOnlyProps) => {
   const { t } = useTranslation('participantsAndProviders');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: p } = useTranslation('prepareForClearance');
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<GetAllParticipantsTypes>(
     GetAllParticipants,
@@ -99,9 +107,19 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
       data-testid="read-only-model-plan--participants-and-providers"
     >
       <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
-        {status && <TaskListStatusTag status={status} />}
+        <h2 className="margin-top-0 margin-bottom-4">
+          {clearance ? t('clearanceHeading') : t('heading')}
+        </h2>
+        <TaskListStatusTag status={status} />
       </div>
+
+      {clearance && (
+        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
+          {p('forModelPlan', {
+            modelName
+          })}
+        </p>
+      )}
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
@@ -124,7 +142,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('participantsCMMI')}
-          copy={participantsCurrentlyInModels ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(participantsCurrentlyInModels)}
           notes={participantsCurrentlyInModelsNote}
         />
 
@@ -185,7 +203,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('assumeRisk')}
-              copy={participantAssumeRisk ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(participantAssumeRisk)}
             />
           </div>
           {participantAssumeRisk && (
@@ -204,7 +222,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('changeRisk')}
-          copy={willRiskChange ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(willRiskChange)}
           notes={willRiskChangeNote}
         />
       </div>
@@ -212,7 +230,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('workCoordination')}
-          copy={coordinateWork ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(coordinateWork)}
           notes={coordinateWorkNote}
         />
 
@@ -220,14 +238,14 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('gainsharing')}
-              copy={gainsharePayments ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(gainsharePayments)}
             />
           </div>
           {gainsharePayments && (
             <div className="desktop:width-card-lg">
               <ReadOnlySection
                 heading={t('trackPayments')}
-                copy={gainsharePaymentsTrack ? h('yes') : h('no')}
+                copy={translateBooleanOrNull(gainsharePaymentsTrack)}
               />
             </div>
           )}

@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import {
   ApolloClient,
   ApolloProvider,
-  HttpLink,
   InMemoryCache,
   split
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { createUploadLink } from 'apollo-upload-client';
 import axios from 'axios';
 import { detect } from 'detect-browser';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
@@ -59,7 +59,7 @@ function getAuthHeader(targetUrl: string) {
 /**
  * Setup client for GraphQL
  */
-const httpLink = new HttpLink({
+const uploadLink = createUploadLink({
   uri: process.env.REACT_APP_GRAPHQL_ADDRESS
 });
 
@@ -73,8 +73,11 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
+const [protocol, gqlAddressWithoutProtocol] = (process.env
+  .REACT_APP_GRAPHQL_ADDRESS as string).split('://');
+const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecting over HTTPs
 const wsLink = new WebSocketLink(
-  new SubscriptionClient('ws://localhost:8085/api/graph/query', {
+  new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
     }
@@ -95,15 +98,17 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(httpLink)
+  authLink.concat(uploadLink)
 );
-
-const typePolicies = {};
 
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({
-    typePolicies
+    typePolicies: {
+      OperationalSolution: {
+        keyFields: ['key', 'nameOther', 'id']
+      }
+    }
   }),
   defaultOptions: {
     watchQuery: {

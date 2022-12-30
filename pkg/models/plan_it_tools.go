@@ -101,7 +101,7 @@ type PlanITTools struct {
 	PRecoverPaymentsNote  *string        `json:"pRecoverPaymentsNote" db:"p_recover_payments_note"`
 }
 
-//NewPlanITTools returns a new PlanITTools object
+// NewPlanITTools returns a new PlanITTools object
 func NewPlanITTools(tls baseTaskListSection) *PlanITTools {
 	return &PlanITTools{
 		baseTaskListSection: tls,

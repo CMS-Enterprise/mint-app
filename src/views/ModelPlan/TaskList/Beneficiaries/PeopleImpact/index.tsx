@@ -41,6 +41,7 @@ import {
   SelectionMethodType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateConfidenceType,
@@ -81,15 +82,14 @@ const PeopleImpact = () => {
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (
-    formikValues: PeopleImpactedFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -167,8 +167,8 @@ const PeopleImpact = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -284,7 +284,7 @@ const PeopleImpact = () => {
                               as={Radio}
                               key={key}
                               id={`beneficiaries-impact-confidence-${key}`}
-                              name="beneficiaries-impact-estimateConfidence"
+                              name="participantsCurrentlyInModels"
                               label={translateConfidenceType(key)}
                               value={key}
                               checked={values.estimateConfidence === key}
@@ -315,7 +315,7 @@ const PeopleImpact = () => {
                         <Field
                           as={MultiSelect}
                           id="beneficiaries-chooseBeneficiaries"
-                          name="beneficiaries-chooseBeneficiaries"
+                          name="beneficiarySelectionMethod"
                           options={mappedSelectionMethodType}
                           selectedLabel={t('selectedMethods')}
                           onChange={(value: string[] | []) => {
@@ -363,7 +363,7 @@ const PeopleImpact = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -375,7 +375,7 @@ const PeopleImpact = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -388,7 +388,7 @@ const PeopleImpact = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

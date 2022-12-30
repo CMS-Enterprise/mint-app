@@ -8,13 +8,15 @@ const locks: LockSectionType[] = [
     __typename: 'TaskListSectionLockStatus',
     modelPlanID: '123',
     section: TaskListSection.BENEFICIARIES,
-    lockedBy: 'MINT'
+    lockedBy: 'MINT',
+    isAssessment: true
   },
   {
     __typename: 'TaskListSectionLockStatus',
     modelPlanID: '123',
     section: TaskListSection.PAYMENT,
-    lockedBy: 'ABCD'
+    lockedBy: 'ABCD',
+    isAssessment: false
   }
 ];
 

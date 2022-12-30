@@ -152,8 +152,8 @@ Once this is setup, you should see `direnv` loading/unloading environment
 variables as you enter or depart from the project directory:
 
 ```console
-$ cd easi-app
-direnv: loading ~/Project/easi-app/.envrc
+$ cd mint-app
+direnv: loading ~/Project/mint-app/.envrc
 direnv: export +EXAMPLE_ENV +EXAMPLE_ENV_ADDITIONAL +EXAMPLE_ENV_MORE ... ~PATH
 $ cd ..
 direnv: unloading

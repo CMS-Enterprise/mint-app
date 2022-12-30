@@ -186,7 +186,7 @@ const operationsEvaluationAndLearning = {
     beneficiary: 'Beneficiary-level data',
     participant: 'Participant-level data',
     provider: 'Provider-level data',
-    other: 'Other-MIPS data',
+    other: 'Other',
     notPlanning: 'Not planning to send data'
   },
   claimLineFeed:
@@ -241,14 +241,15 @@ const operationsEvaluationAndLearning = {
   qualityQuestions: 'Quality questions',
   includedPayment:
     'Data sources included payment (FFS A,B,D claims... Standardized payment tables...)',
-  learningSystem: 'Will the model have a learning system?',
+  learningSystem: 'Will the model have a learning strategy?',
   learningSystemOptions: {
-    connector: 'We plan to have a learning connector',
-    itConnect: 'We plan to use Connect (an IT platform)',
+    connector:
+      'We plan to have a learning contractor (cross-model or individual)',
+    itConnect: 'We plan to use an IT platform (Connect)',
     collaboration: 'We plan to enable participant-to-participant collaboration',
     educate: 'We plan to educate beneficiaries',
     other: 'Other',
-    no: 'No, we will not have a learning system'
+    no: 'No, we will not have a learning strategy'
   },
   obstacles:
     'What challenges do you anticipate during Model design and implementation?',

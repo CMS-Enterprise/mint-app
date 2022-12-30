@@ -1,6 +1,6 @@
 # System intakes backfill
 
-Systems (and their lifecycle IDs) that are created outside EASi can be imported
+Systems (and their lifecycle IDs) that are created outside MINT can be imported
 using data backfill. When run, the backfill program loads data from the
 provided CSV and sends it to the backend over HTTP.
 
@@ -54,5 +54,5 @@ BACKFILL_AUTH # JWT
    To run against production:
 
    ```console
-   env BACKFILL_FILE=$path-to-file BACKFILL_HOST=https://cms.easi.gov go run ./cmd/backfill/main.go
+   env BACKFILL_FILE=$path-to-file BACKFILL_HOST=https://cms.mint.gov go run ./cmd/backfill/main.go
    ```

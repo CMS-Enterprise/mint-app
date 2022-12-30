@@ -66,7 +66,7 @@ const CollaboratorsTable = ({
             <>
               <UswdsReactLink
                 className="margin-right-2"
-                to={`/models/new-plan/${modelID}/add-collaborator/${row.original.id}`}
+                to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}`}
               >
                 {t('table.edit')}
               </UswdsReactLink>
@@ -150,7 +150,7 @@ const CollaboratorsTable = ({
                     {...column.getSortByToggleProps()}
                   >
                     {column.render('Header')}
-                    {getHeaderSortIcon(column)}
+                    {getHeaderSortIcon(column, false)}
                   </button>
                 </th>
               ))}

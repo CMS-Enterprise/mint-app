@@ -6,12 +6,21 @@ const modelPlanTaskList = {
   subheading: 'for <1>{{modelName}}</1>',
   status: 'Status:',
   update: 'Update',
-  summaryBox: {
-    copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
-    existingDocuments: 'document<1>{{plural}}</1> uploaded for ',
+  documentSummaryBox: {
+    heading: 'Documents',
+    copy: 'There are no documents uploaded',
+    existingDocuments: 'document<1>{{plural}}</1> uploaded',
     cta: 'Upload a document',
     viewAll: 'View all model documents',
     uploadAnother: 'Upload another document'
+  },
+  crTDLsSummaryBox: {
+    heading: 'CRs and TDLs',
+    copy: 'There are no CRs or TDLs added.',
+    add: 'Add a CR or TDL',
+    viewAll: 'Manage CRs and TDLs',
+    uploadAnother: 'Add another CR or TDL',
+    more: ' more'
   },
   sideNav: {
     saveAndExit: 'Save & Exit',
@@ -20,65 +29,95 @@ const modelPlanTaskList = {
     relatedContent: 'Related Content',
     ariaLabelForOverview: 'Open overview for adding a system in a new tab',
     overview: 'Overview for adding a model <1>(opens in a new tab)</1>',
+    sampleModelPlan: 'Sample Model Plan <1>(opens in a new tab)</1>',
     modelTeam: 'Model team',
     editTeam: 'Edit team'
   },
   withdraw_modal: {
     header: 'Confirm you want to remove {{-requestName}}.',
-    warning: 'You will lose any information you have filled in.',
-    confirm: 'Remove request',
-    cancel: 'Cancel',
-    confirmationText_name: 'The request for {{-requestName}} has been removed',
+    warning:
+      'Nobody will be able to edit or access this plan. This action cannot be undone. Please proceed with caution.',
+    confirm: 'Remove Model Plan',
+    cancel: 'Keep Model Plan',
+    confirmationText_name:
+      'Success! {{-modelName}} has been removed from MINT.',
     confirmationText_noName: 'The request has been removed'
   },
   numberedList: {
     basics: {
       heading: 'Model basics',
-      copy:
-        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.',
+      team:
+        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'basics'
     },
     generalCharacteristics: {
       heading: 'General characteristics',
-      copy:
-        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.',
+      team:
+        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'characteristics'
     },
     participantsAndProviders: {
       heading: 'Participants and providers',
-      copy:
+      team:
         'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'participants-and-providers'
     },
     beneficiaries: {
       heading: 'Beneficiaries',
-      copy:
+      team:
         'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'beneficiaries'
     },
     opsEvalAndLearning: {
       heading: 'Operations, evaluation, and learning',
-      copy:
+      team:
         'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'ops-eval-and-learning'
     },
     payments: {
       heading: 'Payment',
-      copy:
+      team:
         'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
     },
-    itTools: {
-      heading: 'IT tools',
-      copy:
-        'Choose the IT solutions your model will utilize. Many questions in this section are populated based on responses to questions answered in previous sections.',
-      path: 'it-tools'
+    itSolutions: {
+      heading: 'IT solutions and implementation status',
+      team:
+        'Choose the IT solutions your model model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
+      team2:
+        'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the Assessment Team understand how best to help you.',
+      assessment:
+        'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
+      path: 'it-solutions'
+    },
+    prepareForClearance: {
+      heading: 'Prepare for clearance',
+      team:
+        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
+      assessment:
+        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
+      path: 'prepare-for-clearance'
     }
   },
+  cannotStartClearance:
+    'This step will become available 20 days prior to beginning internal clearance.',
   taskListButton: {
     start: 'Start',
     continue: 'Continue',
-    update: 'Update'
+    update: 'Update',
+    updateStatuses: 'Update statuses'
   },
   taskListItem: {
     ready: 'Ready to start',
@@ -86,11 +125,15 @@ const modelPlanTaskList = {
     inProgress: 'In progress',
     completed: 'Completed',
     notNeeded: 'Not needed',
-    lastUpdated: 'Last updated:'
+    lastUpdated: 'Last updated:',
+    readyForClearance: 'Ready for clearance',
+    cannotStart: 'Cannot start yet'
   },
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
   locked: ' is editing this section. You may access it when they’re done.',
+  assessmentLocked:
+    'The Assessment Team is editing this section. You may access it when they’re done.',
   lockedHeading:
     'Someone is currently editing the Model Plan section you’re trying to access.',
   lockedSubheading: 'Please try again later.',

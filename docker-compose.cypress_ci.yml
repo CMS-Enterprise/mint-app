@@ -18,12 +18,15 @@ services:
   mint:
     image: '${ECR_REGISTRY}/mint-backend:${IMAGE_TAG}'
     environment:
-      - APP_ENV=test
+      - APP_ENV=testing
       - EMAIL_TEMPLATE_DIR=/mint/templates
       - SERVER_CERT
       - SERVER_KEY
       - LOCAL_AUTH_ENABLED=true
-      - FLAG_SOURCE=LOCAL
+      - FLAG_SOURCE=FILE
+      - FLAGDATA_FILE=/cypress/fixtures/flagdata.json
+    volumes:
+      - ./cypress:/cypress # Mounted so that the backend container can access the file with LaunchDarkly flag values
   mint_client:
     build:
       context: .

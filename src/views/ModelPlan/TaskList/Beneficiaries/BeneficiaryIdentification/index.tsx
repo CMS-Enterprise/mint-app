@@ -38,6 +38,7 @@ import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/typ
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -80,15 +81,14 @@ const BeneficiaryIdentification = () => {
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (
-    formikValues: BeneficiaryIdentificationFormType,
-    redirect?: 'next' | 'back'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back') => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -168,8 +168,8 @@ const BeneficiaryIdentification = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -332,7 +332,7 @@ const BeneficiaryIdentification = () => {
                                 }
                                 id="beneficiaries-dual-eligibility-how"
                                 data-testid="beneficiaries-dual-eligibility-how"
-                                name="beneficiaries-dual-eligibility-how"
+                                name="treatDualElligibleDifferentHow"
                               />
                             </FieldGroup>
                           )}
@@ -435,7 +435,7 @@ const BeneficiaryIdentification = () => {
                                 }
                                 id="beneficiaries-exclude-criteria"
                                 data-testid="beneficiaries-exclude-criteria"
-                                name="beneficiaries-exclude-criteria"
+                                name="excludeCertainCharacteristicsCriteria"
                               />
                             </FieldGroup>
                           )}
@@ -489,7 +489,7 @@ const BeneficiaryIdentification = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'back')}
+                        onClick={() => handleFormSubmit('back')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -502,7 +502,7 @@ const BeneficiaryIdentification = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

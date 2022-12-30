@@ -14,14 +14,23 @@ import FavoriteCard from './index';
 const mockModel: ModelPlanType = {
   id: '0186774a-80b0-454c-b69e-c4e949343483',
   modelName: 'Plan For General Characteristics',
+  nameHistory: ['first', 'second'],
   status: ModelStatus.PLAN_DRAFT,
   isFavorite: true,
+  isCollaborator: false,
   basics: {
     applicationsStart: '2022-06-03T17:41:40.962971Z',
     modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
+  crTdls: [
+    {
+      __typename: 'PlanCrTdl',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
   collaborators: [
     {
       fullName: 'Test User',

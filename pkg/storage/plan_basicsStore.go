@@ -13,16 +13,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_basics_create.sql
+//go:embed SQL/plan_basics/create.sql
 var planBasicsCreateSQL string
 
-//go:embed SQL/plan_basics_update.sql
+//go:embed SQL/plan_basics/update.sql
 var planBasicsUpdateSQL string
 
-//go:embed SQL/plan_basics_get_by_id.sql
+//go:embed SQL/plan_basics/get_by_id.sql
 var planBasicsGetByIDSQL string
 
-//go:embed SQL/plan_basics_get_by_model_plan_id.sql
+//go:embed SQL/plan_basics/get_by_model_plan_id.sql
 var planBasicsGetByModelPlanIDSQL string
 
 //go:embed SQL/plan_basics_get_by_model_plan_id_LOADER.sql

@@ -13,7 +13,7 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -38,10 +38,10 @@ import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharac
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import {
   AlternativePaymentModelType,
-  KeyCharacteristic,
-  TaskStatus
+  KeyCharacteristic
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   translateAlternativePaymentTypes,
@@ -70,7 +70,6 @@ const KeyCharacteristics = () => {
 
   const {
     id,
-    alternativePaymentModel,
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
@@ -80,14 +79,15 @@ const KeyCharacteristics = () => {
     collectPlanBidsNote,
     managePartCDEnrollment,
     managePartCDEnrollmentNote,
-    planContactUpdated,
-    planContactUpdatedNote
+    planContractUpdated,
+    planContractUpdatedNote
   } =
     data?.modelPlan?.generalCharacteristics ||
     ({} as KeyCharacteristicsFormType);
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -97,14 +97,15 @@ const KeyCharacteristics = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: KeyCharacteristicsFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -130,7 +131,6 @@ const KeyCharacteristics = () => {
   const initialValues: KeyCharacteristicsFormType = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
-    alternativePaymentModel: alternativePaymentModel ?? null,
     alternativePaymentModelTypes: alternativePaymentModelTypes ?? [],
     alternativePaymentModelNote: alternativePaymentModelNote ?? '',
     keyCharacteristics: keyCharacteristics ?? [],
@@ -140,8 +140,8 @@ const KeyCharacteristics = () => {
     collectPlanBidsNote: collectPlanBidsNote ?? '',
     managePartCDEnrollment: managePartCDEnrollment ?? null,
     managePartCDEnrollmentNote: managePartCDEnrollmentNote ?? '',
-    planContactUpdated: planContactUpdated ?? null,
-    planContactUpdatedNote: planContactUpdatedNote ?? ''
+    planContractUpdated: planContractUpdated ?? null,
+    planContractUpdatedNote: planContractUpdatedNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -181,8 +181,8 @@ const KeyCharacteristics = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -223,105 +223,69 @@ const KeyCharacteristics = () => {
                 }}
               >
                 <FieldGroup
-                  scrollElement="alternativePaymentModel"
-                  error={!!flatErrors.alternativePaymentModel}
+                  scrollElement="alternativePaymentModelTypes"
+                  error={!!flatErrors.alternativePaymentModelTypes}
                   className="margin-y-4 margin-bottom-8"
                 >
-                  <Label htmlFor="plan-characteristics-alternative-payment">
+                  <legend className="usa-label maxw-none">
                     {t('modelAPM')}
-                  </Label>
-                  <p className="text-base margin-y-1">{t('forQPP')}</p>
+                  </legend>
+                  <Alert type="info" slim data-testid="mandatory-fields-alert">
+                    <span className="mandatory-fields-alert__text">
+                      {t('MIPSInfo')}
+                    </span>
+                  </Alert>
+
                   <FieldErrorMsg>
-                    {flatErrors.alternativePaymentModel}
+                    {flatErrors.alternativePaymentModelTypes}
                   </FieldErrorMsg>
+
                   <Fieldset>
+                    {Object.keys(AlternativePaymentModelType)
+                      .filter(x => x !== AlternativePaymentModelType.NOT_APM)
+                      .map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`plan-characteristics-alternative-payment-${type}`}
+                              name="alternativePaymentModelTypes"
+                              label={translateAlternativePaymentTypes(type)}
+                              value={type}
+                              checked={values.alternativePaymentModelTypes.includes(
+                                type as AlternativePaymentModelType
+                              )}
+                              disabled={values.alternativePaymentModelTypes.includes(
+                                AlternativePaymentModelType.NOT_APM
+                              )}
+                            />
+                          </Fragment>
+                        );
+                      })}
                     <Field
-                      as={Radio}
-                      id="plan-characteristics-alternative-payment"
-                      name="alternativePaymentModel"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.alternativePaymentModel === true}
-                      onChange={() => {
-                        setFieldValue('alternativePaymentModel', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-alternative-payment-no"
-                      name="alternativePaymentModel"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.alternativePaymentModel === false}
-                      onChange={() => {
-                        setFieldValue('alternativePaymentModel', false);
+                      as={CheckboxField}
+                      id={`plan-characteristics-alternative-payment-${AlternativePaymentModelType.NOT_APM}`}
+                      name="alternativePaymentModelTypes"
+                      label={translateAlternativePaymentTypes(
+                        AlternativePaymentModelType.NOT_APM
+                      )}
+                      value={AlternativePaymentModelType.NOT_APM}
+                      checked={values.alternativePaymentModelTypes.includes(
+                        AlternativePaymentModelType.NOT_APM
+                      )}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        if (e.target.checked) {
+                          setFieldValue(
+                            'alternativePaymentModelTypes',
+                            AlternativePaymentModelType.NOT_APM
+                          );
+                        } else {
+                          setFieldValue('alternativePaymentModelTypes', []);
+                        }
                       }}
                     />
                   </Fieldset>
-                  {values.alternativePaymentModel && (
-                    <FieldArray
-                      name="alternativePaymentModelTypes"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label text-normal">
-                            {t('modelAPMType')}
-                          </legend>
-                          <FieldErrorMsg>
-                            {flatErrors.alternativePaymentModelTypes}
-                          </FieldErrorMsg>
 
-                          {Object.keys(AlternativePaymentModelType).map(
-                            type => {
-                              return (
-                                <Fragment key={type}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`plan-characteristics-alternative-payment-${type}`}
-                                    name="alternativePaymentModelTypes"
-                                    label={translateAlternativePaymentTypes(
-                                      type
-                                    )}
-                                    value={type}
-                                    checked={values.alternativePaymentModelTypes.includes(
-                                      type as AlternativePaymentModelType
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.alternativePaymentModelTypes.indexOf(
-                                          e.target
-                                            .value as AlternativePaymentModelType
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-                                  {(type === 'MIPS' || type === 'ADVANCED') &&
-                                    values.alternativePaymentModelTypes.includes(
-                                      type as AlternativePaymentModelType
-                                    ) && (
-                                      <Alert
-                                        type="info"
-                                        slim
-                                        data-testid="mandatory-fields-alert"
-                                        className="margin-bottom-4 margin-left-4"
-                                      >
-                                        <span className="mandatory-fields-alert__text">
-                                          {t('MIPSInfo')}
-                                        </span>
-                                      </Alert>
-                                    )}
-                                </Fragment>
-                              );
-                            }
-                          )}
-                        </>
-                      )}
-                    />
-                  )}
                   <AddNote
                     id="plan-characteristics-alternative-payment-note"
                     field="alternativePaymentModelNote"
@@ -406,13 +370,12 @@ const KeyCharacteristics = () => {
                       >
                         {t('reviewPlanBids')}
                       </Label>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="plan-characteristics-collect-bids-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
-                              `/models/${modelID}/task-list/it-tools/page-one`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -463,13 +426,12 @@ const KeyCharacteristics = () => {
                       >
                         {t('manageEnrollment')}
                       </Label>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="plan-characteristics-manage-enrollment-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
-                              `/models/${modelID}/task-list/it-tools/page-one`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -510,51 +472,50 @@ const KeyCharacteristics = () => {
                     />
 
                     <FieldGroup
-                      scrollElement="planContactUpdated"
-                      error={!!flatErrors.planContactUpdated}
+                      scrollElement="planContractUpdated"
+                      error={!!flatErrors.planContractUpdated}
                       className="margin-y-4"
                     >
                       <Label
                         htmlFor="plan-characteristics-contact-updated"
                         className="text-normal"
                       >
-                        {t('updatedContact')}
+                        {t('updatedContract')}
                       </Label>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="plan-characteristics-contact-updated-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
-                              `/models/${modelID}/task-list/it-tools/page-one`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
                       )}
                       <FieldErrorMsg>
-                        {flatErrors.planContactUpdated}
+                        {flatErrors.planContractUpdated}
                       </FieldErrorMsg>
                       <Fieldset>
                         <Field
                           as={Radio}
                           id="plan-characteristics-contact-updated"
-                          name="planContactUpdated"
+                          name="planContractUpdated"
                           label={h('yes')}
                           value="TRUE"
-                          checked={values.planContactUpdated === true}
+                          checked={values.planContractUpdated === true}
                           onChange={() => {
-                            setFieldValue('planContactUpdated', true);
+                            setFieldValue('planContractUpdated', true);
                           }}
                         />
                         <Field
                           as={Radio}
                           id="plan-characteristics-contact-updated-no"
-                          name="planContactUpdated"
+                          name="planContractUpdated"
                           label={h('no')}
                           value="FALSE"
-                          checked={values.planContactUpdated === false}
+                          checked={values.planContractUpdated === false}
                           onChange={() => {
-                            setFieldValue('planContactUpdated', false);
+                            setFieldValue('planContractUpdated', false);
                           }}
                         />
                       </Fieldset>
@@ -562,7 +523,7 @@ const KeyCharacteristics = () => {
 
                     <AddNote
                       id="plan-characteristics-contact-updated-note"
-                      field="planContactUpdatedNote"
+                      field="planContractUpdatedNote"
                     />
                   </>
                 )}
@@ -572,7 +533,7 @@ const KeyCharacteristics = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -584,7 +545,7 @@ const KeyCharacteristics = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -594,7 +555,7 @@ const KeyCharacteristics = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

@@ -9,11 +9,19 @@ import { DiscussionStatus } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetModelPlanDiscussions
 // ====================================================
 
+export interface GetModelPlanDiscussions_modelPlan_collaborators {
+  __typename: "PlanCollaborator";
+  id: UUID;
+  euaUserID: string;
+  fullName: string;
+}
+
 export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
   content: string | null;
+  isAssessment: boolean;
   createdBy: string;
   createdDts: Time;
   resolution: boolean | null;
@@ -26,12 +34,15 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
   createdBy: string;
   createdDts: Time;
   status: DiscussionStatus;
+  isAssessment: boolean;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];
 }
 
 export interface GetModelPlanDiscussions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  isCollaborator: boolean;
+  collaborators: GetModelPlanDiscussions_modelPlan_collaborators[];
   discussions: GetModelPlanDiscussions_modelPlan_discussions[];
 }
 

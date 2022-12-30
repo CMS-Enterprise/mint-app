@@ -1,20 +1,25 @@
 const payments = {
   heading: 'Payment',
+  clearanceHeading: 'Review payment',
   breadcrumb: 'Payment',
   description:
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
   fundingSource:
     'What will be the funding source for payments? Select all that apply.',
+  fundingSourceQuestion: 'What will be the funding source for payments?',
   sourceOptions: {
     ppaca: 'Patient Protection Affordable Care Act (Sec 3021)',
     trustFund: 'Trust Fund',
     other: 'Other'
   },
   whichType: 'Which type?',
+  whichFundingType: 'Which type of trust fund?',
   validDate: 'Please use a valid date format',
   otherSourceOption: 'Please describe the funding source.',
   reconciliation:
     'What is the funding source for reconciliation or other expenditures? Select all that apply.',
+  reconciliationQuestion:
+    'What is the funding source for reconciliation or other expenditures?',
   attachments: 'Attachments',
   addADocument: 'Add a document',
   documentTable: {
@@ -30,6 +35,7 @@ const payments = {
   paymentPreference:
     'Is there a preference that model participants be paid outside of or within the existing claims systems?',
   whoWillYouPay: 'Who will you pay? Select all that apply.',
+  whoWillYouPayQuestion: 'Who will you pay?',
   whoWillYouPayOptions: {
     providers: 'Providers',
     beneficiaries: 'Beneficiaries',
@@ -252,6 +258,7 @@ const payments = {
     'Do you anticipate reconciling payments retrospectively?',
   anticipateReconcilingPaymentsRetrospectivelyNote: '',
   paymentStartDate: 'When will payments start? (Enter an approximate date)',
+  paymentStartDateQuestion: 'When will payments start?',
   paymentStartDateSubcopy:
     'Note: If you are unsure of an approximate date, please select the first day of the approximate month.'
 };

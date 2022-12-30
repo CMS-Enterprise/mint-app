@@ -1,0 +1,36 @@
+{
+  "segments": {},
+  "flags": {
+    "hideITLeadExperience": {
+      "key": "hideITLeadExperience",
+      "on": true,
+      "prerequisites": [],
+      "targets": [
+        {
+          "contextKind": "user",
+          "variation": 1,
+          "values": [
+            "00573947f7692495b420b93796cadfd032e662d6249769d1297522e7bd3e6a51",
+            "5b2561ade18cb3db62a87b462d1c0bcc5630a29ddff801c6e1c1e365e1103ad3"
+          ]
+        }
+      ],
+      "contextTargets": [{ "contextKind": "user", "variation": 1, "values": [] }],
+      "rules": [],
+      "fallthrough": { "variation": 0 },
+      "offVariation": 0,
+      "variations": [true, false],
+      "clientSideAvailability": {
+        "usingMobileKey": false,
+        "usingEnvironmentId": true
+      },
+      "clientSide": true,
+      "salt": "ae6f2e5678aa4c8d9b76f559ead087fd",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "debugEventsUntilDate": null,
+      "version": 35,
+      "deleted": false
+    }
+  }
+}

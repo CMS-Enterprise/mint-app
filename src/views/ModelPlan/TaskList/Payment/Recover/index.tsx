@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   Grid,
   GridContainer,
@@ -25,7 +23,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
-import DatePickerWarning from 'components/shared/DatePickerWarning';
+import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -38,12 +36,9 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  ClaimsBasedPayType,
-  PayType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -53,8 +48,6 @@ const Recover = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-  const [dateInPast, setDateInPast] = useState(false);
-  const [dateLoaded, setDateLoaded] = useState(false);
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -94,20 +87,26 @@ const Recover = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list' | string
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -126,19 +125,6 @@ const Recover = () => {
       });
   };
 
-  // TODO: Figure out why the form doesn't rerender once a date value is fetched - delay works for now
-  // Loading var passed from GQL does not seem to accurately identify a completed payload for date
-  useEffect(() => {
-    setTimeout(() => {
-      setDateLoaded(true);
-      if (paymentStartDate && new Date() > new Date(paymentStartDate)) {
-        setDateInPast(true);
-      } else {
-        setDateInPast(false);
-      }
-    }, 250);
-  }, [paymentStartDate]);
-
   const initialValues: InitialValueType = {
     __typename: 'PlanPayments',
     id: id ?? '',
@@ -152,7 +138,7 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
-    status: sanitizeStatus(status)
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -194,8 +180,8 @@ const Recover = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+        onSubmit={() => {
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -217,18 +203,10 @@ const Recover = () => {
           ) => {
             if (e.target.value === '') {
               setFieldValue(field, null);
-              if (e.target.id !== '') {
-                setDateInPast(false);
-              }
               return;
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              if (new Date() > new Date(e.target.value)) {
-                setDateInPast(true);
-              } else {
-                setDateInPast(false);
-              }
               delete errors[field as keyof InitialValueType];
             } catch (err) {
               setFieldError(field, t('validDate'));
@@ -276,13 +254,12 @@ const Recover = () => {
                           {t('willRecoverPayments')}
                         </Label>
 
-                        {itToolsStarted && (
+                        {itSolutionsStarted && (
                           <ITToolsWarning
                             id="payment-recover-payment-warning"
                             onClick={() =>
                               handleFormSubmit(
-                                values,
-                                `/models/${modelID}/task-list/it-tools/page-nine`
+                                `/models/${modelID}/task-list/it-solutions`
                               )
                             }
                           />
@@ -361,56 +338,26 @@ const Recover = () => {
                         />
                       </FieldGroup>
 
-                      {!loading && dateLoaded && (
-                        <FieldGroup
-                          scrollElement="paymentStartDate"
-                          error={!!flatErrors.paymentStartDate}
-                          className="margin-top-4"
-                        >
-                          <Label
-                            htmlFor="paymentStartDate"
-                            className="maxw-none"
-                          >
-                            {t('paymentStartDate')}
-                          </Label>
-                          <p className="text-normal margin-bottom-1 margin-top-0">
-                            {t('paymentStartDateSubcopy')}
-                          </p>
-                          <div className="usa-hint" id="appointment-date-hint">
-                            {h('datePlaceholder')}
-                          </div>
-                          <FieldErrorMsg>
-                            {flatErrors.paymentStartDate}
-                          </FieldErrorMsg>
-                          <div className="width-card-lg position-relative">
-                            <Field
-                              as={DatePicker}
-                              error={!!flatErrors.paymentStartDate}
-                              id="payment-payment-start-date"
-                              maxLength={50}
-                              name="paymentStartDate"
-                              defaultValue={values.paymentStartDate}
-                              onBlur={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                handleOnBlur(e, 'paymentStartDate');
-                              }}
-                            />
-                            {dateInPast && (
-                              <DatePickerWarning label={h('dateWarning')} />
-                            )}
-                          </div>
-                          {dateInPast && (
-                            <Alert type="warning" className="margin-top-4">
-                              {h('dateWarning')}
-                            </Alert>
-                          )}
+                      {!loading && (
+                        <>
+                          <MINTDatePicker
+                            fieldName="paymentStartDate"
+                            id="payment-payment-start-date"
+                            className="margin-top-6"
+                            label={t('paymentStartDate')}
+                            subLabel={t('paymentStartDateSubcopy')}
+                            placeHolder
+                            handleOnBlur={handleOnBlur}
+                            formikValue={values.paymentStartDate}
+                            value={paymentStartDate}
+                            error={flatErrors.paymentStartDate}
+                          />
 
                           <AddNote
                             id="payment-payment-start-date-note"
                             field="paymentStartDateNote"
                           />
-                        </FieldGroup>
+                        </>
                       )}
 
                       <ReadyForReview
@@ -428,7 +375,7 @@ const Recover = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -440,7 +387,7 @@ const Recover = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -453,7 +400,7 @@ const Recover = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

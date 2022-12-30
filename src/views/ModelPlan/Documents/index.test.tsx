@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlan from 'queries/GetModelPlan';
 import {
@@ -43,6 +46,15 @@ const mocks = [
   }
 ];
 
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
 describe('Model Plan Documents page', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
@@ -52,11 +64,13 @@ describe('Model Plan Documents page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelID/documents">
-              <DocumentsContent />
-            </Route>
-          </MessageProvider>
+          <Provider store={store}>
+            <MessageProvider>
+              <Route path="/models/:modelID/documents">
+                <DocumentsContent />
+              </Route>
+            </MessageProvider>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );

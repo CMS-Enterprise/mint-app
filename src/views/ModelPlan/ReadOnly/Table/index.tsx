@@ -22,7 +22,10 @@ import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import { GetAllModelPlans_modelPlanCollection as AllModelPlansType } from 'queries/ReadOnly/types/GetAllModelPlans';
+import {
+  GetAllModelPlans_modelPlanCollection as AllModelPlansType,
+  GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
+} from 'queries/ReadOnly/types/GetAllModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   translateModelCategory,
@@ -35,13 +38,19 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
+import { RenderFilteredNameHistory } from 'views/ModelPlan/Table';
 
 type ModelPlansTableProps = {
   data: AllModelPlansType[];
   updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  hiddenColumns?: number[]; // indexes of columns to be hidden
 };
 
-const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
+const Table = ({
+  data,
+  updateFavorite,
+  hiddenColumns
+}: ModelPlansTableProps) => {
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('modelSummary');
   const { t: f } = useTranslation('home');
@@ -61,7 +70,7 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
               className="display-block"
               unstyled
             >
-              <IconStar size={3} />
+              <IconStar data-cy="favorited" size={3} />
             </Button>
           ) : (
             <Button
@@ -71,7 +80,11 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
               className="display-block"
               unstyled
             >
-              <IconStarOutline size={3} className="text-gray-30" />
+              <IconStarOutline
+                data-cy="unfavorited"
+                size={3}
+                className="text-gray-30"
+              />
             </Button>
           );
         }
@@ -80,10 +93,20 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
         Header: t('allModels.tableHeading.modelName'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
+          const filteredNameHistory: string[] = row.original.nameHistory?.slice(
+            1
+          );
           return (
-            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
-              {value}
-            </UswdsReactLink>
+            <>
+              <UswdsReactLink
+                to={`/models/${row.original.id}/read-only/model-basics`}
+              >
+                {value}
+              </UswdsReactLink>
+              {filteredNameHistory && filteredNameHistory.length > 0 && (
+                <RenderFilteredNameHistory names={filteredNameHistory} />
+              )}
+            </>
           );
         }
       },
@@ -125,12 +148,15 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
       },
       {
         Header: t('allModels.tableHeading.crsAndTdls'),
-        accessor: 'crsAndTdls',
-        Cell: ({ value }: any) => {
-          if (!value) {
+        accessor: 'crTdls',
+        Cell: ({ value }: { value: CRTDLType[] }) => {
+          if (!value || value.length === 0) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return value;
+          const crtdlIDs = value
+            .map((crtdl: CRTDLType) => crtdl.idNumber)
+            .join(', ');
+          return crtdlIDs;
         }
       }
     ];
@@ -211,36 +237,39 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, index) => (
-                <th
-                  {...column.getHeaderProps()}
-                  aria-sort={getColumnSortStatus(column)}
-                  className="table-header"
-                  scope="col"
-                  style={{
-                    minWidth: index === 0 ? '50px' : '138px',
-                    width:
-                      ((index === 1 || index === 2) && '286px') ||
-                      (index === 3 && '175px') ||
-                      '',
-                    padding: index === 0 ? '0' : 'auto',
-                    paddingTop: index === 0 ? '0rem' : 'auto',
-                    paddingLeft: '0',
-                    paddingBottom: index === 0 ? '0rem' : '.5rem'
-                  }}
-                >
-                  <button
-                    className={classNames('usa-button usa-button--unstyled', {
-                      'margin-top-1': index === 0
-                    })}
-                    type="button"
-                    {...column.getSortByToggleProps()}
+              {headerGroup.headers
+                // @ts-ignore
+                .filter((column, index) => !hiddenColumns?.includes(index))
+                .map((column, index) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    aria-sort={getColumnSortStatus(column)}
+                    className="table-header"
+                    scope="col"
+                    style={{
+                      minWidth: index === 0 ? '50px' : '138px',
+                      width:
+                        ((index === 1 || index === 2) && '286px') ||
+                        (index === 3 && '175px') ||
+                        '',
+                      padding: index === 0 ? '0' : 'auto',
+                      paddingTop: index === 0 ? '0rem' : 'auto',
+                      paddingLeft: '0',
+                      paddingBottom: index === 0 ? '0rem' : '.5rem'
+                    }}
                   >
-                    {column.render('Header')}
-                    {getHeaderSortIcon(column, index === 0)}
-                  </button>
-                </th>
-              ))}
+                    <button
+                      className={classNames('usa-button usa-button--unstyled', {
+                        'margin-top-1': index === 0
+                      })}
+                      type="button"
+                      {...column.getSortByToggleProps()}
+                    >
+                      {column.render('Header')}
+                      {getHeaderSortIcon(column, index === 0)}
+                    </button>
+                  </th>
+                ))}
             </tr>
           ))}
         </thead>
@@ -249,33 +278,38 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell, i) => {
-                  if (i === 0) {
+                {row.cells
+                  .filter((cell, index) => {
+                    // @ts-ignore
+                    return !hiddenColumns?.includes(index);
+                  })
+                  .map((cell, i) => {
+                    if (i === 0) {
+                      return (
+                        <th
+                          {...cell.getCellProps()}
+                          scope="row"
+                          style={{
+                            paddingLeft: '0',
+                            borderBottom: 'auto'
+                          }}
+                        >
+                          {cell.render('Cell')}
+                        </th>
+                      );
+                    }
                     return (
-                      <th
+                      <td
                         {...cell.getCellProps()}
-                        scope="row"
                         style={{
                           paddingLeft: '0',
                           borderBottom: 'auto'
                         }}
                       >
                         {cell.render('Cell')}
-                      </th>
+                      </td>
                     );
-                  }
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        paddingLeft: '0',
-                        borderBottom: 'auto'
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
+                  })}
               </tr>
             );
           })}

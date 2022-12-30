@@ -17,7 +17,8 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const mockData: GetAllGeneralCharacteristicsTypes = {
   __typename: 'PlanGeneralCharacteristics',
-  isNewModel: true,
+  id: '123',
+  isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
   resemblesExistingModel: true,
   resemblesExistingModelWhich: [],
@@ -26,12 +27,11 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: false,
   hasComponentsOrTracksDiffer: null,
   hasComponentsOrTracksNote: null,
-  alternativePaymentModel: true,
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
   ],
-  alternativePaymentModelNote: 'asdfasdfasdfasdf asdf asdf asdf asdf ',
+  alternativePaymentModelNote: 'asdfasd',
   keyCharacteristics: [
     KeyCharacteristic.POPULATION_BASED,
     KeyCharacteristic.PAYMENT,
@@ -44,8 +44,8 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   collectPlanBidsNote: null,
   managePartCDEnrollment: null,
   managePartCDEnrollmentNote: null,
-  planContactUpdated: null,
-  planContactUpdatedNote: null,
+  planContractUpdated: null,
+  planContractUpdatedNote: null,
   careCoordinationInvolved: false,
   careCoordinationInvolvedDescription: null,
   careCoordinationInvolvedNote: null,
@@ -54,7 +54,7 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   additionalServicesInvolvedNote: null,
   communityPartnersInvolved: true,
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
-  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContactUpdatedNote',
+  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: false,
   geographiesTargetedTypes: [],
   geographiesTargetedTypesOther: null,

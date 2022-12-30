@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
@@ -12,11 +12,13 @@ import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
 import { formatDate } from 'utils/date';
 import {
+  translateBooleanOrNull,
   translateCmmiGroups,
   translateCmsCenter,
   translateModelCategory,
   translateModelType
 } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -24,9 +26,16 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 
 import './index.scss';
 
-const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
+export type ReadOnlyProps = {
+  modelID: string;
+  clearance?: boolean;
+};
+
+const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   const { t } = useTranslation('basics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: p } = useTranslation('prepareForClearance');
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
     variables: {
@@ -37,6 +46,11 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
+
+  const { nameHistory } = data?.modelPlan || {};
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
 
   const {
     modelCategory,
@@ -62,17 +76,39 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     status
   } = data?.modelPlan?.basics || {};
 
+  const dateOrNoAnswer = (value: string | null | undefined) => {
+    if (value) {
+      return formatDate(value, 'MM/dd/yyyy');
+    }
+    return <em className="text-base">{t('na')}</em>;
+  };
+
   return (
     <div
       className="read-only-model-plan--model-basics"
       data-testid="read-only-model-plan--model-basics"
     >
       <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
+        <h2 className="margin-top-0 margin-bottom-4">
+          {clearance ? t('clearanceHeading') : t('heading')}
+        </h2>
+
         {status && <TaskListStatusTag status={status} />}
       </div>
 
-      {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
+      {clearance && (
+        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
+          {p('forModelPlan', {
+            modelName
+          })}
+        </p>
+      )}
+
+      <ReadOnlySection
+        heading={t('previousNames')}
+        list
+        listItems={filteredNameHistory}
+      />
 
       <ReadOnlySection
         heading={t('modelCategory')}
@@ -123,7 +159,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
               {t('completeICIP')}
             </ProcessListHeading>
             <p className="margin-y-0 font-body-md line-height-sans-4">
-              {completeICIP ? formatDate(completeICIP, 'MM/dd/yyyy') : t('na')}
+              {dateOrNoAnswer(completeICIP)}
             </p>
           </ProcessListItem>
 
@@ -143,9 +179,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                   {t('clearanceStartDate')}
                 </ProcessListHeading>
                 <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {clearanceStarts
-                    ? formatDate(clearanceStarts, 'MM/dd/yyyy')
-                    : t('na')}
+                  {dateOrNoAnswer(clearanceStarts)}
                 </p>
               </div>
               <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -156,9 +190,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                   {t('clearanceEndDate')}
                 </ProcessListHeading>
                 <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {clearanceEnds
-                    ? formatDate(clearanceEnds, 'MM/dd/yyyy')
-                    : t('na')}
+                  {dateOrNoAnswer(clearanceEnds)}
                 </p>
               </div>
             </div>
@@ -172,7 +204,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
               {t('annouceModel')}
             </ProcessListHeading>
             <p className="margin-y-0 font-body-md line-height-sans-4">
-              {announced ? formatDate(announced, 'MM/dd/yyyy') : t('na')}
+              {dateOrNoAnswer(announced)}
             </p>
           </ProcessListItem>
 
@@ -192,9 +224,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                   {t('applicationStartDate')}
                 </ProcessListHeading>
                 <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {applicationsStart
-                    ? formatDate(applicationsStart, 'MM/dd/yyyy')
-                    : t('na')}
+                  {dateOrNoAnswer(applicationsStart)}
                 </p>
               </div>
               <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -205,9 +235,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                   {t('applicationEndDate')}
                 </ProcessListHeading>
                 <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {applicationsEnd
-                    ? formatDate(applicationsEnd, 'MM/dd/yyyy')
-                    : t('na')}
+                  {dateOrNoAnswer(applicationsEnd)}
                 </p>
               </div>
             </div>
@@ -229,9 +257,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                   {t('performanceStartDate')}
                 </ProcessListHeading>
                 <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {performancePeriodStarts
-                    ? formatDate(performancePeriodStarts, 'MM/dd/yyyy')
-                    : t('na')}
+                  {dateOrNoAnswer(performancePeriodStarts)}
                 </p>
               </div>
               <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -242,9 +268,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                   {t('performanceEndDate')}
                 </ProcessListHeading>
                 <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {performancePeriodEnds
-                    ? formatDate(performancePeriodEnds, 'MM/dd/yyyy')
-                    : t('na')}
+                  {dateOrNoAnswer(performancePeriodEnds)}
                 </p>
               </div>
             </div>
@@ -258,7 +282,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
               {t('modelWrapUp')}
             </ProcessListHeading>
             <p className="margin-y-0 font-body-md line-height-sans-4">
-              {wrapUpEnds ? formatDate(wrapUpEnds, 'MM/dd/yyyy') : t('na')}
+              {dateOrNoAnswer(wrapUpEnds)}
             </p>
           </ProcessListItem>
         </ProcessList>
@@ -266,7 +290,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
 
       <ReadOnlySection
         heading={t('tightTimeline')}
-        copy={phasedIn ? h('yes') : h('no')}
+        copy={translateBooleanOrNull(phasedIn)}
+        notes={phasedInNote}
       />
       <ReadOnlySection heading={t('notes')} copy={phasedInNote} />
     </div>

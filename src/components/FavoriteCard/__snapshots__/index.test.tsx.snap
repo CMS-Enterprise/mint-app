@@ -48,7 +48,7 @@ exports[`FavoriteCard matches the snapshot 1`] = `
             >
               <a
                 class="usa-link"
-                href="/models/0186774a-80b0-454c-b69e-c4e949343483/task-list"
+                href="/models/0186774a-80b0-454c-b69e-c4e949343483/read-only"
               >
                 Plan For General Characteristics
               </a>
@@ -89,6 +89,11 @@ exports[`FavoriteCard matches the snapshot 1`] = `
             </div>
           </div>
         </div>
+        <p
+          class="margin-y-0 font-body-xs line-height-sans-2"
+        >
+          previously  second 
+        </p>
         <p
           class="bookmark__body-text line-height-body-4"
         >
@@ -143,7 +148,7 @@ exports[`FavoriteCard matches the snapshot 1`] = `
             <p
               class="text-bold margin-top-0 margin-bottom-0"
             >
-              CR 1234
+              CR 123
             </p>
           </div>
         </div>

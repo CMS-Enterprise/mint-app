@@ -6,13 +6,10 @@ on:
       env:
         required: true
         type: string
-      lambda_version:
-        required: true
-        type: string
     secrets:
-      AWS_ACCESS_KEY_ID:
+      AWS_ROLE_TO_ASSUME:
         required: true
-      AWS_SECRET_ACCESS_KEY:
+      SLACK_WEBHOOK_URL:
         required: true
       LD_CLIENT_ID:
         required: true
@@ -22,19 +19,17 @@ on:
         required: true
       STATIC_S3_BUCKET:
         required: true
-      AWS_ROLE_TO_ASSUME:
-        required: true
       ECR_REGISTRY:
-        required: true
-      SLACK_WEBHOOK_URL:
         required: true
 
 env:
-  EASI_APP_NODE_VERSION: "16.14.0"
-  EASI_APP_GO_VERSION: "1.18.3"
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   ENV: ${{ inputs.env }}
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
@@ -44,65 +39,63 @@ jobs:
       APP_ENV: ${{ inputs.env }}
     steps:
       - name: Check out code
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+          node-version-file: '.nvmrc'
+          cache: yarn
+      - name: Install yarn dependencies
+        run: yarn install --immutable
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-duration-seconds: 1800
-          role-skip-session-tagging: true
+          aws-region: us-east-1
       - name: Clean the database
         if: contains(inputs.env, 'dev')
-        run: |
-          ./scripts/db_lambda_invoke "easi-app-db-clean-tmp" "2" "easi-app-db-clean"
-      - name: Backup the database
-        if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
-        run: |
-          ./scripts/rds-snapshot-app-db
-      - name: Run migrations
         env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-db-migrate
-          LAMBDA_VERSION: ${{ inputs.lambda_version }}
-          ENV: ${{ inputs.env }}
+          ECR_REPOSITORY: mint-db-clean
+          NEW_IMAGE_TAG: latest
+          TASK_FAMILY: "db-clean-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-app"
+          SECURITY_GROUP_NAME: "ecs-db-clean-${{ inputs.env }}"
         run: |
-          ./scripts/deploy_service "easi-app-db-migrate" "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
-          ./scripts/db_lambda_invoke "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-app-db-migrate"
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/run_ecs_task.sh
+      - name: Run database migrations
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: mint-db-migrate
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          TASK_FAMILY: "db-migrate-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-app"
+          SECURITY_GROUP_NAME: "ecs-db-migrate-${{ inputs.env }}"
+        run: |
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/run_ecs_task.sh
+      # - name: Backup the database
+      #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
+      #   run: |
+      #     ./scripts/rds-snapshot-app-db
       - name: Deploy ECS service
         env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-backend
-          LAMBDA_VERSION: ${{ inputs.lambda_version }}
-          ENV: ${{ inputs.env }}
+          ECR_REPOSITORY: mint-backend
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          TASK_FAMILY: "mint-app-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-app"
+          SERVICE_NAME: mint-app
+          APP_ENV: ${{ inputs.env }}
         run: |
-          ./scripts/deploy_service "easi-app" "$ENV-ecs-manager-docker" "$LAMBDA_VERSION" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$GIT_HASH"
-          ./scripts/healthcheck "$GIT_HASH"
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/deploy_ecs_service.sh
       - name: Build static assets and release to S3
         env:
+          APP_ENV: ${{ inputs.env }}
           LD_CLIENT_ID: ${{ secrets.LD_CLIENT_ID }}
           OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
           OKTA_SERVER_ID: ${{ secrets.OKTA_SERVER_ID }}

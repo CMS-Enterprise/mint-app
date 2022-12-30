@@ -15,14 +15,14 @@ import (
 // PreUpdateSuite is the testify suite for the resolver package
 type PreUpdateSuite struct {
 	suite.Suite
-	Principal *authentication.EUAPrincipal
+	Principal *authentication.ApplicationPrincipal
 }
 
 // TestPreUpdateSuite runs the resolver test suite
 func TestPreUpdateSuite(t *testing.T) {
 	css := new(PreUpdateSuite)
-	css.Principal = &authentication.EUAPrincipal{
-		EUAID:             "FAKE",
+	css.Principal = &authentication.ApplicationPrincipal{
+		Username:          "FAKE",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
 	}
@@ -49,11 +49,27 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 
 	//1/5 Ready for Review
 	changes["status"] = models.TaskReadyForReview
-	suite.Principal.EUAID = "REVI"
+	suite.Principal.Username = "REVI"
 	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForReview)
 	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVI")
 	suite.NotNil(planBasics.ReadyForReviewDts)
+
+	//2/5 Ready for Clearance
+	changes["status"] = models.TaskReadyForClearance
+	suite.Principal.Username = "REVI"
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	suite.Nil(err)
+	suite.EqualValues(planBasics.Status, models.TaskReadyForClearance)
+	suite.EqualValues(*planBasics.ReadyForClearanceBy, "REVI")
+	suite.NotNil(planBasics.ReadyForClearanceDts)
+
+	//3/5 When changed from READY_FOR_CLEARANCE it will always be moved to IN_PROGRESS
+	changes["status"] = models.TaskReadyForReview
+	suite.Principal.Username = "REVI"
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	suite.Nil(err)
+	suite.EqualValues(planBasics.Status, models.TaskInProgress)
 
 }

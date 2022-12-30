@@ -38,6 +38,10 @@
     top: 0;
     padding-top: 1rem;
 
+    &__collaborator {
+      top: 2rem !important;
+    }
+
     @media screen and (min-width: $desktop) {
       margin-top: -1rem;
     }
@@ -54,5 +58,8 @@
       border-left: 0;
     }
 
+  }
+  .status-min-height {
+    min-height: 46px;
   }
 }

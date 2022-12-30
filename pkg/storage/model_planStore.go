@@ -16,20 +16,32 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/model_plan_create.sql
+//go:embed SQL/model_plan/create.sql
 var modelPlanCreateSQL string
 
-//go:embed SQL/model_plan_update.sql
+//go:embed SQL/model_plan/update.sql
 var modelPlanUpdateSQL string
 
-//go:embed SQL/model_plan_get_by_id.sql
+//go:embed SQL/model_plan/get_by_id.sql
 var modelPlanGetByIDSQL string
 
-//go:embed SQL/model_plan_collection.sql
+//go:embed SQL/model_plan/get_by_name.sql
+var modelPlanGetByNameSQL string
+
+//go:embed SQL/model_plan/collection.sql
 var modelPlanCollectionSQL string
 
-//go:embed SQL/model_plan_delete_by_id.sql
+//go:embed SQL/model_plan/collection_by_collaborator.sql
+var modelPlanCollectionByCollaboratorSQL string
+
+//go:embed SQL/model_plan/collection_with_crtdl.sql
+var modelPlanCollectionWithCRTDlSQL string
+
+//go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
+
+//go:embed SQL/model_plan/collection_where_favorited.sql
+var modelPlansFavorited string
 
 // ModelPlanCreate creates a model plan
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
@@ -123,11 +135,98 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 
 }
 
-// ModelPlanCollection returns a list of all model plans
+// ModelPlanGetByName returns a model plan for a given ID
+func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
+	plan := models.ModelPlan{}
+	stmt, err := s.db.PrepareNamed(modelPlanGetByNameSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{"model_name": modelName}
+
+	err = stmt.Get(&plan, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plan",
+			zap.Error(err),
+			zap.String("name", modelName),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     plan,
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return &plan, nil
+
+}
+
+// ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"archived": archived,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
+}
+
+// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the euaID supplied is a collaborator.
+func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, euaID string) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"archived": archived,
+		"euaID":    euaID,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
+}
+
+// ModelPlanCollectionWithCRTDLS returns a list of all model plans for which the there are CRTDls
+func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionWithCRTDlSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -165,4 +264,33 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 
 	return sqlResult, nil
+}
+
+// ModelPlanFavoritedCollection returns a collection of all model plans that are favorited
+func (s *Store) ModelPlanFavoritedCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(modelPlansFavorited)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"archived": archived,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
 }

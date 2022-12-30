@@ -15,7 +15,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
         Participants and Providers
       </h2>
       <span
-        class="model-plan-task-list__task-tag line-height-5 text-bold bg-warning"
+        class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning"
         data-testid="tasklist-tag"
       >
         In progress
@@ -239,7 +239,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -255,7 +259,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
     </div>
@@ -273,7 +281,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -293,7 +305,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers matches snap
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>

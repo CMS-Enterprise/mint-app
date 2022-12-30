@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-Runs the CMS EASi frontend application in the development mode.
+Runs the CMS MINT frontend application in the development mode.
 
 Open [http://localhost:3005](http://localhost:3005) to view it in the browser.
 
@@ -76,7 +76,7 @@ All of the frontend React code lives in the `src` directory.
 ├── src
 │   ├── actions                   # Redux action creators
 │   ├── assets                    # Static assets (e.g. PDFs, docs, etc.)
-│   ├── components                # Common "EASi specific" React components
+│   ├── components                # Common "MINT specific" React components
 │   │   └── shared                # Utility components (e.g. button, spinner)
 │   ├── constants                 # Application constants (e.g. Redux action types)
 │   ├── reducers                  # Redux reducers
@@ -139,7 +139,7 @@ writing these tests in TypeScript, there is documentation in supporting that [he
 The project is now using [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
  It originally started with Enzyme, and the decision was made to switch to RTL,
  so there may still be tests that have not been converted.
- (See [ADR](https://github.com/CMSgov/easi-app/blob/master/docs/adr/0028-use-react-testing-library.md)
+ (See [ADR](https://github.com/CMSgov/mint-app/blob/main/docs/adr/0000-adr-starting-point.md)
  for reasoning)
 
 ### Code coverage

@@ -12,19 +12,19 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/plan_cr_tdl_create.sql
+//go:embed SQL/plan_cr_tdl/create.sql
 var planCrTdlCreateSQL string
 
-//go:embed SQL/plan_cr_tdl_update.sql
+//go:embed SQL/plan_cr_tdl/update.sql
 var planCrTdlUpdateSQL string
 
-//go:embed SQL/plan_cr_tdl_delete.sql
+//go:embed SQL/plan_cr_tdl/delete.sql
 var planCrTdlDeleteSQL string
 
-//go:embed SQL/plan_cr_tdl_get.sql
+//go:embed SQL/plan_cr_tdl/get.sql
 var planCrTdlGetSQL string
 
-//go:embed SQL/plan_cr_tdl_collection_by_model_plan_id.sql
+//go:embed SQL/plan_cr_tdl/collection_by_model_plan_id.sql
 var planCrTdlCollectionByModelPlanIDSQL string
 
 // PlanCrTdlCreate creates  returns a plan_cr_tdl object

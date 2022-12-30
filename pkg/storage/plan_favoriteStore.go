@@ -11,14 +11,17 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/plan_favorite_create.sql
+//go:embed SQL/plan_favorite/create.sql
 var planFavoriteCreateSQL string
 
-//go:embed SQL/plan_favorite_delete.sql
+//go:embed SQL/plan_favorite/delete.sql
 var planFavoriteDeleteSQL string
 
-//go:embed SQL/plan_favorite_get.sql
+//go:embed SQL/plan_favorite/get.sql
 var planFavoriteGetSQL string
+
+//go:embed SQL/plan_favorite/get_collection_by_user_id.sql
+var planFavoriteGetCollectioByUserID string
 
 // PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
@@ -26,7 +29,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
 	}
-	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL)
+	stmt, err := s.db.PrepareNamed(planFavoriteCreateSQL) //TODO, look to refactor this SQL to make it clearer
 
 	if err != nil {
 		logger.Error(
@@ -88,4 +91,25 @@ func (s *Store) PlanFavoriteGetByModelIDAndEUA(logger *zap.Logger, EUAID string,
 	}
 
 	return &retFavorite, nil
+}
+
+// PlanFavoriteGetByCollectionByUserID returns plan favorites by userID
+func (s *Store) PlanFavoriteGetByCollectionByUserID(logger *zap.Logger, EUAID string) ([]*models.PlanFavorite, error) {
+
+	planFavorites := []*models.PlanFavorite{}
+	stmt, err := s.db.PrepareNamed(planFavoriteGetCollectioByUserID)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"user_id": EUAID,
+	}
+
+	err = stmt.Select(&planFavorites, arg)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return planFavorites, nil
 }

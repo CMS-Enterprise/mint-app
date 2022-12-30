@@ -60,33 +60,37 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
     If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
   </p>
   <div
-    class="padding-2 bg-primary-lighter display-flex"
-    data-testid="ask-a-question"
+    class="padding-2 bg-primary-lighter"
   >
-    <svg
-      class="usa-icon text-primary margin-right-1"
-      focusable="false"
-      height="1em"
-      role="img"
-      viewBox="0 0 24 24"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      class="display-flex"
+      data-testid="ask-a-question"
     >
-      <path
-        d="M0 0h24v24H0z"
-        fill="none"
-      />
-      <path
-        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
-      />
-    </svg>
-    <button
-      class="usa-button usa-button--unstyled"
-      data-testid="ask-a-question-button"
-      type="button"
-    >
-      Ask a question
-    </button>
+      <svg
+        class="usa-icon text-primary margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
+        <path
+          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+        />
+      </svg>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="ask-a-question-button"
+        type="button"
+      >
+        Ask a question
+      </button>
+    </div>
   </div>
   <div
     class="grid-container padding-left-0 padding-right-0"
@@ -116,28 +120,6 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             >
               Will you recover the payments?
             </label>
-            <div
-              class="usa-alert usa-alert--warning it-tools-warning"
-              data-testid="alert"
-            >
-              <div
-                class="usa-alert__body"
-              >
-                <p
-                  class="usa-alert__text"
-                >
-                  Changing your answer to this question may also affect your responses to questions in IT tools.  
-                  <button
-                    class="usa-button usa-button usa-button--unstyled"
-                    data-testid="button"
-                    id="payment-recover-payment-warning"
-                    type="button"
-                  >
-                    Go to IT tools.
-                  </button>
-                </p>
-              </div>
-            </div>
             <fieldset
               class="usa-fieldset"
               data-testid="fieldset"
@@ -279,6 +261,109 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   string
                 </textarea>
               </div>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-6"
+            data-scroll="paymentStartDate"
+          >
+            <label
+              class="usa-label usa-legend margin-top-0"
+              data-testid="label"
+              for="payment-payment-start-date"
+            >
+              When will payments start? (Enter an approximate date)
+            </label>
+            <p
+              class="text-normal margin-bottom-1 margin-top-0 "
+            >
+              Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+            </p>
+            <div
+              class="usa-hint"
+              id="appointment-date-hint"
+            >
+              mm/dd/yyyy
+            </div>
+            <div
+              class="width-card-lg position-relative"
+            >
+              <div
+                class="usa-date-picker usa-date-picker--initialized"
+                data-testid="date-picker"
+              >
+                <input
+                  aria-hidden="true"
+                  class="usa-input usa-sr-only usa-date-picker__internal-input"
+                  data-testid="date-picker-internal-input"
+                  error="0"
+                  maxlength="50"
+                  name="paymentStartDate"
+                  readonly=""
+                  tabindex="-1"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="usa-date-picker__wrapper"
+                  tabindex="-1"
+                >
+                  <input
+                    class="usa-input usa-date-picker__external-input"
+                    data-testid="date-picker-external-input"
+                    error="0"
+                    id="payment-payment-start-date"
+                    maxlength="50"
+                    type="text"
+                    value=""
+                  />
+                  <button
+                    aria-haspopup="true"
+                    aria-label="Toggle calendar"
+                    class="usa-date-picker__button"
+                    data-testid="date-picker-button"
+                    type="button"
+                  >
+                     
+                  </button>
+                  <div
+                    aria-modal="true"
+                    class="usa-date-picker__calendar"
+                    data-testid="date-picker-calendar"
+                    hidden=""
+                    role="dialog"
+                    style="top: 0px;"
+                  />
+                  <div
+                    aria-live="polite"
+                    class="usa-sr-only usa-date-picker__status"
+                    data-testid="date-picker-status"
+                    role="status"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="margin-top-4 margin-bottom-8"
+          >
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label"
+                for="payment-payment-start-date-note"
+              >
+                Notes
+              </label>
+              <textarea
+                class="usa-textarea height-15"
+                data-testid="payment-payment-start-date-note"
+                id="payment-payment-start-date-note"
+                name="paymentStartDateNote"
+              >
+                string
+              </textarea>
             </div>
           </div>
           <div

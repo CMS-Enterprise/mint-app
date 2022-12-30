@@ -32,11 +32,9 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetPerformance';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import {
-  BenchmarkForPerformanceType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { BenchmarkForPerformanceType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateBenchmarkForPerformanceType
@@ -84,8 +82,9 @@ const Performance = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -95,14 +94,15 @@ const Performance = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: PerformanceFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -191,8 +191,8 @@ const Performance = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -241,13 +241,12 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-benchmark-performance">
                     {t('establishBenchmark')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-benchmark-performance-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-four`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -437,13 +436,12 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-appeals">
                     {t('participantAppeal')}
                   </Label>
-                  {itToolsStarted && (
+                  {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-appeal-performance-warning"
                       onClick={() =>
                         handleFormSubmit(
-                          values,
-                          `/models/${modelID}/task-list/it-tools/page-five`
+                          `/models/${modelID}/task-list/it-solutions`
                         )
                       }
                     />
@@ -555,7 +553,7 @@ const Performance = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -567,7 +565,7 @@ const Performance = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -578,7 +576,7 @@ const Performance = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

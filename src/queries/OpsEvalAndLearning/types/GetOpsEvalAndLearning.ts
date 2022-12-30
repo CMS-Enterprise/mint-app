@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, TaskStatus } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOpsEvalAndLearning
@@ -29,9 +29,9 @@ export interface GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   iddocSupportNote: string | null;
 }
 
-export interface GetOpsEvalAndLearning_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetOpsEvalAndLearning_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetOpsEvalAndLearning_modelPlan {
@@ -39,7 +39,7 @@ export interface GetOpsEvalAndLearning_modelPlan {
   id: UUID;
   modelName: string;
   opsEvalAndLearning: GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning;
-  itTools: GetOpsEvalAndLearning_modelPlan_itTools;
+  operationalNeeds: GetOpsEvalAndLearning_modelPlan_operationalNeeds[];
 }
 
 export interface GetOpsEvalAndLearning {

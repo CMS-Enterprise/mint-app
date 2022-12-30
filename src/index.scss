@@ -81,6 +81,10 @@ h5 {
   cursor: pointer !important;
 }
 
+.deep-underline {
+  text-underline-offset: 0.15rem;
+}
+
 .no-pointer {
   pointer-events: none;
 }

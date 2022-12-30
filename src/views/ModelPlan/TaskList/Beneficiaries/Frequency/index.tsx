@@ -19,6 +19,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -37,6 +38,7 @@ import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/typ
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { FrequencyType, OverlapType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateFrequencyType,
@@ -83,19 +85,28 @@ const Frequency = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'task-list' | 'back'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'task-list' | 'back' | string) => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -106,6 +117,8 @@ const Frequency = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -124,7 +137,7 @@ const Frequency = () => {
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? '',
-    status: sanitizeStatus(status)
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -166,8 +179,8 @@ const Frequency = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+        onSubmit={() => {
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -228,7 +241,7 @@ const Frequency = () => {
                                 <Field
                                   as={Radio}
                                   id={`beneficiaries-beneficiarySelectionFrequency-${key}`}
-                                  name="beneficiaries-beneficiarySelectionFrequency"
+                                  name="beneficiarySelectionFrequency"
                                   label={translateFrequencyType(key)}
                                   value={key}
                                   checked={
@@ -279,8 +292,20 @@ const Frequency = () => {
                         error={!!flatErrors.beneficiaryOverlap}
                       >
                         <Label htmlFor="beneficiaries-overlap">
-                          {t('levelOfConfidence')}
+                          {t('beneficiaryOverlap')}
                         </Label>
+
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="beneficiaries-overlap-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
                         <FieldErrorMsg>
                           {flatErrors.beneficiaryOverlap}
                         </FieldErrorMsg>
@@ -292,7 +317,7 @@ const Frequency = () => {
                                 <Field
                                   as={Radio}
                                   id={`beneficiaries-overlap-${key}`}
-                                  name="beneficiaries-overlap"
+                                  name="beneficiariesOverlap"
                                   label={translateOverlapType(key)}
                                   value={key}
                                   checked={values.beneficiaryOverlap === key}
@@ -350,7 +375,7 @@ const Frequency = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -362,7 +387,7 @@ const Frequency = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -375,7 +400,7 @@ const Frequency = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

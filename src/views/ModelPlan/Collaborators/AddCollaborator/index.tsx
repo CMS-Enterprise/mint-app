@@ -79,7 +79,7 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelID}/collaborators`);
+            history.push(`/models/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -99,7 +99,7 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelID}/collaborators`);
+            history.push(`/models/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -202,7 +202,7 @@ const Collaborators = () => {
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               setSearchTerm(e?.target?.value);
-                              if (values.fullName || values.euaUserId) {
+                              if (values.fullName || values.euaUserID) {
                                 setFieldValue('fullName', '');
                                 setFieldValue('euaUserID', '');
                               }
@@ -298,7 +298,7 @@ const Collaborators = () => {
               );
             }}
           </Formik>
-          <UswdsReactLink to={`/models/new-plan/${modelID}/collaborators`}>
+          <UswdsReactLink to={`/models/${modelID}/collaborators`}>
             <span>&larr; </span>{' '}
             {!collaboratorId
               ? t('dontAddTeamMember')

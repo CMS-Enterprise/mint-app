@@ -1,5 +1,6 @@
 const generalCharacteristics = {
   heading: 'General characteristics',
+  clearanceHeading: 'Review general characteristics',
   breadcrumb: 'General characteristics',
   isNewModel: 'Is this a new track of an existing model or a new model?',
   newModel: 'New model',
@@ -15,7 +16,8 @@ const generalCharacteristics = {
   waysResembleModel:
     'In what way does the new model resemble the selected model(s)?',
   tracksDiffer: 'How do the tracks differ?',
-  modelAPM: 'Do you think the model could be Alternative Payment Model (APM)?',
+  modelAPM:
+    'What type of Alternative Payment Model (APM) do you think the model could be?',
   forQPP: 'For the Quality Payment Program (QPP)',
   keyCharacteristics:
     'What are the model key characteristics? Select all that apply.',
@@ -24,10 +26,11 @@ const generalCharacteristics = {
   apmTypes: {
     regularAPM: 'Regular APM',
     MIPSAPM: 'MIPS APM',
-    advancedAPM: 'Advanced APM'
+    advancedAPM: 'Advanced APM',
+    notAPM: 'It is not an APM'
   },
   MIPSInfo:
-    'In order to be considered by QPP (and to be MIPS or Advanced APM), you will need to collect TINS and NPIs for provider.',
+    'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
   keyCharacteristicsTypes: {
     episodeBased: 'Episode-Based Model',
     partC: 'Medicare-Advantage (Part C) Model',
@@ -43,7 +46,7 @@ const generalCharacteristics = {
   pleaseDescribe: 'Please describe the other key characteristics',
   reviewPlanBids: 'Will you review and collect plan bids?',
   manageEnrollment: 'Will you manage Part C/D enrollment?',
-  updatedContact: 'Have you updated the plan’s contact?',
+  updatedContract: 'Have you updated the plan’s contract?',
   careCoordination: 'Is care coordination involved?',
   additionalServices: 'Are additional services involved?',
   communityInvolved: 'Are community partners involved?',

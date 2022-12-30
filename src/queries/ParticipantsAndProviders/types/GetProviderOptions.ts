@@ -29,11 +29,17 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders {
   status: TaskStatus;
 }
 
+export interface GetProviderOptions_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
+}
+
 export interface GetProviderOptions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   participantsAndProviders: GetProviderOptions_modelPlan_participantsAndProviders;
+  operationalNeeds: GetProviderOptions_modelPlan_operationalNeeds[];
 }
 
 export interface GetProviderOptions {

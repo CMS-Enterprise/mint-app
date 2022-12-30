@@ -5,8 +5,6 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appses"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -27,7 +25,9 @@ func (s Server) NewDBConfig() storage.DBConfig {
 	s.checkRequiredConfig(appconfig.DBNameConfigKey)
 	s.checkRequiredConfig(appconfig.DBUsernameConfigKey)
 	s.checkRequiredConfig(appconfig.DBMaxConnections)
-	if s.environment.Deployed() {
+
+	useIAM := s.environment.Deployed()
+	if !useIAM { // If not using IAM, fall back to using PGPASS
 		s.checkRequiredConfig(appconfig.DBPasswordConfigKey)
 	}
 	s.checkRequiredConfig(appconfig.DBSSLModeConfigKey)
@@ -38,33 +38,8 @@ func (s Server) NewDBConfig() storage.DBConfig {
 		Username:       s.Config.GetString(appconfig.DBUsernameConfigKey),
 		Password:       s.Config.GetString(appconfig.DBPasswordConfigKey),
 		SSLMode:        s.Config.GetString(appconfig.DBSSLModeConfigKey),
+		UseIAM:         useIAM,
 		MaxConnections: s.Config.GetInt(appconfig.DBMaxConnections),
-	}
-}
-
-// NewEmailConfig returns a new email.Config and checks required fields
-func (s Server) NewEmailConfig() email.Config {
-	s.checkRequiredConfig(appconfig.GRTEmailKey)
-	s.checkRequiredConfig(appconfig.AccessibilityTeamEmailKey)
-	s.checkRequiredConfig(appconfig.ClientHostKey)
-	s.checkRequiredConfig(appconfig.ClientProtocolKey)
-	s.checkRequiredConfig(appconfig.EmailTemplateDirectoryKey)
-
-	return email.Config{
-		URLHost:           s.Config.GetString(appconfig.ClientHostKey),
-		URLScheme:         s.Config.GetString(appconfig.ClientProtocolKey),
-		TemplateDirectory: s.Config.GetString(appconfig.EmailTemplateDirectoryKey),
-	}
-}
-
-// NewSESConfig returns a new email.Config and checks required fields
-func (s Server) NewSESConfig() appses.Config {
-	s.checkRequiredConfig(appconfig.AWSSESSourceARNKey)
-	s.checkRequiredConfig(appconfig.AWSSESSourceKey)
-
-	return appses.Config{
-		SourceARN: s.Config.GetString(appconfig.AWSSESSourceARNKey),
-		Source:    s.Config.GetString(appconfig.AWSSESSourceKey),
 	}
 }
 
@@ -133,6 +108,7 @@ func (s Server) NewFlagConfig() flags.Config {
 
 	var timeout time.Duration
 	var key string
+	var flagValuesFile string
 
 	switch flagSource {
 	case appconfig.FlagSourceLocal:
@@ -143,14 +119,22 @@ func (s Server) NewFlagConfig() flags.Config {
 		s.checkRequiredConfig(appconfig.LDTimeout)
 		timeout = time.Duration(s.Config.GetInt(appconfig.LDTimeout)) * time.Second
 		key = s.Config.GetString(appconfig.LDKey)
+	case appconfig.FlagSourceFile:
+		s.checkRequiredConfig(appconfig.FlagValuesFileKey)
+		flagValuesFile = s.Config.GetString(appconfig.FlagValuesFileKey)
 	default:
-		opts := []appconfig.FlagSourceOption{appconfig.FlagSourceLocal, appconfig.FlagSourceLaunchDarkly}
+		opts := []appconfig.FlagSourceOption{
+			appconfig.FlagSourceLocal,
+			appconfig.FlagSourceLaunchDarkly,
+			appconfig.FlagSourceFile,
+		}
 		s.logger.Fatal(fmt.Sprintf("%s must be set to one of %v", appconfig.FlagSourceKey, opts))
 	}
 
 	return flags.Config{
-		Source:  flagSource,
-		Key:     key,
-		Timeout: timeout,
+		Source:         flagSource,
+		Key:            key,
+		Timeout:        timeout,
+		FlagValuesFile: flagValuesFile,
 	}
 }

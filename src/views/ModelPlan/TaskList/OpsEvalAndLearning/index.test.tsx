@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
 import { GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as GetOpsEvalAndLearningType } from 'queries/OpsEvalAndLearning/types/GetOpsEvalAndLearning';
-import { CcmInvolvmentType, TaskStatus } from 'types/graphql-global-types';
+import { CcmInvolvmentType } from 'types/graphql-global-types';
 
 import {
   isCCWInvolvement,
@@ -46,9 +46,11 @@ const opsEvalAndLearningMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           opsEvalAndLearning: opsEvalAndLearningMockData,
-          itTools: {
-            status: TaskStatus.IN_PROGRESS
-          }
+          operationalNeeds: [
+            {
+              modifiedDts: ''
+            }
+          ]
         }
       }
     }

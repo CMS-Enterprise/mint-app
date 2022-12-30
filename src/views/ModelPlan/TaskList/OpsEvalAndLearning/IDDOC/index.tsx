@@ -1,14 +1,12 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   IconArrowBack,
   Label,
@@ -22,7 +20,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import DatePickerWarning from 'components/shared/DatePickerWarning';
+import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -35,6 +33,7 @@ import {
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
@@ -43,8 +42,6 @@ const IDDOC = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-  const [dateInPast, setDateInPast] = useState(false);
-  const [dateLoaded, setDateLoaded] = useState(false);
 
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
@@ -78,15 +75,14 @@ const IDDOC = () => {
     UpdatePlanOpsEvalAndLearning
   );
 
-  const handleFormSubmit = (
-    formikValues: IDDOCFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -106,19 +102,6 @@ const IDDOC = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  // TODO: Figure out why the form doesn't rerender once a date value is fetched - delay works for now
-  // Loading var passed from GQL does not seem to accurately identify a completed payload for date
-  useEffect(() => {
-    setTimeout(() => {
-      setDateLoaded(true);
-      if (draftIcdDueDate && new Date() > new Date(draftIcdDueDate)) {
-        setDateInPast(true);
-      } else {
-        setDateInPast(false);
-      }
-    }, 250);
-  }, [draftIcdDueDate]);
 
   const initialValues: IDDOCFormType = {
     __typename: 'PlanOpsEvalAndLearning',
@@ -172,8 +155,8 @@ const IDDOC = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -195,18 +178,10 @@ const IDDOC = () => {
           ) => {
             if (e.target.value === '') {
               setFieldValue(field, null);
-              if (e.target.id !== '') {
-                setDateInPast(false);
-              }
               return;
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              if (new Date() > new Date(e.target.value)) {
-                setDateInPast(true);
-              } else {
-                setDateInPast(false);
-              }
               delete errors[field as keyof IDDOCFormType];
             } catch (err) {
               setFieldError(field, t('validDate'));
@@ -367,50 +342,25 @@ const IDDOC = () => {
                   />
                 </FieldGroup>
 
-                {!loading && dateLoaded && (
-                  <FieldGroup
-                    scrollElement="draftIcdDueDate"
-                    error={!!flatErrors.draftIcdDueDate}
-                    className="margin-top-6 width-half"
-                  >
-                    <label
-                      htmlFor="ops-eval-and-learning-icd-due-date"
-                      className="text-bold"
-                    >
-                      {t('draftIDC')}
-                    </label>
-                    <div className="usa-hint margin-y-1">
-                      {h('datePlaceholder')}
-                    </div>
-                    <FieldErrorMsg>{flatErrors.draftIcdDueDate}</FieldErrorMsg>
-                    <div className="width-card-lg position-relative">
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.draftIcdDueDate}
-                        id="ops-eval-and-learning-icd-due-date"
-                        maxLength={50}
-                        name="draftIcdDueDate"
-                        defaultValue={values.draftIcdDueDate}
-                        onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          handleOnBlur(e, 'draftIcdDueDate');
-                        }}
-                      />
-                      {dateInPast && (
-                        <DatePickerWarning label={h('dateWarning')} />
-                      )}
-                    </div>
-
-                    {dateInPast && (
-                      <Alert type="warning" className="margin-top-4">
-                        {h('dateWarning')}
-                      </Alert>
-                    )}
+                {!loading && (
+                  <>
+                    <MINTDatePicker
+                      fieldName="draftIcdDueDate"
+                      id="ops-eval-and-learning-icd-due-date"
+                      className="margin-top-6"
+                      label={t('draftIDC')}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.draftIcdDueDate}
+                      value={draftIcdDueDate}
+                      error={flatErrors.draftIcdDueDate}
+                    />
 
                     <AddNote
                       id="ops-eval-and-learning-icd-due-date-note"
                       field="icdNote"
                     />
-                  </FieldGroup>
+                  </>
                 )}
 
                 <div className="margin-top-6 margin-bottom-3">
@@ -418,7 +368,7 @@ const IDDOC = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -430,7 +380,7 @@ const IDDOC = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -441,7 +391,7 @@ const IDDOC = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

@@ -1,10 +1,16 @@
 package resolvers
 
 import (
+	"fmt"
+
+	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
+
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -20,8 +26,9 @@ type TestConfigs struct {
 	Logger    *zap.Logger
 	UserInfo  *models.UserInfo
 	Store     *storage.Store
+	S3Client  *upload.S3Client
 	PubSub    *pubsub.ServicePubSub
-	Principal *authentication.EUAPrincipal
+	Principal *authentication.ApplicationPrincipal
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -31,15 +38,31 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
+func createS3Client() upload.S3Client {
+	config := testhelpers.NewConfig()
+
+	s3Cfg := upload.Config{
+		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
+
+	return upload.NewS3Client(s3Cfg)
+}
+
 // GetDefaults sets the dependencies for the TestConfigs struct
 func (tc *TestConfigs) GetDefaults() {
-	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
+	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
+	princ := getTestPrincipal(store, userInfo.EuaUserID)
+
+	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
+	tc.S3Client = &s3Client
 	tc.PubSub = ps
 
 	tc.Principal = princ
@@ -60,7 +83,7 @@ func NewDBConfig() storage.DBConfig {
 	}
 }
 
-func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub, *authentication.EUAPrincipal) {
+func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
@@ -71,12 +94,37 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	}
 	ps := pubsub.NewServicePubSub()
 
-	princ := &authentication.EUAPrincipal{
-		EUAID:             userInfo.EuaUserID,
+	return config, ldClient, logger, userInfo, ps
+}
+
+func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
+
+	princ := &authentication.ApplicationPrincipal{
+		Username:          userName,
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: true,
+		JobCodeMAC:        false,
+		UserAccount:       userAccount,
 	}
+	return princ
 
-	return config, ldClient, logger, userInfo, ps, princ
+}
 
+func createAddedAsCollaboratorTemplateCacheHelper(
+	planName string,
+	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
+	templateCache := emailTemplates.NewTemplateCache()
+	_ = templateCache.LoadTextTemplateFromString("testSubject", "{{.ModelName}}'s Test")
+	_ = templateCache.LoadHTMLTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}")
+	testTemplate := emailTemplates.NewEmailTemplate(
+		templateCache,
+		"testSubject",
+		"testBody",
+	)
+
+	expectedSubject := fmt.Sprintf("%s's Test", planName)
+	expectedBody := fmt.Sprintf("%s %s", planName, plan.ID.String())
+	return testTemplate, expectedSubject, expectedBody
 }

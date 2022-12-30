@@ -17,46 +17,56 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_document_create.sql
+//go:embed SQL/plan_document/create.sql
 var planDocumentCreateSQL string
 
-//go:embed SQL/plan_document_update.sql
+//go:embed SQL/plan_document/update.sql
 var planDocumentUpdateSQL string
 
-//go:embed SQL/plan_document_read_by_id.sql
+//go:embed SQL/plan_document/read_by_id.sql
 var planDocumentGetByIDSQL string
 
-//go:embed SQL/plan_document_read_by_model_plan_id.sql
+//go:embed SQL/plan_document/read_by_model_plan_id.sql
 var planDocumentGetByModelPlanIDSQL string
 
-//go:embed SQL/plan_document_delete_by_id.sql
+//go:embed SQL/plan_document/read_by_solution_id.sql
+var planDocumentsGetBySolutionIDSQL string
+
+//go:embed SQL/plan_document/read_by_model_plan_id_not_restricted.sql
+var planDocumentGetByModelPlanIDNotRestrictedSQL string
+
+//go:embed SQL/plan_document/read_by_solution_id_not_restricted.sql
+var planDocumentGetBySolutionIDNotRestrictedSQL string
+
+//go:embed SQL/plan_document/delete_by_id.sql
 var planDocumentDeleteByIDSQL string
+
+//go:embed SQL/plan_document_solution/links_delete_by_document_id.sql
+var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 
 // PlanDocumentCreate creates a plan document
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
 	principal string,
 	inputDocument *models.PlanDocument,
-	documentURL *string,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
 
 	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
-	retDoc := models.PlanDocument{}
+	inputDocument.ModifiedBy = nil
+	inputDocument.ModifiedDts = nil
 
+	retDoc := &models.PlanDocument{}
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
 
-	inputDocument.ModifiedBy = nil
-	inputDocument.ModifiedDts = nil
-
-	err = statement.Get(&retDoc, &inputDocument)
+	err = statement.Get(retDoc, inputDocument)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, &retDoc)
+		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
 
-	return &retDoc, nil
+	return retDoc, nil
 }
 
 // PlanDocumentRead reads a plan document object by id
@@ -103,6 +113,84 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	}
 
 	err = logIfNoRowsFetched(logger, modelPlanID, documents)
+	return documents, err
+}
+
+// PlanDocumentsReadBySolutionID reads a plan document object by solution id
+func (s *Store) PlanDocumentsReadBySolutionID(
+	logger *zap.Logger,
+	solutionID uuid.UUID,
+	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	statement, err := s.db.PrepareNamed(planDocumentsGetBySolutionIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var documents []*models.PlanDocument
+	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
+	}
+
+	err = logIfNoRowsFetched(logger, solutionID, documents)
+	return documents, err
+}
+
+// PlanDocumentsReadByModelPlanIDNotRestricted reads a plan document object by model plan id and restricted = false
+func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	statement, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDNotRestrictedSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var documents []*models.PlanDocument
+	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+	}
+
+	err = logIfNoRowsFetched(logger, modelPlanID, documents)
+	return documents, err
+}
+
+// PlanDocumentsReadBySolutionIDNotRestricted reads a plan document object by model plan id and restricted = false
+func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
+	logger *zap.Logger,
+	solutionID uuid.UUID,
+	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	statement, err := s.db.PrepareNamed(planDocumentGetBySolutionIDNotRestrictedSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var documents []*models.PlanDocument
+	err = statement.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
+	}
+
+	err = logIfNoRowsFetched(logger, solutionID, documents)
 	return documents, err
 }
 
@@ -170,7 +258,20 @@ func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument
 
 // PlanDocumentDelete deletes a plan document object by id
 func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	statement, err := s.db.PrepareNamed(planDocumentDeleteByIDSQL)
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+
+	statement, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = statement.Exec(utilitySQL.CreateDocumentIDQueryMap(id))
+	if err != nil {
+		return nil, err
+	}
+
+	statement, err = tx.PrepareNamed(planDocumentDeleteByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -178,6 +279,11 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID) (sql.Result
 	sqlResult, err := statement.Exec(utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
 	}
 
 	return sqlResult, nil

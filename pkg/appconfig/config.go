@@ -7,6 +7,8 @@ func NewEnvironment(config string) (Environment, error) {
 	switch config {
 	case localEnv.String():
 		return localEnv, nil
+	case testingEnv.String():
+		return testingEnv, nil
 	case testEnv.String():
 		return testEnv, nil
 	case devEnv.String():
@@ -29,13 +31,15 @@ type Environment string
 const (
 	// localEnv is the local environment
 	localEnv Environment = "local"
-	// testEnv is the environment for running tests
+	// testingEnv is the environment for running tests
+	testingEnv Environment = "testing"
+	// testEnv is the environment for the test deployed env
 	testEnv Environment = "test"
 	// devEnv is the environment for the dev deployed env
 	devEnv Environment = "dev"
 	// implEnv is the environment for the impl deployed env
 	implEnv Environment = "impl"
-	// prodEnv is the environment for the impl deployed env
+	// prodEnv is the environment for the prod deployed env
 	prodEnv Environment = "prod"
 )
 
@@ -44,6 +48,8 @@ func (e Environment) String() string {
 	switch e {
 	case localEnv:
 		return "local"
+	case testingEnv:
+		return "testing"
 	case testEnv:
 		return "test"
 	case devEnv:
@@ -60,6 +66,11 @@ func (e Environment) String() string {
 // Local returns true if the environment is local
 func (e Environment) Local() bool {
 	return e == localEnv
+}
+
+// Testing returns true if the environment is testing
+func (e Environment) Testing() bool {
+	return e == testingEnv
 }
 
 // Test returns true if the environment is local
@@ -86,6 +97,8 @@ func (e Environment) Prod() bool {
 func (e Environment) Deployed() bool {
 	switch e {
 	case devEnv:
+		return true
+	case testEnv:
 		return true
 	case implEnv:
 		return true
@@ -117,23 +130,32 @@ const DBSSLModeConfigKey = "PGSSLMODE"
 // DBMaxConnections is the maximum number of connections to the database
 const DBMaxConnections = "DB_MAX_CONNECTIONS"
 
-// AWSSESSourceARNKey is the key for the ARN for sending email
-const AWSSESSourceARNKey = "AWS_SES_SOURCE_ARN"
-
-// AWSSESSourceKey is the key for the sender for sending email
-const AWSSESSourceKey = "AWS_SES_SOURCE"
-
 // GRTEmailKey is the key for the receiving email for the GRT
 const GRTEmailKey = "GRT_EMAIL"
 
 // AccessibilityTeamEmailKey is the key for the receiving email for the 508 team
 const AccessibilityTeamEmailKey = "ACCESSIBILITY_TEAM_EMAIL"
 
+// EmailHostKey is the key for getting the email service's host
+const EmailHostKey = "EMAIL_HOST"
+
+// EmailPortKey is the key for getting the email service's port
+const EmailPortKey = "EMAIL_PORT"
+
+// EmailSenderKey is the key for getting the email sender
+const EmailSenderKey = "EMAIL_SENDER"
+
+// EmailEnabledKey is the key for checking if we should use email service
+const EmailEnabledKey = "EMAIL_ENABLED"
+
 // ClientHostKey is the key for getting the client's domain name
 const ClientHostKey = "CLIENT_HOSTNAME"
 
 // ClientProtocolKey is the key for getting the client's protocol
 const ClientProtocolKey = "CLIENT_PROTOCOL"
+
+// ClientAddressKey is the key for getting the client's address
+const ClientAddressKey = "CLIENT_ADDRESS"
 
 // EmailTemplateDirectoryKey is the key for getting the email template directory
 const EmailTemplateDirectoryKey = "EMAIL_TEMPLATE_DIR"
@@ -168,6 +190,9 @@ const LDTimeout = "LD_TIMEOUT_SECONDS"
 // FlagSourceKey indicates where flags should be loaded from
 const FlagSourceKey = "FLAG_SOURCE"
 
+// FlagValuesFileKey is the key for the environment variable with the file path to a LaunchDarkly flag values file
+const FlagValuesFileKey = "FLAGDATA_FILE"
+
 // LambdaEndpoint is the host to direct lambda requests to
 const LambdaEndpoint = "LAMBDA_ENDPOINT"
 
@@ -183,12 +208,21 @@ const OktaClientID = "OKTA_CLIENT_ID"
 // OktaIssuer is the okta issuer
 const OktaIssuer = "OKTA_ISSUER"
 
+// FaktoryProcessJobs if jobs should be processed
+const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
+
+// FaktoryConnections number of connections for a manager
+const FaktoryConnections = "FAKTORY_CONNECTIONS"
+
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 
 const (
 	// FlagSourceLocal is LOCAL
 	FlagSourceLocal FlagSourceOption = "LOCAL"
+
+	// FlagSourceFile is FILE (for setting LaunchDarkly flag values in a file for use when testing)
+	FlagSourceFile FlagSourceOption = "FILE"
 
 	// FlagSourceLaunchDarkly is LAUNCH_DARKLY
 	FlagSourceLaunchDarkly FlagSourceOption = "LAUNCH_DARKLY"
