@@ -71,9 +71,10 @@ const SolutionImplementation = ({
 }: {
   isUpdatingStatus?: boolean;
 }) => {
-  const { modelID, operationalNeedID } = useParams<{
+  const { modelID, operationalNeedID, solutionId } = useParams<{
     modelID: string;
     operationalNeedID: string;
+    solutionId: string;
   }>();
 
   const history = useHistory();
