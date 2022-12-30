@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
+import { OpSolutionStatus } from 'types/graphql-global-types';
 
 import AddCustomSolution from '.';
 
@@ -33,7 +34,10 @@ const returnMockedData = (results: boolean) => {
                 needed: true,
                 pocName: 'John Doe',
                 pocEmail: 'j.doe@oddball.io',
-                nameOther: 'My custom solution'
+                nameOther: 'My custom solution',
+                status: OpSolutionStatus.COMPLETED,
+                mustFinishDts: '2022-05-12T15:01:39.190679Z',
+                mustStartDts: '2022-05-12T15:01:39.190679Z'
               }
             : {
                 nameOther: '',

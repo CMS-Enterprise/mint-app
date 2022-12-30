@@ -198,7 +198,8 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
                 class="padding-3"
               >
                 <h3
-                  class="margin-bottom-2 margin-top-0 solutions-checkbox__header "
+                  class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
+                  style="word-break: break-word;"
                 >
                   Internal staff
                 </h3>
@@ -280,6 +281,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
         >
           <a
             class="usa-link"
+            data-testid="update-solutions-link"
             href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/update-solutions"
           >
             Update solutions for this operational need
