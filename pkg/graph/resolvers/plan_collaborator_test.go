@@ -71,6 +71,9 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		false,
 		suite.stubFetchUserInfo,
 	)
+	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername(collaboratorInput.EuaUserID)
+	suite.NoError(uAccountErr)
+	suite.NotNil(account)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
