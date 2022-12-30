@@ -1,3 +1,9 @@
+/*
+Subtask component and links component 
+Columns split between 'Todo', 'In progress', and 'Done'
+If no subtasks, renders text for no subtasks
+*/
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';

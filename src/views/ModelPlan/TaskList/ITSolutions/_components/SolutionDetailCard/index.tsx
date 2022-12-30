@@ -1,3 +1,9 @@
+/*
+SolutionDetailCard component used to display solution information
+Contains NeedQuestionAndAnswer component, SolutionCard component, and NeedsStatus
+Contains additional info - dates, status, etc
+*/
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
