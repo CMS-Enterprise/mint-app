@@ -27,32 +27,20 @@ type OktaAccountInfo struct {
 }
 
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
-func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username string, useLocal bool, isMacUser bool) (*authentication.UserAccount, error) {
+func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username string, hasLoggedIn bool,
+	isMacUser bool, getAccountInformation func(ctx context.Context, username string) (*OktaAccountInfo, error)) (*authentication.UserAccount, error) {
 	userAccount, accErr := store.UserAccountGetByUsername(username)
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
 	}
 	if userAccount != nil && userAccount.HasLoggedIn {
 		return userAccount, nil
-		//update  information
 	}
-	accountInfo := &OktaAccountInfo{}
-	if useLocal {
-		accountInfo.Name = username + " Doe"
-		accountInfo.Locale = "en_US"
-		accountInfo.Email = username + "@local.cms.gov"
-		accountInfo.PreferredUsername = username
-		accountInfo.GivenName = username
-		accountInfo.FamilyName = "Doe"
-		accountInfo.ZoneInfo = "America/Los_Angeles"
-	} else {
-		// oktaInfo, err := GetUserInfoFromOkta(baseURL, token)
-		oktaInfo, err := GetUserInfoFromOkta(ctx)
-		if err != nil {
-			return nil, err
-		}
-		accountInfo = oktaInfo
+	accountInfo, err := getAccountInformation(ctx, username)
+	if err != nil {
+		return nil, err
 	}
+
 	if userAccount == nil {
 		userAccount = &authentication.UserAccount{}
 	}
@@ -64,39 +52,40 @@ func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username 
 	userAccount.GivenName = accountInfo.GivenName
 	userAccount.FamilyName = accountInfo.FamilyName
 	userAccount.ZoneInfo = accountInfo.ZoneInfo
-	userAccount.HasLoggedIn = true
+	userAccount.HasLoggedIn = hasLoggedIn
 
 	if userAccount.ID == uuid.Nil {
-		newAccount, err := store.UserAccountInsertByUsername(userAccount)
-		if err != nil {
-			return nil, err
+		newAccount, newErr := store.UserAccountInsertByUsername(userAccount)
+		if newErr != nil {
+			return nil, newErr
 		}
 		return newAccount, nil
 	}
 
-	updatedAccount, err := store.UserAccountUpdateByUserName(userAccount)
-	if err != nil {
-		return nil, err
+	updatedAccount, updateErr := store.UserAccountUpdateByUserName(userAccount)
+	if updateErr != nil {
+		return nil, updateErr
 	}
 	return updatedAccount, nil
 }
 
-// GetOrCreateUserAccountDelegate will return an account if it exists, or create and return a new one if not, getting information from delegate function
-func GetOrCreateUserAccountDelegate(ctx context.Context, store *storage.Store, username string, getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*authentication.UserAccount, error) {
-	userAccount, accErr := store.UserAccountGetByUsername(username)
-	if accErr != nil {
-		return nil, errors.New("failed to get user information from the database")
-	}
-	if userAccount != nil {
-		return userAccount, nil
-	}
-	accountInfo := &OktaAccountInfo{}
+// GetAccountInformationWrapperFunction returns a function that returns *OktaAccountInfo with the input of a function that returns UserInfo
+func GetAccountInformationWrapperFunction(getAccountInformation func(ctx context.Context, username string) (*models.UserInfo, error)) func(ctx context.Context, username string) (*OktaAccountInfo, error) {
 
+	wrapperFunc := func(ctx context.Context, username string) (*OktaAccountInfo, error) {
+		return GetAccountInformationWrapper(ctx, username, getAccountInformation)
+	}
+	return wrapperFunc
+}
+
+// GetAccountInformationWrapper this funtion appends models.UserInfo with needed account info fields as UNKNOWN
+func GetAccountInformationWrapper(ctx context.Context, username string, getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*OktaAccountInfo, error) {
 	userinfo, err := getAccountInformation(ctx, username)
 	if err != nil {
 		return nil, err
 	}
 
+	accountInfo := &OktaAccountInfo{}
 	accountInfo.Name = userinfo.CommonName
 	accountInfo.Locale = "UNKNOWN"
 	accountInfo.Email = userinfo.Email.String()
@@ -105,32 +94,14 @@ func GetOrCreateUserAccountDelegate(ctx context.Context, store *storage.Store, u
 	accountInfo.FamilyName = userinfo.LastName
 	accountInfo.ZoneInfo = "UNKNOWN"
 
-	if userAccount == nil {
-		user := authentication.UserAccount{
-			Username:    &username,
-			IsEUAID:     true, //TODO verify this
-			CommonName:  accountInfo.Name,
-			Locale:      accountInfo.Locale,
-			Email:       accountInfo.Email,
-			GivenName:   accountInfo.GivenName,
-			FamilyName:  accountInfo.FamilyName,
-			ZoneInfo:    accountInfo.ZoneInfo,
-			HasLoggedIn: false, //TODO, need to verify this,
-		}
-		newAccount, err := store.UserAccountInsertByUsername(&user)
-		if err != nil {
-			return nil, err
-		}
-		userAccount = newAccount
-	}
-	return userAccount, nil
+	return accountInfo, nil
 }
 
 // GetUserInfoFromOkta uses the Okta endpoint to retun OktaAccountInfo
-func GetUserInfoFromOkta(ctx context.Context) (*OktaAccountInfo, error) {
+func GetUserInfoFromOkta(ctx context.Context, username string) (*OktaAccountInfo, error) {
 	userEndpoint := "/v1/userinfo" //TODO: it would be better to actually get the endpoint from the token, but not currently given to the front end
 	authPrefix := "Bearer "
-	enhancedJWT := appcontext.JWT(ctx)
+	enhancedJWT := appcontext.EnhancedJWT(ctx)
 	oktaBaseURL, err := enhancedJWT.GetOktaBaseURL()
 	if err != nil {
 		return nil, err
@@ -157,4 +128,20 @@ func GetUserInfoFromOkta(ctx context.Context) (*OktaAccountInfo, error) {
 	ret := OktaAccountInfo{}
 	err = json.Unmarshal([]byte(jsonDataFromHTTP), &ret)
 	return &ret, err
+}
+
+// GetUserInfoFromOktaLocal is used to simulate okta user information when testing locally
+func GetUserInfoFromOktaLocal(ctx context.Context, username string) (*OktaAccountInfo, error) {
+
+	accountInfo := &OktaAccountInfo{
+		Name:              username + " Doe",
+		Locale:            "en_US",
+		Email:             username + "@local.cms.gov",
+		PreferredUsername: username,
+		GivenName:         username,
+		FamilyName:        "Doe",
+		ZoneInfo:          "America/Los_Angeles",
+	}
+	return accountInfo, nil
+
 }

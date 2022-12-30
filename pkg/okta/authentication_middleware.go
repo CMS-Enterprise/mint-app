@@ -127,7 +127,7 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 
 func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.ApplicationPrincipal, error) {
 
-	enhanced := appcontext.JWT(ctx)
+	enhanced := appcontext.EnhancedJWT(ctx)
 	euaID := enhanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
@@ -161,8 +161,9 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 		ctx,
 		f.Store,
 		euaID,
-		false,
+		true,
 		jcMAC,
+		userhelpers.GetUserInfoFromOkta,
 	) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err
@@ -197,7 +198,7 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 			return
 		}
 		ctx := r.Context()
-		ctx = appcontext.WithJWT(ctx, *jwt)
+		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
 		principal, err := f.newPrincipal(ctx)
 		if err != nil {
@@ -212,7 +213,6 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 
 		ctx = appcontext.WithPrincipal(ctx, principal)
 		ctx = appcontext.WithLogger(ctx, logger)
-		ctx = appcontext.WithAuthToken(ctx, jwt.AuthToken)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
@@ -264,7 +264,7 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 			fmt.Println("ERROR PARSING JWT", err)
 			// TODO How to error handle here?
 		}
-		ctx = appcontext.WithJWT(ctx, *jwt)
+		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
 		// devCtx, err := devUserContext(ctx, token)
 		principal, err := f.newPrincipal(ctx)
