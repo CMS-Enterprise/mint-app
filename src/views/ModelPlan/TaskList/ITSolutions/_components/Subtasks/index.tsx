@@ -30,11 +30,16 @@ const columnTypes = {
   done: SubtaskStatus.DONE
 };
 
+type SubtaskColumnsProps = {
+  subtasks: SubtaskType[];
+  status: keyof typeof columnTypes;
+};
+
 // Returns ul list component with subtask name
-const SubtaskColumns = (
-  subtasks: SubtaskType[],
-  status: keyof typeof columnTypes
-): JSX.Element => {
+const SubtaskColumns = ({
+  subtasks,
+  status
+}: SubtaskColumnsProps): JSX.Element => {
   const { t } = useTranslation('itSolutions');
 
   return (
@@ -133,12 +138,6 @@ type SubtasksProps = {
 const Subtasks = ({ subtasks, className }: SubtasksProps) => {
   const { t } = useTranslation('itSolutions');
 
-  const TodoSubtasks = SubtaskColumns(subtasks, 'todo');
-
-  const InProgressSubtasks = SubtaskColumns(subtasks, 'inProgress');
-
-  const DoneSubtasks = SubtaskColumns(subtasks, 'done');
-
   return (
     <div className={classNames(className)}>
       <h3 className="margin-top-0">{t('subtasks.header')}</h3>
@@ -146,14 +145,13 @@ const Subtasks = ({ subtasks, className }: SubtasksProps) => {
       <GridContainer className="padding-0">
         <Grid row className="border">
           {/* TO_DO Subtasks */}
-          {TodoSubtasks}
+          <SubtaskColumns subtasks={subtasks} status="todo" />
 
           {/* IN_PROGRESS Subtasks */}
-
-          {InProgressSubtasks}
+          <SubtaskColumns subtasks={subtasks} status="inProgress" />
 
           {/* DONE Subtasks */}
-          {DoneSubtasks}
+          <SubtaskColumns subtasks={subtasks} status="done" />
         </Grid>
       </GridContainer>
     </div>
