@@ -64,7 +64,11 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SelectSolutions = () => {
+type SelectSolutionsProps = {
+  update?: boolean;
+};
+
+const SelectSolutions = ({ update }: SelectSolutionsProps) => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -113,6 +117,11 @@ const SelectSolutions = () => {
   ) => {
     const { solutions } = formikValues;
 
+    const removedSolutions: string = checkRemovedSolutions(
+      operationalNeed,
+      formikValues
+    );
+
     await Promise.all(
       solutions.map(solution => {
         // Update possibleSolution needed bool and status
@@ -147,19 +156,14 @@ const SelectSolutions = () => {
           if (
             formikRef?.current?.values.solutions.find(
               solution => solution.needed
-            )
+            ) ||
+            update
           ) {
-            showMessageOnNextPage(
-              <Alert type="success" slim className="margin-y-4">
-                <span className="mandatory-fields-alert__text">
-                  {t('successSolutionAdded', {
-                    operationalNeedName: operationalNeed.name
-                  })}
-                </span>
-              </Alert>
-            );
+            showMessageOnNextPage(removedSolutions);
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
+                update ? 'update-status' : 'solution-implementation-details'
+              }`
             );
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
@@ -213,7 +217,7 @@ const SelectSolutions = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('selectSolution')}
+            {update ? t('updateSolutions') : t('selectSolution')}
           </PageHeading>
 
           <p
@@ -225,12 +229,18 @@ const SelectSolutions = () => {
 
           <p className="line-height-body-4">{t('selectInfo')}</p>
 
-          <Grid tablet={{ col: 8 }}>
+          <Grid tablet={{ col: 8 }} className="margin-bottom-4">
             <NeedQuestionAndAnswer
               operationalNeedID={operationalNeedID}
               modelID={modelID}
             />
           </Grid>
+
+          {update && (
+            <Alert type="info" slim className="margin-y-2">
+              {t('updateSolutionsInfo')}
+            </Alert>
+          )}
 
           <Grid row gap>
             <Grid tablet={{ col: 10 }}>
@@ -270,7 +280,7 @@ const SelectSolutions = () => {
                       )}
 
                       <Form
-                        className="margin-top-6"
+                        className="margin-top-2"
                         data-testid="it-tools-page-seven-form"
                         onSubmit={e => {
                           handleSubmit(e);
@@ -333,7 +343,7 @@ const SelectSolutions = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {t('dontAdd')}
+                          {update ? t('dontUpdate') : t('dontAdd')}
                         </Button>
                       </Form>
                     </>
@@ -363,6 +373,32 @@ const SelectSolutions = () => {
       </Grid>
     </>
   );
+};
+
+const checkRemovedSolutions = (
+  operationalNeed: GetOperationalNeedOperationalNeedType,
+  updatedNeed: GetOperationalNeedOperationalNeedType
+) => {
+  const removedSolutions: string[] = [];
+
+  updatedNeed.solutions.forEach(solution => {
+    const originalNeedSolution = operationalNeed.solutions.find(
+      originalSolution =>
+        (originalSolution.nameOther &&
+          originalSolution.nameOther === solution.nameOther) ||
+        originalSolution.id === solution.id
+    );
+
+    if (originalNeedSolution?.needed === true && solution.needed === false) {
+      removedSolutions.push(
+        // One of these values will never be null - ts doesn't recognize this
+        // @ts-ignore
+        originalNeedSolution.nameOther || originalNeedSolution.name
+      );
+    }
+  });
+
+  return removedSolutions.join(',');
 };
 
 export default SelectSolutions;
