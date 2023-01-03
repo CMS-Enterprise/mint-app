@@ -17,7 +17,7 @@ import (
 // ModelPlanCreate implements resolver logic to create a model plan
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
-func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo, principal authentication.Principal) (*models.ModelPlan, error) {
+func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principal authentication.Principal) (*models.ModelPlan, error) {
 
 	plan := models.NewModelPlan(principal.ID(), modelName)
 
@@ -31,6 +31,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	if err != nil {
 		return nil, err
 	}
+	userAccount := principal.Account()
 
 	// Create an initial collaborator for the plan
 	_, _, err = CreatePlanCollaborator(
@@ -39,10 +40,10 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		nil,
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
-			EuaUserID:   principal.ID(),
-			FullName:    principalInfo.CommonName,
+			EuaUserID:   *userAccount.Username,
+			FullName:    userAccount.CommonName,
 			TeamRole:    models.TeamRoleModelLead,
-			Email:       principalInfo.Email.String(),
+			Email:       userAccount.Email,
 		},
 		principal,
 		store,
@@ -52,7 +53,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 
-	baseTaskList := models.NewBaseTaskListSection(principalInfo.EuaUserID, createdPlan.ID) //make a taskList status, with status Ready
+	baseTaskList := models.NewBaseTaskListSection(*userAccount.Username, createdPlan.ID) //make a taskList status, with status Ready
 
 	// Create a default plan basics object
 	basics := models.NewPlanBasics(baseTaskList)
