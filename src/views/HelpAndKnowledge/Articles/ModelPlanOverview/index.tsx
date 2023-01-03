@@ -45,7 +45,7 @@ export const ModelPlanOverviewContent = ({
           </Trans>
         </p>
       </SummaryBox>
-      <PageHeading className="margin-top-7 margin-bottom-1 font-body-xl">
+      <PageHeading className="margin-top-7 margin-bottom-1" headingLevel="h2">
         {t('steps.heading')}
       </PageHeading>
       <p className="font-body-lg margin-y-0">{t('steps.description')}</p>

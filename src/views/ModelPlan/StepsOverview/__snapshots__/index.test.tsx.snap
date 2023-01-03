@@ -96,13 +96,13 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
           </div>
         </div>
       </div>
-      <h1
+      <h2
         aria-live="polite"
-        className="mint-h1 margin-top-7 margin-bottom-1 font-body-xl"
+        className="mint-h1 margin-top-7 margin-bottom-1"
         tabIndex={-1}
       >
         Steps involved in the process
-      </h1>
+      </h2>
       <p
         className="font-body-lg margin-y-0"
       >
