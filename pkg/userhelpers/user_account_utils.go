@@ -26,9 +26,15 @@ type OktaAccountInfo struct {
 	ZoneInfo          string `json:"zoneinfo"`
 }
 
+// AccountInfo represents information needed to make a UserAccount, independent of the source of the information
+type AccountInfo OktaAccountInfo
+
+// GetAccountInfoFunc represents a type of function which takes a context and username and returns AccountInfo
+type GetAccountInfoFunc func(ctx context.Context, username string) (*AccountInfo, error)
+
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
 func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username string, hasLoggedIn bool,
-	isMacUser bool, getAccountInformation func(ctx context.Context, username string) (*OktaAccountInfo, error)) (*authentication.UserAccount, error) {
+	isMacUser bool, getAccountInformation func(ctx context.Context, username string) (*AccountInfo, error)) (*authentication.UserAccount, error) {
 	userAccount, accErr := store.UserAccountGetByUsername(username)
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
@@ -69,23 +75,23 @@ func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username 
 	return updatedAccount, nil
 }
 
-// GetAccountInformationWrapperFunction returns a function that returns *OktaAccountInfo with the input of a function that returns UserInfo
-func GetAccountInformationWrapperFunction(getAccountInformation func(ctx context.Context, username string) (*models.UserInfo, error)) func(ctx context.Context, username string) (*OktaAccountInfo, error) {
+// GetUserInfoAccountInformationWrapperFunction returns a function that returns *AccountInfo with the input of a function that returns UserInfo
+func GetUserInfoAccountInformationWrapperFunction(getAccountInformation func(ctx context.Context, username string) (*models.UserInfo, error)) func(ctx context.Context, username string) (*AccountInfo, error) {
 
-	wrapperFunc := func(ctx context.Context, username string) (*OktaAccountInfo, error) {
-		return GetAccountInformationWrapper(ctx, username, getAccountInformation)
+	wrapperFunc := func(ctx context.Context, username string) (*AccountInfo, error) {
+		return GetUserInfoAccountInformationWrapper(ctx, username, getAccountInformation)
 	}
 	return wrapperFunc
 }
 
-// GetAccountInformationWrapper this funtion appends models.UserInfo with needed account info fields as UNKNOWN
-func GetAccountInformationWrapper(ctx context.Context, username string, getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*OktaAccountInfo, error) {
+// GetUserInfoAccountInformationWrapper this function appends models.UserInfo with needed account info fields as UNKNOWN
+func GetUserInfoAccountInformationWrapper(ctx context.Context, username string, getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*AccountInfo, error) {
 	userinfo, err := getAccountInformation(ctx, username)
 	if err != nil {
 		return nil, err
 	}
 
-	accountInfo := &OktaAccountInfo{}
+	accountInfo := &AccountInfo{}
 	accountInfo.Name = userinfo.CommonName
 	accountInfo.Locale = "UNKNOWN"
 	accountInfo.Email = userinfo.Email.String()
@@ -97,8 +103,35 @@ func GetAccountInformationWrapper(ctx context.Context, username string, getAccou
 	return accountInfo, nil
 }
 
-// GetUserInfoFromOkta uses the Okta endpoint to retun OktaAccountInfo
-func GetUserInfoFromOkta(ctx context.Context, _ string) (*OktaAccountInfo, error) {
+// GetOktaAccountInfoWrapperFunction returns a function that returns *AccountInfo with the input of a function that returns OktaAccountInfo
+func GetOktaAccountInfoWrapperFunction(getAccountInformation func(ctx context.Context, username string) (*OktaAccountInfo, error)) func(ctx context.Context, username string) (*AccountInfo, error) {
+	wrapperFunc := func(ctx context.Context, username string) (*AccountInfo, error) {
+		return GetOktaAccountInfoWrapper(ctx, username, getAccountInformation)
+	}
+	return wrapperFunc
+}
+
+// GetOktaAccountInfoWrapper converts a returns OktaAccountInformation converted to AccountInformation
+func GetOktaAccountInfoWrapper(ctx context.Context, username string, getAccountInformation func(context.Context, string) (*OktaAccountInfo, error)) (*AccountInfo, error) {
+	userinfo, err := getAccountInformation(ctx, username)
+	if err != nil {
+		return nil, err
+	}
+
+	accountInfo := &AccountInfo{}
+	accountInfo.Name = userinfo.Name
+	accountInfo.Locale = userinfo.Locale
+	accountInfo.Email = userinfo.Email
+	accountInfo.PreferredUsername = userinfo.PreferredUsername
+	accountInfo.GivenName = userinfo.GivenName
+	accountInfo.FamilyName = userinfo.FamilyName
+	accountInfo.ZoneInfo = userinfo.ZoneInfo
+
+	return accountInfo, nil
+}
+
+// GetOktaAccountInfo uses the Okta endpoint to retun OktaAccountInfo
+func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error) {
 	userEndpoint := "/v1/userinfo" //TODO: it would be better to actually get the endpoint from the token, but not currently given to the front end
 	authPrefix := "Bearer "
 	enhancedJWT := appcontext.EnhancedJWT(ctx)

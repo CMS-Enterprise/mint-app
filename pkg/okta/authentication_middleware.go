@@ -163,7 +163,7 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 		euaID,
 		true,
 		jcMAC,
-		userhelpers.GetUserInfoFromOkta,
+		userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetOktaAccountInfo),
 	) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err

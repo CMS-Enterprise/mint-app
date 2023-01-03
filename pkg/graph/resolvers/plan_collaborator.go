@@ -49,7 +49,7 @@ func CreatePlanCollaborator(
 	}
 
 	isMacUser := false
-	_, err = userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, userhelpers.GetAccountInformationWrapperFunction(getAccountInformation))
+	_, err = userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, userhelpers.GetUserInfoAccountInformationWrapperFunction(getAccountInformation))
 	if err != nil {
 		return retCollaborator, nil, err
 	}

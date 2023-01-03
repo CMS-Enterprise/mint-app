@@ -94,7 +94,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 
 func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 
-	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), s.store, "EASI", true, false, userhelpers.GetUserInfoFromOktaLocal)
+	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), s.store, "EASI", true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	s.NoError(err)
 

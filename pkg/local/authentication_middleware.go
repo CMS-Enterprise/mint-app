@@ -81,7 +81,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
 	}
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetUserInfoFromOktaLocal)
+	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 	if err != nil {
 		return nil, err
 	}

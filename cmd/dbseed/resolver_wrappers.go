@@ -234,7 +234,7 @@ func addPlanDocumentSolutionLinks(
 
 func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, userName, true, false, userhelpers.GetUserInfoFromOktaLocal)
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
