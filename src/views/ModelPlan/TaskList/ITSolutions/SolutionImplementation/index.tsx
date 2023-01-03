@@ -5,7 +5,7 @@ Displays relevant operational need question and answers
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
@@ -75,6 +75,12 @@ const SolutionImplementation = ({
     modelID: string;
     operationalNeedID: string;
     solutionId: string;
+  }>();
+
+  const {
+    state: { fromSolutionDetails }
+  } = useLocation<{
+    fromSolutionDetails: boolean;
   }>();
 
   const history = useHistory();
@@ -206,40 +212,70 @@ const SolutionImplementation = ({
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {isUpdatingStatus ? t('updateStatus') : t('selectSolution')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      {fromSolutionDetails ? (
+        <BreadcrumbBar variant="wrap">
+          <Breadcrumb>
+            <BreadcrumbLink asCustom={UswdsReactLink} to="/">
+              <span>{h('home')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+          <Breadcrumb>
+            <BreadcrumbLink
+              asCustom={UswdsReactLink}
+              to={`/models/${modelID}/task-list/`}
+            >
+              <span>{h('tasklistBreadcrumb')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+          <Breadcrumb>
+            <BreadcrumbLink
+              asCustom={UswdsReactLink}
+              to={`/models/${modelID}/task-list/it-solutions`}
+            >
+              <span>{t('breadcrumb')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+          <Breadcrumb>
+            <BreadcrumbLink
+              asCustom={UswdsReactLink}
+              to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+            >
+              <span>{t('solutionDetails')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+
+          <Breadcrumb current>
+            {isUpdatingStatus ? t('updateStatus') : t('selectSolution')}
+          </Breadcrumb>
+        </BreadcrumbBar>
+      ) : (
+        <BreadcrumbBar variant="wrap">
+          <Breadcrumb>
+            <BreadcrumbLink asCustom={UswdsReactLink} to="/">
+              <span>{h('home')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+          <Breadcrumb>
+            <BreadcrumbLink
+              asCustom={UswdsReactLink}
+              to={`/models/${modelID}/task-list/`}
+            >
+              <span>{h('tasklistBreadcrumb')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+          <Breadcrumb>
+            <BreadcrumbLink
+              asCustom={UswdsReactLink}
+              to={`/models/${modelID}/task-list/it-solutions`}
+            >
+              <span>{t('breadcrumb')}</span>
+            </BreadcrumbLink>
+          </Breadcrumb>
+          <Breadcrumb current>
+            {isUpdatingStatus ? t('updateStatus') : t('selectSolution')}
+          </Breadcrumb>
+        </BreadcrumbBar>
+      )}
 
       {mutationError && (
         <Alert type="error" slim>
@@ -548,7 +584,7 @@ const SolutionImplementation = ({
                               className="margin-right-1"
                               aria-hidden
                             />
-                            {isUpdatingStatus
+                            {fromSolutionDetails
                               ? t('dontAddandReturnToSolutionDetails')
                               : t('dontAdd')}
                           </Button>
