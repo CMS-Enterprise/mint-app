@@ -3,7 +3,7 @@
 exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="grid-container padding-3 bg-base-lightest"
+    class="grid-container padding-3 bg-base-lightest maxw-none"
     data-testid="gridContainer"
   >
     <div

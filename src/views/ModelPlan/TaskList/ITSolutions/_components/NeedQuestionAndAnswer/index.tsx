@@ -202,7 +202,7 @@ const NeedQuestionAndAnswer = ({
 
   return (
     <GridContainer
-      className={classNames('padding-3 bg-base-lightest', className)}
+      className={classNames('padding-3 bg-base-lightest maxw-none', className)}
     >
       <Grid row>
         <Grid desktop={{ col: expanded ? 6 : 12 }}>

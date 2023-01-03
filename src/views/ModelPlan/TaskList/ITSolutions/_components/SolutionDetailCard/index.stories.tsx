@@ -1,13 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import { ComponentMeta } from '@storybook/react';
 
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'types/graphql-global-types';
-import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import needQuestionAndAnswerMock from '../NeedQuestionAndAnswer/mocks';
 
@@ -31,33 +30,34 @@ const solution: GetOperationalSolutionType = {
   mustStartDts: null
 };
 
-describe('SolutionDetailsCard', () => {
-  it('matches snapshot', async () => {
-    const { asFragment, getByText } = render(
+export default {
+  title: 'Operational Solution Detail Card',
+  component: SolutionDetailCard,
+  decorators: [
+    Story => (
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-          <VerboseMockedProvider
-            mocks={needQuestionAndAnswerMock}
-            addTypename={false}
-          >
-            <SolutionDetailCard
-              solution={solution}
-              modelID={modelID}
-              operationalNeedID={operationalNeedID}
-            />
-          </VerboseMockedProvider>
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
+          <Story />
         </Route>
       </MemoryRouter>
-    );
+    )
+  ]
+} as ComponentMeta<typeof SolutionDetailCard>;
 
-    await waitFor(() => {
-      expect(getByText('December 30, 2022')).toBeInTheDocument();
-    });
+export const Default = () => (
+  <SolutionDetailCard
+    solution={solution}
+    modelID={modelID}
+    operationalNeedID={operationalNeedID}
+  />
+);
 
-    expect(asFragment()).toMatchSnapshot();
-  });
-});
+Default.parameters = {
+  apolloClient: {
+    mocks: needQuestionAndAnswerMock
+  }
+};

@@ -31,10 +31,10 @@ describe('SolutionDetailsCard', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
           <Subtasks subtasks={subtasks} />
         </Route>
       </MemoryRouter>
@@ -55,10 +55,10 @@ describe('SolutionDetailsCard', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
           <Subtasks subtasks={[]} />
         </Route>
       </MemoryRouter>
