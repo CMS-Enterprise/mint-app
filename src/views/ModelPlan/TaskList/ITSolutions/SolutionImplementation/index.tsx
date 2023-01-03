@@ -238,7 +238,7 @@ const SolutionImplementation = ({
           <Breadcrumb>
             <BreadcrumbLink
               asCustom={UswdsReactLink}
-              to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0].id}/solution-details`}
+              to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`}
             >
               <span>{t('solutionDetails')}</span>
             </BreadcrumbLink>
