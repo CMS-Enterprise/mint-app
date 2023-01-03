@@ -32,7 +32,7 @@ const solution: GetOperationalSolutionType = {
 };
 
 describe('SolutionDetailsCard', () => {
-  xit('matches snapshot', async () => {
+  it('matches snapshot', async () => {
     const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
