@@ -98,7 +98,7 @@ func GetAccountInformationWrapper(ctx context.Context, username string, getAccou
 }
 
 // GetUserInfoFromOkta uses the Okta endpoint to retun OktaAccountInfo
-func GetUserInfoFromOkta(ctx context.Context, username string) (*OktaAccountInfo, error) {
+func GetUserInfoFromOkta(ctx context.Context, _ string) (*OktaAccountInfo, error) {
 	userEndpoint := "/v1/userinfo" //TODO: it would be better to actually get the endpoint from the token, but not currently given to the front end
 	authPrefix := "Bearer "
 	enhancedJWT := appcontext.EnhancedJWT(ctx)
