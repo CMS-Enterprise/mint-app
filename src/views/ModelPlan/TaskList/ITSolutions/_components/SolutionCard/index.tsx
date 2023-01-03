@@ -56,10 +56,13 @@ const SolutionCard = ({
   };
 
   return (
-    <CardGroup className="flex-column">
+    <CardGroup className="flex-column flex-no-wrap">
       <Card className={classNames('solution-card', { shadow }, className)}>
         <div className="padding-3">
-          <h3 className="margin-bottom-2 margin-top-0 solutions-checkbox__header ">
+          <h3
+            className="margin-bottom-2 margin-top-0 solutions-checkbox__header"
+            style={{ wordBreak: 'break-word' }}
+          >
             {solution.nameOther || solution.name}
           </h3>
 
@@ -103,6 +106,7 @@ const SolutionCard = ({
             </Grid>
           )}
 
+          {/* Show 'About Dettails' link if not updating solution details and not a custom solution */}
           {solution.name && (
             <>
               <Divider />
@@ -117,27 +121,34 @@ const SolutionCard = ({
             </>
           )}
 
-          {addingCustom && (
-            <div
-              className="display-flex margin-top-2"
-              data-testid="custom-solution-card"
-            >
-              <UswdsReactLink
-                className="margin-right-2"
-                to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
+          {/* Renders links to either update solution details or remove solution details */}
+          {(addingCustom || !solution.name) && (
+            <>
+              {!addingCustom && <Divider className="margin-top-2" />}
+              <div
+                className="display-flex margin-top-2"
+                data-testid="custom-solution-card"
               >
-                {t('updateTheseDetails')}
-              </UswdsReactLink>
-
-              {(solution.pocName || solution.pocEmail) && (
                 <UswdsReactLink
-                  className="text-red"
-                  to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
+                  className="margin-right-2 display-flex flex-align-center"
+                  to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
                 >
-                  {t('removeTheseDetails')}
+                  {t('updateTheseDetails')}
+                  {!addingCustom && (
+                    <IconArrowForward className="margin-left-1" />
+                  )}
                 </UswdsReactLink>
-              )}
-            </div>
+
+                {addingCustom && (solution.pocName || solution.pocEmail) && (
+                  <UswdsReactLink
+                    className="text-red"
+                    to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
+                  >
+                    {t('removeTheseDetails')}
+                  </UswdsReactLink>
+                )}
+              </div>
+            </>
           )}
         </div>
       </Card>

@@ -258,7 +258,9 @@ const operationsEvaluationAndLearning = {
   identifyAlternative: 'Identify and alternative iterations of the model.',
   episodeInitiation: 'Episode initiation and termination criteria',
   episodeInitiationInfo:
-    '(In ZZZZ this was the receipt of chemo and specific diagnostic codes)'
+    '(In ZZZZ this was the receipt of chemo and specific diagnostic codes)',
+  appealsWarning:
+    'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.'
 };
 
 export default operationsEvaluationAndLearning;
