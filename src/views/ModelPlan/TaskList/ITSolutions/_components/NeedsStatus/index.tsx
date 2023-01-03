@@ -24,7 +24,7 @@ const OperationalNeedsStatusTag = ({
     case OperationalNeedStatus.NOT_NEEDED:
     case OpSolutionStatus.NOT_STARTED:
       return (
-        <Tag className="line-height-body-1 text-bold bg-white border-2px text-base">
+        <Tag className="line-height-body-1 text-bold bg-transparent border-2px text-base">
           {tagText}
         </Tag>
       );

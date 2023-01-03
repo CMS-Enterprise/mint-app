@@ -153,6 +153,7 @@
     "regenerator-runtime": "^0.13.9",
     "sass-resources-loader": "^2.1.1",
     "start-server-and-test": "^1.11.0",
+    "storybook-addon-apollo-client": "^4.0.13",
     "text-encoding": "^0.7.0",
     "ts-loader": "^7.0.5"
   },

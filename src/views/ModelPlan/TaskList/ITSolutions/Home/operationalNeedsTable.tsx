@@ -58,9 +58,10 @@ import {
   returnActionText
 } from '../util';
 
-interface GetOperationalNeedsTableType
+export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
   status: OperationalNeedsSolutionsStatus;
+  needID: string;
 }
 
 type OperationalNeedsTableProps = {

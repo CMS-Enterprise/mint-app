@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -436,6 +437,7 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-appeals">
                     {t('participantAppeal')}
                   </Label>
+
                   {itSolutionsStarted && (
                     <ITToolsWarning
                       id="ops-eval-and-learning-appeal-performance-warning"
@@ -444,8 +446,14 @@ const Performance = () => {
                           `/models/${modelID}/task-list/it-solutions`
                         )
                       }
+                      className="margin-top-2"
                     />
                   )}
+
+                  <Alert slim type="info">
+                    {t('appealsWarning')}
+                  </Alert>
+
                   <Label
                     htmlFor="ops-eval-and-learning-appeal-performance"
                     className="text-normal margin-top-2"
