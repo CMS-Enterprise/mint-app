@@ -208,7 +208,7 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               style="padding-left: 0px;"
             >
               <span
-                class="mint-tag line-height-body-1 text-bold bg-white border-2px text-base"
+                class="mint-tag line-height-body-1 text-bold bg-transparent border-2px text-base"
                 data-testid="tag"
               >
                 Not answered

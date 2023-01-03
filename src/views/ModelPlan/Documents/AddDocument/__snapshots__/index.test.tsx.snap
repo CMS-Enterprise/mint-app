@@ -351,9 +351,10 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
         <div
           class="display-block"
         >
-          <a
-            class="usa-link display-inline-flex flex-align-center margin-y-3"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
+          <button
+            class="usa-button display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -374,7 +375,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               />
             </svg>
             Don’t upload and return to previous page
-          </a>
+          </button>
         </div>
       </div>
     </div>
