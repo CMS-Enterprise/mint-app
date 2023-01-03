@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -39,7 +40,7 @@ func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username stri
 }
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, suite.stubFetchUserInfo)
+	mp, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	return mp
 }
@@ -117,7 +118,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
-		suite.stubFetchUserInfo,
+		userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return collaborator

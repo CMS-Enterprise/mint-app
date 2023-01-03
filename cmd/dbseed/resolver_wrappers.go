@@ -28,7 +28,7 @@ import (
 func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string, euaID string) *models.ModelPlan {
 
 	princ := getTestPrincipal(store, euaID)
-	plan, err := resolvers.ModelPlanCreate(context.Background(), logger, modelName, store, princ, stubFetchUserInfo)
+	plan, err := resolvers.ModelPlanCreate(context.Background(), logger, modelName, store, princ, userhelpers.GetUserInfoAccountInformationWrapperFunction(stubFetchUserInfo))
 	if err != nil {
 		panic(err)
 	}
@@ -97,7 +97,7 @@ func addPlanCollaborator(
 		princ,
 		store,
 		true,
-		stubFetchUserInfo,
+		userhelpers.GetUserInfoAccountInformationWrapperFunction(stubFetchUserInfo),
 	)
 	if err != nil {
 		panic(err)

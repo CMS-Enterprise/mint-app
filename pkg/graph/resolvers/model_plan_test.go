@@ -7,11 +7,12 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, suite.stubFetchUserInfo)
+	result, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo))
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)

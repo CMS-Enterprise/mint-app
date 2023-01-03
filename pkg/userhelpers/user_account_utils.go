@@ -32,9 +32,15 @@ type AccountInfo OktaAccountInfo
 // GetAccountInfoFunc represents a type of function which takes a context and username and returns AccountInfo
 type GetAccountInfoFunc func(ctx context.Context, username string) (*AccountInfo, error)
 
+// GetOktaAccountInfoFunc represents a type of function which takes a context and username and returns OktaAccountInfo
+type GetOktaAccountInfoFunc func(ctx context.Context, username string) (*OktaAccountInfo, error)
+
+// GetUserInfoFunc represents a type of function which takes a context and username and returns UserInfo
+type GetUserInfoFunc func(ctx context.Context, username string) (*models.UserInfo, error)
+
 // GetOrCreateUserAccount will return an account if it exists, or create and return a new one if not
 func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username string, hasLoggedIn bool,
-	isMacUser bool, getAccountInformation func(ctx context.Context, username string) (*AccountInfo, error)) (*authentication.UserAccount, error) {
+	isMacUser bool, getAccountInformation GetAccountInfoFunc) (*authentication.UserAccount, error) {
 	userAccount, accErr := store.UserAccountGetByUsername(username)
 	if accErr != nil {
 		return nil, errors.New("failed to get user information from the database")
@@ -76,7 +82,7 @@ func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username 
 }
 
 // GetUserInfoAccountInformationWrapperFunction returns a function that returns *AccountInfo with the input of a function that returns UserInfo
-func GetUserInfoAccountInformationWrapperFunction(getAccountInformation func(ctx context.Context, username string) (*models.UserInfo, error)) func(ctx context.Context, username string) (*AccountInfo, error) {
+func GetUserInfoAccountInformationWrapperFunction(getAccountInformation GetUserInfoFunc) GetAccountInfoFunc {
 
 	wrapperFunc := func(ctx context.Context, username string) (*AccountInfo, error) {
 		return GetUserInfoAccountInformationWrapper(ctx, username, getAccountInformation)
@@ -85,7 +91,7 @@ func GetUserInfoAccountInformationWrapperFunction(getAccountInformation func(ctx
 }
 
 // GetUserInfoAccountInformationWrapper this function appends models.UserInfo with needed account info fields as UNKNOWN
-func GetUserInfoAccountInformationWrapper(ctx context.Context, username string, getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*AccountInfo, error) {
+func GetUserInfoAccountInformationWrapper(ctx context.Context, username string, getAccountInformation GetUserInfoFunc) (*AccountInfo, error) {
 	userinfo, err := getAccountInformation(ctx, username)
 	if err != nil {
 		return nil, err
@@ -104,7 +110,7 @@ func GetUserInfoAccountInformationWrapper(ctx context.Context, username string, 
 }
 
 // GetOktaAccountInfoWrapperFunction returns a function that returns *AccountInfo with the input of a function that returns OktaAccountInfo
-func GetOktaAccountInfoWrapperFunction(getAccountInformation func(ctx context.Context, username string) (*OktaAccountInfo, error)) func(ctx context.Context, username string) (*AccountInfo, error) {
+func GetOktaAccountInfoWrapperFunction(getAccountInformation GetOktaAccountInfoFunc) GetAccountInfoFunc {
 	wrapperFunc := func(ctx context.Context, username string) (*AccountInfo, error) {
 		return GetOktaAccountInfoWrapper(ctx, username, getAccountInformation)
 	}
@@ -112,7 +118,7 @@ func GetOktaAccountInfoWrapperFunction(getAccountInformation func(ctx context.Co
 }
 
 // GetOktaAccountInfoWrapper converts a returns OktaAccountInformation converted to AccountInformation
-func GetOktaAccountInfoWrapper(ctx context.Context, username string, getAccountInformation func(context.Context, string) (*OktaAccountInfo, error)) (*AccountInfo, error) {
+func GetOktaAccountInfoWrapper(ctx context.Context, username string, getAccountInformation GetOktaAccountInfoFunc) (*AccountInfo, error) {
 	userinfo, err := getAccountInformation(ctx, username)
 	if err != nil {
 		return nil, err

@@ -15,6 +15,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // WorkerSuite is the testify suite for the worker package
@@ -45,7 +46,7 @@ func (suite *WorkerSuite) SetupTest() {
 }
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := resolvers.ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, suite.stubFetchUserInfo)
+	mp, err := resolvers.ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	return mp
 }
@@ -78,7 +79,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
-		suite.stubFetchUserInfo,
+		userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return collaborator

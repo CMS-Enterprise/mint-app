@@ -31,7 +31,7 @@ func CreatePlanCollaborator(
 	principal authentication.Principal,
 	store *storage.Store,
 	checkAccess bool,
-	getAccountInformation func(context.Context, string) (*models.UserInfo, error)) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
 	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
 	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
@@ -49,7 +49,7 @@ func CreatePlanCollaborator(
 	}
 
 	isMacUser := false
-	_, err = userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, userhelpers.GetUserInfoAccountInformationWrapperFunction(getAccountInformation))
+	_, err = userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, getAccountInformation)
 	if err != nil {
 		return retCollaborator, nil, err
 	}

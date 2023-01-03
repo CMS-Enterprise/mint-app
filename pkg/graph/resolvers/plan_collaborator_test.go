@@ -6,6 +6,7 @@ import (
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -69,7 +70,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
-		suite.stubFetchUserInfo,
+		userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo),
 	)
 	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername(collaboratorInput.EuaUserID)
 	suite.NoError(uAccountErr)
