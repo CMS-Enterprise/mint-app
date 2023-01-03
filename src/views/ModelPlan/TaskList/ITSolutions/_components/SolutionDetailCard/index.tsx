@@ -100,10 +100,10 @@ const SolutionDetailCard = ({
               id="add-solution-not-listed"
               className="usa-button usa-button--outline"
               onClick={() => {
-                history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
-                  { fromSolutionDetails: true }
-                );
+                history.push({
+                  pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
+                  state: { fromSolutionDetails: true }
+                });
               }}
             >
               {t('updateStatusAndTiming')}
