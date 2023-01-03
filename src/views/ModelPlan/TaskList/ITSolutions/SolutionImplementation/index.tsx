@@ -200,6 +200,16 @@ const SolutionImplementation = ({
     return <NotFound />;
   }
 
+  const renderCancelCopy = () => {
+    if (isUpdatingStatus && fromSolutionDetails) {
+      return t('dontUpdateandReturnToSolutionDetails');
+    }
+    if (isUpdatingStatus) {
+      return t('dontUpdateandReturnToTracker');
+    }
+    return t('dontAdd');
+  };
+
   return (
     <>
       {fromSolutionDetails ? (
@@ -471,9 +481,7 @@ const SolutionImplementation = ({
                               className="margin-right-1"
                               aria-hidden
                             />
-                            {fromSolutionDetails
-                              ? t('dontAddandReturnToSolutionDetails')
-                              : t('dontAdd')}
+                            {renderCancelCopy()}
                           </Button>
                         </Fieldset>
                       </Form>
