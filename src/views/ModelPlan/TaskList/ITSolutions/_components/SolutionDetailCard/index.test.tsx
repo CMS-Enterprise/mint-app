@@ -55,6 +55,9 @@ describe('SolutionDetailsCard', () => {
     );
 
     await waitFor(() => {
+      expect(
+        getByText('Obtain an application support contractor')
+      ).toBeInTheDocument();
       expect(getByText('December 30, 2022')).toBeInTheDocument();
     });
 

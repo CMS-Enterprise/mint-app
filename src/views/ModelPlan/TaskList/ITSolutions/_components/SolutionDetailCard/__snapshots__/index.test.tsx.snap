@@ -24,7 +24,9 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
           </p>
           <p
             class="margin-top-0 font-body-sm margin-bottom-0"
-          />
+          >
+            Obtain an application support contractor
+          </p>
         </div>
         <div
           class="desktop:grid-col-6"
