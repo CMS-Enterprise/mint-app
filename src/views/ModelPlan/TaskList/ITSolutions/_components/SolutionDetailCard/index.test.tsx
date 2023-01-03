@@ -48,6 +48,7 @@ describe('SolutionDetailsCard', () => {
               solution={solution}
               modelID={modelID}
               operationalNeedID={operationalNeedID}
+              operationalSolutionID={operationalSolutionID}
             />
           </VerboseMockedProvider>
         </Route>
