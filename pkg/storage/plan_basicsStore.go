@@ -25,7 +25,7 @@ var planBasicsGetByIDSQL string
 //go:embed SQL/plan_basics/get_by_model_plan_id.sql
 var planBasicsGetByModelPlanIDSQL string
 
-//go:embed SQL/plan_basics_get_by_model_plan_id_LOADER.sql
+//go:embed SQL/plan_basics/get_by_model_plan_id_LOADER.sql
 var planBasicsGetByModelPlanIDLoaderSQL string
 
 // PlanBasicsCreate creates a new plan basics

@@ -38,6 +38,7 @@ require github.com/xhit/go-simple-mail/v2 v2.12.0
 require github.com/contribsys/faktory v1.6.0
 
 require (
+	github.com/graph-gophers/dataloader v5.0.0+incompatible // indirect
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 	gopkg.in/ghodss/yaml.v1 v1.0.0 // indirect
 )
