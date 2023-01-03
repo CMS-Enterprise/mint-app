@@ -37,6 +37,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
   const editable: boolean =
     pathname.split('/')[3] === 'task-list' ||
+    pathname.split('/')[3] === 'documents' ||
     pathname.split('/')[3] === 'collaborators';
 
   const { data, loading } = useQuery<

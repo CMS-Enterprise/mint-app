@@ -1,11 +1,12 @@
-describe('The Model Plan Ops Eval and Learning Form', () => {
+describe('The Model Plan IT solutions tracker', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
-  it('completes a Model Plan Ops Eval and Learning form', () => {
+  it('completes a Model Plan IT solutions tracker', () => {
     cy.clickPlanTableByName('Empty Plan');
 
+    // Enter into op eval and learning and answer helpdesk op needs question
     cy.get('[data-testid="ops-eval-and-learning"]').click();
 
     cy.wait(500);
@@ -22,6 +23,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.wait(500);
 
+    // Click into the it solutions tracker for helpdesk op needs
     cy.get('[data-testid="needs-table"] tbody tr')
       .should('have.length', 1)
       .first()
@@ -31,6 +33,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
         cy.contains('Select a solution').click();
       });
 
+    // Toggle the NeedsQuestionsAndAnswer component to see previously answered question
     cy.get('[data-testid="toggle-need-answer"]').click();
 
     cy.get('[data-testid="need-question"]').contains(
@@ -39,13 +42,16 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.get('[data-testid="true"]').contains('Yes');
 
+    // Click to add a solution that is not a default
     cy.get('#add-solution-not-listed').click();
 
+    // Selecting other to adda custom solution
     cy.get('#it-solutions-key').select('Other');
     cy.get('#it-solutions-key').contains('Other');
 
     cy.get('#add-custom-solution-button').click();
 
+    // Fill out other custom solution form
     cy.get('#it-solution-custom-name-other')
       .type('My custom solution')
       .should('have.value', 'My custom solution');
@@ -58,20 +64,28 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .type('j.doe@oddball.io')
       .should('have.value', 'j.doe@oddball.io');
 
+    // Submitting the custom solution
     cy.get('#submit-custom-solution').click();
 
     cy.wait(500);
 
+    // Adding the custom solution
     cy.get('#add-solution-details-button').click();
 
     cy.wait(500);
 
+    // Adding a few other solutions
     cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
+
+    cy.get('#it-solutions-through_a_contractor')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.contains('button', 'Continue').click();
 
     cy.wait(500);
 
+    // Filling out solutions details
     cy.get('#solution-must-start-CBOSC')
       .type('12/10/2030')
       .should('have.value', '12/10/2030');
@@ -90,20 +104,45 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.get('#submit-solutions').click();
 
+    // Verifying solutions are added on the IT solutions tracker
     cy.get('[data-testid="needs-table"] tbody tr')
-      .should('have.length', 2)
+      .should('have.length', 3)
       .first()
       .within(() => {
         cy.contains('Helpdesk support');
         cy.contains('My custom solution');
       });
 
+    // Click to view solution details view
     cy.get('[data-testid="needs-table"] tbody tr')
-      .should('have.length', 2)
-      .eq(1)
+      .should('have.length', 3)
+      .eq(2)
       .within(() => {
         cy.contains('Helpdesk support');
         cy.contains('Consolidated Business Operations Support Center (CBOSC)');
+        cy.contains('View details').click();
       });
+
+    // Click button to update existing solutions for the relevant need
+    cy.get('[data-testid="update-solutions-link"]').click();
+
+    cy.get('[data-testid="alert"]').contains(
+      'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.'
+    );
+
+    // Removing a solution
+    cy.get('#it-solutions-through_a_contractor')
+      .uncheck({ force: true })
+      .should('not.be.checked');
+
+    cy.contains('button', 'Continue').click();
+
+    cy.wait(500);
+
+    cy.get('[data-testid="alert"]').contains(
+      'Saving these selections will delete the Through a contractor solution page/s that is associated with this operational need.'
+    );
+
+    cy.get('#submit-solutions').click();
   });
 });

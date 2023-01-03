@@ -3,7 +3,7 @@
 exports[`IT Solutions SolutionCard matches snapshot 1`] = `
 <DocumentFragment>
   <ul
-    class="usa-card-group flex-column"
+    class="usa-card-group flex-column flex-no-wrap"
     data-testid="CardGroup"
   >
     <li
@@ -17,7 +17,8 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
           class="padding-3"
         >
           <h3
-            class="margin-bottom-2 margin-top-0 solutions-checkbox__header "
+            class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
+            style="word-break: break-word;"
           >
             Internal staff
           </h3>

@@ -11,13 +11,16 @@ export default gql`
       createdDts
       modifiedDts
       basics {
+        id
         clearanceStarts
         applicationsStart @include(if: $isMAC)
       }
       generalCharacteristics @include(if: $isMAC) {
+        id
         keyCharacteristics
       }
       payments @include(if: $isMAC) {
+        id
         paymentStartDate
       }
       collaborators {
@@ -26,8 +29,10 @@ export default gql`
         teamRole
       }
       discussions {
+        id
         status
         replies {
+          id
           resolution
         }
       }

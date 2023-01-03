@@ -10,6 +10,9 @@ export default gql`
       nameOther
       pocName
       pocEmail
+      status
+      mustFinishDts
+      mustStartDts
     }
   }
 `;

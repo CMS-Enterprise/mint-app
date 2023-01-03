@@ -8,6 +8,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-controls',
+    "storybook-addon-apollo-client",
   ],
   webpackFinal: (config) => {
     config.resolve.modules = [

@@ -1,16 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
   Grid,
   GridContainer,
   IconArrowBack
 } from '@trussworks/react-uswds';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
@@ -20,6 +20,8 @@ const AddDocument = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
   const { modelID } = useParams<{ modelID: string }>();
+
+  const history = useHistory();
 
   return (
     <MainContent data-testid="add-document">
@@ -61,13 +63,14 @@ const AddDocument = () => {
           <DocumentUpload />
 
           <div className="display-block">
-            <UswdsReactLink
-              to={`/models/${modelID}/documents`}
-              className="display-inline-flex flex-align-center margin-y-3"
+            <Button
+              type="button"
+              onClick={() => history.goBack()}
+              className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />
               {t('dontUpload')}
-            </UswdsReactLink>
+            </Button>
           </div>
         </Grid>
       </GridContainer>

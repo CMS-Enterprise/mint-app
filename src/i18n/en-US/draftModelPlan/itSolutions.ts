@@ -64,6 +64,7 @@ const itSolutions = {
     viewDetails: 'View details',
     updateNeed: 'Update operational need',
     selectSolution: 'Select a solution',
+
     noSolutionSelected: 'No solution selected',
     error: {
       heading: 'There is a problem',
@@ -83,6 +84,7 @@ const itSolutions = {
     completed: 'Completed',
     atRisk: 'At risk'
   },
+
   warningRedirect:
     'Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  ',
   goToITTools: 'Go to IT solutions tracker.',
@@ -93,6 +95,9 @@ const itSolutions = {
     button: 'Add an operational need or IT solution'
   },
   selectSolution: 'Select a solution',
+  updateSolutions: 'Update solution selections',
+  updateSolutionsInfo:
+    'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.',
   selectInfo:
     'Select from common solutions to solve your operational need or add another solution not listed.',
   operationalNeed: 'Operational need',
@@ -107,6 +112,7 @@ const itSolutions = {
   selectAnother: 'Select another solution not listed',
   continue: 'Continue',
   dontAdd: 'Don’t add solutions and return to tracker',
+  dontUpdate: 'Don’t update solutions and return to tracker',
   helpChoosing: 'Need help choosing a solution?',
   helpfulLinks: 'Helpful links',
   availableSolutions: 'Available operational solutions (opens in a new tab)',
@@ -132,7 +138,10 @@ const itSolutions = {
     'There was an error adding your solution details. Please try again.',
   updateError:
     'There was an error updating your solution details. Please try again.',
+  solutionRemoveWarning:
+    'Saving these selections will delete the {{-solutions}} solution page/s that is associated with this operational need.',
   successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}',
+  successSolutionUpdated: 'Success! Your solution details have been updated.',
   solution: 'Solution',
   saveSolutions: 'Save solutions',
   addImplementationDetails: 'Add solution implementation details',
@@ -141,6 +150,26 @@ const itSolutions = {
   mustStartBy: 'Must start by',
   mustFinishBy: 'Must finish by',
   whatIsStatus: 'What is the status of this solution?',
+  solutionDetails: 'Solution details',
+  solutionDetailsInfo:
+    'Update the implementation status, timing, and add any subtasks and documents to track your progress for this operational solution.',
+  updateSolutionsLink: 'Update solutions for this operational need',
+  notSpecified: 'not specified',
+  updateStatusAndTiming: 'Update status and timing',
+  subtasks: {
+    header: 'Subtasks',
+    todo: 'To do',
+    inProgress: 'In progress',
+    done: 'Done',
+    addSubtasks: 'Add subtasks',
+    manageSubtasks: 'Manage subtasks',
+    noSubtasks: 'No subtasks added yet'
+  },
+  documents: 'Documents',
+  links: {
+    linkDocuments: 'Link existing documents',
+    uploadDocuments: 'Upload a document'
+  },
   updateStatus: 'Update status',
   updateStatusInfo:
     'Update the implementation status and deadline for this solution.',

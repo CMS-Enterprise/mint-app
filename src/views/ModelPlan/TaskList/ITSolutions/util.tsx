@@ -118,7 +118,9 @@ export const returnActionLinks = (
       >
         {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
       </UswdsReactLink>
-      <UswdsReactLink to="/">
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+      >
         {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
       </UswdsReactLink>
     </>
@@ -138,6 +140,9 @@ export const returnActionLinks = (
     case OpSolutionStatus.ONBOARDING:
       return solutionActionLinks;
     case OpSolutionStatus.NOT_STARTED:
+      if (operationalNeed.nameOther) {
+        return solutionActionLinks;
+      }
       return (
         <UswdsReactLink
           to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
