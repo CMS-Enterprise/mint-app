@@ -65,7 +65,10 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { getByText, getAllByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`,
+            state: { fromSolutionDetails: false }
+          }
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -107,7 +110,10 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`,
+            state: { fromSolutionDetails: false }
+          }
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
