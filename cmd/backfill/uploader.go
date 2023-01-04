@@ -57,39 +57,36 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 	fmt.Printf("Uploading model : %q \n", entry.ModelPlan.ModelName)
 
 	userName := entry.ModelPlan.CreatedBy
-	user := u.Backfiller.UDictionary.tryGetUserByName(userName)
+	user := u.Backfiller.UDictionary.tryGetUserByName(userName) //TODO create an account AFTER WE ADD A USER
 	var princ authentication.Principal
-	var userInfo models.UserInfo
 	if userName == "" {
 		userName = "ANON"
 		oktaPrinc := authentication.ApplicationPrincipal{
 			Username:          userName,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
+			UserAccount: &authentication.UserAccount{
+				Username:   &userName,
+				Email:      "unknown@mint.cms.gov",
+				CommonName: userName,
+			},
 		}
 		princ = &oktaPrinc
-		userInfo = models.UserInfo{
-			EuaUserID:  userName,
-			CommonName: userName,
-			Email:      "unknown@mint.cms.gov", //revisit this
-
-		}
 	} else {
 		oktaPrinc := authentication.ApplicationPrincipal{
 			Username:          user.EUAID,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
+			UserAccount: &authentication.UserAccount{
+				Username:   &user.EUAID,
+				Email:      user.Email,
+				CommonName: user.Name,
+			},
 		}
 		princ = &oktaPrinc
-		userInfo = models.UserInfo{
-			EuaUserID:  user.EUAID,
-			CommonName: user.Name,
-			Email:      models.EmailAddress(user.Email), //revisit this, maybe we do some CEDAR or we redo everything? When we parse, should we note everything we need to look up from CEDAR or something?
-
-		}
 	}
 
-	_, uErr := u.uploadModelPlan(entry, princ, userInfo)
+	_, uErr := u.uploadModelPlan(entry, princ)
 	entry.addNonNullUError(uErr)
 
 	if uErr != nil {
@@ -122,7 +119,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 }
 
-func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Principal, userInfo models.UserInfo) (*models.ModelPlan, *UploadError) {
+func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Principal) (*models.ModelPlan, *UploadError) {
 	entry.ModelPlan.CreatedBy = princ.ID()
 
 	if entry.ModelPlan.ModelName == "" {
@@ -130,7 +127,7 @@ func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Pr
 		u.Logger.Error("model name is not defined")
 	}
 
-	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, &userInfo, princ)
+	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, princ)
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "ModelPLan",
@@ -146,6 +143,7 @@ func (u *Uploader) uploadPlanCollaborators(entry *BackfillEntry, princ authentic
 	for i, collab := range entry.Collaborators {
 		var uErr *UploadError
 		collab, uErr = u.uploadPlanCollaborator(entry, princ, collab)
+		// TODO need to add a user account to the DB!!!
 
 		entry.addNonNullUError(uErr)
 		entry.Collaborators[i] = collab //if error, replaced with null..
@@ -156,15 +154,7 @@ func (u *Uploader) uploadPlanCollaborators(entry *BackfillEntry, princ authentic
 
 func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentication.Principal, collab *models.PlanCollaborator) (*models.PlanCollaborator, *UploadError) {
 
-	// input := model.PlanCollaboratorCreateInput{
-	// 	ModelPlanID: collab.ModelPlanID,
-	// 	EuaUserID: collab.EUAUserID,
-	// 	FullName: collab.FullName,
-	// 	TeamRole: collab.TeamRole,
-	// 	Email: collab.Email,
-
-	// }
-	// retCollab, err := resolvers.CreatePlanCollaborator(&u.Logger,nil,nil,) // this resolver does a lot... maybe just skip it for now
+	// TODO need
 	//TODO, update the collabs created by, model plan id etc
 	collab.CreatedBy = entry.ModelPlan.CreatedBy
 	collab.ModelPlanID = entry.ModelPlan.ID
