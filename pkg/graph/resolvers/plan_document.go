@@ -124,3 +124,8 @@ func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, id uuid.U
 	rowsAffected, err := sqlResult.RowsAffected()
 	return int(rowsAffected), err
 }
+
+// PlanDocumentNumLinkedSolutions implements resolver logic to retrieve the number of linked solutions for a document by ID
+func PlanDocumentNumLinkedSolutions(logger *zap.Logger, principal authentication.Principal, store *storage.Store, documentID uuid.UUID) (int, error) {
+	return store.PlanDocumentNumLinkedSolutions(logger, documentID)
+}
