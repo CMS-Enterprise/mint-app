@@ -396,6 +396,7 @@ const SolutionImplementation = ({
 
                                   return (
                                     <Solution
+                                      key={solution.id}
                                       solution={solution}
                                       identifier={identifier}
                                       index={index}
@@ -419,6 +420,7 @@ const SolutionImplementation = ({
 
                                   return (
                                     <Solution
+                                      key={solution.id}
                                       solution={solution}
                                       identifier={identifier}
                                       index={index}
