@@ -485,6 +485,14 @@ func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.Plan
 	return url, nil
 }
 
+// NumLinkedSolutions is the resolver for the numLinkedSolutions field.
+func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
+}
+
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
 func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error) {
 	return obj.ResemblesExistingModelWhich, nil
