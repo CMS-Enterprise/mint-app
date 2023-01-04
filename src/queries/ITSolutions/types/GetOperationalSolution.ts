@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OperationalSolutionKey } from "./../../../types/graphql-global-types";
+import { OperationalSolutionKey, OpSolutionStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOperationalSolution
@@ -18,6 +18,9 @@ export interface GetOperationalSolution_operationalSolution {
   nameOther: string | null;
   pocName: string | null;
   pocEmail: string | null;
+  status: OpSolutionStatus;
+  mustFinishDts: Time | null;
+  mustStartDts: Time | null;
 }
 
 export interface GetOperationalSolution {

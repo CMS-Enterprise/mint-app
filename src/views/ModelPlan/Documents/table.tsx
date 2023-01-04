@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
 import Modal from 'components/Modal';
@@ -35,6 +36,7 @@ type PlanDocumentsTableProps = {
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
   isHelpArticle?: boolean;
+  className?: string;
 };
 
 type DocumentStatusType = 'success' | 'error';
@@ -44,7 +46,8 @@ const PlanDocumentsTable = ({
   modelID,
   setDocumentMessage,
   setDocumentStatus,
-  isHelpArticle
+  isHelpArticle,
+  className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
   const { error, loading, data, refetch: refetchDocuments } = useQuery<
@@ -82,14 +85,16 @@ const PlanDocumentsTable = ({
   }
 
   return (
-    <Table
-      data={documents}
-      hiddenColumns={hiddenColumns}
-      refetch={refetchDocuments}
-      setDocumentMessage={setDocumentMessage}
-      setDocumentStatus={setDocumentStatus}
-      hasEditAccess={hasEditAccess}
-    />
+    <div className={classNames(className)}>
+      <Table
+        data={documents}
+        hiddenColumns={hiddenColumns}
+        refetch={refetchDocuments}
+        setDocumentMessage={setDocumentMessage}
+        setDocumentStatus={setDocumentStatus}
+        hasEditAccess={hasEditAccess}
+      />
+    </div>
   );
 };
 

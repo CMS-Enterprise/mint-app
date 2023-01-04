@@ -141,16 +141,8 @@ func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.Mo
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	principalInfo, err := r.service.FetchUserInfo(ctx, principal.ID())
-	if err != nil { //if can't get user info, use EUAID as commonName
-		tempPrincipalInfo := models.UserInfo{
-			EuaUserID:  principal.ID(),
-			CommonName: principal.ID(),
-		}
-		principalInfo = &tempPrincipalInfo
-	}
 
-	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo, principal)
+	return resolvers.ModelPlanCreate(logger, modelName, r.store, principal)
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.
