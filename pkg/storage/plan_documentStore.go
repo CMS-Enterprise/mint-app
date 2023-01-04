@@ -44,9 +44,6 @@ var planDocumentDeleteByIDSQL string
 //go:embed SQL/plan_document_solution/links_delete_by_document_id.sql
 var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 
-//go:embed SQL/plan_document/num_links_by_document_id.sql
-var planDocumentNumLinkedSolutionsSQL string
-
 // PlanDocumentCreate creates a plan document
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
@@ -290,22 +287,4 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID) (sql.Result
 	}
 
 	return sqlResult, nil
-}
-
-// PlanDocumentNumLinkedSolutions implements store logic to retrieve the number of linked solutions for a document by ID
-func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uuid.UUID) (int, error) {
-	statement, err := s.db.PrepareNamed(planDocumentNumLinkedSolutionsSQL)
-	if err != nil {
-		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
-	}
-
-	result := 0
-	err = statement.Get(&result, map[string]interface{}{
-		"document_id": documentID,
-	})
-	if err != nil {
-		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
-	}
-
-	return result, nil
 }
