@@ -143,7 +143,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return resolvers.ModelPlanCreate(ctx, logger, modelName, r.store, principal, userhelpers.GetUserInfoAccountInformationWrapperFunction(r.service.FetchUserInfo))
+	return resolvers.ModelPlanCreate(ctx, logger, modelName, r.store, principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.
@@ -168,7 +168,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 		principal,
 		r.store,
 		true,
-		userhelpers.GetUserInfoAccountInformationWrapperFunction(r.service.FetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
 	return planCollaborator, err
 }

@@ -70,7 +70,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
-		userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername(collaboratorInput.EuaUserID)
 	suite.NoError(uAccountErr)

@@ -46,7 +46,7 @@ func (suite *WorkerSuite) SetupTest() {
 }
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := resolvers.ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo))
+	mp, err := resolvers.ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	return mp
 }
@@ -79,7 +79,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
-		userhelpers.GetUserInfoAccountInformationWrapperFunction(suite.stubFetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return collaborator

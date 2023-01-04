@@ -81,18 +81,18 @@ func GetOrCreateUserAccount(ctx context.Context, store *storage.Store, username 
 	return updatedAccount, nil
 }
 
-// GetUserInfoAccountInformationWrapperFunction returns a function that returns *AccountInfo with the input of a function that returns UserInfo
-func GetUserInfoAccountInformationWrapperFunction(getAccountInformation GetUserInfoFunc) GetAccountInfoFunc {
+// GetUserInfoAccountInfoWrapperFunc returns a function that returns *AccountInfo with the input of a function that returns UserInfo
+func GetUserInfoAccountInfoWrapperFunc(getUserInfo GetUserInfoFunc) GetAccountInfoFunc {
 
 	wrapperFunc := func(ctx context.Context, username string) (*AccountInfo, error) {
-		return GetUserInfoAccountInformationWrapper(ctx, username, getAccountInformation)
+		return GetUserInfoAccountInfoWrapper(ctx, username, getUserInfo)
 	}
 	return wrapperFunc
 }
 
-// GetUserInfoAccountInformationWrapper this function appends models.UserInfo with needed account info fields as UNKNOWN
-func GetUserInfoAccountInformationWrapper(ctx context.Context, username string, getAccountInformation GetUserInfoFunc) (*AccountInfo, error) {
-	userinfo, err := getAccountInformation(ctx, username)
+// GetUserInfoAccountInfoWrapper this function appends models.UserInfo with needed account info fields as UNKNOWN
+func GetUserInfoAccountInfoWrapper(ctx context.Context, username string, getUserInfo GetUserInfoFunc) (*AccountInfo, error) {
+	userinfo, err := getUserInfo(ctx, username)
 	if err != nil {
 		return nil, err
 	}

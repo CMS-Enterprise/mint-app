@@ -67,7 +67,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		s.testConfigs.Principal,
 		s.testConfigs.Store,
 		false,
-		userhelpers.GetUserInfoAccountInformationWrapperFunction(s.stubFetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
 	)
 	s.NoError(err)
 	mockController.Finish()
