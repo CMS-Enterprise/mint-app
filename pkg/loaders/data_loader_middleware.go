@@ -28,12 +28,11 @@ type Loaders struct {
 // TODO pass the store here? Or ok to get it from routes instead?
 func NewLoaders(store *storage.Store) *Loaders {
 	// define the data loader
-	basicsReader := &BasicsReader{
+	dR := &DataReader{
 		Store: *store,
 	}
 	loaders := &Loaders{
-		// BasicsLoader: dataloader.NewBatchedLoader(basicsReader.GetUsers),
-		BasicsLoader: dataloader.NewBatchedLoader(basicsReader.GetPlanBasics),
+		BasicsLoader: dataloader.NewBatchedLoader(dR.GetPlanBasics),
 	}
 	return loaders
 }
@@ -58,20 +57,20 @@ func For(ctx context.Context) *Loaders {
 	return ctx.Value(loadersKey).(*Loaders)
 }
 
-// BasicsReader reads Users from a database
-type BasicsReader struct {
+// DataReader reads Users from a database
+type DataReader struct {
 	Store storage.Store
 }
 
 // GetPlanBasics uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (br BasicsReader) GetPlanBasics(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func (dr DataReader) GetPlanBasics(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 
 	modelPlanIDs := make([]string, len(keys))
 	for ix, key := range keys {
 		modelPlanIDs[ix] = key.String()
 	}
 	logger := appcontext.ZLogger(ctx)
-	basics, _ := br.Store.PlanBasicsGetByModelPlanIDLOADER(logger, modelPlanIDs) //TODO, should we move some logic there?
+	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, modelPlanIDs) //TODO, should we move some logic there?
 	// basicsByID := map[string]*models.PlanBasics{}
 	// for _, planBasic := range basics {
 
