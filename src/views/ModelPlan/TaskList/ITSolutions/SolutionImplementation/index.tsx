@@ -218,6 +218,10 @@ const SolutionImplementation = ({
     { text: isUpdatingStatus ? t('updateStatus') : t('selectSolution') }
   ];
 
+  const solutionsArray = isUpdatingStatus
+    ? operationalNeed.solutions.filter(solution => solution.id === solutionId)
+    : operationalNeed.solutions;
+
   return (
     <>
       <Breadcrumbs
@@ -335,57 +339,29 @@ const SolutionImplementation = ({
                         }}
                       >
                         <Fieldset disabled={loading}>
-                          {isUpdatingStatus
-                            ? operationalNeed.solutions
-                                .filter(solution => solution.id === solutionId)
-                                .map((solution, index) => {
-                                  const identifier = (
-                                    solution.nameOther ||
-                                    solution.key ||
-                                    ''
-                                  ).replaceAll(' ', '-');
+                          {solutionsArray.map((solution, index) => {
+                            const identifier = (
+                              solution.nameOther ||
+                              solution.key ||
+                              ''
+                            ).replaceAll(' ', '-');
 
-                                  return (
-                                    <Solution
-                                      key={solution.id}
-                                      solution={solution}
-                                      identifier={identifier}
-                                      index={index}
-                                      handleOnBlur={handleOnBlur}
-                                      setFieldValue={setFieldValue}
-                                      isUpdatingStatus={isUpdatingStatus}
-                                      operationalNeed={operationalNeed}
-                                      values={values}
-                                      flatErrors={flatErrors}
-                                      loading={loading}
-                                    />
-                                  );
-                                })
-                            : operationalNeed.solutions.map(
-                                (solution, index) => {
-                                  const identifier = (
-                                    solution.nameOther ||
-                                    solution.key ||
-                                    ''
-                                  ).replaceAll(' ', '-');
-
-                                  return (
-                                    <Solution
-                                      key={solution.id}
-                                      solution={solution}
-                                      identifier={identifier}
-                                      index={index}
-                                      handleOnBlur={handleOnBlur}
-                                      setFieldValue={setFieldValue}
-                                      isUpdatingStatus={isUpdatingStatus}
-                                      operationalNeed={operationalNeed}
-                                      values={values}
-                                      flatErrors={flatErrors}
-                                      loading={loading}
-                                    />
-                                  );
-                                }
-                              )}
+                            return (
+                              <Solution
+                                key={solution.id}
+                                solution={solution}
+                                identifier={identifier}
+                                index={index}
+                                handleOnBlur={handleOnBlur}
+                                setFieldValue={setFieldValue}
+                                isUpdatingStatus={isUpdatingStatus}
+                                operationalNeed={operationalNeed}
+                                values={values}
+                                flatErrors={flatErrors}
+                                loading={loading}
+                              />
+                            );
+                          })}
 
                           {message && (
                             <Alert type="warning" slim className="margin-top-6">

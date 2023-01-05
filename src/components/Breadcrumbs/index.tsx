@@ -7,7 +7,7 @@ import {
 
 import UswdsReactLink from 'components/LinkWrapper';
 
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   items: {
     text: string;
     url?: string;
