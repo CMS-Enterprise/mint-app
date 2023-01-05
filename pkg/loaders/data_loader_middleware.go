@@ -21,7 +21,8 @@ const (
 
 // Loaders wrap your data loaders to inject via middleware
 type Loaders struct {
-	BasicsLoader *dataloader.Loader
+	BasicsLoader          *dataloader.Loader
+	OperationalNeedLoader *dataloader.Loader
 }
 
 // NewLoaders instantiates data loaders for the middleware
@@ -32,7 +33,8 @@ func NewLoaders(store *storage.Store) *Loaders {
 		Store: *store,
 	}
 	loaders := &Loaders{
-		BasicsLoader: dataloader.NewBatchedLoader(dR.GetPlanBasics),
+		BasicsLoader:          dataloader.NewBatchedLoader(dR.GetPlanBasicsByModelPlanID),
+		OperationalNeedLoader: dataloader.NewBatchedLoader(dR.GetOperationalNeedsByModelPlanID),
 	}
 	return loaders
 }
@@ -62,8 +64,8 @@ type DataReader struct {
 	Store storage.Store
 }
 
-// GetPlanBasics uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (dr DataReader) GetPlanBasics(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+// GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
+func (dr DataReader) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 
 	modelPlanIDs := make([]string, len(keys))
 	for ix, key := range keys {
@@ -90,6 +92,38 @@ func (dr DataReader) GetPlanBasics(ctx context.Context, keys dataloader.Keys) []
 			err := fmt.Errorf("plan basic not found for model plan %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}
 		}
+	}
+	return output
+
+}
+
+func stringArrayFromKeys(keys dataloader.Keys) []string {
+	stringArr := make([]string, len(keys))
+	for ix, key := range keys {
+		stringArr[ix] = key.String()
+	}
+	return stringArr
+}
+
+// GetOperationalNeedsByModelPlanID uses a data loader to aggregate SQL calls and return data
+func (dr DataReader) GetOperationalNeedsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+
+	modelPlanIDs := stringArrayFromKeys(keys)
+	logger := appcontext.ZLogger(ctx)
+
+	opNeeds, _ := dr.Store.OperationalNeedCollectionGetByModelPlanIDLOADER(logger, modelPlanIDs)
+
+	// RETURN IN THE SAME ORDER REQUESTED
+	output := make([]*dataloader.Result, len(keys))
+	for index, key := range keys {
+		// needs, ok := lo.Filter(opNeeds, func(opNeed *models.OperationalNeed, index int) bool {
+		// 	return opNeed.ModelPlanID.String() == key.String()
+		// })
+		needs := lo.Filter(opNeeds, func(opNeed *models.OperationalNeed, index int) bool {
+			return opNeed.ModelPlanID.String() == key.String()
+		})
+		output[index] = &dataloader.Result{Data: needs, Error: nil}
+
 	}
 	return output
 

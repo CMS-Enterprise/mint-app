@@ -2,6 +2,7 @@ package storage
 
 import (
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -13,6 +14,9 @@ import (
 
 //go:embed SQL/operational_need/collection_get_by_model_plan_id.sql
 var operationalNeedCollectionByModelPlanIDSQL string
+
+//go:embed SQL/operational_need/collection_get_by_model_plan_id_LOADER.sql
+var operationalNeedCollectionByModelPlanIDLOADERSQL string
 
 //go:embed SQL/operational_need/get_by_model_plan_id_and_type.sql
 var operationalNeedGetByModelPlanIDAndTypeSQL string
@@ -50,6 +54,24 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 	}
 
 	err = stmt.Select(&needs, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return needs, nil
+}
+
+// OperationalNeedCollectionGetByModelPlanIDLOADER returns OperationalNeeds utilizing a Data Loader
+func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(logger *zap.Logger, modelPlanIDSlice []string) ([]*models.OperationalNeed, error) {
+	needs := []*models.OperationalNeed{}
+
+	query, args, err := sqlx.In(operationalNeedCollectionByModelPlanIDLOADERSQL, modelPlanIDSlice)
+	if err != nil {
+		return nil, err
+	}
+
+	query = s.db.Rebind(query)
+	err = s.db.Select(&needs, query, args...)
 
 	if err != nil {
 		return nil, err

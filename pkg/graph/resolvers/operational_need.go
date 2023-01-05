@@ -1,10 +1,14 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
+	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/loaders"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -18,6 +22,21 @@ func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID u
 	}
 
 	return needs, nil
+}
+
+// OperationalNeedCollectionGetByModelPlanIDLOADER returns possible and existing OperationalNeeds associated to a model plan
+func OperationalNeedCollectionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
+	allLoaders := loaders.For(ctx)
+	opNeedLoader := allLoaders.OperationalNeedLoader
+
+	thunk := opNeedLoader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
+
+	result, err := thunk()
+	if err != nil {
+		return nil, err
+	}
+	return result.([]*models.OperationalNeed), nil
+
 }
 
 // OperationalNeedInsertOrUpdateCustom adds or updates a Custom Operational Need

@@ -134,8 +134,7 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
