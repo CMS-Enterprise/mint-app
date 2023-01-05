@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink
 } from '@trussworks/react-uswds';
 
-export interface BreadcrumbsProps {
+import UswdsReactLink from 'components/LinkWrapper';
+
+interface BreadcrumbsProps {
   items: {
     text: string;
-    url?: string;
-    onClick?: () => void;
+    url: string;
   }[];
 }
 
@@ -20,10 +20,7 @@ export interface BreadcrumbsProps {
 
 const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   return (
-    <BreadcrumbBar
-      navProps={{ style: { backgroundColor: 'transparent' } }}
-      className="padding-bottom-0"
-    >
+    <BreadcrumbBar variant="wrap">
       {items.map((link, idx) => {
         if (idx === items.length - 1) {
           return (
@@ -34,11 +31,7 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
         }
         return (
           <Breadcrumb key={link.text}>
-            <BreadcrumbLink
-              asCustom={Link}
-              to={link.url!}
-              onClick={link.onClick}
-            >
+            <BreadcrumbLink asCustom={UswdsReactLink} to={link.url!}>
               <span>{link.text}</span>
             </BreadcrumbLink>
           </Breadcrumb>
