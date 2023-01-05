@@ -345,7 +345,6 @@ const SolutionImplementation = ({
                               solution.key ||
                               ''
                             ).replaceAll(' ', '-');
-
                             return (
                               <Solution
                                 key={solution.id}
@@ -354,8 +353,7 @@ const SolutionImplementation = ({
                                 index={index}
                                 handleOnBlur={handleOnBlur}
                                 setFieldValue={setFieldValue}
-                                isUpdatingStatus={isUpdatingStatus}
-                                operationalNeed={operationalNeed}
+                                length={solutionsArray.length}
                                 values={values}
                                 flatErrors={flatErrors}
                                 loading={loading}

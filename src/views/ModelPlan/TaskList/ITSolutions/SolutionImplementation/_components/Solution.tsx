@@ -30,8 +30,7 @@ type SolutionTypes = {
     value: any,
     shouldValidate?: boolean | undefined
   ) => void;
-  isUpdatingStatus: boolean;
-  operationalNeed: OperationNeedType;
+  length: number;
   values: OperationNeedType;
   flatErrors: flatErrorsType;
   loading: boolean;
@@ -43,10 +42,9 @@ const Solution = ({
   index,
   handleOnBlur,
   setFieldValue,
-  isUpdatingStatus,
-  operationalNeed,
   values,
   flatErrors,
+  length,
   loading
 }: SolutionTypes) => {
   const { t } = useTranslation('itSolutions');
@@ -161,8 +159,7 @@ const Solution = ({
           <ImplementationStatuses />
         </>
       )}
-
-      {index !== operationalNeed.solutions.length - 1 && !isUpdatingStatus && (
+      {index !== length - 1 && length > 1 && (
         <Divider className="margin-bottom-6 margin-top-6" />
       )}
     </div>
