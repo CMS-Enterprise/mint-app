@@ -22,7 +22,6 @@ type flatErrorsType = {
 
 type SolutionTypes = {
   solution: OpertionalNeedSolutionTypes;
-  // flatErrors: [key: string]: string;
   identifier: string;
   index: number;
   handleOnBlur: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
