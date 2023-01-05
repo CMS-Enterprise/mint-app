@@ -80,7 +80,7 @@ const Solution = ({
             <div className="width-card-lg position-relative">
               <Field
                 as={DatePicker}
-                error={!!flatErrors.mustStartDts}
+                error={+!!flatErrors.mustStartDts}
                 id={`solution-must-start-${identifier}`}
                 data-testid={`solution-must-start-${identifier}`}
                 maxLength={50}
@@ -111,7 +111,7 @@ const Solution = ({
             <div className="width-card-lg position-relative">
               <Field
                 as={DatePicker}
-                error={!!flatErrors.mustFinishDts}
+                error={+!!flatErrors.mustFinishDts}
                 id={`solution-must-finish-${identifier}`}
                 data-testid={`solution-must-finish-${identifier}`}
                 maxLength={50}
