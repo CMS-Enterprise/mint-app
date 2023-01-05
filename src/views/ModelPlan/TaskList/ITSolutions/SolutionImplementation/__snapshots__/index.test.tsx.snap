@@ -49,7 +49,9 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Select a solution
+        <span>
+          Select a solution
+        </span>
       </li>
     </ol>
   </nav>
@@ -277,6 +279,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-input usa-sr-only usa-date-picker__internal-input"
                         data-testid="date-picker-internal-input"
+                        error="0"
                         maxlength="50"
                         name="solutions[0].mustStartDts"
                         readonly=""
@@ -291,6 +294,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                         <input
                           class="usa-input usa-date-picker__external-input"
                           data-testid="date-picker-external-input"
+                          error="0"
                           id="solution-must-start-RMADA"
                           maxlength="50"
                           type="text"
@@ -350,6 +354,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-input usa-sr-only usa-date-picker__internal-input"
                         data-testid="date-picker-internal-input"
+                        error="0"
                         maxlength="50"
                         name="solutions[0].mustFinishDts"
                         readonly=""
@@ -364,6 +369,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                         <input
                           class="usa-input usa-date-picker__external-input"
                           data-testid="date-picker-external-input"
+                          error="0"
                           id="solution-must-finish-RMADA"
                           maxlength="50"
                           type="text"
