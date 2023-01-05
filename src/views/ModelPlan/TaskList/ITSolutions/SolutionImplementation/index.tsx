@@ -61,7 +61,7 @@ const SolutionImplementation = ({
   const { modelID, operationalNeedID, solutionId } = useParams<{
     modelID: string;
     operationalNeedID: string;
-    solutionId: string;
+    solutionId?: string | undefined;
   }>();
 
   const {
@@ -218,9 +218,12 @@ const SolutionImplementation = ({
     { text: isUpdatingStatus ? t('updateStatus') : t('selectSolution') }
   ];
 
-  const solutionsArray = isUpdatingStatus
-    ? operationalNeed.solutions.filter(solution => solution.id === solutionId)
-    : operationalNeed.solutions;
+  const solutionsArray =
+    solutionId === undefined
+      ? operationalNeed.solutions
+      : operationalNeed.solutions.filter(
+          solution => solution.id === solutionId
+        );
 
   return (
     <>
