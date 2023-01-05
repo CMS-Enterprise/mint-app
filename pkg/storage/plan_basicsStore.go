@@ -103,7 +103,7 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 }
 
 // PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
-func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, modelPlanIDSlice []uuid.UUID) ([]*models.PlanBasics, error) {
+func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, modelPlanIDSlice []string) ([]*models.PlanBasics, error) {
 	basicSlice := []*models.PlanBasics{} //TOOD use new data loader query instead.
 
 	query, args, err := sqlx.In(planBasicsGetByModelPlanIDLoaderSQL, modelPlanIDSlice)

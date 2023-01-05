@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/loaders"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/worker"
 
@@ -109,6 +110,9 @@ func (s *Server) routes(
 		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger, store)
 		s.router.Use(localAuthenticationMiddleware)
 	}
+	dataLoaders := loaders.NewLoaders(store)
+	dataLoaderMiddleware := loaders.NewDataLoaderMiddleware(dataLoaders)
+	s.router.Use(dataLoaderMiddleware)
 
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 

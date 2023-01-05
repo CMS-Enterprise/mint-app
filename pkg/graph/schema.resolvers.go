@@ -24,9 +24,10 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
+	// return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // GeneralCharacteristics is the resolver for the generalCharacteristics field.
