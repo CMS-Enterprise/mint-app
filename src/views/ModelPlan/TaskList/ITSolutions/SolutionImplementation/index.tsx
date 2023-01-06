@@ -170,8 +170,8 @@ const SolutionImplementation = ({
               </Alert>
             );
 
-            // If isUpdatingStatus, go to previous page, otherwise, go to tracker
-            if (isUpdatingStatus) {
+            // If fromSolutionDetails, go to previous page, otherwise, go to tracker
+            if (fromSolutionDetails) {
               history.goBack();
             } else {
               history.push(`/models/${modelID}/task-list/it-solutions`);
@@ -205,6 +205,16 @@ const SolutionImplementation = ({
       return t('dontUpdateandReturnToTracker');
     }
     return t('dontAdd');
+  };
+
+  const handleCancelClick = (values: GetOperationalNeedOperationalNeedType) => {
+    if (isUpdatingStatus && fromSolutionDetails) {
+      return history.goBack();
+    }
+    if (isUpdatingStatus) {
+      return history.push(`/models/${modelID}/task-list/it-solutions`);
+    }
+    return handleFormSubmit(values, null, true);
   };
 
   const breadcrumbs = [
@@ -399,13 +409,7 @@ const SolutionImplementation = ({
                           <Button
                             type="button"
                             className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
-                            onClick={() => {
-                              if (isUpdatingStatus) {
-                                history.goBack();
-                              } else {
-                                handleFormSubmit(values, null, true);
-                              }
-                            }}
+                            onClick={() => handleCancelClick(values)}
                           >
                             <IconArrowBack
                               className="margin-right-1"
