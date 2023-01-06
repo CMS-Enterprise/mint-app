@@ -3,6 +3,9 @@ package resolvers
 import (
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
+	"github.com/cmsgov/mint-app/pkg/local"
+
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
@@ -21,14 +24,15 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig  storage.DBConfig
-	LDClient  *ld.LDClient
-	Logger    *zap.Logger
-	UserInfo  *models.UserInfo
-	Store     *storage.Store
-	S3Client  *upload.S3Client
-	PubSub    *pubsub.ServicePubSub
-	Principal *authentication.ApplicationPrincipal
+	DBConfig    storage.DBConfig
+	LDClient    *ld.LDClient
+	Logger      *zap.Logger
+	UserInfo    *models.UserInfo
+	Store       *storage.Store
+	S3Client    *upload.S3Client
+	PubSub      *pubsub.ServicePubSub
+	Principal   *authentication.ApplicationPrincipal
+	CedarClient cedarldap.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -56,6 +60,8 @@ func (tc *TestConfigs) GetDefaults() {
 	store, _ := storage.NewStore(logger, config, ldClient)
 	princ := getTestPrincipal(store, userInfo.EuaUserID)
 
+	cedarLDAPClient := local.NewCedarLdapClient(logger)
+
 	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
@@ -64,6 +70,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Store = store
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
+	tc.CedarClient = cedarLDAPClient
 
 	tc.Principal = princ
 }

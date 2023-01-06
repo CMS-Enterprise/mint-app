@@ -132,7 +132,10 @@ func (s *Store) PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelP
 }
 
 // PlanDiscussionUpdate updates a plan discussion object
-func (s *Store) PlanDiscussionUpdate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
+func (s *Store) PlanDiscussionUpdate(
+	logger *zap.Logger,
+	discussion *models.PlanDiscussion,
+) (*models.PlanDiscussion, error) {
 	statement, err := s.db.PrepareNamed(planDiscussionUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, discussion)

@@ -2,6 +2,7 @@ package worker
 
 import (
 	"bytes"
+	"context"
 	"testing"
 	"time"
 
@@ -38,7 +39,14 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		ModelPlanID: mp.ID,
 		Content:     content,
 	}
-	pd, err := resolvers.CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	pd, err := resolvers.CreatePlanDiscussion(
+		context.TODO(),
+		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return pd
 }

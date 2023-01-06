@@ -1,7 +1,9 @@
 package worker
 
 import (
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -28,6 +30,7 @@ type TestConfigs struct {
 	PubSub               *pubsub.ServicePubSub
 	Principal            *authentication.ApplicationPrincipal
 	EmailTemplateService email.TemplateServiceImpl
+	CedarClient          cedarldap.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -66,6 +69,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.PubSub = ps
 	tc.Principal = princ
 	tc.EmailTemplateService = *emailTemplateService
+	tc.CedarClient = local.NewCedarLdapClient(logger)
 }
 
 // NewDBConfig returns a DBConfig struct with values from appconfig

@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -33,6 +35,7 @@ type Resolver struct {
 	emailTemplateService email.TemplateService
 	ldClient             *ldclient.LDClient
 	pubsub               pubsub.PubSub
+	cedarClient          cedarldap.Client
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -53,8 +56,9 @@ func NewResolver(
 	emailTemplateService email.TemplateService,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
+	cedarClient cedarldap.Client,
 ) *Resolver {
 	return &Resolver{store: store, service: service, s3Client: s3Client,
 		emailService: emailService, emailTemplateService: emailTemplateService,
-		ldClient: ldClient, pubsub: pubsub}
+		ldClient: ldClient, pubsub: pubsub, cedarClient: cedarClient}
 }

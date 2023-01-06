@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -38,7 +39,14 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 		ModelPlanID: mp.ID,
 		Content:     content,
 	}
-	pd, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	pd, err := CreatePlanDiscussion(
+		context.TODO(),
+		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return pd
 }
@@ -49,7 +57,14 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 		Content:      content,
 		Resolution:   resolution,
 	}
-	dr, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	dr, err := CreateDiscussionReply(
+		context.TODO(),
+		suite.testConfigs.CedarClient,
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return dr
 }

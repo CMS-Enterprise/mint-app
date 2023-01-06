@@ -1,7 +1,11 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/providers"
 
 	"github.com/google/uuid"
 
@@ -12,10 +16,34 @@ import (
 )
 
 // CreatePlanDiscussion implements resolver logic to create a plan Discussion object
-func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-	planDiscussion := models.NewPlanDiscussion(principal.ID(), principal.AllowASSESSMENT(), input.ModelPlanID, input.Content)
+func CreatePlanDiscussion(
+	ctx context.Context,
+	logger *zap.Logger,
+	userInfoProvider providers.UserInfoProvider,
+	input *model.PlanDiscussionCreateInput,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.PlanDiscussion, error) {
+	createdByUserInfo, modifiedByUserInfo, err := fetchBaseStructUserInformation(
+		ctx,
+		userInfoProvider,
+		principal.ID(),
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
 
-	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
+	planDiscussion := models.NewPlanDiscussion(
+		principal.ID(),
+		principal.AllowASSESSMENT(),
+		input.ModelPlanID,
+		input.Content,
+		*createdByUserInfo,
+		modifiedByUserInfo,
+	)
+
+	err = BaseStructPreCreate(logger, planDiscussion, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +53,15 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 }
 
 // UpdatePlanDiscussion implements resolver logic to update a plan Discussion object
-func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
+func UpdatePlanDiscussion(
+	ctx context.Context,
+	logger *zap.Logger,
+	userInfoProvider providers.UserInfoProvider,
+	id uuid.UUID,
+	changes map[string]interface{},
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.PlanDiscussion, error) {
 	// Get existing discussion
 	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
 	if err != nil {
@@ -35,6 +71,23 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
+	}
+
+	createdByUserInfo, err := userInfoProvider.FetchUserInfo(ctx, existingDiscussion.CreatedBy)
+	if err != nil {
+		return nil, err
+	}
+	existingDiscussion.CreatedByUserInfo = *createdByUserInfo
+
+	if existingDiscussion.ModifiedBy != nil {
+		var modifiedByUserInfo *models.UserInfo
+		modifiedByUserInfo, err = userInfoProvider.FetchUserInfo(ctx, *existingDiscussion.ModifiedBy)
+		if err != nil {
+			return nil, err
+		}
+		existingDiscussion.ModifiedByUserInfo = modifiedByUserInfo
+	} else {
+		existingDiscussion.ModifiedByUserInfo = nil
 	}
 
 	result, err := store.PlanDiscussionUpdate(logger, existingDiscussion)
@@ -57,10 +110,35 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 }
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
-func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreateInput, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	discussionReply := models.NewDiscussionReply(principal.ID(), principal.AllowASSESSMENT(), input.DiscussionID, input.Content, input.Resolution)
+func CreateDiscussionReply(
+	ctx context.Context,
+	userInfoProvider providers.UserInfoProvider,
+	logger *zap.Logger,
+	input *model.DiscussionReplyCreateInput,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.DiscussionReply, error) {
+	createdByUserInfo, modifiedByUserInfo, err := fetchBaseStructUserInformation(
+		ctx,
+		userInfoProvider,
+		principal.ID(),
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
 
-	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
+	discussionReply := models.NewDiscussionReply(
+		principal.ID(),
+		principal.AllowASSESSMENT(),
+		input.DiscussionID,
+		input.Content,
+		input.Resolution,
+		*createdByUserInfo,
+		modifiedByUserInfo,
+	)
+
+	err = BaseStructPreCreate(logger, discussionReply, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +148,15 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 }
 
 // UpdateDiscussionReply implements resolver logic to update a Discussion reply object
-func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
+func UpdateDiscussionReply(
+	ctx context.Context,
+	logger *zap.Logger,
+	userInfoProvider providers.UserInfoProvider,
+	id uuid.UUID,
+	changes map[string]interface{},
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.DiscussionReply, error) {
 	// Get existing reply
 	existingReply, err := store.DiscussionReplyByID(logger, id)
 	if err != nil {
@@ -79,6 +165,23 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
+	}
+
+	createdByUserInfo, err := userInfoProvider.FetchUserInfo(ctx, existingReply.CreatedBy)
+	if err != nil {
+		return nil, err
+	}
+	existingReply.CreatedByUserInfo = *createdByUserInfo
+
+	if existingReply.ModifiedBy != nil {
+		var modifiedByUserInfo *models.UserInfo
+		modifiedByUserInfo, err = userInfoProvider.FetchUserInfo(ctx, *existingReply.ModifiedBy)
+		if err != nil {
+			return nil, err
+		}
+		existingReply.ModifiedByUserInfo = modifiedByUserInfo
+	} else {
+		existingReply.ModifiedByUserInfo = nil
 	}
 
 	result, err := store.DiscussionReplyUpdate(logger, existingReply)
@@ -113,4 +216,29 @@ func PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 
 	result, err := store.PlanDiscussionCollectionByModelPlanID(logger, modelPlanID)
 	return result, err
+}
+
+func fetchBaseStructUserInformation(
+	ctx context.Context,
+	userInfoProvider providers.UserInfoProvider,
+	createdBy string,
+	modifiedBy *string,
+) (
+	*models.UserInfo,
+	*models.UserInfo,
+	error,
+) {
+	var createdByUserInfo, err = userInfoProvider.FetchUserInfo(ctx, createdBy)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var modifiedByUserInfo *models.UserInfo
+	if modifiedBy != nil {
+		modifiedByUserInfo, err = userInfoProvider.FetchUserInfo(ctx, *modifiedBy)
+		if err != nil {
+			return nil, nil, err
+		}
+	}
+	return createdByUserInfo, modifiedByUserInfo, err
 }

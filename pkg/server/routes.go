@@ -188,6 +188,7 @@ func (s *Server) routes(
 		emailTemplateService,
 		ldClient,
 		s.pubsub,
+		cedarLDAPClient,
 	)
 	gqlDirectives := generated.DirectiveRoot{
 		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {

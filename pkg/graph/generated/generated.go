@@ -82,15 +82,17 @@ type ComplexityRoot struct {
 	}
 
 	DiscussionReply struct {
-		Content      func(childComplexity int) int
-		CreatedBy    func(childComplexity int) int
-		CreatedDts   func(childComplexity int) int
-		DiscussionID func(childComplexity int) int
-		ID           func(childComplexity int) int
-		IsAssessment func(childComplexity int) int
-		ModifiedBy   func(childComplexity int) int
-		ModifiedDts  func(childComplexity int) int
-		Resolution   func(childComplexity int) int
+		Content            func(childComplexity int) int
+		CreatedBy          func(childComplexity int) int
+		CreatedByUserInfo  func(childComplexity int) int
+		CreatedDts         func(childComplexity int) int
+		DiscussionID       func(childComplexity int) int
+		ID                 func(childComplexity int) int
+		IsAssessment       func(childComplexity int) int
+		ModifiedBy         func(childComplexity int) int
+		ModifiedByUserInfo func(childComplexity int) int
+		ModifiedDts        func(childComplexity int) int
+		Resolution         func(childComplexity int) int
 	}
 
 	ExistingModel struct {
@@ -323,16 +325,18 @@ type ComplexityRoot struct {
 	}
 
 	PlanDiscussion struct {
-		Content      func(childComplexity int) int
-		CreatedBy    func(childComplexity int) int
-		CreatedDts   func(childComplexity int) int
-		ID           func(childComplexity int) int
-		IsAssessment func(childComplexity int) int
-		ModelPlanID  func(childComplexity int) int
-		ModifiedBy   func(childComplexity int) int
-		ModifiedDts  func(childComplexity int) int
-		Replies      func(childComplexity int) int
-		Status       func(childComplexity int) int
+		Content            func(childComplexity int) int
+		CreatedBy          func(childComplexity int) int
+		CreatedByUserInfo  func(childComplexity int) int
+		CreatedDts         func(childComplexity int) int
+		ID                 func(childComplexity int) int
+		IsAssessment       func(childComplexity int) int
+		ModelPlanID        func(childComplexity int) int
+		ModifiedBy         func(childComplexity int) int
+		ModifiedByUserInfo func(childComplexity int) int
+		ModifiedDts        func(childComplexity int) int
+		Replies            func(childComplexity int) int
+		Status             func(childComplexity int) int
 	}
 
 	PlanDocument struct {
@@ -1176,6 +1180,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.DiscussionReply.CreatedBy(childComplexity), true
 
+	case "DiscussionReply.createdByUserInfo":
+		if e.complexity.DiscussionReply.CreatedByUserInfo == nil {
+			break
+		}
+
+		return e.complexity.DiscussionReply.CreatedByUserInfo(childComplexity), true
+
 	case "DiscussionReply.createdDts":
 		if e.complexity.DiscussionReply.CreatedDts == nil {
 			break
@@ -1210,6 +1221,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.ModifiedBy(childComplexity), true
+
+	case "DiscussionReply.modifiedByUserInfo":
+		if e.complexity.DiscussionReply.ModifiedByUserInfo == nil {
+			break
+		}
+
+		return e.complexity.DiscussionReply.ModifiedByUserInfo(childComplexity), true
 
 	case "DiscussionReply.modifiedDts":
 		if e.complexity.DiscussionReply.ModifiedDts == nil {
@@ -2801,6 +2819,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanDiscussion.CreatedBy(childComplexity), true
 
+	case "PlanDiscussion.createdByUserInfo":
+		if e.complexity.PlanDiscussion.CreatedByUserInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanDiscussion.CreatedByUserInfo(childComplexity), true
+
 	case "PlanDiscussion.createdDts":
 		if e.complexity.PlanDiscussion.CreatedDts == nil {
 			break
@@ -2835,6 +2860,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDiscussion.ModifiedBy(childComplexity), true
+
+	case "PlanDiscussion.modifiedByUserInfo":
+		if e.complexity.PlanDiscussion.ModifiedByUserInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanDiscussion.ModifiedByUserInfo(childComplexity), true
 
 	case "PlanDiscussion.modifiedDts":
 		if e.complexity.PlanDiscussion.ModifiedDts == nil {
@@ -6570,6 +6602,8 @@ type PlanDiscussion  {
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
+  createdByUserInfo: UserInfo!
+  modifiedByUserInfo: UserInfo
 
   createdBy: String!
   createdDts: Time!
@@ -6604,6 +6638,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
   isAssessment: Boolean!
+  createdByUserInfo: UserInfo!
+  modifiedByUserInfo: UserInfo
 
 	createdBy: String!
 	createdDts: Time!
@@ -10306,6 +10342,107 @@ func (ec *executionContext) fieldContext_DiscussionReply_isAssessment(ctx contex
 	return fc, nil
 }
 
+func (ec *executionContext) _DiscussionReply_createdByUserInfo(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionReply_createdByUserInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.UserInfo)
+	fc.Result = res
+	return ec.marshalNUserInfo2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionReply_createdByUserInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionReply",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "commonName":
+				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "euaUserId":
+				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DiscussionReply_modifiedByUserInfo(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionReply_modifiedByUserInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserInfo)
+	fc.Result = res
+	return ec.marshalOUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionReply_modifiedByUserInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionReply",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "commonName":
+				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "euaUserId":
+				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _DiscussionReply_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 	if err != nil {
@@ -12657,6 +12794,10 @@ func (ec *executionContext) fieldContext_ModelPlan_discussions(ctx context.Conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_PlanDiscussion_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15529,6 +15670,10 @@ func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_PlanDiscussion_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15630,6 +15775,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_PlanDiscussion_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15731,6 +15880,10 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_PlanDiscussion_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_PlanDiscussion_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15830,6 +15983,10 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_DiscussionReply_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_DiscussionReply_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -15929,6 +16086,10 @@ func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_DiscussionReply_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_DiscussionReply_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -16028,6 +16189,10 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_DiscussionReply_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_DiscussionReply_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -22973,6 +23138,10 @@ func (ec *executionContext) fieldContext_PlanDiscussion_replies(ctx context.Cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUserInfo":
+				return ec.fieldContext_DiscussionReply_createdByUserInfo(ctx, field)
+			case "modifiedByUserInfo":
+				return ec.fieldContext_DiscussionReply_modifiedByUserInfo(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -23027,6 +23196,107 @@ func (ec *executionContext) fieldContext_PlanDiscussion_isAssessment(ctx context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDiscussion_createdByUserInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDiscussion_createdByUserInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.UserInfo)
+	fc.Result = res
+	return ec.marshalNUserInfo2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDiscussion_createdByUserInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussion",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "commonName":
+				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "euaUserId":
+				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDiscussion_modifiedByUserInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDiscussion_modifiedByUserInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserInfo)
+	fc.Result = res
+	return ec.marshalOUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDiscussion_modifiedByUserInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussion",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "commonName":
+				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "euaUserId":
+				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
 		},
 	}
 	return fc, nil
@@ -45736,6 +46006,17 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "createdByUserInfo":
+
+			out.Values[i] = ec._DiscussionReply_createdByUserInfo(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modifiedByUserInfo":
+
+			out.Values[i] = ec._DiscussionReply_modifiedByUserInfo(ctx, field, obj)
+
 		case "createdBy":
 
 			out.Values[i] = ec._DiscussionReply_createdBy(ctx, field, obj)
@@ -47522,6 +47803,17 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUserInfo":
+
+			out.Values[i] = ec._PlanDiscussion_createdByUserInfo(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modifiedByUserInfo":
+
+			out.Values[i] = ec._PlanDiscussion_modifiedByUserInfo(ctx, field, obj)
+
 		case "createdBy":
 
 			out.Values[i] = ec._PlanDiscussion_createdBy(ctx, field, obj)
@@ -57307,6 +57599,10 @@ func (ec *executionContext) marshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋg
 	return res
 }
 
+func (ec *executionContext) marshalNUserInfo2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx context.Context, sel ast.SelectionSet, v models.UserInfo) graphql.Marshaler {
+	return ec._UserInfo(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNUserInfo2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfoᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.UserInfo) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -62186,6 +62482,13 @@ func (ec *executionContext) unmarshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(c
 func (ec *executionContext) marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
 	res := models.MarshalUUID(v)
 	return res
+}
+
+func (ec *executionContext) marshalOUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx context.Context, sel ast.SelectionSet, v *models.UserInfo) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._UserInfo(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {

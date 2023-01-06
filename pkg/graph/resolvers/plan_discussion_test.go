@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 
@@ -17,7 +19,14 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 		Content:     "This is a test comment",
 	}
 
-	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := CreatePlanDiscussion(
+		context.TODO(),
+		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
@@ -41,7 +50,14 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
-	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
+	result, err := CreatePlanDiscussion(
+		context.TODO(),
+		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
+		input,
+		regularUserPrincipal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
@@ -60,7 +76,15 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 		"content": "This is now updated! Thanks for looking at my test",
 		"status":  models.DiscussionAnswered,
 	}
-	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := UpdatePlanDiscussion(
+		context.TODO(),
+		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
+		discussion.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
 	suite.NoError(err)
 	suite.EqualValues(discussion.ID, result.ID)
@@ -104,7 +128,14 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 		Resolution:   true,
 	}
 
-	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := CreateDiscussionReply(
+		context.TODO(),
+		suite.testConfigs.CedarClient,
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
@@ -128,7 +159,14 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
-	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
+	result, err := CreateDiscussionReply(
+		context.TODO(),
+		suite.testConfigs.CedarClient,
+		suite.testConfigs.Logger,
+		input,
+		regularUserPrincipal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
@@ -149,7 +187,15 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 		"resolution": true,
 	}
 
-	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := UpdateDiscussionReply(
+		context.TODO(),
+		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
+		reply.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
 	suite.NoError(err)
 	suite.EqualValues(changes["content"], result.Content)

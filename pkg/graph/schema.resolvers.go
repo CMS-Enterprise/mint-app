@@ -260,7 +260,7 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanDiscussion(logger, &input, principal, r.store)
+	return resolvers.CreatePlanDiscussion(ctx, logger, r.cedarClient, &input, principal, r.store)
 }
 
 // UpdatePlanDiscussion is the resolver for the updatePlanDiscussion field.
@@ -268,7 +268,7 @@ func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUI
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
+	return resolvers.UpdatePlanDiscussion(ctx, logger, r.cedarClient, id, changes, principal, r.store)
 }
 
 // DeletePlanDiscussion is the resolver for the deletePlanDiscussion field.
@@ -284,7 +284,7 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
+	return resolvers.CreateDiscussionReply(ctx, r.cedarClient, logger, &input, principal, r.store)
 }
 
 // UpdateDiscussionReply is the resolver for the updateDiscussionReply field.
@@ -292,7 +292,7 @@ func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UU
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
+	return resolvers.UpdateDiscussionReply(ctx, logger, r.cedarClient, id, changes, principal, r.store)
 }
 
 // DeleteDiscussionReply is the resolver for the deleteDiscussionReply field.

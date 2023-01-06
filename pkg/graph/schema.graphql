@@ -317,6 +317,8 @@ type PlanDiscussion  {
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
+  createdByUserInfo: UserInfo!
+  modifiedByUserInfo: UserInfo
 
   createdBy: String!
   createdDts: Time!
@@ -351,6 +353,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
   isAssessment: Boolean!
+  createdByUserInfo: UserInfo!
+  modifiedByUserInfo: UserInfo
 
 	createdBy: String!
 	createdDts: Time!
