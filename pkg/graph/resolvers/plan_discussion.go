@@ -112,8 +112,8 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(
 	ctx context.Context,
-	userInfoProvider providers.UserInfoProvider,
 	logger *zap.Logger,
+	userInfoProvider providers.UserInfoProvider,
 	input *model.DiscussionReplyCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,

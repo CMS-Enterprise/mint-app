@@ -59,8 +59,8 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 	}
 	dr, err := CreateDiscussionReply(
 		context.TODO(),
-		suite.testConfigs.CedarClient,
 		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

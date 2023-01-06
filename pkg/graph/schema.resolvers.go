@@ -284,7 +284,7 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(ctx, r.cedarClient, logger, &input, principal, r.store)
+	return resolvers.CreateDiscussionReply(ctx, logger, r.cedarClient, &input, principal, r.store)
 }
 
 // UpdateDiscussionReply is the resolver for the updateDiscussionReply field.

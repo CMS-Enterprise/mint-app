@@ -130,8 +130,8 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 
 	result, err := CreateDiscussionReply(
 		context.TODO(),
-		suite.testConfigs.CedarClient,
 		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -161,8 +161,8 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	}
 	result, err := CreateDiscussionReply(
 		context.TODO(),
-		suite.testConfigs.CedarClient,
 		suite.testConfigs.Logger,
+		suite.testConfigs.CedarClient,
 		input,
 		regularUserPrincipal,
 		suite.testConfigs.Store,
