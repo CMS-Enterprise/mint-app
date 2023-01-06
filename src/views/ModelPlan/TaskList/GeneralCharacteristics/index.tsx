@@ -40,8 +40,13 @@ import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/Upd
 import GetExistingModelPlans from 'queries/GetExistingModelPlans';
 import GetDraftModelPlans from 'queries/GetModelPlans';
 import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
-import { GetModelPlans as GetDraftModelPlansType } from 'queries/types/GetModelPlans';
+import {
+  GetModelPlans as GetDraftModelPlansType,
+  GetModelPlansVariables
+} from 'queries/types/GetModelPlans';
+import { ModelPlanFilter } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Authority from './Authority';
@@ -59,10 +64,15 @@ export const CharacteristicsContent = () => {
   );
   const history = useHistory();
 
-  const {
-    data: modelData,
-    error: modelError
-  } = useQuery<GetDraftModelPlansType>(GetDraftModelPlans);
+  const { data: modelData, error: modelError } = useQuery<
+    GetDraftModelPlansType,
+    GetModelPlansVariables
+  >(GetDraftModelPlans, {
+    variables: {
+      filter: ModelPlanFilter.INCLUDE_ALL,
+      isMAC: false
+    }
+  });
 
   const {
     data: existingModelData,
@@ -113,15 +123,14 @@ export const CharacteristicsContent = () => {
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (
-    formikValues: GetGeneralCharacteristicsFormType,
-    redirect?: 'next' | 'back'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+  const handleFormSubmit = (redirect?: 'next' | 'back') => {
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -191,8 +200,8 @@ export const CharacteristicsContent = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -488,7 +497,7 @@ export const CharacteristicsContent = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'back')}
+                  onClick={() => handleFormSubmit('back')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -498,7 +507,7 @@ export const CharacteristicsContent = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

@@ -21,7 +21,6 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   hasComponentsOrTracks: boolean | null;
   hasComponentsOrTracksDiffer: string | null;
   hasComponentsOrTracksNote: string | null;
-  alternativePaymentModel: boolean | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
@@ -31,8 +30,8 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;
   managePartCDEnrollmentNote: string | null;
-  planContactUpdated: boolean | null;
-  planContactUpdatedNote: string | null;
+  planContractUpdated: boolean | null;
+  planContractUpdatedNote: string | null;
   careCoordinationInvolved: boolean | null;
   careCoordinationInvolvedDescription: string | null;
   careCoordinationInvolvedNote: string | null;

@@ -3,10 +3,13 @@ package resolvers
 import (
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -14,7 +17,7 @@ import (
 // ModelPlanCreate implements resolver logic to create a model plan
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
-func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo, principal authentication.Principal) (*models.ModelPlan, error) {
+func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principal authentication.Principal) (*models.ModelPlan, error) {
 
 	plan := models.NewModelPlan(principal.ID(), modelName)
 
@@ -28,16 +31,29 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	if err != nil {
 		return nil, err
 	}
+	userAccount := principal.Account()
 
 	// Create an initial collaborator for the plan
-	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID, principalInfo.EuaUserID, principalInfo.CommonName, models.TeamRoleModelLead, principalInfo.Email.String())
-
-	_, err = store.PlanCollaboratorCreate(logger, collab)
+	_, _, err = CreatePlanCollaborator(
+		logger,
+		nil,
+		nil,
+		&model.PlanCollaboratorCreateInput{
+			ModelPlanID: plan.ID,
+			EuaUserID:   *userAccount.Username,
+			FullName:    userAccount.CommonName,
+			TeamRole:    models.TeamRoleModelLead,
+			Email:       userAccount.Email,
+		},
+		principal,
+		store,
+		false,
+	)
 	if err != nil {
 		return nil, err
 	}
 
-	baseTaskList := models.NewBaseTaskListSection(principalInfo.EuaUserID, createdPlan.ID) //make a taskList status, with status Ready
+	baseTaskList := models.NewBaseTaskListSection(*userAccount.Username, createdPlan.ID) //make a taskList status, with status Ready
 
 	// Create a default plan basics object
 	basics := models.NewPlanBasics(baseTaskList)
@@ -92,6 +108,11 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	if err != nil {
 		return nil, err
 	}
+	//Create default Operational Needs
+	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.ID())
+	if err != nil {
+		return nil, err
+	}
 
 	return createdPlan, err
 }
@@ -127,17 +148,30 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return plan, nil
 }
 
-// ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, includeAll bool) ([]*models.ModelPlan, error) {
-	var modelPlans []*models.ModelPlan
-	var err error
-	if includeAll {
-		modelPlans, err = store.ModelPlanCollection(logger, false)
-	} else {
-		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
-	}
+// ModelPlanGetSampleModel returns the sample model plan
+func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
+	plan, err := store.ModelPlanGetByName(logger, constants.SampleModelName)
 	if err != nil {
 		return nil, err
+	}
+
+	return plan, nil
+}
+
+// ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
+func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
+	var modelPlans []*models.ModelPlan
+	var err error
+	switch filter {
+	case model.ModelPlanFilterIncludeAll:
+		modelPlans, err = store.ModelPlanCollection(logger, false)
+	case model.ModelPlanFilterCollabOnly:
+		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
+	case model.ModelPlanFilterWithCrTdls:
+		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+	default:
+		modelPlans = nil
+		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)
 	}
 
 	return modelPlans, err

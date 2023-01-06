@@ -9,12 +9,18 @@ import (
 // GoSimpleMailService is an EmailService implementation for the GoSimpleMail library
 type GoSimpleMailService struct {
 	smtpServer *mail.SMTPServer
-	smtpClient *mail.SMTPClient
 	config     EmailServiceConfig
 }
 
 // NewGoSimpleMailService is a constructor for GoSimpleMailService
 func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailService, error) {
+	if !config.GetEnabled() {
+		return &GoSimpleMailService{
+			smtpServer: nil,
+			config:     &config,
+		}, nil
+	}
+
 	smtpServer := &mail.SMTPServer{
 		Authentication: config.Authentication,
 		Encryption:     config.Encryption,
@@ -29,14 +35,8 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 		TLSConfig:      config.TLSConfig,
 	}
 
-	smtpClient, err := smtpServer.Connect()
-	if err != nil {
-		return nil, err
-	}
-
 	return &GoSimpleMailService{
 		smtpServer: smtpServer,
-		smtpClient: smtpClient,
 		config:     &config,
 	}, nil
 }
@@ -59,6 +59,9 @@ func (g GoSimpleMailService) setEmailBody(email *mail.Email, contentType string,
 
 // Send uses the GoSimpleMailService to dispatch an email with the provided settings
 func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses []string, subject string, contentType string, body string) error {
+	if !g.config.GetEnabled() {
+		return nil
+	}
 	email := mail.NewMSG()
 	email.SetFrom(from).
 		SetSubject(subject)
@@ -81,5 +84,19 @@ func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses
 
 // SendEmail is a GoSimpleMail specific method allowing for dispatching an email using a mail.Email object
 func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
-	return email.Send(g.smtpClient)
+	if !g.config.GetEnabled() {
+		return nil
+	}
+
+	smtpClient, err := g.smtpServer.Connect()
+	if err != nil {
+		return err
+	}
+
+	return email.Send(smtpClient)
+}
+
+// GetConfig returns this service's configuration
+func (g GoSimpleMailService) GetConfig() EmailServiceConfig {
+	return g.config
 }

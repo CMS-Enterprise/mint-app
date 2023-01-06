@@ -95,6 +95,16 @@ def wait_for_success(message, command)
   puts " ✨ done ✨"
 end
 
+def contribsys_docker_login
+  attempt = `docker pull docker.contribsys.com/contribsys/faktory-ent:latest 2>&1 >/dev/null | tail -n 1`
+
+  if attempt.include?('no basic auth credentials')
+    puts '🔐 Login to docker.contribsys.com (creds are in 1Password) 🔐'
+    return system('docker login docker.contribsys.com', exception: true)
+  end
+
+end
+
 desc "Check to see if the app's prerequisites are installed"
 task :prereqs do
   @needed.each do |executable, install_with|
@@ -122,6 +132,9 @@ def up(frontend_included, *args, debug:false, wait:false)
     "COMPOSE_HTTP_TIMEOUT" => "120",
     "AIR_CONFIG" =>conf,
   }
+
+  contribsys_docker_login
+
   command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
 
   if args.any?
@@ -353,11 +366,13 @@ namespace :db do
   desc "Deletes all rows from all tables"
   task :clean do
     tableList = "
+    analyzed_audit,
     nda_agreement,
     discussion_reply,
     plan_basics,
     plan_collaborator,
     plan_discussion,
+    plan_document_solution_link,
     plan_document,
     plan_general_characteristics,
     plan_beneficiaries,
@@ -367,7 +382,10 @@ namespace :db do
     plan_it_tools,
     plan_favorite,
     plan_cr_tdl,
-    model_plan"
+    operational_solution,
+    operational_need,
+    model_plan,
+    user_account"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`

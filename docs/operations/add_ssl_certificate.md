@@ -24,7 +24,7 @@ It's nice to validate that the certificate is actually in the docker container w
     ```
 2. Shell into the backend so you can explore the file structure & run commands
     ```bash
-    docker-compose exec -it easi /bin/bash
+    docker-compose exec -it mint /bin/bash
     ```
 3. Scan for expected certificates using `openssl`. It's often useful to `grep` this output for the serial of the certificate. The following command should output useful information for the certificate given a serial:
     ```bash

@@ -36,12 +36,9 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  ClaimsBasedPayType,
-  PayType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -90,25 +87,26 @@ const Recover = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (
-    formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list' | string
-  ) => {
-    const {
-      id: updateId,
-      __typename,
-      status: inputStatus,
-      ...changeValues
-    } = formikValues;
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
-        id: updateId,
-        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
+        id,
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -182,8 +180,8 @@ const Recover = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+        onSubmit={() => {
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -256,13 +254,12 @@ const Recover = () => {
                           {t('willRecoverPayments')}
                         </Label>
 
-                        {itToolsStarted && (
+                        {itSolutionsStarted && (
                           <ITToolsWarning
                             id="payment-recover-payment-warning"
                             onClick={() =>
                               handleFormSubmit(
-                                values,
-                                `/models/${modelID}/task-list/it-tools/page-nine`
+                                `/models/${modelID}/task-list/it-solutions`
                               )
                             }
                           />
@@ -378,7 +375,7 @@ const Recover = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -390,7 +387,7 @@ const Recover = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -403,7 +400,7 @@ const Recover = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

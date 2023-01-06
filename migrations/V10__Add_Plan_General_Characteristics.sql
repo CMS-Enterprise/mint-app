@@ -1,7 +1,8 @@
 CREATE TYPE ALTERNATIVE_PAYMENT_MODEL_TYPE AS ENUM (
     'REGULAR',
     'MIPS',
-    'ADVANCED'
+    'ADVANCED',
+    'NOT_APM'
 );
 
 CREATE TYPE KEY_CHARACTERISTIC AS ENUM (
@@ -64,7 +65,6 @@ CREATE TABLE plan_general_characteristics (
     has_components_or_tracks_note ZERO_STRING,
 
     -- Page 2
-    alternative_payment_model BOOLEAN,
     alternative_payment_model_types ALTERNATIVE_PAYMENT_MODEL_TYPE[],
     alternative_payment_model_note ZERO_STRING,
     key_characteristics KEY_CHARACTERISTIC[],
@@ -74,8 +74,8 @@ CREATE TABLE plan_general_characteristics (
     collect_plan_bids_note ZERO_STRING,
     manage_part_c_d_enrollment BOOLEAN,
     manage_part_c_d_enrollment_note ZERO_STRING,
-    plan_contact_updated BOOLEAN,
-    plan_contact_updated_note ZERO_STRING,
+    plan_contract_updated BOOLEAN,
+    plan_contract_updated_note ZERO_STRING,
 
     -- Page 3
     care_coordination_involved BOOLEAN,

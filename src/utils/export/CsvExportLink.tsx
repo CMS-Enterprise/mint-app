@@ -61,12 +61,7 @@ export const CsvExportLink = ({
 
   // Fetches all data from all model plans
   const [fetchAllModelCSVData] = useLazyQuery<GetAllModelDataType>(
-    GetAllModelPlans,
-    {
-      variables: {
-        includeAll
-      }
-    }
+    GetAllModelPlans
   );
 
   // Fetches all data from a single model plan

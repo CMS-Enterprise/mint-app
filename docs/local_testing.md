@@ -1,11 +1,11 @@
-# Testing EASi Locally
+# Testing MINT Locally
 
 Run all tests other than Cypress in the project using `scripts/dev test`.
 
 ## Server tests
 
 - Run `scripts/dev test:go` to run all local-only server-side tests. This requires the database to be running first. Use `scripts/dev up:backend` to start it.
-- Run `scripts/dev test:go:only [full package name]` (e.g. `scripts/dev test:go:only "github.com/cmsgov/easi-app/pkg/cedar/core"`) to run server-side tests for a specific folder. Depending on the tests being run, this may require the database to be running, as above.
+- Run `scripts/dev test:go:only [full package name]` (e.g. `scripts/dev test:go:only "github.com/cmsgov/mint-app/pkg/cedar/core"`) to run server-side tests for a specific folder. Depending on the tests being run, this may require the database to be running, as above.
 - Run `scripts/dev test:go:long` to run all server-side tests, including ones that contact external services.
 
 ## JS Tests
@@ -22,9 +22,9 @@ There are multiple ways to run the Cypress tests:
     - Option 1: Use the preview features available in Windows Insiders build. See [Microsoft docs](https://docs.microsoft.com/en-us/windows/wsl/tutorials/gui-apps).
     - Option 2: Set up an X server on Windows and configure WSL to use it. See [this article](https://wilcovanes.ch/articles/setting-up-the-cypress-gui-in-wsl2-ubuntu-for-windows-10/) for details.
   - Note: the database, frontend, and backend must be running prior to starting the Cypress tests. Use `scripts/dev up` to start them.
-  - The `APP_ENV` environment variable should be set to `test` in `.envrc.local`. After creating `.envrc.local` if necessary and adding `APP_ENV=test` to it, run `direnv allow` to enable it. (See [instructions above](#direnv) on `direnv` usage)
+  - The `APP_ENV` environment variable should be set to `testing` in `.envrc.local`. After creating `.envrc.local` if necessary and adding `APP_ENV=testing` to it, run `direnv allow` to enable it. (See [instructions above](#direnv) on `direnv` usage)
   - Running `login.spec.js` requires the environment variables `OKTA_TEST_USERNAME`, `OKTA_TEST_PASSWORD`, and `OKTA_TEST_SECRET` to be set in `.envrc.local`. The values can be found in 1Password, as mentioned in the [Authentication section](#authentication).
-- `APP_ENV=test ./scripts/run-cypress-test-docker` : Run the Cypress tests,
+- `APP_ENV=testing ./scripts/run-cypress-test-docker` : Run the Cypress tests,
   database, migrations, backend, and frontend locally in Docker, similar to how
   they run in CI. Running the tests in this way takes time, but is useful
   for troubleshooting integration test failures in CI.

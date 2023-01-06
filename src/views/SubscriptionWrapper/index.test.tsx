@@ -9,7 +9,8 @@ describe('SubscriptionWrapper functions', () => {
       __typename: 'TaskListSectionLockStatus',
       modelPlanID: '123',
       section: TaskListSection.BENEFICIARIES,
-      lockedBy: 'MINT'
+      lockedBy: 'MINT',
+      isAssessment: true
     };
 
     const expectedValue: LockSectionType[] = [
@@ -17,7 +18,8 @@ describe('SubscriptionWrapper functions', () => {
         __typename: 'TaskListSectionLockStatus',
         modelPlanID: '123',
         section: TaskListSection.BENEFICIARIES,
-        lockedBy: 'MINT'
+        lockedBy: 'MINT',
+        isAssessment: true
       }
     ];
 
@@ -31,7 +33,8 @@ describe('SubscriptionWrapper functions', () => {
       __typename: 'TaskListSectionLockStatus',
       modelPlanID: '123',
       section: TaskListSection.BENEFICIARIES,
-      lockedBy: 'ABCD'
+      lockedBy: 'ABCD',
+      isAssessment: false
     };
 
     const expectedValue: LockSectionType[] = [
@@ -39,7 +42,8 @@ describe('SubscriptionWrapper functions', () => {
         __typename: 'TaskListSectionLockStatus',
         modelPlanID: '123',
         section: TaskListSection.BENEFICIARIES,
-        lockedBy: 'ABCD'
+        lockedBy: 'ABCD',
+        isAssessment: false
       }
     ];
 
@@ -49,7 +53,8 @@ describe('SubscriptionWrapper functions', () => {
           __typename: 'TaskListSectionLockStatus',
           modelPlanID: '123',
           section: TaskListSection.BENEFICIARIES,
-          lockedBy: 'MINT'
+          lockedBy: 'MINT',
+          isAssessment: false
         }
       ],
       lockToAdd
@@ -63,7 +68,8 @@ describe('SubscriptionWrapper functions', () => {
       __typename: 'TaskListSectionLockStatus',
       modelPlanID: '123',
       section: TaskListSection.BENEFICIARIES,
-      lockedBy: 'ABCD'
+      lockedBy: 'ABCD',
+      isAssessment: false
     };
 
     const expectedValue: LockSectionType[] = [];
@@ -74,7 +80,8 @@ describe('SubscriptionWrapper functions', () => {
           __typename: 'TaskListSectionLockStatus',
           modelPlanID: '123',
           section: TaskListSection.BENEFICIARIES,
-          lockedBy: 'ABCD'
+          lockedBy: 'ABCD',
+          isAssessment: false
         }
       ],
       lockToRemove

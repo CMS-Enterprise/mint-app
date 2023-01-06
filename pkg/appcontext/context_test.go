@@ -95,8 +95,8 @@ func TestContextPrincipal(t *testing.T) {
 			expectADMIN: false,
 		},
 		"regular user": {
-			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
-				EUAID:             submitterID,
+			ctx: WithPrincipal(context.Background(), &authentication.ApplicationPrincipal{
+				Username:          submitterID,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: false,
 			}),
@@ -105,8 +105,8 @@ func TestContextPrincipal(t *testing.T) {
 			expectADMIN: false,
 		},
 		"admin User": {
-			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
-				EUAID:             reviewerID,
+			ctx: WithPrincipal(context.Background(), &authentication.ApplicationPrincipal{
+				Username:          reviewerID,
 				JobCodeUSER:       true,
 				JobCodeASSESSMENT: true,
 			}),
@@ -123,8 +123,8 @@ func TestContextPrincipal(t *testing.T) {
 
 			// Assert (of AAA)
 			assert.Equal(t, tc.expectID, p.ID(), "ID")
-			assert.Equal(t, tc.expectMINT, p.AllowUSER(), "MINT_USER")
-			assert.Equal(t, tc.expectADMIN, p.AllowASSESSMENT(), "MINT_ASSESSMENT")
+			assert.Equal(t, tc.expectMINT, p.AllowUSER(), "MINT_USER_NONPROD")
+			assert.Equal(t, tc.expectADMIN, p.AllowASSESSMENT(), "MINT_ASSESSMENT_NONPROD")
 		})
 	}
 }

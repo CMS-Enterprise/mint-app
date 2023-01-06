@@ -29,6 +29,7 @@ export enum AgreementType {
 export enum AlternativePaymentModelType {
   ADVANCED = "ADVANCED",
   MIPS = "MIPS",
+  NOT_APM = "NOT_APM",
   REGULAR = "REGULAR",
 }
 
@@ -284,6 +285,12 @@ export enum ModelLearningSystemType {
   PARTICIPANT_COLLABORATION = "PARTICIPANT_COLLABORATION",
 }
 
+export enum ModelPlanFilter {
+  COLLAB_ONLY = "COLLAB_ONLY",
+  INCLUDE_ALL = "INCLUDE_ALL",
+  WITH_CR_TDLS = "WITH_CR_TDLS",
+}
+
 export enum ModelStatus {
   ANNOUNCED = "ANNOUNCED",
   CLEARED = "CLEARED",
@@ -403,6 +410,84 @@ export enum OelSendReportsType {
   INTERNAL_STAFF = "INTERNAL_STAFF",
   OTHER = "OTHER",
   RMADA = "RMADA",
+}
+
+export enum OpSolutionStatus {
+  AT_RISK = "AT_RISK",
+  BACKLOG = "BACKLOG",
+  COMPLETED = "COMPLETED",
+  IN_PROGRESS = "IN_PROGRESS",
+  NOT_STARTED = "NOT_STARTED",
+  ONBOARDING = "ONBOARDING",
+}
+
+export enum OperationalNeedKey {
+  ACQUIRE_AN_EVAL_CONT = "ACQUIRE_AN_EVAL_CONT",
+  ACQUIRE_A_LEARN_CONT = "ACQUIRE_A_LEARN_CONT",
+  ADJUST_FFS_CLAIMS = "ADJUST_FFS_CLAIMS",
+  ADVERTISE_MODEL = "ADVERTISE_MODEL",
+  APP_SUPPORT_CON = "APP_SUPPORT_CON",
+  CLAIMS_BASED_MEASURES = "CLAIMS_BASED_MEASURES",
+  COL_REV_SCORE_APP = "COL_REV_SCORE_APP",
+  COMM_W_PART = "COMM_W_PART",
+  COMPUTE_SHARED_SAVINGS_PAYMENT = "COMPUTE_SHARED_SAVINGS_PAYMENT",
+  DATA_TO_MONITOR = "DATA_TO_MONITOR",
+  DATA_TO_SUPPORT_EVAL = "DATA_TO_SUPPORT_EVAL",
+  EDUCATE_BENEF = "EDUCATE_BENEF",
+  ESTABLISH_BENCH = "ESTABLISH_BENCH",
+  HELPDESK_SUPPORT = "HELPDESK_SUPPORT",
+  IDDOC_SUPPORT = "IDDOC_SUPPORT",
+  MAKE_NON_CLAIMS_BASED_PAYMENTS = "MAKE_NON_CLAIMS_BASED_PAYMENTS",
+  MANAGE_BEN_OVERLAP = "MANAGE_BEN_OVERLAP",
+  MANAGE_CD = "MANAGE_CD",
+  MANAGE_FFS_EXCL_PAYMENTS = "MANAGE_FFS_EXCL_PAYMENTS",
+  MANAGE_PROV_OVERLAP = "MANAGE_PROV_OVERLAP",
+  PART_TO_PART_COLLAB = "PART_TO_PART_COLLAB",
+  PROCESS_PART_APPEALS = "PROCESS_PART_APPEALS",
+  QUALITY_PERFORMANCE_SCORES = "QUALITY_PERFORMANCE_SCORES",
+  RECOVER_PAYMENTS = "RECOVER_PAYMENTS",
+  REV_COL_BIDS = "REV_COL_BIDS",
+  SEND_REPDATA_TO_PART = "SEND_REPDATA_TO_PART",
+  UPDATE_CONTRACT = "UPDATE_CONTRACT",
+}
+
+export enum OperationalSolutionKey {
+  ACO_OS = "ACO_OS",
+  ACO_UI = "ACO_UI",
+  ANOTHER_CONTRACTOR = "ANOTHER_CONTRACTOR",
+  APPS = "APPS",
+  ARS = "ARS",
+  CBOSC = "CBOSC",
+  CCW = "CCW",
+  CONNECT = "CONNECT",
+  CROSS_MODEL_CONTRACT = "CROSS_MODEL_CONTRACT",
+  EXISTING_CMS_DATA_AND_PROCESS = "EXISTING_CMS_DATA_AND_PROCESS",
+  FFS_COMPETENCY_CENTER = "FFS_COMPETENCY_CENTER",
+  GOVDELIVERY = "GOVDELIVERY",
+  GRANT_SOLUTIONS = "GRANT_SOLUTIONS",
+  HIGLAS = "HIGLAS",
+  HPMS = "HPMS",
+  IDOS = "IDOS",
+  IDR = "IDR",
+  INNOVATION = "INNOVATION",
+  INTERNAL_STAFF = "INTERNAL_STAFF",
+  IPC = "IPC",
+  ISP = "ISP",
+  MAC = "MAC",
+  MARX = "MARX",
+  MDM = "MDM",
+  MEDICARE_APPEAL_SYSTEM = "MEDICARE_APPEAL_SYSTEM",
+  NEW_CMMI_PROCESS = "NEW_CMMI_PROCESS",
+  OC = "OC",
+  OTHER_NEW_PROCESS = "OTHER_NEW_PROCESS",
+  OUTLOOK_MAILBOX = "OUTLOOK_MAILBOX",
+  RFA = "RFA",
+  RMADA = "RMADA",
+  RMADA_CONTRACTOR = "RMADA_CONTRACTOR",
+  SALESFORCE = "SALESFORCE",
+  SALESFORCE_PORTAL = "SALESFORCE_PORTAL",
+  SHARED_SYSTEMS = "SHARED_SYSTEMS",
+  THROUGH_A_CONTRACTOR = "THROUGH_A_CONTRACTOR",
 }
 
 export enum OverlapType {
@@ -537,6 +622,13 @@ export enum PpToAdvertiseType {
   SALESFORCE = "SALESFORCE",
 }
 
+export enum PrepareForClearanceStatus {
+  CANNOT_START = "CANNOT_START",
+  IN_PROGRESS = "IN_PROGRESS",
+  READY = "READY",
+  READY_FOR_CLEARANCE = "READY_FOR_CLEARANCE",
+}
+
 export enum ProviderAddType {
   MANDATORILY = "MANDATORILY",
   NA = "NA",
@@ -557,11 +649,11 @@ export enum ProviderLeaveType {
 }
 
 export enum RecruitmentType {
+  APPLICATION_COLLECTION_TOOL = "APPLICATION_COLLECTION_TOOL",
   LOI = "LOI",
   NA = "NA",
   NOFO = "NOFO",
   OTHER = "OTHER",
-  RFA = "RFA",
 }
 
 export enum SelectionMethodType {
@@ -585,13 +677,14 @@ export enum StakeholdersType {
 }
 
 export enum TaskListSection {
+  BASICS = "BASICS",
   BENEFICIARIES = "BENEFICIARIES",
   GENERAL_CHARACTERISTICS = "GENERAL_CHARACTERISTICS",
   IT_TOOLS = "IT_TOOLS",
-  MODEL_BASICS = "MODEL_BASICS",
   OPERATIONS_EVALUATION_AND_LEARNING = "OPERATIONS_EVALUATION_AND_LEARNING",
   PARTICIPANTS_AND_PROVIDERS = "PARTICIPANTS_AND_PROVIDERS",
   PAYMENT = "PAYMENT",
+  PREPARE_FOR_CLEARANCE = "PREPARE_FOR_CLEARANCE",
 }
 
 export enum TaskStatus {
@@ -609,6 +702,7 @@ export enum TaskStatusInput {
 
 export enum TeamRole {
   EVALUATION = "EVALUATION",
+  IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
@@ -646,6 +740,15 @@ export interface ModelPlanChanges {
   someNumbers?: number[] | null;
   archived?: boolean | null;
   status?: ModelStatus | null;
+}
+
+export interface OperationalSolutionChanges {
+  needed?: boolean | null;
+  pocName?: string | null;
+  pocEmail?: string | null;
+  mustStartDts?: Time | null;
+  mustFinishDts?: Time | null;
+  status?: OpSolutionStatus | null;
 }
 
 /**
@@ -754,6 +857,7 @@ export interface PlanDocumentInput {
   modelPlanID: UUID;
   fileData: Upload;
   documentType: DocumentType;
+  restricted: boolean;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
 }
@@ -774,7 +878,6 @@ export interface PlanGeneralCharacteristicsChanges {
   hasComponentsOrTracks?: boolean | null;
   hasComponentsOrTracksDiffer?: string | null;
   hasComponentsOrTracksNote?: string | null;
-  alternativePaymentModel?: boolean | null;
   alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
@@ -784,8 +887,8 @@ export interface PlanGeneralCharacteristicsChanges {
   collectPlanBidsNote?: string | null;
   managePartCDEnrollment?: boolean | null;
   managePartCDEnrollmentNote?: string | null;
-  planContactUpdated?: boolean | null;
-  planContactUpdatedNote?: string | null;
+  planContractUpdated?: boolean | null;
+  planContractUpdatedNote?: string | null;
   careCoordinationInvolved?: boolean | null;
   careCoordinationInvolvedDescription?: string | null;
   careCoordinationInvolvedNote?: string | null;

@@ -36,8 +36,8 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		Content:     "This is a test comment",
 	}
 
-	regularUserPrincipal := &authentication.EUAPrincipal{
-		EUAID:             "TEST",
+	regularUserPrincipal := &authentication.ApplicationPrincipal{
+		Username:          "TEST",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -67,7 +67,7 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
@@ -123,8 +123,8 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 		Resolution:   true,
 	}
 
-	regularUserPrincipal := &authentication.EUAPrincipal{
-		EUAID:             "TEST",
+	regularUserPrincipal := &authentication.ApplicationPrincipal{
+		Username:          "TEST",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
@@ -155,7 +155,7 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["resolution"], result.Resolution)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {

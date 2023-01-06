@@ -1,11 +1,11 @@
-# Getting prod metrics for EASi
+# Getting prod metrics for MINT
 
 You'll likely need to fetch metrics for us at some point for the
-project to understand the impact EASi is making.
+project to understand the impact MINT is making.
 
 ## Steps
 
-1. Visit [EASi Production](https://easi.cms.gov)
+1. Visit [MINT Production](https://mint.cms.gov)
 1. Login with your EUA credentials
 1. Open up the browser console and find your OKTA Access Token with the
 following command:
@@ -20,7 +20,7 @@ following command:
 to whatever makes sense for your query:
 
     ```BASH
-    curl -X GET 'https://easi.cms.gov/api/v1/metrics?startTime=2020-05-30T00:00:00.00Z' \
+    curl -X GET 'https://mint.cms.gov/api/v1/metrics?startTime=2020-05-30T00:00:00.00Z' \
     -H "Authorization: Bearer $OKTA_TOKEN"
     ```
 

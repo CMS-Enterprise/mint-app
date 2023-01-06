@@ -1,12 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CardGroup, GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
-import ArticleCard from 'components/ArticleCard';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
-import helpAndKnowledgeArticles from './Articles';
+import HelpCardGroup from './Articles/_components/HelpCardGroup';
 
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -29,11 +28,7 @@ export const HelpAndKnowledgeHome = () => {
       <GridContainer>
         <h2 className="margin-bottom-0">{t('gettingStarted')}</h2>
         <p className="margin-bottom-3">{t('instructions')}</p>
-        <CardGroup className="margin-y-2">
-          {helpAndKnowledgeArticles.map(article => (
-            <ArticleCard key={article.route} {...article} isLink />
-          ))}
-        </CardGroup>
+        <HelpCardGroup className="margin-y-2" />
       </GridContainer>
     </MainContent>
   );

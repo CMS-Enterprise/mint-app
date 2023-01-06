@@ -7,10 +7,10 @@ exports[`RelatedArticle matches the snapshot 1`] = `
     data-testid="article-card"
   >
     <div
-      class="usa-card__container radius-md shadow-2 minh-mobile"
+      class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
     >
       <header
-        class="usa-card__header padding-x-3 padding-top-3"
+        class="usa-card__header padding-0"
         data-testid="CardHeader"
       >
         <h3
@@ -19,8 +19,19 @@ exports[`RelatedArticle matches the snapshot 1`] = `
           Overview for adding a model
         </h3>
       </header>
+      <a
+        class="usa-link width-fit-content display-block "
+        href="/help-and-knowledge/getting-started"
+      >
+        <span
+          class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+          data-testid="tag"
+        >
+          Getting started
+        </span>
+      </a>
       <div
-        class="usa-card__body padding-top-0 article__body"
+        class="usa-card__body padding-x-0 article__body"
         data-testid="CardBody"
       >
         <p>
@@ -28,7 +39,7 @@ exports[`RelatedArticle matches the snapshot 1`] = `
         </p>
       </div>
       <div
-        class="usa-card__footer padding-top-2 article__footer"
+        class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
         data-testid="CardFooter"
       >
         <a

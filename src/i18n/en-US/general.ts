@@ -12,7 +12,8 @@ const general = {
   },
   edit: 'Edit',
   remove: 'Remove',
-  pageLoading: 'Loading the page'
+  pageLoading: 'Loading the page',
+  oktaWidget: 'Sign in with your EUA or IDM credentials.'
 };
 
 export default general;

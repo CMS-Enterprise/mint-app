@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
+
 // This is a query to get ALL data for ALL models, used for exporting/reporting features
 export default gql`
-  query GetAllModelData($includeAll: Boolean!) {
-    modelPlanCollection(includeAll: $includeAll) {
+  query GetAllModelData {
+    modelPlanCollection(filter: INCLUDE_ALL) {
       id
       modelName
       archived
@@ -124,7 +125,6 @@ export default gql`
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
-        alternativePaymentModel
         alternativePaymentModelTypes
         alternativePaymentModelNote
         keyCharacteristics
@@ -134,8 +134,8 @@ export default gql`
         collectPlanBidsNote
         managePartCDEnrollment
         managePartCDEnrollmentNote
-        planContactUpdated
-        planContactUpdatedNote
+        planContractUpdated
+        planContractUpdatedNote
         geographiesTargeted
         geographiesTargetedTypes
         geographiesTargetedTypesOther

@@ -14,64 +14,79 @@ type TimeOutWrapperProps = {
   children: React.ReactNode;
 };
 
+// TimeOutWrapper handles all of the logic for tracking user activity and conditionally rendering a timeout modal
+// if idle time reaches a certain threshold.
+// This component effectively doesn't do anything when using local auth.
 const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
-  const [lastActiveAt, setLastActiveAt] = useState(DateTime.local().toMillis());
-  const [expirationTime, setExpirationTime] = useState(0);
-
-  const LAST_ACTIVE_AT_KEY = 'mintLastActiveAt';
   const isLocalAuth =
     isLocalAuthEnabled() &&
     window.localStorage[localAuthStorageKey] &&
     JSON.parse(window.localStorage[localAuthStorageKey]).favorLocalAuth;
 
-  useIdleTimer({
-    onAction: () => {
-      setLastActiveAt(DateTime.local().toMillis());
-    },
-    events: ['mousedown', 'keydown'],
-    debounce: 500
-  });
-
   const { authState, oktaAuth } = useOktaAuth();
   const { t } = useTranslation();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [timeRemainingArr, setTimeRemainingArr] = useState([0, 'second']);
 
-  const tenMinutes = Duration.fromObject({ minutes: 10 }).as('milliseconds');
+  const fiveMinutes = Duration.fromObject({ minutes: 5 }).as('milliseconds');
+
+  // Since 5 minutes is used for the `promptTimeout` AND the `timeout`, you effectively have 10 minutes before you're logged out due to inactivity.
+  // 5 of those minutes will be uninterrupted, the other 5 will be when the prompt is up.
+  const idleTimer = useIdleTimer({
+    events: ['mousedown', 'keydown'],
+    onIdle: () => {
+      if (!isLocalAuth && authState?.isAuthenticated) {
+        oktaAuth.signOut();
+      }
+    },
+    onPrompt: () => {
+      if (!isLocalAuth && authState?.isAuthenticated) {
+        setTimeRemainingArr(formatSessionTimeRemaining(fiveMinutes));
+      }
+    },
+    promptTimeout: fiveMinutes,
+    crossTab: true,
+    syncTimers: 1000,
+    debounce: 500,
+    timeout: fiveMinutes
+  });
 
   const forceRenew = async () => {
-    const tokenManager = await oktaAuth.tokenManager;
-    tokenManager.renew('idToken');
-    tokenManager.renew('accessToken');
+    // If not using local auth, and we've got an authenticated user with an access token, attempt to refresh it
+    // Otherwise, do nothing
+    if (authState?.idToken && authState?.accessToken) {
+      const tokenManager = await oktaAuth.tokenManager;
+      tokenManager.renew('idToken');
+      tokenManager.renew('accessToken');
+    }
   };
 
   /**
-   * @param timeRemaining seconds
+   * @param timeRemainingMs milliseconds
    * @returns [minutes, seconds]
    */
   const formatSessionTimeRemaining = (
-    timeRemaining: number
+    timeRemainingMs: number
   ): [number, string] => {
-    const minutes = timeRemaining / 60;
+    const timeRemainingSeconds = timeRemainingMs / 1000;
+    const minutes = timeRemainingSeconds / 60;
     // Using Math.ceil() for greater than one minute
     // 299 seconds = 4.983 minutes, but should still display 5 minutes
     // Using Math.floor() for less than one minute
     // 59 seconds = .983 minutes, Using floor so minutes is 0 to display 59 secounds
     const wholeMinutes = minutes > 1 ? Math.ceil(minutes) : Math.floor(minutes);
 
-    if (timeRemaining > 0) {
+    if (timeRemainingSeconds > 0) {
       if (wholeMinutes > 0) {
         return [wholeMinutes, 'minute'];
       }
-      return [Math.floor(timeRemaining), 'second'];
+      return [Math.floor(timeRemainingSeconds), 'second'];
     }
     return [0, 'second'];
   };
 
   const handleModalExit = async () => {
-    setIsModalOpen(false);
-    setLastActiveAt(DateTime.local().toMillis());
+    idleTimer.reset();
     forceRenew();
   };
 
@@ -79,48 +94,30 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   // Updates the minutes/seconds in the message
   useInterval(
     () => {
-      const now = DateTime.local().toSeconds();
-      const isSessionExpired = now - expirationTime > 0;
-      setTimeRemainingArr(formatSessionTimeRemaining(expirationTime - now));
-      if (isSessionExpired) {
-        oktaAuth.signOut({
-          postLogoutRedirectUri: `${window.location.origin}/login`
-        });
-      }
+      setTimeRemainingArr(
+        formatSessionTimeRemaining(idleTimer.getRemainingTime())
+      );
     },
-    authState?.isAuthenticated && isModalOpen ? 1000 : null
-  );
-
-  // useInterval starts when a user is logged in AND the modal is not open
-  // useInterval stops/pauses, when a use is logged out or the modal is open
-  // Calculates the user's inactivity to display the modal
-  useInterval(
-    () => {
-      if (lastActiveAt + tenMinutes < DateTime.local().toMillis()) {
-        const now = DateTime.local();
-        const expiration = Math.floor(now.plus({ minutes: 5 }).toSeconds());
-        setExpirationTime(expiration);
-        setTimeRemainingArr(
-          formatSessionTimeRemaining(expiration - now.toSeconds())
-        );
-        setIsModalOpen(true);
-      }
-    },
-    authState?.isAuthenticated && !isModalOpen && !isLocalAuth ? 1000 : null
+    authState?.isAuthenticated && idleTimer.isPrompted() ? 1000 : null
   );
 
   // If user is authenticated and has a token, renew it forever one
   // minute before expiration.
   // The user's inactivity will log the user out.
   useEffect(() => {
-    const twoMinutes = Duration.fromObject({ minutes: 1 }).as('seconds');
+    const oneMinute = Duration.fromObject({ minutes: 1 }).as('seconds');
 
     if (authState?.isAuthenticated && authState.accessToken) {
       // expiresAt is in seconds
       const timeUntilTokenExpiration =
         authState?.accessToken?.expiresAt -
         DateTime.local().toSeconds() -
-        twoMinutes;
+        oneMinute;
+
+      // If token is expired already, sign out!
+      if (timeUntilTokenExpiration <= 0) {
+        oktaAuth.signOut();
+      }
 
       const timeout = setTimeout(() => {
         forceRenew();
@@ -132,32 +129,9 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated, authState?.accessToken]);
 
-  // Set lastActiveAt between tabs
-  useEffect(() => {
-    localStorage.setItem(LAST_ACTIVE_AT_KEY, lastActiveAt.toString());
-  }, [lastActiveAt]);
-
-  // Listen to lastActiveAt between tabs
-  useEffect(() => {
-    const handler = (event: StorageEvent) => {
-      if (
-        event.storageArea === localStorage &&
-        event.key === LAST_ACTIVE_AT_KEY
-      ) {
-        setLastActiveAt(parseInt(event.newValue || '0', 10));
-        setIsModalOpen(false);
-      }
-    };
-
-    window.addEventListener('storage', handler);
-    return () => {
-      window.removeEventListener('storage', handler);
-    };
-  }, []);
-
   return (
     <>
-      <Modal isOpen={isModalOpen} closeModal={handleModalExit}>
+      <Modal isOpen={idleTimer.isPrompted()} closeModal={handleModalExit}>
         <h3
           className="margin-top-0"
           role="timer"

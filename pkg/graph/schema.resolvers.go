@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -68,8 +69,9 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 // Documents is the resolver for the documents field.
 func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
 
-	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, r.store, r.s3Client)
+	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
 	return documents, err
 }
 
@@ -116,6 +118,12 @@ func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) (
 	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// PrepareForClearance is the resolver for the prepareForClearance field.
+func (r *modelPlanResolver) PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ReadyForClearanceRead(logger, r.store, obj.ID)
+}
+
 // NameHistory is the resolver for the nameHistory field.
 func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -123,20 +131,18 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 	return resolvers.ModelPlanNameHistory(logger, obj.ID, sort, r.store)
 }
 
+// OperationalNeeds is the resolver for the operationalNeeds field.
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	principalInfo, err := r.service.FetchUserInfo(ctx, principal.ID())
-	if err != nil { //if can't get user info, use EUAID as commonName
-		tempPrincipalInfo := models.UserInfo{
-			EuaUserID:  principal.ID(),
-			CommonName: principal.ID(),
-		}
-		principalInfo = &tempPrincipalInfo
-	}
 
-	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo, principal)
+	return resolvers.ModelPlanCreate(logger, modelName, r.store, principal)
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.
@@ -152,7 +158,16 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanCollaborator(logger, &input, principal, r.store)
+	planCollaborator, _, err := resolvers.CreatePlanCollaborator(
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		&input,
+		principal,
+		r.store,
+		true,
+	)
+	return planCollaborator, err
 }
 
 // UpdatePlanCollaborator is the resolver for the updatePlanCollaborator field.
@@ -281,14 +296,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 }
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
@@ -318,7 +333,7 @@ func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.N
 func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanFavoriteCreate(logger, principal, r.store, modelPlanID)
+	return resolvers.PlanFavoriteCreate(logger, principal, principal.ID(), r.store, modelPlanID)
 }
 
 // DeletePlanFavorite is the resolver for the deletePlanFavorite field.
@@ -347,6 +362,73 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
+}
+
+// AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
+func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
+}
+
+// UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
+func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
+}
+
+// AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
+func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionInsertOrUpdate(logger, operationalNeedID, solutionType, changes, principal, r.store)
+}
+
+// AddOrUpdateCustomOperationalSolution is the resolver for the addOrUpdateCustomOperationalSolution field.
+func (r *mutationResolver) AddOrUpdateCustomOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, customSolutionType string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionInsertOrUpdateCustom(logger, operationalNeedID, customSolutionType, changes, principal, r.store)
+}
+
+// UpdateCustomOperationalSolutionByID is the resolver for the updateCustomOperationalSolutionByID field.
+func (r *mutationResolver) UpdateCustomOperationalSolutionByID(ctx context.Context, id uuid.UUID, customSolutionType *string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionCustomUpdateByID(logger, id, customSolutionType, changes, principal, r.store)
+}
+
+// CreatePlanDocumentSolutionLinks is the resolver for the createPlanDocumentSolutionLinks field.
+func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) ([]*models.PlanDocumentSolutionLink, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentSolutionLinksCreate(logger, r.store, solutionID, documentIDs, principal)
+}
+
+// RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
+func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store)
+}
+
+// Solutions is the resolver for the solutions field.
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
+}
+
+// Documents is the resolver for the documents field.
+func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanDocumentsReadBySolutionID(
+		logger,
+		obj.ID,
+		principal,
+		r.store,
+		r.s3Client,
+	)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -398,6 +480,14 @@ func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.Plan
 	}
 
 	return url, nil
+}
+
+// NumLinkedSolutions is the resolver for the numLinkedSolutions field.
+func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
@@ -751,6 +841,12 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
+// PossibleSolutions is the resolver for the possibleSolutions field.
+func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -769,6 +865,11 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 // ModelPlan is the resolver for the modelPlan field.
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
+	constants.GetSampleUUID()
+
+	if id == constants.GetSampleUUID() {
+		return resolvers.ModelPlanGetSampleModel(logger, r.store)
+	}
 
 	return resolvers.ModelPlanGetByID(logger, id, r.store)
 }
@@ -781,10 +882,10 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 }
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
-func (r *queryResolver) ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error) {
+func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollection(logger, principal, r.store, includeAll)
+	return resolvers.ModelPlanCollection(logger, principal, r.store, filter)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.
@@ -825,7 +926,7 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
+	return resolvers.NDAAgreementGetByUserID(logger, principal, r.store)
 }
 
 // CrTdl is the resolver for the crTdl field.
@@ -834,10 +935,43 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 	return resolvers.PlanCrTdlGet(logger, id, r.store)
 }
 
+// OperationalSolutions is the resolver for the operationalSolutions field.
+func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, includeNotNeeded, r.store)
+}
+
+// OperationalSolution is the resolver for the operationalSolution field.
+func (r *queryResolver) OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionGetByID(logger, id, r.store)
+}
+
+// OperationalNeed is the resolver for the operationalNeed field.
+func (r *queryResolver) OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalNeedGetByID(logger, id, r.store)
+}
+
 // AuditChanges is the resolver for the auditChanges field.
 func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey, r.store)
+}
+
+// PossibleOperationalNeeds is the resolver for the possibleOperationalNeeds field.
+func (r *queryResolver) PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalNeedCollectionGet(logger, r.store)
+}
+
+// PossibleOperationalSolutions is the resolver for the possibleOperationalSolutions field.
+func (r *queryResolver) PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PossibleOperationalSolutionCollectionGetAll(logger, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -867,6 +1001,16 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
+
+// OperationalNeed returns generated.OperationalNeedResolver implementation.
+func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
+	return &operationalNeedResolver{r}
+}
+
+// OperationalSolution returns generated.OperationalSolutionResolver implementation.
+func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
+	return &operationalSolutionResolver{r}
+}
 
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
@@ -905,6 +1049,11 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
+// PossibleOperationalNeed returns generated.PossibleOperationalNeedResolver implementation.
+func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedResolver {
+	return &possibleOperationalNeedResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -917,6 +1066,8 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type operationalNeedResolver struct{ *Resolver }
+type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
@@ -926,6 +1077,7 @@ type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
+type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

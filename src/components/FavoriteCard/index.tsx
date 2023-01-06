@@ -34,8 +34,20 @@ const FavoriteCard = ({
   removeFavorite
 }: FavoriteCardProps) => {
   const { t } = useTranslation('modelPlan');
+  const { t: h } = useTranslation('home');
 
-  const { id, modelName, basics, collaborators, crTdls, status } = modelPlan;
+  const {
+    id,
+    basics,
+    collaborators,
+    crTdls,
+    modelName,
+    nameHistory,
+    status
+  } = modelPlan;
+
+  const filteredList = nameHistory.slice(1);
+  const firstThreeNames = filteredList.slice(0, 3).join(', ');
 
   const crtdlIDs = crTdls.map(crtdl => crtdl.idNumber);
 
@@ -63,6 +75,13 @@ const FavoriteCard = ({
           </div>
           <TaskListStatus modelID={id} status={status} />
         </div>
+        {nameHistory && nameHistory.length > 1 && (
+          <p className="margin-y-0 font-body-xs line-height-sans-2">
+            {h('previously')} {firstThreeNames}{' '}
+            {filteredList.length > 3 ??
+              `+ ${filteredList.length - 3} ${h('more')}`}
+          </p>
+        )}
         <p className="bookmark__body-text line-height-body-4">
           {basics.goal || ''}
         </p>
@@ -95,7 +114,6 @@ const FavoriteCard = ({
           </Grid>
           <Grid desktop={{ col: 4 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.cRTDLs`)}</p>
-            {/* TODO: Fill with CR TDL data */}
             <p className="text-bold margin-top-0 margin-bottom-0">
               {crtdlIDs.length ? (
                 crtdlIDs.join(', ')

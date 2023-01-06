@@ -27,7 +27,6 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: false,
   hasComponentsOrTracksDiffer: null,
   hasComponentsOrTracksNote: null,
-  alternativePaymentModel: true,
   alternativePaymentModelTypes: [
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
@@ -45,8 +44,8 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   collectPlanBidsNote: null,
   managePartCDEnrollment: null,
   managePartCDEnrollmentNote: null,
-  planContactUpdated: null,
-  planContactUpdatedNote: null,
+  planContractUpdated: null,
+  planContractUpdatedNote: null,
   careCoordinationInvolved: false,
   careCoordinationInvolvedDescription: null,
   careCoordinationInvolvedNote: null,
@@ -55,7 +54,7 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   additionalServicesInvolvedNote: null,
   communityPartnersInvolved: true,
   communityPartnersInvolvedDescription: 'Are community partners involved?\n\n',
-  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContactUpdatedNote',
+  communityPartnersInvolvedNote: 'frwegqergqgrqwg planContractUpdatedNote',
   geographiesTargeted: false,
   geographiesTargetedTypes: [],
   geographiesTargetedTypesOther: null,

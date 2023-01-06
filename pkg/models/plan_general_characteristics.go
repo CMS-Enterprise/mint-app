@@ -20,7 +20,6 @@ type PlanGeneralCharacteristics struct {
 	HasComponentsOrTracksNote   *string        `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
-	AlternativePaymentModel      *bool          `json:"alternativePaymentModel" db:"alternative_payment_model" statusWeight:"1"`
 	AlternativePaymentModelTypes pq.StringArray `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
 	AlternativePaymentModelNote  *string        `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
 	KeyCharacteristics           pq.StringArray `json:"keyCharacteristics" db:"key_characteristics"`
@@ -30,8 +29,8 @@ type PlanGeneralCharacteristics struct {
 	CollectPlanBidsNote          *string        `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
 	ManagePartCDEnrollment       *bool          `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`
 	ManagePartCDEnrollmentNote   *string        `json:"managePartCDEnrollmentNote" db:"manage_part_c_d_enrollment_note"`
-	PlanContactUpdated           *bool          `json:"planContactUpdated" db:"plan_contact_updated"`
-	PlanContactUpdatedNote       *string        `json:"planContactUpdatedNote" db:"plan_contact_updated_note"`
+	PlanContractUpdated          *bool          `json:"planContractUpdated" db:"plan_contract_updated"`
+	PlanContractUpdatedNote      *string        `json:"planContractUpdatedNote" db:"plan_contract_updated_note"`
 
 	// Page 3
 	CareCoordinationInvolved              *bool   `json:"careCoordinationInvolved" db:"care_coordination_involved" statusWeight:"1"`

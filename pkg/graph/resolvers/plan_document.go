@@ -5,6 +5,7 @@ import (
 	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/accesscontrol"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -15,7 +16,7 @@ import (
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
 func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
-	document := models.NewPlanDocument(principal.ID(), input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes))
+	document := models.NewPlanDocument(principal.ID(), input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes))
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
@@ -46,12 +47,61 @@ func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload
 }
 
 // PlanDocumentsReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
-func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
-	documents, err := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
+func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
+	isCollaborator, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
 	if err != nil {
 		return nil, err
 	}
 
+	if !isCollaborator {
+		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return notRestrictedDocuments, nil
+	}
+
+	documents, docErr := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
+
+	if docErr != nil {
+		return nil, docErr
+	}
+	return documents, nil
+
+}
+
+// PlanDocumentsReadBySolutionID implements resolver logic to fetch a plan document object by solution ID
+func PlanDocumentsReadBySolutionID(
+	logger *zap.Logger,
+	id uuid.UUID,
+	principal authentication.Principal,
+	store *storage.Store,
+	s3Client *upload.S3Client,
+) ([]*models.PlanDocument, error) {
+
+	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, id)
+	if err != nil {
+		return nil, err
+	}
+
+	if !isCollaborator {
+		notRestrictedDocuments, err := store.PlanDocumentsReadBySolutionIDNotRestricted(logger, id, s3Client)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return notRestrictedDocuments, nil
+	}
+
+	documents, docErr := store.PlanDocumentsReadBySolutionID(logger, id, s3Client)
+
+	if docErr != nil {
+		return nil, docErr
+	}
 	return documents, nil
 }
 

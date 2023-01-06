@@ -5,6 +5,10 @@ const home = {
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
   startNow: 'Start a new Model Plan',
+  previously: 'previously ',
+  viewMore: 'View {{-number}} more',
+  viewLess: 'View less',
+  more: 'more',
   mintTasks: [
     'collaborate on requirements for new CMMI models and demonstrations',
     'access resources to help you complete your model plans'
@@ -26,10 +30,17 @@ const home = {
     admin: {
       heading: 'Model plans'
     },
+    mac: {
+      heading: 'Upcoming models',
+      empty: {
+        heading: 'There aren’t any model plans with CRs or TDLs.',
+        body:
+          'Check back later. When CR or TDL is added to a model plan, it will appear here.'
+      }
+    },
     empty: {
-      heading: 'You don’t have any draft model plans yet',
-      body:
-        'Start a new plan by clicking the button above. Once you start one, it will appear in this section.'
+      heading: 'There aren’t any model plans yet.',
+      body: 'Once one is added, it will appear here.'
     },
     caption:
       'Below is a list of governance requests that are in draft or submitted.',
@@ -38,6 +49,10 @@ const home = {
       category: 'Category',
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
+      startDate: 'Model start date',
+      paymentDate: 'Payment start date',
+      keyCharacteristics: 'Key characteristics',
+      crTDLs: 'CRs and TDLs',
       status: 'Status',
       recentActivity: 'Recent activity'
     },

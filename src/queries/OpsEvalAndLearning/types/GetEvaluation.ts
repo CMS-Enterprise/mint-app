@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, TaskStatus } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetEvaluation
@@ -29,9 +29,9 @@ export interface GetEvaluation_modelPlan_opsEvalAndLearning {
   shareCclfDataNote: string | null;
 }
 
-export interface GetEvaluation_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetEvaluation_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetEvaluation_modelPlan {
@@ -39,7 +39,7 @@ export interface GetEvaluation_modelPlan {
   id: UUID;
   modelName: string;
   opsEvalAndLearning: GetEvaluation_modelPlan_opsEvalAndLearning;
-  itTools: GetEvaluation_modelPlan_itTools;
+  operationalNeeds: GetEvaluation_modelPlan_operationalNeeds[];
 }
 
 export interface GetEvaluation {

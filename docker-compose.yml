@@ -34,23 +34,26 @@ services:
       - API_PORT=8080
       - OKTA_CLIENT_ID=0oad9awvebnsMwWNa297
       - OKTA_ISSUER=https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
+      - EMAIL_HOST=email
+      - EMAIL_PORT=1025
+      - EMAIL_SENDER
+      - EMAIL_ENABLED
       - GRT_EMAIL=success@simulator.amazonses.com
       - ACCESSIBILITY_TEAM_EMAIL=success@simluator.amazonses.com
       - EMAIL_TEMPLATE_DIR=./pkg/email/templates
       - AWS_REGION=us-west-2
-      - AWS_SES_SOURCE=no-reply-$APP_ENV@info.easi.cms.gov
-      - AWS_SES_SOURCE_ARN
       - AWS_S3_FILE_UPLOAD_BUCKET=mint-app-file-uploads
       - AWS_ACCESS_KEY_ID=1
       - AWS_SECRET_ACCESS_KEY=1
       - PGHOST=db
       - PGPORT=5432
       - PGDATABASE=postgres
-      - PGUSER=app_user
-      - PGPASS=supersecretapp
+      - PGUSER=postgres
+      - PGPASS=mysecretpassword
       - PGSSLMODE=disable
       - DB_MAX_CONNECTIONS=20
       - FLAG_SOURCE
+      - FLAGDATA_FILE
       - LD_SDK_KEY
       - LD_TIMEOUT_SECONDS=30
       - LD_ENV_USER
@@ -58,11 +61,13 @@ services:
       - LAMBDA_ENDPOINT=http://prince:9001
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
-      - MINIO_ADDRESS
+      - MINIO_ADDRESS=http://minio:9005
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
       - FAKTORY_URL
+      - FAKTORY_PROCESS_JOBS
+      - FAKTORY_CONNECTIONS
 
     depends_on:
       db_migrate:
@@ -91,15 +96,15 @@ services:
       - "1085:1080"
       - "1030:1025"
   faktory:
-    image: contribsys/faktory:latest
-    command: /faktory -b :7419 -w :7420 -e production
+    image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
       - 7419:7419
       - 7420:7420
-    environment:
-      - FAKTORY_PASSWORD
     volumes:
       - faktory:/var/lib/faktory
+      - type: bind
+        source: ./.faktory/conf.d
+        target: /root/.faktory/conf.d
     restart: always
 volumes:
   faktory:

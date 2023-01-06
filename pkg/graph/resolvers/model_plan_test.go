@@ -1,13 +1,16 @@
 package resolvers
 
 import (
+	"time"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
+	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal)
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)
@@ -38,7 +41,7 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
 	suite.NotNil(result.ModifiedBy)
 	suite.NotNil(result.ModifiedDts)
-	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {
@@ -54,42 +57,50 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	// Create 3 plans without additional collaborators (TEST is the only one, by default)
 	_ = suite.createModelPlan("Test Plan")
 	_ = suite.createModelPlan("Test Plan 2")
-	_ = suite.createModelPlan("Test Plan 3")
+	planWithCRTDLs := suite.createModelPlan("Test Plan with CRTDL")
 
 	// Create a plan that has CLAB as a collaborator (along with TEST)
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
 	suite.createPlanCollaborator(planWithCollab, "CLAB", "Clab Rater", models.TeamRoleEvaluation, "clab.rater@gmail.com")
 
+	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
+
 	// Get plan collection as CLAB
-	clabPrincipal := &authentication.EUAPrincipal{
-		EUAID:             "CLAB",
+	clabPrincipal := &authentication.ApplicationPrincipal{
+		Username:          "CLAB",
 		JobCodeUSER:       true,
 		JobCodeASSESSMENT: false,
 	}
 
-	// Assert that CLAB only sees 1 model plan with includeAll = false
-	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, false)
+	// Assert that CLAB only sees 1 model plan with collab only filter
+	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 1)
 
-	// Assert that CLAB sees all 4 model plans with includeAll = true
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, true)
+	// Assert that CLAB sees all 4 model plans with include all filter
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
 
-	// Assert that TEST only sees all 4 model plans with includeAll = false (as they're a collaborator on all of them)
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, false)
+	// Assert that TEST only sees all 4 model plans with collab only filter (as they're a collaborator on all of them)
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
 
-	// Assert that TEST sees all 4 model plans with includeAll = true
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, true)
+	// Assert that TEST sees all 4 model plans with include all filter
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
+
+	// Assert that TEST sees all 1 model plan when CRDTL is seelcted
+	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls)
+	suite.NoError(err)
+	suite.NotNil(result)
+	suite.Len(result, 1)
 }
 
 func (suite *ResolverSuite) TestModelPlanNameHistory() {

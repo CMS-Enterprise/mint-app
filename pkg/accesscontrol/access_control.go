@@ -54,18 +54,51 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 // IsCollaboratorModelPlanID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
-
 	if principal.AllowASSESSMENT() {
 		return true, nil
-	} else if principal.AllowUSER() {
+	}
+
+	if principal.AllowMAC() {
+		return false, nil
+	}
+
+	if principal.AllowUSER() {
 		collaborator, err := store.CheckIfCollaborator(logger, principal.ID(), modelPlanID)
 		return collaborator, err
-
-	} else {
-		errString := "user has no roles"
-		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
-		return false, fmt.Errorf(errString)
 	}
+
+	errString := "user has no roles"
+	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
+	return false, fmt.Errorf(errString)
+}
+
+// IsCollaboratorSolutionID handles the logic to assess if a user has permission to update an object by virtue of being
+// a collaborator on a model associated with a Solution by SolutionID.
+// Users with the Assessment role are automatically allowed access to update all records.
+func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, solutionID uuid.UUID) (bool, error) {
+	if principal.AllowASSESSMENT() {
+		return true, nil
+	}
+
+	if principal.AllowMAC() {
+		return false, nil
+	}
+
+	if principal.AllowUSER() {
+		collaborator, err := store.CheckIfCollaboratorBySolutionID(logger, principal.ID(), solutionID)
+		return collaborator, err
+	}
+
+	errString := "user has no roles"
+	logger.Warn(
+		errString,
+		zap.String("user", principal.ID()),
+		zap.String(
+			"SolutionID",
+			solutionID.String(),
+		),
+	)
+	return false, fmt.Errorf(errString)
 
 }
 

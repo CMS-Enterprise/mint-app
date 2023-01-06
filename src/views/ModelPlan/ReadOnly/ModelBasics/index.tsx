@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
@@ -18,6 +18,7 @@ import {
   translateModelCategory,
   translateModelType
 } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -25,8 +26,16 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 
 import './index.scss';
 
-const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
+export type ReadOnlyProps = {
+  modelID: string;
+  clearance?: boolean;
+};
+
+const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   const { t } = useTranslation('basics');
+  const { t: p } = useTranslation('prepareForClearance');
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
     variables: {
@@ -37,6 +46,11 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
+
+  const { nameHistory } = data?.modelPlan || {};
+  const filteredNameHistory = nameHistory?.filter(
+    previousName => previousName !== modelName
+  );
 
   const {
     modelCategory,
@@ -75,11 +89,26 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
       data-testid="read-only-model-plan--model-basics"
     >
       <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
+        <h2 className="margin-top-0 margin-bottom-4">
+          {clearance ? t('clearanceHeading') : t('heading')}
+        </h2>
+
         {status && <TaskListStatusTag status={status} />}
       </div>
 
-      {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
+      {clearance && (
+        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
+          {p('forModelPlan', {
+            modelName
+          })}
+        </p>
+      )}
+
+      <ReadOnlySection
+        heading={t('previousNames')}
+        list
+        listItems={filteredNameHistory}
+      />
 
       <ReadOnlySection
         heading={t('modelCategory')}

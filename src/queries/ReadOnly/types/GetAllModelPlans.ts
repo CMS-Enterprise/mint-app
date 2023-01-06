@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, ModelCategory, TeamRole } from "./../../../types/graphql-global-types";
+import { ModelPlanFilter, ModelStatus, ModelCategory, TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelPlans
@@ -32,6 +32,7 @@ export interface GetAllModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  nameHistory: string[];
   status: ModelStatus;
   isFavorite: boolean;
   isCollaborator: boolean;
@@ -42,4 +43,8 @@ export interface GetAllModelPlans_modelPlanCollection {
 
 export interface GetAllModelPlans {
   modelPlanCollection: GetAllModelPlans_modelPlanCollection[];
+}
+
+export interface GetAllModelPlansVariables {
+  filter: ModelPlanFilter;
 }

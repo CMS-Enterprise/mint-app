@@ -1,6 +1,6 @@
 describe('Discussion Center', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
   it('asks a question and answers a question', () => {
@@ -21,7 +21,7 @@ describe('Discussion Center', () => {
     cy.contains('button', '1 unanswered question');
 
     cy.contains(
-      'p',
+      '.usa-alert__body',
       'There are no answered questions yet. When a question is answered, it will appear here with the response.'
     );
 
@@ -45,7 +45,7 @@ describe('Discussion Center', () => {
     cy.contains('button', '1 answered question');
 
     cy.contains(
-      'p',
+      '.usa-alert__body',
       'There are no unanswered questions. Ask a question using the link above.'
     );
 

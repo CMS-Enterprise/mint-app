@@ -244,6 +244,64 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
+                data-scroll="restricted"
+              >
+                <label
+                  class="usa-label maxw-none"
+                  data-testid="label"
+                  for="document-upload-restricted-yes"
+                >
+                  Does this document contain cost information?
+                </label>
+                <p
+                  class="margin-0 line-height-body-4"
+                >
+                  Cost information would include any content relating to budget, funding, cost, or other monetary considerations.
+                </p>
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="document-upload-restricted-true"
+                      name="restricted"
+                      type="radio"
+                      value="YES"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="document-upload-restricted-true"
+                    >
+                      Yes
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="document-upload-restricted-false"
+                      name="restricted"
+                      type="radio"
+                      value="NO"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="document-upload-restricted-false"
+                    >
+                      No
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="usa-form-group"
                 data-scroll="optionalNotes"
                 id="optional-notes"
               >
@@ -293,9 +351,10 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
         <div
           class="display-block"
         >
-          <a
-            class="usa-link display-inline-flex flex-align-center margin-y-3"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
+          <button
+            class="usa-button display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -316,7 +375,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               />
             </svg>
             Don’t upload and return to previous page
-          </a>
+          </button>
         </div>
       </div>
     </div>

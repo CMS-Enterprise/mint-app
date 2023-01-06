@@ -21,6 +21,7 @@ import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
+import ModelInfoWrapper from 'views/ModelInfoWrapper';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -35,10 +36,12 @@ import Basics from 'views/ModelPlan/TaskList/Basics';
 import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'views/ModelPlan/TaskList/GeneralCharacteristics';
+import ITSolutions from 'views/ModelPlan/TaskList/ITSolutions';
 import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
+import PrepareForClearance from 'views/ModelPlan/TaskList/PrepareForClearance';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
@@ -49,6 +52,7 @@ import SubscriptionHandler from 'views/SubscriptionHandler';
 import SubscriptionWrapper from 'views/SubscriptionWrapper';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
+import Unfollow from 'views/Unfollow';
 import UserInfo from 'views/User';
 import UserInfoWrapper from 'views/UserInfoWrapper';
 
@@ -77,6 +81,8 @@ const AppRoutes = () => {
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
+
+      <SecureRoute path="/unfollow" exact component={Unfollow} />
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
@@ -144,6 +150,17 @@ const AppRoutes = () => {
         path="/models/:modelID/task-list/it-tools"
         component={ITTools}
       />
+      {!flags.hideITLeadExperience && (
+        <SecureRoute
+          path="/models/:modelID/task-list/it-solutions"
+          component={ITSolutions}
+        />
+      )}
+
+      <SecureRoute
+        path="/models/:modelID/task-list/prepare-for-clearance"
+        component={PrepareForClearance}
+      />
       <SecureRoute
         path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
@@ -207,15 +224,17 @@ const App = () => {
                   <UserInfoWrapper>
                     <NDAWrapper>
                       <ModelAccessWrapper>
-                        <TimeOutWrapper>
-                          <NavContextProvider>
-                            <PageWrapper>
-                              <Header />
-                              <AppRoutes />
-                              <Footer />
-                            </PageWrapper>
-                          </NavContextProvider>
-                        </TimeOutWrapper>
+                        <ModelInfoWrapper>
+                          <TimeOutWrapper>
+                            <NavContextProvider>
+                              <PageWrapper>
+                                <Header />
+                                <AppRoutes />
+                                <Footer />
+                              </PageWrapper>
+                            </NavContextProvider>
+                          </TimeOutWrapper>
+                        </ModelInfoWrapper>
                       </ModelAccessWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>

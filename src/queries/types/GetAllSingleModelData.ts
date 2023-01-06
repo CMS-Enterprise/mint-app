@@ -135,7 +135,6 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   communityPartnersInvolved: boolean | null;
   communityPartnersInvolvedDescription: string | null;
   communityPartnersInvolvedNote: string | null;
-  alternativePaymentModel: boolean | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
@@ -145,8 +144,8 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;
   managePartCDEnrollmentNote: string | null;
-  planContactUpdated: boolean | null;
-  planContactUpdatedNote: string | null;
+  planContractUpdated: boolean | null;
+  planContractUpdatedNote: string | null;
   geographiesTargeted: boolean | null;
   geographiesTargetedTypes: GeographyType[];
   geographiesTargetedTypesOther: string | null;

@@ -65,15 +65,21 @@ type PlanDocumentInput struct {
 	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
+	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription"`
 	OptionalNotes        *string             `json:"optionalNotes"`
 }
 
+type PrepareForClearance struct {
+	Status             PrepareForClearanceStatus `json:"status"`
+	LatestClearanceDts *time.Time                `json:"latestClearanceDts"`
+}
+
 type TaskListSectionLockStatus struct {
-	ModelPlanID  uuid.UUID       `json:"modelPlanID"`
-	Section      TaskListSection `json:"section"`
-	LockedBy     string          `json:"lockedBy"`
-	IsAssessment bool            `json:"isAssessment"`
+	ModelPlanID  uuid.UUID              `json:"modelPlanID"`
+	Section      models.TaskListSection `json:"section"`
+	LockedBy     string                 `json:"lockedBy"`
+	IsAssessment bool                   `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {
@@ -221,17 +227,19 @@ const (
 	AlternativePaymentModelTypeRegular  AlternativePaymentModelType = "REGULAR"
 	AlternativePaymentModelTypeMips     AlternativePaymentModelType = "MIPS"
 	AlternativePaymentModelTypeAdvanced AlternativePaymentModelType = "ADVANCED"
+	AlternativePaymentModelTypeNotApm   AlternativePaymentModelType = "NOT_APM"
 )
 
 var AllAlternativePaymentModelType = []AlternativePaymentModelType{
 	AlternativePaymentModelTypeRegular,
 	AlternativePaymentModelTypeMips,
 	AlternativePaymentModelTypeAdvanced,
+	AlternativePaymentModelTypeNotApm,
 }
 
 func (e AlternativePaymentModelType) IsValid() bool {
 	switch e {
-	case AlternativePaymentModelTypeRegular, AlternativePaymentModelTypeMips, AlternativePaymentModelTypeAdvanced:
+	case AlternativePaymentModelTypeRegular, AlternativePaymentModelTypeMips, AlternativePaymentModelTypeAdvanced, AlternativePaymentModelTypeNotApm:
 		return true
 	}
 	return false
@@ -1154,6 +1162,49 @@ func (e *ModelLearningSystemType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ModelLearningSystemType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ModelPlanFilter string
+
+const (
+	ModelPlanFilterIncludeAll ModelPlanFilter = "INCLUDE_ALL"
+	ModelPlanFilterCollabOnly ModelPlanFilter = "COLLAB_ONLY"
+	ModelPlanFilterWithCrTdls ModelPlanFilter = "WITH_CR_TDLS"
+)
+
+var AllModelPlanFilter = []ModelPlanFilter{
+	ModelPlanFilterIncludeAll,
+	ModelPlanFilterCollabOnly,
+	ModelPlanFilterWithCrTdls,
+}
+
+func (e ModelPlanFilter) IsValid() bool {
+	switch e {
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls:
+		return true
+	}
+	return false
+}
+
+func (e ModelPlanFilter) String() string {
+	return string(e)
+}
+
+func (e *ModelPlanFilter) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelPlanFilter(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelPlanFilter", str)
+	}
+	return nil
+}
+
+func (e ModelPlanFilter) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -2472,6 +2523,51 @@ func (e PpToAdvertiseType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type PrepareForClearanceStatus string
+
+const (
+	PrepareForClearanceStatusCannotStart       PrepareForClearanceStatus = "CANNOT_START"
+	PrepareForClearanceStatusReady             PrepareForClearanceStatus = "READY"
+	PrepareForClearanceStatusInProgress        PrepareForClearanceStatus = "IN_PROGRESS"
+	PrepareForClearanceStatusReadyForClearance PrepareForClearanceStatus = "READY_FOR_CLEARANCE"
+)
+
+var AllPrepareForClearanceStatus = []PrepareForClearanceStatus{
+	PrepareForClearanceStatusCannotStart,
+	PrepareForClearanceStatusReady,
+	PrepareForClearanceStatusInProgress,
+	PrepareForClearanceStatusReadyForClearance,
+}
+
+func (e PrepareForClearanceStatus) IsValid() bool {
+	switch e {
+	case PrepareForClearanceStatusCannotStart, PrepareForClearanceStatusReady, PrepareForClearanceStatusInProgress, PrepareForClearanceStatusReadyForClearance:
+		return true
+	}
+	return false
+}
+
+func (e PrepareForClearanceStatus) String() string {
+	return string(e)
+}
+
+func (e *PrepareForClearanceStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PrepareForClearanceStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PrepareForClearanceStatus", str)
+	}
+	return nil
+}
+
+func (e PrepareForClearanceStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type ProviderAddType string
 
 const (
@@ -2580,16 +2676,19 @@ const (
 	RoleMintUser Role = "MINT_USER"
 	// A MINT assessment team user
 	RoleMintAssessment Role = "MINT_ASSESSMENT"
+	// A MINT MAC user
+	RoleMintMac Role = "MINT_MAC"
 )
 
 var AllRole = []Role{
 	RoleMintUser,
 	RoleMintAssessment,
+	RoleMintMac,
 }
 
 func (e Role) IsValid() bool {
 	switch e {
-	case RoleMintUser, RoleMintAssessment:
+	case RoleMintUser, RoleMintAssessment, RoleMintMac:
 		return true
 	}
 	return false
@@ -2715,57 +2814,6 @@ func (e *StakeholdersType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e StakeholdersType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type TaskListSection string
-
-const (
-	TaskListSectionModelBasics                     TaskListSection = "MODEL_BASICS"
-	TaskListSectionGeneralCharacteristics          TaskListSection = "GENERAL_CHARACTERISTICS"
-	TaskListSectionParticipantsAndProviders        TaskListSection = "PARTICIPANTS_AND_PROVIDERS"
-	TaskListSectionBeneficiaries                   TaskListSection = "BENEFICIARIES"
-	TaskListSectionOperationsEvaluationAndLearning TaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
-	TaskListSectionPayment                         TaskListSection = "PAYMENT"
-	TaskListSectionItTools                         TaskListSection = "IT_TOOLS"
-)
-
-var AllTaskListSection = []TaskListSection{
-	TaskListSectionModelBasics,
-	TaskListSectionGeneralCharacteristics,
-	TaskListSectionParticipantsAndProviders,
-	TaskListSectionBeneficiaries,
-	TaskListSectionOperationsEvaluationAndLearning,
-	TaskListSectionPayment,
-	TaskListSectionItTools,
-}
-
-func (e TaskListSection) IsValid() bool {
-	switch e {
-	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools:
-		return true
-	}
-	return false
-}
-
-func (e TaskListSection) String() string {
-	return string(e)
-}
-
-func (e *TaskListSection) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = TaskListSection(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid TaskListSection", str)
-	}
-	return nil
-}
-
-func (e TaskListSection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

@@ -34,11 +34,9 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import {
-  ModelLearningSystemType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { ModelLearningSystemType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateModelLearningSystemType
@@ -86,8 +84,9 @@ const Learning = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -97,19 +96,21 @@ const Learning = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: InitialValueType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const {
-      id: updateId,
-      __typename,
-      status: inputStatus,
-      ...changeValues
-    } = formikValues;
+    const dirtyInputs = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    if (dirtyInputs.status) {
+      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+    }
+
     update({
       variables: {
-        id: updateId,
-        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
+        id,
+        changes: dirtyInputs
       }
     })
       .then(response => {
@@ -179,8 +180,8 @@ const Learning = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+        onSubmit={() => {
+          handleFormSubmit('task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -230,13 +231,12 @@ const Learning = () => {
                         {t('learningSystem')}
                       </legend>
 
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="ops-eval-and-learning-learning-systems-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
-                              `/models/${modelID}/task-list/it-tools/page-seven`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -343,7 +343,7 @@ const Learning = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -355,7 +355,7 @@ const Learning = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -366,7 +366,7 @@ const Learning = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

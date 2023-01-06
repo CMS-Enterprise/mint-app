@@ -64,33 +64,37 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           Model basics
         </h1>
         <div
-          class="padding-2 bg-primary-lighter display-flex"
-          data-testid="ask-a-question"
+          class="padding-2 bg-primary-lighter"
         >
-          <svg
-            class="usa-icon text-primary margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="display-flex"
+            data-testid="ask-a-question"
           >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
-            />
-          </svg>
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="ask-a-question-button"
-            type="button"
-          >
-            Ask a question
-          </button>
+            <svg
+              class="usa-icon text-primary margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+              />
+            </svg>
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="ask-a-question-button"
+              type="button"
+            >
+              Ask a question
+            </button>
+          </div>
         </div>
         <div
           class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
@@ -106,388 +110,461 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             </span>
           </div>
         </div>
-        <form
-          action="#"
-          class="tablet:grid-col-6 margin-top-6"
+        <div
+          class="grid-container padding-x-0"
+          data-testid="gridContainer"
         >
           <div
-            class="usa-form-group margin-top-4"
-            data-scroll="modelName"
+            class="grid-row grid-gap"
+            data-testid="grid"
           >
-            <label
-              class="usa-label"
-              data-testid="label"
-              for="plan-basics-model-name"
+            <div
+              class="desktop:grid-col-6"
+              data-testid="grid"
             >
-              Model name
-            </label>
-            <input
-              class="usa-input"
-              data-testid="textInput"
-              id="plan-basics-model-name"
-              maxlength="50"
-              name="modelName"
-              value=""
-            />
+              <form
+                action="#"
+                class="margin-top-6"
+              >
+                <div
+                  class="usa-form-group margin-top-4"
+                  data-scroll="modelName"
+                >
+                  <label
+                    class="usa-label"
+                    data-testid="label"
+                    for="plan-basics-model-name"
+                  >
+                    Model name
+                  </label>
+                  <input
+                    class="usa-input"
+                    data-testid="textInput"
+                    id="plan-basics-model-name"
+                    maxlength="50"
+                    name="modelName"
+                    value="My excellent plan that I just initiated"
+                  />
+                </div>
+                <div
+                  class="usa-form-group margin-top-4"
+                  data-scroll="modelCategory"
+                >
+                  <label
+                    class="usa-label"
+                    data-testid="label"
+                    for="plan-basics-model-category"
+                  >
+                    Model category
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="dropdown"
+                    id="plan-basics-model-category"
+                    name="basics.modelCategory"
+                  >
+                    <option
+                      disabled=""
+                      value=""
+                    >
+                      -Select-
+                    </option>
+                    <option
+                      value="ACCOUNTABLE_CARE"
+                    >
+                      Accountable Care
+                    </option>
+                    <option
+                      value="DEMONSTRATION"
+                    >
+                      Demonstration
+                    </option>
+                    <option
+                      value="EPISODE_BASED_PAYMENT_INITIATIVES"
+                    >
+                      Episode-based Payment Initiatives
+                    </option>
+                    <option
+                      value="INIT_ACCEL_DEV_AND_TEST"
+                    >
+                      Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models
+                    </option>
+                    <option
+                      value="INIT_MEDICAID_CHIP_POP"
+                    >
+                      Initiatives Focused on the Medicaid and CHIP Population
+                    </option>
+                    <option
+                      value="INIT_SPEED_ADOPT_BEST_PRACTICE"
+                    >
+                      Initiatives to Speed the Adoption of Best Practices
+                    </option>
+                    <option
+                      value="INIT__MEDICARE_MEDICAID_ENROLLEES"
+                    >
+                      Initiatives Focused on the Medicare and Medicaid Enrollees
+                    </option>
+                    <option
+                      value="PRIMARY_CARE_TRANSFORMATION"
+                    >
+                      Primary Care Transformation
+                    </option>
+                    <option
+                      value="UNKNOWN"
+                    >
+                      Unknown
+                    </option>
+                  </select>
+                </div>
+                <div
+                  class="usa-form-group margin-top-4"
+                  data-scroll="cmsCenters"
+                >
+                  <legend
+                    class="usa-label"
+                  >
+                    CMS component
+                  </legend>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      name="basics.cmsCenters"
+                      type="checkbox"
+                      value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                    >
+                      Center for Clinical Standards and Quality (CCSQ)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                      name="basics.cmsCenters"
+                      type="checkbox"
+                      value="CENTER_FOR_MEDICARE"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                    >
+                      Center for Medicare (CM)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                      name="basics.cmsCenters"
+                      type="checkbox"
+                      value="CENTER_FOR_PROGRAM_INTEGRITY"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                    >
+                      Center for Program Integrity (CPI)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      id="new-plan-cmsCenters-CMMI"
+                      name="basics.cmsCenters"
+                      type="checkbox"
+                      value="CMMI"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmsCenters-CMMI"
+                    >
+                      CMMI
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      name="basics.cmsCenters"
+                      type="checkbox"
+                      value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                    >
+                      Federal Coordinated Health Care
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      id="new-plan-cmsCenters-OTHER"
+                      name="basics.cmsCenters"
+                      type="checkbox"
+                      value="OTHER"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmsCenters-OTHER"
+                    >
+                      Other
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                  <div
+                    class="usa-form-group margin-top-4"
+                  >
+                    <label
+                      class="usa-label"
+                      data-testid="label"
+                      for="plan-basics-cmsCategory--Other"
+                    >
+                      Please specify
+                    </label>
+                    <input
+                      class="usa-input"
+                      data-testid="textInput"
+                      id="plan-basics-cmsCategory--Other"
+                      maxlength="50"
+                      name="basics.cmsOther"
+                      value="The Center for Awesomeness "
+                    />
+                  </div>
+                </div>
+                <div
+                  class="usa-form-group margin-top-4"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="basics.cmmiGroups"
+                  >
+                    CMMI Group
+                  </label>
+                  <p
+                    class="text-base margin-bottom-1 margin-top-1"
+                  >
+                    You only need to select the CMMI group if CMMI is selected as the main CMS component.
+                  </p>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-PATIENT_CARE_MODELS_GROUP"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="PATIENT_CARE_MODELS_GROUP"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-PATIENT_CARE_MODELS_GROUP"
+                    >
+                      Patient Care Models Group (PCMG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-POLICY_AND_PROGRAMS_GROUP"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="POLICY_AND_PROGRAMS_GROUP"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-POLICY_AND_PROGRAMS_GROUP"
+                    >
+                      Policy and Programs Group (PPG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+                    >
+                      Preventative and Population Health Care Models Group (PPHCMG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="SEAMLESS_CARE_MODELS_GROUP"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
+                    >
+                      Seamless Care Models Group (SCMG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="STATE_INNOVATIONS_GROUP"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
+                    >
+                      State Innovations Group (SIG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="margin-top-6 margin-bottom-3"
+                >
+                  <button
+                    class="usa-button"
+                    data-testid="button"
+                    type="submit"
+                  >
+                    Next
+                  </button>
+                </div>
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="button"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                    />
+                  </svg>
+                  Save and return to task list
+                </button>
+              </form>
+            </div>
+            <div
+              class="desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <div
+                class="usa-summary-box margin-top-6"
+                data-testid="summary-box--previous-name"
+              >
+                <div
+                  class="usa-summary-box__body"
+                >
+                  <h3
+                    class="usa-summary-box__heading"
+                  />
+                  <div
+                    class="usa-summary-box__text"
+                  >
+                    <p
+                      class="margin-y-0 text-bold"
+                    >
+                      Previous model names
+                    </p>
+                    <ul
+                      class="margin-top-1 margin-bottom-0 padding-left-2"
+                    >
+                      <li>
+                        First Name
+                      </li>
+                      <li>
+                        Second Name
+                      </li>
+                      <li>
+                        Third Name
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="modelCategory"
-          >
-            <label
-              class="usa-label"
-              data-testid="label"
-              for="plan-basics-model-category"
-            >
-              Model category
-            </label>
-            <select
-              class="usa-select"
-              data-testid="dropdown"
-              id="plan-basics-model-category"
-              name="basics.modelCategory"
-            >
-              <option
-                disabled=""
-                value=""
-              >
-                -Select-
-              </option>
-              <option
-                value="ACCOUNTABLE_CARE"
-              >
-                Accountable Care
-              </option>
-              <option
-                value="DEMONSTRATION"
-              >
-                Demonstration
-              </option>
-              <option
-                value="EPISODE_BASED_PAYMENT_INITIATIVES"
-              >
-                Episode-based Payment Initiatives
-              </option>
-              <option
-                value="INIT_ACCEL_DEV_AND_TEST"
-              >
-                Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models
-              </option>
-              <option
-                value="INIT_MEDICAID_CHIP_POP"
-              >
-                Initiatives Focused on the Medicaid and CHIP Population
-              </option>
-              <option
-                value="INIT_SPEED_ADOPT_BEST_PRACTICE"
-              >
-                Initiatives to Speed the Adoption of Best Practices
-              </option>
-              <option
-                value="INIT__MEDICARE_MEDICAID_ENROLLEES"
-              >
-                Initiatives Focused on the Medicare and Medicaid Enrollees
-              </option>
-              <option
-                value="PRIMARY_CARE_TRANSFORMATION"
-              >
-                Primary Care Transformation
-              </option>
-              <option
-                value="UNKNOWN"
-              >
-                Unknown
-              </option>
-            </select>
-          </div>
-          <div
-            class="usa-form-group margin-top-4"
-            data-scroll="cmsCenters"
-          >
-            <legend
-              class="usa-label"
-            >
-              CMS component
-            </legend>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                name="basics.cmsCenters"
-                type="checkbox"
-                value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-              >
-                Center for Clinical Standards and Quality (CCSQ)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                name="basics.cmsCenters"
-                type="checkbox"
-                value="CENTER_FOR_MEDICARE"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-              >
-                Center for Medicare (CM)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                name="basics.cmsCenters"
-                type="checkbox"
-                value="CENTER_FOR_PROGRAM_INTEGRITY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-              >
-                Center for Program Integrity (CPI)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters-CMMI"
-                name="basics.cmsCenters"
-                type="checkbox"
-                value="CMMI"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters-CMMI"
-              >
-                CMMI
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                name="basics.cmsCenters"
-                type="checkbox"
-                value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-              >
-                Federal Coordinated Health Care
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters-OTHER"
-                name="basics.cmsCenters"
-                type="checkbox"
-                value="OTHER"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters-OTHER"
-              >
-                Other
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-          </div>
-          <div
-            class="usa-form-group margin-top-4"
-          >
-            <label
-              class="usa-label text-normal"
-              data-testid="label"
-              for="basics.cmmiGroups"
-            >
-              CMMI Group
-            </label>
-            <p
-              class="text-base margin-bottom-1 margin-top-1"
-            >
-              You only need to select the CMMI group if CMMI is selected as the main CMS component.
-            </p>
-            <div
-              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-            >
-              <input
-                class="usa-checkbox__input"
-                disabled=""
-                id="new-plan-cmmiGroup-PATIENT_CARE_MODELS_GROUP"
-                name="basics.cmmiGroups"
-                type="checkbox"
-                value="PATIENT_CARE_MODELS_GROUP"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmmiGroup-PATIENT_CARE_MODELS_GROUP"
-              >
-                Patient Care Models Group (PCMG)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-            >
-              <input
-                class="usa-checkbox__input"
-                disabled=""
-                id="new-plan-cmmiGroup-POLICY_AND_PROGRAMS_GROUP"
-                name="basics.cmmiGroups"
-                type="checkbox"
-                value="POLICY_AND_PROGRAMS_GROUP"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmmiGroup-POLICY_AND_PROGRAMS_GROUP"
-              >
-                Policy and Programs Group (PPG)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-            >
-              <input
-                class="usa-checkbox__input"
-                disabled=""
-                id="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                name="basics.cmmiGroups"
-                type="checkbox"
-                value="PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-              >
-                Preventative and Population Health Care Models Group (PPHCMG)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-            >
-              <input
-                class="usa-checkbox__input"
-                disabled=""
-                id="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
-                name="basics.cmmiGroups"
-                type="checkbox"
-                value="SEAMLESS_CARE_MODELS_GROUP"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
-              >
-                Seamless Care Models Group (SCMG)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-            >
-              <input
-                class="usa-checkbox__input"
-                disabled=""
-                id="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
-                name="basics.cmmiGroups"
-                type="checkbox"
-                value="STATE_INNOVATIONS_GROUP"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
-              >
-                State Innovations Group (SIG)
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-              />
-            </div>
-          </div>
-          <div
-            class="margin-top-6 margin-bottom-3"
-          >
-            <button
-              class="usa-button"
-              data-testid="button"
-              type="submit"
-            >
-              Next
-            </button>
-          </div>
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-              />
-            </svg>
-            Save and return to task list
-          </button>
-        </form>
+        </div>
         <div
           class="mint-page-number margin-bottom-10"
         >

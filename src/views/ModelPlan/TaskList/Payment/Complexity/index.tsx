@@ -41,6 +41,7 @@ import {
   PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   mapMultiSelectOptions,
   translateAnticipatedPaymentFrequencyType,
@@ -85,24 +86,23 @@ const Complexity = () => {
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (
-    formikValues: ComplexityFormType,
-    redirect?: 'next' | 'back' | 'task-list'
-  ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
-    const hasClaimsBasedPayment = formikValues.payType.includes(
+  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+    const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
-    const hasReductionToCostSharing = formikValues.payClaims.includes(
+    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
       ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
     );
-    const hasNonClaimBasedPayment = formikValues.payType.includes(
+    const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -198,8 +198,8 @@ const Complexity = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -452,7 +452,7 @@ const Complexity = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit(values, 'back');
+                            handleFormSubmit('back');
                           }}
                         >
                           {h('back')}
@@ -464,7 +464,7 @@ const Complexity = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'task-list')}
+                        onClick={() => handleFormSubmit('task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
@@ -477,7 +477,7 @@ const Complexity = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

@@ -36,10 +36,10 @@ import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/Participant
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ParticipantCommunicationType,
-  ParticipantRiskType,
-  TaskStatus
+  ParticipantRiskType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateCommunicationType,
@@ -80,8 +80,9 @@ export const Communication = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const itToolsStarted: boolean =
-    data?.modelPlan.itTools.status !== TaskStatus.READY;
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -91,14 +92,15 @@ export const Communication = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: CommunicationFormType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        )
       }
     })
       .then(response => {
@@ -174,8 +176,8 @@ export const Communication = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values, 'next');
+        onSubmit={() => {
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -222,13 +224,12 @@ export const Communication = () => {
                       <legend className="usa-label">
                         {t('participantCommunication')}
                       </legend>
-                      {itToolsStarted && (
+                      {itSolutionsStarted && (
                         <ITToolsWarning
                           id="participants-and-providers-communication-method-warning"
                           onClick={() =>
                             handleFormSubmit(
-                              values,
-                              `/models/${modelID}/task-list/it-tools/page-three`
+                              `/models/${modelID}/task-list/it-solutions`
                             )
                           }
                         />
@@ -436,7 +437,7 @@ export const Communication = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      handleFormSubmit(values, 'back');
+                      handleFormSubmit('back');
                     }}
                   >
                     {h('back')}
@@ -448,7 +449,7 @@ export const Communication = () => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'task-list')}
+                  onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
                   {h('saveAndReturn')}
@@ -458,7 +459,7 @@ export const Communication = () => {
                 <AutoSave
                   values={values}
                   onSave={() => {
-                    handleFormSubmit(formikRef.current!.values);
+                    handleFormSubmit();
                   }}
                   debounceDelay={3000}
                 />

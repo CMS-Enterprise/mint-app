@@ -12,6 +12,7 @@ import {
   DataForMonitoringType,
   OelObtainDataType
 } from 'types/graphql-global-types';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsPageSix from '.';
 
@@ -64,7 +65,7 @@ describe('IT Tools Page six', () => {
       >
         <MockedProvider mocks={itToolsPageSixMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-six">
-            <ITToolsPageSix />
+            <ITToolsPageSix opsEvalAndLearningLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -100,7 +101,7 @@ describe('IT Tools Page six', () => {
       >
         <MockedProvider mocks={itToolsPageSixMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/it-tools/page-six">
-            <ITToolsPageSix />
+            <ITToolsPageSix opsEvalAndLearningLock={LockStatus.LOCKED} />
           </Route>
         </MockedProvider>
       </MemoryRouter>

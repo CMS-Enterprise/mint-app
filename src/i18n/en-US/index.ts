@@ -5,11 +5,13 @@ import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import generalCharacteristics from './draftModelPlan/generalCharacteristics';
+import itSolutions from './draftModelPlan/itSolutions';
 import itTools from './draftModelPlan/itTools';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
+import prepareForClearance from './draftModelPlan/prepareForClearance';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
@@ -49,6 +51,7 @@ const enUS = {
   header,
   helpAndKnowledge,
   home,
+  itSolutions,
   itTools,
   modelPlan,
   modelPlanOverview,
@@ -59,6 +62,7 @@ const enUS = {
   operationsEvaluationAndLearning,
   participantsAndProviders,
   payments,
+  prepareForClearance,
   privacyPolicy,
   readOnlyModelPlan,
   sampleModelPlan,

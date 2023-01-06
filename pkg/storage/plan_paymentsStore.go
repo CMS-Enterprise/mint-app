@@ -13,16 +13,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//go:embed SQL/plan_payments_create.sql
+//go:embed SQL/plan_payments/create.sql
 var planPaymentsCreateSQL string
 
-//go:embed SQL/plan_payments_update.sql
+//go:embed SQL/plan_payments/update.sql
 var planPaymentsUpdateSQL string
 
-//go:embed SQL/plan_payments_get_by_id.sql
+//go:embed SQL/plan_payments/get_by_id.sql
 var planPaymentsGetByIDSQL string
 
-//go:embed SQL/plan_payments_get_by_model_plan_id.sql
+//go:embed SQL/plan_payments/get_by_model_plan_id.sql
 var planPaymentsGetByModelPlanIDSQL string
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller

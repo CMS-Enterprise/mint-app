@@ -2,7 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
-import { TaskStatus } from 'types/graphql-global-types';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;
@@ -19,7 +22,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 export const TaskListStatusTag = ({
   status
 }: {
-  status: TaskStatus | undefined;
+  status: TaskStatus | PrepareForClearanceStatus | undefined;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -38,6 +41,14 @@ export const TaskListStatusTag = ({
       tagCopy = t('taskListItem.ready');
       tagStyle = 'bg-accent-cool';
       break;
+    case 'READY_FOR_CLEARANCE':
+      tagCopy = t('taskListItem.readyForClearance');
+      tagStyle = 'bg-base-lighter text-base-darker';
+      break;
+    case 'CANNOT_START':
+      tagCopy = t('taskListItem.cannotStart');
+      tagStyle = 'bg-white border-2px text-base';
+      break;
     default:
       tagCopy = '';
       tagStyle = 'bg-accent-cool';
@@ -46,7 +57,7 @@ export const TaskListStatusTag = ({
   return (
     <span
       data-testid="tasklist-tag"
-      className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold ${tagStyle}`}
     >
       {tagCopy}
     </span>
@@ -56,7 +67,7 @@ export const TaskListStatusTag = ({
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: TaskStatus;
+  status: TaskStatus | PrepareForClearanceStatus;
   testId: string;
   lastUpdated?: string | null;
 };

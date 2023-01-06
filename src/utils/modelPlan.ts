@@ -62,6 +62,8 @@ export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
       return i18next.t('modelPlan:teamRoles.evaluation');
+    case 'IT_LEAD':
+      return i18next.t('modelPlan:teamRoles.itLead');
     case 'LEADERSHIP':
       return i18next.t('modelPlan:teamRoles.leadership');
     case 'LEARNING':
@@ -184,6 +186,8 @@ export const translateAlternativePaymentTypes = (type: string) => {
       return i18next.t('generalCharacteristics:apmTypes.MIPSAPM');
     case 'ADVANCED':
       return i18next.t('generalCharacteristics:apmTypes.advancedAPM');
+    case 'NOT_APM':
+      return i18next.t('generalCharacteristics:apmTypes.notAPM');
     default:
       return '';
   }
@@ -544,8 +548,10 @@ export const translateRecruitmentType = (type: string) => {
   switch (type) {
     case 'LOI':
       return i18next.t('participantsAndProviders:recruitOptions.loi');
-    case 'RFA':
-      return i18next.t('participantsAndProviders:recruitOptions.rfa');
+    case 'APPLICATION_COLLECTION_TOOL':
+      return i18next.t(
+        'participantsAndProviders:recruitOptions.appCollectionTool'
+      );
     case 'NOFO':
       return i18next.t('participantsAndProviders:recruitOptions.nofo');
     case 'OTHER':
@@ -1504,6 +1510,44 @@ export const translatePRecoverPaymentsType = (type: string) => {
   }
 };
 
+export const translateOpNeedsStatusType = (type: string) => {
+  switch (type) {
+    case 'NOT_NEEDED':
+      return i18next.t('itSolutions:status.notNeeded');
+    case 'NOT_ANSWERED':
+      return i18next.t('itSolutions:status.notAnswered');
+    case 'NOT_STARTED':
+      return i18next.t('itSolutions:status.notStarted');
+    case 'ONBOARDING':
+      return i18next.t('itSolutions:status.onboarding');
+    case 'BACKLOG':
+      return i18next.t('itSolutions:status.backlog');
+    case 'IN_PROGRESS':
+      return i18next.t('itSolutions:status.inProgress');
+    case 'COMPLETED':
+      return i18next.t('itSolutions:status.completed');
+    case 'AT_RISK':
+      return i18next.t('itSolutions:status.atRisk');
+    default:
+      return '';
+  }
+};
+
+export const translateAppealsQuestionType = (type: string) => {
+  switch (type) {
+    case 'appealPerformance':
+      return i18next.t('operationsEvaluationAndLearning:performanceScores');
+    case 'appealFeedback':
+      return i18next.t('operationsEvaluationAndLearning:feedbackResults');
+    case 'appealPayments':
+      return i18next.t('operationsEvaluationAndLearning:payments');
+    case 'appealOther':
+      return i18next.t('operationsEvaluationAndLearning:others');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
@@ -1582,7 +1626,8 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NOT_APPLICABLE' ||
     b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
     b === 'NOT_PLANNING_TO_SEND_DATA' ||
-    b === 'NO_LEARNING_SYSTEM'
+    b === 'NO_LEARNING_SYSTEM' ||
+    b === 'NOT_APM'
   )
     return -1;
   if (a < b || b === 'OTHER') {
@@ -1591,6 +1636,22 @@ export const sortOtherEnum = (a: string, b: string) => {
   if (a > b) {
     return 1;
   }
+  return 0;
+};
+
+// Sort possible operational needs
+export const sortPossibleOperationalNeeds = (
+  a: { name: string },
+  b: { name: string }
+) => {
+  if (a.name === 'Other new process') return 1;
+
+  if (b.name === 'Other new process') return -1;
+
+  if (a.name < b.name) return -1;
+
+  if (a.name > b.name) return 1;
+
   return 0;
 };
 
@@ -1613,8 +1674,10 @@ export const isUUID = (uuid: string) =>
 /* i.e. Steve Rogers == SR */
 export const getUserInitials = (user: string) =>
   user
-    ?.match(/(\b\S)?/g)
-    ?.join('')
-    ?.match(/(^\S|\S$)?/g)
-    ?.join('')
-    ?.toUpperCase();
+    ?.split(' ')
+    .map(name => returnValidLetter(name?.charAt(0)).toUpperCase())
+    .join('');
+
+// Check if a single character is a valid letter
+export const returnValidLetter = (str: string) =>
+  str.length === 1 && str.match(/[a-z]/i) ? str : '';

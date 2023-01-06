@@ -9,19 +9,24 @@ import './index.scss';
 
 interface SideNavProps {
   subComponents: subComponentsProps;
+  isHelpArticle: boolean | undefined;
 }
 
-const SideNav = ({ subComponents }: SideNavProps) => {
+const SideNav = ({ subComponents, isHelpArticle }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
 
   // Mapping of all sub navigation links
   const subNavigationLinks: React.ReactNode[] = Object.keys(subComponents).map(
     (key: string) => (
       <NavLink
-        to={subComponents[key].route}
+        to={
+          !isHelpArticle
+            ? subComponents[key].route
+            : subComponents[key].helpRoute
+        }
         key={key}
         activeClassName="usa-current"
-        className={key === 'it-tools' ? 'nav-group-border' : ''}
+        className={key === 'it-solutions' ? 'nav-group-border' : ''}
       >
         {t(`navigation.${key}`)}
       </NavLink>

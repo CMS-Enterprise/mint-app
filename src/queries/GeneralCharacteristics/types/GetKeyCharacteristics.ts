@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AlternativePaymentModelType, KeyCharacteristic, TaskStatus } from "./../../../types/graphql-global-types";
+import { AlternativePaymentModelType, KeyCharacteristic } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetKeyCharacteristics
@@ -12,7 +12,6 @@ import { AlternativePaymentModelType, KeyCharacteristic, TaskStatus } from "./..
 export interface GetKeyCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
-  alternativePaymentModel: boolean | null;
   alternativePaymentModelTypes: AlternativePaymentModelType[];
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
@@ -22,13 +21,13 @@ export interface GetKeyCharacteristics_modelPlan_generalCharacteristics {
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;
   managePartCDEnrollmentNote: string | null;
-  planContactUpdated: boolean | null;
-  planContactUpdatedNote: string | null;
+  planContractUpdated: boolean | null;
+  planContractUpdatedNote: string | null;
 }
 
-export interface GetKeyCharacteristics_modelPlan_itTools {
-  __typename: "PlanITTools";
-  status: TaskStatus;
+export interface GetKeyCharacteristics_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  modifiedDts: Time | null;
 }
 
 export interface GetKeyCharacteristics_modelPlan {
@@ -36,7 +35,7 @@ export interface GetKeyCharacteristics_modelPlan {
   id: UUID;
   modelName: string;
   generalCharacteristics: GetKeyCharacteristics_modelPlan_generalCharacteristics;
-  itTools: GetKeyCharacteristics_modelPlan_itTools;
+  operationalNeeds: GetKeyCharacteristics_modelPlan_operationalNeeds[];
 }
 
 export interface GetKeyCharacteristics {
