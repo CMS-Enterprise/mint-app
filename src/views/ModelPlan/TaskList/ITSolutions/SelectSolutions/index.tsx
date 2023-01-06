@@ -161,7 +161,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
                 update ? 'update-status' : 'solution-implementation-details'
               }`,
-              { fromSolutionDetails: false }
+              update && { fromSolutionDetails: false }
             );
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
