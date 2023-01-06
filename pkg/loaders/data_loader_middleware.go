@@ -217,23 +217,8 @@ func (loaders *Loaders) GetOperationalSolutionAndPossibleCollectionByOperational
 		logger.Error("issue converting keys to JSON for data loader in Operational Solutions", zap.Error(*err))
 	}
 
-	keyBytes, marshalErr := json.Marshal(arrayCK)
-	jsonString := string(keyBytes)
-	if marshalErr != nil {
-		fmt.Print(marshalErr)
-	}
-	fmt.Print(keyBytes)
-	fmt.Print(jsonString)
-
 	dr := loaders.DataReader
-	// notNeededKey := "includeNotNeeded"
 
-	// includeNotNeededInterf, ok := loaders.OperationSolutionLoader.Map[notNeededKey]
-	// if ok {
-	// 	includeNotNeeded, _ = includeNotNeededInterf.(bool) //TODO handle invalid type
-
-	// }
-	// includeNotNeeded := loaders.OperationSolutionLoader.Map[notNeededKey].(bool) //TODO error handle here in case not a bool or doesn't exist?
 	sols, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger, marshaledParams)
 
 	output := make([]*dataloader.Result, len(keys))
