@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: no-commit-to-branch
         args: [
-          '--pattern', '^(?!((main)|(feature\/EASI-\d{1,5})|((EASI-\d{1,5}|NOREF|dependabot)\/[a-zA-Z0-9\-\._/]+))$).*',
+          '--pattern', '^(?!((main)|(feature\/EASI-\d{1,5})|((EASI-\d{1,5}|NOREF|renovate)\/[a-zA-Z0-9\-\._/]+))$).*',
           '--branch', '' # Adding this to remove the default protection on `main` so that CI checks can pass
         ]
         name: Enforce branch naming patterns
