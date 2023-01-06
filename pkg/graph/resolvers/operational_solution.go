@@ -1,10 +1,13 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/loaders"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -15,6 +18,39 @@ func OperationaSolutionsAndPossibleGetByOPNeedID(logger *zap.Logger, operational
 	sols, err := store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger, operationalNeedID, includeNotNeeded)
 
 	return sols, err
+}
+
+// OperationaSolutionsAndPossibleGetByOPNeedIDLOADER returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
+func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool, store *storage.Store) ([]*models.OperationalSolution, error) {
+	allLoaders := loaders.For(ctx)
+	opSolutionLoader := allLoaders.OperationSolutionLoader
+
+	key := loaders.NewCompoundKey()
+
+	key.Args["include_not_needed"] = includeNotNeeded
+	key.Args["operational_need_id"] = operationalNeedID
+
+	// existingParam, ok := opSolutionLoader.Map["includeNotNeeded"]
+	// if ok { //Was a value already set?
+	// 	if existingParam != includeNotNeeded { //Needs to be the same for all calls or the loader will fail. If needed in the future, we will need to implement a composite key to the loader
+	// 		return nil, fmt.Errorf("includeNotNeeded needs to be consistent across all calls to the loader")
+	// 	}
+	// }
+	// opSolutionLoader.Map["includeNotNeeded"] = includeNotNeeded
+	// dataloader.StringKey(operationalNeedID.String()
+	// dataloader.K
+
+	//TODO do we need to write a new interface to convert our types to what we need?
+	// thunk := opSolutionLoader.Loader.Load(ctx, dataloader.StringKey(operationalNeedID.String()))
+	thunk := opSolutionLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+	// defer opSolutionLoader.Clear()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.OperationalSolution), nil
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready

@@ -46,7 +46,7 @@ func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID
 	basicsLoader := allLoaders.BasicsLoader
 
 	//TODO do we need to write a new interface to convert our types to what we need?
-	thunk := basicsLoader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
+	thunk := basicsLoader.Loader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
 	result, err := thunk()
 
 	if err != nil {

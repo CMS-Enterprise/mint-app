@@ -29,7 +29,7 @@ func OperationalNeedCollectionGetByModelPlanIDLOADER(ctx context.Context, modelP
 	allLoaders := loaders.For(ctx)
 	opNeedLoader := allLoaders.OperationalNeedLoader
 
-	thunk := opNeedLoader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
+	thunk := opNeedLoader.Loader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
 
 	result, err := thunk()
 	if err != nil {

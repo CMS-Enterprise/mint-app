@@ -414,8 +414,9 @@ func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, i
 
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
+	// logger := appcontext.ZLogger(ctx)
+	// return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded, r.store)
 }
 
 // Documents is the resolver for the documents field.
