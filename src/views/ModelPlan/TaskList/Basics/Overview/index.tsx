@@ -36,7 +36,6 @@ import {
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
-import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Overview = () => {
@@ -142,7 +141,6 @@ const Overview = () => {
           handleFormSubmit('next');
         }}
         enableReinitialize
-        validationSchema={planBasicsSchema.pageTwoSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}

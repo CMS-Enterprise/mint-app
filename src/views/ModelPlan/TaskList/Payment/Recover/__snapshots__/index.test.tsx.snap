@@ -286,7 +286,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               mm/dd/yyyy
             </div>
             <div
-              class="width-card-lg position-relative"
+              class="position-relative"
             >
               <div
                 class="usa-date-picker usa-date-picker--initialized"

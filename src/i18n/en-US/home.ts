@@ -39,9 +39,8 @@ const home = {
       }
     },
     empty: {
-      heading: 'You don’t have any draft model plans yet',
-      body:
-        'Start a new plan by clicking the button above. Once you start one, it will appear in this section.'
+      heading: 'There aren’t any model plans yet.',
+      body: 'Once one is added, it will appear here.'
     },
     caption:
       'Below is a list of governance requests that are in draft or submitted.',
