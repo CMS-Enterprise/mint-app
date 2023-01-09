@@ -296,37 +296,9 @@ const SolutionImplementation = ({
               {(
                 formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
               ) => {
-                const {
-                  errors,
-                  setErrors,
-                  setFieldError,
-                  setFieldValue,
-                  handleSubmit,
-                  values
-                } = formikProps;
+                const { errors, setErrors, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
-
-                const handleOnBlur = (
-                  e: React.ChangeEvent<HTMLInputElement>,
-                  field: string
-                ) => {
-                  if (e.target.value === '') {
-                    setFieldValue(field, null);
-                    return;
-                  }
-                  try {
-                    setFieldValue(
-                      field,
-                      new Date(e.target.value).toISOString()
-                    );
-                    delete errors[
-                      field as keyof GetOperationalNeedOperationalNeedType
-                    ];
-                  } catch (err) {
-                    setFieldError(field, h('validDate'));
-                  }
-                };
 
                 return (
                   <>
@@ -363,23 +335,19 @@ const SolutionImplementation = ({
                             ''
                           ).replaceAll(' ', '-');
                           return (
-                            <>
-                              <Solution
-                                key={solution.id}
-                                solution={solution}
-                                identifier={identifier}
-                                index={index}
-                                handleOnBlur={handleOnBlur}
-                                setFieldValue={setFieldValue}
-                                length={formikNeed.solutions.length}
-                                values={values}
-                                flatErrors={flatErrors}
-                                loading={loading}
-                                operationalNeedID={operationalNeedID}
-                                operationalSolutionID={solutionId}
-                                modelID={modelID}
-                              />
-                            </>
+                            <Solution
+                              key={solution.id}
+                              formikProps={formikProps}
+                              solution={solution}
+                              identifier={identifier}
+                              index={index}
+                              length={formikNeed.solutions.length}
+                              flatErrors={flatErrors}
+                              loading={loading}
+                              operationalNeedID={operationalNeedID}
+                              operationalSolutionID={solutionId}
+                              modelID={modelID}
+                            />
                           );
                         })}
 
