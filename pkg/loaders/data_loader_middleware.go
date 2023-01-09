@@ -30,7 +30,7 @@ type LoaderWithMap struct {
 func newLoaderWithMap(batchFn dataloader.BatchFunc) *LoaderWithMap {
 
 	return &LoaderWithMap{
-		Loader: dataloader.NewBatchedLoader(batchFn),
+		Loader: dataloader.NewBatchedLoader(batchFn, dataloader.WithClearCacheOnBatch()),
 		Map:    map[string]interface{}{},
 	}
 }
