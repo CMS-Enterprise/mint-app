@@ -42,7 +42,7 @@ func PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
 func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	allLoaders := loaders.For(ctx)
+	allLoaders := loaders.Loaders(ctx)
 	basicsLoader := allLoaders.BasicsLoader
 
 	//TODO do we need to write a new interface to convert our types to what we need?

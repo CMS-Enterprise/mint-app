@@ -13,7 +13,7 @@ import (
 )
 
 // GetOperationalSolutionAndPossibleCollectionByOperationalNeedID uses a data loader to return operational solutions by operational need id
-func (loaders *Loaders) GetOperationalSolutionAndPossibleCollectionByOperationalNeedID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperationalNeedID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	logger := appcontext.ZLogger(ctx)
 	arrayCK, err := CompoundKeyArray(keys)
 	if err != nil {

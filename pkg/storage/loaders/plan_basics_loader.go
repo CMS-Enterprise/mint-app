@@ -12,7 +12,7 @@ import (
 )
 
 // GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (loaders *Loaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	dr := loaders.DataReader
 
 	modelPlanIDs := make([]string, len(keys))

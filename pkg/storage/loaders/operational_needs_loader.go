@@ -11,7 +11,7 @@ import (
 )
 
 // GetOperationalNeedsByModelPlanID uses a data loader to aggregate SQL calls and return data
-func (loaders *Loaders) GetOperationalNeedsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func (loaders *DataLoaders) GetOperationalNeedsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 
 	modelPlanIDs := stringArrayFromKeys(keys)
 	logger := appcontext.ZLogger(ctx)

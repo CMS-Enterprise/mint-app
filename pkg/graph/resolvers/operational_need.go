@@ -26,7 +26,7 @@ func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID u
 
 // OperationalNeedCollectionGetByModelPlanIDLOADER returns possible and existing OperationalNeeds associated to a model plan
 func OperationalNeedCollectionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
-	allLoaders := loaders.For(ctx)
+	allLoaders := loaders.Loaders(ctx)
 	opNeedLoader := allLoaders.OperationalNeedLoader
 
 	thunk := opNeedLoader.Loader.Load(ctx, dataloader.StringKey(modelPlanID.String()))

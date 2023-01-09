@@ -110,7 +110,7 @@ func (s *Server) routes(
 		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger, store)
 		s.router.Use(localAuthenticationMiddleware)
 	}
-	dataLoaders := loaders.NewLoaders(store)
+	dataLoaders := loaders.NewDataLoaders(store)
 	dataLoaderMiddleware := loaders.NewDataLoaderMiddleware(dataLoaders)
 	s.router.Use(dataLoaderMiddleware)
 

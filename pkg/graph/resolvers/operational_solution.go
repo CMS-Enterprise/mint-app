@@ -22,7 +22,7 @@ func OperationaSolutionsAndPossibleGetByOPNeedID(logger *zap.Logger, operational
 
 // OperationaSolutionsAndPossibleGetByOPNeedIDLOADER returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
 func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool, store *storage.Store) ([]*models.OperationalSolution, error) {
-	allLoaders := loaders.For(ctx)
+	allLoaders := loaders.Loaders(ctx)
 	opSolutionLoader := allLoaders.OperationSolutionLoader
 
 	key := loaders.NewCompoundKey()
