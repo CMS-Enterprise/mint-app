@@ -21,33 +21,23 @@ const (
 	loadersKey = ctxKey("dataloaders")
 )
 
-// LoaderWithMap wraps a DataLoader so it has access to an optional Map
-type LoaderWithMap struct {
+// WrappedDataLoader wraps a DataLoader so it has access to an optional Map
+type WrappedDataLoader struct {
 	Loader *dataloader.Loader
-	Map    map[string]interface{}
 }
 
-func newLoaderWithMap(batchFn dataloader.BatchFunc) *LoaderWithMap {
+func newLoaderWithMap(batchFn dataloader.BatchFunc) *WrappedDataLoader {
 
-	return &LoaderWithMap{
+	return &WrappedDataLoader{
 		Loader: dataloader.NewBatchedLoader(batchFn, dataloader.WithClearCacheOnBatch()),
-		Map:    map[string]interface{}{},
 	}
-}
-
-// Clear removes all entries from a MAP entry
-func (l LoaderWithMap) Clear() {
-	for k := range l.Map {
-		delete(l.Map, k)
-	}
-
 }
 
 // Loaders wrap your data loaders to inject via middleware
 type Loaders struct {
-	BasicsLoader            *LoaderWithMap
-	OperationalNeedLoader   *LoaderWithMap
-	OperationSolutionLoader *LoaderWithMap
+	BasicsLoader            *WrappedDataLoader
+	OperationalNeedLoader   *WrappedDataLoader
+	OperationSolutionLoader *WrappedDataLoader
 	DataReader              *DataReader
 }
 
@@ -102,12 +92,7 @@ func (k CompoundKey) String() string { return fmt.Sprint(k.Args) }
 func (k CompoundKey) Raw() interface{} { return k }
 
 // NewLoaders instantiates data loaders for the middleware
-// TODO pass the store here? Or ok to get it from routes instead?
 func NewLoaders(store *storage.Store) *Loaders {
-	// define the data loader
-	// dR := &DataReader{
-	// 	Store: store,
-	// }
 	loaders := &Loaders{
 		DataReader: &DataReader{
 			Store: store,
