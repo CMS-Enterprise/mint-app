@@ -81,7 +81,7 @@ export FAKTORY_PROCESS_JOBS=true
 - Processes aren't running.
   - Ensure `FAKTORY_PROCESS_JOBS` is set to true
   - Ensure `FAKTORY_CONNECTIONS` is set to at least 15-20. If there aren't enough connections jobs could get "stuck".
-  - Ensure that you aren't running in `testing` environment (`APP_ENV=local`).
+  - Ensure that you are running in the `local` environment (`APP_ENV=local`).
   - Navigate to `localhost:7420/busy` and check the `Processes` section. If processes are running you should see something like:
     | ID              | Name                           | Started     | Connections | RSS  | Busy |
     | --------------- | ------------------------------ | ----------- | ----------- | ---- | ---- |
