@@ -24,3 +24,8 @@ func PlanDocumentSolutionLinkRemove(logger *zap.Logger, id uuid.UUID, store *sto
 func PlanDocumentSolutionLinksGetBySolutionID(logger *zap.Logger, id uuid.UUID, store *storage.Store) ([]*models.PlanDocumentSolutionLink, error) {
 	return store.PlanDocumentSolutionLinksGetBySolutionID(logger, id)
 }
+
+// PlanDocumentNumLinkedSolutions implements resolver logic to retrieve the number of linked solutions for a document by ID
+func PlanDocumentNumLinkedSolutions(logger *zap.Logger, principal authentication.Principal, store *storage.Store, documentID uuid.UUID) (int, error) {
+	return store.PlanDocumentNumLinkedSolutions(logger, documentID)
+}

@@ -67,7 +67,7 @@ export const MINTDatePicker = ({
           </div>
         )}
         <FieldErrorMsg>{error}</FieldErrorMsg>
-        <div className="width-card-lg position-relative">
+        <div className="position-relative">
           <Field
             as={DatePicker}
             error={+!!error}
