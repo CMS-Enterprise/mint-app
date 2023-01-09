@@ -228,7 +228,8 @@ const SolutionImplementation = ({
     { text: isUpdatingStatus ? t('updateStatus') : t('selectSolution') }
   ];
 
-  const solutionsArray =
+  const formikNeed = { ...operationalNeed };
+  formikNeed.solutions =
     solutionId === undefined
       ? operationalNeed.solutions
       : operationalNeed.solutions.filter(
@@ -282,7 +283,7 @@ const SolutionImplementation = ({
           <Grid gap>
             <Grid tablet={{ col: 8 }}>
               <Formik
-                initialValues={operationalNeed}
+                initialValues={formikNeed}
                 onSubmit={values => {
                   handleFormSubmit(values);
                 }}
@@ -352,7 +353,7 @@ const SolutionImplementation = ({
                         }}
                       >
                         <Fieldset disabled={loading}>
-                          {solutionsArray.map((solution, index) => {
+                          {formikNeed.solutions.map((solution, index) => {
                             const identifier = (
                               solution.nameOther ||
                               solution.key ||
@@ -366,7 +367,7 @@ const SolutionImplementation = ({
                                 index={index}
                                 handleOnBlur={handleOnBlur}
                                 setFieldValue={setFieldValue}
-                                length={solutionsArray.length}
+                                length={formikNeed.solutions.length}
                                 values={values}
                                 flatErrors={flatErrors}
                                 loading={loading}
