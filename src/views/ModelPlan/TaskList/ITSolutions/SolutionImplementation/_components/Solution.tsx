@@ -15,6 +15,7 @@ import { translateOpNeedsStatusType } from 'utils/modelPlan';
 
 import ImplementationStatuses from '../../_components/ImplementationStatus';
 import SolutionCard from '../../_components/SolutionCard';
+import SolutionDetailCard from '../../_components/SolutionDetailCard';
 
 type flatErrorsType = {
   [key: string]: string;
@@ -34,6 +35,9 @@ type SolutionTypes = {
   values: OperationNeedType;
   flatErrors: flatErrorsType;
   loading: boolean;
+  operationalNeedID: string;
+  operationalSolutionID: string | undefined;
+  modelID: string;
 };
 
 const Solution = ({
@@ -45,7 +49,10 @@ const Solution = ({
   values,
   flatErrors,
   length,
-  loading
+  loading,
+  operationalNeedID,
+  operationalSolutionID,
+  modelID
 }: SolutionTypes) => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -54,7 +61,21 @@ const Solution = ({
     <div key={solution.id}>
       <p className="text-bold">{t('solution')}</p>
 
-      <SolutionCard solution={solution} shadow />
+      {/*
+        Operational Solution ID is UNDEFINED if user is displaying ALL solutions to an Operational Need.
+        Operational Solution ID is DEFINED if user is displaying an INDIVIDUAL solution to an Operational Need.
+      */}
+      {operationalSolutionID === undefined ? (
+        <SolutionCard solution={solution} shadow />
+      ) : (
+        <SolutionDetailCard
+          solution={solution}
+          operationalNeedID={operationalNeedID}
+          operationalSolutionID={operationalSolutionID}
+          modelID={modelID}
+          isUpdatingStatus
+        />
+      )}
 
       {!loading && (
         <>

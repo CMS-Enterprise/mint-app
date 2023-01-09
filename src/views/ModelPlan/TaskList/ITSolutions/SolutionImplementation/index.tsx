@@ -274,92 +274,96 @@ const SolutionImplementation = ({
           </p>
 
           <Grid tablet={{ col: 8 }}>
-            <NeedQuestionAndAnswer
-              operationalNeedID={operationalNeedID}
-              modelID={modelID}
-            />
-          </Grid>
+            {/*
+              Operational Solution ID is UNDEFINED if user is displaying ALL solutions to an Operational Need.
+              Operational Solution ID is DEFINED if user is displaying an INDIVIDUAL solution to an Operational Need.
+            */}
+            {solutionId === undefined && (
+              <NeedQuestionAndAnswer
+                operationalNeedID={operationalNeedID}
+                modelID={modelID}
+              />
+            )}
 
-          <Grid gap>
-            <Grid tablet={{ col: 8 }}>
-              <Formik
-                initialValues={formikNeed}
-                onSubmit={values => {
-                  handleFormSubmit(values);
-                }}
-                enableReinitialize
-                innerRef={formikRef}
-              >
-                {(
-                  formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
+            <Formik
+              initialValues={formikNeed}
+              onSubmit={values => {
+                handleFormSubmit(values);
+              }}
+              enableReinitialize
+              innerRef={formikRef}
+            >
+              {(
+                formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
+              ) => {
+                const {
+                  errors,
+                  setErrors,
+                  setFieldError,
+                  setFieldValue,
+                  handleSubmit,
+                  values
+                } = formikProps;
+
+                const flatErrors = flattenErrors(errors);
+
+                const handleOnBlur = (
+                  e: React.ChangeEvent<HTMLInputElement>,
+                  field: string
                 ) => {
-                  const {
-                    errors,
-                    setErrors,
-                    setFieldError,
-                    setFieldValue,
-                    handleSubmit,
-                    values
-                  } = formikProps;
+                  if (e.target.value === '') {
+                    setFieldValue(field, null);
+                    return;
+                  }
+                  try {
+                    setFieldValue(
+                      field,
+                      new Date(e.target.value).toISOString()
+                    );
+                    delete errors[
+                      field as keyof GetOperationalNeedOperationalNeedType
+                    ];
+                  } catch (err) {
+                    setFieldError(field, h('validDate'));
+                  }
+                };
 
-                  const flatErrors = flattenErrors(errors);
-
-                  const handleOnBlur = (
-                    e: React.ChangeEvent<HTMLInputElement>,
-                    field: string
-                  ) => {
-                    if (e.target.value === '') {
-                      setFieldValue(field, null);
-                      return;
-                    }
-                    try {
-                      setFieldValue(
-                        field,
-                        new Date(e.target.value).toISOString()
-                      );
-                      delete errors[
-                        field as keyof GetOperationalNeedOperationalNeedType
-                      ];
-                    } catch (err) {
-                      setFieldError(field, h('validDate'));
-                    }
-                  };
-
-                  return (
-                    <>
-                      {Object.keys(errors).length > 0 && (
-                        <ErrorAlert
-                          testId="formik-validation-errors"
-                          classNames="margin-top-3"
-                          heading={h('checkAndFix')}
-                        >
-                          {Object.keys(flatErrors).map(key => {
-                            return (
-                              <ErrorAlertMessage
-                                key={`Error.${key}`}
-                                errorKey={key}
-                                message={flatErrors[key]}
-                              />
-                            );
-                          })}
-                        </ErrorAlert>
-                      )}
-
-                      <Form
-                        className="margin-top-6"
-                        data-testid="it-tools-page-seven-form"
-                        onSubmit={e => {
-                          handleSubmit(e);
-                        }}
+                return (
+                  <>
+                    {Object.keys(errors).length > 0 && (
+                      <ErrorAlert
+                        testId="formik-validation-errors"
+                        classNames="margin-top-3"
+                        heading={h('checkAndFix')}
                       >
-                        <Fieldset disabled={loading}>
-                          {formikNeed.solutions.map((solution, index) => {
-                            const identifier = (
-                              solution.nameOther ||
-                              solution.key ||
-                              ''
-                            ).replaceAll(' ', '-');
-                            return (
+                        {Object.keys(flatErrors).map(key => {
+                          return (
+                            <ErrorAlertMessage
+                              key={`Error.${key}`}
+                              errorKey={key}
+                              message={flatErrors[key]}
+                            />
+                          );
+                        })}
+                      </ErrorAlert>
+                    )}
+
+                    <Form
+                      className="margin-top-6"
+                      data-testid="it-tools-page-seven-form"
+                      onSubmit={e => {
+                        handleSubmit(e);
+                      }}
+                    >
+                      <Fieldset disabled={loading}>
+                        {formikNeed.solutions.map((solution, index) => {
+                          const identifier = (
+                            solution.nameOther ||
+                            solution.key ||
+                            ''
+                          ).replaceAll(' ', '-');
+                          return (
+                            <>
                               <Solution
                                 key={solution.id}
                                 solution={solution}
@@ -371,60 +375,63 @@ const SolutionImplementation = ({
                                 values={values}
                                 flatErrors={flatErrors}
                                 loading={loading}
+                                operationalNeedID={operationalNeedID}
+                                operationalSolutionID={solutionId}
+                                modelID={modelID}
                               />
-                            );
-                          })}
+                            </>
+                          );
+                        })}
 
-                          {message && (
-                            <Alert type="warning" slim className="margin-top-6">
-                              {t('solutionRemoveWarning', {
-                                solutions: message
-                              })}
-                            </Alert>
+                        {message && (
+                          <Alert type="warning" slim className="margin-top-6">
+                            {t('solutionRemoveWarning', {
+                              solutions: message
+                            })}
+                          </Alert>
+                        )}
+
+                        <div className="margin-top-6 margin-bottom-3">
+                          {!isUpdatingStatus && (
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--outline margin-bottom-1"
+                              onClick={() => {
+                                handleFormSubmit(values, 'back');
+                              }}
+                            >
+                              {h('back')}
+                            </Button>
                           )}
 
-                          <div className="margin-top-6 margin-bottom-3">
-                            {!isUpdatingStatus && (
-                              <Button
-                                type="button"
-                                className="usa-button usa-button--outline margin-bottom-1"
-                                onClick={() => {
-                                  handleFormSubmit(values, 'back');
-                                }}
-                              >
-                                {h('back')}
-                              </Button>
-                            )}
-
-                            <Button
-                              type="submit"
-                              id="submit-solutions"
-                              onClick={() => setErrors({})}
-                            >
-                              {isUpdatingStatus
-                                ? t('updateSolution')
-                                : t('saveSolutions')}
-                            </Button>
-                          </div>
-
                           <Button
-                            type="button"
-                            className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
-                            onClick={() => handleCancelClick(values)}
+                            type="submit"
+                            id="submit-solutions"
+                            onClick={() => setErrors({})}
                           >
-                            <IconArrowBack
-                              className="margin-right-1"
-                              aria-hidden
-                            />
-                            {renderCancelCopy()}
+                            {isUpdatingStatus
+                              ? t('updateSolution')
+                              : t('saveSolutions')}
                           </Button>
-                        </Fieldset>
-                      </Form>
-                    </>
-                  );
-                }}
-              </Formik>
-            </Grid>
+                        </div>
+
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
+                          onClick={() => handleCancelClick(values)}
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {renderCancelCopy()}
+                        </Button>
+                      </Fieldset>
+                    </Form>
+                  </>
+                );
+              }}
+            </Formik>
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
