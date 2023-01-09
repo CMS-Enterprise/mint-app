@@ -7,9 +7,9 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/loaders"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // OperationaSolutionsAndPossibleGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need

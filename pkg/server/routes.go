@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/loaders"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/99designs/gqlgen/graphql"
