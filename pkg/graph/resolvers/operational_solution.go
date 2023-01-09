@@ -30,21 +30,8 @@ func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, oper
 	key.Args["include_not_needed"] = includeNotNeeded
 	key.Args["operational_need_id"] = operationalNeedID
 
-	// existingParam, ok := opSolutionLoader.Map["includeNotNeeded"]
-	// if ok { //Was a value already set?
-	// 	if existingParam != includeNotNeeded { //Needs to be the same for all calls or the loader will fail. If needed in the future, we will need to implement a composite key to the loader
-	// 		return nil, fmt.Errorf("includeNotNeeded needs to be consistent across all calls to the loader")
-	// 	}
-	// }
-	// opSolutionLoader.Map["includeNotNeeded"] = includeNotNeeded
-	// dataloader.StringKey(operationalNeedID.String()
-	// dataloader.K
-
-	//TODO do we need to write a new interface to convert our types to what we need?
-	// thunk := opSolutionLoader.Loader.Load(ctx, dataloader.StringKey(operationalNeedID.String()))
 	thunk := opSolutionLoader.Loader.Load(ctx, key)
 	result, err := thunk()
-	// defer opSolutionLoader.Clear()
 
 	if err != nil {
 		return nil, err

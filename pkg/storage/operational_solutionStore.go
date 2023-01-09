@@ -11,12 +11,6 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/operational_solution/collection_get_by_operational_need_id.sql
-var operationalSolutionCollectionGetByOperationalNeedIDSQL string
-
-// //go:embed SQL/operational_solution/collection_get_by_operational_need_id_LOADER.sql
-// var operationalSolutionCollectionGetByOperationalNeedIDLOADERSQL string
-
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
 
@@ -40,28 +34,6 @@ var operationalSolutionInsertOrUpdateSQL string
 
 //go:embed SQL/operational_solution/insert_or_update_other.sql
 var operationalSolutionInsertOrUpdateOtherSQL string
-
-// OperationalSolutionCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
-func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID) ([]*models.OperationalSolution, error) {
-	solutions := []*models.OperationalSolution{}
-
-	stmt, err := s.db.PrepareNamed(operationalSolutionCollectionGetByOperationalNeedIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-
-		"operational_need_id": operationalNeedID,
-	}
-
-	err = stmt.Select(&solutions, arg) //this returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-	return solutions, nil
-}
 
 // OperationalSolutionAndPossibleCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
 func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
@@ -94,14 +66,8 @@ func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLO
 	if err != nil {
 		return nil, err
 	}
-	// arg := map[string]interface{}{
-
-	// 	"operational_need_ids": pq.Array(operationalNeedIDs),
-	// 	"includeNotNeeded":     includeNotNeeded,
-	// }
 
 	arg := map[string]interface{}{
-
 		"paramTableJSON": paramTableJSON,
 	}
 	err = stmt.Select(&solutions, arg) //this returns more than one
@@ -110,35 +76,6 @@ func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLO
 		return nil, err
 	}
 	return solutions, nil
-
-	// query, args, err := sqlx.In(operationalSolutionCollectionGetByOperationalNeedIDLOADERSQL, operationalNeedIDs) //TODO what about include not needed? where do we get that?
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// query = s.db.Rebind(query)
-
-	// err = s.db.Select(&solutions, query, args...) //includes not needed inserted solutions
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// if includeNotNeeded {
-	// 	possibleSol := []*models.OperationalSolution{}
-
-	// 	query, args, err := sqlx.In(operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL, operationalNeedIDs) //TODO what about include not needed? where do we get that?
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	query = s.db.Rebind(query)
-
-	// 	err = s.db.Select(&solutions, query, args...)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	solutions = append(solutions, possibleSol...)
-	// }
-
-	// return solutions, nil
 
 }
 
