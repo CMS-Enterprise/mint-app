@@ -5,4 +5,6 @@ type UserInfo struct {
 	CommonName string
 	Email      EmailAddress
 	EuaUserID  string
+	FirstName  string
+	LastName   string
 }
