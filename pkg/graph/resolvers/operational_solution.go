@@ -36,8 +36,18 @@ func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, oper
 	if err != nil {
 		return nil, err
 	}
+	ret := result.([]*models.OperationalSolution)
 
-	return result.([]*models.OperationalSolution), nil
+	if ret == nil {
+		return []*models.OperationalSolution{}, nil //THERE was no result, instantiate empty model
+	}
+	if len(ret) == 1 {
+		if ret[0] == nil {
+			return []*models.OperationalSolution{}, nil //THERE was no result, instantiate empty model
+		}
+	}
+
+	return ret, nil
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready

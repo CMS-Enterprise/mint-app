@@ -5,11 +5,9 @@ import (
 	"fmt"
 
 	"github.com/graph-gophers/dataloader"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // GetOperationalSolutionAndPossibleCollectionByOperationalNeedID uses a data loader to return operational solutions by operational need id
@@ -26,17 +24,15 @@ func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperati
 
 	dr := loaders.DataReader
 
-	sols, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger, marshaledParams)
+	resSet, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger, marshaledParams)
 
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
 		ck := key.Raw().(CompoundKey)
-		opNeedID := fmt.Sprint(ck.Args["operational_need_id"])
-		needs := lo.Filter(sols, func(opSol *models.OperationalSolution, index int) bool {
-
-			return opSol.OperationalNeedID.String() == opNeedID
-		})
-		output[index] = &dataloader.Result{Data: needs, Error: loadErr}
+		resKey := fmt.Sprint(ck.Args["operational_need_id"])
+		resKey = resKey + fmt.Sprint(ck.Args["include_not_needed"]) //so there isn't a space
+		opSols := resSet[resKey]
+		output[index] = &dataloader.Result{Data: opSols, Error: loadErr}
 
 	}
 	return output
