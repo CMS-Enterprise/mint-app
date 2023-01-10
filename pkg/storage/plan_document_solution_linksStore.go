@@ -26,6 +26,9 @@ var planDocumentSolutionLinkDeleteByIDSQL string
 //go:embed SQL/plan_document_solution/links_get_by_id.sql
 var planDocumentSolutionLinksGetByIDSQL string
 
+//go:embed SQL/plan_document_solution/num_links_by_document_id.sql
+var planDocumentNumLinkedSolutionsSQL string
+
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links
 func (s *Store) PlanDocumentSolutionLinksCreate(
 	_ *zap.Logger,
@@ -90,6 +93,24 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	}
 
 	return solutionLinks, nil
+}
+
+// PlanDocumentNumLinkedSolutions implements store logic to retrieve the number of linked solutions for a document by ID
+func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uuid.UUID) (int, error) {
+	statement, err := s.db.PrepareNamed(planDocumentNumLinkedSolutionsSQL)
+	if err != nil {
+		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
+	}
+
+	result := 0
+	err = statement.Get(&result, map[string]interface{}{
+		"document_id": documentID,
+	})
+	if err != nil {
+		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
+	}
+
+	return result, nil
 }
 
 // convertToStringArray converts a UUID array to a string array so sqlx can understand the type

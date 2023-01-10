@@ -1,12 +1,15 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
@@ -56,6 +59,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		AnyTimes()
 
 	_, _, err := CreatePlanCollaborator(
+		context.Background(),
 		s.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
@@ -63,6 +67,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		s.testConfigs.Principal,
 		s.testConfigs.Store,
 		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
 	)
 	s.NoError(err)
 	mockController.Finish()

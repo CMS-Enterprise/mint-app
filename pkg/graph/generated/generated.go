@@ -336,25 +336,26 @@ type ComplexityRoot struct {
 	}
 
 	PlanDocument struct {
-		Bucket        func(childComplexity int) int
-		CreatedBy     func(childComplexity int) int
-		CreatedDts    func(childComplexity int) int
-		DeletedAt     func(childComplexity int) int
-		DocumentType  func(childComplexity int) int
-		DownloadURL   func(childComplexity int) int
-		FileKey       func(childComplexity int) int
-		FileName      func(childComplexity int) int
-		FileSize      func(childComplexity int) int
-		FileType      func(childComplexity int) int
-		ID            func(childComplexity int) int
-		ModelPlanID   func(childComplexity int) int
-		ModifiedBy    func(childComplexity int) int
-		ModifiedDts   func(childComplexity int) int
-		OptionalNotes func(childComplexity int) int
-		OtherType     func(childComplexity int) int
-		Restricted    func(childComplexity int) int
-		VirusClean    func(childComplexity int) int
-		VirusScanned  func(childComplexity int) int
+		Bucket             func(childComplexity int) int
+		CreatedBy          func(childComplexity int) int
+		CreatedDts         func(childComplexity int) int
+		DeletedAt          func(childComplexity int) int
+		DocumentType       func(childComplexity int) int
+		DownloadURL        func(childComplexity int) int
+		FileKey            func(childComplexity int) int
+		FileName           func(childComplexity int) int
+		FileSize           func(childComplexity int) int
+		FileType           func(childComplexity int) int
+		ID                 func(childComplexity int) int
+		ModelPlanID        func(childComplexity int) int
+		ModifiedBy         func(childComplexity int) int
+		ModifiedDts        func(childComplexity int) int
+		NumLinkedSolutions func(childComplexity int) int
+		OptionalNotes      func(childComplexity int) int
+		OtherType          func(childComplexity int) int
+		Restricted         func(childComplexity int) int
+		VirusClean         func(childComplexity int) int
+		VirusScanned       func(childComplexity int) int
 	}
 
 	PlanDocumentSolutionLink struct {
@@ -929,6 +930,8 @@ type PlanDocumentResolver interface {
 	OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error)
 	OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error)
 	DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error)
+
+	NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error)
 }
 type PlanGeneralCharacteristicsResolver interface {
 	ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error)
@@ -2954,6 +2957,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDocument.ModifiedDts(childComplexity), true
+
+	case "PlanDocument.numLinkedSolutions":
+		if e.complexity.PlanDocument.NumLinkedSolutions == nil {
+			break
+		}
+
+		return e.complexity.PlanDocument.NumLinkedSolutions(childComplexity), true
 
 	case "PlanDocument.optionalNotes":
 		if e.complexity.PlanDocument.OptionalNotes == nil {
@@ -6458,6 +6468,7 @@ type PlanDocument {
   optionalNotes: String
   downloadUrl: String
   deletedAt: Time
+  numLinkedSolutions: Int!
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -12591,6 +12602,8 @@ func (ec *executionContext) fieldContext_ModelPlan_documents(ctx context.Context
 				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
 			case "deletedAt":
 				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
 			case "createdDts":
@@ -15349,6 +15362,8 @@ func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx cont
 				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
 			case "deletedAt":
 				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
 			case "createdDts":
@@ -19035,6 +19050,8 @@ func (ec *executionContext) fieldContext_OperationalSolution_documents(ctx conte
 				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
 			case "deletedAt":
 				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
 			case "createdDts":
@@ -23845,6 +23862,50 @@ func (ec *executionContext) fieldContext_PlanDocument_deletedAt(ctx context.Cont
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDocument_numLinkedSolutions(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanDocument().NumLinkedSolutions(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDocument_numLinkedSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDocument",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
 		},
 	}
 	return fc, nil
@@ -41550,6 +41611,8 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
 			case "deletedAt":
 				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "numLinkedSolutions":
+				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
 			case "createdDts":
@@ -47697,6 +47760,26 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanDocument_deletedAt(ctx, field, obj)
 
+		case "numLinkedSolutions":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_numLinkedSolutions(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdBy":
 
 			out.Values[i] = ec._PlanDocument_createdBy(ctx, field, obj)

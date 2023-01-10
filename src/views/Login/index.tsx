@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 
 import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
 import OktaSignInWidget from 'components/shared/OktaSignInWidget';
 import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
@@ -60,7 +59,6 @@ const Login = () => {
           </button>
         </div>
       )}
-      <PageHeading>Sign in using EUA</PageHeading>
       <OktaSignInWidget onSuccess={onSuccess} onError={() => {}} />
     </MainContent>
   );

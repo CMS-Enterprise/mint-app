@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 	"path/filepath"
 
@@ -27,7 +28,7 @@ import (
 func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string, euaID string) *models.ModelPlan {
 
 	princ := getTestPrincipal(store, euaID)
-	plan, err := resolvers.ModelPlanCreate(logger, modelName, store, princ)
+	plan, err := resolvers.ModelPlanCreate(context.Background(), logger, modelName, store, princ, userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo))
 	if err != nil {
 		panic(err)
 	}
@@ -64,6 +65,16 @@ func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.Model
 	return updated
 }
 
+func stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
+	return &models.UserInfo{
+		EuaUserID:  username,
+		FirstName:  username,
+		LastName:   "Doe",
+		CommonName: username + " Doe",
+		Email:      models.NewEmailAddress(username + ".doe@local.fake"),
+	}, nil
+}
+
 // addPlanCollaborator is a wrapper for resolvers.CreatePlanCollaborator
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
@@ -78,6 +89,7 @@ func addPlanCollaborator(
 	princ := getTestPrincipal(store, mp.CreatedBy)
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
+		context.Background(),
 		logger,
 		emailService,
 		emailTemplateService,
@@ -85,6 +97,7 @@ func addPlanCollaborator(
 		princ,
 		store,
 		true,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
 	)
 	if err != nil {
 		panic(err)
@@ -221,7 +234,7 @@ func addPlanDocumentSolutionLinks(
 
 func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(store, userName, true, "", "", false)
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
