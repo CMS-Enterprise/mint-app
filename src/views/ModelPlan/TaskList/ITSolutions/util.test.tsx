@@ -13,8 +13,7 @@ import { GetOperationalNeedsTableType } from './Home/operationalNeedsTable';
 import {
   filterNeedsFormatSolutions,
   filterPossibleNeeds,
-  returnActionLinks,
-  SolutionAsNeed
+  returnActionLinks
 } from './util';
 
 const modelID = 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06';
@@ -70,7 +69,7 @@ describe('IT Solutions Util', () => {
     expect(
       returnActionLinks(
         OpSolutionStatus.NOT_STARTED,
-        operationalNeed as SolutionAsNeed,
+        operationalNeed as GetOperationalNeedsTableType,
         modelID
       )
     ).toEqual(
