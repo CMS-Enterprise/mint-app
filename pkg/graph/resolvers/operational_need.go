@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -28,8 +27,10 @@ func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID u
 func OperationalNeedCollectionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
 	allLoaders := loaders.Loaders(ctx)
 	opNeedLoader := allLoaders.OperationalNeedLoader
+	key := loaders.NewCompoundKey()
+	key.Args["model_plan_id"] = modelPlanID
 
-	thunk := opNeedLoader.Loader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
+	thunk := opNeedLoader.Loader.Load(ctx, key)
 
 	result, err := thunk()
 	if err != nil {

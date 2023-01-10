@@ -1,3 +1,11 @@
+WITH QUERIED_IDS AS (
+    /*Translate the input to a table */
+    SELECT model_plan_id
+    FROM
+        JSON_TO_RECORDSET(:paramTableJSON)
+        AS x("model_plan_id" UUID) --noqa
+)
+
 SELECT
     OpNd.id,
     OpNd.model_plan_id AS model_plan_id,
@@ -11,7 +19,7 @@ SELECT
     OpNd.created_dts AS created_dts,
     OpNd.modified_by,
     OpNd.modified_dts
-FROM operational_need AS OpNd
+FROM QUERIED_IDS AS qIDs
+INNER JOIN operational_need AS OpNd ON OpNd.model_plan_id = qIDs.model_plan_id
 LEFT JOIN possible_operational_need AS pOpNd ON OpNd.need_type = pOpNd.id
-WHERE OpNd.model_plan_id IN (?)
-ORDER BY need_type ASC
+ORDER BY need_type ASC;

@@ -4,7 +4,6 @@ import (
 	_ "embed"
 
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -92,7 +91,6 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 	}
-
 	err = statement.Get(&plan, arg)
 
 	if err != nil {
@@ -103,16 +101,18 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 }
 
 // PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
-func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, modelPlanIDSlice []string) ([]*models.PlanBasics, error) {
+func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBasics, error) {
 	basicSlice := []*models.PlanBasics{} //TOOD use new data loader query instead.
 
-	query, args, err := sqlx.In(planBasicsGetByModelPlanIDLoaderSQL, modelPlanIDSlice)
+	stmt, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
-	query = s.db.Rebind(query)
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
 
-	err = s.db.Select(&basicSlice, query, args...)
+	err = stmt.Select(&basicSlice, arg) //this returns more than one
 
 	if err != nil {
 		return nil, err

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -44,9 +43,11 @@ func PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store
 func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := loaders.Loaders(ctx)
 	basicsLoader := allLoaders.BasicsLoader
+	key := loaders.NewCompoundKey()
+	key.Args["model_plan_id"] = modelPlanID
 
 	//TODO do we need to write a new interface to convert our types to what we need?
-	thunk := basicsLoader.Loader.Load(ctx, dataloader.StringKey(modelPlanID.String()))
+	thunk := basicsLoader.Loader.Load(ctx, key)
 	result, err := thunk()
 
 	if err != nil {

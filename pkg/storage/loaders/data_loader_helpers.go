@@ -75,11 +75,3 @@ func newWrappedDataLoader(batchFn dataloader.BatchFunc) *WrappedDataLoader {
 type DataReader struct {
 	Store *storage.Store
 }
-
-func stringArrayFromKeys(keys dataloader.Keys) []string {
-	stringArr := make([]string, len(keys))
-	for ix, key := range keys {
-		stringArr[ix] = key.String()
-	}
-	return stringArr
-}

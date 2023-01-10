@@ -6,6 +6,7 @@ import (
 
 	"github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -15,12 +16,17 @@ import (
 func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	dr := loaders.DataReader
 
-	modelPlanIDs := make([]string, len(keys))
-	for ix, key := range keys {
-		modelPlanIDs[ix] = key.String()
-	}
 	logger := appcontext.ZLogger(ctx)
-	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, modelPlanIDs)
+	arrayCK, err := CompoundKeyArray(keys)
+	if err != nil {
+		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
+	}
+	marshaledParams, err := arrayCK.ToJSONArray()
+	if err != nil {
+		logger.Error("issue converting keys to JSON for data loader in Operational Solutions", zap.Error(*err))
+	}
+
+	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, marshaledParams)
 	basicsByID := lo.Associate(basics, func(b *models.PlanBasics) (string, *models.PlanBasics) {
 		return b.ModelPlanID.String(), b
 	})
@@ -28,12 +34,18 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		basic, ok := basicsByID[key.String()]
-
+		ck, ok := key.Raw().(CompoundKey)
 		if ok {
-			output[index] = &dataloader.Result{Data: basic, Error: nil}
+			resKey := fmt.Sprint(ck.Args["model_plan_id"])
+			basic, ok := basicsByID[resKey]
+			if ok {
+				output[index] = &dataloader.Result{Data: basic, Error: nil}
+			} else {
+				err := fmt.Errorf("plan basic not found for model plan %s", resKey)
+				output[index] = &dataloader.Result{Data: nil, Error: err}
+			}
 		} else {
-			err := fmt.Errorf("plan basic not found for model plan %s", key.String())
+			err := fmt.Errorf("could not retrive key from %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}
 		}
 	}

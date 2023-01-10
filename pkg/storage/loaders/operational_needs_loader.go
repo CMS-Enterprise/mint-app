@@ -2,8 +2,10 @@ package loaders
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/graph-gophers/dataloader"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -11,12 +13,19 @@ import (
 
 // GetOperationalNeedsByModelPlanID uses a data loader to aggregate SQL calls and return data
 func (loaders *DataLoaders) GetOperationalNeedsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
-
-	modelPlanIDs := stringArrayFromKeys(keys)
 	logger := appcontext.ZLogger(ctx)
+	arrayCK, err := CompoundKeyArray(keys)
+	if err != nil {
+		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
+	}
+	marshaledParams, err := arrayCK.ToJSONArray()
+	if err != nil {
+		logger.Error("issue converting keys to JSON for data loader in Operational Solutions", zap.Error(*err))
+	}
+
 	dr := loaders.DataReader
 
-	opNeeds, _ := dr.Store.OperationalNeedCollectionGetByModelPlanIDLOADER(logger, modelPlanIDs)
+	opNeeds, _ := dr.Store.OperationalNeedCollectionGetByModelPlanIDLOADER(logger, marshaledParams)
 	opNeedsByID := map[string][]*models.OperationalNeed{}
 	for _, opNeed := range opNeeds {
 
@@ -32,11 +41,20 @@ func (loaders *DataLoaders) GetOperationalNeedsByModelPlanID(ctx context.Context
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		needs := opNeedsByID[key.String()]
-		// needs := lo.Filter(opNeeds, func(opNeed *models.OperationalNeed, index int) bool {
-		// 	return opNeed.ModelPlanID.String() == key.String()
-		// })
-		output[index] = &dataloader.Result{Data: needs, Error: nil}
+		ck, ok := key.Raw().(CompoundKey)
+		if ok {
+			resKey := fmt.Sprint(ck.Args["model_plan_id"])
+			needs, ok := opNeedsByID[resKey]
+			if ok {
+				output[index] = &dataloader.Result{Data: needs, Error: nil}
+			} else {
+				err := fmt.Errorf("operational needs not found for model plan %s", resKey)
+				output[index] = &dataloader.Result{Data: nil, Error: err}
+			}
+		} else {
+			err := fmt.Errorf("could not retrive key from %s", key.String())
+			output[index] = &dataloader.Result{Data: nil, Error: err}
+		}
 
 	}
 	return output

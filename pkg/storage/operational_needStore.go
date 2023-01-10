@@ -2,7 +2,6 @@ package storage
 
 import (
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -62,16 +61,18 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 }
 
 // OperationalNeedCollectionGetByModelPlanIDLOADER returns OperationalNeeds utilizing a Data Loader
-func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(logger *zap.Logger, modelPlanIDSlice []string) ([]*models.OperationalNeed, error) {
+func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalNeed, error) {
 	needs := []*models.OperationalNeed{}
 
-	query, args, err := sqlx.In(operationalNeedCollectionByModelPlanIDLOADERSQL, modelPlanIDSlice)
+	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDLOADERSQL)
 	if err != nil {
 		return nil, err
 	}
 
-	query = s.db.Rebind(query)
-	err = s.db.Select(&needs, query, args...)
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+	err = stmt.Select(&needs, arg) //this returns more than one
 
 	if err != nil {
 		return nil, err
