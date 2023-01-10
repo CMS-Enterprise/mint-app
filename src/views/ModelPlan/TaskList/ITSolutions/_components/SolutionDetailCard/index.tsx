@@ -22,6 +22,7 @@ import SolutionCard from '../SolutionCard';
 type SolutionDetailCardProps = {
   solution: GetOperationalSolutionType;
   operationalNeedID: string;
+  operationalSolutionID: string;
   modelID: string;
   className?: string;
 };
@@ -29,6 +30,7 @@ type SolutionDetailCardProps = {
 const SolutionDetailCard = ({
   solution,
   operationalNeedID,
+  operationalSolutionID,
   modelID,
   className
 }: SolutionDetailCardProps) => {
@@ -98,9 +100,10 @@ const SolutionDetailCard = ({
               id="add-solution-not-listed"
               className="usa-button usa-button--outline"
               onClick={() => {
-                history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status`
-                );
+                history.push({
+                  pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
+                  state: { fromSolutionDetails: true }
+                });
               }}
             >
               {t('updateStatusAndTiming')}
