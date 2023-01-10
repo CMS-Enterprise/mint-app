@@ -1,16 +1,18 @@
 // .scss settings
 
+// USWDS theme overrides
 @forward './stylesheets/_settings.scss';
-@forward 'uswds';
-// @forward './stylesheets/_uswdsUtilities.scss';
 
-@use '../node_modules/uswds/src/stylesheets/theme/styles.scss' as *;
+// USWDS packages
+@forward 'uswds';
+
+// USWDS typography theme used below
+@use 'uswds-theme-typography' as *;
 
 // Vendor Styles
 @forward '../node_modules/font-awesome/css/font-awesome.min.css';
 @forward '../node_modules/@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 @forward '../node_modules/@trussworks/react-uswds/lib/index.css';
-
 
 // Custom USWDS
 @forward './stylesheets/custom.scss';
@@ -115,6 +117,7 @@ button:disabled {
     }
   }
 }
+
 .usa-summary-box__heading {
   margin-bottom: 0rem;
 }
