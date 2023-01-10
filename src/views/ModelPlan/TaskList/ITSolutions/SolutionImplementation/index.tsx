@@ -5,30 +5,21 @@ Displays relevant operational need question and answers
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   Grid,
-  IconArrowBack,
-  Label,
-  Radio
+  IconArrowBack
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
-import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
-import FieldGroup from 'components/shared/FieldGroup';
 import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import {
@@ -40,18 +31,14 @@ import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/ty
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
+import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { translateOpNeedsStatusType } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
-import ImplementationStatuses from '../_components/ImplementationStatus';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-import SolutionCard from '../_components/SolutionCard';
+
+import Solution from './_components/Solution';
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure
@@ -66,10 +53,21 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SolutionImplementation = () => {
-  const { modelID, operationalNeedID } = useParams<{
+const SolutionImplementation = ({
+  isUpdatingStatus = false
+}: {
+  isUpdatingStatus?: boolean;
+}) => {
+  const { modelID, operationalNeedID, solutionId } = useParams<{
     modelID: string;
     operationalNeedID: string;
+    solutionId?: string | undefined;
+  }>();
+
+  const {
+    state: { fromSolutionDetails }
+  } = useLocation<{
+    fromSolutionDetails: boolean;
   }>();
 
   const history = useHistory();
@@ -161,14 +159,24 @@ const SolutionImplementation = () => {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {t('successSolutionAdded', {
-                    operationalNeedName: operationalNeed.name
-                  })}
+                  {isUpdatingStatus
+                    ? t('successStatusUpdated', {
+                        operationalNeedName: operationalNeed.name
+                      })
+                    : t('successSolutionAdded', {
+                        operationalNeedName: operationalNeed.name
+                      })}
                 </span>
               </Alert>
             );
 
-            history.push(`/models/${modelID}/task-list/it-solutions`);
+            // If fromSolutionDetails, go to previous page, otherwise, go to tracker
+            if (fromSolutionDetails) {
+              history.goBack();
+            } else {
+              history.push(`/models/${modelID}/task-list/it-solutions`);
+            }
+
             // Go back but still save solution details
           } else if (redirect === 'back') {
             history.goBack();
@@ -189,32 +197,54 @@ const SolutionImplementation = () => {
     return <NotFound />;
   }
 
+  const renderCancelCopy = () => {
+    if (isUpdatingStatus && fromSolutionDetails) {
+      return t('dontUpdateandReturnToSolutionDetails');
+    }
+    if (isUpdatingStatus) {
+      return t('dontUpdateandReturnToTracker');
+    }
+    return t('dontAdd');
+  };
+
+  const handleCancelClick = (values: GetOperationalNeedOperationalNeedType) => {
+    if (isUpdatingStatus && fromSolutionDetails) {
+      return history.goBack();
+    }
+    if (isUpdatingStatus) {
+      return history.push(`/models/${modelID}/task-list/it-solutions`);
+    }
+    return handleFormSubmit(values, null, true);
+  };
+
+  const breadcrumbs = [
+    { text: h('home'), url: '/' },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    {
+      text: t('solutionDetails'),
+      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
+    },
+    { text: isUpdatingStatus ? t('updateStatus') : t('selectSolution') }
+  ];
+
+  const formikNeed = { ...operationalNeed };
+  formikNeed.solutions =
+    solutionId === undefined
+      ? operationalNeed.solutions
+      : operationalNeed.solutions.filter(
+          solution => solution.id === solutionId
+        );
+
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={
+          fromSolutionDetails
+            ? breadcrumbs
+            : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+        }
+      />
 
       {mutationError && (
         <Alert type="error" slim>
@@ -225,7 +255,9 @@ const SolutionImplementation = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addImplementationDetails')}
+            {isUpdatingStatus
+              ? t('updateStatus')
+              : t('addImplementationDetails')}
           </PageHeading>
 
           <p
@@ -236,7 +268,9 @@ const SolutionImplementation = () => {
           </p>
 
           <p className="line-height-body-4">
-            {t('addImplementationDetailsInfo')}
+            {isUpdatingStatus
+              ? t('updateStatusInfo')
+              : t('addImplementationDetailsInfo')}
           </p>
 
           <Grid tablet={{ col: 8 }}>
@@ -249,7 +283,7 @@ const SolutionImplementation = () => {
           <Grid gap>
             <Grid tablet={{ col: 8 }}>
               <Formik
-                initialValues={operationalNeed}
+                initialValues={formikNeed}
                 onSubmit={values => {
                   handleFormSubmit(values);
                 }}
@@ -319,156 +353,25 @@ const SolutionImplementation = () => {
                         }}
                       >
                         <Fieldset disabled={loading}>
-                          {operationalNeed.solutions.map((solution, index) => {
+                          {formikNeed.solutions.map((solution, index) => {
                             const identifier = (
                               solution.nameOther ||
                               solution.key ||
                               ''
                             ).replaceAll(' ', '-');
-
                             return (
-                              <div key={solution.id}>
-                                <p className="text-bold">{t('solution')}</p>
-
-                                <SolutionCard solution={solution} shadow />
-
-                                {!loading && (
-                                  <>
-                                    <FieldGroup
-                                      scrollElement="mustStartDts"
-                                      error={!!flatErrors.mustStartDts}
-                                      className="margin-top-1"
-                                    >
-                                      <Label
-                                        htmlFor={`solution-must-start-${identifier}`}
-                                        className="text-bold"
-                                      >
-                                        {t('mustStartBy')}
-                                      </Label>
-
-                                      <div className="usa-hint margin-top-1">
-                                        {h('datePlaceholder')}
-                                      </div>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors.mustStartDts}
-                                      </FieldErrorMsg>
-
-                                      <div className="width-card-lg position-relative">
-                                        <Field
-                                          as={DatePicker}
-                                          error={+!!flatErrors.mustStartDts}
-                                          id={`solution-must-start-${identifier}`}
-                                          data-testid={`solution-must-start-${identifier}`}
-                                          maxLength={50}
-                                          name={`solutions[${index}].mustStartDts`}
-                                          defaultValue={solution.mustStartDts}
-                                          onBlur={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                          ) => {
-                                            handleOnBlur(
-                                              e,
-                                              `solutions[${index}].mustStartDts`
-                                            );
-                                          }}
-                                        />
-                                      </div>
-                                    </FieldGroup>
-
-                                    <FieldGroup
-                                      scrollElement="mustFinishDts"
-                                      error={!!flatErrors.mustFinishDts}
-                                    >
-                                      <Label
-                                        htmlFor={`solution-must-finish-${identifier}`}
-                                        className="text-bold"
-                                      >
-                                        {t('mustFinishBy')}
-                                      </Label>
-
-                                      <div className="usa-hint margin-top-1">
-                                        {h('datePlaceholder')}
-                                      </div>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors.mustFinishDts}
-                                      </FieldErrorMsg>
-
-                                      <div className="width-card-lg position-relative">
-                                        <Field
-                                          as={DatePicker}
-                                          error={+!!flatErrors.mustFinishDts}
-                                          id={`solution-must-finish-${identifier}`}
-                                          data-testid={`solution-must-finish-${identifier}`}
-                                          maxLength={50}
-                                          name={`solutions[${index}].mustFinishDts`}
-                                          defaultValue={solution.mustFinishDts}
-                                          onBlur={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                          ) => {
-                                            handleOnBlur(
-                                              e,
-                                              `solutions[${index}].mustFinishDts`
-                                            );
-                                          }}
-                                        />
-                                      </div>
-                                    </FieldGroup>
-
-                                    <FieldGroup>
-                                      <Label
-                                        htmlFor={`solution-status-${identifier}`}
-                                        className="text-bold"
-                                      >
-                                        {t('whatIsStatus')}
-                                      </Label>
-
-                                      <FieldErrorMsg>
-                                        {flatErrors.status}
-                                      </FieldErrorMsg>
-
-                                      <Fieldset>
-                                        {[
-                                          OpSolutionStatus.NOT_STARTED,
-                                          OpSolutionStatus.ONBOARDING,
-                                          OpSolutionStatus.BACKLOG,
-                                          OpSolutionStatus.IN_PROGRESS,
-                                          OpSolutionStatus.COMPLETED,
-                                          OpSolutionStatus.AT_RISK
-                                        ].map(key => (
-                                          <Field
-                                            as={Radio}
-                                            key={key}
-                                            id={`solution-status-${identifier}-${key}`}
-                                            name={`solutions[${index}].status`}
-                                            label={translateOpNeedsStatusType(
-                                              key
-                                            )}
-                                            value={key}
-                                            checked={
-                                              values.solutions[index]
-                                                ?.status === key
-                                            }
-                                            onChange={() => {
-                                              setFieldValue(
-                                                `solutions[${index}].status`,
-                                                key
-                                              );
-                                            }}
-                                          />
-                                        ))}
-                                      </Fieldset>
-                                    </FieldGroup>
-
-                                    <ImplementationStatuses />
-                                  </>
-                                )}
-
-                                {index !==
-                                  operationalNeed.solutions.length - 1 && (
-                                  <Divider className="margin-bottom-6 margin-top-6" />
-                                )}
-                              </div>
+                              <Solution
+                                key={solution.id}
+                                solution={solution}
+                                identifier={identifier}
+                                index={index}
+                                handleOnBlur={handleOnBlur}
+                                setFieldValue={setFieldValue}
+                                length={formikNeed.solutions.length}
+                                values={values}
+                                flatErrors={flatErrors}
+                                loading={loading}
+                              />
                             );
                           })}
 
@@ -481,37 +384,39 @@ const SolutionImplementation = () => {
                           )}
 
                           <div className="margin-top-6 margin-bottom-3">
-                            <Button
-                              type="button"
-                              className="usa-button usa-button--outline margin-bottom-1"
-                              onClick={() => {
-                                handleFormSubmit(values, 'back');
-                              }}
-                            >
-                              {h('back')}
-                            </Button>
+                            {!isUpdatingStatus && (
+                              <Button
+                                type="button"
+                                className="usa-button usa-button--outline margin-bottom-1"
+                                onClick={() => {
+                                  handleFormSubmit(values, 'back');
+                                }}
+                              >
+                                {h('back')}
+                              </Button>
+                            )}
 
                             <Button
                               type="submit"
                               id="submit-solutions"
                               onClick={() => setErrors({})}
                             >
-                              {t('saveSolutions')}
+                              {isUpdatingStatus
+                                ? t('updateSolution')
+                                : t('saveSolutions')}
                             </Button>
                           </div>
 
                           <Button
                             type="button"
                             className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
-                            onClick={() => {
-                              handleFormSubmit(values, null, true);
-                            }}
+                            onClick={() => handleCancelClick(values)}
                           >
                             <IconArrowBack
                               className="margin-right-1"
                               aria-hidden
                             />
-                            {t('dontAdd')}
+                            {renderCancelCopy()}
                           </Button>
                         </Fieldset>
                       </Form>
