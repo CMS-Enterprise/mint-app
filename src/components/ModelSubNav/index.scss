@@ -1,3 +1,5 @@
+@use 'uswds-theme-color' as *;
+
 .sub-nav {
     &:hover {
         background-color: color($theme-color-primary-dark) !important;

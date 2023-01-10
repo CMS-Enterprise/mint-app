@@ -1,10 +1,6 @@
-@import '~uswds/src/stylesheets/theme/uswds-theme-general';
-@import '~uswds/src/stylesheets/theme/uswds-theme-typography';
-@import '~uswds/src/stylesheets/theme/uswds-theme-spacing';
-@import '~uswds/src/stylesheets/theme/uswds-theme-color';
-@import '~uswds/src/stylesheets/theme/uswds-theme-utilities';
-
-// Disable showing updates and notifications logs
-$theme-show-notifications: false;
-
-@import '~uswds/src/stylesheets/packages/required';
+// @forward '~uswds/src/stylesheets/theme/_uswds-theme-general.scss';
+// @forward '~uswds/src/stylesheets/theme/_uswds-theme-typography.scss';
+// @forward '~uswds/src/stylesheets/theme/_uswds-theme-spacing.scss';
+// @forward '~uswds/src/stylesheets/theme/_uswds-theme-color.scss';
+// @forward '~uswds/src/stylesheets/theme/_uswds-theme-utilities.scss';
+// @forward '~uswds/src/stylesheets/packages/_required.scss';
