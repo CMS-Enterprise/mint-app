@@ -1,5 +1,6 @@
 import React, { ReactNode, ReactNodeArray } from 'react';
 import ReactModal from 'react-modal';
+import { IconClose } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import noScroll from 'no-scroll';
 
@@ -47,7 +48,7 @@ const Modal = ({
         aria-label="Close Modal"
         onClick={closeModal}
       >
-        <i className="fa fa-times" />
+        <IconClose />
       </button>
       <div className="mint-modal__body">{children}</div>
     </ReactModal>

@@ -32,12 +32,6 @@ const (
 	JobCodeProdMACUser    = "MINT MAC Users"
 )
 
-// EnhancedJwt is the JWT and the auth token
-type EnhancedJwt struct {
-	JWT       *jwtverifier.Jwt
-	AuthToken string
-}
-
 // JobCodesConfig contains a set of environment context-sensitive job codes
 type JobCodesConfig struct {
 	user       string
@@ -91,7 +85,7 @@ func (j *JobCodesConfig) GetMACUserJobCode() string {
 	return j.macUser
 }
 
-func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*EnhancedJwt, error) {
+func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*authentication.EnhancedJwt, error) {
 	tokenParts := strings.Split(authHeader, "Bearer ")
 	if len(tokenParts) < 2 {
 		return nil, errors.New("invalid Bearer in auth header")
@@ -102,7 +96,7 @@ func (f MiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*Enhanced
 	}
 
 	jwt, err := f.verifier.VerifyAccessToken(bearerToken)
-	enhanced := EnhancedJwt{
+	enhanced := authentication.EnhancedJwt{
 		JWT:       jwt,
 		AuthToken: bearerToken,
 	}
@@ -131,16 +125,18 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 	return false
 }
 
-func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication.ApplicationPrincipal, error) {
-	euaID := enchanced.JWT.Claims["sub"].(string)
+func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.ApplicationPrincipal, error) {
+
+	enhanced := appcontext.EnhancedJWT(ctx)
+	euaID := enhanced.JWT.Claims["sub"].(string)
 	if euaID == "" {
 		return nil, errors.New("unable to retrieve EUA ID from JWT")
 	}
 
 	// Get job codes out of the JWT
-	jcUser := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetUserJobCode())
-	jcAssessment := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetAssessmentJobCode())
-	jcMAC := jwtGroupsContainsJobCode(enchanced.JWT, f.jobCodes.GetMACUserJobCode())
+	jcUser := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
+	jcAssessment := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetAssessmentJobCode())
+	jcMAC := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMACUserJobCode())
 
 	// Create a LaunchDarkly user
 	// NOTE: This is copied pkg flags.Principal(). That function couldn't be used here because it
@@ -160,14 +156,14 @@ func (f MiddlewareFactory) newPrincipal(enchanced *EnhancedJwt) (*authentication
 		jcAssessment = false
 	}
 
-	oktaBaseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
+	// oktaBaseURL := enchanced.JWT.Claims["iss"].(string) // the base url for user info endpoint
 	userAccount, err := userhelpers.GetOrCreateUserAccount(
+		ctx,
 		f.Store,
 		euaID,
-		false,
-		oktaBaseURL,
-		enchanced.AuthToken,
+		true,
 		jcMAC,
+		userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetOktaAccountInfo),
 	) //TODO, do we need to do anything with the user? Should we pass the id around?
 	if err != nil {
 		return nil, err
@@ -201,8 +197,10 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 			)
 			return
 		}
+		ctx := r.Context()
+		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
-		principal, err := f.newPrincipal(jwt)
+		principal, err := f.newPrincipal(ctx)
 		if err != nil {
 			f.WriteErrorResponse(
 				r.Context(),
@@ -213,7 +211,6 @@ func (f MiddlewareFactory) NewAuthenticationMiddleware(next http.Handler) http.H
 		}
 		logger = logger.With(zap.String("user", principal.ID())).With(zap.Bool("assessment", principal.AllowASSESSMENT()))
 
-		ctx := r.Context()
 		ctx = appcontext.WithPrincipal(ctx, principal)
 		ctx = appcontext.WithLogger(ctx, logger)
 		next.ServeHTTP(w, r.WithContext(ctx))
@@ -267,9 +264,10 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 			fmt.Println("ERROR PARSING JWT", err)
 			// TODO How to error handle here?
 		}
+		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
 		// devCtx, err := devUserContext(ctx, token)
-		principal, err := f.newPrincipal(jwt)
+		principal, err := f.newPrincipal(ctx)
 		if err != nil {
 			logger.Error("could not set context for okta auth", zap.Error(err))
 			return nil, err

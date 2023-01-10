@@ -1,9 +1,11 @@
 package resolvers
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -17,8 +19,7 @@ import (
 // ModelPlanCreate implements resolver logic to create a model plan
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
-func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principal authentication.Principal) (*models.ModelPlan, error) {
-
+func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, store *storage.Store, principal authentication.Principal, getAccountInformation userhelpers.GetAccountInfoFunc) (*models.ModelPlan, error) {
 	plan := models.NewModelPlan(principal.ID(), modelName)
 
 	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
@@ -35,6 +36,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 
 	// Create an initial collaborator for the plan
 	_, _, err = CreatePlanCollaborator(
+		ctx,
 		logger,
 		nil,
 		nil,
@@ -48,6 +50,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		principal,
 		store,
 		false,
+		getAccountInformation,
 	)
 	if err != nil {
 		return nil, err

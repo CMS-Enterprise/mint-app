@@ -15,6 +15,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // Fields is the resolver for the fields field.
@@ -142,7 +143,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return resolvers.ModelPlanCreate(logger, modelName, r.store, principal)
+	return resolvers.ModelPlanCreate(ctx, logger, modelName, r.store, principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.
@@ -159,6 +160,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	logger := appcontext.ZLogger(ctx)
 
 	planCollaborator, _, err := resolvers.CreatePlanCollaborator(
+		ctx,
 		logger,
 		r.emailService,
 		r.emailTemplateService,
@@ -166,6 +168,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 		principal,
 		r.store,
 		true,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
 	)
 	return planCollaborator, err
 }

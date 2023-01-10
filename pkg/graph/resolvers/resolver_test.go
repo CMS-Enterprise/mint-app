@@ -1,10 +1,12 @@
 package resolvers
 
 import (
+	"context"
 	"testing"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -27,8 +29,18 @@ func (suite *ResolverSuite) SetupTest() {
 	assert.NoError(suite.T(), err)
 }
 
+func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
+	return &models.UserInfo{
+		EuaUserID:  username,
+		FirstName:  username,
+		LastName:   "Doe",
+		CommonName: username + " Doe",
+		Email:      models.NewEmailAddress(username + ".doe@local.fake"),
+	}, nil
+}
+
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal)
+	mp, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	return mp
 }
@@ -98,6 +110,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		AnyTimes()
 
 	collaborator, _, err := CreatePlanCollaborator(
+		context.Background(),
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
@@ -105,6 +118,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return collaborator

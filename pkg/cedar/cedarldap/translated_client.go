@@ -93,6 +93,8 @@ func (c TranslatedClient) FetchUserInfo(ctx context.Context, euaID string) (*mod
 		CommonName: person.CommonName,
 		Email:      models2.NewEmailAddress(person.Email),
 		EuaUserID:  person.UserName,
+		FirstName:  person.FirstName,
+		LastName:   person.LastName,
 	}, nil
 }
 
@@ -136,6 +138,8 @@ func (c TranslatedClient) SearchCommonNameContains(ctx context.Context, commonNa
 			CommonName: person.CommonName,
 			Email:      models2.NewEmailAddress(person.Email),
 			EuaUserID:  person.UserName,
+			FirstName:  person.FirstName,
+			LastName:   person.LastName,
 		}
 	}
 
