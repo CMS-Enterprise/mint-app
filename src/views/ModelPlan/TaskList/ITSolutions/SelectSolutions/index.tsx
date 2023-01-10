@@ -9,9 +9,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   CardGroup,
   Grid,
@@ -20,7 +17,7 @@ import {
 import { Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
@@ -163,7 +160,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
                 update ? 'update-status' : 'solution-implementation-details'
-              }`
+              }`,
+              { fromSolutionDetails: false }
             );
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
@@ -177,36 +175,30 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
       });
   };
 
+  const breadcrumbs = [
+    { text: h('home'), url: '/' },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    {
+      text: t('solutionDetails'),
+      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
+    },
+    { text: update ? t('updateStatus') : t('selectSolution') }
+  ];
+
   if (error) {
     return <NotFound />;
   }
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{t('selectSolution')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={
+          update
+            ? breadcrumbs
+            : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+        }
+      />
 
       {mutationError && (
         <Alert type="error" slim>

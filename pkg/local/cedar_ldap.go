@@ -34,6 +34,8 @@ func (c CedarLdapClient) FetchUserInfo(_ context.Context, euaID string) (*models
 	c.logger.Info("Mock FetchUserInfo from LDAP", zap.String("euaID", euaID))
 	return &models.UserInfo{
 		CommonName: fmt.Sprintf("%s Doe", strings.ToLower(euaID)),
+		FirstName:  euaID,
+		LastName:   "Doe",
 		Email:      models.NewEmailAddress(fmt.Sprintf("%s@local.fake", euaID)),
 		EuaUserID:  euaID,
 	}, nil

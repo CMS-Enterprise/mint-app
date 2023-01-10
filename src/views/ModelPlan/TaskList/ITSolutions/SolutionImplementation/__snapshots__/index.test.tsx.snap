@@ -49,7 +49,9 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Select a solution
+        <span>
+          Select a solution
+        </span>
       </li>
     </ol>
   </nav>

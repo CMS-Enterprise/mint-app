@@ -53,6 +53,7 @@ export const Default = () => (
     solution={solution}
     modelID={modelID}
     operationalNeedID={operationalNeedID}
+    operationalSolutionID={operationalSolutionID}
   />
 );
 
