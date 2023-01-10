@@ -69,6 +69,7 @@ resultSet AS (
 Translated AS (
     /*Translate the result set to use JSON specific field names */
     SELECT
+        res.id,
         res.operational_need_id AS operationalNeedID,
         res.solution_type AS solutionType,
         res.needed AS needed,

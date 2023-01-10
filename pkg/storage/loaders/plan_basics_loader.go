@@ -21,14 +21,14 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 	}
 	logger := appcontext.ZLogger(ctx)
 	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, modelPlanIDs)
+	basicsByID := lo.Associate(basics, func(b *models.PlanBasics) (string, *models.PlanBasics) {
+		return b.ModelPlanID.String(), b
+	})
 
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		basic, ok := lo.Find(basics, func(basic *models.PlanBasics) bool { //Get the  plan basic that matches what we asked for
-
-			return basic.ModelPlanID.String() == key.String()
-		})
+		basic, ok := basicsByID[key.String()]
 
 		if ok {
 			output[index] = &dataloader.Result{Data: basic, Error: nil}
