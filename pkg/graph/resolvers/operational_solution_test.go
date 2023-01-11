@@ -12,6 +12,9 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKOutlookMailbox
 
+	// dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
+	// suite.testConfigs.Context = context.WithValue(suite.testConfigs.Context, testDataLoaderKey, dataLoaders)
+
 	// need := suite.createOperationalNeed(plan, &needType,  true)
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
@@ -19,18 +22,18 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 2)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, true, suite.testConfigs.Store)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, true)
 	suite.NoError(err)
 	suite.Len(opSols, 3) //We now have the possible need that is not needed
 
 	//INSERt the possible and return only needed types, verify it still returns 3
 	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 3) //We still have 3 solutions, because they are now all needed
 
@@ -39,7 +42,7 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 2)
 

@@ -1,9 +1,14 @@
 package resolvers
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import (
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
 func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("plan for need")
+
+	// dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
+	// suite.testConfigs.Context = context.WithValue(suite.testConfigs.Context, testDataLoaderKey, dataLoaders)
 
 	//1. Get all current possible needs
 	posNeeds, err := PossibleOperationalNeedCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
@@ -12,7 +17,7 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	possibleCount := len(posNeeds)
 
 	//2. Get all Operational Needs
-	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(opNeeds, possibleCount)
 	firstNeed := opNeeds[0]

@@ -13,7 +13,7 @@ const (
 
 func dataLoadermMiddleware(loaders *DataLoaders, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		nextCtx := context.WithValue(r.Context(), loadersKey, loaders)
+		nextCtx := CTXWithLoaders(r.Context(), loaders)
 		r = r.WithContext(nextCtx)
 		next.ServeHTTP(w, r)
 	})
@@ -29,4 +29,9 @@ func NewDataLoaderMiddleware(loaders *DataLoaders) func(http.Handler) http.Handl
 // Loaders returns the dataLoaders for a given context
 func Loaders(ctx context.Context) *DataLoaders {
 	return ctx.Value(loadersKey).(*DataLoaders)
+}
+
+// CTXWithLoaders decorates the context with a dataloader
+func CTXWithLoaders(ctx context.Context, loaders *DataLoaders) context.Context {
+	return context.WithValue(ctx, loadersKey, loaders)
 }

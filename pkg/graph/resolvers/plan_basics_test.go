@@ -9,7 +9,7 @@ import (
 func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the basics as part of the resolver
 
-	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, basics.ModelPlanID)
@@ -42,6 +42,9 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 
 func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the milestones as part of the resolver
+
+	// dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
+	// suite.testConfigs.Context = context.WithValue(suite.testConfigs.Context, testDataLoaderKey, dataLoaders)
 
 	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
