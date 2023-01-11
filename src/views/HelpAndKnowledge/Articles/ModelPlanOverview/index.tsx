@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Grid,
   Link as UswdsLink,
   ProcessList,
   ProcessListHeading,
@@ -23,7 +24,7 @@ export const ModelPlanOverviewContent = ({
   const { t } = useTranslation('modelPlanOverview');
 
   return (
-    <div>
+    <>
       <SummaryBox
         heading=""
         className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
@@ -44,12 +45,12 @@ export const ModelPlanOverviewContent = ({
           </Trans>
         </p>
       </SummaryBox>
-      <PageHeading className="margin-top-7 margin-bottom-1">
+      <PageHeading className="margin-top-7 margin-bottom-1" headingLevel="h2">
         {t('steps.heading')}
       </PageHeading>
       <p className="font-body-lg margin-y-0">{t('steps.description')}</p>
 
-      <div className="tablet:grid-col-6 margin-top-105">
+      <Grid desktop={{ col: 6 }} className="margin-top-105">
         <ProcessList>
           <ProcessListItem>
             <ProcessListHeading type="h3">
@@ -86,8 +87,8 @@ export const ModelPlanOverviewContent = ({
             <p>{t('steps.fifth.description')}</p>
           </ProcessListItem>
         </ProcessList>
-      </div>
-    </div>
+      </Grid>
+    </>
   );
 };
 

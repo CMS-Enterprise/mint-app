@@ -4,10 +4,10 @@ const crtdl = {
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'CRs and TDLs',
   description:
-    'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the Model Assessment team at ',
+    'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
   emailContact: 'MINTTeam@cms.hhs.gov.',
   readOnlyDescription:
-    'More information about each Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the Model Assessment team at ',
+    'More information about each Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
   addCRTDL: 'Add a CR or TDL',
   updateCRTDL: 'Update a CR or TDL',
   addRedirect: 'Don’t add a CR or TDL and return to previous page',

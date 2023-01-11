@@ -4,7 +4,7 @@ import { Link as UswdsLink } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 interface ToStateProps {
-  [key: string]: string | number | null;
+  [key: string]: string | number | null | boolean;
 }
 
 export interface LocationProps {

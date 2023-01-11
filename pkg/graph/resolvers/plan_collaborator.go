@@ -1,11 +1,14 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -20,13 +23,15 @@ import (
 //
 // A plan favorite is created for the collaborating user when the user is added as a collaborator
 func CreatePlanCollaborator(
+	ctx context.Context,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
-	checkAccess bool) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+	checkAccess bool,
+	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
 	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
 	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
@@ -41,6 +46,12 @@ func CreatePlanCollaborator(
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
 	if err != nil {
 		return nil, nil, err
+	}
+
+	isMacUser := false
+	_, err = userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, getAccountInformation)
+	if err != nil {
+		return retCollaborator, nil, err
 	}
 
 	planFavorite, err := PlanFavoriteCreate(logger, principal, input.EuaUserID, store, modelPlan.ID)
