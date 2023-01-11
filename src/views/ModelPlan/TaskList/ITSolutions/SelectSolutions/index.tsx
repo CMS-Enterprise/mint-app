@@ -37,10 +37,7 @@ import {
 } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
 import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
+import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
@@ -128,8 +125,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
               operationalNeedID,
               solutionType: solution.key,
               changes: {
-                needed: solution.needed || false,
-                status: OpSolutionStatus.NOT_STARTED
+                needed: solution.needed || false
               }
             }
           });
