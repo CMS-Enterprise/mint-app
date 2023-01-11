@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
 	"strings"
 
 	"github.com/samber/lo"
+
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // PossibleUser represents user information for backfill purposes
@@ -14,6 +17,8 @@ type PossibleUser struct {
 	EUAID        string
 	Role         string
 	Organization string
+	GivenName    string
+	FamilyName   string
 }
 
 // PossibleUserDictionary is a mapping of possible users by Name
@@ -51,4 +56,21 @@ func (pd PossibleUserDictionary) tryGetUserByName(userName string) *PossibleUser
 	}
 	return user
 
+}
+
+func backfillUserWrapperAccountInfoFunc(ctx context.Context, username string, user *PossibleUser) userhelpers.GetAccountInfoFunc {
+	wrapper := func(ctx context.Context, username string) (*userhelpers.AccountInfo, error) {
+		account := userhelpers.AccountInfo{
+			Name:              user.Name,
+			Locale:            "UNKNOWN",
+			Email:             user.Email,
+			PreferredUsername: user.EUAID,
+			GivenName:         user.GivenName,
+			FamilyName:        user.FamilyName,
+			ZoneInfo:          "UNKNOWN",
+		}
+		return &account, nil
+
+	}
+	return wrapper
 }

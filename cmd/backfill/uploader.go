@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 
@@ -16,6 +17,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
@@ -86,7 +88,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 		princ = &oktaPrinc
 	}
 
-	_, uErr := u.uploadModelPlan(entry, princ)
+	_, uErr := u.uploadModelPlan(entry, princ, user)
 	entry.addNonNullUError(uErr)
 
 	if uErr != nil {
@@ -119,7 +121,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 }
 
-func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Principal) (*models.ModelPlan, *UploadError) {
+func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Principal, user *PossibleUser) (*models.ModelPlan, *UploadError) {
 	entry.ModelPlan.CreatedBy = princ.ID()
 
 	if entry.ModelPlan.ModelName == "" {
@@ -127,7 +129,7 @@ func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Pr
 		u.Logger.Error("model name is not defined")
 	}
 
-	modelPlan, err := resolvers.ModelPlanCreate(&u.Logger, entry.ModelPlan.ModelName, &u.Store, princ)
+	modelPlan, err := resolvers.ModelPlanCreate(context.Background(), &u.Logger, entry.ModelPlan.ModelName, &u.Store, princ, backfillUserWrapperAccountInfoFunc(context.Background(), user.Name, user))
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "ModelPLan",
@@ -154,8 +156,16 @@ func (u *Uploader) uploadPlanCollaborators(entry *BackfillEntry, princ authentic
 
 func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentication.Principal, collab *models.PlanCollaborator) (*models.PlanCollaborator, *UploadError) {
 
-	// TODO need
-	//TODO, update the collabs created by, model plan id etc
+	user := u.Backfiller.UDictionary.tryGetUserByName(collab.FullName)
+	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), &u.Store, user.EUAID, false, false, backfillUserWrapperAccountInfoFunc(context.Background(), user.EUAID, user))
+	if err != nil {
+		return nil, &UploadError{
+			Model:   "UserAccount",
+			Message: err.Error(),
+			DBError: err,
+		}
+	}
+
 	collab.CreatedBy = entry.ModelPlan.CreatedBy
 	collab.ModelPlanID = entry.ModelPlan.ID
 	retCollaborator, err := u.Store.PlanCollaboratorCreate(&u.Logger, collab)
