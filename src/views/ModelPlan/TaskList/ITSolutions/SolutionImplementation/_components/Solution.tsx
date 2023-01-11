@@ -69,16 +69,18 @@ const Solution = ({
 
   return (
     <div key={solution.id}>
-      <p className="text-bold">{t('solution')}</p>
-
       {/*
         Operational Solution ID is UNDEFINED if user is displaying ALL solutions to an Operational Need.
         Operational Solution ID is DEFINED if user is displaying an INDIVIDUAL solution to an Operational Need.
       */}
       {operationalSolutionID === undefined ? (
-        <SolutionCard solution={solution} shadow />
+        <>
+          <p className="text-bold">{t('solution')}</p>
+          <SolutionCard solution={solution} shadow />
+        </>
       ) : (
         <SolutionDetailCard
+          className="margin-bottom-3"
           solution={solution}
           operationalNeedID={operationalNeedID}
           operationalSolutionID={operationalSolutionID}
