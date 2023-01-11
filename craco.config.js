@@ -16,7 +16,7 @@ const StyleAliasesFixPlugin = {
           sassOptions: {
               includePaths: [
                 "./src/stylesheets",
-                "./node_modules/@uswds",
+                // "./node_modules/@uswds",
                 "./node_modules/@uswds/uswds/packages",
                 "./node_modules/uswds/src/stylesheets/theme"
               ]
@@ -28,6 +28,7 @@ const StyleAliasesFixPlugin = {
               ...rules.oneOf[+ruleIndex].use[useIndex].options,
               ...resolvePathsOptions
           });
+          console.log(JSON.stringify(config, null, 4));
       return config;
   },
 };
