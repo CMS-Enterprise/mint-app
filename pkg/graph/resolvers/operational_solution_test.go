@@ -1,7 +1,12 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -45,6 +50,43 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 
 	// suite.Len(opSols.PossibleSolutions, 0) //There is only 1 possilbe solution right now for ManageCD.
 
+}
+
+func (suite *ResolverSuite) TestOperationalSolutionLoader() {
+	plan1 := suite.createModelPlan("Plan For Needs 1")
+	plan2 := suite.createModelPlan("Plan For Needs 2")
+
+	needType := models.OpNKAcquireALearnCont
+
+	need1, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan1.ID, needType)
+	suite.NoError(err)
+	suite.NotNil(need1)
+	need2, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan2.ID, needType)
+	suite.NoError(err)
+	suite.NotNil(need2)
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifySolutionsLoader(ctx, need1.ID)
+	})
+	g.Go(func() error {
+		return verifySolutionsLoader(ctx, need2.ID)
+	})
+	err = g.Wait()
+	suite.NoError(err)
+}
+func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
+	if err != nil {
+		return err
+	}
+	if len(opSols) < 1 {
+		return fmt.Errorf("no operational solutions returns for %s", operationalNeedID)
+	}
+	if operationalNeedID != opSols[0].OperationalNeedID {
+		return fmt.Errorf("op needs returned operational need ID %s, expected %s", opSols[0].OperationalNeedID, operationalNeedID)
+	}
+	return nil
 }
 
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
