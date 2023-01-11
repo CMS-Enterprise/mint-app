@@ -81,7 +81,19 @@ jobs:
       #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
       #   run: |
       #     ./scripts/rds-snapshot-app-db
-      - name: Deploy ECS service
+      - name: Deploy Faktory ECS service
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: mint-faktory
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          TASK_FAMILY: "mint-faktory-${{ inputs.env }}" # TODO Confirm with Azeez
+          ECS_CLUSTER: "${{ inputs.env }}-mint-app" # TODO Confirm with Azeez
+          SERVICE_NAME: mint-app # TODO Confirm with Azeez
+          APP_ENV: ${{ inputs.env }} # TODO Is this needed at all?
+        run: |
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/deploy_ecs_service.sh
+      - name: Deploy MINT ECS service
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-backend
