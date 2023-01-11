@@ -3,11 +3,54 @@
 // USWDS theme overrides
 @forward './stylesheets/_settings.scss';
 
-// USWDS packages
-@forward 'uswds';
-
 // USWDS typography theme used below
 @use 'uswds-theme-typography' as *;
+
+// USWDS all packages
+// @forward 'uswds';
+
+// forward all used individual packages to reduce compile time
+@forward 'usa-accordion';
+@forward 'usa-alert';
+@forward 'usa-banner';
+@forward 'usa-breadcrumb';
+@forward 'usa-button';
+@forward 'usa-button-group';
+@forward 'usa-card';
+@forward 'usa-checkbox';
+@forward 'usa-checklist';
+@forward 'usa-combo-box';
+@forward 'usa-date-picker';
+@forward 'usa-date-range-picker';
+@forward 'usa-error-message';
+@forward 'usa-fieldset';
+@forward 'usa-file-input';
+@forward 'usa-footer';
+@forward 'usa-form';
+@forward 'usa-form-group';
+@forward 'usa-header';
+@forward 'usa-hint';
+@forward 'usa-icon';
+@forward 'usa-input';
+@forward 'usa-label';
+@forward 'usa-legend';
+@forward 'usa-link';
+@forward 'usa-list';
+@forward 'usa-media-block';
+@forward 'usa-modal';
+@forward 'usa-nav';
+@forward 'usa-pagination';
+@forward 'usa-process-list';
+@forward 'usa-radio';
+@forward 'usa-search';
+@forward 'usa-select';
+@forward 'usa-sidenav';
+@forward 'usa-summary-box';
+@forward 'usa-table';
+@forward 'usa-textarea';
+@forward 'usa-tooltip';
+@forward 'uswds-global';
+@forward 'uswds-utilities';
 
 // Vendor Styles
 @forward '../node_modules/font-awesome/css/font-awesome.min.css';
