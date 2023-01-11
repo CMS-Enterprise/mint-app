@@ -1,7 +1,12 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -40,11 +45,39 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.Nil(basics.PhasedInNote)
 }
 
+func (suite *ResolverSuite) TestPlanBasicsDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Basics 1")
+	plan2 := suite.createModelPlan("Plan For Basics 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyBasicsLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyBasicsLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+	// go verifyBasicsLoader(ctx, plan1.ID)
+	// go verifyBasicsLoader(ctx, plan2.ID)
+
+}
+func verifyBasicsLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != basics.ModelPlanID {
+		return fmt.Errorf("basics returned model plan ID %s, expected %s", basics.ModelPlanID, modelPlanID)
+	}
+	return nil
+}
+
 func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the milestones as part of the resolver
-
-	// dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
-	// suite.testConfigs.Context = context.WithValue(suite.testConfigs.Context, testDataLoaderKey, dataLoaders)
 
 	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)

@@ -7,9 +7,6 @@ import (
 func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("plan for need")
 
-	// dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
-	// suite.testConfigs.Context = context.WithValue(suite.testConfigs.Context, testDataLoaderKey, dataLoaders)
-
 	//1. Get all current possible needs
 	posNeeds, err := PossibleOperationalNeedCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
 	suite.NoError(err)

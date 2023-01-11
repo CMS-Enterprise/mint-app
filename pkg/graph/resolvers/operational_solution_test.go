@@ -12,9 +12,6 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKOutlookMailbox
 
-	// dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
-	// suite.testConfigs.Context = context.WithValue(suite.testConfigs.Context, testDataLoaderKey, dataLoaders)
-
 	// need := suite.createOperationalNeed(plan, &needType,  true)
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
