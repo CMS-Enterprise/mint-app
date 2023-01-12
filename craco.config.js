@@ -7,9 +7,7 @@ module.exports = {
         sassOptions: {
           includePaths: [
             "./src/stylesheets",
-            "./node_modules/@uswds/uswds/packages",
-            "./node_modules/uswds/src/stylesheets/theme"
-          ]
+            "./node_modules/@uswds/uswds/packages"          ]
         }
       }
     }

@@ -3,8 +3,8 @@
 // USWDS theme overrides
 @forward './stylesheets/_settings.scss';
 
-// USWDS typography theme used below
-@use 'uswds-theme-typography' as *;
+// USWDS typography/color theme used below
+@use 'uswds-core' as *;
 
 // USWDS all packages
 // @forward 'uswds';

@@ -8606,13 +8606,6 @@ cpy@^8.1.1:
     p-filter "^2.1.0"
     p-map "^3.0.0"
 
-craco-sass-resources-loader@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/craco-sass-resources-loader/-/craco-sass-resources-loader-1.1.0.tgz#b9d584e28896785e329856b5796735e8e487e09c"
-  integrity sha512-JRRpuK5xKoaH3Zch/geGhoVrE5b/b4MTV2wOUFA+otZ5ANn+58+UQmA+RYSUubJFR+62i2leo8n8RMZFNSMpLg==
-  dependencies:
-    sass-resources-loader "^2.0.0"
-
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"
@@ -9446,11 +9439,6 @@ domhandler@^4.0.0, domhandler@^4.2.0:
   integrity sha512-zk7sgt970kzPks2Bf+dwT/PLzghLnsivb9CcxkvR8Mzr66Olr0Ofd8neSbglHJHaHa2MadfoSdNlKYAaafmWfA==
   dependencies:
     domelementtype "^2.2.0"
-
-domready@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/domready/-/domready-1.0.8.tgz#91f252e597b65af77e745ae24dd0185d5e26d58c"
-  integrity sha512-uIzsOJUNk+AdGE9a6VDeessoMCzF8RrZvJCX/W8QtyfgdR6Uofn/MvRonih3OtCO79b2VDzDOymuiABrQ4z3XA==
 
 domutils@1.5.1:
   version "1.5.1"
@@ -18488,16 +18476,6 @@ sass-loader@^13.2.0:
     klona "^2.0.4"
     neo-async "^2.6.2"
 
-sass-resources-loader@^2.0.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/sass-resources-loader/-/sass-resources-loader-2.1.1.tgz#a231b7c4e326d9c8d141909c901233bef9453151"
-  integrity sha512-/KrD5mEBTj3ZQ49thKSThhpv1OFhc82JbWA0bmv9yANRuPIlQrydNpZG82jdy4pEWY0QcQTGyd5OmCb3xVeZsw==
-  dependencies:
-    async "^3.2.0"
-    chalk "^4.1.0"
-    glob "^7.1.6"
-    loader-utils "^2.0.0"
-
 sass-resources-loader@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/sass-resources-loader/-/sass-resources-loader-2.2.5.tgz#75131cdb26bae51fcffc007d8155d57b5e825ca7"
@@ -20740,17 +20718,6 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
-
-uswds@^2.13.3:
-  version "2.13.3"
-  resolved "https://registry.yarnpkg.com/uswds/-/uswds-2.13.3.tgz#f2a0623b496941ff30ad3a0ea1610407d35a6b14"
-  integrity sha512-qCblljeaRvS3+PrSxoHqQwmMnp746+Y1YZA34BkTzJknvo2bhhdzGE21yJaInumzIqV3glLD13TFdRwrwikMMQ==
-  dependencies:
-    classlist-polyfill "1.0.3"
-    domready "1.0.8"
-    object-assign "4.1.1"
-    receptor "1.0.0"
-    resolve-id-refs "0.1.0"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
