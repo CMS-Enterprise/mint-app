@@ -3,11 +3,12 @@ module.exports = {
     sass: {
       loaderOptions: {
         sourceMap: true,
-        implementation: require("sass"),
         sassOptions: {
           includePaths: [
-            "./src/stylesheets",
-            "./node_modules/@uswds/uswds/packages"]
+            './src/stylesheets',
+            './node_modules/@uswds/uswds',
+            './node_modules/@uswds/uswds/packages'
+          ]
         }
       }
     }
