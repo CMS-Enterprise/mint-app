@@ -6,7 +6,6 @@ module.exports = {
         sassOptions: {
           includePaths: [
             './src/stylesheets',
-            './node_modules/@uswds/uswds',
             './node_modules/@uswds/uswds/packages'
           ]
         }

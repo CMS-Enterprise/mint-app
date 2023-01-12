@@ -5,7 +5,7 @@ const deviceBreakpoints = {
   mobile: '480px',
   tablet: '640px',
   desktop: '1024px'
-}
+};
 
 type deviceProps = 'mobile' | 'tablet' | 'desktop';
 
