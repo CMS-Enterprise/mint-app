@@ -34,7 +34,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan favorite with error %s", err),
-			zap.String("user", favorite.CreatedBy),
+			zap.String("user", favorite.CreatedBy.String()),
 		)
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan with error %s", err),
-			zap.String("user", favorite.CreatedBy),
+			zap.String("user", favorite.CreatedBy.String()),
 		)
 		return nil, err
 
