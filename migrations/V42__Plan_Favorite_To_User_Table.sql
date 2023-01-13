@@ -1,9 +1,3 @@
--- /*  Change data type from EUAID to TEXT */
-
--- ALTER TABLE plan_favorite
--- ALTER COLUMN user_id TYPE TEXT;
-
-
 /* ADD Temp data column for this */
 
 ALTER TABLE plan_favorite
@@ -18,9 +12,9 @@ RENAME COLUMN modified_by TO modified_by_old;
 
 /* ADD Correct Column */
 ALTER TABLE plan_favorite
-ADD COLUMN user_id UUID,
-ADD COLUMN created_by UUID,
-ADD COLUMN modified_by UUID;
+ADD COLUMN user_id UUID REFERENCES public.user_account (id) MATCH SIMPLE,
+ADD COLUMN created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
+ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;
 
 /* Perform the data migration */
 WITH userAccount AS (
