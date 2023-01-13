@@ -112,7 +112,12 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
 func getDigestAnalyzedAudits(userID string, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
-	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, userID)
+	account, err := store.UserAccountGetByUsername(userID) //TODO verify
+	if err != nil {
+		return nil, err
+	}
+
+	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, account.ID)
 	if err != nil {
 		return nil, err
 	}

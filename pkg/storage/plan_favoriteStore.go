@@ -42,7 +42,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	err = stmt.Get(&retFavorite, favorite)
 	if err != nil {
 		logger.Error(
-			fmt.Sprintf("Failed to create plan with error %s", err),
+			fmt.Sprintf("Failed to create plan favorite with error %s", err),
 			zap.String("user", favorite.CreatedBy.String()),
 		)
 		return nil, err
@@ -53,13 +53,13 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 }
 
 // PlanFavoriteDelete deletes a plan favorite
-func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid.UUID) (*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, planID uuid.UUID) (*models.PlanFavorite, error) {
 	stmt, err := s.db.PrepareNamed(planFavoriteDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"user_id":       EUAID,
+		"user_id":       userAccountID,
 		"model_plan_id": planID,
 	}
 	delFavorite := models.PlanFavorite{}
@@ -94,7 +94,7 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, use
 }
 
 // PlanFavoriteGetByCollectionByUserID returns plan favorites by userID
-func (s *Store) PlanFavoriteGetByCollectionByUserID(logger *zap.Logger, EUAID string) ([]*models.PlanFavorite, error) {
+func (s *Store) PlanFavoriteGetByCollectionByUserID(logger *zap.Logger, userAccountID uuid.UUID) ([]*models.PlanFavorite, error) {
 
 	planFavorites := []*models.PlanFavorite{}
 	stmt, err := s.db.PrepareNamed(planFavoriteGetCollectioByUserID)
@@ -102,7 +102,7 @@ func (s *Store) PlanFavoriteGetByCollectionByUserID(logger *zap.Logger, EUAID st
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"user_id": EUAID,
+		"user_id": userAccountID,
 	}
 
 	err = stmt.Select(&planFavorites, arg)
