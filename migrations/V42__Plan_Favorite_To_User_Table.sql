@@ -32,9 +32,9 @@ WITH userAccount AS (
         user_account_created.id AS created_by,
         user_account_modified.id AS modified_by
     FROM plan_favorite
-    INNER JOIN user_account ON plan_favorite.user_id_old = user_account.username
-    INNER JOIN user_account AS user_account_created ON plan_favorite.created_by_old = user_account_created.username
-    INNER JOIN user_account AS user_account_modified ON plan_favorite.modified_by_old = user_account_modified.username
+    LEFT JOIN user_account ON plan_favorite.user_id_old = user_account.username
+    LEFT JOIN user_account AS user_account_created ON plan_favorite.created_by_old = user_account_created.username
+    LEFT JOIN user_account AS user_account_modified ON plan_favorite.modified_by_old = user_account_modified.username
 )
 
 UPDATE plan_favorite
