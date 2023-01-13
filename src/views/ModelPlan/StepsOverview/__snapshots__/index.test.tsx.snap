@@ -84,7 +84,7 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
             <p
               className="margin-y-1"
             >
-              If you have any questions, you can reach the Model Assessment Team at: 
+              If you have any questions, you can reach the MINT Team at: 
               <a
                 className="usa-link"
                 href="mailto:MINTTeam@cms.hhs.gov"
@@ -151,7 +151,7 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
               Iterate on your draft model plan
             </h3>
             <p>
-              Work with the Model Assessment Team and other administrative teams to iterate on model requirements.
+              Work with the MINT Team and other administrative teams to iterate on model requirements.
             </p>
           </li>
           <li
