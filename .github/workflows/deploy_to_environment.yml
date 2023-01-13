@@ -85,9 +85,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-faktory
-          TASK_FAMILY: "mint-faktory-${{ inputs.env }}" # TODO Confirm with Azeez
-          ECS_CLUSTER: "${{ inputs.env }}-mint-faktory" # TODO Confirm with Azeez
-          SERVICE_NAME: mint-faktory # TODO Confirm with Azeez
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          TASK_FAMILY: "mint-faktory-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-faktory"
+          SERVICE_NAME: mint-faktory
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/deploy_ecs_service.sh
@@ -95,6 +96,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-backend
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
           TASK_FAMILY: "mint-app-${{ inputs.env }}"
           ECS_CLUSTER: "${{ inputs.env }}-mint-app"
           SERVICE_NAME: mint-app
