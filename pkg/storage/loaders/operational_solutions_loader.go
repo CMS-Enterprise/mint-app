@@ -28,7 +28,7 @@ func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperati
 
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		ck := key.Raw().(CompoundKey)
+		ck := key.Raw().(KeyArgs)
 		resKey := fmt.Sprint(ck.Args["operational_need_id"])
 		resKey = resKey + fmt.Sprint(ck.Args["include_not_needed"]) //so there isn't a space
 		opSols := resSet[resKey]

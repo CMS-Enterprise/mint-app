@@ -25,7 +25,7 @@ func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, oper
 	allLoaders := loaders.Loaders(ctx)
 	opSolutionLoader := allLoaders.OperationSolutionLoader
 
-	key := loaders.NewCompoundKey()
+	key := loaders.NewKeyArgs()
 
 	key.Args["include_not_needed"] = includeNotNeeded
 	key.Args["operational_need_id"] = operationalNeedID

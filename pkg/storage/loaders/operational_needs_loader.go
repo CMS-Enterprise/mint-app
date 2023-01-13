@@ -41,7 +41,7 @@ func (loaders *DataLoaders) GetOperationalNeedsByModelPlanID(ctx context.Context
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		ck, ok := key.Raw().(CompoundKey)
+		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
 			needs, ok := opNeedsByID[resKey]

@@ -9,23 +9,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CompoundKey implements the DataLoader Key interface
-type CompoundKey struct {
+// KeyArgs implements the DataLoader Key interface
+type KeyArgs struct {
 	Args map[string]interface{}
 }
 
-// NewCompoundKey instantiates a compound key
-func NewCompoundKey() CompoundKey {
-	return CompoundKey{
+// NewKeyArgs instantiates a compound key
+func NewKeyArgs() KeyArgs {
+	return KeyArgs{
 		Args: map[string]interface{}{},
 	}
 }
 
-// CompoundKeys represents an Array of CompoundKeys
-type CompoundKeys []CompoundKey
+// KeyArgsArray represents an Array of KeyArgs
+type KeyArgsArray []KeyArgs
 
 // ToJSONArray converts CompoundKeys to JSON array notation
-func (ck CompoundKeys) ToJSONArray() (string, *error) {
+func (ck KeyArgsArray) ToJSONArray() (string, *error) {
 
 	mapSlice := []map[string]interface{}{}
 	for _, v := range ck {
@@ -39,11 +39,11 @@ func (ck CompoundKeys) ToJSONArray() (string, *error) {
 }
 
 // CompoundKeyArray casts a dataloader.Keys object to a CompoundKeys object
-func CompoundKeyArray(Keys dataloader.Keys) (CompoundKeys, *error) {
+func CompoundKeyArray(Keys dataloader.Keys) (KeyArgsArray, *error) {
 
-	cKeys := []CompoundKey{}
+	cKeys := []KeyArgs{}
 	for _, ck := range Keys {
-		converted, ok := ck.Raw().(CompoundKey)
+		converted, ok := ck.Raw().(KeyArgs)
 		if ok {
 			cKeys = append(cKeys, converted)
 		}
@@ -54,10 +54,10 @@ func CompoundKeyArray(Keys dataloader.Keys) (CompoundKeys, *error) {
 }
 
 // String is an identity method. Used to implement String interface
-func (k CompoundKey) String() string { return fmt.Sprint(k.Args) }
+func (k KeyArgs) String() string { return fmt.Sprint(k.Args) }
 
 // Raw is an identity method. Used to implement Key Raw
-func (k CompoundKey) Raw() interface{} { return k }
+func (k KeyArgs) Raw() interface{} { return k }
 
 // WrappedDataLoader wraps a DataLoader so it has access to an optional Map
 type WrappedDataLoader struct {

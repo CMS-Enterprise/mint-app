@@ -27,7 +27,7 @@ func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID u
 func OperationalNeedCollectionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
 	allLoaders := loaders.Loaders(ctx)
 	opNeedLoader := allLoaders.OperationalNeedLoader
-	key := loaders.NewCompoundKey()
+	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID
 
 	thunk := opNeedLoader.Loader.Load(ctx, key)

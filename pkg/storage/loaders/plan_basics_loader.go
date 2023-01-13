@@ -34,7 +34,7 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		ck, ok := key.Raw().(CompoundKey)
+		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
 			basic, ok := basicsByID[resKey]

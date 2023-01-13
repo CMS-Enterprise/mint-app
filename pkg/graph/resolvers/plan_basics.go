@@ -43,7 +43,7 @@ func PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store
 func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := loaders.Loaders(ctx)
 	basicsLoader := allLoaders.BasicsLoader
-	key := loaders.NewCompoundKey()
+	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID
 
 	//TODO do we need to write a new interface to convert our types to what we need?
