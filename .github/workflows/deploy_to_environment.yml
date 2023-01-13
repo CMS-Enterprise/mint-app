@@ -85,11 +85,9 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-faktory
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
           TASK_FAMILY: "mint-faktory-${{ inputs.env }}" # TODO Confirm with Azeez
-          ECS_CLUSTER: "${{ inputs.env }}-mint-app" # TODO Confirm with Azeez
-          SERVICE_NAME: mint-app # TODO Confirm with Azeez
-          APP_ENV: ${{ inputs.env }} # TODO Is this needed at all?
+          ECS_CLUSTER: "${{ inputs.env }}-mint-faktory" # TODO Confirm with Azeez
+          SERVICE_NAME: mint-faktory # TODO Confirm with Azeez
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/deploy_ecs_service.sh
@@ -97,14 +95,18 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-backend
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
           TASK_FAMILY: "mint-app-${{ inputs.env }}"
           ECS_CLUSTER: "${{ inputs.env }}-mint-app"
           SERVICE_NAME: mint-app
-          APP_ENV: ${{ inputs.env }}
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/deploy_ecs_service.sh
+      - name: Wait for /healthcheck to return new version
+        env:
+          APP_ENV: ${{ inputs.env }}
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+        run: |
+          ./scripts/healthcheck "$NEW_IMAGE_TAG"
       - name: Build static assets and release to S3
         env:
           APP_ENV: ${{ inputs.env }}
