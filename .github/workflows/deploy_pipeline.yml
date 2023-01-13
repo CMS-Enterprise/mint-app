@@ -21,6 +21,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       INFRA_ROLE_TO_ASSUME: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      CONTRIBSYS_REPO_USERNAME: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
+      CONTRIBSYS_REPO_PASSWORD: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
 
   run_tests:
     uses: ./.github/workflows/run_tests.yml
