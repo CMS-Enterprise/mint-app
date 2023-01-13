@@ -17,7 +17,7 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := CompoundKeyArray(keys)
+	arrayCK, err := ConvertToKeyArgsArray(keys)
 	if err != nil {
 		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
 	}

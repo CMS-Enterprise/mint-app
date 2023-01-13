@@ -5,8 +5,6 @@ import (
 	"fmt"
 
 	"github.com/graph-gophers/dataloader"
-
-	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // KeyArgs implements the DataLoader Key interface
@@ -38,8 +36,8 @@ func (ck KeyArgsArray) ToJSONArray() (string, *error) {
 	return string(byteArr), nil
 }
 
-// CompoundKeyArray casts a dataloader.Keys object to a CompoundKeys object
-func CompoundKeyArray(Keys dataloader.Keys) (KeyArgsArray, *error) {
+// ConvertToKeyArgsArray casts a dataloader.Keys object to a KeyArgsArray object
+func ConvertToKeyArgsArray(Keys dataloader.Keys) (KeyArgsArray, *error) {
 
 	cKeys := []KeyArgs{}
 	for _, ck := range Keys {
@@ -58,20 +56,3 @@ func (k KeyArgs) String() string { return fmt.Sprint(k.Args) }
 
 // Raw is an identity method. Used to implement Key Raw
 func (k KeyArgs) Raw() interface{} { return k }
-
-// WrappedDataLoader wraps a DataLoader so it has access to an optional Map
-type WrappedDataLoader struct {
-	Loader *dataloader.Loader
-}
-
-func newWrappedDataLoader(batchFn dataloader.BatchFunc) *WrappedDataLoader {
-
-	return &WrappedDataLoader{
-		Loader: dataloader.NewBatchedLoader(batchFn, dataloader.WithClearCacheOnBatch()),
-	}
-}
-
-// DataReader reads Users from a database
-type DataReader struct {
-	Store *storage.Store
-}

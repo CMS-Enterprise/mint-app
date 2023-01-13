@@ -23,3 +23,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	return loaders
 }
+
+// DataReader reads Users from a database
+type DataReader struct {
+	Store *storage.Store
+}

@@ -13,7 +13,7 @@ import (
 // GetOperationalSolutionAndPossibleCollectionByOperationalNeedID uses a data loader to return operational solutions by operational need id
 func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperationalNeedID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := CompoundKeyArray(keys)
+	arrayCK, err := ConvertToKeyArgsArray(keys)
 	if err != nil {
 		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
 	}
