@@ -56,8 +56,3 @@ ALTER COLUMN created_by SET NOT NULL;
 
 CREATE UNIQUE INDEX idx_plan_favorite_user
 ON plan_favorite(model_plan_id, user_id);
-
-/*TODO
-SET FOREIGN KEY RELATIONSHIPS TO THE USER TABLE FOR THOSE FIELDS!!! MAYBE DO IT EARLIER WHEN WE ADD THE TABLE!!
-
-*/

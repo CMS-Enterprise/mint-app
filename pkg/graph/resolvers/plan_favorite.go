@@ -40,7 +40,7 @@ func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, 
 // PlanFavoriteDelete deletes a plan favorite record in the database
 func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 
-	existingFavorite, err := store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlanID)
+	existingFavorite, err := store.PlanFavoriteGetByModelIDAndUserAccountID(logger, principal.Account().ID, modelPlanID)
 
 	if err != nil {
 		return nil, err
@@ -58,6 +58,6 @@ func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, 
 // PlanFavoriteGet returns a plan favorite record
 func PlanFavoriteGet(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
-	return store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlandID)
+	return store.PlanFavoriteGetByModelIDAndUserAccountID(logger, principal.Account().ID, modelPlandID)
 
 }

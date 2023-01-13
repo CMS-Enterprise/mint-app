@@ -71,14 +71,14 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid
 	return &delFavorite, nil
 }
 
-// PlanFavoriteGetByModelIDAndEUA returns a plan favorite
-func (s *Store) PlanFavoriteGetByModelIDAndEUA(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+// PlanFavoriteGetByModelIDAndUserAccountID returns a plan favorite
+func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, userAccountID uuid.UUID, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
 	if err != nil {
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"user_id":       EUAID,
+		"user_id":       userAccountID,
 		"model_plan_id": modelPlanID,
 	}
 	retFavorite := models.PlanFavorite{}
