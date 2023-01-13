@@ -10,9 +10,9 @@ type PlanFavorite struct {
 }
 
 // NewPlanFavorite returns a plan collaborator object
-func NewPlanFavorite(createdBy uuid.UUID, modelPlanID uuid.UUID) PlanFavorite {
+func NewPlanFavorite(createdBy uuid.UUID, userID uuid.UUID, modelPlanID uuid.UUID) PlanFavorite {
 	return PlanFavorite{
-		UserID:              createdBy,
+		UserID:              userID,
 		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
 		baseStructUserTable: NewBaseStructUser(createdBy),
 	}
