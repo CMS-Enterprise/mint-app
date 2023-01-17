@@ -3,8 +3,7 @@ name: PR Checks
 on:
   pull_request:
     branches:
-      # - "**"
-      - "shouldnt-ever-run"
+      - "**"
 
 # This concurrency group exists with cancel-in-progress: true so that only the latest run of the workflow is executed (as its all that should matter).
 concurrency:
