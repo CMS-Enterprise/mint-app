@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-/* 
-ESLint is not recognizing the path alias for icons
-Alias can be found here - /node_modules/@uswds/uswds/package.json
-*/
-/*eslint-disable */
-import dotGovSvg from '@uswds/uswds/src/img/icon-dot-gov.svg'; 
-import httpsSvg from '@uswds/uswds/src/img/icon-https.svg'; 
-import flagImg from '@uswds/uswds/src/img/us_flag_small.png';
-/* eslint-enable */
+
+import dotGovSvg from '../../assets/icons/icon-dot-gov.svg';
+import httpsSvg from '../../assets/icons/icon-https.svg';
+import flagImg from '../../assets/icons/us_flag_small.png';
 
 const UsGovBanner = () => {
   const [displayContent, setDisplayContent] = useState(false);
