@@ -169,6 +169,7 @@ const SolutionDetails = () => {
             <SolutionDetailCard
               solution={solution}
               operationalNeedID={operationalNeedID}
+              operationalSolutionID={operationalSolutionID}
               modelID={modelID}
             />
 

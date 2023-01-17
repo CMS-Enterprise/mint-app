@@ -1,16 +1,18 @@
 package resolvers
 
 import (
+	"context"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal)
+	result, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)
