@@ -69,9 +69,6 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     }
   });
 
-  // Used to map EUA ids to full name
-  const collaborators = data?.modelPlan?.collaborators || [];
-
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const hasEditAccess: boolean =
@@ -384,7 +381,6 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                     )}
                     status={DiscussionStatus[status]}
                     hasEditAccess={hasEditAccess}
-                    collaborators={collaborators}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
                     setReply={setReply}
