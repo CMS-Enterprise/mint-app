@@ -33,6 +33,7 @@ type TestConfigs struct {
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
+// Note, it does not return the principal as this needs to be updated for every test. This should only be called from setup tests!
 func GetDefaultTestConfigs() *TestConfigs {
 	tc := TestConfigs{}
 	tc.GetDefaults()
@@ -52,10 +53,10 @@ func createS3Client() upload.S3Client {
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
+// The principal needs to be set before every test as the user account is removed between tests
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
-	princ := getTestPrincipal(store, userInfo.EuaUserID)
 
 	s3Client := createS3Client()
 	tc.DBConfig = config
@@ -65,8 +66,6 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Store = store
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
-
-	tc.Principal = princ
 }
 
 // NewDBConfig returns a DBConfig struct with values from appconfig
