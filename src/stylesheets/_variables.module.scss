@@ -1,0 +1,8 @@
+@import 'viewports';
+
+// division by 1px removes the unit
+:export {
+    mobile: calc($mobile / 1px);
+    tablet: calc($tablet / 1px);
+    desktop: calc($desktop / 1px);
+}

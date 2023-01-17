@@ -8,7 +8,6 @@ import classnames from 'classnames';
 import { NavContext } from 'components/Header/navContext';
 import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
-// import UsGovBanner from 'components/UsGovBanner';
 import { localAuthStorageKey } from 'constants/localAuth';
 
 import './index.scss';
