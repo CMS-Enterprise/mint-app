@@ -44,16 +44,12 @@ const SingleDiscussion = ({
           <div className="display-flex flex-align-center">
             <AssessmentIcon size={3} />{' '}
             <span>
-              {t('assessment')} | {discussion.createdBy}
+              {t('assessment')} | {discussion.createdByUser.commonName}
             </span>
           </div>
         ) : (
           <IconInitial
-            user={
-              collaborators.find(
-                collaborator => collaborator.euaUserID === discussion.createdBy
-              )?.fullName || ''
-            }
+            user={discussion.createdByUser.commonName}
             index={index}
             className="margin-bottom-2"
           />
