@@ -16,6 +16,16 @@ export interface GetModelPlanDiscussions_modelPlan_collaborators {
   fullName: string;
 }
 
+export interface GetModelPlanDiscussions_modelPlan_discussions_createdByUser {
+  __typename: "UserInfo";
+  commonName: string;
+}
+
+export interface GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUser {
+  __typename: "UserInfo";
+  commonName: string;
+}
+
 export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
@@ -25,6 +35,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   createdBy: string;
   createdDts: Time;
   resolution: boolean | null;
+  createdByUser: GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUser;
 }
 
 export interface GetModelPlanDiscussions_modelPlan_discussions {
@@ -35,6 +46,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
   createdDts: Time;
   status: DiscussionStatus;
   isAssessment: boolean;
+  createdByUser: GetModelPlanDiscussions_modelPlan_discussions_createdByUser;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];
 }
 

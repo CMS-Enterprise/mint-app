@@ -17,6 +17,9 @@ export default gql`
         createdDts
         status
         isAssessment
+        createdByUser {
+          commonName
+        }
         replies {
           id
           discussionID
@@ -25,6 +28,9 @@ export default gql`
           createdBy
           createdDts
           resolution
+          createdByUser {
+            commonName
+          }
         }
       }
     }
