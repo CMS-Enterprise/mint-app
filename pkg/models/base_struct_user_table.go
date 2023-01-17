@@ -9,6 +9,7 @@ import (
 )
 
 // baseStructUserTable represents the shared data in common betwen all models
+// this struct will replace baseStruct, and be renamed baseStruct once all data objects get migrated to use the user table
 type baseStructUserTable struct {
 	ID          uuid.UUID  `json:"id" db:"id"`
 	CreatedBy   uuid.UUID  `json:"createdBy" db:"created_by"`
