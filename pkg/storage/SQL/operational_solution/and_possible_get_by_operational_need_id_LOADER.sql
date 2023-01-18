@@ -64,41 +64,7 @@ resultSet AS (
     LEFT JOIN possible_operational_solution AS pOpSol ON OpSol.solution_type = pOpSol.id
     WHERE (qID.include_not_needed = TRUE OR OpSol.needed = TRUE)
     ORDER BY solution_type ASC
-),
-
-Translated AS (
-    /*Translate the result set to use JSON specific field names */
-    SELECT
-        res.id,
-        res.operational_need_id AS operationalNeedID,
-        res.solution_type AS solutionType,
-        res.needed AS needed,
-        res.sol_name AS name, --noqa
-        res.sol_key AS key, --noqa
-        res.name_other AS nameOther,
-        res.poc_name AS pocName,
-        res.poc_email AS pocEmail,
-        res.must_start_dts AS mustStartDts,
-        res.must_finish_dts AS mustFinishDts,
-        res.status AS status,
-        res.created_by AS createdBy,
-        res.created_dts AS createdDts,
-        res.modified_by AS modifiedBy,
-        res.modified_dts AS modifiedDts
-    FROM resultSet AS res
-),
-
-Grouped AS (
-    /*Group the result set, and format the result as JSON array */
-    SELECT
-        qID.res_key,
-        JSON_AGG(Translated) AS res --noqa
-    FROM QUERIED_IDS AS qID
-    LEFT JOIN Translated ON Translated.operationalNeedID = qID.operational_need_id --noqa
-    GROUP BY qID.res_key
 )
 
-
-/* Format the Grouped result set as a JSON Map String []*models.OperationalSolution */
-SELECT JSONB_OBJECT_AGG(Grouped.res_key, TO_JSONB(GROUPED.res)) --noqa
-FROM Grouped;
+SELECT *
+FROM resultSet;

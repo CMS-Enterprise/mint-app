@@ -8,10 +8,7 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
@@ -56,28 +53,21 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 }
 
 func (suite *ResolverSuite) TestOperationalSolutionLoader() {
-	plan1 := suite.createModelPlan("Plan For Needs 1")
-	plan2 := suite.createModelPlan("Plan For Needs 2")
 
-	needType := models.OpNKAcquireALearnCont
-
-	need1, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan1.ID, needType)
-	suite.NoError(err)
-	suite.NotNil(need1)
-	need2, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan2.ID, needType)
-	suite.NoError(err)
-	suite.NotNil(need2)
+	numModels := 3
+	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
 
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-	g.Go(func() error {
-		return verifySolutionsLoader(ctx, need1.ID)
-	})
-	g.Go(func() error {
-		return verifySolutionsLoader(ctx, need2.ID)
-	})
-	err = g.Wait()
+
+	for _, opNeedID := range opNeedIds {
+		theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
+		g.Go(theFunc)
+	}
+
+	err := g.Wait()
 	suite.NoError(err)
 }
+
 func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
 	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
 	if err != nil {
@@ -91,111 +81,10 @@ func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) err
 	}
 	return nil
 }
-
-func verifySolutionsLoaderSimple(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADERSimple(ctx, operationalNeedID, true)
-	if err != nil {
-		return err
-	}
-	if len(opSols) < 1 {
-		return fmt.Errorf("no operational solutions returns for %s", operationalNeedID)
-	}
-	if operationalNeedID != opSols[0].OperationalNeedID {
-		return fmt.Errorf("op needs returned operational need ID %s, expected %s", opSols[0].OperationalNeedID, operationalNeedID)
-	}
-	return nil
-}
-
-func verifySolutionsNoLoader(ctx context.Context, operationalNeedID uuid.UUID, store *storage.Store) error { //TODO make this more robust, as we can't assert at this level
-	logger := appcontext.ZLogger(ctx)
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, true, store)
-	if err != nil {
-		return err
-	}
-	if len(opSols) < 1 {
-		return fmt.Errorf("no operational solutions returns for %s", operationalNeedID)
-	}
-	// if operationalNeedID != opSols[0].OperationalNeedID { // NOT TESTING THIS, because older SQL would return uuid.nil
-	// 	return fmt.Errorf("op needs returned operational need ID %s, expected %s", opSols[0].OperationalNeedID, operationalNeedID)
-	// }
-	return nil
-}
-
 func getVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
 	return func() error {
 		return verifySolutionsFunc(ctx, operationalNeedID)
 	}
-}
-func getVerificationFunctionStore(ctx context.Context, operationalNeedID uuid.UUID, store *storage.Store, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID, store *storage.Store) error) func() error {
-	return func() error {
-		return verifySolutionsFunc(ctx, operationalNeedID, store)
-	}
-}
-func (suite *ResolverSuite) TestBenchmarkDataLoadersComparison() {
-	numModels := 100
-	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
-	marshalledParams := opNeedsToMarshaledParams(opNeedIds)
-
-	suite.Run("MappedDataLoader", func() {
-		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-		for _, opNeedID := range opNeedIds {
-			theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
-			g.Go(theFunc)
-		}
-		err := g.Wait()
-		suite.NoError(err)
-
-	})
-
-	suite.Run("SimpleDataLoader", func() {
-		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-		for _, opNeedID := range opNeedIds {
-			theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoaderSimple)
-			g.Go(theFunc)
-		}
-		err := g.Wait()
-		suite.NoError(err)
-
-	})
-
-	suite.Run("No Data Loader", func() {
-		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-		for _, opNeedID := range opNeedIds {
-			theFunc := getVerificationFunctionStore(ctx, opNeedID, suite.testConfigs.Store, verifySolutionsNoLoader)
-			g.Go(theFunc)
-		}
-		err := g.Wait()
-		suite.NoError(err)
-
-	})
-
-	suite.Run("Loader SQL with Map", func() {
-		_, err := suite.testConfigs.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(suite.testConfigs.Logger, marshalledParams)
-		suite.NoError(err)
-	})
-	suite.Run("Loader SQL Simplified", func() {
-		_, err := suite.testConfigs.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADERSimplified(suite.testConfigs.Logger, marshalledParams)
-		suite.NoError(err)
-	})
-
-	suite.T().Log("TestBenchmarkDataLoadersComparison Created ", numModels, " models. Num of Needs : ", len(opNeedIds))
-}
-
-func opNeedsToMarshaledParams(uuidSlice []uuid.UUID) string {
-	cKeys := loaders.KeyArgsArray{}
-	includeNotNeeded := true
-	for _, operationalNeedID := range uuidSlice {
-		arg := loaders.KeyArgs{
-			Args: map[string]interface{}{
-				"include_not_needed":  includeNotNeeded,
-				"operational_need_id": operationalNeedID,
-			},
-		}
-		cKeys = append(cKeys, arg)
-	}
-	marshaledParams, _ := cKeys.ToJSONArray()
-	return marshaledParams
-
 }
 
 func makeMulipleModelsAndReturnNeedIDs(suite *ResolverSuite, numModels int) []uuid.UUID {
@@ -211,7 +100,6 @@ func makeMulipleModelsAndReturnNeedIDs(suite *ResolverSuite, numModels int) []uu
 	return opNeedSlice
 
 }
-
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	// 1. Create solution, ensure fields are as expected
 	plan := suite.createModelPlan("plan for solutions")

@@ -25,36 +25,7 @@ func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperati
 
 	dr := loaders.DataReader
 
-	resSet, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger, marshaledParams)
-
-	output := make([]*dataloader.Result, len(keys))
-	for index, key := range keys {
-		ck := key.Raw().(KeyArgs)
-		resKey := fmt.Sprint(ck.Args["operational_need_id"])
-		resKey = resKey + fmt.Sprint(ck.Args["include_not_needed"]) //so there isn't a space
-		opSols := resSet[resKey]
-		output[index] = &dataloader.Result{Data: opSols, Error: loadErr}
-
-	}
-	return output
-
-}
-
-// GetOperationalSolutionAndPossibleCollectionByOperationalNeedIDSimplified uses a data loader to return operational solutions by operational need id
-func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperationalNeedIDSimplified(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
-	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := ConvertToKeyArgsArray(keys)
-	if err != nil {
-		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
-	}
-	marshaledParams, err := arrayCK.ToJSONArray()
-	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Operational Solutions", zap.Error(*err))
-	}
-
-	dr := loaders.DataReader
-
-	sols, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADERSimplified(logger, marshaledParams)
+	sols, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger, marshaledParams)
 	if loadErr != nil {
 		return []*dataloader.Result{{Data: nil, Error: loadErr}}
 
@@ -83,12 +54,6 @@ func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperati
 				err := fmt.Errorf("operational solutions not found for operationalNeed  %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}
 			}
-
-			// needs := lo.Filter(sols, func(opSol *models.OperationalSolution, index int) bool {
-
-			// 	return opSol.OperationalNeedID.String() == opNeedID
-			// })
-			// output[index] = &dataloader.Result{Data: needs, Error: loadErr}
 		} else {
 			err := fmt.Errorf("could not retrive key from %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}

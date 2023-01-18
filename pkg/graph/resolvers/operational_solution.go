@@ -36,36 +36,6 @@ func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, oper
 	if err != nil {
 		return nil, err
 	}
-	ret := result.([]*models.OperationalSolution)
-
-	if ret == nil {
-		return []*models.OperationalSolution{}, nil //THERE was no result, instantiate empty model
-	}
-	if len(ret) == 1 {
-		if ret[0] == nil {
-			return []*models.OperationalSolution{}, nil //THERE was no result, instantiate empty model
-		}
-	}
-
-	return ret, nil
-}
-
-// OperationaSolutionsAndPossibleGetByOPNeedIDLOADERSimple returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
-func OperationaSolutionsAndPossibleGetByOPNeedIDLOADERSimple(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	allLoaders := loaders.Loaders(ctx)
-	opSolutionLoaderSimple := allLoaders.OperationSolutionLoaderSimplified
-
-	key := loaders.NewKeyArgs()
-
-	key.Args["include_not_needed"] = includeNotNeeded
-	key.Args["operational_need_id"] = operationalNeedID
-
-	thunk := opSolutionLoaderSimple.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
 
 	return result.([]*models.OperationalSolution), nil
 }
