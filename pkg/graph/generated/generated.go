@@ -41,6 +41,7 @@ type Config struct {
 
 type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
+	DiscussionReply() DiscussionReplyResolver
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	OperationalNeed() OperationalNeedResolver
@@ -82,15 +83,16 @@ type ComplexityRoot struct {
 	}
 
 	DiscussionReply struct {
-		Content      func(childComplexity int) int
-		CreatedBy    func(childComplexity int) int
-		CreatedDts   func(childComplexity int) int
-		DiscussionID func(childComplexity int) int
-		ID           func(childComplexity int) int
-		IsAssessment func(childComplexity int) int
-		ModifiedBy   func(childComplexity int) int
-		ModifiedDts  func(childComplexity int) int
-		Resolution   func(childComplexity int) int
+		Content       func(childComplexity int) int
+		CreatedBy     func(childComplexity int) int
+		CreatedByUser func(childComplexity int) int
+		CreatedDts    func(childComplexity int) int
+		DiscussionID  func(childComplexity int) int
+		ID            func(childComplexity int) int
+		IsAssessment  func(childComplexity int) int
+		ModifiedBy    func(childComplexity int) int
+		ModifiedDts   func(childComplexity int) int
+		Resolution    func(childComplexity int) int
 	}
 
 	ExistingModel struct {
@@ -323,16 +325,17 @@ type ComplexityRoot struct {
 	}
 
 	PlanDiscussion struct {
-		Content      func(childComplexity int) int
-		CreatedBy    func(childComplexity int) int
-		CreatedDts   func(childComplexity int) int
-		ID           func(childComplexity int) int
-		IsAssessment func(childComplexity int) int
-		ModelPlanID  func(childComplexity int) int
-		ModifiedBy   func(childComplexity int) int
-		ModifiedDts  func(childComplexity int) int
-		Replies      func(childComplexity int) int
-		Status       func(childComplexity int) int
+		Content       func(childComplexity int) int
+		CreatedBy     func(childComplexity int) int
+		CreatedByUser func(childComplexity int) int
+		CreatedDts    func(childComplexity int) int
+		ID            func(childComplexity int) int
+		IsAssessment  func(childComplexity int) int
+		ModelPlanID   func(childComplexity int) int
+		ModifiedBy    func(childComplexity int) int
+		ModifiedDts   func(childComplexity int) int
+		Replies       func(childComplexity int) int
+		Status        func(childComplexity int) int
 	}
 
 	PlanDocument struct {
@@ -850,6 +853,9 @@ type ComplexityRoot struct {
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
+type DiscussionReplyResolver interface {
+	CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error)
+}
 type ModelPlanResolver interface {
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 	GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error)
@@ -925,6 +931,8 @@ type PlanBeneficiariesResolver interface {
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
+
+	CreatedByUser(ctx context.Context, obj *models.PlanDiscussion) (*models.UserInfo, error)
 }
 type PlanDocumentResolver interface {
 	OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error)
@@ -1178,6 +1186,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.CreatedBy(childComplexity), true
+
+	case "DiscussionReply.createdByUser":
+		if e.complexity.DiscussionReply.CreatedByUser == nil {
+			break
+		}
+
+		return e.complexity.DiscussionReply.CreatedByUser(childComplexity), true
 
 	case "DiscussionReply.createdDts":
 		if e.complexity.DiscussionReply.CreatedDts == nil {
@@ -2803,6 +2818,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDiscussion.CreatedBy(childComplexity), true
+
+	case "PlanDiscussion.createdByUser":
+		if e.complexity.PlanDiscussion.CreatedByUser == nil {
+			break
+		}
+
+		return e.complexity.PlanDiscussion.CreatedByUser(childComplexity), true
 
 	case "PlanDiscussion.createdDts":
 		if e.complexity.PlanDiscussion.CreatedDts == nil {
@@ -6582,6 +6604,8 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
+  createdByUser: UserInfo!
+  
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -6615,6 +6639,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
   isAssessment: Boolean!
+
+  createdByUser: UserInfo!
 
 	createdBy: String!
 	createdDts: Time!
@@ -10317,6 +10343,58 @@ func (ec *executionContext) fieldContext_DiscussionReply_isAssessment(ctx contex
 	return fc, nil
 }
 
+func (ec *executionContext) _DiscussionReply_createdByUser(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionReply_createdByUser(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.DiscussionReply().CreatedByUser(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserInfo)
+	fc.Result = res
+	return ec.marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionReply_createdByUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionReply",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "commonName":
+				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "euaUserId":
+				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _DiscussionReply_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 	if err != nil {
@@ -12670,6 +12748,8 @@ func (ec *executionContext) fieldContext_ModelPlan_discussions(ctx context.Conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_PlanDiscussion_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15544,6 +15624,8 @@ func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_PlanDiscussion_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15645,6 +15727,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_PlanDiscussion_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15746,6 +15830,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_PlanDiscussion_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15845,6 +15931,8 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_DiscussionReply_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -15944,6 +16032,8 @@ func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_DiscussionReply_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -16043,6 +16133,8 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_DiscussionReply_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -22990,6 +23082,8 @@ func (ec *executionContext) fieldContext_PlanDiscussion_replies(ctx context.Cont
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+			case "createdByUser":
+				return ec.fieldContext_DiscussionReply_createdByUser(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -23044,6 +23138,58 @@ func (ec *executionContext) fieldContext_PlanDiscussion_isAssessment(ctx context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDiscussion_createdByUser(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDiscussion_createdByUser(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanDiscussion().CreatedByUser(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.UserInfo)
+	fc.Result = res
+	return ec.marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDiscussion_createdByUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussion",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "commonName":
+				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "email":
+				return ec.fieldContext_UserInfo_email(ctx, field)
+			case "euaUserId":
+				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
 		},
 	}
 	return fc, nil
@@ -45775,14 +45921,14 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 			out.Values[i] = ec._DiscussionReply_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "discussionID":
 
 			out.Values[i] = ec._DiscussionReply_discussionID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "content":
 
@@ -45797,21 +45943,41 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 			out.Values[i] = ec._DiscussionReply_isAssessment(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUser":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DiscussionReply_createdByUser(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdBy":
 
 			out.Values[i] = ec._DiscussionReply_createdBy(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "createdDts":
 
 			out.Values[i] = ec._DiscussionReply_createdDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "modifiedBy":
 
@@ -47585,6 +47751,26 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUser":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDiscussion_createdByUser(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdBy":
 
 			out.Values[i] = ec._PlanDiscussion_createdBy(ctx, field, obj)
@@ -57388,6 +57574,10 @@ func (ec *executionContext) marshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋg
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalNUserInfo2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfo(ctx context.Context, sel ast.SelectionSet, v models.UserInfo) graphql.Marshaler {
+	return ec._UserInfo(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNUserInfo2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfoᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.UserInfo) graphql.Marshaler {
