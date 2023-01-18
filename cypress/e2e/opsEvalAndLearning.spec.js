@@ -249,9 +249,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.clickOutside();
 
-    cy.get('[data-testid="multiselect-tag--Other-MIPS data"]')
-      .first()
-      .contains('Other');
+    cy.get('[data-testid="multiselect-tag--Other"]').last().contains('Other');
 
     cy.get('#ops-eval-and-learning-share-cclf-data-true')
       .check({ force: true })
@@ -361,11 +359,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.contains('button', 'Save and start next Model Plan section').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment$/);
     });
 
-    cy.get('[data-testid="task-list-intake-form-opsEvalAndLearning"]').contains(
-      'In progress'
-    );
+    cy.get('h1.mint-h1').contains('Payment');
   });
 });
