@@ -212,11 +212,11 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.contains('button', 'Save and start next Model Plan section').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/beneficiaries/
+      );
     });
 
-    cy.get(
-      '[data-testid="task-list-intake-form-participantsAndProviders"]'
-    ).contains('In progress');
+    cy.get('h1.mint-h1').contains('Beneficiaries');
   });
 });
