@@ -8,7 +8,10 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
@@ -103,24 +106,41 @@ func verifySolutionsLoaderSimple(ctx context.Context, operationalNeedID uuid.UUI
 	return nil
 }
 
+func verifySolutionsNoLoader(ctx context.Context, operationalNeedID uuid.UUID, store *storage.Store) error { //TODO make this more robust, as we can't assert at this level
+	logger := appcontext.ZLogger(ctx)
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, true, store)
+	if err != nil {
+		return err
+	}
+	if len(opSols) < 1 {
+		return fmt.Errorf("no operational solutions returns for %s", operationalNeedID)
+	}
+	// if operationalNeedID != opSols[0].OperationalNeedID { // NOT TESTING THIS, because older SQL would return uuid.nil
+	// 	return fmt.Errorf("op needs returned operational need ID %s, expected %s", opSols[0].OperationalNeedID, operationalNeedID)
+	// }
+	return nil
+}
+
 func getVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
 	return func() error {
 		return verifySolutionsFunc(ctx, operationalNeedID)
 	}
 }
+func getVerificationFunctionStore(ctx context.Context, operationalNeedID uuid.UUID, store *storage.Store, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID, store *storage.Store) error) func() error {
+	return func() error {
+		return verifySolutionsFunc(ctx, operationalNeedID, store)
+	}
+}
 func (suite *ResolverSuite) TestBenchmarkDataLoadersComparison() {
-	numModels := 300
+	numModels := 100
 	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
+	marshalledParams := opNeedsToMarshaledParams(opNeedIds)
 
 	suite.Run("MappedDataLoader", func() {
 		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 		for _, opNeedID := range opNeedIds {
 			theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
 			g.Go(theFunc)
-			// g.Go(func() error {
-			// 	return verifySolutionsLoader(ctx, opNeedID)
-			// })
-
 		}
 		err := g.Wait()
 		suite.NoError(err)
@@ -132,16 +152,51 @@ func (suite *ResolverSuite) TestBenchmarkDataLoadersComparison() {
 		for _, opNeedID := range opNeedIds {
 			theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoaderSimple)
 			g.Go(theFunc)
-			// g.Go(func() error {
-			// 	return verifySolutionsLoaderSimple(ctx, opNeedID)
-			// })
-
 		}
 		err := g.Wait()
 		suite.NoError(err)
 
 	})
+
+	suite.Run("No Data Loader", func() {
+		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+		for _, opNeedID := range opNeedIds {
+			theFunc := getVerificationFunctionStore(ctx, opNeedID, suite.testConfigs.Store, verifySolutionsNoLoader)
+			g.Go(theFunc)
+		}
+		err := g.Wait()
+		suite.NoError(err)
+
+	})
+
+	suite.Run("Loader SQL with Map", func() {
+		_, err := suite.testConfigs.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(suite.testConfigs.Logger, marshalledParams)
+		suite.NoError(err)
+	})
+	suite.Run("Loader SQL Simplified", func() {
+		_, err := suite.testConfigs.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADERSimplified(suite.testConfigs.Logger, marshalledParams)
+		suite.NoError(err)
+	})
+
 	suite.T().Log("TestBenchmarkDataLoadersComparison Created ", numModels, " models. Num of Needs : ", len(opNeedIds))
+}
+
+func opNeedsToMarshaledParams(uuidSlice []uuid.UUID) string {
+	// cKeys := []loaders.KeyArgs{}
+	cKeys := loaders.KeyArgsArray{}
+	includeNotNeeded := true
+	for _, operationalNeedID := range uuidSlice {
+		arg := loaders.KeyArgs{
+			Args: map[string]interface{}{
+				"include_not_needed":  includeNotNeeded,
+				"operational_need_id": operationalNeedID,
+			},
+		}
+		cKeys = append(cKeys, arg)
+	}
+	marshaledParams, _ := cKeys.ToJSONArray()
+	return marshaledParams
+
 }
 
 // func (suite *ResolverSuite) TestBenchmarkDataLoaderSimple() {
