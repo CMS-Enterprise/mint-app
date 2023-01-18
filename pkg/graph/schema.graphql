@@ -319,6 +319,8 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
+  createdByUser: UserInfo!
+  
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -352,6 +354,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
   isAssessment: Boolean!
+
+  createdByUser: UserInfo!
 
 	createdBy: String!
 	createdDts: Time!
