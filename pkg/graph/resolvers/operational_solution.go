@@ -50,6 +50,26 @@ func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, oper
 	return ret, nil
 }
 
+// OperationaSolutionsAndPossibleGetByOPNeedIDLOADERSimple returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
+func OperationaSolutionsAndPossibleGetByOPNeedIDLOADERSimple(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
+	allLoaders := loaders.Loaders(ctx)
+	opSolutionLoaderSimple := allLoaders.OperationSolutionLoaderSimplified
+
+	key := loaders.NewKeyArgs()
+
+	key.Args["include_not_needed"] = includeNotNeeded
+	key.Args["operational_need_id"] = operationalNeedID
+
+	thunk := opSolutionLoaderSimple.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.OperationalSolution), nil
+}
+
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready
 func OperationalSolutionInsertOrUpdate(logger *zap.Logger, operationNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
 

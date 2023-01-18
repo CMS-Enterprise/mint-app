@@ -20,6 +20,9 @@ var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADER.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL string
 
+//go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADERSimplified.sql
+var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSimplifiedSQL string
+
 //go:embed SQL/operational_solution/get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
 
@@ -114,6 +117,27 @@ func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLO
 		return nil, err
 	}
 	return resSet, nil
+
+}
+
+// OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADERSimplified returns Operational Solutions that match the paramtableJSON
+func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADERSimplified(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolution, error) {
+	solutions := []*models.OperationalSolution{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSimplifiedSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+	err = stmt.Select(&solutions, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return solutions, nil
 
 }
 

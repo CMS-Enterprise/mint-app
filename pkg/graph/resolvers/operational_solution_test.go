@@ -89,6 +89,103 @@ func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) err
 	return nil
 }
 
+func verifySolutionsLoaderSimple(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADERSimple(ctx, operationalNeedID, true)
+	if err != nil {
+		return err
+	}
+	if len(opSols) < 1 {
+		return fmt.Errorf("no operational solutions returns for %s", operationalNeedID)
+	}
+	if operationalNeedID != opSols[0].OperationalNeedID {
+		return fmt.Errorf("op needs returned operational need ID %s, expected %s", opSols[0].OperationalNeedID, operationalNeedID)
+	}
+	return nil
+}
+
+func getVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
+	return func() error {
+		return verifySolutionsFunc(ctx, operationalNeedID)
+	}
+}
+func (suite *ResolverSuite) TestBenchmarkDataLoadersComparison() {
+	numModels := 300
+	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
+
+	suite.Run("MappedDataLoader", func() {
+		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+		for _, opNeedID := range opNeedIds {
+			theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
+			g.Go(theFunc)
+			// g.Go(func() error {
+			// 	return verifySolutionsLoader(ctx, opNeedID)
+			// })
+
+		}
+		err := g.Wait()
+		suite.NoError(err)
+
+	})
+
+	suite.Run("SimpleDataLoader", func() {
+		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+		for _, opNeedID := range opNeedIds {
+			theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoaderSimple)
+			g.Go(theFunc)
+			// g.Go(func() error {
+			// 	return verifySolutionsLoaderSimple(ctx, opNeedID)
+			// })
+
+		}
+		err := g.Wait()
+		suite.NoError(err)
+
+	})
+	suite.T().Log("TestBenchmarkDataLoadersComparison Created ", numModels, " models. Num of Needs : ", len(opNeedIds))
+}
+
+// func (suite *ResolverSuite) TestBenchmarkDataLoaderSimple() {
+// 	opNeedIds := make100ModelsAndReturnNeedIDs(suite)
+
+// 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+// 	for _, opNeedID := range opNeedIds {
+// 		g.Go(func() error {
+// 			return verifySolutionsLoaderSimple(ctx, opNeedID)
+// 		})
+
+// 	}
+
+// 	err := g.Wait()
+// 	suite.NoError(err)
+// }
+// func (suite *ResolverSuite) TestBenchmarkDataLoader() {
+// 	opNeedIds := make100ModelsAndReturnNeedIDs(suite)
+
+// 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+// 	for _, opNeedID := range opNeedIds {
+// 		g.Go(func() error {
+// 			return verifySolutionsLoader(ctx, opNeedID)
+// 		})
+
+// 	}
+
+// 	err := g.Wait()
+// 	suite.NoError(err)
+// }
+func makeMulipleModelsAndReturnNeedIDs(suite *ResolverSuite, numModels int) []uuid.UUID {
+	opNeedSlice := []uuid.UUID{}
+	for i := 0; i < numModels; i++ {
+		plan := suite.createModelPlan("Plan For Needs " + fmt.Sprint(i))
+		needs, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+		suite.NoError(err)
+		for j := 0; j < len(needs); j++ {
+			opNeedSlice = append(opNeedSlice, needs[j].ID)
+		}
+	}
+	return opNeedSlice
+
+}
+
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	// 1. Create solution, ensure fields are as expected
 	plan := suite.createModelPlan("plan for solutions")
