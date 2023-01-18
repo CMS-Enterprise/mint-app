@@ -17,7 +17,7 @@ const modelPlanOverview = {
         'track the IT solutions the model will use and track its status through implementation'
     },
     email:
-      'If you have any questions, you can reach the Model Assessment Team at: <1>MINTTeam@cms.hhs.gov</1>.'
+      'If you have any questions, you can reach the MINT Team at: <1>MINTTeam@cms.hhs.gov</1>.'
   },
   steps: {
     heading: 'Steps involved in the process',
@@ -37,7 +37,7 @@ const modelPlanOverview = {
     third: {
       heading: 'Iterate on your draft model plan',
       description:
-        'Work with the Model Assessment Team and other administrative teams to iterate on model requirements.'
+        'Work with the MINT Team and other administrative teams to iterate on model requirements.'
     },
     fourth: {
       heading: 'Track your IT solutions',

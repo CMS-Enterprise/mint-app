@@ -45,6 +45,11 @@
   margin-right: .25rem;
 }
 
+.usa-alert .usa-alert__body {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 .usa-alert.mint-inline-alert {
   background-color: white;
   background-size: 1.6rem;
@@ -55,7 +60,7 @@
     background: #585c62;
   }
   .usa-alert__body {
-    padding-left: 2.8rem;
+    padding-left: 2.8rem;    
   }
   .usa-alert__text:only-child {
     margin-bottom: 0;

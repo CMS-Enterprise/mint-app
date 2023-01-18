@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import deviceBreakpoints from 'stylesheets/_variables.module.scss';
+import deviceBreakpoints from '../stylesheets/_variables.module.scss';
 
 type deviceProps = 'mobile' | 'tablet' | 'desktop';
 
