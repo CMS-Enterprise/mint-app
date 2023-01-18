@@ -5,11 +5,6 @@ export default gql`
     modelPlan(id: $id) {
       id
       isCollaborator
-      collaborators {
-        id
-        euaUserID
-        fullName
-      }
       discussions {
         id
         content
