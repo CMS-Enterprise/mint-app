@@ -7920,6 +7920,7 @@ enum TeamRole {
   LEARNING
   EVALUATION
   IT_LEAD
+  ARCHITECT
 }
 
 enum ModelType

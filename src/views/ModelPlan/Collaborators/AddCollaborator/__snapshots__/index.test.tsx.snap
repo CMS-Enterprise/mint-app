@@ -92,6 +92,11 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
                 IT Lead
               </option>
               <option
+                value="ARCHITECT"
+              >
+                Architect
+              </option>
+              <option
                 value="LEADERSHIP"
               >
                 Leadership
@@ -145,7 +150,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
           href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators"
         >
           <span>
-            ← 
+            ←
           </span>
            Don’t add a team member and return to the previous page
         </a>
