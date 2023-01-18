@@ -182,7 +182,6 @@ func (suite *ResolverSuite) TestBenchmarkDataLoadersComparison() {
 }
 
 func opNeedsToMarshaledParams(uuidSlice []uuid.UUID) string {
-	// cKeys := []loaders.KeyArgs{}
 	cKeys := loaders.KeyArgsArray{}
 	includeNotNeeded := true
 	for _, operationalNeedID := range uuidSlice {
@@ -199,34 +198,6 @@ func opNeedsToMarshaledParams(uuidSlice []uuid.UUID) string {
 
 }
 
-// func (suite *ResolverSuite) TestBenchmarkDataLoaderSimple() {
-// 	opNeedIds := make100ModelsAndReturnNeedIDs(suite)
-
-// 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-// 	for _, opNeedID := range opNeedIds {
-// 		g.Go(func() error {
-// 			return verifySolutionsLoaderSimple(ctx, opNeedID)
-// 		})
-
-// 	}
-
-// 	err := g.Wait()
-// 	suite.NoError(err)
-// }
-// func (suite *ResolverSuite) TestBenchmarkDataLoader() {
-// 	opNeedIds := make100ModelsAndReturnNeedIDs(suite)
-
-// 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-// 	for _, opNeedID := range opNeedIds {
-// 		g.Go(func() error {
-// 			return verifySolutionsLoader(ctx, opNeedID)
-// 		})
-
-// 	}
-
-// 	err := g.Wait()
-// 	suite.NoError(err)
-// }
 func makeMulipleModelsAndReturnNeedIDs(suite *ResolverSuite, numModels int) []uuid.UUID {
 	opNeedSlice := []uuid.UUID{}
 	for i := 0; i < numModels; i++ {
