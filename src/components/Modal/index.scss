@@ -1,3 +1,5 @@
+@use 'viewports' as *;
+
 .mint-modal {
   &__overlay {
     position: fixed;
