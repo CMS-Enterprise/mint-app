@@ -64,16 +64,12 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.wait(500);
 
-    cy.get('#plan-characteristics-alternative-payment')
-      .check({ force: true })
-      .should('be.checked');
-
     cy.get('#plan-characteristics-alternative-payment-MIPS')
       .check({ force: true })
       .should('be.checked');
 
     cy.get('[data-testid="mandatory-fields-alert"]').contains(
-      'In order to be considered by QPP (and to be MIPS or Advanced APM), you will need to collect TINS and NPIs for provider.'
+      'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.'
     );
 
     cy.get('#plan-characteristics-key-characteristics').within(() => {
@@ -199,11 +195,11 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.contains('button', 'Save and start next Model Plan section').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list$/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/participants-and-providers$/
+      );
     });
 
-    cy.get(
-      '[data-testid="task-list-intake-form-generalCharacteristics"]'
-    ).contains('In progress');
+    cy.get('h1.mint-h1').contains('Participants and Providers');
   });
 });
