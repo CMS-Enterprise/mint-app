@@ -260,7 +260,8 @@ const payments = {
   paymentStartDate: 'When will payments start? (Enter an approximate date)',
   paymentStartDateQuestion: 'When will payments start?',
   paymentStartDateSubcopy:
-    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.'
+    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
+  continueToITSolutions: 'Continue to IT solutions and implementation status'
 };
 
 export default payments;

@@ -14,26 +14,6 @@ import Discussions from './index';
 const discussionResult = {
   modelPlan: {
     __typename: 'ModelPlan',
-    collaborators: [
-      {
-        __typename: 'PlanCollaborator',
-        id: '123',
-        euaUserID: 'TIDA',
-        fullName: 'John Doe'
-      },
-      {
-        __typename: 'PlanCollaborator',
-        id: '123',
-        euaUserID: 'JFCS',
-        fullName: 'Jane Doe'
-      },
-      {
-        __typename: 'PlanCollaborator',
-        id: '123',
-        euaUserID: 'UISX',
-        fullName: 'Jack Doe'
-      }
-    ],
     discussions: [
       {
         __typename: 'PlanDiscussion',
@@ -42,6 +22,9 @@ const discussionResult = {
         createdBy: 'TIDA',
         createdDts: '2022-05-12T15:01:39.190679Z',
         status: 'UNANSWERED',
+        createdByUser: {
+          commonName: 'John Doe'
+        },
         replies: []
       },
       {
@@ -51,6 +34,9 @@ const discussionResult = {
         createdBy: 'JFCS',
         createdDts: '2022-05-12T15:01:39.190679Z',
         status: 'ANSWERED',
+        createdByUser: {
+          commonName: 'Jane Doe'
+        },
         replies: [
           {
             __typename: 'DiscussionReply',
@@ -59,6 +45,9 @@ const discussionResult = {
             id: 'abc',
             content: 'This is an answer.',
             createdBy: 'UISX',
+            createdByUser: {
+              commonName: 'Jack Doe'
+            },
             createdDts: '2022-05-12T15:01:39.190679Z'
           }
         ]

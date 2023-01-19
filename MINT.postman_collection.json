@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "08b67561-b006-4d82-8974-9b999501f5b2",
+		"_postman_id": "c9a76611-bd0a-4f80-948e-f9638b52b6c6",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -425,14 +425,30 @@
 			"item": [
 				{
 					"name": "Create Plan Discussion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createPlanDiscussion",
+									"",
+									"discussionID = responseData.id",
+									"",
+									"",
+									"pm.collectionVariables.set(\"discussionID\", discussionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"content\": \"\"\n  }\n}"
+								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -452,8 +468,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"content\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"status\": \"UNANSWERED\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -473,8 +489,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
+								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionID}}\"\n}"
 							}
 						},
 						"url": {
@@ -488,14 +504,30 @@
 				},
 				{
 					"name": "Create Discussion Reply",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createDiscussionReply",
+									"",
+									"discussionReplyID = responseData.id",
+									"",
+									"",
+									"pm.collectionVariables.set(\"discussionReplyID\", discussionReplyID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"discussionID\": \"\",\n    \"content\": \"\",\n    \"resolution\": true\n  }\n}"
+								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"discussionID\": \"{{discussionID}}\",\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -515,8 +547,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"content\": \"\",\n    \"resolution\": true\n  }\n}"
+								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -536,8 +568,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
+								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{discussionReplyID}}\"\n}"
 							}
 						},
 						"url": {
@@ -1744,6 +1776,14 @@
 		},
 		{
 			"key": "operationalSolutionID",
+			"value": ""
+		},
+		{
+			"key": "discussionID",
+			"value": ""
+		},
+		{
+			"key": "discussionReplyID",
 			"value": ""
 		}
 	]
