@@ -179,6 +179,9 @@ const itSolutions = {
   dontUpdateandReturnToTracker: 'Don’t update and return to tracker',
   successStatusUpdated: 'Success! {{-operationalNeedName}} status updated.',
   errorStatusUpdated:
-    'There was an issue updating the status for {{-operationalNeedName}}. Please try again.'
+    'There was an issue updating the status for {{-operationalNeedName}}. Please try again.',
+  addOpertationalNeed: 'Add an operational need',
+  addOpertationalNeedInfo:
+    'Describe the operational need you’re solving or additional workstream you’re tracking.'
 };
 export default itSolutions;
