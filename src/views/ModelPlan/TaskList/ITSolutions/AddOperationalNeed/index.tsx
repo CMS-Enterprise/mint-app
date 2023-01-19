@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Grid } from '@trussworks/react-uswds';
+import { Alert, Grid } from '@trussworks/react-uswds';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -47,7 +47,15 @@ const AddOperationalNeed = () => {
             {h('for')} {modelName}
           </p>
 
-          <p className="line-height-body-4">{t('addOpertationalNeedInfo')}</p>
+          <p className="line-height-body-4 margin-bottom-6">
+            {t('addOpertationalNeedInfo')}
+          </p>
+
+          <Grid tablet={{ col: 8 }}>
+            <Alert slim type="info">
+              {t('noDuplicates')}
+            </Alert>
+          </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
           <OperationalSolutionsSidebar modelID={modelID} />

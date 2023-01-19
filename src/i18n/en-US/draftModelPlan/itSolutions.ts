@@ -182,6 +182,8 @@ const itSolutions = {
     'There was an issue updating the status for {{-operationalNeedName}}. Please try again.',
   addOpertationalNeed: 'Add an operational need',
   addOpertationalNeedInfo:
-    'Describe the operational need you’re solving or additional workstream you’re tracking.'
+    'Describe the operational need you’re solving or additional workstream you’re tracking.',
+  noDuplicates:
+    'Make sure you aren’t duplicating an operational need that’s already a part of the tracker.'
 };
 export default itSolutions;
