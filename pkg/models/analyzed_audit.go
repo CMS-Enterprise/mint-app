@@ -344,7 +344,7 @@ type AnalyzedModelLeads struct {
 const (
 	// AnalyzedModelLeadsHumanizedAdded is human readable
 	// sentence template of AnalyzedModelLeads.Added
-	AnalyzedModelLeadsHumanizedAdded = "%s has been addeed as a Model Lead"
+	AnalyzedModelLeadsHumanizedAdded = "%s has been added as a Model Lead"
 )
 
 // Humanize returns AnalyzedModelLeads in human readable sentences

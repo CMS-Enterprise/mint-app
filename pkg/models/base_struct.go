@@ -4,14 +4,17 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // IBaseStruct is an interface that all models must implement
 type IBaseStruct interface {
-	GetBaseStruct() *baseStruct
+	// GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
+	SetModifiedBy(principal authentication.Principal) error
 }
 
 // baseStruct represents the shared data in common betwen all models
@@ -28,6 +31,12 @@ func NewBaseStruct(createdBy string) baseStruct {
 	return baseStruct{
 		CreatedBy: createdBy,
 	}
+}
+func (b *baseStruct) SetModifiedBy(principal authentication.Principal) error {
+	euaid := principal.ID()
+
+	b.ModifiedBy = &euaid
+	return nil
 }
 
 // GetBaseStruct returns the Base Struct
