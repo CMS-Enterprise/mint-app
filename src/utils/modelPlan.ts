@@ -173,6 +173,10 @@ export const translateModelPlanStatus = (status: string) => {
       return i18next.t('modelPlan:planStatuses.cleared');
     case 'ANNOUNCED':
       return i18next.t('modelPlan:planStatuses.announced');
+    case 'PAUSED':
+      return i18next.t('modelPlan:planStatuses.paused');
+    case 'CANCELED':
+      return i18next.t('modelPlan:planStatuses.canceled');
     default:
       return '';
   }

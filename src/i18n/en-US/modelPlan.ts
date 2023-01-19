@@ -17,7 +17,9 @@ const modelPlan = {
     hhsClearance: 'HHS clearance',
     ombASRFClearance: 'OMB/ASRF clearance',
     cleared: 'Cleared',
-    announced: 'Announced'
+    announced: 'Announced',
+    paused: 'Paused',
+    canceled: 'Canceled'
   },
   status: {
     heading: 'Update status',

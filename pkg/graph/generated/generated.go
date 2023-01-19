@@ -6605,7 +6605,7 @@ type PlanDiscussion  {
   isAssessment: Boolean!
 
   createdByUser: UserInfo!
-  
+
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -7977,6 +7977,8 @@ enum ModelStatus {
 	OMB_ASRF_CLEARANCE
 	CLEARED
 	ANNOUNCED
+  PAUSED
+  CANCELED
 }
 
 enum CMSCenter {
