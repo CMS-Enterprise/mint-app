@@ -422,13 +422,6 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             >
               Back
             </button>
-            <button
-              class="usa-button"
-              data-testid="button"
-              type="submit"
-            >
-              Save and start next Model Plan section
-            </button>
           </div>
           <button
             class="usa-button usa-button usa-button--unstyled"
