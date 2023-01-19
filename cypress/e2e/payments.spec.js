@@ -247,10 +247,14 @@ describe('The Model Plan Payment Form', () => {
       .type('10/26/2028')
       .should('have.value', '10/26/2028');
 
-    cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains('button', 'Save and start next Model Plan section').should(
+      'not.exist'
+    );
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    });
+    // Uncomment the code below once IT Lead Experience is PROD
+    // cy.contains('button', 'Continue to IT solutions and implementation status').click();
+    // cy.location().should(loc => {
+    //   expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/it-solutions$/);
+    // });
   });
 });

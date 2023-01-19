@@ -703,6 +703,7 @@ export enum TaskStatusInput {
 }
 
 export enum TeamRole {
+  ARCHITECT = "ARCHITECT",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",

@@ -114,6 +114,10 @@ const Authority = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else {
+            history.push(
+              `/models/${modelID}/task-list/participants-and-providers`
+            );
           }
         }
       })
@@ -175,7 +179,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit('task-list');
+          handleFormSubmit();
         }}
         enableReinitialize
         innerRef={formikRef}
