@@ -119,6 +119,8 @@ const Frequency = () => {
             history.push(`/models/${modelID}/task-list/`);
           } else if (redirect) {
             history.push(redirect);
+          } else {
+            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
           }
         }
       })
@@ -180,7 +182,7 @@ const Frequency = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit();
         }}
         enableReinitialize
         innerRef={formikRef}

@@ -15,6 +15,7 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
@@ -45,6 +46,7 @@ import { NotFoundPartial } from 'views/NotFound';
 import { renderCurrentPage, renderTotalPages } from '..';
 
 const Recover = () => {
+  const flags = useFlags();
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -380,9 +382,11 @@ const Recover = () => {
                         >
                           {h('back')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('saveAndStartNext')}
-                        </Button>
+                        {flags.hideITLeadExperience && (
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {t('continueToITSolutions')}
+                          </Button>
+                        )}
                       </div>
                       <Button
                         type="button"
