@@ -131,10 +131,10 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
-	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().AddDate(0, 0, 1).Format("2006-01-02"), plan.ID.String())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), noChangeMp.ID.String())
 	suite.NoError(err)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC().AddDate(0, 0, 1))
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC())
 	suite.Error(err)
 }
 
