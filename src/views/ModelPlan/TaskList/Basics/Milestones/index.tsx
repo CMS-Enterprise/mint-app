@@ -109,7 +109,7 @@ const Milestones = () => {
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/basics/overview`);
           } else {
-            history.push(`/models/${modelID}/task-list`);
+            history.push(`/models/${modelID}/task-list/characteristics`);
           }
         }
       })

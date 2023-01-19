@@ -64,4 +64,36 @@ describe('SolutionDetailsCard', () => {
 
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('isUpdatingStatus variant', async () => {
+    const { asFragment, getByText } = render(
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+        ]}
+      >
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+          <VerboseMockedProvider
+            mocks={needQuestionAndAnswerMock}
+            addTypename={false}
+          >
+            <SolutionDetailCard
+              solution={solution}
+              modelID={modelID}
+              operationalNeedID={operationalNeedID}
+              operationalSolutionID={operationalSolutionID}
+              isUpdatingStatus
+            />
+          </VerboseMockedProvider>
+        </Route>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(() => getByText('Must start by')).toThrow();
+      expect(() => getByText('December 30, 2022')).toThrow();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

@@ -123,6 +123,8 @@ const Learning = () => {
             history.push(`/models/${modelID}/task-list`);
           } else if (redirect) {
             history.push(redirect);
+          } else {
+            history.push(`/models/${modelID}/task-list/payment`);
           }
         }
       })
@@ -181,7 +183,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit();
         }}
         enableReinitialize
         innerRef={formikRef}

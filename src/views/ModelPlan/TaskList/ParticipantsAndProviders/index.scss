@@ -1,3 +1,5 @@
+@use 'viewports' as *;
+
 .participants-and-providers {
     &__info {
         @media screen and (max-width: $tablet) {
