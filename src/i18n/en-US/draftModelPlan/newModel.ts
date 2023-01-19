@@ -56,7 +56,7 @@ const newModel = {
   success: {
     heading: 'Success! You have removed yourself from {{-modelName}}.',
     message:
-      'If you need to access the Model Plan in the future, please contact a member of the model team or the Model Assessment Team.'
+      'If you need to access the Model Plan in the future, please contact a member of the model team or the MINT Team.'
   }
 };
 

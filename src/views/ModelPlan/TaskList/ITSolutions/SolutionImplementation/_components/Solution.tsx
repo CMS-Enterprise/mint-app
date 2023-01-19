@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DatePicker, Fieldset, Label, Radio } from '@trussworks/react-uswds';
-import { Field } from 'formik';
+import { Field, FormikProps } from 'formik';
 
 import Divider from 'components/shared/Divider';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -15,6 +15,7 @@ import { translateOpNeedsStatusType } from 'utils/modelPlan';
 
 import ImplementationStatuses from '../../_components/ImplementationStatus';
 import SolutionCard from '../../_components/SolutionCard';
+import SolutionDetailCard from '../../_components/SolutionDetailCard';
 
 type flatErrorsType = {
   [key: string]: string;
@@ -24,37 +25,69 @@ type SolutionTypes = {
   solution: OpertionalNeedSolutionTypes;
   identifier: string;
   index: number;
-  handleOnBlur: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => void;
   length: number;
-  values: OperationNeedType;
   flatErrors: flatErrorsType;
   loading: boolean;
+  operationalNeedID: string;
+  operationalSolutionID: string | undefined;
+  modelID: string;
+  formikProps: FormikProps<OperationNeedType>;
 };
 
 const Solution = ({
   solution,
   identifier,
   index,
-  handleOnBlur,
-  setFieldValue,
-  values,
   flatErrors,
   length,
-  loading
+  loading,
+  operationalNeedID,
+  operationalSolutionID,
+  modelID,
+  formikProps
 }: SolutionTypes) => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
+  const { errors, setFieldError, setFieldValue, values } = formikProps;
+
+  const handleOnBlur = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    if (e.target.value === '') {
+      setFieldValue(field, null);
+      return;
+    }
+    try {
+      setFieldValue(field, new Date(e.target.value).toISOString());
+      delete errors[field as keyof OperationNeedType];
+    } catch (err) {
+      setFieldError(field, h('validDate'));
+    }
+  };
+
   return (
     <div key={solution.id}>
-      <p className="text-bold">{t('solution')}</p>
-
-      <SolutionCard solution={solution} shadow />
+      {/*
+        Operational Solution ID is UNDEFINED if user is displaying ALL solutions to an Operational Need.
+        Operational Solution ID is DEFINED if user is displaying an INDIVIDUAL solution to an Operational Need.
+      */}
+      {operationalSolutionID === undefined ? (
+        <>
+          <p className="text-bold">{t('solution')}</p>
+          <SolutionCard solution={solution} shadow />
+        </>
+      ) : (
+        <SolutionDetailCard
+          className="margin-bottom-3"
+          solution={solution}
+          operationalNeedID={operationalNeedID}
+          operationalSolutionID={operationalSolutionID}
+          modelID={modelID}
+          isUpdatingStatus
+        />
+      )}
 
       {!loading && (
         <>

@@ -69,9 +69,6 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     }
   });
 
-  // Used to map EUA ids to full name
-  const collaborators = data?.modelPlan?.collaborators || [];
-
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const hasEditAccess: boolean =
@@ -244,11 +241,11 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                 <div className="display-flex flex-align-center">
                   <AssessmentIcon size={3} />{' '}
                   <span>
-                    {t('assessment')} | {reply.createdBy}
+                    {t('assessment')} | {reply.createdByUser.commonName}
                   </span>
                 </div>
               ) : (
-                <IconInitial user={reply.createdBy} index={0} />
+                <IconInitial user={reply.createdByUser.commonName} index={0} />
               )}
               <span className="margin-left-2 margin-top-05 text-base">
                 {getTimeElapsed(reply.createdDts)
@@ -384,7 +381,6 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                     )}
                     status={DiscussionStatus[status]}
                     hasEditAccess={hasEditAccess}
-                    collaborators={collaborators}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
                     setReply={setReply}
