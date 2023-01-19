@@ -26,6 +26,10 @@ type ResolverSuite struct {
 // SetupTest clears the database between each test
 func (suite *ResolverSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
+
+	//GET USER ACCOUNT EACH TIME!
+	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.EuaUserID)
+	suite.testConfigs.Principal = princ
 	assert.NoError(suite.T(), err)
 }
 

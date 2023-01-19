@@ -4,17 +4,21 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // IBaseTaskListSection returns the embedded BaseTaskListSection
 type IBaseTaskListSection interface {
-	GetBaseTaskListSection() *baseTaskListSection
+	// GetBaseTaskListSection() *baseTaskListSection
 	CalcStatus(TaskStatus) error
 	//methods from BaseStruct
 	GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
+	SetModifiedBy(principal authentication.Principal) error
+	GetStatus() TaskStatus
 }
 
 // baseTaskListSection represents all the shared fields in common to a task list section
@@ -43,6 +47,11 @@ func NewBaseTaskListSection(createdBy string, modelPlanID uuid.UUID) baseTaskLis
 // GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
 func (b *baseTaskListSection) GetBaseTaskListSection() *baseTaskListSection {
 	return b
+}
+
+// GetStatus returns the status of a basesTaskListSection
+func (b *baseTaskListSection) GetStatus() TaskStatus {
+	return b.Status
 }
 
 // CalcStatus updates the TaskStatus if it is in ready, but it has been modified.
