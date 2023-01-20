@@ -323,7 +323,7 @@ func (t *Translation) translateField(entry *BackfillEntry, value string, backfil
 	if t.ModelName == "MANUAL_ENTRY" {
 		entry.TErrors = append(entry.TErrors, TranslationError{
 			Translation: *t,
-			Type:        "manual-interention",
+			Type:        "manual-intervention",
 			Value:       value,
 			Message:     "this field required manual translation",
 		})
