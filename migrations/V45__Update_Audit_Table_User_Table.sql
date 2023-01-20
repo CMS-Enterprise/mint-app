@@ -2,10 +2,6 @@
 ALTER TABLE audit.change
 RENAME COLUMN modified_by TO modified_by_old;
 
-/* Update AUDIT TABLE */
-ALTER TABLE audit.change
-RENAME COLUMN created_by TO created_by_old;
-
 ALTER TABLE audit.change
 ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;
 
@@ -25,22 +21,15 @@ Once all tables have been migrate, this column should be removed as it is no lon
 WITH
 UnMatched AS (
     SELECT
-        audit.change.user_id_old,
-        audit.change.created_by_old,
         audit.change.modified_by_old,
-        user_account_created.id AS created_by,
         user_account_modified.id AS modified_by
     FROM audit.change
-    LEFT JOIN user_account AS user_account_created ON audit.change.created_by_old = user_account_created.username
     LEFT JOIN user_account AS user_account_modified ON audit.change.modified_by_old = user_account_modified.username
-    WHERE user_account.id IS NULL OR user_account_created.id IS NULL OR user_account_modified.id IS NULL
+    WHERE user_account_modified.id IS NULL
 ),
 
+--TODO simplify to 1 cte
 UnMatched_UserNames AS (
-    SELECT created_by_old AS USER_NAME FROM Unmatched
-    WHERE created_by IS NULL AND created_by_old IS NOT NULL
-
-    UNION
     SELECT modified_by_old AS USER_NAME FROM Unmatched
     WHERE modified_by IS NULL AND modified_by_old IS NOT NULL
 
@@ -75,30 +64,25 @@ FROM UnMatched_UserNames;
 
 
 /* Perform the data migration */
-WITH userAccount AS (  --noqa
+WITH userAccount AS (
     SELECT
         audit.change.id AS changeID,
-        user_account.id AS user_id,
-        user_account_created.id AS created_by,
         user_account_modified.id AS modified_by
     FROM audit.change
-    LEFT JOIN user_account AS user_account_created ON audit.change.created_by_old = user_account_created.username
     LEFT JOIN user_account AS user_account_modified ON audit.change.modified_by_old = user_account_modified.username
 )
 
 UPDATE audit.change
 SET
-    created_by = userAccount.created_by,
-    modified_by = userAccount.modified_by,
+    modified_by = userAccount.modified_by
 FROM userAccount
 WHERE userAccount.changeID = audit.change.id;
 
 
 /*remove the old columns */
 ALTER TABLE audit.change
-DROP COLUMN created_by_old,
 DROP COLUMN modified_by_old;
 
 /*add constraints */
 ALTER TABLE audit.change
-ALTER COLUMN created_by SET NOT NULL;
+ALTER COLUMN modified_by SET NOT NULL;
