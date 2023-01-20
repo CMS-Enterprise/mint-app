@@ -9,6 +9,7 @@ import (
 // OperationalSolution represents the specific implemented solution to an Operational Need
 type OperationalSolution struct {
 	baseStruct
+	operationalNeedRelation
 	OperationalNeedID uuid.UUID               `json:"operationalNeedID" db:"operational_need_id"`
 	SolutionType      *int                    `json:"solutionType" db:"solution_type"`
 	Needed            *bool                   `json:"needed" db:"needed"` // Null means that it is not an actual record
@@ -27,10 +28,11 @@ func NewOperationalSolution(createdBy string, operationalNeedID uuid.UUID) *Oper
 	needed := true
 
 	return &OperationalSolution{
-		baseStruct:        NewBaseStruct(createdBy),
-		OperationalNeedID: operationalNeedID, // TODO, should this be an embedded struct. (FUTURE TICKET EASI-2429)
-		Status:            OpSNotStarted,
-		Needed:            &needed,
+		baseStruct:              NewBaseStruct(createdBy),
+		operationalNeedRelation: NewOperationalNeedRelation(operationalNeedID),
+		OperationalNeedID:       operationalNeedID, // TODO, should this be an embedded struct. (FUTURE TICKET EASI-2429)
+		Status:                  OpSNotStarted,
+		Needed:                  &needed,
 	}
 }
 
