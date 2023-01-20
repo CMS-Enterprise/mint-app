@@ -32,8 +32,8 @@ func main() { //TODO make this a command
 	testTransform := false
 	testUpload := true
 	useEdit := false
-	useDecember13 := false
-	useJanuary19 := true
+	useDecember13 := true
+	useJanuary19 := false
 	testUserInfo := false
 
 	testTransform = true
