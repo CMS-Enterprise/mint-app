@@ -507,15 +507,23 @@ func (t *Translation) handleConversion(field *reflect.Value, otherField *reflect
 				layout3 := "1/2/06 15:04:05"
 				tVal, err = time.Parse(layout3, valString)
 				if err != nil {
-					wasTBD := t.errIfTBD(valString, fieldTypeS)
-					if wasTBD != nil {
-						tErr = wasTBD
-					} else {
-						tErr = &TranslationError{
-							Translation: *t,
-							Type:        "time-conversion",
-							Value:       valString,
-							Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+					layout4 := "1/2/2006 15:04"
+					tVal, err = time.Parse(layout4, valString)
+					if err != nil {
+						layout5 := "1/2/2006 15:04:05"
+						tVal, err = time.Parse(layout5, valString)
+						if err != nil {
+							wasTBD := t.errIfTBD(valString, fieldTypeS)
+							if wasTBD != nil {
+								tErr = wasTBD
+							} else {
+								tErr = &TranslationError{
+									Translation: *t,
+									Type:        "time-conversion",
+									Value:       valString,
+									Message:     fmt.Sprintf("type conversion failed to convert to *time for type %s", fieldType),
+								}
+							}
 						}
 					}
 				}
