@@ -60,6 +60,11 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 
 	userName := entry.ModelPlan.CreatedBy
 	user := u.Backfiller.UDictionary.tryGetUserByName(userName) //TODO create an account AFTER WE ADD A USER
+	creatorAccount, err := userhelpers.GetOrCreateUserAccount(context.Background(), &u.Store, user.EUAID, false, false, backfillUserWrapperAccountInfoFunc(context.Background(), user.EUAID, user))
+
+	if err != nil {
+		return fmt.Errorf("unable to get account for " + userName)
+	}
 	var princ authentication.Principal
 	if userName == "" {
 		userName = "ANON"
@@ -67,11 +72,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 			Username:          userName,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
-			UserAccount: &authentication.UserAccount{
-				Username:   &userName,
-				Email:      "unknown@mint.cms.gov",
-				CommonName: userName,
-			},
+			UserAccount:       creatorAccount,
 		}
 		princ = &oktaPrinc
 	} else {
@@ -79,11 +80,7 @@ func (u *Uploader) uploadEntry(entry *BackfillEntry) error {
 			Username:          user.EUAID,
 			JobCodeASSESSMENT: false,
 			JobCodeUSER:       true,
-			UserAccount: &authentication.UserAccount{
-				Username:   &user.EUAID,
-				Email:      user.Email,
-				CommonName: user.Name,
-			},
+			UserAccount:       creatorAccount,
 		}
 		princ = &oktaPrinc
 	}
