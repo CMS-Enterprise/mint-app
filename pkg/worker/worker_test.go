@@ -38,6 +38,11 @@ func (suite *WorkerSuite) stubFetchUserInfo(ctx context.Context, username string
 func (suite *WorkerSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
 	assert.NoError(suite.T(), err)
+
+	//GET USER ACCOUNT EACH TIME!
+	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.EuaUserID)
+	suite.testConfigs.Principal = princ
+
 	// Flush faktory after each test
 	client, err := faktory.Open()
 	assert.NoError(suite.T(), err)

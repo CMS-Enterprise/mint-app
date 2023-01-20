@@ -11,11 +11,11 @@ import (
 
 // BaseStructPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
 func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[string]interface{}, principal authentication.Principal, store *storage.Store, applyChanges bool, checkAccess bool) error {
-	section := bs.GetBaseStruct()
 
-	modified := principal.ID()
-
-	section.ModifiedBy = &modified
+	err := bs.SetModifiedBy(principal)
+	if err != nil {
+		return err
+	}
 
 	if checkAccess {
 		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)

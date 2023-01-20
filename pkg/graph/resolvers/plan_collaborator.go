@@ -49,12 +49,12 @@ func CreatePlanCollaborator(
 	}
 
 	isMacUser := false
-	_, err = userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, getAccountInformation)
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, getAccountInformation)
 	if err != nil {
 		return retCollaborator, nil, err
 	}
 
-	planFavorite, err := PlanFavoriteCreate(logger, principal, input.EuaUserID, store, modelPlan.ID)
+	planFavorite, err := PlanFavoriteCreate(logger, principal, collabAccount.ID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
 	}

@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Attach To Docker",
             "debugAdapter": "dlv-dap",
@@ -11,6 +12,14 @@
             "substitutePath": [
                 { "from": "${workspaceFolder}", "to": "/mint" },
             ]
+        },
+        {
+            "name": "Launch current package",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${relativeFileDirname}",
+            "cwd": "${workspaceFolder}"            
         }
     ]
 }
