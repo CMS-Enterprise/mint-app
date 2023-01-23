@@ -18,15 +18,12 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import { OperationalNeedKey } from 'types/graphql-global-types';
+import useMessage from 'hooks/useMessage';
+import { GetOperationalNeeds_modelPlan_operationalNeeds as CustomOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
-
-type OperationalNeedFormType = {
-  key: OperationalNeedKey;
-};
 
 const AddOperationalNeed = () => {
   const { modelID } = useParams<{ modelID: string }>();
@@ -34,12 +31,13 @@ const AddOperationalNeed = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const formikRef = useRef<FormikProps<OperationalNeedFormType>>(null);
+  const formikRef = useRef<FormikProps<CustomOperationalNeedsType>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
+  const { showMessageOnNextPage } = useMessage();
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
@@ -47,6 +45,10 @@ const AddOperationalNeed = () => {
     { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
     { text: t('addOpertationalNeed') }
   ];
+
+  const initialValues: CustomOperationalNeedsType = {
+    nameOther: ''
+  };
 
   return (
     <>
@@ -81,16 +83,14 @@ const AddOperationalNeed = () => {
             </Alert>
 
             <Formik
-              initialValues={customOperationalSolution}
+              initialValues={initialValues}
               onSubmit={values => {
                 handleFormSubmit(values);
               }}
               enableReinitialize
               innerRef={formikRef}
             >
-              {(
-                formikProps: FormikProps<CustomOperationalSolutionFormType>
-              ) => {
+              {(formikProps: FormikProps<CustomOperationalNeedsType>) => {
                 const { errors, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
