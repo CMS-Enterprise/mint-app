@@ -184,6 +184,9 @@ const itSolutions = {
   addOpertationalNeedInfo:
     'Describe the operational need you’re solving or additional workstream you’re tracking.',
   noDuplicates:
-    'Make sure you aren’t duplicating an operational need that’s already a part of the tracker.'
+    'Make sure you aren’t duplicating an operational need that’s already a part of the tracker.',
+  customOperationalNeedName: 'What operational need are you solving?',
+  dontAddandReturnToTracker: 'Don’t add and return to tracker',
+  saveWithoutAdding: 'Save without adding a solution'
 };
 export default itSolutions;
