@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -19,19 +19,32 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as CustomOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
+import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
 
+type CustomOperationalNeedFormType = Omit<
+  GetOperationalNeedsType,
+  | '__typename'
+  | 'id'
+  | 'modelPlanID'
+  | 'name'
+  | 'key'
+  | 'needed'
+  | 'modifiedDts'
+  | 'solutions'
+>;
+
 const AddOperationalNeed = () => {
   const { modelID } = useParams<{ modelID: string }>();
+  const history = useHistory();
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const formikRef = useRef<FormikProps<CustomOperationalNeedsType>>(null);
+  const formikRef = useRef<FormikProps<CustomOperationalNeedFormType>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -46,7 +59,7 @@ const AddOperationalNeed = () => {
     { text: t('addOpertationalNeed') }
   ];
 
-  const initialValues: CustomOperationalNeedsType = {
+  const initialValues: CustomOperationalNeedFormType = {
     nameOther: ''
   };
 
@@ -85,12 +98,13 @@ const AddOperationalNeed = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={values => {
-                handleFormSubmit(values);
+                // handleFormSubmit(values);
+                console.log(values);
               }}
               enableReinitialize
               innerRef={formikRef}
             >
-              {(formikProps: FormikProps<CustomOperationalNeedsType>) => {
+              {(formikProps: FormikProps<CustomOperationalNeedFormType>) => {
                 const { errors, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
@@ -117,12 +131,12 @@ const AddOperationalNeed = () => {
 
                     <Form
                       className="margin-top-3"
-                      data-testid="it-solutions-add-solution"
+                      data-testid="it-solutions-add-custom-operational-need"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset>
                         <FieldGroup
                           scrollElement="nameOther"
                           error={!!flatErrors.nameOther}
@@ -145,55 +159,6 @@ const AddOperationalNeed = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="pocName"
-                          error={!!flatErrors.pocName}
-                          className="margin-top-3"
-                        >
-                          <Label htmlFor="it-solution-custom-poc-name">
-                            {t('solutionPOC')}
-                          </Label>
-
-                          <p className="margin-bottom-1">
-                            {t('solutionPOCInfo')}
-                          </p>
-
-                          <FieldErrorMsg>{flatErrors.pocName}</FieldErrorMsg>
-
-                          <Field
-                            as={TextInput}
-                            error={!!flatErrors.pocName}
-                            id="it-solution-custom-poc-name"
-                            data-testid="it-solution-custom-poc-name"
-                            maxLength={50}
-                            name="pocName"
-                          />
-                        </FieldGroup>
-
-                        <FieldGroup
-                          scrollElement="pocEmail"
-                          error={!!flatErrors.pocEmail}
-                          className="margin-top-3"
-                        >
-                          <Label
-                            htmlFor="it-solution-custom-poc-email"
-                            className="text-normal"
-                          >
-                            {t('solutionEmailInfo')}
-                          </Label>
-
-                          <FieldErrorMsg>{flatErrors.pocEmail}</FieldErrorMsg>
-
-                          <Field
-                            as={TextInput}
-                            error={!!flatErrors.pocEmail}
-                            id="it-solution-custom-poc-email"
-                            data-testid="it-solution-custom-poc-email"
-                            maxLength={50}
-                            name="pocEmail"
-                          />
-                        </FieldGroup>
-
                         <div className="margin-top-6 margin-bottom-3">
                           <Button
                             type="submit"
@@ -201,9 +166,7 @@ const AddOperationalNeed = () => {
                             id="submit-custom-solution"
                             disabled={!values.nameOther}
                           >
-                            {operationalSolutionID
-                              ? t('updateSolutionDetails')
-                              : t('addSolutionDetails')}
+                            {t('addSolutionDetails')}
                           </Button>
                         </div>
 
@@ -218,9 +181,7 @@ const AddOperationalNeed = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {operationalSolutionID
-                            ? t('dontUpdateSolution')
-                            : t('dontAddSolution')}
+                          {t('dontAddSolution')}
                         </Button>
                       </Fieldset>
                     </Form>
