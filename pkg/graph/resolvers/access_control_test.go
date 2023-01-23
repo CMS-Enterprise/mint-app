@@ -100,7 +100,7 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	// Check soultion relation with plan document solution link
 	reader := bytes.NewReader([]byte("Some test file contents"))
 	document, err := suite.createTestPlanDocument(plan, reader)
-	suite.Error(err)
+	suite.NoError(err)
 
 	documentIDs := []uuid.UUID{document.ID}
 
