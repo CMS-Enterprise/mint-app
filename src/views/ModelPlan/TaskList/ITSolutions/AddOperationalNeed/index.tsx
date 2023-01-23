@@ -143,7 +143,7 @@ const AddOperationalNeed = () => {
                           className="margin-top-3"
                         >
                           <Label htmlFor="it-solution-custom-name-other">
-                            {t('solutionName')}
+                            {t('customOperationalNeedName')}
                             <RequiredAsterisk />
                           </Label>
 
@@ -160,9 +160,17 @@ const AddOperationalNeed = () => {
                         </FieldGroup>
 
                         <div className="margin-top-6 margin-bottom-3">
+                          {/* Saves, does not add solution, and returns to tracker */}
+                          <Button
+                            type="button"
+                            id=""
+                            disabled={!values.nameOther}
+                          >
+                            {t('saveWithoutAdding')}
+                          </Button>
+                          {/* Saves and continues to add solution */}
                           <Button
                             type="submit"
-                            className="margin-bottom-1"
                             id="submit-custom-solution"
                             disabled={!values.nameOther}
                           >
@@ -181,7 +189,7 @@ const AddOperationalNeed = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {t('dontAddSolution')}
+                          {t('dontAddandReturnToTracker')}
                         </Button>
                       </Fieldset>
                     </Form>
