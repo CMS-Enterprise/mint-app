@@ -23,6 +23,7 @@ DECLARE
     changeJSON JSONB;
     modified_by_user_id UUID;
     created_by_user_id UUID;
+    unknown_user_uuid UUID = '00000000-0000-0000-0000-000000000000';
 BEGIN
 
     IF TG_WHEN <> 'AFTER' THEN
@@ -98,7 +99,7 @@ BEGIN
         modified_by_user_id --modified_by
     );
     IF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
-        audit_row.modified_by = 'UNKN'; --We don't have the context of who deleted the row
+        audit_row.modified_by = unknown_user_uuid; --We don't have the context of who deleted the row
         audit_row.primary_key = h_old -> pkey_f; --New is null
         audit_row.foreign_key = h_old -> fkey_f;
     ELSIF (TG_OP = 'INSERT' AND TG_LEVEL = 'ROW') THEN
