@@ -20,7 +20,7 @@ UnMatched_UserNames AS (
         user_account_modified.id AS modified_by
     FROM audit.change
     LEFT JOIN user_account AS user_account_modified ON audit.change.modified_by_old = user_account_modified.username
-    WHERE user_account_modified.id IS NULL AND audit.change.modified_by_old IS NOT NULL AND audit.change.modified_by_old NOT IN ('MINT', 'UNK')
+    WHERE user_account_modified.id IS NULL AND audit.change.modified_by_old IS NOT NULL AND audit.change.modified_by_old NOT IN ('MINT', 'UNKN')
 )
 
 -- Insert any missing user_accounts
