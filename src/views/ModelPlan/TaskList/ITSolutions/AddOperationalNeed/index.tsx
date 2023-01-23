@@ -74,7 +74,6 @@ const AddOperationalNeed = () => {
           if (redirect === 'it-tracker') {
             history.push(`/models/${modelID}/task-list/it-solutions`);
           } else {
-            // this needs the operation need ID
             history.push(
               `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`
             );
