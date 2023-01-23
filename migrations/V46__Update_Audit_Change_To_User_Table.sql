@@ -66,10 +66,8 @@ WITH AccountJoins AS (
 userAccount AS ( /*  MINT AND UNK should point to the system user account, or the UNKNOWN ACCOUNT */
     SELECT
         changeID,
-        CASE WHEN modified_by_old = 'MINT' THEN
-            (SELECT id FROM user_account WHERE username = 'MINT_SYSTEM')
-            WHEN modified_by_old = 'UNKN' THEN
-                (SELECT id FROM user_account WHERE username = 'UNKNOWN_USER')
+        CASE WHEN modified_by_old = 'MINT' THEN '00000001-0001-0001-0001-000000000001' --SYSTEM
+            WHEN modified_by_old = 'UNKN' THEN '00000000-0000-0000-0000-000000000000' --UNKNOWN
             ELSE
                 modified_by_user_id
         END
