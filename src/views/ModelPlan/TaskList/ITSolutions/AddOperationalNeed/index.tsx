@@ -1,6 +1,7 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -18,8 +19,10 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import useMessage from 'hooks/useMessage';
+// import useMessage from 'hooks/useMessage';
 import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
+import { UpdateCustomOperationalNeedVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
+import UpdateCustomOperationalNeed from 'queries/ITSolutions/UpdateCustomOperationalNeed';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -48,9 +51,39 @@ const AddOperationalNeed = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
-  const { showMessageOnNextPage } = useMessage();
+  // const { showMessageOnNextPage } = useMessage();
+
+  const initialValues: CustomOperationalNeedFormType = {
+    nameOther: ''
+  };
+
+  const [
+    addCustomOperationalNeed
+  ] = useMutation<UpdateCustomOperationalNeedVariables>(
+    UpdateCustomOperationalNeed
+  );
+
+  const handleFormSubmit = async (
+    formikValues: CustomOperationalNeedFormType
+  ) => {
+    const { nameOther } = formikValues;
+
+    await addCustomOperationalNeed({
+      variables: {
+        modelPlanID: modelID,
+        customNeedType: nameOther,
+        needed: true
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          history.push(`/models/${modelID}/task-list/it-solutions`);
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
+  };
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
@@ -59,19 +92,9 @@ const AddOperationalNeed = () => {
     { text: t('addOpertationalNeed') }
   ];
 
-  const initialValues: CustomOperationalNeedFormType = {
-    nameOther: ''
-  };
-
   return (
     <>
       <Breadcrumbs items={breadcrumbs} />
-
-      {mutationError && (
-        <Alert type="error" slim>
-          {t('updateError')}
-        </Alert>
-      )}
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
@@ -97,10 +120,7 @@ const AddOperationalNeed = () => {
 
             <Formik
               initialValues={initialValues}
-              onSubmit={values => {
-                // handleFormSubmit(values);
-                console.log(values);
-              }}
+              onSubmit={handleFormSubmit}
               enableReinitialize
               innerRef={formikRef}
             >
