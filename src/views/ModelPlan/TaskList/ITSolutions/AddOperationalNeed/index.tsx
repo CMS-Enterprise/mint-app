@@ -63,21 +63,24 @@ const AddOperationalNeed = () => {
     UpdateCustomOperationalNeed
   );
 
-  const handleFormSubmit = async (
-    formikValues: CustomOperationalNeedFormType
+  const handleFormSubmit = (
+    formikValues: CustomOperationalNeedFormType,
+    redirect?: 'it-tracker'
   ) => {
-    const { nameOther } = formikValues;
-
-    await addCustomOperationalNeed({
+    addCustomOperationalNeed({
       variables: {
         modelPlanID: modelID,
-        customNeedType: nameOther,
+        customNeedType: formikValues.nameOther,
         needed: true
       }
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelID}/task-list/it-solutions`);
+          if (redirect === 'it-tracker') {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
+          } else {
+            history.push(`/models/${modelID}/task-list/it-solutions/`);
+          }
         }
       })
       .catch(errors => {
@@ -120,7 +123,7 @@ const AddOperationalNeed = () => {
 
             <Formik
               initialValues={initialValues}
-              onSubmit={handleFormSubmit}
+              onSubmit={values => handleFormSubmit(values)}
               enableReinitialize
               innerRef={formikRef}
             >
@@ -186,6 +189,9 @@ const AddOperationalNeed = () => {
                             id=""
                             disabled={!values.nameOther}
                             outline
+                            onClick={() =>
+                              handleFormSubmit(values, 'it-tracker')
+                            }
                           >
                             {t('saveWithoutAdding')}
                           </Button>
