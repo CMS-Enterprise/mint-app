@@ -3,7 +3,7 @@
 *
 */
 
-CREATE FUNCTION audit.if_modified() RETURNS TRIGGER AS $audit_table$
+CREATE OR REPLACE FUNCTION audit.if_modified() RETURNS TRIGGER AS $audit_table$
 DECLARE
     audit_row audit.change;
     include_values boolean;
@@ -17,7 +17,7 @@ DECLARE
     fkey_f TEXT;
     created_by_f TEXT;
     modified_by_f TEXT;
-    uses_user_id boolean;
+    table_uses_user_id boolean;
     h_changed HSTORE;
     diff_keys text[] = ARRAY[]::text[];
     changeJSON JSONB;
@@ -46,7 +46,7 @@ BEGIN
     modified_by_f,
     pkey_f,
     fkey_f,
-    uses_user_id
+    table_uses_user_id
     FROM audit.table_config
     WHERE schema =TG_TABLE_SCHEMA::text AND name = TG_TABLE_NAME::text;
 
@@ -78,12 +78,15 @@ BEGIN
         SELECT jsonb_object_agg(field,(to_jsonb(r) - 'field'))
         INTO changeJSON
             FROM RESULTSet r;
--- Set the EUAID
-IF (uses_user_id) THEN
+    -- Set the EUAID
+    IF (table_uses_user_id) THEN
+        modified_by_user_id = NEW.modified_by;
+        created_by_user_id = NEW.created_by;
 
-ELSE
-
-            ;
+    ELSE
+        modified_by_user_id = (SELECT id FROM user_account WHERE username = NEW.modified_by);
+        created_by_user_id = (SELECT id FROM user_account WHERE username = NEW.created_by);
+    END IF;
     audit_row = ROW (
     nextval('audit.change_id_seq'), --id
         table_id, --table_id
@@ -91,15 +94,15 @@ ELSE
         h_new -> fkey_f, --foreign_key
         substring(TG_OP,1,1), --action
         changeJSON, --fields
-        NEW.modified_by, --modified_by
-        CURRENT_TIMESTAMP --modified_dts
+        CURRENT_TIMESTAMP, --modified_dts
+        modified_by_user_id --modified_by
     );
     IF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
         audit_row.modified_by = 'UNKN'; --We don't have the context of who deleted the row
         audit_row.primary_key = h_old -> pkey_f; --New is null
         audit_row.foreign_key = h_old -> fkey_f;
     ELSIF (TG_OP = 'INSERT' AND TG_LEVEL = 'ROW') THEN
-        audit_row.modified_by = NEW.created_by;
+        audit_row.modified_by = created_by_user_id;
         audit_row.modified_dts = NEW.created_dts;
     END IF;
 
