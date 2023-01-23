@@ -51,11 +51,11 @@ func createS3Client() upload.S3Client {
 	return upload.NewS3Client(s3Cfg)
 }
 
-// GetDefaults sets the dependencies for the TestConfigs struct
+// GetDefaults sets the dependencies for the TestConfigs struct that will remain constant across the suite
+// The principal needs to be set before every test as the user account is removed between tests
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
-	princ := getTestPrincipal(store, userInfo.EuaUserID)
 	emailTemplateService, _ := email.NewTemplateServiceImpl()
 
 	s3Client := createS3Client()
@@ -66,7 +66,6 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Store = store
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
-	tc.Principal = princ
 	tc.EmailTemplateService = *emailTemplateService
 }
 

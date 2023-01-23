@@ -115,7 +115,7 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 		changes := map[string]interface{}{
 			"modelName": modelNames[i],
 		}
-		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, GetDefaultTestConfigs().Principal, suite.testConfigs.Store)
+		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 		suite.NoError(err)
 	}
 
