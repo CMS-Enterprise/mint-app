@@ -474,7 +474,7 @@ end
 
 desc "Generate a new migration with the current utc timestamp prefix"
 task genmigration: :consume_args do |t, args|
-  migrationName = Time.now.utc.strftime("v%Y%m%d%H%M%S__.sql")
+  migrationName = Time.now.utc.strftime("V%Y%m%d%H%M%S__.sql")
   FileUtils.touch("migrations/#{migrationName}")
 end
 
