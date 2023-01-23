@@ -3,6 +3,7 @@ version: '3.7'
 services:
   db_migrate:
     image: '${ECR_REGISTRY}/mint-db-migrate:${IMAGE_TAG}'
+    platform: linux/amd64
   db_seed:
     build:
       context: .
