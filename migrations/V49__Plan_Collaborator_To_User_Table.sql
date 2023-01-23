@@ -125,7 +125,7 @@ ADD CONSTRAINT unique_collaborator_per_plan UNIQUE (model_plan_id, user_id);
 /* update audit config */
 UPDATE audit.table_config
 SET uses_user_id = TRUE,
-    modified_by = 'MINT',
+    modified_by = '00000001-0001-0001-0001-000000000001', --System Account
     modified_dts = current_timestamp
 WHERE name = 'plan_collaborator';
 

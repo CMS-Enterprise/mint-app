@@ -20,7 +20,7 @@ UnMatched_UserNames AS (
         user_account_modified.id AS modified_by
     FROM audit.change
     LEFT JOIN user_account AS user_account_modified ON audit.change.modified_by_old = user_account_modified.username
-    WHERE user_account_modified.id IS NULL AND audit.change.modified_by_old IS NOT NULL
+    WHERE user_account_modified.id IS NULL AND audit.change.modified_by_old IS NOT NULL AND audit.change.modified_by_old NOT IN ('MINT', 'UNK')
 )
 
 -- Insert any missing user_accounts
@@ -52,13 +52,31 @@ FROM UnMatched_UserNames;
 
 
 /* Perform the data migration */
-WITH userAccount AS (
+
+WITH AccountJoins AS (
     SELECT
         audit.change.id AS changeID,
-        user_account_modified.id AS modified_by
+        audit.change.modified_by_old,
+        user_account_modified.id AS modified_by_user_id
     FROM audit.change
     LEFT JOIN user_account AS user_account_modified ON audit.change.modified_by_old = user_account_modified.username
+),
+
+
+userAccount AS ( /*  MINT AND UNK should point to the system user account, or the UNKNOWN ACCOUNT */
+    SELECT
+        changeID,
+        CASE WHEN modified_by_old = 'MINT' THEN
+            (SELECT id FROM user_account WHERE username = 'MINT_SYSTEM')
+            WHEN modified_by_old = 'UNKN' THEN
+                (SELECT id FROM user_account WHERE username = 'UNKNOWN_USER')
+            ELSE
+                modified_by_user_id
+        END
+        AS modified_by
+    FROM AccountJoins
 )
+
 
 UPDATE audit.change
 SET

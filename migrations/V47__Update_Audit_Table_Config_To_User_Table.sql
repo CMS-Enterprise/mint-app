@@ -13,7 +13,7 @@ RENAME COLUMN created_by TO created_by_old;
 ALTER TABLE audit.table_config
 RENAME COLUMN modified_by TO modified_by_old;
 
-ALTER TABLE table_config
+ALTER TABLE audit.table_config
 ADD COLUMN created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
 ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;
 /***
