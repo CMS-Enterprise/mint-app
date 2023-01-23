@@ -20,8 +20,10 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 // import useMessage from 'hooks/useMessage';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsType } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { UpdateCustomOperationalNeedVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
+import {
+  UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
+  UpdateCustomOperationalNeedVariables
+} from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
 import UpdateCustomOperationalNeed from 'queries/ITSolutions/UpdateCustomOperationalNeed';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -29,16 +31,9 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
 
 type CustomOperationalNeedFormType = Omit<
-  GetOperationalNeedsType,
-  | '__typename'
-  | 'id'
-  | 'modelPlanID'
-  | 'name'
-  | 'key'
-  | 'needed'
-  | 'modifiedDts'
-  | 'solutions'
->;
+  FormTypes,
+  '__typename' | 'id' | 'needed' | 'key' | 'nameOther'
+> & { nameOther: string };
 
 const AddOperationalNeed = () => {
   const { modelID } = useParams<{ modelID: string }>();
@@ -57,11 +52,10 @@ const AddOperationalNeed = () => {
     nameOther: ''
   };
 
-  const [
-    addCustomOperationalNeed
-  ] = useMutation<UpdateCustomOperationalNeedVariables>(
-    UpdateCustomOperationalNeed
-  );
+  const [addCustomOperationalNeed] = useMutation<
+    FormTypes,
+    UpdateCustomOperationalNeedVariables
+  >(UpdateCustomOperationalNeed);
 
   const handleFormSubmit = (
     formikValues: CustomOperationalNeedFormType,
@@ -76,11 +70,13 @@ const AddOperationalNeed = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          if (redirect === 'it-tracker') {
-            history.push(`/models/${modelID}/task-list/it-solutions`);
-          } else {
-            history.push(`/models/${modelID}/task-list/it-solutions/`);
-          }
+          console.log(response?.data?.id);
+          // if (redirect === 'it-tracker') {
+          //   history.push(`/models/${modelID}/task-list/it-solutions`);
+          // } else {
+          //   // this needs the operation need ID
+          //   history.push(`/models/${modelID}/task-list/it-solutions/`);
+          // }
         }
       })
       .catch(errors => {
