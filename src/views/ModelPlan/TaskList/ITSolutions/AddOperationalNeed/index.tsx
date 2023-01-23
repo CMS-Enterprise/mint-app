@@ -165,6 +165,7 @@ const AddOperationalNeed = () => {
                             type="button"
                             id=""
                             disabled={!values.nameOther}
+                            outline
                           >
                             {t('saveWithoutAdding')}
                           </Button>
@@ -174,7 +175,7 @@ const AddOperationalNeed = () => {
                             id="submit-custom-solution"
                             disabled={!values.nameOther}
                           >
-                            {t('addSolutionDetails')}
+                            {t('continue')}
                           </Button>
                         </div>
 
