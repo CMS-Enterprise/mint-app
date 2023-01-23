@@ -5,6 +5,7 @@ require "json"
 require "yaml"
 require "irb"        # debugging
 require "io/console" # for IO#getch
+require "fileutils"
 
 # ExtraArguments is a hack that alters how the command line arguments are parsed.
 #
@@ -469,6 +470,12 @@ end
 desc "Run all linters and checks managed by pre-commit"
 task :lint do
   sh "pre-commit run -a"
+end
+
+desc "Generate a new migration with the current utc timestamp prefix"
+task genmigration: :consume_args do |t, args|
+  migrationName = Time.now.utc.strftime("v%Y%m%d%H%M%S__.sql")
+  FileUtils.touch("migrations/#{migrationName}")
 end
 
 begin
