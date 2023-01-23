@@ -21,6 +21,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 // import useMessage from 'hooks/useMessage';
 import {
+  UpdateCustomOperationalNeed as MutationType,
   UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
   UpdateCustomOperationalNeedVariables
 } from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
@@ -53,7 +54,7 @@ const AddOperationalNeed = () => {
   };
 
   const [addCustomOperationalNeed] = useMutation<
-    FormTypes,
+    MutationType,
     UpdateCustomOperationalNeedVariables
   >(UpdateCustomOperationalNeed);
 
@@ -70,13 +71,14 @@ const AddOperationalNeed = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          console.log(response?.data?.id);
-          // if (redirect === 'it-tracker') {
-          //   history.push(`/models/${modelID}/task-list/it-solutions`);
-          // } else {
-          //   // this needs the operation need ID
-          //   history.push(`/models/${modelID}/task-list/it-solutions/`);
-          // }
+          if (redirect === 'it-tracker') {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
+          } else {
+            // this needs the operation need ID
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`
+            );
+          }
         }
       })
       .catch(errors => {
