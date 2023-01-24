@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
@@ -461,6 +462,12 @@ func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *mode
 func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
 	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
 	return sTypes, nil
+}
+
+// UserAccount is the resolver for the userAccount field.
+func (r *planCollaboratorResolver) UserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.UserAccountGetByID(logger, r.store, obj.UserID)
 }
 
 // Replies is the resolver for the replies field.
@@ -1038,6 +1045,11 @@ func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
 	return &planBeneficiariesResolver{r}
 }
 
+// PlanCollaborator returns generated.PlanCollaboratorResolver implementation.
+func (r *Resolver) PlanCollaborator() generated.PlanCollaboratorResolver {
+	return &planCollaboratorResolver{r}
+}
+
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.
 func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 	return &planDiscussionResolver{r}
@@ -1089,6 +1101,7 @@ type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
+type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }

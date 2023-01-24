@@ -32,8 +32,15 @@ func CreatePlanCollaborator(
 	store *storage.Store,
 	checkAccess bool,
 	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
-	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
-	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
+
+	isMacUser := false
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, input.EuaUserID, false, isMacUser, getAccountInformation)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.FullName, input.TeamRole, input.Email)
+	err = BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -46,12 +53,6 @@ func CreatePlanCollaborator(
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
 	if err != nil {
 		return nil, nil, err
-	}
-
-	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, getAccountInformation)
-	if err != nil {
-		return retCollaborator, nil, err
 	}
 
 	planFavorite, err := PlanFavoriteCreate(logger, principal, collabAccount.ID, store, modelPlan.ID)

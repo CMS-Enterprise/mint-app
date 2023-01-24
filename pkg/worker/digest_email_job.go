@@ -42,7 +42,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 		return batch.Jobs(func() error {
 			for _, c := range collaborators {
-				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, c.EUAUserID)
+				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, c.UserID) //TODO verify!
 				job.Queue = emailQueue
 				err = batch.Push(job)
 				if err != nil {
@@ -69,15 +69,17 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 
-	userID := args[1].(string)
+	userID := args[1].(uuid.UUID)
 
 	// Get the latest collaborator to get their email.
 	// TODO: get email from user_account table when it is ready
-	latestCollaborator, err := w.Store.PlanCollaboratorFetchLatestByUserID(userID)
+	//TODO update this
+	account, err := w.Store.UserAccountGetByID(userID)
 	if err != nil {
 		return err
 	}
-	recipientEmail := latestCollaborator.Email
+
+	recipientEmail := account.Email
 
 	// Get all analyzedAudits based on users favorited models
 	analyzedAudits, err := getDigestAnalyzedAudits(userID, dateAnalyzed, w.Store, w.Logger)
@@ -111,8 +113,8 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 */
 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
-func getDigestAnalyzedAudits(userID string, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
-	account, err := store.UserAccountGetByUsername(userID) //TODO verify
+func getDigestAnalyzedAudits(userID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
+	account, err := store.UserAccountGetByID(userID) //TODO verify
 	if err != nil {
 		return nil, err
 	}

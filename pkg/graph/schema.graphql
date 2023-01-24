@@ -128,13 +128,12 @@ PlanCollaborator represents a collaborator on a plan
 type PlanCollaborator {
   id: UUID!
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userID: UUID!
+  userAccount: UserAccount!
   teamRole: TeamRole!
-  email: String!
-  createdBy: String!
+  createdBy: UUID!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
   modifiedDts: Time
 }
 """
@@ -2308,6 +2307,20 @@ directive @goModel(
   model: String
   models: [String!]
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+type UserAccount {
+	id: UUID!
+	username: String!
+	isEUAID: Boolean
+	commonName: String!
+	locale: String!
+	email: String!
+	givenName: String!
+	familyName: String!
+	zoneInfo: String!
+	hasLoggedIn: Boolean
+}
+
 
 """
 A user role associated with a job code

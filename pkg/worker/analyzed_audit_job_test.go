@@ -37,7 +37,13 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
+	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(modelLead.UserID)
+
+	suite.NoError(err)
 	collaborator := suite.createPlanCollaborator(plan, "COLB", "New Colaborator", "MODEL_TEAM", "test@email.com")
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+
+	suite.NoError(err)
 
 	// Add Discussion
 	suite.createPlanDiscussion(plan, "Test Comment")
@@ -100,8 +106,8 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
 	// Plan Collaborators. Only model leads should be added.
-	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLead.FullName))
-	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaborator.FullName)))
+	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLeadAccount.CommonName))
+	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaboratorAccount.CommonName)))
 
 	// Discussions Activity
 	suite.True(analyzedAudit.Changes.PlanDiscussions.Activity)

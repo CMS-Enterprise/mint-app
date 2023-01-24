@@ -25,8 +25,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     operational_solution,
     operational_need,
     analyzed_audit,
-    model_plan,
-    user_account
+    model_plan
 	`
 
 	_, err := s.db.Exec("TRUNCATE " + tables)

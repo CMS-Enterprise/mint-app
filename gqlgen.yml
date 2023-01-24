@@ -36,6 +36,7 @@ struct_tag: gqlgen
 # if they match it will use them, otherwise it will generate them.
 autobind:
   - 'github.com/cmsgov/mint-app/pkg/models'
+  - 'github.com/cmsgov/mint-app/pkg/authentication'
 
 # This section declares type mapping between the GraphQL and go type systems
 #
@@ -57,3 +58,6 @@ models:
   UUID:
     model:
       - github.com/cmsgov/mint-app/pkg/models.UUID
+  # UserAccount:
+  #   model:
+  #     - github.com/cmsgov/mint-app/pkg/authentication.UserAccount

@@ -8,6 +8,7 @@ import (
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/golang/mock/gomock"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -39,6 +40,8 @@ func (suite *WorkerSuite) TestDigestEmail() {
 
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+	suite.NoError(err)
 
 	var analyzedAudits []*models.AnalyzedAudit
 	modelNameChange := "Old Name"
@@ -57,7 +60,7 @@ func (suite *WorkerSuite) TestDigestEmail() {
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
 	// Test getDailyDigestAnalyzedAudits
-	analyzedAudits, err := getDigestAnalyzedAudits(collaborator.EUAUserID, time.Now().UTC(), worker.Store, worker.Logger)
+	analyzedAudits, err = getDigestAnalyzedAudits(collaborator.UserID, time.Now().UTC(), worker.Store, worker.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 
@@ -82,14 +85,14 @@ func (suite *WorkerSuite) TestDigestEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaborator.Email}),
+			gomock.Eq([]string{collaboratorAccount.Email}),
 			gomock.Any(),
 			gomock.Eq(emailSubject),
 			gomock.Any(),
 			gomock.Eq(emailBody),
 		).MinTimes(1).MaxTimes(1)
 
-	err = worker.DigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.EUAUserID)
+	err = worker.DigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID)
 
 	suite.NoError(err)
 	mockController.Finish()
@@ -106,7 +109,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	//Create Plans
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
-	emails := []string{collaborator.EUAUserID, "TEST"}
+	emails := []string{collaborator.UserID.String(), uuid.Nil.String()} //TODO verify that his is correct
 
 	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
@@ -211,6 +214,8 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	//Create Plans
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+	suite.NoError(err)
 
 	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
@@ -232,7 +237,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 
 	// Test when DigestEmailJob runs it enqueues
 	// the with the correct args
-	job := faktory.NewJob("DigestEmailJob", date, collaborator.EUAUserID)
+	job := faktory.NewJob("DigestEmailJob", date, collaborator.UserID)
 	job.Queue = emailQueue
 
 	err = pool.With(func(cl *faktory.Client) error {
@@ -249,14 +254,14 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		suite.NoError(err2)
 		suite.Equal(emailQueue, job1.Queue)
 		suite.Equal(date, job1.Args[0].(string))
-		suite.Equal(collaborator.EUAUserID, job1.Args[1].(string))
+		suite.Equal(collaborator.UserID, job1.Args[1].(string))
 
 		// Make sure email sent
 		mockEmailService.
 			EXPECT().
 			Send(
 				gomock.Any(),
-				gomock.Eq([]string{collaborator.Email}),
+				gomock.Eq([]string{collaboratorAccount.Email}),
 				gomock.Any(),
 				gomock.Any(),
 				gomock.Any(),

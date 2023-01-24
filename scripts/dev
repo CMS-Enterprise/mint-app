@@ -384,8 +384,7 @@ namespace :db do
     plan_cr_tdl,
     operational_solution,
     operational_need,
-    model_plan,
-    user_account"
+    model_plan"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
