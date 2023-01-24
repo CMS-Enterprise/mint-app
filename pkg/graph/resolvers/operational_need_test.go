@@ -1,6 +1,14 @@
 package resolvers
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import (
+	"context"
+	"fmt"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
 func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("plan for need")
@@ -12,7 +20,7 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	possibleCount := len(posNeeds)
 
 	//2. Get all Operational Needs
-	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(opNeeds, possibleCount)
 	firstNeed := opNeeds[0]
@@ -25,6 +33,31 @@ func (suite *ResolverSuite) TestOperationalNeedCollectionGetByModelPlanID() {
 	suite.NotNil(firstNeed.Name) // Enforce returning the name from this query //TODO
 	suite.Nil(firstNeed.Needed)  //Needed should not yet be set
 
+}
+
+func (suite *ResolverSuite) TestOperationalNeedLoader() {
+	plan1 := suite.createModelPlan("Plan For Needs 1")
+	plan2 := suite.createModelPlan("Plan For Needs 2")
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyNeedsLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyNeedsLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+}
+
+func verifyNeedsLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+	if modelPlanID != opNeeds[0].ModelPlanID { //did we return the correct need?
+		return fmt.Errorf("op needs returned model plan ID %s, expected %s", opNeeds[0].ModelPlanID, modelPlanID)
+	}
+	return nil
 }
 
 func (suite *ResolverSuite) TestOperationalNeedInsertOrUpdateCustom() {

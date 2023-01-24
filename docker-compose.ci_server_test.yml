@@ -9,6 +9,7 @@ services:
       - '5432:5432'
   db_migrate:
     image: '${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}'
+    platform: linux/amd64
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword

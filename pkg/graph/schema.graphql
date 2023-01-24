@@ -320,7 +320,7 @@ type PlanDiscussion  {
   isAssessment: Boolean!
 
   createdByUser: UserInfo!
-  
+
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -1366,11 +1366,11 @@ type NDAInfo {
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
-    userID: String!
+    userID: UUID!
 
-    createdBy: String!
+    createdBy: UUID!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
     modifiedDts: Time
 
 }
@@ -1693,6 +1693,8 @@ enum ModelStatus {
 	OMB_ASRF_CLEARANCE
 	CLEARED
 	ANNOUNCED
+  PAUSED
+  CANCELED
 }
 
 enum CMSCenter {

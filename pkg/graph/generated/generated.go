@@ -6605,7 +6605,7 @@ type PlanDiscussion  {
   isAssessment: Boolean!
 
   createdByUser: UserInfo!
-  
+
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -7651,11 +7651,11 @@ type NDAInfo {
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
-    userID: String!
+    userID: UUID!
 
-    createdBy: String!
+    createdBy: UUID!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
     modifiedDts: Time
 
 }
@@ -7978,6 +7978,8 @@ enum ModelStatus {
 	OMB_ASRF_CLEARANCE
 	CLEARED
 	ANNOUNCED
+  PAUSED
+  CANCELED
 }
 
 enum CMSCenter {
@@ -24644,9 +24646,9 @@ func (ec *executionContext) _PlanFavorite_userID(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanFavorite_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -24656,7 +24658,7 @@ func (ec *executionContext) fieldContext_PlanFavorite_userID(ctx context.Context
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -24688,9 +24690,9 @@ func (ec *executionContext) _PlanFavorite_createdBy(ctx context.Context, field g
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanFavorite_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -24700,7 +24702,7 @@ func (ec *executionContext) fieldContext_PlanFavorite_createdBy(ctx context.Cont
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -24773,9 +24775,9 @@ func (ec *executionContext) _PlanFavorite_modifiedBy(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanFavorite_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -24785,7 +24787,7 @@ func (ec *executionContext) fieldContext_PlanFavorite_modifiedBy(ctx context.Con
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -62459,6 +62461,22 @@ func (ec *executionContext) unmarshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(c
 
 func (ec *executionContext) marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
 	res := models.MarshalUUID(v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (*uuid.UUID, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := models.UnmarshalUUID(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := models.MarshalUUID(*v)
 	return res
 }
 
