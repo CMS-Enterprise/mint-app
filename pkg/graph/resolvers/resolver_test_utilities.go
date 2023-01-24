@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -30,6 +32,7 @@ type TestConfigs struct {
 	S3Client  *upload.S3Client
 	PubSub    *pubsub.ServicePubSub
 	Principal *authentication.ApplicationPrincipal
+	Context   context.Context
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -66,6 +69,11 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Store = store
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
+
+	dataLoaders := loaders.NewDataLoaders(tc.Store)
+	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	tc.Context = appcontext.WithLogger(tc.Context, tc.Logger)
+
 }
 
 // NewDBConfig returns a DBConfig struct with values from appconfig

@@ -1,12 +1,15 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // OperationaSolutionsAndPossibleGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need
@@ -15,6 +18,26 @@ func OperationaSolutionsAndPossibleGetByOPNeedID(logger *zap.Logger, operational
 	sols, err := store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger, operationalNeedID, includeNotNeeded)
 
 	return sols, err
+}
+
+// OperationaSolutionsAndPossibleGetByOPNeedIDLOADER returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
+func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
+	allLoaders := loaders.Loaders(ctx)
+	opSolutionLoader := allLoaders.OperationSolutionLoader
+
+	key := loaders.NewKeyArgs()
+
+	key.Args["include_not_needed"] = includeNotNeeded
+	key.Args["operational_need_id"] = operationalNeedID
+
+	thunk := opSolutionLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.OperationalSolution), nil
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready
