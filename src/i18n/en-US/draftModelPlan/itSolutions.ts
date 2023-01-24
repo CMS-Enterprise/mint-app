@@ -188,6 +188,12 @@ const itSolutions = {
   customOperationalNeedName: 'What operational need are you solving?',
   dontAddandReturnToTracker: 'Don’t add and return to tracker',
   saveWithoutAdding: 'Save without adding a solution',
-  editNeed: 'Edit this operational need'
+  editNeed: 'Edit this operational need',
+  successMessage: {
+    onlyOperationalNeed:
+      'Success! Your operational need “{{-operationalNeedName}}” is added.',
+    operationalNeedAndSolution:
+      'Success! Your operational need “{{-operationalNeedName}}” and solution are added.'
+  }
 };
 export default itSolutions;
