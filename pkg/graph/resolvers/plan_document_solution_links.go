@@ -25,10 +25,16 @@ func PlanDocumentSolutionLinksCreate(logger *zap.Logger, store *storage.Store, s
 }
 
 // PlanDocumentSolutionLinkRemove implements resolver logic to delete a plan document solution link
-func PlanDocumentSolutionLinkRemove(logger *zap.Logger, id uuid.UUID, store *storage.Store) (bool, error) {
-	// existingLink :=
+func PlanDocumentSolutionLinkRemove(logger *zap.Logger, id uuid.UUID, store *storage.Store, principal authentication.Principal) (bool, error) {
+	existingLink, err := store.PlanDocumentSolutionLinkGetByID(logger, id)
+	if err != nil {
+		return false, err
+	}
 
-	// err := BaseStructPreDelete()
+	err = BaseStructPreDelete(logger, existingLink, principal, store, true)
+	if err != nil {
+		return false, err
+	}
 	return store.PlanDocumentSolutionLinkRemove(logger, id)
 }
 
