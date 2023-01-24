@@ -19,7 +19,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-// import useMessage from 'hooks/useMessage';
+import useMessage from 'hooks/useMessage';
 import {
   UpdateCustomOperationalNeed as MutationType,
   UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
@@ -47,7 +47,7 @@ const AddOperationalNeed = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  // const { showMessageOnNextPage } = useMessage();
+  const { showMessageOnNextPage } = useMessage();
 
   const initialValues: CustomOperationalNeedFormType = {
     nameOther: ''
@@ -72,6 +72,16 @@ const AddOperationalNeed = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'it-tracker') {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('successMessage.onlyOperationalNeed', {
+                    operationalNeedName:
+                      response.data?.addOrUpdateCustomOperationalNeed.nameOther
+                  })}
+                </span>
+              </Alert>
+            );
             history.push(`/models/${modelID}/task-list/it-solutions`);
           } else {
             history.push(
