@@ -48,6 +48,7 @@ describe('The Model Plan Task List', () => {
         fileName: 'test.pdf'
       }
     ],
+    collaborators: [],
     discussions: [
       {
         __typename: 'PlanDiscussion',
