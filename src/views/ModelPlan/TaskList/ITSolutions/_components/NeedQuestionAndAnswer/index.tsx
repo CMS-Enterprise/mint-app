@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
@@ -169,12 +170,18 @@ const NeedQuestionAndAnswer = ({
         </Grid>
 
         <Grid desktop={{ col: expanded ? 6 : 12 }}>
-          <InfoToggle
-            needConfig={needConfig}
-            data={data}
-            answers={answers}
-            modelID={modelID}
-          />
+          {needConfig ? (
+            <InfoToggle
+              needConfig={needConfig}
+              data={data}
+              answers={answers}
+              modelID={modelID}
+            />
+          ) : (
+            <UswdsReactLink to={`/models/${modelID}/task-list/it-solutions`}>
+              {t('editNeed')}
+            </UswdsReactLink>
+          )}
 
           {/* Renders a solution card if solution data present */}
           {solution && (

@@ -187,6 +187,7 @@ const itSolutions = {
     'Make sure you aren’t duplicating an operational need that’s already a part of the tracker.',
   customOperationalNeedName: 'What operational need are you solving?',
   dontAddandReturnToTracker: 'Don’t add and return to tracker',
-  saveWithoutAdding: 'Save without adding a solution'
+  saveWithoutAdding: 'Save without adding a solution',
+  editNeed: 'Edit this operational need'
 };
 export default itSolutions;
