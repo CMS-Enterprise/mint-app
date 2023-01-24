@@ -41,7 +41,7 @@ var planDocumentGetBySolutionIDNotRestrictedSQL string
 //go:embed SQL/plan_document/delete_by_id.sql
 var planDocumentDeleteByIDSQL string
 
-//go:embed SQL/plan_document_solution/links_delete_by_document_id.sql
+//go:embed SQL/plan_document_solution_link/delete_by_document_id.sql
 var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 
 // PlanDocumentCreate creates a plan document
