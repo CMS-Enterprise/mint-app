@@ -108,7 +108,9 @@ WHERE userAccount.collabID = plan_collaborator.id;
 ALTER TABLE plan_collaborator
 DROP COLUMN user_id_old,
 DROP COLUMN created_by_old,
-DROP COLUMN modified_by_old;
+DROP COLUMN modified_by_old,
+DROP COLUMN email,
+DROP COLUMN full_name;
 
 /*add constraints */
 ALTER TABLE plan_collaborator
