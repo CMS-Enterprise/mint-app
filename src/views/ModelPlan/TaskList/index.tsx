@@ -29,11 +29,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-// import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-// import {
-//   GetModelCollaborators,
-//   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-// } from 'queries/Collaborators/types/GetModelCollaborators';
 import GetModelPlan from 'queries/GetModelPlan';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
