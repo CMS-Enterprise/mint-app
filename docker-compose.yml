@@ -8,6 +8,7 @@ services:
       - POSTGRES_PASSWORD=mysecretpassword
   db_migrate:
     image: mint-db-migrate:latest
+    platform: linux/amd64
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
@@ -92,6 +93,7 @@ services:
       "
   email:
     image: dockage/mailcatcher:0.7.1
+    platform: linux/amd64
     ports:
       - "1085:1080"
       - "1030:1025"

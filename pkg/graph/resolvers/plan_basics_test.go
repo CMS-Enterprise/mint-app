@@ -1,7 +1,12 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -9,7 +14,7 @@ import (
 func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the basics as part of the resolver
 
-	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, basics.ModelPlanID)
@@ -38,6 +43,37 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.Nil(basics.HighLevelNote)
 	suite.Nil(basics.PhasedIn)
 	suite.Nil(basics.PhasedInNote)
+}
+
+func (suite *ResolverSuite) TestPlanBasicsDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Basics 1")
+	plan2 := suite.createModelPlan("Plan For Basics 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyBasicsLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyBasicsLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+	// go verifyBasicsLoader(ctx, plan1.ID)
+	// go verifyBasicsLoader(ctx, plan2.ID)
+
+}
+func verifyBasicsLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != basics.ModelPlanID {
+		return fmt.Errorf("basics returned model plan ID %s, expected %s", basics.ModelPlanID, modelPlanID)
+	}
+	return nil
 }
 
 func (suite *ResolverSuite) TestUpdatePlanBasics() {
