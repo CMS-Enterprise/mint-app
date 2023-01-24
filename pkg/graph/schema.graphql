@@ -319,6 +319,8 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
+  createdByUser: UserInfo!
+
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -352,6 +354,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
   isAssessment: Boolean!
+
+  createdByUser: UserInfo!
 
 	createdBy: String!
 	createdDts: Time!
@@ -1362,11 +1366,11 @@ type NDAInfo {
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
-    userID: String!
+    userID: UUID!
 
-    createdBy: String!
+    createdBy: UUID!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
     modifiedDts: Time
 
 }
@@ -1657,6 +1661,7 @@ enum TeamRole {
   LEARNING
   EVALUATION
   IT_LEAD
+  ARCHITECT
 }
 
 enum ModelType
@@ -1688,6 +1693,8 @@ enum ModelStatus {
 	OMB_ASRF_CLEARANCE
 	CLEARED
 	ANNOUNCED
+  PAUSED
+  CANCELED
 }
 
 enum CMSCenter {

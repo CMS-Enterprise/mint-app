@@ -23,11 +23,17 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// CreatedByUser is the resolver for the createdByUser field.
+func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error) {
+	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
+	// return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // GeneralCharacteristics is the resolver for the generalCharacteristics field.
@@ -134,8 +140,7 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -336,7 +341,7 @@ func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.N
 func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanFavoriteCreate(logger, principal, principal.ID(), r.store, modelPlanID)
+	return resolvers.PlanFavoriteCreate(logger, principal, principal.Account().ID, r.store, modelPlanID)
 }
 
 // DeletePlanFavorite is the resolver for the deletePlanFavorite field.
@@ -417,8 +422,7 @@ func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, i
 
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
 }
 
 // Documents is the resolver for the documents field.
@@ -463,6 +467,11 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
+}
+
+// CreatedByUser is the resolver for the createdByUser field.
+func (r *planDiscussionResolver) CreatedByUser(ctx context.Context, obj *models.PlanDiscussion) (*models.UserInfo, error) {
+	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
 }
 
 // OtherType is the resolver for the otherType field.
@@ -999,6 +1008,11 @@ func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (str
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
+// DiscussionReply returns generated.DiscussionReplyResolver implementation.
+func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
+	return &discussionReplyResolver{r}
+}
+
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -1067,6 +1081,7 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
+type discussionReplyResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }

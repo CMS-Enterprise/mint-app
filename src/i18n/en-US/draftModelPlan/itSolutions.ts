@@ -169,7 +169,16 @@ const itSolutions = {
   links: {
     linkDocuments: 'Link existing documents',
     uploadDocuments: 'Upload a document'
-  }
+  },
+  updateStatus: 'Update status',
+  updateStatusInfo:
+    'Update the implementation status and deadline for this solution.',
+  updateSolution: 'Update solution',
+  dontUpdateandReturnToSolutionDetails:
+    'Don’t update and return to solution details',
+  dontUpdateandReturnToTracker: 'Don’t update and return to tracker',
+  successStatusUpdated: 'Success! {{-operationalNeedName}} status updated.',
+  errorStatusUpdated:
+    'There was an issue updating the status for {{-operationalNeedName}}. Please try again.'
 };
-
 export default itSolutions;

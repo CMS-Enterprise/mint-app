@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .mint-section {
     &__border {
         border: 1px solid color($theme-color-base-light);

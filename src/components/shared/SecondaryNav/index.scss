@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .mint-secondary-nav {
   border-bottom: 1px solid color($theme-color-base-lighter);
   // This breaks responsiveness; no plans for now

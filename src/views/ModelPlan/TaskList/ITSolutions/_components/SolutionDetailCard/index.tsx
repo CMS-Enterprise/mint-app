@@ -22,15 +22,19 @@ import SolutionCard from '../SolutionCard';
 type SolutionDetailCardProps = {
   solution: GetOperationalSolutionType;
   operationalNeedID: string;
+  operationalSolutionID: string;
   modelID: string;
   className?: string;
+  isUpdatingStatus?: boolean;
 };
 
 const SolutionDetailCard = ({
   solution,
   operationalNeedID,
+  operationalSolutionID,
   modelID,
-  className
+  className,
+  isUpdatingStatus = false
 }: SolutionDetailCardProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -41,15 +45,17 @@ const SolutionDetailCard = ({
       <NeedQuestionAndAnswer
         operationalNeedID={operationalNeedID}
         modelID={modelID}
-        expanded
+        expanded={!isUpdatingStatus}
       />
 
-      <div className="padding-x-3 padding-top-0">
-        <Divider className="margin-bottom-3" />
-      </div>
+      {!isUpdatingStatus && (
+        <div className="padding-x-3 padding-top-0">
+          <Divider className="margin-bottom-3" />
+        </div>
+      )}
 
       <Grid row gap className="padding-x-3 padding-bottom-3">
-        <Grid desktop={{ col: 6 }}>
+        <Grid desktop={{ col: isUpdatingStatus ? 12 : 6 }}>
           <p className="text-bold margin-top-0 margin-bottom-1">
             {t('solution')}
           </p>
@@ -63,50 +69,53 @@ const SolutionDetailCard = ({
             </UswdsReactLink>
           </div>
         </Grid>
-        <Grid desktop={{ col: 6 }}>
-          <Grid row gap className="margin-bottom-2">
-            <Grid desktop={{ col: 6 }}>
-              <p className="margin-0 text-bold">{t('mustStartBy')}</p>
+        {!isUpdatingStatus && (
+          <Grid desktop={{ col: 6 }}>
+            <Grid row gap className="margin-bottom-2">
+              <Grid desktop={{ col: 6 }}>
+                <p className="margin-0 text-bold">{t('mustStartBy')}</p>
 
-              <p className="margin-y-1">
-                {solution.mustStartDts
-                  ? formatDate(solution.mustStartDts)
-                  : t('notSpecified')}
-              </p>
+                <p className="margin-y-1">
+                  {solution.mustStartDts
+                    ? formatDate(solution.mustStartDts)
+                    : t('notSpecified')}
+                </p>
+              </Grid>
+
+              <Grid desktop={{ col: 6 }}>
+                <p className="margin-0 text-bold">{t('mustFinishBy')}</p>
+
+                <p className="margin-y-1">
+                  {solution.mustFinishDts
+                    ? formatDate(solution.mustFinishDts)
+                    : t('notSpecified')}
+                </p>
+              </Grid>
             </Grid>
-
-            <Grid desktop={{ col: 6 }}>
-              <p className="margin-0 text-bold">{t('mustFinishBy')}</p>
-
-              <p className="margin-y-1">
-                {solution.mustFinishDts
-                  ? formatDate(solution.mustFinishDts)
-                  : t('notSpecified')}
+            <Grid className="margin-bottom-3">
+              <p className="margin-top-0 margin-bottom-1 text-bold">
+                {t('itSolutionsTable.status')}
               </p>
+
+              <OperationalNeedsStatusTag status={solution.status} />
+            </Grid>
+            <Grid>
+              <Button
+                type="button"
+                id="add-solution-not-listed"
+                className="usa-button usa-button--outline"
+                onClick={() => {
+                  history.push({
+                    pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
+                    state: { fromSolutionDetails: true }
+                  });
+                }}
+              >
+                {t('updateStatusAndTiming')}
+              </Button>
             </Grid>
           </Grid>
-          <Grid className="margin-bottom-3">
-            <p className="margin-top-0 margin-bottom-1 text-bold">
-              {t('itSolutionsTable.status')}
-            </p>
-
-            <OperationalNeedsStatusTag status={solution.status} />
-          </Grid>
-          <Grid>
-            <Button
-              type="button"
-              id="add-solution-not-listed"
-              className="usa-button usa-button--outline"
-              onClick={() => {
-                history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status`
-                );
-              }}
-            >
-              {t('updateStatusAndTiming')}
-            </Button>
-          </Grid>
-        </Grid>
+        )}
       </Grid>
     </div>
   );

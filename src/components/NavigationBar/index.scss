@@ -1,3 +1,5 @@
+@use 'colors' as *;
+
 .usa-nav {
     margin-left: -1em
 }
@@ -21,7 +23,7 @@
 
         &__current {
             height: .25em;
-            background-color: $mint-blue;
+            // background-color: $mint-blue;
             margin-top: .5em;
             pointer-events: none;
         }
