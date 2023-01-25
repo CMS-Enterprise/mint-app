@@ -1483,6 +1483,7 @@ type Query {
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  userAccount(username: String!): UserAccount!
 }
 
 enum ModelPlanFilter {

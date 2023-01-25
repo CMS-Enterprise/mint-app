@@ -994,6 +994,12 @@ func (r *queryResolver) PossibleOperationalSolutions(ctx context.Context) ([]*mo
 	return resolvers.PossibleOperationalSolutionCollectionGetAll(logger, r.store)
 }
 
+// UserAccount is the resolver for the userAccount field.
+func (r *queryResolver) UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.UserAccountGetByUsername(logger, r.store, username)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()
