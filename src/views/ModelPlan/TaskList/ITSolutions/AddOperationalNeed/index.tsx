@@ -84,9 +84,10 @@ const AddOperationalNeed = () => {
             );
             history.push(`/models/${modelID}/task-list/it-solutions`);
           } else {
-            history.push(
-              `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`
-            );
+            history.push({
+              pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
+              state: { isCustomNeed: true }
+            });
           }
         }
       })

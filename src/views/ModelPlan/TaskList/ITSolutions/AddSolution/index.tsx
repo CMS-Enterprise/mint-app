@@ -6,7 +6,7 @@ Queries and displays SolutionCard component when a custom solution/operationalSo
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
@@ -63,13 +63,17 @@ const AddSolution = () => {
     operationalNeedID: string;
     operationalSolutionID?: string;
   }>();
+  const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('draftModelPlan');
+  const formikRef = useRef<FormikProps<OperationalSolutionFormType>>(null);
 
   const history = useHistory();
 
-  const { t } = useTranslation('itSolutions');
-  const { t: h } = useTranslation('draftModelPlan');
-
-  const formikRef = useRef<FormikProps<OperationalSolutionFormType>>(null);
+  const {
+    state: { isCustomNeed }
+  } = useLocation<{
+    isCustomNeed: boolean;
+  }>();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -352,7 +356,10 @@ const AddSolution = () => {
                             className="usa-button usa-button--unstyled display-flex flex-align-center"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+                                isCustomNeed
+                                  ? // To update this to go to new update operational need page
+                                    `/models/${modelID}/task-list/it-solutions`
+                                  : `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
                               );
                             }}
                           >
