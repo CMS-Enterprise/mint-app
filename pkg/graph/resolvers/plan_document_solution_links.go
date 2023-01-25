@@ -12,11 +12,29 @@ import (
 
 // PlanDocumentSolutionLinksCreate implements resolver logic to create a collection of new plan document solution links
 func PlanDocumentSolutionLinksCreate(logger *zap.Logger, store *storage.Store, solutionID uuid.UUID, documentIDs []uuid.UUID, principal authentication.Principal) ([]*models.PlanDocumentSolutionLink, error) {
+
+	//check one link, since all are for the same solution
+	link := models.NewPlanDocumentSolutionLink(principal.ID(), solutionID)
+
+	err := BaseStructPreCreate(logger, &link, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
 	return store.PlanDocumentSolutionLinksCreate(logger, solutionID, documentIDs, principal)
 }
 
 // PlanDocumentSolutionLinkRemove implements resolver logic to delete a plan document solution link
-func PlanDocumentSolutionLinkRemove(logger *zap.Logger, id uuid.UUID, store *storage.Store) (bool, error) {
+func PlanDocumentSolutionLinkRemove(logger *zap.Logger, id uuid.UUID, store *storage.Store, principal authentication.Principal) (bool, error) {
+	existingLink, err := store.PlanDocumentSolutionLinkGetByID(logger, id)
+	if err != nil {
+		return false, err
+	}
+
+	err = BaseStructPreDelete(logger, existingLink, principal, store, true)
+	if err != nil {
+		return false, err
+	}
 	return store.PlanDocumentSolutionLinkRemove(logger, id)
 }
 

@@ -1,8 +1,13 @@
 package resolvers
 
 import (
+	"bytes"
+
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/accesscontrol"
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
@@ -68,6 +73,60 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 
 	//8. Mac Users are NEVER collaborators
 	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
+	suite.Error(err)
+
+	//  Check Operational Need relation with Operational Solutions
+	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	opSol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, opNeeds[0].ID, models.OpSKOutlookMailbox, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	//9. User is collaborator by solutionID
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &basicUserPrincipal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	//10. User is  not collaborator by solutionID
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &notCollab, suite.testConfigs.Store)
+	suite.Error(err)
+
+	//11. User is not collaborator by solutionID, but is assessment user
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &assessment, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	//12. Mac Users are NEVER collaborators
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
+	suite.Error(err)
+
+	// Check soultion relation with plan document solution link
+	reader := bytes.NewReader([]byte("Some test file contents"))
+	document, err := suite.createTestPlanDocument(plan, reader)
+	suite.NoError(err)
+
+	documentIDs := []uuid.UUID{document.ID}
+
+	solutionLinks, err := PlanDocumentSolutionLinksCreate(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		opSol.ID,
+		documentIDs,
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+
+	//13. User is collaborator by solutionID
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &basicUserPrincipal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	//14. User is  not collaborator by solutionID
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &notCollab, suite.testConfigs.Store)
+	suite.Error(err)
+
+	//15. User is not collaborator by solutionID, but is assessment user
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &assessment, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	//16. Mac Users are NEVER collaborators
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
 	suite.Error(err)
 
 }

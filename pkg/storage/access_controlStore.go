@@ -16,6 +16,9 @@ var checkIfCollaboratorDiscussionIDSQL string
 //go:embed SQL/access_control/check_if_collaborator_by_solution_id.sql
 var checkIfCollaboratorBySolutionIDSQL string
 
+//go:embed SQL/access_control/check_if_collaborator_by_operational_need_id.sql
+var checkIfCollaboratorByOperationalNeedIDSQL string
+
 // CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
 func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID string, modelPlanID uuid.UUID) (bool, error) {
 
@@ -76,6 +79,33 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 	}
 	arg := map[string]interface{}{
 		"solution_id": solutionID,
+		"eua_user_id": principalID,
+	}
+
+	err = stmt.Get(&isCollaborator, arg)
+	if err != nil {
+		return isCollaborator, err
+	}
+	return isCollaborator, nil
+
+}
+
+// CheckIfCollaboratorByOperationalNeedID returns true if the principal is a collaborator on a model plan associated
+// with a OperationalNeed by OperationalNeedID.
+func (s *Store) CheckIfCollaboratorByOperationalNeedID(
+	logger *zap.Logger,
+	principalID string,
+	operationalNeedID uuid.UUID,
+) (bool, error) {
+
+	isCollaborator := false
+
+	stmt, err := s.db.PrepareNamed(checkIfCollaboratorByOperationalNeedIDSQL)
+	if err != nil {
+		return isCollaborator, err
+	}
+	arg := map[string]interface{}{
+		"need_id":     operationalNeedID,
 		"eua_user_id": principalID,
 	}
 
