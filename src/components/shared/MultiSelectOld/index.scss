@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .easi-multiselect--tag {
   .usa-icon {
     cursor: pointer;
@@ -5,9 +7,11 @@
 }
 
 .easi-multiselect .usa-combo-box__list-option {
+  padding-bottom: 0px;
+  
   &--focused {
     background-color: color('base-lightest');
-    outline: none;
+    outline: none;    
 
     .usa-checkbox {
       background-color: transparent;

@@ -1,17 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-  ComboboxPopover
-} from '@reach/combobox';
 import { Button, Dropdown, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import CedarContactSelect from 'components/CedarContactSelect';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -20,7 +14,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import teamRoles from 'constants/enums/teamRoles';
-import useUserSearch from 'hooks/useCedarUsers';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
 import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
@@ -34,19 +27,12 @@ import flattenErrors from 'utils/flattenErrors';
 import { translateTeamRole } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
-import '@reach/combobox/styles.css';
-
 const Collaborators = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
-
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Custom hook for live searching users from CEDAR
-  const foundUsers = useUserSearch(searchTerm);
 
   const history = useHistory();
   const [create] = useMutation<CreateCollaboratorsType>(
@@ -169,10 +155,7 @@ const Collaborators = () => {
                       scrollElement="fullName"
                       error={!!flatErrors.fullName}
                     >
-                      <Label
-                        htmlFor="new-plan-model-name"
-                        className="margin-bottom-1"
-                      >
+                      <Label htmlFor="new-plan-model-name">
                         {t('teamMemberName')}
                       </Label>
                       <FieldErrorMsg>{flatErrors.fullName}</FieldErrorMsg>
@@ -182,57 +165,44 @@ const Collaborators = () => {
                           as={TextInput}
                           disabled
                           error={!!flatErrors.fullName}
+                          className="margin-top-1"
                           id="collaboration-full-name"
                           name="fullName"
                         />
                       ) : (
-                        <Combobox
-                          aria-label="Cedar-Users"
-                          onSelect={item => {
-                            const foundUser = foundUsers?.userObj[item];
-                            setFieldValue('fullName', foundUser?.commonName);
-                            setFieldValue('euaUserID', foundUser?.euaUserId);
-                            setFieldValue('email', foundUser?.email);
-                          }}
-                        >
-                          <ComboboxInput
-                            className="usa-select"
-                            selectOnClick
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setSearchTerm(e?.target?.value);
-                              if (values.fullName || values.euaUserID) {
-                                setFieldValue('fullName', '');
-                                setFieldValue('euaUserID', '');
-                              }
+                        <>
+                          <Label
+                            htmlFor="model-team-cedar-contact"
+                            className="text-normal margin-top-1 margin-bottom-105 text-base"
+                            hint
+                          >
+                            {t('startTyping')}
+                          </Label>
+                          <CedarContactSelect
+                            id="model-team-cedar-contact"
+                            name="model-team-cedar-contact"
+                            value={
+                              collaborator?.euaUserID
+                                ? {
+                                    euaUserId: collaborator.euaUserID,
+                                    commonName: collaborator.fullName,
+                                    email: collaborator.email
+                                  }
+                                : undefined
+                            }
+                            onChange={cedarContact => {
+                              setFieldValue(
+                                'fullName',
+                                cedarContact?.commonName
+                              );
+                              setFieldValue(
+                                'euaUserID',
+                                cedarContact?.euaUserId
+                              );
+                              setFieldValue('email', cedarContact?.email);
                             }}
                           />
-                          {foundUsers?.formattedUsers && (
-                            <ComboboxPopover>
-                              {foundUsers.formattedUsers.length > 0 ? (
-                                <ComboboxList>
-                                  {foundUsers.formattedUsers.map(
-                                    (user, index) => {
-                                      const str = `${user.label}, ${user.value}`;
-                                      return (
-                                        <ComboboxOption
-                                          key={str}
-                                          index={index}
-                                          value={str}
-                                        />
-                                      );
-                                    }
-                                  )}
-                                </ComboboxList>
-                              ) : (
-                                <span className="display-block margin-1">
-                                  {h('noResults')}
-                                </span>
-                              )}
-                            </ComboboxPopover>
-                          )}
-                        </Combobox>
+                        </>
                       )}
                     </FieldGroup>
 
@@ -240,7 +210,7 @@ const Collaborators = () => {
                       scrollElement="teamRole"
                       error={!!flatErrors.teamRole}
                     >
-                      <Label htmlFor="IntakeForm-RequesterComponent">
+                      <Label htmlFor="collaborator-role">
                         {t('teamMemberRole')}
                       </Label>
                       <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>

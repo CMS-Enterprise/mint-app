@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MultiSelect matches the snapshot 1`] = `
+exports[`RelatedArticle matches the snapshot 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    class="margin-top-1"
+  >
     <div
       class="easi-multiselect usa-combo-box css-b62m3t-container"
       id="test-multiSelect"
@@ -24,7 +26,7 @@ exports[`MultiSelect matches the snapshot 1`] = `
           class=" css-319lph-ValueContainer"
         >
           <div
-            class=" css-14el2xx-placeholder"
+            class=" css-1hgum8q-placeholder"
             id="react-select-2-placeholder"
           >
             0 selected

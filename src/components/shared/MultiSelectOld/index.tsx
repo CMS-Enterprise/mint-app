@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import Select, { MultiValue, OptionProps } from 'react-select';
 import { IconClose, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -27,6 +27,7 @@ const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
       <CheckboxField
         label={data.label}
         id={innerProps.id!}
+        testid={`option-${data.value}`}
         name={data.value}
         checked={isSelected}
         onChange={() => null}
@@ -53,7 +54,7 @@ const MultiSelectTag = ({
       id={id}
       data-testid={`multiselect-tag--${label}`}
       className={classNames(
-        'easi-multiselect--tag padding-x-1 padding-y-05 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center',
+        'easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center',
         className
       )}
     >
@@ -61,7 +62,10 @@ const MultiSelectTag = ({
       {handleRemove && (
         <IconClose
           onClick={() => handleRemove(label)}
-          onKeyDown={() => handleRemove(label)}
+          onKeyDown={e => {
+            if (e.key !== 'Tab') return handleRemove(label);
+            return null;
+          }}
           className="margin-left-05"
           tabIndex={0}
           role="button"
@@ -72,15 +76,8 @@ const MultiSelectTag = ({
   );
 };
 
-/**
- * EASi Multiselect.
- * Uses `react-select/Select` and `@trussworks/react-uswds/Tag`.
- *
- * https://www.figma.com/file/5y4EbRmFUB7xRBKUG4qlup/USWDS-Library?node-id=869%3A7346&t=WrUjXtNxIxMgpPss-0
- */
 const MultiSelect = ({
   id,
-  inputId,
   name,
   selectedLabel,
   options,
@@ -88,8 +85,7 @@ const MultiSelect = ({
   initialValues,
   className
 }: {
-  id?: string;
-  inputId?: string;
+  id: string;
   name: string;
   selectedLabel?: string;
   options: MultiSelectOptionProps[];
@@ -102,6 +98,18 @@ const MultiSelect = ({
       ? options.filter(option => initialValues.includes(option.value))
       : []
   );
+
+  const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
+    ...options
+  ]);
+
+  useEffect(() => {
+    setSelected(
+      initialValues
+        ? originalOptions.filter(option => initialValues.includes(option.value))
+        : []
+    );
+  }, [initialValues, originalOptions]);
 
   const customStyles: {
     [index: string]: (
@@ -149,6 +157,10 @@ const MultiSelect = ({
       marginTop: '10px',
       marginBottom: '10px'
     }),
+    placeholder: provided => ({
+      ...provided,
+      lineHeight: '1rem'
+    }),
     menu: provided => ({
       ...provided,
       marginTop: '0px',
@@ -160,10 +172,9 @@ const MultiSelect = ({
   };
 
   return (
-    <div>
+    <div className="margin-top-1">
       <Select
         id={id}
-        inputId={inputId}
         name={name}
         className={classNames('easi-multiselect usa-combo-box', className)}
         options={options}
