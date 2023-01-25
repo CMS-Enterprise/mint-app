@@ -470,6 +470,22 @@ func (r *planCollaboratorResolver) UserAccount(ctx context.Context, obj *models.
 	return resolvers.UserAccountGetByID(logger, r.store, obj.UserID)
 }
 
+// CreatedByUserAccount is the resolver for the createdByUserAccount field.
+func (r *planCollaboratorResolver) CreatedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.UserAccountGetByID(logger, r.store, obj.CreatedBy)
+}
+
+// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
+func (r *planCollaboratorResolver) ModifiedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
+	logger := appcontext.ZLogger(ctx)
+	if obj.ModifiedBy == nil {
+		return nil, nil //no user
+	}
+	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
+
+}
+
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies

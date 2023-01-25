@@ -301,15 +301,17 @@ type ComplexityRoot struct {
 	}
 
 	PlanCollaborator struct {
-		CreatedBy   func(childComplexity int) int
-		CreatedDts  func(childComplexity int) int
-		ID          func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		TeamRole    func(childComplexity int) int
-		UserAccount func(childComplexity int) int
-		UserID      func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		TeamRole              func(childComplexity int) int
+		UserAccount           func(childComplexity int) int
+		UserID                func(childComplexity int) int
 	}
 
 	PlanCrTdl struct {
@@ -946,6 +948,10 @@ type PlanBeneficiariesResolver interface {
 }
 type PlanCollaboratorResolver interface {
 	UserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error)
+
+	CreatedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error)
+
+	ModifiedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -2691,6 +2697,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanCollaborator.CreatedBy(childComplexity), true
 
+	case "PlanCollaborator.createdByUserAccount":
+		if e.complexity.PlanCollaborator.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanCollaborator.CreatedByUserAccount(childComplexity), true
+
 	case "PlanCollaborator.createdDts":
 		if e.complexity.PlanCollaborator.CreatedDts == nil {
 			break
@@ -2718,6 +2731,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanCollaborator.ModifiedBy(childComplexity), true
+
+	case "PlanCollaborator.modifiedByUserAccount":
+		if e.complexity.PlanCollaborator.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanCollaborator.ModifiedByUserAccount(childComplexity), true
 
 	case "PlanCollaborator.modifiedDts":
 		if e.complexity.PlanCollaborator.ModifiedDts == nil {
@@ -6511,8 +6531,10 @@ type PlanCollaborator {
   userAccount: UserAccount!
   teamRole: TeamRole!
   createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 """
@@ -12720,10 +12742,14 @@ func (ec *executionContext) fieldContext_ModelPlan_collaborators(ctx context.Con
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
 			}
@@ -14005,10 +14031,14 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
 			}
@@ -14104,10 +14134,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
 			}
@@ -14203,10 +14237,14 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
 			}
@@ -22397,6 +22435,72 @@ func (ec *executionContext) fieldContext_PlanCollaborator_createdBy(ctx context.
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanCollaborator_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanCollaborator().CreatedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCollaborator_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCollaborator",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanCollaborator_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
 	if err != nil {
@@ -22477,6 +22581,69 @@ func (ec *executionContext) fieldContext_PlanCollaborator_modifiedBy(ctx context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCollaborator_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanCollaborator().ModifiedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCollaborator_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCollaborator",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -42182,10 +42349,14 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCollaborator_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCollaborator_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
 			}
@@ -48174,6 +48345,26 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCollaborator_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdDts":
 
 			out.Values[i] = ec._PlanCollaborator_createdDts(ctx, field, obj)
@@ -48185,6 +48376,23 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 
 			out.Values[i] = ec._PlanCollaborator_modifiedBy(ctx, field, obj)
 
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCollaborator_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanCollaborator_modifiedDts(ctx, field, obj)
@@ -63211,6 +63419,13 @@ func (ec *executionContext) marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(
 	}
 	res := models.MarshalUUID(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx context.Context, sel ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._UserAccount(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {

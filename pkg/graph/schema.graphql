@@ -132,8 +132,10 @@ type PlanCollaborator {
   userAccount: UserAccount!
   teamRole: TeamRole!
   createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 """
