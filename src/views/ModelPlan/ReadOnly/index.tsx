@@ -179,7 +179,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const hasEditAccess: boolean =
     !isHelpArticle &&
     !isMAC(groups) &&
-    (isCollaborator || isAssessment(groups));
+    (isCollaborator || isAssessment(groups, flags));
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);

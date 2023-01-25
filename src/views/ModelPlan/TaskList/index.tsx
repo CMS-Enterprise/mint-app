@@ -112,7 +112,7 @@ const TaskList = () => {
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   // Used to conditonally render role specific text in task list
-  const userRole = isAssessment(groups) ? 'assessment' : 'team';
+  const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 

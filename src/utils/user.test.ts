@@ -48,32 +48,31 @@ describe('user', () => {
   });
 
   describe('isBasicUser', () => {
-    const defaultFlags = {} as Flags;
     describe('only user job code exists in groups', () => {
       const groups = [BASIC];
       it('returns true', () => {
-        expect(isBasicUser(groups, defaultFlags)).toBe(true);
+        expect(isBasicUser(groups)).toBe(true);
       });
     });
 
     describe('only assessment job code', () => {
       const groups = [ASSESSMENT];
       it('returns false', () => {
-        expect(isBasicUser(groups, defaultFlags)).toBe(false);
+        expect(isBasicUser(groups)).toBe(false);
       });
     });
 
     describe('both job codes', () => {
       const groups = [BASIC, ASSESSMENT];
       it('returns true', () => {
-        expect(isBasicUser(groups, defaultFlags)).toBe(true);
+        expect(isBasicUser(groups)).toBe(true);
       });
     });
 
     describe('no job code exists in groups', () => {
       const groups: Array<String> = [];
       it('returns false', () => {
-        expect(isBasicUser(groups, defaultFlags)).toBe(false);
+        expect(isBasicUser(groups)).toBe(false);
       });
     });
   });

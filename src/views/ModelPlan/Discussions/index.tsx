@@ -12,6 +12,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -69,10 +70,12 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     }
   });
 
+  const flags = useFlags();
+
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const hasEditAccess: boolean =
-    (isCollaborator || isAssessment(groups)) && !isMAC(groups);
+    (isCollaborator || isAssessment(groups, flags)) && !isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
