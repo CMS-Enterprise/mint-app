@@ -25,10 +25,9 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
 		EuaUserID:   "CLAB",
-		FullName:    "Clab O' Rater",
 		TeamRole:    models.TeamRoleLeadership,
-		Email:       "clab@rater.com",
 	}
+	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
 	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
 
@@ -53,7 +52,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Eq([]string{expectedEmail}),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),
@@ -89,7 +88,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 
 func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	collaborator := suite.createPlanCollaborator(plan, "CLAB", "Clab O' Rater", models.TeamRoleLeadership, "clab@rater.com")
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", models.TeamRoleLeadership)
 	suite.Nil(collaborator.ModifiedBy)
 	suite.Nil(collaborator.ModifiedDts)
 
@@ -123,7 +122,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
 
 func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	_ = suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership, "scnd@collab.edu")
+	_ = suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
 
 	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -136,7 +135,7 @@ func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 
 func (suite *ResolverSuite) TestFetchCollaboratorByID() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	collaborator := suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership, "scnd@collab.edu")
+	collaborator := suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
 
 	collaboratorByID, err := FetchCollaboratorByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -145,7 +144,7 @@ func (suite *ResolverSuite) TestFetchCollaboratorByID() {
 
 func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 	plan := suite.createModelPlan("Plan For Milestones")
-	collaborator := suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership, "scnd@collab.edu")
+	collaborator := suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
 
 	// Delete the 2nd collaborator
 	deletedCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Principal, suite.testConfigs.Store)

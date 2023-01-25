@@ -70,13 +70,11 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 	return dr
 }
 
-func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, teamRole models.TeamRole) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		EuaUserID:   EUAUserID,
-		FullName:    fullName,
 		TeamRole:    teamRole,
-		Email:       emailAddress,
 	}
 
 	mockController := gomock.NewController(suite.T())
@@ -105,7 +103,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Eq([]string{collaboratorInput.EuaUserID + ".doe@local.fake"}), //this comes from the stub user info function
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),

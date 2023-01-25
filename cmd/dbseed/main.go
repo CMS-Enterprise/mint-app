@@ -125,9 +125,9 @@ func seedData(config *viper.Viper) {
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: planWithCollaborators.ID,
 			EuaUserID:   "BTAL",
-			FullName:    "Betty Alpha",
-			TeamRole:    models.TeamRoleLeadership,
-			Email:       "bAlpha@local.fake",
+			// FullName:    "Betty Alpha",
+			TeamRole: models.TeamRoleLeadership,
+			// Email:       "bAlpha@local.fake",
 		})
 
 	// Seed a plan with CRs / TDLs
@@ -179,9 +179,9 @@ func seedData(config *viper.Viper) {
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: sampleModelPlan.ID,
 			EuaUserID:   "BTAL",
-			FullName:    "Betty Alpha",
-			TeamRole:    models.TeamRoleLeadership,
-			Email:       "bAlpha@local.fake",
+			// FullName:    "Betty Alpha",
+			TeamRole: models.TeamRoleLeadership,
+			// Email:       "bAlpha@local.fake",
 		})
 	updatePlanBasics(store, logger, sampleModelPlan, map[string]interface{}{
 		"modelType":       models.MTVoluntary,

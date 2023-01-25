@@ -6545,9 +6545,7 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
   euaUserID: String!
-  fullName: String!
   teamRole: TeamRole!
-  email: String!
 }
 
 """
@@ -46070,7 +46068,7 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "fullName", "teamRole", "email"}
+	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "teamRole"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -46093,27 +46091,11 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 			if err != nil {
 				return it, err
 			}
-		case "fullName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fullName"))
-			it.FullName, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "teamRole":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamRole"))
 			it.TeamRole, err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "email":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
-			it.Email, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

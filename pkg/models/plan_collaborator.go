@@ -13,7 +13,7 @@ type PlanCollaborator struct {
 }
 
 // NewPlanCollaborator returns a plan collaborator object
-func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, fullName string, teamRole TeamRole, email string) *PlanCollaborator {
+func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRole TeamRole) *PlanCollaborator {
 	return &PlanCollaborator{
 		UserID:              userID,
 		TeamRole:            teamRole,

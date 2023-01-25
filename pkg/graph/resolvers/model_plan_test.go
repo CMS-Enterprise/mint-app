@@ -63,7 +63,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 
 	// Create a plan that has CLAB as a collaborator (along with TEST)
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
-	suite.createPlanCollaborator(planWithCollab, "CLAB", "Clab Rater", models.TeamRoleEvaluation, "clab.rater@gmail.com")
+	suite.createPlanCollaborator(planWithCollab, "CLAB", models.TeamRoleEvaluation)
 
 	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
 

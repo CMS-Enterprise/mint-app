@@ -41,9 +41,7 @@ type NDAInfo struct {
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`
 	EuaUserID   string          `json:"euaUserID"`
-	FullName    string          `json:"fullName"`
 	TeamRole    models.TeamRole `json:"teamRole"`
-	Email       string          `json:"email"`
 }
 
 type PlanCrTdlCreateInput struct {

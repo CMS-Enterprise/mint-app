@@ -39,7 +39,7 @@ func CreatePlanCollaborator(
 		return nil, nil, err
 	}
 
-	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.FullName, input.TeamRole, input.Email)
+	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.TeamRole)
 	err = BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
 		return nil, nil, err
@@ -61,7 +61,7 @@ func CreatePlanCollaborator(
 	}
 
 	if emailService != nil && emailTemplateService != nil {
-		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, collabAccount.Email, modelPlan)
 		if err != nil {
 			return retCollaborator, planFavorite, err
 		}
