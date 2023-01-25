@@ -17,7 +17,7 @@ var checkIfCollaboratorDiscussionIDSQL string
 var checkIfCollaboratorBySolutionIDSQL string
 
 // CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
-func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID string, modelPlanID uuid.UUID) (bool, error) {
+func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID string, modelPlanID uuid.UUID) (bool, error) { //TODO update to take user_account_id intead of eua
 
 	isCollaborator := false
 

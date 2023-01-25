@@ -1,15 +1,13 @@
 SELECT
     id,
     model_plan_id,
-    eua_user_id,
-    full_name,
+    user_id,
     team_role,
-    email,
     created_by,
     created_dts,
     modified_by,
     modified_dts
 FROM plan_collaborator
-WHERE eua_user_id = :eua_user_id
+WHERE user_id = :user_id --TODO, this is expecting an EUAID, we might need to use a join
 ORDER BY created_dts DESC
 LIMIT 1;

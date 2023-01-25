@@ -124,7 +124,7 @@ func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborato
 
 // PlanCollaboratorFetchLatestByUserID returns the latest plan collaborator for a given EUAID
 func (s *Store) PlanCollaboratorFetchLatestByUserID(EUAID string) (*models.PlanCollaborator, error) {
-	statement, err := s.db.PrepareNamed(planCollaboratorFetchLatestByEuaIDSQL)
+	statement, err := s.db.PrepareNamed(planCollaboratorFetchLatestByEuaIDSQL) //TODO this should be updated to get user account instead  or join to get collaborator from the user table.
 	if err != nil {
 		return nil, err
 	}
