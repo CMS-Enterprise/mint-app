@@ -1,7 +1,7 @@
 import { ASSESSMENT, BASIC, MAC } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
-export const isAssessment = (groups: Array<String> = [], flags?: Flags) => {
+export const isAssessment = (groups: Array<String> = [], flags: Flags) => {
   if (flags?.downgradeAssessmentTeam) {
     return false;
   }
@@ -12,7 +12,7 @@ export const isAssessment = (groups: Array<String> = [], flags?: Flags) => {
   return false;
 };
 
-export const isBasicUser = (groups: Array<String> = [], flags?: Flags) => {
+export const isBasicUser = (groups: Array<String> = []) => {
   if (groups.includes(BASIC)) {
     return true;
   }
@@ -20,7 +20,7 @@ export const isBasicUser = (groups: Array<String> = [], flags?: Flags) => {
   return false;
 };
 
-export const isMAC = (groups: Array<String> = [], flags?: Flags) => {
+export const isMAC = (groups: Array<String> = []) => {
   if (groups.includes(MAC)) {
     return true;
   }

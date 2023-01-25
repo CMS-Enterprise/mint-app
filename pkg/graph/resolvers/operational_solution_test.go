@@ -1,7 +1,12 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -19,18 +24,18 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 2)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, true, suite.testConfigs.Store)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, true)
 	suite.NoError(err)
 	suite.Len(opSols, 3) //We now have the possible need that is not needed
 
 	//INSERt the possible and return only needed types, verify it still returns 3
 	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 3) //We still have 3 solutions, because they are now all needed
 
@@ -39,7 +44,7 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedID(suite.testConfigs.Logger, need.ID, false, suite.testConfigs.Store)
+	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 2)
 
@@ -47,6 +52,54 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 
 }
 
+func (suite *ResolverSuite) TestOperationalSolutionLoader() {
+
+	numModels := 3
+	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+
+	for _, opNeedID := range opNeedIds {
+		theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
+		g.Go(theFunc)
+	}
+
+	err := g.Wait()
+	suite.NoError(err)
+}
+
+func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
+	if err != nil {
+		return err
+	}
+	if len(opSols) < 1 {
+		return fmt.Errorf("no operational solutions returns for %s", operationalNeedID)
+	}
+	if operationalNeedID != opSols[0].OperationalNeedID {
+		return fmt.Errorf("op needs returned operational need ID %s, expected %s", opSols[0].OperationalNeedID, operationalNeedID)
+	}
+	return nil
+}
+func getVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
+	return func() error {
+		return verifySolutionsFunc(ctx, operationalNeedID)
+	}
+}
+
+func makeMulipleModelsAndReturnNeedIDs(suite *ResolverSuite, numModels int) []uuid.UUID {
+	opNeedSlice := []uuid.UUID{}
+	for i := 0; i < numModels; i++ {
+		plan := suite.createModelPlan("Plan For Needs " + fmt.Sprint(i))
+		needs, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+		suite.NoError(err)
+		for j := 0; j < len(needs); j++ {
+			opNeedSlice = append(opNeedSlice, needs[j].ID)
+		}
+	}
+	return opNeedSlice
+
+}
 func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	// 1. Create solution, ensure fields are as expected
 	plan := suite.createModelPlan("plan for solutions")

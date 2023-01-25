@@ -5,6 +5,7 @@ import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import { DateTime } from 'luxon';
 
 import Modal from 'components/Modal';
@@ -59,11 +60,13 @@ const PlanDocumentsTable = ({
     }
   });
 
+  const flags = useFlags();
+
   const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean =
-    !isHelpArticle && (isCollaborator || isAssessment(groups));
+    !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
   if (loading) {
     return <PageLoading />;

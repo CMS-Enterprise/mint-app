@@ -29,11 +29,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
 import GetModelPlan from 'queries/GetModelPlan';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
@@ -112,7 +107,7 @@ const TaskList = () => {
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   // Used to conditonally render role specific text in task list
-  const userRole = isAssessment(groups) ? 'assessment' : 'team';
+  const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
@@ -140,20 +135,9 @@ const TaskList = () => {
     beneficiaries,
     payments,
     operationalNeeds = [],
-    prepareForClearance
+    prepareForClearance,
+    collaborators
   } = modelPlan;
-
-  const { data: collaboratorData } = useQuery<GetModelCollaborators>(
-    GetModelPlanCollaborators,
-    {
-      variables: {
-        id: modelID
-      }
-    }
-  );
-
-  const collaborators = (collaboratorData?.modelPlan?.collaborators ??
-    []) as GetCollaboratorsType[];
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]

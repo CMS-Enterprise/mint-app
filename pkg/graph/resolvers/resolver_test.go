@@ -164,3 +164,8 @@ func TestResolverSuite(t *testing.T) {
 	rs.testConfigs = GetDefaultTestConfigs()
 	suite.Run(t, rs)
 }
+
+// func (suite *ResolverSuite) HandleStats(suiteName string, stats *suite.SuiteInformation) {
+// 	// suite.T().Log("Writing Statistics")
+// 	// suite.T().Log(stats)
+// }

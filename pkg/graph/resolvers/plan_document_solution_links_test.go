@@ -97,6 +97,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 		suite.testConfigs.Logger,
 		createdPlanDocumentSolutionLinks[0].ID,
 		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
 	)
 
 	suite.True(wasPlanDocumentRemoveSuccess)
@@ -114,6 +115,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 		suite.testConfigs.Logger,
 		createdPlanDocumentSolutionLinks[1].ID,
 		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
 	)
 
 	suite.True(wasPlanDocumentRemoveSuccess)
