@@ -2,46 +2,49 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetModelPlan from 'queries/GetModelPlan';
-import {
-  CMMIGroup,
-  CMSCenter,
-  ModelCategory,
-  ModelStatus
-} from 'types/graphql-global-types';
+import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
+import { GetModelPlanDocuments as GetModelPlanDocumentsType } from 'queries/Documents/types/GetModelPlanDocuments';
+import { DocumentType } from 'types/graphql-global-types';
 
 import { DocumentsContent } from './index';
+
+const docMock: GetModelPlanDocumentsType = {
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+    isCollaborator: true,
+    documents: [
+      {
+        __typename: 'PlanDocument',
+        id: '123',
+        virusScanned: true,
+        virusClean: true,
+        fileName: 'My MINT document',
+        fileType: '',
+        downloadUrl: '',
+        restricted: false,
+        documentType: DocumentType.CONCEPT_PAPER,
+        createdDts: '',
+        optionalNotes: '',
+        otherType: ''
+      }
+    ]
+  }
+};
 
 const mocks = [
   {
     request: {
-      query: GetModelPlan,
+      query: GetModelPlanDocuments,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
-      data: {
-        modelPlan: {
-          modelName: 'My excellent plan that I just initiated',
-          __typename: 'ModelPlan',
-          id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
-          status: ModelStatus.PLAN_DRAFT,
-          modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
-          cmmiGroups: [
-            CMMIGroup.STATE_INNOVATIONS_GROUP,
-            CMMIGroup.POLICY_AND_PROGRAMS_GROUP
-          ],
-          cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
-          cmsOther: 'The Center for Awesomeness ',
-          archived: false,
-          basics: null,
-          documents: []
-        }
-      }
+      data: docMock
     }
   }
 ];
@@ -74,6 +77,11 @@ describe('Model Plan Documents page', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitFor(() => {
+      expect(screen.getByText('My MINT document')).toBeInTheDocument();
+    });
+
     await waitFor(() => {
       expect(asFragment()).toMatchSnapshot();
     });
