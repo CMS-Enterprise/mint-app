@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -280,7 +280,11 @@ const AddOrUpdateOperationalNeed = () => {
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
           {/* to pass down remove operational need to sidebar */}
-          <ITSolutionsSidebar modelID={modelID} renderTextFor="need" />
+          <ITSolutionsSidebar
+            modelID={modelID}
+            renderTextFor="need"
+            isUpdating={isUpdating}
+          />
         </Grid>
       </Grid>
     </>

@@ -8,10 +8,12 @@ import { OperationalNeedModalContext } from '../OperationalNeedModalContext';
 
 const ITSolutionsSidebar = ({
   modelID,
-  renderTextFor
+  renderTextFor,
+  isUpdating = false
 }: {
   modelID: string;
   renderTextFor: 'need' | 'solution' | 'status';
+  isUpdating?: boolean;
 }) => {
   const { t } = useTranslation('itSolutions');
   const { setIsModalOpen } = useContext(OperationalNeedModalContext);
@@ -22,15 +24,17 @@ const ITSolutionsSidebar = ({
         <AskAQuestion modelID={modelID} renderTextFor={renderTextFor} />
       </div>
       {/* to receive remove operational need */}
-      <div className="margin-top-4">
-        <Button
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-          className="usa-button usa-button--unstyled line-height-body-5"
-        >
-          <p>{t('removeNeed')}</p>
-        </Button>
-      </div>
+      {isUpdating && (
+        <div className="margin-top-4">
+          <Button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="usa-button usa-button--unstyled line-height-body-5"
+          >
+            <p>{t('removeNeed')}</p>
+          </Button>
+        </div>
+      )}
       <div className="margin-top-4">
         <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
         <Button
