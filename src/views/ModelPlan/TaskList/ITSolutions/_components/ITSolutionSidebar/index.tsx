@@ -4,7 +4,7 @@ import { Button } from '@trussworks/react-uswds';
 
 import AskAQuestion from 'components/AskAQuestion';
 
-import { ITSolutionsModalContext } from '../..';
+import { OperationalNeedModalContext } from '../OperationalNeedModalContext';
 
 const ITSolutionsSidebar = ({
   modelID,
@@ -14,7 +14,7 @@ const ITSolutionsSidebar = ({
   renderTextFor: 'need' | 'solution' | 'status';
 }) => {
   const { t } = useTranslation('itSolutions');
-  const { setIsModalOpen } = useContext(ITSolutionsModalContext);
+  const { setIsModalOpen } = useContext(OperationalNeedModalContext);
 
   return (
     <>

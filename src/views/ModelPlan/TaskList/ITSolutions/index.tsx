@@ -1,12 +1,11 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
-import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { OperationalNeedModalContextProvider } from './_components/OperationalNeedModalContext';
 import AddCustomSolution from './AddCustomSolution';
 import AddOrUpdateOperationalNeed from './AddOrUpdateOperationalNeed';
 import AddSolution from './AddSolution';
@@ -15,22 +14,10 @@ import SelectSolutions from './SelectSolutions';
 import SolutionDetails from './SolutionDetails';
 import SolutionImplementation from './SolutionImplementation';
 
-export const ITSolutionsModalContext = createContext({
-  isModalOpen: false,
-  setIsModalOpen: (isModalOpen: boolean) => {}
-});
-
 const ITSolutions = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <MainContent data-testid="it-solutions">
-      <ITSolutionsModalContext.Provider
-        value={{
-          isModalOpen,
-          setIsModalOpen
-        }}
-      >
+      <OperationalNeedModalContextProvider>
         <GridContainer>
           <Grid desktop={{ col: 12 }}>
             <Switch>
@@ -105,25 +92,7 @@ const ITSolutions = () => {
             </Switch>
           </Grid>
         </GridContainer>
-      </ITSolutionsModalContext.Provider>
-      <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-y-0">
-          <h1>hello world</h1>
-        </PageHeading>
-        <p className="margin-top-2 margin-bottom-3">
-          <p>Lorem ipsum dolor sit.</p>
-        </p>
-        <Button
-          type="button"
-          className="margin-right-4 bg-error"
-          // onClick={() => archiveModelPlan()}
-        >
-          Confirm
-        </Button>
-        <Button type="button" unstyled onClick={() => setIsModalOpen(false)}>
-          cancel
-        </Button>
-      </Modal>
+      </OperationalNeedModalContextProvider>
     </MainContent>
   );
 };

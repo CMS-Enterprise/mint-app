@@ -16,7 +16,7 @@ import {
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
-import { ITSolutionsModalContext } from '../..';
+import { OperationalNeedModalContext } from '../OperationalNeedModalContext';
 import SolutionCard from '../SolutionCard';
 
 import InfoToggle from './_component/InfoToggle';
@@ -91,7 +91,7 @@ const NeedQuestionAndAnswer = ({
   isRenderingOnSolutionsDetails = false
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
-  const { setIsModalOpen } = useContext(ITSolutionsModalContext);
+  const { setIsModalOpen } = useContext(OperationalNeedModalContext);
 
   // Fetch operational need answer to question
   const { data: need } = useQuery<
