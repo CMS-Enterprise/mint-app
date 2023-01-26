@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -44,10 +44,11 @@ type CustomOperationalNeedFormType = Omit<
 const AddOrUpdateOperationalNeed = () => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
-    operationalNeedID?: string;
+    operationalNeedID: string;
   }>();
   const history = useHistory();
-  const [isUpdating, setIsUpdating] = useState<boolean>(!!operationalNeedID);
+
+  const isUpdating = !!operationalNeedID;
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -63,7 +64,7 @@ const AddOrUpdateOperationalNeed = () => {
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
     variables: {
-      id: operationalNeedID || ''
+      id: operationalNeedID
     },
     skip: !operationalNeedID
   });
@@ -117,7 +118,16 @@ const AddOrUpdateOperationalNeed = () => {
     { text: h('home'), url: '/' },
     { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
     { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
-    { text: t('addOpertationalNeed') }
+    {
+      text: t('solutionDetails'),
+      url: `/models/${modelID}/task-list/it-solutions`
+      // url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
+    },
+    {
+      text: isUpdating
+        ? t('updateThisOpertationalNeed')
+        : t('addOpertationalNeed')
+    }
   ];
 
   const initialValues: CustomOperationalNeedFormType = {
