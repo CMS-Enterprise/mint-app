@@ -46,6 +46,7 @@ const SolutionDetailCard = ({
         operationalNeedID={operationalNeedID}
         modelID={modelID}
         expanded={!isUpdatingStatus}
+        isRenderingOnSolutionsDetails
       />
 
       {!isUpdatingStatus && (

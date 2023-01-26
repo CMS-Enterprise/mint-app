@@ -78,6 +78,7 @@ type NeedQuestionAndAnswerProps = {
   modelID: string;
   expanded?: boolean;
   solution?: GetOperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
+  isRenderingOnSolutionsDetails?: boolean;
 };
 
 const NeedQuestionAndAnswer = ({
@@ -85,7 +86,8 @@ const NeedQuestionAndAnswer = ({
   operationalNeedID,
   modelID,
   expanded,
-  solution
+  solution,
+  isRenderingOnSolutionsDetails = false
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
 
@@ -152,6 +154,25 @@ const NeedQuestionAndAnswer = ({
     return formatOperationalNeedAnswers(needConfig, data);
   }, [needConfig, data]);
 
+  const renderLinks = () => {
+    if (isRenderingOnSolutionsDetails) {
+      return (
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+        >
+          {t('updateThisOpertationalNeed')}
+        </UswdsReactLink>
+      );
+    }
+    return (
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+      >
+        {t('editNeed')}
+      </UswdsReactLink>
+    );
+  };
+
   return (
     <GridContainer
       className={classNames('padding-3 bg-base-lightest maxw-none', className)}
@@ -178,9 +199,7 @@ const NeedQuestionAndAnswer = ({
               modelID={modelID}
             />
           ) : (
-            <UswdsReactLink to={`/models/${modelID}/task-list/it-solutions`}>
-              {t('editNeed')}
-            </UswdsReactLink>
+            renderLinks()
           )}
 
           {/* Renders a solution card if solution data present */}
