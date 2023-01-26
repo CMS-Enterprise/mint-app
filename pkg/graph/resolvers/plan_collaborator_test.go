@@ -8,7 +8,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -174,13 +173,11 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
-	assessment := authentication.ApplicationPrincipal{
-		Username:          "FAIL",
-		JobCodeASSESSMENT: true,
-		JobCodeUSER:       true,
-	}
+	assessment := getTestPrincipal(suite.testConfigs.Store, "FAIL")
+	assessment.JobCodeASSESSMENT = true
+	assessment.JobCodeUSER = true
 
-	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Logger, &assessment, suite.testConfigs.Store, plan.ID)
+	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Logger, assessment, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(false, isCollabFalseCase)
 }
