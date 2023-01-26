@@ -3,7 +3,7 @@
 exports[`CedarContactSelect selects contact from dropdown 1`] = `
 <DocumentFragment>
   <div
-    class="margin-top-1 cedar-contact-select usa-combo-box css-b62m3t-container"
+    class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
     id="cedarContactSelect"
   >
     <span

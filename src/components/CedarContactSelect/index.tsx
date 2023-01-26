@@ -76,11 +76,26 @@ const ClearIndicator = (
   props: ClearIndicatorProps<CedarContactSelectOption, false>
 ) => {
   const {
-    selectProps: { inputValue }
+    selectProps: { inputValue, id },
+    clearValue
   } = props;
   // Fix bug in 'same as requester' checkboxes where clear indicator shows with no input value
   if (!inputValue) return null;
-  return <components.ClearIndicator {...props} />;
+  return (
+    <button
+      type="button"
+      id="clear-selection"
+      tabIndex={0}
+      onClick={() => {
+        clearValue();
+        document?.getElementById(`react-select-${id}-input`)?.focus();
+      }}
+      className="usa-button--unstyled"
+      aria-label="Clear selection"
+    >
+      <components.ClearIndicator {...props} />
+    </button>
+  );
 };
 
 const IndicatorsContainer = (

@@ -181,11 +181,9 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
       >
         How often do you anticipate sharing data?
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-data-sharing-frequency"
         >
           <span
@@ -205,7 +203,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-4-placeholder"
               >
                 0 selected
@@ -375,11 +373,9 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
       >
         How often do you anticipate collecting data?
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-data-collection-frequency"
         >
           <span
@@ -399,7 +395,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-5-placeholder"
               >
                 0 selected

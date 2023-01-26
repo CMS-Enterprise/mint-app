@@ -4,7 +4,7 @@ exports[`MultiSelect matches the snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="easi-multiselect usa-combo-box css-b62m3t-container"
+      class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
       id="test-multiSelect"
     >
       <span

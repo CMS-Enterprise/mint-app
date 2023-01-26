@@ -3,7 +3,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
+// import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
+import GetCedarUser from 'queries/GetCedarUser';
 
 import CedarContactSelect from './index';
 
@@ -11,7 +12,7 @@ describe('CedarContactSelect', () => {
   // Cedar contacts query mock
   const cedarContactsQuery = {
     request: {
-      query: GetModelPlanCollaborator,
+      query: GetCedarUser,
       variables: {
         commonName: 'Adeline'
       }
