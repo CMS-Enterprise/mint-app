@@ -178,6 +178,7 @@ const Collaborators = () => {
                           >
                             {t('startTyping')}
                           </Label>
+
                           <CedarContactSelect
                             id="model-team-cedar-contact"
                             name="model-team-cedar-contact"
