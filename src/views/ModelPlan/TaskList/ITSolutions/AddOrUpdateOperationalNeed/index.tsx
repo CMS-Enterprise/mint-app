@@ -41,7 +41,7 @@ type CustomOperationalNeedFormType = Omit<
   '__typename' | 'id' | 'needed' | 'key' | 'nameOther'
 > & { nameOther: string };
 
-const AddOrUpdateOperationalNeed = ({ update }: { update?: boolean }) => {
+const AddOrUpdateOperationalNeed = () => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID?: string;
@@ -64,7 +64,7 @@ const AddOrUpdateOperationalNeed = ({ update }: { update?: boolean }) => {
     variables: {
       id: operationalNeedID || ''
     },
-    skip: !update
+    skip: !operationalNeedID
   });
 
   const [addCustomOperationalNeed] = useMutation<
