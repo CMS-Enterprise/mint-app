@@ -34,7 +34,7 @@ const ITSolutions = () => {
               path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
               exact
             >
-              <AddOrUpdateOperationalNeed update />
+              <AddOrUpdateOperationalNeed />
             </Route>
 
             <Route
