@@ -101,9 +101,8 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.NoError(err)
 	suite.NotNil(updatedCollaborator.ModifiedBy)
 	suite.NotNil(updatedCollaborator.ModifiedDts)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedCollaborator.ModifiedBy)
-	suite.EqualValues(account.ID, collaborator.UserID) // TODO verify test
-	// suite.EqualValues("Clab O' Rater", updatedCollaborator.FullName)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedCollaborator.ModifiedBy)
+	suite.EqualValues(account.ID, collaborator.UserID)
 	suite.EqualValues(models.TeamRoleEvaluation, updatedCollaborator.TeamRole)
 }
 
