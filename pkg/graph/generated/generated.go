@@ -6580,7 +6580,7 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 """
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
-  euaUserID: String!
+  userName: String!
   teamRole: TeamRole!
 }
 
@@ -46346,7 +46346,7 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "teamRole"}
+	fieldsInOrder := [...]string{"modelPlanID", "userName", "teamRole"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -46361,11 +46361,11 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 			if err != nil {
 				return it, err
 			}
-		case "euaUserID":
+		case "userName":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("euaUserID"))
-			it.EuaUserID, err = ec.unmarshalNString2string(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userName"))
+			it.UserName, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

@@ -24,7 +24,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
-		EuaUserID:   "CLAB",
+		UserName:    "CLAB",
 		TeamRole:    models.TeamRoleLeadership,
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
@@ -71,7 +71,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		false,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
-	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername(collaboratorInput.EuaUserID)
+	account, uAccountErr := suite.testConfigs.Store.UserAccountGetByUsername(collaboratorInput.UserName)
 	suite.NoError(uAccountErr)
 	suite.NotNil(account)
 

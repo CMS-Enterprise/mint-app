@@ -42,7 +42,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		nil,
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
-			EuaUserID:   *userAccount.Username,
+			UserName:    *userAccount.Username,
 			TeamRole:    models.TeamRoleModelLead,
 		},
 		principal,

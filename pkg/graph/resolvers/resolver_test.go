@@ -70,10 +70,10 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 	return dr
 }
 
-func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, teamRole models.TeamRole) *models.PlanCollaborator {
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, teamRole models.TeamRole) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
-		EuaUserID:   EUAUserID,
+		UserName:    userName,
 		TeamRole:    teamRole,
 	}
 
@@ -103,7 +103,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorInput.EuaUserID + ".doe@local.fake"}), //this comes from the stub user info function
+			gomock.Eq([]string{collaboratorInput.UserName + ".doe@local.fake"}), //this comes from the stub user info function
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),

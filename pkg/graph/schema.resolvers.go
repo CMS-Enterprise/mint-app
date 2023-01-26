@@ -483,7 +483,6 @@ func (r *planCollaboratorResolver) ModifiedByUserAccount(ctx context.Context, ob
 		return nil, nil //no user
 	}
 	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
-
 }
 
 // Replies is the resolver for the replies field.

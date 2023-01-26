@@ -34,7 +34,7 @@ func CreatePlanCollaborator(
 	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
 
 	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, input.EuaUserID, false, isMacUser, getAccountInformation)
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, input.UserName, false, isMacUser, getAccountInformation)
 	if err != nil {
 		return nil, nil, err
 	}

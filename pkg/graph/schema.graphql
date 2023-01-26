@@ -181,7 +181,7 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 """
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
-  euaUserID: String!
+  userName: String!
   teamRole: TeamRole!
 }
 
