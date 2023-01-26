@@ -181,6 +181,8 @@ const itSolutions = {
   errorStatusUpdated:
     'There was an issue updating the status for {{-operationalNeedName}}. Please try again.',
   addOpertationalNeed: 'Add an operational need',
+  update: 'Update',
+  updateThisOpertationalNeed: 'Update this operational need',
   addOpertationalNeedInfo:
     'Describe the operational need you’re solving or additional workstream you’re tracking.',
   noDuplicates:
