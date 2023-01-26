@@ -67,6 +67,16 @@ func (suite *ResolverSuite) TestOperationalSolutionLoader() {
 	err := g.Wait()
 	suite.NoError(err)
 }
+func (suite *ResolverSuite) TestOperationalSolutionLoaderNotNeeded() {
+	numModels := 1
+	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
+
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, opNeedIds[0], false)
+	suite.Len(opSols, 0) // Should be an empty array, because there are no solutions at this point
+
+	suite.NoError(err)
+
+}
 
 func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
 	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
