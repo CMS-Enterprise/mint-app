@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -20,6 +20,11 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
+import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
+import {
+  GetOperationalNeed as GetOperationalNeedType,
+  GetOperationalNeedVariables
+} from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   UpdateCustomOperationalNeed as MutationType,
   UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
@@ -36,8 +41,11 @@ type CustomOperationalNeedFormType = Omit<
   '__typename' | 'id' | 'needed' | 'key' | 'nameOther'
 > & { nameOther: string };
 
-const AddOperationalNeed = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+const AddOrUpdateOperationalNeed = ({ update }: { update?: boolean }) => {
+  const { modelID, operationalNeedID } = useParams<{
+    modelID: string;
+    operationalNeedID?: string;
+  }>();
   const history = useHistory();
 
   const { t } = useTranslation('itSolutions');
@@ -49,9 +57,15 @@ const AddOperationalNeed = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const initialValues: CustomOperationalNeedFormType = {
-    nameOther: ''
-  };
+  const { data } = useQuery<
+    GetOperationalNeedType,
+    GetOperationalNeedVariables
+  >(GetOperationalNeed, {
+    variables: {
+      id: operationalNeedID || ''
+    },
+    skip: !update
+  });
 
   const [addCustomOperationalNeed] = useMutation<
     MutationType,
@@ -82,8 +96,10 @@ const AddOperationalNeed = () => {
                 </span>
               </Alert>
             );
+            // Save without adding solution
             history.push(`/models/${modelID}/task-list/it-solutions`);
           } else {
+            // Contiues to add solution
             history.push({
               pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
               state: { isCustomNeed: true }
@@ -102,6 +118,10 @@ const AddOperationalNeed = () => {
     { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
     { text: t('addOpertationalNeed') }
   ];
+
+  const initialValues: CustomOperationalNeedFormType = {
+    nameOther: data?.operationalNeed.nameOther ?? ''
+  };
 
   return (
     <>
@@ -242,4 +262,4 @@ const AddOperationalNeed = () => {
   );
 };
 
-export default AddOperationalNeed;
+export default AddOrUpdateOperationalNeed;
