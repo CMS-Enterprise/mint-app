@@ -114,6 +114,8 @@ const itSolutions = {
   dontAdd: 'Don’t add solutions and return to tracker',
   dontUpdate: 'Don’t update solutions and return to tracker',
   helpChoosing: 'Need help choosing a solution?',
+  notSureWhatToDoNext: 'Not sure what to do next?',
+  helpTiming: 'Need help figuring out timing?',
   helpfulLinks: 'Helpful links',
   availableSolutions: 'Available operational solutions (opens in a new tab)',
   addSolution: 'Add a solution',
