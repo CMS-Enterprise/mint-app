@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -47,6 +47,7 @@ const AddOrUpdateOperationalNeed = () => {
     operationalNeedID?: string;
   }>();
   const history = useHistory();
+  const [isUpdating, setIsUpdating] = useState<boolean>(!!operationalNeedID);
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -130,7 +131,9 @@ const AddOrUpdateOperationalNeed = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addOpertationalNeed')}
+            {isUpdating
+              ? t('updateThisOpertationalNeed')
+              : t('addOpertationalNeed')}
           </PageHeading>
 
           <p
@@ -156,7 +159,7 @@ const AddOrUpdateOperationalNeed = () => {
               innerRef={formikRef}
             >
               {(formikProps: FormikProps<CustomOperationalNeedFormType>) => {
-                const { errors, handleSubmit, values } = formikProps;
+                const { errors, dirty, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
 
@@ -211,26 +214,38 @@ const AddOrUpdateOperationalNeed = () => {
                         </FieldGroup>
 
                         <div className="margin-top-6 margin-bottom-3">
-                          {/* Saves, does not add solution, and returns to tracker */}
-                          <Button
-                            type="button"
-                            id=""
-                            disabled={!values.nameOther}
-                            outline
-                            onClick={() =>
-                              handleFormSubmit(values, 'it-tracker')
-                            }
-                          >
-                            {t('saveWithoutAdding')}
-                          </Button>
-                          {/* Saves and continues to add solution */}
-                          <Button
-                            type="submit"
-                            id="submit-custom-solution"
-                            disabled={!values.nameOther}
-                          >
-                            {t('continue')}
-                          </Button>
+                          {isUpdating ? (
+                            <Button
+                              type="submit"
+                              id="submit-custom-solution"
+                              disabled={!dirty}
+                            >
+                              {t('update')}
+                            </Button>
+                          ) : (
+                            <>
+                              {/* Saves, does not add solution, and returns to tracker */}
+                              <Button
+                                type="button"
+                                id=""
+                                disabled={!values.nameOther}
+                                outline
+                                onClick={() =>
+                                  handleFormSubmit(values, 'it-tracker')
+                                }
+                              >
+                                {t('saveWithoutAdding')}
+                              </Button>
+                              {/* Saves and continues to add solution */}
+                              <Button
+                                type="submit"
+                                id="submit-custom-solution"
+                                disabled={!values.nameOther}
+                              >
+                                {t('continue')}
+                              </Button>
+                            </>
+                          )}
                         </div>
 
                         <Button
