@@ -4,7 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -68,11 +67,8 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
 
 	// Get plan collection as CLAB
-	clabPrincipal := &authentication.ApplicationPrincipal{
-		Username:          "CLAB",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	clabPrincipal := getTestPrincipal(suite.testConfigs.Store, "CLAB")
+	clabPrincipal.JobCodeASSESSMENT = false
 
 	// Assert that CLAB only sees 1 model plan with collab only filter
 	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)

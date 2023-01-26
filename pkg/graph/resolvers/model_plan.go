@@ -167,7 +167,7 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 	case model.ModelPlanFilterIncludeAll:
 		modelPlans, err = store.ModelPlanCollection(logger, false)
 	case model.ModelPlanFilterCollabOnly:
-		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
+		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
 		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
 	default:
