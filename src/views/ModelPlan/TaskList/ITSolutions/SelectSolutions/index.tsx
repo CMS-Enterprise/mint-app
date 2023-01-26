@@ -42,8 +42,8 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import CheckboxCard from '../_components/CheckboxCard';
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure
@@ -342,7 +342,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <OperationalSolutionsSidebar modelID={modelID} />
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
     </>

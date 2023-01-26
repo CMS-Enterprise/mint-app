@@ -49,8 +49,8 @@ import { sortPossibleOperationalNeeds } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
 import SolutionCard from '../_components/SolutionCard';
 
 type OperationalSolutionFormType = {
@@ -379,7 +379,7 @@ const AddSolution = () => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <OperationalSolutionsSidebar modelID={modelID} />
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
     </>

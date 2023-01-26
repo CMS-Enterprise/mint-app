@@ -34,7 +34,7 @@ import UpdateCustomOperationalNeed from 'queries/ITSolutions/UpdateCustomOperati
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
-import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 
 type CustomOperationalNeedFormType = Omit<
   FormTypes,
@@ -280,7 +280,7 @@ const AddOrUpdateOperationalNeed = () => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <OperationalSolutionsSidebar modelID={modelID} />
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="need" />
         </Grid>
       </Grid>
     </>

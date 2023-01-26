@@ -43,8 +43,8 @@ import { OpSolutionStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
 
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
@@ -425,7 +425,7 @@ const AddCustomSolution = () => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <OperationalSolutionsSidebar modelID={modelID} />
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
     </>

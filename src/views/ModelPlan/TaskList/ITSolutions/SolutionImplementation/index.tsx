@@ -35,8 +35,8 @@ import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-import OperationalSolutionsSidebar from '../_components/OperationalSolutionSidebar';
 
 import Solution from './_components/Solution';
 
@@ -403,7 +403,10 @@ const SolutionImplementation = ({
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <OperationalSolutionsSidebar modelID={modelID} />
+          <ITSolutionsSidebar
+            modelID={modelID}
+            renderTextFor={isUpdatingStatus ? 'status' : 'solution'}
+          />
         </Grid>
       </Grid>
     </>

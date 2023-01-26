@@ -4,13 +4,19 @@ import { Button } from '@trussworks/react-uswds';
 
 import AskAQuestion from 'components/AskAQuestion';
 
-const OperationalSolutionsSidebar = ({ modelID }: { modelID: string }) => {
+const ITSolutionsSidebar = ({
+  modelID,
+  renderTextFor
+}: {
+  modelID: string;
+  renderTextFor: 'need' | 'solution' | 'status';
+}) => {
   const { t } = useTranslation('itSolutions');
 
   return (
     <>
       <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-        <AskAQuestion modelID={modelID} opNeeds />
+        <AskAQuestion modelID={modelID} renderTextFor={renderTextFor} />
       </div>
       <div className="margin-top-4">
         <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
@@ -28,4 +34,4 @@ const OperationalSolutionsSidebar = ({ modelID }: { modelID: string }) => {
   );
 };
 
-export default OperationalSolutionsSidebar;
+export default ITSolutionsSidebar;
