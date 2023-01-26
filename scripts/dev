@@ -384,10 +384,16 @@ namespace :db do
     plan_cr_tdl,
     operational_solution,
     operational_need,
-    model_plan"
+    model_plan,
+    audit.change"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
+
+    #remove all non system accounts
+    systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"
+    `echo "DELETE FROM user_account WHERE username NOT IN #{systemAccounts}" | psql` 
+
   end
 end
 
