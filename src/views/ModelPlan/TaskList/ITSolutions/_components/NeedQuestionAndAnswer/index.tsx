@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -16,6 +16,7 @@ import {
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
+import { ITSolutionsModalContext } from '../..';
 import SolutionCard from '../SolutionCard';
 
 import InfoToggle from './_component/InfoToggle';
@@ -90,6 +91,7 @@ const NeedQuestionAndAnswer = ({
   isRenderingOnSolutionsDetails = false
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
+  const { setIsModalOpen } = useContext(ITSolutionsModalContext);
 
   // Fetch operational need answer to question
   const { data: need } = useQuery<
@@ -157,11 +159,22 @@ const NeedQuestionAndAnswer = ({
   const renderLinks = () => {
     if (isRenderingOnSolutionsDetails) {
       return (
-        <UswdsReactLink
-          to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
-        >
-          {t('updateThisOpertationalNeed')}
-        </UswdsReactLink>
+        <>
+          <UswdsReactLink
+            to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+          >
+            {t('updateThisOpertationalNeed')}
+          </UswdsReactLink>
+          <div className="margin-top-4">
+            <Button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="usa-button usa-button--unstyled line-height-body-5"
+            >
+              <p>{t('removeNeed')}</p>
+            </Button>
+          </div>
+        </>
       );
     }
     return (
