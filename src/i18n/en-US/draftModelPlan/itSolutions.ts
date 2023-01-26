@@ -193,6 +193,7 @@ const itSolutions = {
   dontAddandReturnToTracker: 'Don’t add and return to tracker',
   saveWithoutAdding: 'Save without adding a solution',
   editNeed: 'Edit this operational need',
+  removeNeed: 'Remove this operational need',
   successMessage: {
     onlyOperationalNeed:
       'Success! Your operational need “{{-operationalNeedName}}” is added.',
