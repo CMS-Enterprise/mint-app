@@ -231,10 +231,11 @@ func analyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads
 		return m.TableName == "plan_collaborator"
 	})
 
+	//TODO update to be user_id as the field name to get the user_if of who was added
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "full_name") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
-			return m.Fields["full_name"].New.(string), true
+		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
+			return m.Fields["user_id"].New.(string), true
 		}
 		return "", false
 	})

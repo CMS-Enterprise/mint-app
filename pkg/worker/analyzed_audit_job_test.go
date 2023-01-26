@@ -106,7 +106,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
 	// Plan Collaborators. Only model leads should be added.
-	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLeadAccount.CommonName))
+	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLeadAccount.CommonName)) //TODO, need to verify the process to convert the UUID of the lead account to human readable
 	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaboratorAccount.CommonName)))
 
 	// Discussions Activity

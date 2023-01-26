@@ -338,7 +338,7 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 // AnalyzedModelLeads represents an AnalyzedModelLeads in an AnalyzedAuditChange
 type AnalyzedModelLeads struct {
-	Added []string `json:"added,omitempty"`
+	Added []string `json:"added,omitempty"` //TODO change to uuid?
 }
 
 const (
@@ -352,7 +352,7 @@ func (a *AnalyzedModelLeads) Humanize() []string {
 	var humanizedAnalyzedModelLeads []string
 
 	if a == nil {
-		return humanizedAnalyzedModelLeads
+		return humanizedAnalyzedModelLeads //TODO, fetch from the database here or before?
 	}
 
 	if len(a.Added) > 0 {
