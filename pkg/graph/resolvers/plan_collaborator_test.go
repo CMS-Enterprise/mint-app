@@ -78,10 +78,8 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
 	suite.EqualValues(account.ID, collaborator.UserID)
-	// suite.EqualValues("CLAB", collaborator.EUAUserID) //TODO verify this
-	// suite.EqualValues("Clab O' Rater", collaborator.FullName)
 	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, collaborator.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
 	mockController.Finish()
 }
