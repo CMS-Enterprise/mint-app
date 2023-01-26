@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -42,6 +42,8 @@ type CustomOperationalNeedFormType = Omit<
 > & { nameOther: string };
 
 const AddOrUpdateOperationalNeed = () => {
+  const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('draftModelPlan');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -49,9 +51,6 @@ const AddOrUpdateOperationalNeed = () => {
   const history = useHistory();
 
   const isUpdating = !!operationalNeedID;
-
-  const { t } = useTranslation('itSolutions');
-  const { t: h } = useTranslation('draftModelPlan');
 
   const formikRef = useRef<FormikProps<CustomOperationalNeedFormType>>(null);
 
@@ -280,6 +279,7 @@ const AddOrUpdateOperationalNeed = () => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
+          {/* to pass down remove operational need to sidebar */}
           <ITSolutionsSidebar modelID={modelID} renderTextFor="need" />
         </Grid>
       </Grid>
