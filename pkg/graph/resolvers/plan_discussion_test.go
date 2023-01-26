@@ -36,11 +36,9 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		Content:     "This is a test comment",
 	}
 
-	regularUserPrincipal := &authentication.ApplicationPrincipal{
-		Username:          "TEST",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	regularUserPrincipal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	regularUserPrincipal.JobCodeASSESSMENT = false
+	regularUserPrincipal.JobCodeUSER = true
 	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
