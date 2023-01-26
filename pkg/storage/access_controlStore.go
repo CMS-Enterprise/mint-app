@@ -94,7 +94,7 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 // with a OperationalNeed by OperationalNeedID.
 func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 	logger *zap.Logger,
-	principalID string,
+	principalID uuid.UUID,
 	operationalNeedID uuid.UUID,
 ) (bool, error) {
 
@@ -105,8 +105,8 @@ func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 		return isCollaborator, err
 	}
 	arg := map[string]interface{}{
-		"need_id":     operationalNeedID,
-		"eua_user_id": principalID,
+		"need_id": operationalNeedID,
+		"user_id": principalID,
 	}
 
 	err = stmt.Get(&isCollaborator, arg)

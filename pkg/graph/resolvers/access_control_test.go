@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/accesscontrol"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -14,45 +13,40 @@ import (
 func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	plan := suite.createModelPlan("Test Plan") //plan created by TEST
 
-	basicUserPrincipal := authentication.ApplicationPrincipal{
-		Username:          suite.testConfigs.Principal.Username,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false, // so we don't bypass Collaborator check
-		JobCodeMAC:        false,
-	}
-	notCollab := authentication.ApplicationPrincipal{
-		Username:          "FAIL",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false, // so we don't bypass Collaborator check
-		JobCodeMAC:        false,
-	}
-	assessment := authentication.ApplicationPrincipal{
-		Username:          "FAIL",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true, //Bypass Collaborator check
-		JobCodeMAC:        false,
-	}
-	macUser := authentication.ApplicationPrincipal{
-		Username:          "MyFunIDMUsername",
-		JobCodeUSER:       false,
-		JobCodeASSESSMENT: false, //Bypass Collaborator check
-		JobCodeMAC:        true,
-	}
+	basicUserPrincipal := suite.testConfigs.Principal
+	basicUserPrincipal.JobCodeUSER = true
+	basicUserPrincipal.JobCodeASSESSMENT = false
+	basicUserPrincipal.JobCodeMAC = false
+
+	notCollab := getTestPrincipal(suite.testConfigs.Store, "FAIL")
+	notCollab.JobCodeUSER = true
+	notCollab.JobCodeASSESSMENT = false
+	notCollab.JobCodeMAC = false
+
+	assessment := getTestPrincipal(suite.testConfigs.Store, "FAIL")
+	assessment.JobCodeUSER = true
+	assessment.JobCodeASSESSMENT = true //Bypass Collaborator check
+	assessment.JobCodeMAC = false
+
+	macUser := getTestPrincipal(suite.testConfigs.Store, "MyFunIDMUsername")
+	macUser.JobCodeUSER = false
+	macUser.JobCodeASSESSMENT = false
+	macUser.JobCodeMAC = true
 
 	//1. User is collaborator by modelPlanID
-	err := accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, &basicUserPrincipal, suite.testConfigs.Store)
+	err := accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, basicUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//2. User is  not collaborator by modelPlanID
-	err = accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, &notCollab, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, notCollab, suite.testConfigs.Store)
 	suite.Error(err)
 
 	//3. User is  not collaborator by modelPlanID, but is assessment user
-	err = accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, &assessment, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, assessment, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//4. Mac Users are NEVER collaborators
-	err = accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(plan, suite.testConfigs.Logger, macUser, suite.testConfigs.Store)
 	suite.Error(err)
 
 	//  Create discussion and reply
@@ -60,19 +54,19 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
 
 	//5. User is collaborator by discusionID
-	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, &basicUserPrincipal, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, basicUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//6. User is  not collaborator by discusionID
-	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, &notCollab, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, notCollab, suite.testConfigs.Store)
 	suite.Error(err)
 
 	//7. User is  not collaborator by discusionID, but is assessment user
-	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, &assessment, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, assessment, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//8. Mac Users are NEVER collaborators
-	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(reply, suite.testConfigs.Logger, macUser, suite.testConfigs.Store)
 	suite.Error(err)
 
 	//  Check Operational Need relation with Operational Solutions
@@ -82,19 +76,19 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	suite.NoError(err)
 
 	//9. User is collaborator by solutionID
-	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &basicUserPrincipal, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, basicUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//10. User is  not collaborator by solutionID
-	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &notCollab, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, notCollab, suite.testConfigs.Store)
 	suite.Error(err)
 
 	//11. User is not collaborator by solutionID, but is assessment user
-	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &assessment, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, assessment, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//12. Mac Users are NEVER collaborators
-	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(opSol, suite.testConfigs.Logger, macUser, suite.testConfigs.Store)
 	suite.Error(err)
 
 	// Check soultion relation with plan document solution link
@@ -114,19 +108,19 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	suite.NoError(err)
 
 	//13. User is collaborator by solutionID
-	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &basicUserPrincipal, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, basicUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//14. User is  not collaborator by solutionID
-	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &notCollab, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, notCollab, suite.testConfigs.Store)
 	suite.Error(err)
 
 	//15. User is not collaborator by solutionID, but is assessment user
-	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &assessment, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, assessment, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//16. Mac Users are NEVER collaborators
-	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, &macUser, suite.testConfigs.Store)
+	err = accesscontrol.ErrorIfNotCollaborator(solutionLinks[0], suite.testConfigs.Logger, macUser, suite.testConfigs.Store)
 	suite.Error(err)
 
 }
