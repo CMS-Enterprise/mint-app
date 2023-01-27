@@ -107,17 +107,21 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         What type of Alternative Payment Model (APM) do you think the model could be?
       </legend>
       <div
-        class="usa-alert usa-alert--info usa-alert--slim"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
         data-testid="mandatory-fields-alert"
       >
         <div
           class="usa-alert__body"
         >
-          <span
-            class="mandatory-fields-alert__text"
+          <p
+            class="usa-alert__text"
           >
-            In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
-          </span>
+            <span
+              class="mandatory-fields-alert__text"
+            >
+              In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+            </span>
+          </p>
         </div>
       </div>
       <fieldset

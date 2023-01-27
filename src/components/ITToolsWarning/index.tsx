@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Button } from '@trussworks/react-uswds';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+
+import Alert from 'components/shared/Alert';
 
 import './index.scss';
 

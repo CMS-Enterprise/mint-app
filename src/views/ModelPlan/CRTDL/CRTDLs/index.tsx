@@ -69,10 +69,10 @@ export const CRTDLs = () => {
             <Breadcrumb current>{t('heading')}</Breadcrumb>
           </BreadcrumbBar>
 
-          {message && <Expire delay={4000}>{message}</Expire>}
+          {message && <Expire delay={45000}>{message}</Expire>}
 
           {crtdlMessage && (
-            <Expire delay={4000}>
+            <Expire delay={45000}>
               <Alert
                 type={crtdlStatus}
                 slim

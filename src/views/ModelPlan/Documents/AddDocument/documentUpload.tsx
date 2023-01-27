@@ -11,6 +11,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import { RadioField } from 'components/shared/RadioField';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
@@ -141,8 +142,19 @@ const DocumentUpload = () => {
                   <FieldGroup scrollElement="file" error={!!flatErrors.file}>
                     <Label htmlFor="FileUpload-File">
                       {t('documentUpload')}
+                      <RequiredAsterisk />
                     </Label>
+
+                    <Label
+                      htmlFor="FileUpload-File"
+                      hint
+                      className="text-normal text-base margin-y-1"
+                    >
+                      {t('fileTypes')}
+                    </Label>
+
                     <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
+
                     <Field
                       as={FileUpload}
                       id="FileUpload-File"
@@ -163,7 +175,10 @@ const DocumentUpload = () => {
                     error={!!flatErrors.documentType}
                   >
                     <fieldset className="usa-fieldset margin-top-4">
-                      <legend className="usa-label">{t('whatType')}</legend>
+                      <legend className="usa-label">
+                        {t('whatType')}
+                        <RequiredAsterisk />
+                      </legend>
                       <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
                       {(Object.keys(DocumentType) as Array<
                         keyof typeof DocumentType
@@ -197,7 +212,7 @@ const DocumentUpload = () => {
                         value="OTHER"
                       />
                       {values.documentType === 'OTHER' && (
-                        <div className="width-card-lg margin-left-4 margin-bottom-1">
+                        <div className="margin-left-4 margin-bottom-1">
                           <FieldGroup
                             scrollElement="otherTypeDescription"
                             error={!!flatErrors.otherTypeDescription}
@@ -207,6 +222,7 @@ const DocumentUpload = () => {
                               className="margin-bottom-1"
                             >
                               {t('documentKind')}
+                              <RequiredAsterisk />
                             </Label>
                             <FieldErrorMsg>
                               {flatErrors.otherTypeDescription}
@@ -233,6 +249,7 @@ const DocumentUpload = () => {
                       className="maxw-none"
                     >
                       {t('costQuestion')}
+                      <RequiredAsterisk />
                     </Label>
 
                     <p className="margin-0 line-height-body-4">
@@ -301,7 +318,12 @@ const DocumentUpload = () => {
                     <Button
                       type="submit"
                       onClick={() => setErrors({})}
-                      disabled={isSubmitting || !values.file}
+                      disabled={
+                        isSubmitting ||
+                        !values.file ||
+                        !values.documentType ||
+                        values.restricted === null
+                      }
                       data-testid="upload-document"
                     >
                       {t('uploadButton')}
