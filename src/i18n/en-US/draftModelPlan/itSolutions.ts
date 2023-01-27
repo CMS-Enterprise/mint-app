@@ -201,6 +201,10 @@ const itSolutions = {
       'Success! Your operational need “{{-operationalNeedName}}” and solution are added.',
     operationalNeedRemoval:
       'Success! {{-operationalNeedName}} has been removed.'
+  },
+  errorMessage: {
+    operationalNeedRemoval:
+      'Sorry, we encountered a problem removing {{-operationalNeedName}}. Please try again.'
   }
 };
 export default itSolutions;
