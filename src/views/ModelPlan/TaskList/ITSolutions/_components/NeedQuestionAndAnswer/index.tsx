@@ -91,7 +91,7 @@ const NeedQuestionAndAnswer = ({
   isRenderingOnSolutionsDetails = false
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
-  const { setIsModalOpen, setOperationalNeedID } = useContext(
+  const { setIsModalOpen, setOperationalNeed } = useContext(
     OperationalNeedModalContext
   );
 
@@ -171,7 +171,11 @@ const NeedQuestionAndAnswer = ({
             <Button
               type="button"
               onClick={() => {
-                setOperationalNeedID(operationalNeed.id);
+                setOperationalNeed({
+                  modelID,
+                  id: operationalNeed.id,
+                  nameOther: operationalNeed.nameOther ?? ''
+                });
                 setIsModalOpen(true);
               }}
               className="usa-button usa-button--unstyled line-height-body-5"

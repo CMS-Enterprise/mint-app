@@ -1,50 +1,79 @@
-// Context Provider for Navigation Header
-// Some sibling components other than header need to call/trigger state changes of the side mobile navigation
-
 import React, { createContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
+import useMessage from 'hooks/useMessage';
 import {
   UpdateCustomOperationalNeedById as MutationType,
-  UpdateCustomOperationalNeedById_updateCustomOperationalNeedByID as OperationalNeedTypes,
   UpdateCustomOperationalNeedByIdVariables
 } from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
 import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 
+type ContextTypes = {
+  modelID: string;
+  id: string;
+  nameOther: string;
+};
+
 const OperationalNeedModalContext = createContext({
   isModalOpen: false,
   setIsModalOpen: (isModalOpen: boolean) => {},
-  operationalNeedID: '',
-  setOperationalNeedID: (operationalNeedID: string) => {}
+  operationalNeed: {
+    modelID: '',
+    id: '',
+    nameOther: ''
+  },
+  setOperationalNeed: (operationalNeed: ContextTypes) => {}
 });
 
-// The context provider will be a wrapper that any child components can call to toggle side nav
-type childrenProps = {
+const OperationalNeedModalContextProvider = ({
+  children
+}: {
   children: React.ReactNode;
-};
-
-const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
+}) => {
+  const { t } = useTranslation('itSolutions');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [operationalNeedID, setOperationalNeedID] = useState('');
+  const [operationalNeed, setOperationalNeed] = useState<ContextTypes>({
+    modelID: '',
+    id: '',
+    nameOther: ''
+  });
   const [removeNeed] = useMutation<
     MutationType,
     UpdateCustomOperationalNeedByIdVariables
   >(UpdateCustomOperationalNeedById);
 
-  // const handleRemove = () = {
-  //   removeNeed({
-  //     variables: {
-  //       id: id,
-  //       customNeedType
-  //     }
-  //   })
-  // }
+  const history = useHistory();
+  const { showMessageOnNextPage } = useMessage();
 
-  const consoleLogMe = () => {
-    return console.log(operationalNeedID);
+  const handleRemove = () => {
+    removeNeed({
+      variables: {
+        id: operationalNeed.id,
+        customNeedType: operationalNeed.nameOther,
+        needed: false
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        showMessageOnNextPage(
+          <Alert type="success" slim className="margin-y-4">
+            <span className="mandatory-fields-alert__text">
+              {t('successMessage.operationalNeedRemoval', {
+                operationalNeedName: operationalNeed.nameOther
+              })}
+            </span>
+          </Alert>
+        );
+        history.push(
+          `/models/${operationalNeed.modelID}/task-list/it-solutions`
+        );
+      }
+    });
   };
 
   return (
@@ -54,21 +83,21 @@ const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
         value={{
           isModalOpen,
           setIsModalOpen,
-          operationalNeedID,
-          setOperationalNeedID
+          operationalNeed,
+          setOperationalNeed
         }}
       >
         {children}
       </OperationalNeedModalContext.Provider>
       <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-y-0">
+        <PageHeading headingLevel="h2" className="margin-y . rdfgv -0">
           hello world
         </PageHeading>
         <p className="margin-top-2 margin-bottom-3">Lorem ipsum dolor sit.</p>
         <Button
           type="button"
           className="margin-right-4 bg-error"
-          onClick={() => consoleLogMe()}
+          onClick={() => handleRemove()}
         >
           Confirm
         </Button>

@@ -198,7 +198,9 @@ const itSolutions = {
     onlyOperationalNeed:
       'Success! Your operational need “{{-operationalNeedName}}” is added.',
     operationalNeedAndSolution:
-      'Success! Your operational need “{{-operationalNeedName}}” and solution are added.'
+      'Success! Your operational need “{{-operationalNeedName}}” and solution are added.',
+    operationalNeedRemoval:
+      'Success! {{-operationalNeedName}} has been removed.'
   }
 };
 export default itSolutions;
