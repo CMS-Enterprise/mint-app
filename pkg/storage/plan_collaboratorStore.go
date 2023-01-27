@@ -30,8 +30,8 @@ var planCollaboratorFetchByIDSQL string
 //go:embed SQL/plan_collaborator/fetch_latest_by_eua_id.sql
 var planCollaboratorFetchLatestByEuaIDSQL string
 
-//go:embed SQL/plan_collaborator/collection_unique_by_eua.sql
-var planCollaboratorCollectionUniqueEua string
+//go:embed SQL/plan_collaborator/collection_unique_by_user_id.sql
+var planCollaboratorCollectionUniqueUserID string
 
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
@@ -147,7 +147,7 @@ func (s *Store) PlanCollaboratorFetchLatestByUserID(EUAID string) (*models.PlanC
 func (s *Store) PlanCollaboratorCollection() ([]*models.PlanCollaborator, error) {
 	planCollaborators := []*models.PlanCollaborator{}
 
-	statement, err := s.db.PrepareNamed(planCollaboratorCollectionUniqueEua)
+	statement, err := s.db.PrepareNamed(planCollaboratorCollectionUniqueUserID)
 	if err != nil {
 		return nil, err
 	}

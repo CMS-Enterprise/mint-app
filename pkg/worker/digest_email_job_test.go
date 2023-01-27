@@ -8,7 +8,6 @@ import (
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/golang/mock/gomock"
-	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -92,7 +91,7 @@ func (suite *WorkerSuite) TestDigestEmail() {
 			gomock.Eq(emailBody),
 		).MinTimes(1).MaxTimes(1)
 
-	err = worker.DigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID)
+	err = worker.DigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
 
 	suite.NoError(err)
 	mockController.Finish()
@@ -109,7 +108,8 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	//Create Plans
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
-	emails := []string{collaborator.UserID.String(), uuid.Nil.String()} //TODO verify that his is correct
+	emails := []string{collaborator.UserID.String(), suite.testConfigs.Principal.Account().ID.String()} //TODO verify that his is correct
+	// SHOULD EMAIL CREATOR OF PLAN AND COLLABORATOR
 
 	modelNameChange := "Old Name"
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
@@ -118,7 +118,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead", ID: collaborator.ID}}
 	dicussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
@@ -224,7 +224,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead", ID: collaborator.ID}}
 	dicussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
@@ -254,7 +254,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		suite.NoError(err2)
 		suite.Equal(emailQueue, job1.Queue)
 		suite.Equal(date, job1.Args[0].(string))
-		suite.Equal(collaborator.UserID, job1.Args[1].(string))
+		suite.EqualValues(collaborator.UserID.String(), job1.Args[1].(string))
 
 		// Make sure email sent
 		mockEmailService.

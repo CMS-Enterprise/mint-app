@@ -69,11 +69,9 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 
-	userID := args[1].(uuid.UUID)
+	userIDString := args[1].(string) // This is always returned as a string from faktory
+	userID := uuid.MustParse(userIDString)
 
-	// Get the latest collaborator to get their email.
-	// TODO: get email from user_account table when it is ready
-	//TODO update this
 	account, err := w.Store.UserAccountGetByID(userID)
 	if err != nil {
 		return err
@@ -114,12 +112,8 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
 func getDigestAnalyzedAudits(userID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
-	account, err := store.UserAccountGetByID(userID) //TODO verify
-	if err != nil {
-		return nil, err
-	}
 
-	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, account.ID)
+	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, userID)
 	if err != nil {
 		return nil, err
 	}
