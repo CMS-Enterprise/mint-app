@@ -91,7 +91,6 @@ const OperationalNeedModalContextProvider = ({
   };
 
   return (
-    // the Provider gives access to the context to its children
     <>
       <OperationalNeedModalContext.Provider
         value={{
@@ -124,5 +123,3 @@ const OperationalNeedModalContextProvider = ({
 };
 
 export { OperationalNeedModalContext, OperationalNeedModalContextProvider };
-
-// To have the remove operational need mutation here
