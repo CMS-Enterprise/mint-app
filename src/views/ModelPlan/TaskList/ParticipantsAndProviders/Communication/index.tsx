@@ -211,7 +211,7 @@ export const Communication = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-communication-form"
                 onSubmit={e => {
                   handleSubmit(e);

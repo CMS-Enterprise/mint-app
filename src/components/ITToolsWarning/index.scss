@@ -9,6 +9,13 @@
     @media screen and (max-width: $desktop) {
         position: relative !important;
         margin: auto !important;
+        margin-top: .5rem !important;
+        margin-bottom: 1rem !important;
         width: auto !important;
     }
+
+    // @media screen and (max-width: $tablet) {
+    //     margin-top: 5rem !important;
+    //     margin-bottom: 5rem !important;
+    // }
 }

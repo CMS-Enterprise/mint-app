@@ -237,7 +237,7 @@ export const ProviderOptions = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-providers-form"
                 onSubmit={e => {
                   handleSubmit(e);
