@@ -283,7 +283,7 @@ const AddOrUpdateOperationalNeed = () => {
           <ITSolutionsSidebar
             modelID={modelID}
             renderTextFor="need"
-            isUpdating={isUpdating}
+            operationalNeed={data?.operationalNeed}
           />
         </Grid>
       </Grid>
