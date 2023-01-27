@@ -16,6 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import Expire from 'components/shared/Expire';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
@@ -49,14 +50,11 @@ const AddOrUpdateOperationalNeed = () => {
     operationalNeedID: string;
   }>();
   const history = useHistory();
-
-  const isUpdating = !!operationalNeedID;
-
+  const { message, showMessageOnNextPage } = useMessage();
+  const { modelName } = useContext(ModelInfoContext);
   const formikRef = useRef<FormikProps<CustomOperationalNeedFormType>>(null);
 
-  const { modelName } = useContext(ModelInfoContext);
-
-  const { showMessageOnNextPage } = useMessage();
+  const isUpdating = !!operationalNeedID;
 
   const { data } = useQuery<
     GetOperationalNeedType,
@@ -136,6 +134,8 @@ const AddOrUpdateOperationalNeed = () => {
   return (
     <>
       <Breadcrumbs items={breadcrumbs} />
+
+      <Expire delay={10000}>{message}</Expire>
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>

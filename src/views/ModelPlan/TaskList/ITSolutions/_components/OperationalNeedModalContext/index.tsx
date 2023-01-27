@@ -49,7 +49,7 @@ const OperationalNeedModalContextProvider = ({
   >(UpdateCustomOperationalNeedById);
 
   const history = useHistory();
-  const { showMessageOnNextPage } = useMessage();
+  const { showMessage, showMessageOnNextPage } = useMessage();
 
   const handleRemove = () => {
     removeNeed({
@@ -76,7 +76,18 @@ const OperationalNeedModalContextProvider = ({
           setIsModalOpen(false);
         }
       })
-      .catch(errors => {});
+      .catch(errors => {
+        showMessage(
+          <Alert type="error" slim className="margin-y-4">
+            <span className="mandatory-fields-alert__text">
+              {t('errorMessage.operationalNeedRemoval', {
+                operationalNeedName: operationalNeed.nameOther
+              })}
+            </span>
+          </Alert>
+        );
+        setIsModalOpen(false);
+      });
   };
 
   return (
