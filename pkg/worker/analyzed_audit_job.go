@@ -231,13 +231,17 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_collaborator"
 	})
-	// DECIDE where to query the database!
-	//TODO update to be user_id as the field name to get the user_if of who was added
+	var parseError error
+
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
 			idString := m.Fields["user_id"].New.(string)
-			id := uuid.MustParse(idString)
+			var id uuid.UUID
+			id, parseError = uuid.Parse(idString)
+			if parseError != nil {
+				return models.AnalyzedModelLeadInfo{}, false
+			}
 
 			account, _ := store.UserAccountGetByID(id) //TODO should we handle? The error? I think null is ok if can't get the account
 
@@ -248,6 +252,9 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 		}
 		return models.AnalyzedModelLeadInfo{}, false
 	})
+	if parseError != nil {
+		return nil, parseError
+	}
 
 	if len(addedCollaborators) > 0 {
 		return &models.AnalyzedModelLeads{

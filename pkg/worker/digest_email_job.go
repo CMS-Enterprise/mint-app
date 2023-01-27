@@ -70,7 +70,10 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	}
 
 	userIDString := args[1].(string) // This is always returned as a string from faktory
-	userID := uuid.MustParse(userIDString)
+	userID, err := uuid.Parse(userIDString)
+	if err != nil {
+		return err
+	}
 
 	account, err := w.Store.UserAccountGetByID(userID)
 	if err != nil {
