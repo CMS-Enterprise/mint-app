@@ -2,10 +2,16 @@
 // Some sibling components other than header need to call/trigger state changes of the side mobile navigation
 
 import React, { createContext, useState } from 'react';
+import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import {
+  UpdateCustomOperationalNeedById as MutationType,
+  UpdateCustomOperationalNeedByIdVariables
+} from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
+import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 
 const OperationalNeedModalContext = createContext({
   isModalOpen: false,
@@ -19,6 +25,23 @@ type childrenProps = {
 
 const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [removeNeed] = useMutation<
+    MutationType,
+    UpdateCustomOperationalNeedByIdVariables
+  >(UpdateCustomOperationalNeedById);
+
+  // const handleRemove = () = {
+  //   removeNeed({
+  //     variables: {
+  //       id: id,
+  //       customNeedType
+  //     }
+  //   })
+  // }
+
+  const consoleLogMe = () => {
+    return console.log(operationalNeedToRemove);
+  };
 
   return (
     // the Provider gives access to the context to its children
@@ -33,15 +56,13 @@ const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
       </OperationalNeedModalContext.Provider>
       <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-y-0">
-          <h1>hello world</h1>
+          hello world
         </PageHeading>
-        <p className="margin-top-2 margin-bottom-3">
-          <p>Lorem ipsum dolor sit.</p>
-        </p>
+        <p className="margin-top-2 margin-bottom-3">Lorem ipsum dolor sit.</p>
         <Button
           type="button"
           className="margin-right-4 bg-error"
-          // onClick={() => archiveModelPlan()}
+          onClick={() => consoleLogMe()}
         >
           Confirm
         </Button>
@@ -54,3 +75,5 @@ const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
 };
 
 export { OperationalNeedModalContext, OperationalNeedModalContextProvider };
+
+// To have the remove operational need mutation here
