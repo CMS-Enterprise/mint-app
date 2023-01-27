@@ -58,22 +58,25 @@ const OperationalNeedModalContextProvider = ({
         customNeedType: operationalNeed.nameOther,
         needed: false
       }
-    }).then(response => {
-      if (!response?.errors) {
-        showMessageOnNextPage(
-          <Alert type="success" slim className="margin-y-4">
-            <span className="mandatory-fields-alert__text">
-              {t('successMessage.operationalNeedRemoval', {
-                operationalNeedName: operationalNeed.nameOther
-              })}
-            </span>
-          </Alert>
-        );
-        history.push(
-          `/models/${operationalNeed.modelID}/task-list/it-solutions`
-        );
-      }
-    });
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessageOnNextPage(
+            <Alert type="success" slim className="margin-y-4">
+              <span className="mandatory-fields-alert__text">
+                {t('successMessage.operationalNeedRemoval', {
+                  operationalNeedName: operationalNeed.nameOther
+                })}
+              </span>
+            </Alert>
+          );
+          history.push(
+            `/models/${operationalNeed.modelID}/task-list/it-solutions`
+          );
+          setIsModalOpen(false);
+        }
+      })
+      .catch(errors => {});
   };
 
   return (
