@@ -91,7 +91,9 @@ const NeedQuestionAndAnswer = ({
   isRenderingOnSolutionsDetails = false
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
-  const { setIsModalOpen } = useContext(OperationalNeedModalContext);
+  const { setIsModalOpen, setOperationalNeedID } = useContext(
+    OperationalNeedModalContext
+  );
 
   // Fetch operational need answer to question
   const { data: need } = useQuery<
@@ -168,7 +170,10 @@ const NeedQuestionAndAnswer = ({
           <div className="margin-top-4">
             <Button
               type="button"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                setOperationalNeedID(operationalNeed.id);
+                setIsModalOpen(true);
+              }}
               className="usa-button usa-button--unstyled line-height-body-5"
             >
               <p>{t('removeNeed')}</p>

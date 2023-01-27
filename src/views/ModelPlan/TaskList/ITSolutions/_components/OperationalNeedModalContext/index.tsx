@@ -9,13 +9,16 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import {
   UpdateCustomOperationalNeedById as MutationType,
+  UpdateCustomOperationalNeedById_updateCustomOperationalNeedByID as OperationalNeedTypes,
   UpdateCustomOperationalNeedByIdVariables
 } from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
 import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 
 const OperationalNeedModalContext = createContext({
   isModalOpen: false,
-  setIsModalOpen: (isModalOpen: boolean) => {}
+  setIsModalOpen: (isModalOpen: boolean) => {},
+  operationalNeedID: '',
+  setOperationalNeedID: (operationalNeedID: string) => {}
 });
 
 // The context provider will be a wrapper that any child components can call to toggle side nav
@@ -25,6 +28,7 @@ type childrenProps = {
 
 const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [operationalNeedID, setOperationalNeedID] = useState('');
   const [removeNeed] = useMutation<
     MutationType,
     UpdateCustomOperationalNeedByIdVariables
@@ -40,7 +44,7 @@ const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
   // }
 
   const consoleLogMe = () => {
-    return console.log(operationalNeedToRemove);
+    return console.log(operationalNeedID);
   };
 
   return (
@@ -49,7 +53,9 @@ const OperationalNeedModalContextProvider = ({ children }: childrenProps) => {
       <OperationalNeedModalContext.Provider
         value={{
           isModalOpen,
-          setIsModalOpen
+          setIsModalOpen,
+          operationalNeedID,
+          setOperationalNeedID
         }}
       >
         {children}
