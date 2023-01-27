@@ -31,7 +31,8 @@ const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
     >
       <CheckboxField
         label={data.label}
-        id={innerProps.id!}
+        id={`option-${data.value}`}
+        testid={`option-${data.value}`}
         name={data.value}
         checked={isSelected}
         onChange={() => null}

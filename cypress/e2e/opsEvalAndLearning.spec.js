@@ -356,7 +356,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
         'We might not have complete staffing for this. We might need to use more contractors than previously anticipated.'
       );
 
-    cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment$/);
