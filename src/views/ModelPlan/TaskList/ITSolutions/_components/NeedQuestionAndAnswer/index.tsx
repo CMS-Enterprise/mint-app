@@ -167,7 +167,7 @@ const NeedQuestionAndAnswer = ({
           >
             {t('updateThisOpertationalNeed')}
           </UswdsReactLink>
-          <div className="margin-top-4">
+          <div className="margin-top-1">
             <Button
               type="button"
               onClick={() => {
@@ -178,9 +178,9 @@ const NeedQuestionAndAnswer = ({
                 });
                 setIsModalOpen(true);
               }}
-              className="usa-button usa-button--unstyled line-height-body-5"
+              className="usa-button usa-button--unstyled line-height-body-5 text-red"
             >
-              <p>{t('removeNeed')}</p>
+              {t('removeNeed')}
             </Button>
           </div>
         </>

@@ -103,19 +103,23 @@ const OperationalNeedModalContextProvider = ({
         {children}
       </OperationalNeedModalContext.Provider>
       <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-y . rdfgv -0">
-          hello world
+        <PageHeading headingLevel="h2" className="margin-y-0">
+          {t('removeNeedModal.heading', {
+            operationalNeedName: operationalNeed.nameOther
+          })}
         </PageHeading>
-        <p className="margin-top-2 margin-bottom-3">Lorem ipsum dolor sit.</p>
+        <p className="margin-top-2 margin-bottom-3">
+          {t('removeNeedModal.warning')}
+        </p>
         <Button
           type="button"
           className="margin-right-4 bg-error"
           onClick={() => handleRemove()}
         >
-          Confirm
+          {t('removeNeedModal.confirmButton')}
         </Button>
         <Button type="button" unstyled onClick={() => setIsModalOpen(false)}>
-          cancel
+          {t('removeNeedModal.cancel')}
         </Button>
       </Modal>
     </>

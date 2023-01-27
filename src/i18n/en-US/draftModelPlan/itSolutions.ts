@@ -194,6 +194,13 @@ const itSolutions = {
   saveWithoutAdding: 'Save without adding a solution',
   editNeed: 'Edit this operational need',
   removeNeed: 'Remove this operational need',
+  removeNeedModal: {
+    heading: 'Confirm you want to remove {{-operationalNeedName}}.',
+    warning:
+      'You will not be able to access any associated solution details pages once it has been removed.',
+    confirmButton: 'Remove operational need',
+    cancel: 'Cancel'
+  },
   successMessage: {
     onlyOperationalNeed:
       'Success! Your operational need “{{-operationalNeedName}}” is added.',
