@@ -43,12 +43,12 @@ const ITSolutionsSidebar = ({
             }}
             className="usa-button usa-button--unstyled line-height-body-5"
           >
-            <p>{t('removeNeed')}</p>
+            {t('removeNeed')}
           </Button>
         </div>
       )}
       <div className="margin-top-4">
-        <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
+        <p className="text-bold margin-bottom-2">{t('helpfulLinks')}</p>
         <Button
           type="button"
           onClick={() =>
@@ -56,7 +56,7 @@ const ITSolutionsSidebar = ({
           }
           className="usa-button usa-button--unstyled line-height-body-5"
         >
-          <p>{t('availableSolutions')}</p>
+          {t('availableSolutions')}
         </Button>
       </div>
     </>
