@@ -6,6 +6,7 @@ import (
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -105,9 +106,14 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// CrTdl Activity
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
-	// Plan Collaborators. Only model leads should be added.
-	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLeadAccount.CommonName)) //TODO, need to verify the process to convert the UUID of the lead account to human readable
-	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaboratorAccount.CommonName)))
+	// Plan Collaborators. Only model leads should be added. Will be 2, one for the added account, one for the principal
+	suite.Len(analyzedAudit.Changes.ModelLeads.Added, 2)
+	leadIDs := []uuid.UUID{}
+	for _, lead := range analyzedAudit.Changes.ModelLeads.Added {
+		leadIDs = append(leadIDs, lead.ID)
+	}
+	suite.Contains(leadIDs, modelLeadAccount.ID)
+	suite.NotContains(leadIDs, collaboratorAccount.ID)
 
 	// Discussions Activity
 	suite.True(analyzedAudit.Changes.PlanDiscussions.Activity)

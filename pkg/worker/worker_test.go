@@ -127,7 +127,7 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 	updatedSections []string,
 	reviewSections []string,
 	clearanceSections []string,
-	addedLeads []string, discussionActivity bool) *models.AnalyzedAuditChange {
+	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
 		ModelPlan: &models.AnalyzedModelPlan{

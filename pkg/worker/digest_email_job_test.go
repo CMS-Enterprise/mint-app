@@ -51,7 +51,7 @@ func (suite *WorkerSuite) TestDigestEmail() {
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []string{"New Lead"}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	dicussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
@@ -118,7 +118,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []string{"New Lead"}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	dicussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,
@@ -224,7 +224,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
 	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
-	addedLead := []string{"New Lead"}
+	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	dicussionActivity := true
 
 	auditChange := *suite.createAnalyzedAuditChange(modelNameChange, modelStatusChange, documentCount,

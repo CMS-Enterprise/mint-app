@@ -338,7 +338,18 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 // AnalyzedModelLeads represents an AnalyzedModelLeads in an AnalyzedAuditChange
 type AnalyzedModelLeads struct {
-	Added []string `json:"added,omitempty"` //TODO change to uuid?
+	Added []AnalyzedModelLeadInfo `json:"added,omitempty"`
+}
+
+// AnalyzedModelLeadInfo Returns store Information about a ModelLead
+type AnalyzedModelLeadInfo struct {
+	ID         uuid.UUID `json:"id" db:"id"`
+	CommonName string    `json:"commonName" db:"common_name"`
+}
+
+// String implements the stringer interface
+func (a *AnalyzedModelLeadInfo) String() string {
+	return a.CommonName
 }
 
 const (
@@ -356,7 +367,7 @@ func (a *AnalyzedModelLeads) Humanize() []string {
 	}
 
 	if len(a.Added) > 0 {
-		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name string, index int) string {
+		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name AnalyzedModelLeadInfo, index int) string {
 			return fmt.Sprintf(AnalyzedModelLeadsHumanizedAdded, name)
 		})
 	}
