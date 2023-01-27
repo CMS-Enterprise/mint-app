@@ -96,7 +96,7 @@ const Learning = () => {
   );
 
   const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
+    redirect?: 'back' | 'task-list' | 'next' | string
   ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
@@ -121,10 +121,10 @@ const Learning = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/payment`);
           } else if (redirect) {
             history.push(redirect);
-          } else {
-            history.push(`/models/${modelID}/task-list/payment`);
           }
         }
       })
@@ -183,7 +183,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit();
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}

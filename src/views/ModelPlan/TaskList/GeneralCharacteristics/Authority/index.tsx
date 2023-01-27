@@ -90,7 +90,7 @@ const Authority = () => {
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | 'next') => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -179,7 +179,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit();
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}

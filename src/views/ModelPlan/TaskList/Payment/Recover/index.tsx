@@ -95,7 +95,9 @@ const Recover = () => {
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+  const handleFormSubmit = (
+    redirect?: 'back' | 'task-list' | 'next' | string
+  ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
