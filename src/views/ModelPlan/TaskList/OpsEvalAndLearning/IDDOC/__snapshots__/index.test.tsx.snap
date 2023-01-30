@@ -298,7 +298,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       />
     </div>
     <div
-      class="usa-form-group margin-top-6"
+      class="usa-form-group margin-top-6 margin-right-4"
       data-scroll="draftIcdDueDate"
     >
       <label
