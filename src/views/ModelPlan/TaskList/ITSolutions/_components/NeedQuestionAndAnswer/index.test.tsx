@@ -38,7 +38,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText('Use an Application Review and Scoring tool')
+        getByText('Use an application review and scoring tool')
       ).toBeInTheDocument();
       expect(
         getByText('Get an application support contractor')
@@ -72,7 +72,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText('Use an Application Review and Scoring tool')
+        getByText('Use an application review and scoring tool')
       ).toBeInTheDocument();
     });
 
