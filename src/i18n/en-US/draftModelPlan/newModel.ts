@@ -40,6 +40,9 @@ const newModel = {
   addAnotherMember: 'Add another team member',
   existingMember:
     'This person is already a member of your model team. Please select a different person to add to your team.',
+  successMessage: 'Success! {{-collaborator}} has been added as {{-role}}.',
+  successUpdateMessage:
+    'Success! {{-collaborator}} has been updated as {{-role}}.',
   modal: {
     heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:

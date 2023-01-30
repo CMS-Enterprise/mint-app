@@ -17,6 +17,7 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import DeleteModelPlanCollaborator from 'queries/Collaborators/DeleteModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
@@ -70,7 +71,7 @@ export const CollaboratorsContent = () => {
 
   const history = useHistory();
 
-  const { showMessageOnNextPage } = useMessage();
+  const { message, showMessageOnNextPage } = useMessage();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLastLead, setIsLastLead] = useState(false);
@@ -170,9 +171,12 @@ export const CollaboratorsContent = () => {
   return (
     <MainContent>
       {RemoveCollaborator()}
+
       <GridContainer>
         <Grid row gap>
           <Grid desktop={{ col: 12 }}>
+            {message && <Expire delay={45000}>{message}</Expire>}
+
             <BreadcrumbBar variant="wrap">
               <Breadcrumb>
                 <BreadcrumbLink asCustom={Link} to="/">

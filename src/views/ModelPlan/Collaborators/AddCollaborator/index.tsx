@@ -22,6 +22,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
 import useUserSearch from 'hooks/useCedarUsers';
+import useMessage from 'hooks/useMessage';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
 import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
@@ -43,6 +44,8 @@ const Collaborators = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
+
+  const { showMessageOnNextPage } = useMessage();
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -81,6 +84,21 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {t('successUpdateMessage', {
+                    collaborator: fullName,
+                    role: translateTeamRole(teamRole)
+                  })}
+                </Alert>
+              </>
+            );
             history.push(`/models/${modelID}/collaborators`);
           }
         })
@@ -101,6 +119,21 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {t('successMessage', {
+                    collaborator: fullName,
+                    role: translateTeamRole(teamRole)
+                  })}
+                </Alert>
+              </>
+            );
             history.push(`/models/${modelID}/collaborators`);
           }
         })
