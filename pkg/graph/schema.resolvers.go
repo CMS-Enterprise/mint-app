@@ -24,6 +24,15 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
+func (r *auditChangeResolver) ModifiedByUserAccount(ctx context.Context, obj *models.AuditChange) (*authentication.UserAccount, error) {
+	logger := appcontext.ZLogger(ctx)
+	if obj.ModifiedBy == nil {
+		return nil, nil //no user
+	}
+	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
+}
+
 // CreatedByUser is the resolver for the createdByUser field.
 func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error) {
 	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
@@ -31,9 +40,6 @@ func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models
 
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
-	// logger := appcontext.ZLogger(ctx)
-
-	// return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 

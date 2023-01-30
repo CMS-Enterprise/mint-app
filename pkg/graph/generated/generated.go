@@ -70,14 +70,15 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	AuditChange struct {
-		Action      func(childComplexity int) int
-		Fields      func(childComplexity int) int
-		ForeignKey  func(childComplexity int) int
-		ID          func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		PrimaryKey  func(childComplexity int) int
-		TableName   func(childComplexity int) int
+		Action                func(childComplexity int) int
+		Fields                func(childComplexity int) int
+		ForeignKey            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		PrimaryKey            func(childComplexity int) int
+		TableName             func(childComplexity int) int
 	}
 
 	CurrentUser struct {
@@ -869,6 +870,8 @@ type ComplexityRoot struct {
 
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
+
+	ModifiedByUserAccount(ctx context.Context, obj *models.AuditChange) (*authentication.UserAccount, error)
 }
 type DiscussionReplyResolver interface {
 	CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error)
@@ -1169,6 +1172,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.AuditChange.ModifiedBy(childComplexity), true
+
+	case "AuditChange.modifiedByUserAccount":
+		if e.complexity.AuditChange.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.AuditChange.ModifiedByUserAccount(childComplexity), true
 
 	case "AuditChange.modifiedDts":
 		if e.complexity.AuditChange.ModifiedDts == nil {
@@ -7816,8 +7826,9 @@ type AuditChange {
   tableName: String!
   action: String!
   fields: Map!
-  modifiedBy: String
-  modifiedDts: Time
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time  
 }
 
 
@@ -10166,9 +10177,9 @@ func (ec *executionContext) _AuditChange_modifiedBy(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_AuditChange_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10178,7 +10189,70 @@ func (ec *executionContext) fieldContext_AuditChange_modifiedBy(ctx context.Cont
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AuditChange_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.AuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AuditChange_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.AuditChange().ModifiedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AuditChange_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AuditChange",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -43082,6 +43156,8 @@ func (ec *executionContext) fieldContext_Query_auditChanges(ctx context.Context,
 				return ec.fieldContext_AuditChange_fields(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_AuditChange_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_AuditChange_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_AuditChange_modifiedDts(ctx, field)
 			}
@@ -46621,6 +46697,23 @@ func (ec *executionContext) _AuditChange(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._AuditChange_modifiedBy(ctx, field, obj)
 
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._AuditChange_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._AuditChange_modifiedDts(ctx, field, obj)
