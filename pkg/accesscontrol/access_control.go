@@ -18,7 +18,10 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 
 	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
 	discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
+	operationalNeedRelation, hasOperationalNeedRelation := obj.(models.IOperationalNeedRelation)
+	solutionRelation, hasSolutionRelation := obj.(models.ISolutionRelation)
 	notCollabErrString := "user is not a collaborator"
+
 	if hasModelPlanRelation { //Favor modelPlanRelation  first
 
 		isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, modelPlanRelation.GetModelPlanID())
@@ -42,6 +45,28 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
 			return apperrors.NotCollaboratorError{
 				Err: fmt.Errorf("DiscussionID: " + discussionRelation.GetDiscussionID().String()),
+			}
+		}
+	} else if hasOperationalNeedRelation {
+		isCollaborator, err := IsCollaboratorByOperationalNeedID(logger, principal, store, operationalNeedRelation.GetOperationalNeedID())
+		if err != nil {
+			return err
+		}
+		if !isCollaborator {
+			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedRelation.GetOperationalNeedID().String()))
+			return apperrors.NotCollaboratorError{
+				Err: fmt.Errorf("OperationalNeedID: " + operationalNeedRelation.GetOperationalNeedID().String()),
+			}
+		}
+	} else if hasSolutionRelation {
+		isCollaborator, err := IsCollaboratorSolutionID(logger, principal, store, solutionRelation.GetSolutionID())
+		if err != nil {
+			return err
+		}
+		if !isCollaborator {
+			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("SolutionID", solutionRelation.GetSolutionID().String()))
+			return apperrors.NotCollaboratorError{
+				Err: fmt.Errorf("SolutionID: " + solutionRelation.GetSolutionID().String()),
 			}
 		}
 	} else {
@@ -114,6 +139,23 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 	} else {
 		errString := "user has no roles"
 		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
+		return false, fmt.Errorf(errString)
+	}
+
+}
+
+// IsCollaboratorByOperationalNeedID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
+// Users with the Assessment role are automatically allowed access to update all records.
+func IsCollaboratorByOperationalNeedID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, operationalNeedID uuid.UUID) (bool, error) {
+	if principal.AllowASSESSMENT() {
+		return true, nil
+	} else if principal.AllowUSER() {
+		collaborator, err := store.CheckIfCollaboratorByOperationalNeedID(logger, principal.ID(), operationalNeedID)
+		return collaborator, err
+
+	} else {
+		errString := "user has no roles"
+		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedID.String()))
 		return false, fmt.Errorf(errString)
 	}
 

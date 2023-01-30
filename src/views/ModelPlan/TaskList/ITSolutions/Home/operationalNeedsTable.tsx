@@ -25,6 +25,7 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -88,6 +89,8 @@ const OperationalNeedsTable = ({
     }
   });
 
+  const flags = useFlags();
+
   // Memoized function to return/filter possible needs and needed solutions
   const operationalNeeds = useMemo(() => {
     const needData = data?.modelPlan?.operationalNeeds
@@ -103,7 +106,7 @@ const OperationalNeedsTable = ({
 
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
-  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [

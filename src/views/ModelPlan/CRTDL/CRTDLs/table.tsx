@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -59,6 +60,8 @@ const CRTDLTable = ({
     }
   });
 
+  const flags = useFlags();
+
   const crtdls = (data?.modelPlan?.crTdls ?? []) as CDTRLType[];
 
   const modelName = data?.modelPlan.modelName;
@@ -66,7 +69,7 @@ const CRTDLTable = ({
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean =
-    !isHelpArticle && (isCollaborator || isAssessment(groups));
+    !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
   if (loading) {
     return <PageLoading />;
