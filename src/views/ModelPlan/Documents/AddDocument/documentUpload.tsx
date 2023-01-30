@@ -322,7 +322,9 @@ const DocumentUpload = () => {
                         isSubmitting ||
                         !values.file ||
                         !values.documentType ||
-                        values.restricted === null
+                        values.restricted === null ||
+                        (values.documentType === DocumentType.OTHER &&
+                          !values.otherTypeDescription.trim())
                       }
                       data-testid="upload-document"
                     >
