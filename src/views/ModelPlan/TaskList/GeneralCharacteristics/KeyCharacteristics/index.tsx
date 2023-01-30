@@ -324,9 +324,13 @@ const KeyCharacteristics = () => {
                   field="keyCharacteristicsNote"
                 />
 
-                {values.keyCharacteristics.includes(
-                  'OTHER' as KeyCharacteristic
-                ) && (
+                {(values.keyCharacteristics.includes(KeyCharacteristic.OTHER) ||
+                  values.keyCharacteristics.includes(
+                    KeyCharacteristic.PART_C
+                  ) ||
+                  values.keyCharacteristics.includes(
+                    KeyCharacteristic.PART_D
+                  )) && (
                   <FieldGroup
                     scrollElement="keyCharacteristicsOther"
                     className="margin-top-neg-4"

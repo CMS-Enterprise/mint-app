@@ -53,12 +53,12 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         </p>
       </div>
       <div
-        class="read-only-section read-only-section--does-your-proposed-track-model-resemble-any-existing-model margin-bottom-3"
+        class="read-only-section read-only-section--does-your-proposed-track-model-resemble-any-existing-models margin-bottom-3"
       >
         <p
           class="text-bold margin-y-0 font-body-sm line-height-sans-4"
         >
-          Does your proposed track/model resemble any existing model?
+          Does your proposed track/model resemble any existing models?
         </p>
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
@@ -227,7 +227,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
           <li
             class="font-sans-md line-height-sans-4"
           >
-            Serivce Delivery Model
+            Service Delivery Model
           </li>
           <li
             class="font-sans-md line-height-sans-4"
