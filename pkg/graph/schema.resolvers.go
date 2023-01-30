@@ -26,11 +26,11 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 
 // ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
 func (r *auditChangeResolver) ModifiedByUserAccount(ctx context.Context, obj *models.AuditChange) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 	if obj.ModifiedBy == nil {
 		return nil, nil //no user
 	}
-	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
+	return resolvers.UserAccountGetByIDLOADER(ctx, *obj.ModifiedBy)
 }
 
 // CreatedByUser is the resolver for the createdByUser field.
@@ -472,23 +472,24 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 
 // UserAccount is the resolver for the userAccount field.
 func (r *planCollaboratorResolver) UserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.UserAccountGetByID(logger, r.store, obj.UserID)
+	// logger := appcontext.ZLogger(ctx)
+	return resolvers.UserAccountGetByIDLOADER(ctx, obj.UserID)
 }
 
 // CreatedByUserAccount is the resolver for the createdByUserAccount field.
 func (r *planCollaboratorResolver) CreatedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.UserAccountGetByID(logger, r.store, obj.CreatedBy)
+	// logger := appcontext.ZLogger(ctx)
+	return resolvers.UserAccountGetByIDLOADER(ctx, obj.CreatedBy)
 }
 
 // ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
 func (r *planCollaboratorResolver) ModifiedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 	if obj.ModifiedBy == nil {
 		return nil, nil //no user
 	}
-	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
+	// return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
+	return resolvers.UserAccountGetByIDLOADER(ctx, *obj.ModifiedBy)
 }
 
 // Replies is the resolver for the replies field.
