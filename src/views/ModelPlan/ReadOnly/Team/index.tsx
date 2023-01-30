@@ -47,14 +47,16 @@ const TeamGroupings = ({
               }}
             >
               <CardHeader className="padding-0">
-                <h3 className="margin-0">{collaborator.fullName}</h3>
+                <h3 className="margin-0">
+                  {collaborator.userAccount.commonName}
+                </h3>
                 <Link
-                  aria-label={collaborator.email}
+                  aria-label={collaborator.userAccount.email}
                   className="margin-0 line-height-body-5"
-                  href={`mailto:${collaborator.email}`}
+                  href={`mailto:${collaborator.userAccount.email}`}
                   target="_blank"
                 >
-                  {collaborator.email}
+                  {collaborator.userAccount.email}
                   <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
                 </Link>
               </CardHeader>

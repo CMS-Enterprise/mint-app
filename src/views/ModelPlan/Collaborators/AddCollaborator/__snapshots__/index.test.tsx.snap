@@ -31,7 +31,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
         >
           <div
             class="usa-form-group"
-            data-scroll="fullName"
+            data-scroll="userAccount.commonName"
           >
             <label
               class="usa-label margin-bottom-1"

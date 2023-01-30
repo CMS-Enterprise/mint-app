@@ -23,12 +23,18 @@ import teamRoles from 'constants/enums/teamRoles';
 import useUserSearch from 'hooks/useCedarUsers';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
-import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
+import {
+  CreateModelPlanCollaborator as CreateCollaboratorsType,
+  CreateModelPlanCollaboratorVariables
+} from 'queries/Collaborators/types/CreateModelPlanCollaborator';
 import {
   GetModelCollaborator,
   GetModelCollaborator_planCollaboratorByID as CollaboratorFormType
 } from 'queries/Collaborators/types/GetModelCollaborator';
-import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
+import {
+  UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
+  UpdateModelPlanCollaboratorVariables
+} from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
 import UpdateModelPlanCollaborator from 'queries/Collaborators/UpdateModelPlanCollaborator';
 import flattenErrors from 'utils/flattenErrors';
 import { translateTeamRole } from 'utils/modelPlan';
@@ -49,12 +55,16 @@ const Collaborators = () => {
   const foundUsers = useUserSearch(searchTerm);
 
   const history = useHistory();
-  const [create] = useMutation<CreateCollaboratorsType>(
-    CreateModelPlanCollaborator
-  );
-  const [update] = useMutation<UpdateModelPlanCollaboratorType>(
-    UpdateModelPlanCollaborator
-  );
+
+  const [create] = useMutation<
+    CreateCollaboratorsType,
+    CreateModelPlanCollaboratorVariables
+  >(CreateModelPlanCollaborator);
+
+  const [update] = useMutation<
+    UpdateModelPlanCollaboratorType,
+    UpdateModelPlanCollaboratorVariables
+  >(UpdateModelPlanCollaborator);
 
   const { data } = useQuery<GetModelCollaborator>(GetModelPlanCollaborator, {
     variables: {
@@ -64,17 +74,19 @@ const Collaborators = () => {
   });
 
   const collaborator =
-    data?.planCollaboratorByID ?? ({} as CollaboratorFormType);
+    data?.planCollaboratorByID ?? ({ userAccount: {} } as CollaboratorFormType);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
-    const { fullName = '', teamRole = '', euaUserID = '', email = '' } =
-      formikValues || {};
+    const {
+      userAccount: { username },
+      teamRole
+    } = formikValues || { userAccount: { userName: null } };
 
     if (collaboratorId) {
       update({
         variables: {
           id: collaboratorId,
-          newRole: teamRole
+          newRole: teamRole!
         }
       })
         .then(response => {
@@ -89,11 +101,9 @@ const Collaborators = () => {
       create({
         variables: {
           input: {
-            fullName,
-            teamRole,
-            email,
-            euaUserID,
-            modelPlanID: modelID
+            modelPlanID: modelID,
+            userName: username!,
+            teamRole: teamRole!
           }
         }
       })
@@ -135,7 +145,6 @@ const Collaborators = () => {
               const {
                 errors,
                 values,
-                setErrors,
                 setFieldValue,
                 handleSubmit
               } = formikProps;
@@ -166,8 +175,8 @@ const Collaborators = () => {
                     }}
                   >
                     <FieldGroup
-                      scrollElement="fullName"
-                      error={!!flatErrors.fullName}
+                      scrollElement="userAccount.commonName"
+                      error={!!flatErrors['userAccount.commonName']}
                     >
                       <Label
                         htmlFor="new-plan-model-name"
@@ -175,24 +184,31 @@ const Collaborators = () => {
                       >
                         {t('teamMemberName')}
                       </Label>
-                      <FieldErrorMsg>{flatErrors.fullName}</FieldErrorMsg>
+                      <FieldErrorMsg>
+                        {flatErrors['userAccount.commonName']}
+                      </FieldErrorMsg>
 
                       {collaboratorId ? (
                         <Field
                           as={TextInput}
                           disabled
-                          error={!!flatErrors.fullName}
+                          error={!!flatErrors['userAccount.commonName']}
                           id="collaboration-full-name"
-                          name="fullName"
+                          name="userAccount.commonName"
                         />
                       ) : (
                         <Combobox
                           aria-label="Cedar-Users"
                           onSelect={item => {
                             const foundUser = foundUsers?.userObj[item];
-                            setFieldValue('fullName', foundUser?.commonName);
-                            setFieldValue('euaUserID', foundUser?.euaUserId);
-                            setFieldValue('email', foundUser?.email);
+                            setFieldValue(
+                              'userAccount.commonName',
+                              foundUser?.commonName
+                            );
+                            setFieldValue(
+                              'userAccount.username',
+                              foundUser?.euaUserId
+                            );
                           }}
                         >
                           <ComboboxInput
@@ -202,9 +218,12 @@ const Collaborators = () => {
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               setSearchTerm(e?.target?.value);
-                              if (values.fullName || values.euaUserID) {
-                                setFieldValue('fullName', '');
-                                setFieldValue('euaUserID', '');
+                              if (
+                                values.userAccount.commonName ||
+                                values.userAccount.username
+                              ) {
+                                setFieldValue('userAccount.commonName', '');
+                                setFieldValue('userAccount.username', '');
                               }
                             }}
                           />
@@ -285,8 +304,9 @@ const Collaborators = () => {
                     <div className="margin-y-4 display-block">
                       <Button
                         type="submit"
-                        disabled={!values.fullName || !values.teamRole}
-                        onClick={() => setErrors({})}
+                        disabled={
+                          !values.userAccount.commonName || !values.teamRole
+                        }
                       >
                         {!collaboratorId
                           ? t('addTeamMemberButton')
