@@ -24,6 +24,9 @@ var planBasicsGetByIDSQL string
 //go:embed SQL/plan_basics/get_by_model_plan_id.sql
 var planBasicsGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_basics/get_by_model_plan_id_LOADER.sql
+var planBasicsGetByModelPlanIDLoaderSQL string
+
 // PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
@@ -78,7 +81,7 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 
 // PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
 func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{}
+	plan := models.PlanBasics{} //TOOD use new data loader query instead.
 
 	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDSQL)
 	if err != nil {
@@ -88,7 +91,6 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 	}
-
 	err = statement.Get(&plan, arg)
 
 	if err != nil {
@@ -96,4 +98,25 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 	}
 
 	return &plan, nil
+}
+
+// PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
+func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBasics, error) {
+	basicSlice := []*models.PlanBasics{} //TOOD use new data loader query instead.
+
+	stmt, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&basicSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return basicSlice, nil
 }

@@ -11,11 +11,11 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/operational_solution/collection_get_by_operational_need_id.sql
-var operationalSolutionCollectionGetByOperationalNeedIDSQL string
-
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
+
+//go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADER.sql
+var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL string
 
 //go:embed SQL/operational_solution/get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
@@ -34,28 +34,6 @@ var operationalSolutionInsertOrUpdateSQL string
 
 //go:embed SQL/operational_solution/insert_or_update_other.sql
 var operationalSolutionInsertOrUpdateOtherSQL string
-
-// OperationalSolutionCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
-func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID) ([]*models.OperationalSolution, error) {
-	solutions := []*models.OperationalSolution{}
-
-	stmt, err := s.db.PrepareNamed(operationalSolutionCollectionGetByOperationalNeedIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-
-		"operational_need_id": operationalNeedID,
-	}
-
-	err = stmt.Select(&solutions, arg) //this returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-	return solutions, nil
-}
 
 // OperationalSolutionAndPossibleCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
 func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
@@ -78,6 +56,27 @@ func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(l
 		return nil, err
 	}
 	return solutions, nil
+}
+
+// OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER returns Operational Solutions that match the paramtableJSON
+func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolution, error) {
+	solutions := []*models.OperationalSolution{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+	err = stmt.Select(&solutions, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return solutions, nil
+
 }
 
 // OperationalSolutionGetByOperationNeedIDAndType returns an operational solution that matches by operational need an solutionType

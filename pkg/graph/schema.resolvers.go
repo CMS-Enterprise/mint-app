@@ -30,9 +30,10 @@ func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models
 
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
-	logger := appcontext.ZLogger(ctx)
+	// logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
+	// return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // GeneralCharacteristics is the resolver for the generalCharacteristics field.
@@ -139,8 +140,7 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -416,14 +416,14 @@ func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, 
 
 // RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
 func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store, principal)
 }
 
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, obj.ID, includeNotNeeded, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
 }
 
 // Documents is the resolver for the documents field.
