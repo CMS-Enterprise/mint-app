@@ -41,11 +41,18 @@ export interface CreateModelPlan_createModelPlan_basics {
   status: TaskStatus;
 }
 
+export interface CreateModelPlan_createModelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface CreateModelPlan_createModelPlan_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
-  euaUserID: string;
+  userAccount: CreateModelPlan_createModelPlan_collaborators_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
 }
 

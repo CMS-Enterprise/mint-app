@@ -18,12 +18,18 @@ export interface GetModelPlan_modelPlan_basics {
   status: TaskStatus;
 }
 
+export interface GetModelPlan_modelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetModelPlan_modelPlan_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
-  euaUserID: string;
-  email: string;
+  userAccount: GetModelPlan_modelPlan_collaborators_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
   modelPlanID: UUID;
   createdDts: Time;

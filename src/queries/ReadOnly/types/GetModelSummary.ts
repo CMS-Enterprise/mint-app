@@ -20,9 +20,16 @@ export interface GetModelSummary_modelPlan_generalCharacteristics {
   keyCharacteristics: KeyCharacteristic[];
 }
 
+export interface GetModelSummary_modelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetModelSummary_modelPlan_collaborators {
   __typename: "PlanCollaborator";
-  fullName: string;
+  userAccount: GetModelSummary_modelPlan_collaborators_userAccount;
   teamRole: TeamRole;
 }
 

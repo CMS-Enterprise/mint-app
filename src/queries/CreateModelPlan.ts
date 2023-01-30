@@ -38,8 +38,12 @@ export default gql`
       }
       collaborators {
         id
-        fullName
-        euaUserID
+        userAccount {
+          commonName
+          email
+          username
+        }
+        userID
         teamRole
       }
     }
