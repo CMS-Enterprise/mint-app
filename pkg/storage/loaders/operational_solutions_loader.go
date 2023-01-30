@@ -47,13 +47,10 @@ func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperati
 		if ok {
 
 			resKey := fmt.Sprint(ck.Args["operational_need_id"])
-			sols, ok := solsByID[resKey]
-			if ok {
-				output[index] = &dataloader.Result{Data: sols, Error: nil}
-			} else {
-				err := fmt.Errorf("operational solutions not found for operationalNeed  %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
-			}
+			sols := solsByID[resKey] //Any Solutions not found will return a zero state result eg empty array
+
+			output[index] = &dataloader.Result{Data: sols, Error: nil}
+
 		} else {
 			err := fmt.Errorf("could not retrive key from %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}
