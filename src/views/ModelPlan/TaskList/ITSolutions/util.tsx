@@ -129,8 +129,18 @@ export const returnActionLinks = (
     </>
   );
 
-  // If row is a predefined operational solution and not an operational need/custom solution, return solutionActionLinks
+  // If row is a custom operational need and does not have solution, then reutrn link to update need
+  // Otherwise, if row is a predefined operational solution and not an operational need/custom solution, return solutionActionLinks
   if (!operationalNeedObj) {
+    if (!operationalNeed.key && !operationalNeed.needKey) {
+      return (
+        <UswdsReactLink
+          to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+        >
+          {i18next.t('itSolutions:itSolutionsTable.updateNeed')}
+        </UswdsReactLink>
+      );
+    }
     return solutionActionLinks;
   }
 
