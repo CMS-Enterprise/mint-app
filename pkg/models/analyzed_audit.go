@@ -368,7 +368,7 @@ func (a *AnalyzedModelLeads) Humanize() []string {
 
 	if len(a.Added) > 0 {
 		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name AnalyzedModelLeadInfo, index int) string {
-			return fmt.Sprintf(AnalyzedModelLeadsHumanizedAdded, name)
+			return fmt.Sprintf(AnalyzedModelLeadsHumanizedAdded, name.CommonName)
 		})
 	}
 
