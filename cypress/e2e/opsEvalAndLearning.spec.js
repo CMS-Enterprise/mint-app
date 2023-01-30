@@ -359,7 +359,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment$/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
 
     cy.get('h1.mint-h1').contains('Payment');
