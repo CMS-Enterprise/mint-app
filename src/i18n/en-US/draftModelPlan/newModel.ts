@@ -46,7 +46,7 @@ const newModel = {
   modal: {
     heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:
-      'This team member will not be able to accesss this model plan after they have been removed.',
+      '​​This team member will not be able to edit this Model Plan after they have been removed.',
     confirm: 'Yes, remove team member',
     no: 'No, keep team member',
     remove: 'Remove'
@@ -54,14 +54,14 @@ const newModel = {
   selfModal: {
     heading: 'Are you sure you want to remove yourself?',
     subheading:
-      'You will not be able to access this Model Plan after you have been removed.',
+      'You will not be able to edit this Model Plan after you have been removed.',
     confirm: 'Remove yourself',
     no: 'Keep yourself'
   },
   success: {
     heading: 'Success! You have removed yourself from {{-modelName}}.',
     message:
-      'If you need to access the Model Plan in the future, please contact a member of the model team or the MINT Team.'
+      'If you need to edit the Model Plan in the future, please contact a member of the model team or the MINT Team.'
   }
 };
 
