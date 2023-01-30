@@ -38,6 +38,8 @@ const newModel = {
   dontUpdateTeamMember:
     'Don’t edit a team member and return to the previous page',
   addAnotherMember: 'Add another team member',
+  existingMember:
+    'This person is already a member of your model team. Please select a different person to add to your team.',
   modal: {
     heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:

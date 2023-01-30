@@ -19,6 +19,7 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
 import useUserSearch from 'hooks/useCedarUsers';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
@@ -49,12 +50,13 @@ const Collaborators = () => {
   const foundUsers = useUserSearch(searchTerm);
 
   const history = useHistory();
-  const [create] = useMutation<CreateCollaboratorsType>(
+  const [create, { loading }] = useMutation<CreateCollaboratorsType>(
     CreateModelPlanCollaborator
   );
-  const [update] = useMutation<UpdateModelPlanCollaboratorType>(
-    UpdateModelPlanCollaborator
-  );
+  const [
+    update,
+    { loading: updateLoading }
+  ] = useMutation<UpdateModelPlanCollaboratorType>(UpdateModelPlanCollaborator);
 
   const { data } = useQuery<GetModelCollaborator>(GetModelPlanCollaborator, {
     variables: {
@@ -103,7 +105,16 @@ const Collaborators = () => {
           }
         })
         .catch(errors => {
-          formikRef?.current?.setErrors(errors);
+          const collaboratorExistingError = errors.graphQLErrors[0]?.message.includes(
+            'unique_collaborator_per_plan'
+          );
+          if (collaboratorExistingError) {
+            formikRef?.current?.setErrors({
+              euaUserID: t('existingMember')
+            });
+          } else {
+            formikRef?.current?.setErrors(errors);
+          }
         });
     }
   };
@@ -159,6 +170,7 @@ const Collaborators = () => {
                       })}
                     </ErrorAlert>
                   )}
+
                   <Form
                     onSubmit={e => {
                       handleSubmit(e);
@@ -283,15 +295,19 @@ const Collaborators = () => {
                     </Alert>
 
                     <div className="margin-y-4 display-block">
-                      <Button
-                        type="submit"
-                        disabled={!values.fullName || !values.teamRole}
-                        onClick={() => setErrors({})}
-                      >
-                        {!collaboratorId
-                          ? t('addTeamMemberButton')
-                          : t('updateTeamMember')}
-                      </Button>
+                      {loading || updateLoading ? (
+                        <Spinner />
+                      ) : (
+                        <Button
+                          type="submit"
+                          disabled={!values.fullName || !values.teamRole}
+                          onClick={() => setErrors({})}
+                        >
+                          {!collaboratorId
+                            ? t('addTeamMemberButton')
+                            : t('updateTeamMember')}
+                        </Button>
+                      )}
                     </div>
                   </Form>
                 </>
