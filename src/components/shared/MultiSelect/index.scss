@@ -1,4 +1,5 @@
 @use 'uswds-core' as *;
+@use 'colors' as *;
 
 .easi-multiselect--tag {
   .usa-icon {
@@ -7,12 +8,15 @@
 }
 
 .easi-multiselect .usa-combo-box__list-option {
+
   &--focused {
     background-color: color('base-lightest');
-    outline: none;
+    outline:  0.25rem solid $focus-border;
 
     .usa-checkbox {
       background-color: transparent;
+      display: flex;
+      align-items: center;
     }
   }
 
