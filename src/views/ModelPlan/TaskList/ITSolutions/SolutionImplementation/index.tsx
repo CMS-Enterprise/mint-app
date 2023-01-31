@@ -65,9 +65,10 @@ const SolutionImplementation = ({
   }>();
 
   const {
-    state: { fromSolutionDetails }
+    state: { fromSolutionDetails, isCustomNeed }
   } = useLocation<{
     fromSolutionDetails: boolean;
+    isCustomNeed: boolean;
   }>();
 
   const history = useHistory();
@@ -156,16 +157,27 @@ const SolutionImplementation = ({
         if (response && !errors) {
           // If successfully submitting solution details
           if (!dontAdd && !redirect) {
+            const words = (
+              updateStatus: boolean,
+              customNeed: boolean | undefined
+            ) => {
+              if (updateStatus && !customNeed)
+                return t('successStatusUpdated', {
+                  operationalNeedName: operationalNeed.name
+                });
+              if (!updateStatus && !customNeed)
+                return t('successSolutionAdded', {
+                  operationalNeedName: operationalNeed.name
+                });
+              return t('successMessage.operationalNeedAndSolution', {
+                operationalNeedName: operationalNeed.nameOther
+              });
+            };
+
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {isUpdatingStatus
-                    ? t('successStatusUpdated', {
-                        operationalNeedName: operationalNeed.name
-                      })
-                    : t('successSolutionAdded', {
-                        operationalNeedName: operationalNeed.name
-                      })}
+                  {words(isUpdatingStatus, isCustomNeed)}
                 </span>
               </Alert>
             );
