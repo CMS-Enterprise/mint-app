@@ -18,6 +18,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 
 	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
 	discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
+	solutionRelation, hasSolutionRelation := obj.(models.ISolutionRelation)
 	notCollabErrString := "user is not a collaborator"
 	if hasModelPlanRelation { //Favor modelPlanRelation  first
 
@@ -42,6 +43,18 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
 			return apperrors.NotCollaboratorError{
 				Err: fmt.Errorf("DiscussionID: " + discussionRelation.GetDiscussionID().String()),
+			}
+		}
+	} else if hasSolutionRelation {
+		isCollaborator, err := IsCollaboratorSolutionID(logger, principal, store, solutionRelation.GetSolutionID())
+		if err != nil {
+			return err
+		}
+
+		if !isCollaborator {
+			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("SolutionID", solutionRelation.GetSolutionID().String()))
+			return apperrors.NotCollaboratorError{
+				Err: fmt.Errorf("SolutionID: " + solutionRelation.GetSolutionID().String()),
 			}
 		}
 	} else {

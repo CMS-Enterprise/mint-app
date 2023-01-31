@@ -13,6 +13,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type CreateOperationalSolutionSubtaskInput struct {
+	Name   string                                  `json:"name"`
+	Status models.OperationalSolutionSubtaskStatus `json:"status"`
+}
+
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
@@ -86,6 +91,11 @@ type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                 `json:"changeType"`
 	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
 	ActionType ActionType                 `json:"actionType"`
+}
+
+type UpdateOperationalSolutionSubtaskInput struct {
+	ID      uuid.UUID              `json:"id"`
+	Changes map[string]interface{} `json:"changes"`
 }
 
 type ActionType string
