@@ -83,20 +83,25 @@ export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
 
 type TableProps = {
   hiddenColumns?: string[];
+  userModels: boolean;
   isAssessment: boolean;
   isMAC: boolean;
+  // callback used to hide parent header if assessment user has no associated model plans
+  hideTable?: (tableHidden: boolean) => void;
 };
 
 const DraftModelPlansTable = ({
   hiddenColumns,
+  userModels,
   isAssessment,
-  isMAC
+  isMAC,
+  hideTable
 }: TableProps) => {
   const { t } = useTranslation('home');
 
   let queryType = ModelPlanFilter.COLLAB_ONLY;
 
-  if (isAssessment) {
+  if (!userModels && !isMAC) {
     queryType = ModelPlanFilter.INCLUDE_ALL;
   } else if (isMAC) {
     queryType = ModelPlanFilter.WITH_CR_TDLS;
@@ -366,6 +371,11 @@ const DraftModelPlansTable = ({
     return <PageLoading />;
   }
 
+  if (isAssessment && userModels && data.length === 0) {
+    if (hideTable) hideTable(true);
+    return null;
+  }
+
   if (error) {
     return <div>{JSON.stringify(error)}</div>;
   }
@@ -390,28 +400,33 @@ const DraftModelPlansTable = ({
   return (
     <div className="model-plan-table">
       <div className="mint-header__basic">
-        <GlobalClientFilter
-          setGlobalFilter={setGlobalFilter}
-          tableID={t('requestsTable.id')}
-          tableName={t('requestsTable.title')}
-          className="margin-bottom-4"
-        />
+        {!userModels && (
+          <GlobalClientFilter
+            setGlobalFilter={setGlobalFilter}
+            tableID={t('requestsTable.id')}
+            tableName={t('requestsTable.title')}
+            className="margin-bottom-4"
+          />
+        )}
 
-        {isAssessment && (
+        {isAssessment && !userModels && (
           <div className="flex-align-self-center">
             <CsvExportLink includeAll />
           </div>
         )}
       </div>
 
-      <TableResults
-        globalFilter={state.globalFilter}
-        pageIndex={state.pageIndex}
-        pageSize={state.pageSize}
-        filteredRowLength={page.length}
-        rowLength={data.length}
-        className="margin-bottom-4"
-      />
+      {!userModels && (
+        <TableResults
+          globalFilter={state.globalFilter}
+          pageIndex={state.pageIndex}
+          pageSize={state.pageSize}
+          filteredRowLength={page.length}
+          rowLength={data.length}
+          className="margin-bottom-4"
+        />
+      )}
+
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
@@ -464,9 +479,7 @@ const DraftModelPlansTable = ({
                           {...cell.getCellProps()}
                           scope="row"
                           style={{
-                            paddingLeft: '0',
-                            borderBottom:
-                              index === page.length - 1 ? 'none' : 'auto'
+                            paddingLeft: '0'
                           }}
                         >
                           {cell.render('Cell')}
@@ -477,9 +490,7 @@ const DraftModelPlansTable = ({
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          paddingLeft: '0',
-                          borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                          paddingLeft: '0'
                         }}
                       >
                         {cell.render('Cell')}
@@ -492,19 +503,21 @@ const DraftModelPlansTable = ({
         </tbody>
       </UswdsTable>
 
-      <TablePagination
-        gotoPage={gotoPage}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canNextPage={canNextPage}
-        pageIndex={state.pageIndex}
-        pageOptions={pageOptions}
-        canPreviousPage={canPreviousPage}
-        pageCount={pageCount}
-        pageSize={state.pageSize}
-        setPageSize={setPageSize}
-        page={[]}
-      />
+      {!userModels && (
+        <TablePagination
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canNextPage={canNextPage}
+          pageIndex={state.pageIndex}
+          pageOptions={pageOptions}
+          canPreviousPage={canPreviousPage}
+          pageCount={pageCount}
+          pageSize={state.pageSize}
+          setPageSize={setPageSize}
+          page={[]}
+        />
+      )}
 
       <div
         className="usa-sr-only usa-table__announcement-region"
