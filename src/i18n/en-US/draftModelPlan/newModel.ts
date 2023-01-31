@@ -30,6 +30,7 @@ const newModel = {
   teamInfo:
     'Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
   searchTeamInfo: 'Search for a team member to add to your model team.',
+  startTyping: 'Start typing the person’s name you want to add',
   teamMemberName: 'Team member name',
   teamMemberRole: 'Team member role',
   searchMemberInfo:

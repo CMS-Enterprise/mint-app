@@ -4,7 +4,6 @@ import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -36,11 +35,9 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		Content:     "This is a test comment",
 	}
 
-	regularUserPrincipal := &authentication.ApplicationPrincipal{
-		Username:          "TEST",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	regularUserPrincipal := suite.testConfigs.Principal
+	regularUserPrincipal.JobCodeASSESSMENT = false
+	regularUserPrincipal.JobCodeUSER = true
 	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
@@ -123,11 +120,9 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 		Resolution:   true,
 	}
 
-	regularUserPrincipal := &authentication.ApplicationPrincipal{
-		Username:          "TEST",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	regularUserPrincipal := suite.testConfigs.Principal
+	regularUserPrincipal.JobCodeASSESSMENT = false
+
 	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(result.ID)

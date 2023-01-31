@@ -57,10 +57,10 @@ export const DocumentsContent = () => {
             <Breadcrumb current>{t('heading')}</Breadcrumb>
           </BreadcrumbBar>
 
-          {message && <Expire delay={4000}>{message}</Expire>}
+          {message && <Expire delay={45000}>{message}</Expire>}
 
           {documentMessage && (
-            <Expire delay={4000}>
+            <Expire delay={45000}>
               <Alert
                 type={documentStatus}
                 slim

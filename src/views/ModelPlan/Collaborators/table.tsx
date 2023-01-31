@@ -33,11 +33,10 @@ const CollaboratorsTable = ({
   const { t } = useTranslation('newModel');
 
   const columns: any = useMemo(() => {
-    // TODO: Import collaborator types
     return [
       {
         Header: t('table.name'),
-        accessor: 'fullName',
+        accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
           return <IconInitial user={value} index={row.index} />;
         }
@@ -119,7 +118,10 @@ const CollaboratorsTable = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'fullName', asc: true }], []),
+        sortBy: useMemo(
+          () => [{ id: 'userAccount.commonName', asc: true }],
+          []
+        ),
         pageIndex: 0
       }
     },

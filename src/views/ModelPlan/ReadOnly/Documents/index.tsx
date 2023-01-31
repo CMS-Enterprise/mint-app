@@ -31,7 +31,7 @@ const ReadOnlyDocuments = ({
       </div>
 
       {documentMessage && (
-        <Expire delay={4000}>
+        <Expire delay={45000}>
           <Alert
             type={documentStatus}
             slim

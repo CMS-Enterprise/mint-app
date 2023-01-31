@@ -33,7 +33,13 @@ const mockModel: ModelPlanType = {
   ],
   collaborators: [
     {
-      fullName: 'Test User',
+      userAccount: {
+        __typename: 'UserAccount',
+        email: '',
+        username: 'MINT',
+        commonName: 'Test User'
+      },
+      userID: '123',
       teamRole: TeamRole.MODEL_LEAD,
       __typename: 'PlanCollaborator'
     }

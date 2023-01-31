@@ -88,7 +88,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaborator(logger, principal.ID(), modelPlanID)
+		collaborator, err := store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
 		return collaborator, err
 	}
 
@@ -110,7 +110,7 @@ func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Princ
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaboratorBySolutionID(logger, principal.ID(), solutionID)
+		collaborator, err := store.CheckIfCollaboratorBySolutionID(logger, principal.Account().ID, solutionID)
 		return collaborator, err
 	}
 
@@ -132,15 +132,21 @@ func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Princ
 func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, discussionID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {
 		return true, nil
-	} else if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaboratorByDiscussionID(logger, principal.ID(), discussionID)
+	}
+
+	if principal.AllowMAC() {
+		return false, nil
+	}
+
+	if principal.AllowUSER() {
+		collaborator, err := store.CheckIfCollaboratorByDiscussionID(logger, principal.Account().ID, discussionID)
 		return collaborator, err
 
-	} else {
-		errString := "user has no roles"
-		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
-		return false, fmt.Errorf(errString)
 	}
+
+	errString := "user has no roles"
+	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
+	return false, fmt.Errorf(errString)
 
 }
 
@@ -149,14 +155,20 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 func IsCollaboratorByOperationalNeedID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, operationalNeedID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {
 		return true, nil
-	} else if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaboratorByOperationalNeedID(logger, principal.ID(), operationalNeedID)
+	}
+
+	if principal.AllowMAC() {
+		return false, nil
+	}
+
+	if principal.AllowUSER() {
+		collaborator, err := store.CheckIfCollaboratorByOperationalNeedID(logger, principal.Account().ID, operationalNeedID)
 		return collaborator, err
 
-	} else {
-		errString := "user has no roles"
-		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedID.String()))
-		return false, fmt.Errorf(errString)
 	}
+
+	errString := "user has no roles"
+	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedID.String()))
+	return false, fmt.Errorf(errString)
 
 }

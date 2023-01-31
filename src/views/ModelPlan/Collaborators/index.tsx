@@ -117,7 +117,7 @@ export const CollaboratorsContent = () => {
       .then(response => {
         if (!response?.errors) {
           setModalOpen(false);
-          if (collaborator.euaUserID === euaId) {
+          if (collaborator.userAccount.username === euaId) {
             showMessageOnNextPage(
               <SuccessRemovalMessage modelName={data?.modelPlan?.modelName} />
             );
@@ -138,13 +138,15 @@ export const CollaboratorsContent = () => {
   const RemoveCollaborator = () => {
     // i18n key for conditionally rendering text
     const selfOrCollaborator: string =
-      removeCollaborator?.euaUserID === euaId ? 'selfModal' : 'modal';
+      removeCollaborator?.userAccount.username === euaId
+        ? 'selfModal'
+        : 'modal';
 
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
           {t(`${selfOrCollaborator}.heading`, {
-            collaborator: removeCollaborator?.fullName
+            collaborator: removeCollaborator?.userAccount.commonName
           })}
         </PageHeading>
         <p>{t(`${selfOrCollaborator}.subheading`)}</p>

@@ -17,7 +17,11 @@ export default gql`
       }
       isCollaborator
       collaborators {
-        fullName
+        userAccount {
+          commonName
+          email
+          username
+        }
         teamRole
       }
       crTdls {
