@@ -23,6 +23,7 @@ describe('The Model Plan General Characteristics Form', () => {
       .should('be.checked');
 
     cy.get('#plan-characteristics-existing-model')
+      .click()
       .type('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 
