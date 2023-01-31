@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Alert,
   Button,
   Grid,
   GridContainer,
@@ -18,6 +17,7 @@ import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';

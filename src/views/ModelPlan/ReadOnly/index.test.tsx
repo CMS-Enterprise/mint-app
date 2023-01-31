@@ -34,11 +34,17 @@ const mockData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
+
   collaborators: [
     {
-      __typename: 'PlanCollaborator',
-      fullName: 'First Collaborator',
-      teamRole: TeamRole.MODEL_LEAD
+      userAccount: {
+        __typename: 'UserAccount',
+        email: '',
+        username: 'MINT',
+        commonName: 'First Collaborator'
+      },
+      teamRole: TeamRole.MODEL_LEAD,
+      __typename: 'PlanCollaborator'
     }
   ],
   crTdls: [

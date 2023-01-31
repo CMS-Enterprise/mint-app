@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 
+import { MessageProvider } from 'hooks/useMessage';
 import GetCRTDL from 'queries/CRTDL/GetCRTDL';
 
 import AddCRTDL from '.';
@@ -40,11 +41,13 @@ describe('Model Plan Add CR and TDL page', () => {
           `/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${crtdlID}`
         ]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?">
-            <AddCRTDL />
-          </Route>
-        </MockedProvider>
+        <MessageProvider>
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?">
+              <AddCRTDL />
+            </Route>
+          </MockedProvider>
+        </MessageProvider>
       </MemoryRouter>
     );
 
@@ -65,11 +68,13 @@ describe('Model Plan Add CR and TDL page', () => {
           `/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${crtdlID}`
         ]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?">
-            <AddCRTDL />
-          </Route>
-        </MockedProvider>
+        <MessageProvider>
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl/:crtdlID?">
+              <AddCRTDL />
+            </Route>
+          </MockedProvider>
+        </MessageProvider>
       </MemoryRouter>
     );
 

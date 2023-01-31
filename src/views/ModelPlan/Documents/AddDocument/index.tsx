@@ -13,6 +13,7 @@ import {
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 
 import DocumentUpload from './documentUpload';
 
@@ -58,6 +59,10 @@ const AddDocument = () => {
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
             {t('uploadDescription')}
+          </p>
+
+          <p className="margin-bottom-2 font-body-md line-height-body-4">
+            {t('requiredHint')} <RequiredAsterisk /> {t('requiredHint2')}
           </p>
 
           <DocumentUpload />

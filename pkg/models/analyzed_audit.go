@@ -338,13 +338,24 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 // AnalyzedModelLeads represents an AnalyzedModelLeads in an AnalyzedAuditChange
 type AnalyzedModelLeads struct {
-	Added []string `json:"added,omitempty"`
+	Added []AnalyzedModelLeadInfo `json:"added,omitempty"`
+}
+
+// AnalyzedModelLeadInfo Returns store Information about a ModelLead
+type AnalyzedModelLeadInfo struct {
+	ID         uuid.UUID `json:"id" db:"id"`
+	CommonName string    `json:"commonName" db:"common_name"`
+}
+
+// String implements the stringer interface
+func (a *AnalyzedModelLeadInfo) String() string {
+	return a.CommonName
 }
 
 const (
 	// AnalyzedModelLeadsHumanizedAdded is human readable
 	// sentence template of AnalyzedModelLeads.Added
-	AnalyzedModelLeadsHumanizedAdded = "%s has been addeed as a Model Lead"
+	AnalyzedModelLeadsHumanizedAdded = "%s has been added as a Model Lead"
 )
 
 // Humanize returns AnalyzedModelLeads in human readable sentences
@@ -352,12 +363,12 @@ func (a *AnalyzedModelLeads) Humanize() []string {
 	var humanizedAnalyzedModelLeads []string
 
 	if a == nil {
-		return humanizedAnalyzedModelLeads
+		return humanizedAnalyzedModelLeads //TODO, fetch from the database here or before?
 	}
 
 	if len(a.Added) > 0 {
-		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name string, index int) string {
-			return fmt.Sprintf(AnalyzedModelLeadsHumanizedAdded, name)
+		humanizedAnalyzedModelLeads = lo.Map(a.Added, func(name AnalyzedModelLeadInfo, index int) string {
+			return fmt.Sprintf(AnalyzedModelLeadsHumanizedAdded, name.CommonName)
 		})
 	}
 

@@ -128,13 +128,14 @@ PlanCollaborator represents a collaborator on a plan
 type PlanCollaborator {
   id: UUID!
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userID: UUID!
+  userAccount: UserAccount!
   teamRole: TeamRole!
-  email: String!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 """
@@ -180,10 +181,8 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 """
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userName: String!
   teamRole: TeamRole!
-  email: String!
 }
 
 """
@@ -320,7 +319,7 @@ type PlanDiscussion  {
   isAssessment: Boolean!
 
   createdByUser: UserInfo!
-  
+
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -1366,11 +1365,11 @@ type NDAInfo {
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
-    userID: String!
+    userID: UUID!
 
-    createdBy: String!
+    createdBy: UUID!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
     modifiedDts: Time
 
 }
@@ -1418,8 +1417,9 @@ type AuditChange {
   tableName: String!
   action: String!
   fields: Map!
-  modifiedBy: String
-  modifiedDts: Time
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time  
 }
 
 
@@ -1486,6 +1486,7 @@ type Query {
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  userAccount(username: String!): UserAccount!
 }
 
 enum ModelPlanFilter {
@@ -1693,6 +1694,8 @@ enum ModelStatus {
 	OMB_ASRF_CLEARANCE
 	CLEARED
 	ANNOUNCED
+  PAUSED
+  CANCELED
 }
 
 enum CMSCenter {
@@ -2306,6 +2309,20 @@ directive @goModel(
   model: String
   models: [String!]
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+type UserAccount {
+	id: UUID!
+	username: String!
+	isEUAID: Boolean
+	commonName: String!
+	locale: String!
+	email: String!
+	givenName: String!
+	familyName: String!
+	zoneInfo: String!
+	hasLoggedIn: Boolean
+}
+
 
 """
 A user role associated with a job code

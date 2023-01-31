@@ -20,7 +20,7 @@ require (
 	github.com/lib/pq v1.10.6
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/okta/okta-jwt-verifier-golang v1.3.1
-	github.com/pquerna/otp v1.3.0
+	github.com/pquerna/otp v1.4.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.13.0
 	github.com/stretchr/testify v1.8.1
@@ -40,6 +40,7 @@ require github.com/contribsys/faktory v1.6.2
 require (
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	go.opentelemetry.io/otel v1.11.1 // indirect
 	go.opentelemetry.io/otel/trace v1.11.1 // indirect
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect

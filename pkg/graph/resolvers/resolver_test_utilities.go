@@ -3,8 +3,11 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"os"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -30,9 +33,11 @@ type TestConfigs struct {
 	S3Client  *upload.S3Client
 	PubSub    *pubsub.ServicePubSub
 	Principal *authentication.ApplicationPrincipal
+	Context   context.Context
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
+// Note, it does not return the principal as this needs to be updated for every test. This should only be called from setup tests!
 func GetDefaultTestConfigs() *TestConfigs {
 	tc := TestConfigs{}
 	tc.GetDefaults()
@@ -47,15 +52,19 @@ func createS3Client() upload.S3Client {
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
+	//OS ENV won't get environment variables set by VSCODE for debugging
+	_ = os.Setenv(appconfig.LocalMinioAddressKey, config.GetString(appconfig.LocalMinioAddressKey))
+	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
+	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
 	return upload.NewS3Client(s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
+// The principal needs to be set before every test as the user account is removed between tests
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
-	princ := getTestPrincipal(store, userInfo.EuaUserID)
 
 	s3Client := createS3Client()
 	tc.DBConfig = config
@@ -66,7 +75,10 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
 
-	tc.Principal = princ
+	dataLoaders := loaders.NewDataLoaders(tc.Store)
+	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	tc.Context = appcontext.WithLogger(tc.Context, tc.Logger)
+
 }
 
 // NewDBConfig returns a DBConfig struct with values from appconfig

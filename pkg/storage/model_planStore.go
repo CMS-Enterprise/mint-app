@@ -192,8 +192,8 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 	return modelPlans, nil
 }
 
-// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the euaID supplied is a collaborator.
-func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, euaID string) ([]*models.ModelPlan, error) {
+// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the user_accountID supplied is a collaborator.
+func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, userID uuid.UUID) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
@@ -202,7 +202,7 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 	}
 	arg := map[string]interface{}{
 		"archived": archived,
-		"euaID":    euaID,
+		"user_id":  userID,
 	}
 
 	err = stmt.Select(&modelPlans, arg)

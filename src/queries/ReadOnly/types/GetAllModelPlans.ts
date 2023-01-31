@@ -16,9 +16,17 @@ export interface GetAllModelPlans_modelPlanCollection_basics {
   goal: string | null;
 }
 
+export interface GetAllModelPlans_modelPlanCollection_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetAllModelPlans_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
-  fullName: string;
+  userAccount: GetAllModelPlans_modelPlanCollection_collaborators_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
 }
 

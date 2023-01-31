@@ -1,4 +1,35 @@
-{
+{    
+    "go.testEnvVars": {
+    "PGHOST": "localhost",
+    "PGPORT": "5437",
+    "PGDATABASE": "postgres",
+    "PGUSER": "postgres",
+    "PGPASS": "mysecretpassword",
+    "PGPASSWORD": "mysecretpassword",
+    "PGSSLMODE": "disable",
+    "DB_MAX_CONNECTIONS": "20",
+    "AWS_REGION": "us-west-2",
+    "AWS_S3_FILE_UPLOAD_BUCKET": "mint-app-file-uploads",
+    // "MINIO_HOST": "localhost:9005",
+    "MINIO_ADDRESS": "http://localhost:9005",
+    "MINIO_ACCESS_KEY": "minioadmin",
+    "MINIO_SECRET_KEY": "minioadmin"
+  },
+  "go.toolsEnvVars": {
+    "PGHOST": "localhost",
+    "PGPORT": "5437",
+    "PGDATABASE": "postgres",
+    "PGUSER": "postgres",
+    "PGPASS": "mysecretpassword",
+    "PGPASSWORD": "mysecretpassword",
+    "PGSSLMODE": "disable",
+    "DB_MAX_CONNECTIONS": "20",
+    "AWS_REGION": "us-west-2",
+    "AWS_S3_FILE_UPLOAD_BUCKET": "mint-app-file-uploads",
+    "MINIO_ADDRESS": "http://localhost:9005",
+    "MINIO_ACCESS_KEY": "minioadmin",
+    "MINIO_SECRET_KEY": "minioadmin"
+  },
     "editor.formatOnSave": false,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -24,6 +23,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';

@@ -10,4 +10,4 @@ SELECT
 FROM model_plan
 INNER JOIN plan_collaborator ON plan_collaborator.model_plan_id = model_plan.id
 
-WHERE plan_collaborator.eua_user_id = :euaID AND model_plan.archived = :archived
+WHERE plan_collaborator.user_id = :user_id AND model_plan.archived = :archived

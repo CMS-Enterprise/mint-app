@@ -26,6 +26,10 @@ type ResolverSuite struct {
 // SetupTest clears the database between each test
 func (suite *ResolverSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
+
+	//GET USER ACCOUNT EACH TIME!
+	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.EuaUserID)
+	suite.testConfigs.Principal = princ
 	assert.NoError(suite.T(), err)
 }
 
@@ -66,13 +70,11 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 	return dr
 }
 
-func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, teamRole models.TeamRole) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
-		EuaUserID:   EUAUserID,
-		FullName:    fullName,
+		UserName:    userName,
 		TeamRole:    teamRole,
-		Email:       emailAddress,
 	}
 
 	mockController := gomock.NewController(suite.T())
@@ -101,7 +103,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Eq([]string{collaboratorInput.UserName + ".doe@local.fake"}), //this comes from the stub user info function
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),
@@ -162,3 +164,8 @@ func TestResolverSuite(t *testing.T) {
 	rs.testConfigs = GetDefaultTestConfigs()
 	suite.Run(t, rs)
 }
+
+// func (suite *ResolverSuite) HandleStats(suiteName string, stats *suite.SuiteInformation) {
+// 	// suite.T().Log("Writing Statistics")
+// 	// suite.T().Log(stats)
+// }

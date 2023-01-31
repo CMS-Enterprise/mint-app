@@ -149,8 +149,8 @@ const TaskListSideNav = ({
               {collaborators.map((collaborator, index) => {
                 return (
                   <IconInitial
-                    key={collaborator.euaUserID}
-                    user={collaborator.fullName}
+                    key={collaborator.userAccount.username}
+                    user={collaborator.userAccount.commonName}
                     index={index}
                   />
                 );

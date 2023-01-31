@@ -7,17 +7,12 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  Alert,
-  Button,
-  Fieldset,
-  Grid,
-  IconArrowBack
-} from '@trussworks/react-uswds';
+import { Button, Fieldset, Grid, IconArrowBack } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';

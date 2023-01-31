@@ -60,6 +60,7 @@ services:
       - ./tmp/minio:/data
   prince:
     image: lambci/lambda:go1.x
+    platform: linux/amd64
     ports:
       - 9006:9001
     environment:

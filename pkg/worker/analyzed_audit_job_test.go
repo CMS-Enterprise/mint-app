@@ -6,6 +6,7 @@ import (
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -37,7 +38,13 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
+	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(modelLead.UserID)
+
+	suite.NoError(err)
 	collaborator := suite.createPlanCollaborator(plan, "COLB", "New Colaborator", "MODEL_TEAM", "test@email.com")
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+
+	suite.NoError(err)
 
 	// Add Discussion
 	suite.createPlanDiscussion(plan, "Test Comment")
@@ -99,9 +106,14 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// CrTdl Activity
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
-	// Plan Collaborators. Only model leads should be added.
-	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLead.FullName))
-	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaborator.FullName)))
+	// Plan Collaborators. Only model leads should be added. Will be 2, one for the added account, one for the principal
+	suite.Len(analyzedAudit.Changes.ModelLeads.Added, 2)
+	leadIDs := []uuid.UUID{}
+	for _, lead := range analyzedAudit.Changes.ModelLeads.Added {
+		leadIDs = append(leadIDs, lead.ID)
+	}
+	suite.Contains(leadIDs, modelLeadAccount.ID)
+	suite.NotContains(leadIDs, collaboratorAccount.ID)
 
 	// Discussions Activity
 	suite.True(analyzedAudit.Changes.PlanDiscussions.Activity)
@@ -131,10 +143,10 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
-	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().AddDate(0, 0, 1).Format("2006-01-02"), plan.ID.String())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), noChangeMp.ID.String())
 	suite.NoError(err)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC().AddDate(0, 0, 1))
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC())
 	suite.Error(err)
 }
 
