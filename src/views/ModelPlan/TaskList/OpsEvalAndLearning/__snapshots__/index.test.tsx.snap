@@ -116,7 +116,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-checkbox__label"
         for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
       >
-        Yes, we will get support from another agenct through IAA
+        Yes, we will get support from another agency through Inter Agency Agreement (IAA)
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -449,6 +449,26 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        id="ops-eval-and-learning-contractor-support-ONE"
+        name="contractorSupport"
+        type="checkbox"
+        value="ONE"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-contractor-support-ONE"
+      >
+        One contractor to support implementation
+      </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
         id="ops-eval-and-learning-contractor-support-MULTIPLE"
         name="contractorSupport"
         type="checkbox"
@@ -479,26 +499,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         for="ops-eval-and-learning-contractor-support-NONE"
       >
         Do not plan to use an implemenation contractor
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-contractor-support-ONE"
-        name="contractorSupport"
-        type="checkbox"
-        value="ONE"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-contractor-support-ONE"
-      >
-        One contractor to support implementation
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

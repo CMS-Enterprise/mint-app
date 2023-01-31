@@ -6,7 +6,8 @@ const operationsEvaluationAndLearning = {
   anotherAgencyOptions: {
     withState: 'Yes, we will partner with states',
     getIdeas: 'Yes, we will get ideas from another agency',
-    getSupport: 'Yes, we will get support from another agenct through IAA',
+    getSupport:
+      'Yes, we will get support from another agency through Inter Agency Agreement (IAA)',
     no: 'No',
     other: 'Other'
   },
@@ -225,6 +226,8 @@ const operationsEvaluationAndLearning = {
   reportingFrequency:
     'What is the frequency of reporting either to you or from participants under the model?',
   ccw: 'Is Chronic Conditions Warehouse (CCW) involved in the model?',
+  ccwInfo:
+    'If you select either yes option, there will be additional questions to answer.',
   ccwOptions: {
     yesEval: 'Yes, for evaluation',
     yesImpl: 'Yes, for implementation',

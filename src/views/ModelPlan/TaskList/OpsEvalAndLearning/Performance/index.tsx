@@ -42,7 +42,12 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Performance = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -65,6 +70,7 @@ const Performance = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     benchmarkForPerformance,
     benchmarkForPerformanceNote,
     computePerformanceScores,
@@ -138,6 +144,7 @@ const Performance = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     benchmarkForPerformance: benchmarkForPerformance ?? null,
     benchmarkForPerformanceNote: benchmarkForPerformanceNote ?? '',
@@ -598,11 +605,13 @@ const Performance = () => {
           currentPage={renderCurrentPage(
             5,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

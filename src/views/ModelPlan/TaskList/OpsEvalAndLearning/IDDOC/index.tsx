@@ -36,7 +36,12 @@ import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const IDDOC = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -59,6 +64,7 @@ const IDDOC = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     technicalContactsIdentified,
     technicalContactsIdentifiedDetail,
     technicalContactsIdentifiedNote,
@@ -107,6 +113,7 @@ const IDDOC = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     technicalContactsIdentified: technicalContactsIdentified ?? null,
     technicalContactsIdentifiedDetail: technicalContactsIdentifiedDetail ?? '',
@@ -405,11 +412,13 @@ const IDDOC = () => {
           currentPage={renderCurrentPage(
             2,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

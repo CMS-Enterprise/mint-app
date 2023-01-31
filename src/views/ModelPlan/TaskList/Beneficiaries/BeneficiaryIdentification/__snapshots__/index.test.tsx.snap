@@ -352,7 +352,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               data-testid="label"
               for="beneficiaries-dual-eligibility"
             >
-              Should dual-eligible beneficiaries be treated differently than non-dually eligibles?
+              Should dually-eligible beneficiaries be treated differently than non-dually eligibles?
             </label>
             <fieldset
               class="usa-fieldset"

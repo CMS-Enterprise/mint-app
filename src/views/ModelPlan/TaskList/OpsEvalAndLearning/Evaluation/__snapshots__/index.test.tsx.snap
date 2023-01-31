@@ -236,6 +236,11 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       Is Chronic Conditions Warehouse (CCW) involved in the model?
     </legend>
+    <p
+      class="text-base margin-y-1"
+    >
+      If you select either yes option, there will be additional questions to answer.
+    </p>
     <div
       class="mint-checkbox usa-checkbox"
     >

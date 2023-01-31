@@ -42,7 +42,12 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const DataSharing = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -65,6 +70,7 @@ const DataSharing = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     dataSharingStarts,
     dataSharingStartsOther,
     dataSharingFrequency,
@@ -104,7 +110,10 @@ const DataSharing = () => {
             );
           } else if (redirect === 'back') {
             if (
-              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment || [])
+              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
+              isQualityMeasures(
+                formikRef?.current?.values.dataNeededForMonitoring
+              )
             ) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
@@ -129,6 +138,7 @@ const DataSharing = () => {
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     dataSharingStarts: dataSharingStarts ?? null,
     dataSharingStartsOther: dataSharingStartsOther ?? '',
     dataSharingFrequency: dataSharingFrequency ?? [],
@@ -565,11 +575,13 @@ const DataSharing = () => {
           currentPage={renderCurrentPage(
             8,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />
