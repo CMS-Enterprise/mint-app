@@ -23,6 +23,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     plan_favorite,
     plan_cr_tdl,
     operational_solution,
+	operational_solution_subtasks,
     operational_need,
     analyzed_audit,
     model_plan,

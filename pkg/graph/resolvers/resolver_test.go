@@ -141,24 +141,94 @@ func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber strin
 	return crTdl
 }
 
-// func (suite *ResolverSuite) createOperationalSolution(opNeed *models.OperationalNeed, solutionType *models.OperationalSolutionKey, customSolutionType *string, needed bool) *models.OperationalSolution {
+func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolution {
+	planName := "Plan For Milestones"
+	plan := suite.createModelPlan(planName)
+	needType := models.OpNKManageCd
 
-// 	changes := map[string]interface{}{
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
+	operationalSolution, _ := OperationalSolutionInsertOrUpdateCustom(
+		suite.testConfigs.Logger,
+		need.ID,
+		"AnotherSolution",
+		nil,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
-// 		"operational_need_id": opNeed.ID,
-// 	}
+	return operationalSolution
+}
 
-// 	if solutionType != nil {
-// 		sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, opNeed.ID, *solutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
-// 		suite.NoError(err)
-// 		return sol
-// 	}
+func (suite *ResolverSuite) createOperationalSolutionSubtask() *models.OperationalSolutionSubtask {
+	operationalSolution := suite.createOperationalSolution()
 
-// 	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, opNeed.ID, *customSolutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
-// 	suite.NoError(err)
-// 	return sol
+	return suite.createOperationalSolutionSubtaskWithSolution(operationalSolution)
+}
 
-// }
+func (suite *ResolverSuite) createOperationalSolutionSubtaskWithSolution(
+	operationalSolution *models.OperationalSolution) *models.OperationalSolutionSubtask {
+	inputs := []*model.CreateOperationalSolutionSubtaskInput{{
+		Name:   "Test Operational Solution Input",
+		Status: models.OperationalSolutionSubtaskStatusTodo,
+	}}
+
+	return suite.createOperationalSolutionSubtasksWithSolution(operationalSolution, inputs)[0]
+}
+
+func (suite *ResolverSuite) createMultipleOperationSolutionSubtasks() []*models.OperationalSolutionSubtask {
+	operationalSolution := suite.createOperationalSolution()
+
+	createOperationalSolutionInput := []*model.CreateOperationalSolutionSubtaskInput{
+		{
+			Name:   "Subtask A",
+			Status: models.OperationalSolutionSubtaskStatusTodo,
+		},
+		{
+			Name:   "Subtask B",
+			Status: models.OperationalSolutionSubtaskStatusInProgress,
+		},
+	}
+
+	subtasks := suite.createOperationalSolutionSubtasksWithSolution(
+		operationalSolution,
+		createOperationalSolutionInput,
+	)
+	return subtasks
+}
+
+func (suite *ResolverSuite) createOperationalSolutionSubtasksWithSolution(
+	operationalSolution *models.OperationalSolution,
+	inputs []*model.CreateOperationalSolutionSubtaskInput) []*models.OperationalSolutionSubtask {
+	subtasks, err := OperationalSolutionSubtasksCreate(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		inputs,
+		operationalSolution.ID,
+		suite.testConfigs.Principal)
+	suite.NoError(err)
+	suite.NotNil(subtasks)
+	suite.Len(subtasks, len(inputs))
+	return subtasks
+}
+
+func (suite *ResolverSuite) convertOperationalSubtasksToUpdateInputs(
+	subtasks []*models.OperationalSolutionSubtask) []*model.UpdateOperationalSolutionSubtaskInput {
+	var updateInputs []*model.UpdateOperationalSolutionSubtaskInput
+	for _, subtask := range subtasks {
+		updateInputs = append(
+			updateInputs,
+			&model.UpdateOperationalSolutionSubtaskInput{
+				ID: subtask.ID,
+				Changes: map[string]interface{}{
+					"name":   subtask.Name,
+					"status": subtask.Status,
+				},
+			},
+		)
+	}
+	return updateInputs
+}
 
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
