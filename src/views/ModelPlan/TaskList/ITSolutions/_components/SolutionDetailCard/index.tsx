@@ -63,7 +63,10 @@ const SolutionDetailCard = ({
           <SolutionCard solution={solution} shadow />
           <div className="margin-y-1">
             <UswdsReactLink
-              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-solutions`}
+              to={{
+                pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-solutions`,
+                state: { isCustomNeed: false }
+              }}
               data-testid="update-solutions-link"
             >
               {t('updateSolutionsLink')}

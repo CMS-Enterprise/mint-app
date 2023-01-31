@@ -5,7 +5,7 @@ Displays relevant operational need question and answers
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
@@ -63,15 +63,20 @@ type SelectSolutionsProps = {
 };
 
 const SelectSolutions = ({ update }: SelectSolutionsProps) => {
+  const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('draftModelPlan');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
   }>();
 
-  const history = useHistory();
+  const {
+    state: { isCustomNeed }
+  } = useLocation<{
+    isCustomNeed?: boolean;
+  }>();
 
-  const { t } = useTranslation('itSolutions');
-  const { t: h } = useTranslation('draftModelPlan');
+  const history = useHistory();
 
   const { showMessageOnNextPage } = useMessage();
 
@@ -157,7 +162,10 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
                 update ? 'update-status' : 'solution-implementation-details'
               }`,
-              { fromSolutionDetails: false }
+              {
+                fromSolutionDetails: false,
+                isCustomNeed
+              }
             );
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
