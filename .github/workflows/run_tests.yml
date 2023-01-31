@@ -150,7 +150,7 @@ jobs:
         run: |
           scripts/dev down
           scripts/dev up
-          yarn run cypress
+          yarn cypress run
           scripts/dev down
       - name: Upload cypress videos
         if: ${{ always() }}
