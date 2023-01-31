@@ -83,7 +83,6 @@ const AddOrUpdateOperationalNeed = () => {
     formikValues: CustomOperationalNeedFormType,
     redirect?: 'it-tracker'
   ) => {
-    debugger;
     if (isUpdating) {
       updateNeedByID({
         variables: {
@@ -97,22 +96,11 @@ const AddOrUpdateOperationalNeed = () => {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  wip
-                  {/* {t('successMessage.onlyOperationalNeed', {
-                      operationalNeedName:
-                        response.data?.addOrUpdateCustomOperationalNeed
-                          .nameOther
-                    })} */}
+                  {t('successMessage.operationalNeedUpdate')}
                 </span>
               </Alert>
             );
-            // Save without adding solution
             history.push(`/models/${modelID}/task-list/it-solutions`);
-            // Contiues to add solution
-            // history.push({
-            //   pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
-            //   state: { isCustomNeed: true }
-            // });
           }
         })
         .catch(errors => {
