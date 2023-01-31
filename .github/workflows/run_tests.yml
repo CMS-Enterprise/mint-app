@@ -146,15 +146,12 @@ jobs:
           registry: docker.contribsys.com
           username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
           password: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
-      - name: Start backend & frontend
+      - name: Run E2E tests
         run: |
           scripts/dev down
           scripts/dev up
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v5
-      - name: Stop backend & frontend
-        if: ${{ failure() }}
-        run: scripts/dev down
+          yarn run cypress
+          scripts/dev down
       - name: Upload cypress videos
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
