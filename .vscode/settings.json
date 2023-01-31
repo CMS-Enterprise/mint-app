@@ -26,7 +26,6 @@
     "DB_MAX_CONNECTIONS": "20",
     "AWS_REGION": "us-west-2",
     "AWS_S3_FILE_UPLOAD_BUCKET": "mint-app-file-uploads",
-    // "MINIO_HOST": "localhost:9005",
     "MINIO_ADDRESS": "http://localhost:9005",
     "MINIO_ACCESS_KEY": "minioadmin",
     "MINIO_SECRET_KEY": "minioadmin"
