@@ -13,7 +13,9 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
+import useMessage from 'hooks/useMessage';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
 import {
@@ -40,14 +42,16 @@ const Collaborators = () => {
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
 
+  const { showMessageOnNextPage } = useMessage();
+
   const history = useHistory();
 
-  const [create] = useMutation<
+  const [create, { loading }] = useMutation<
     CreateCollaboratorsType,
     CreateModelPlanCollaboratorVariables
   >(CreateModelPlanCollaborator);
 
-  const [update] = useMutation<
+  const [update, { loading: updateLoading }] = useMutation<
     UpdateModelPlanCollaboratorType,
     UpdateModelPlanCollaboratorVariables
   >(UpdateModelPlanCollaborator);
@@ -64,7 +68,7 @@ const Collaborators = () => {
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
     const {
-      userAccount: { username },
+      userAccount: { username, commonName },
       teamRole
     } = formikValues || { userAccount: { userName: null } };
 
@@ -77,6 +81,21 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {t('successUpdateMessage', {
+                    collaborator: commonName,
+                    role: translateTeamRole(teamRole!)
+                  })}
+                </Alert>
+              </>
+            );
             history.push(`/models/${modelID}/collaborators`);
           }
         })
@@ -95,11 +114,37 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {t('successMessage', {
+                    collaborator: commonName,
+                    role: translateTeamRole(teamRole!)
+                  })}
+                </Alert>
+              </>
+            );
             history.push(`/models/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
-          formikRef?.current?.setErrors(errors);
+          const collaboratorExistingError = errors.graphQLErrors[0]?.message.includes(
+            'unique_collaborator_per_plan'
+          );
+          if (collaboratorExistingError) {
+            formikRef?.current?.setErrors({
+              userAccount: {
+                username: t('existingMember')
+              }
+            });
+          } else {
+            formikRef?.current?.setErrors(errors);
+          }
         });
     }
   };
@@ -154,6 +199,7 @@ const Collaborators = () => {
                       })}
                     </ErrorAlert>
                   )}
+
                   <Form
                     onSubmit={e => {
                       handleSubmit(e);
@@ -181,34 +227,6 @@ const Collaborators = () => {
                           name="userAccount.commonName"
                         />
                       ) : (
-                        // <Combobox
-                        //   aria-label="Cedar-Users"
-                        //   onSelect={item => {
-                        //     const foundUser = foundUsers?.userObj[item];
-                        //     setFieldValue(
-                        //       'userAccount.commonName',
-                        //       foundUser?.commonName
-                        //     );
-                        //     setFieldValue(
-                        //       'userAccount.username',
-                        //       foundUser?.euaUserId
-                        //     );
-                        //   }}
-                        // >
-                        //   <ComboboxInput
-                        //     className="usa-select"
-                        //     selectOnClick
-                        //     onChange={(
-                        //       e: React.ChangeEvent<HTMLInputElement>
-                        //     ) => {
-                        //       setSearchTerm(e?.target?.value);
-                        //       if (
-                        //         values.userAccount.commonName ||
-                        //         values.userAccount.username
-                        //       ) {
-                        //         setFieldValue('userAccount.commonName', '');
-                        //         setFieldValue('userAccount.username', '');
-                        //       }
                         <>
                           <Label
                             htmlFor="model-team-cedar-contact"
@@ -294,16 +312,20 @@ const Collaborators = () => {
                     </Alert>
 
                     <div className="margin-y-4 display-block">
-                      <Button
-                        type="submit"
-                        disabled={
-                          !values.userAccount.commonName || !values.teamRole
-                        }
-                      >
-                        {!collaboratorId
-                          ? t('addTeamMemberButton')
-                          : t('updateTeamMember')}
-                      </Button>
+                      {loading || updateLoading ? (
+                        <Spinner />
+                      ) : (
+                        <Button
+                          type="submit"
+                          disabled={
+                            !values.userAccount.commonName || !values.teamRole
+                          }
+                        >
+                          {!collaboratorId
+                            ? t('addTeamMemberButton')
+                            : t('updateTeamMember')}
+                        </Button>
+                      )}
                     </div>
                   </Form>
                 </>

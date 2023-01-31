@@ -24,7 +24,7 @@
 // Textarea
 .usa-textarea {
   height: 300px;
-  max-width: 830px;
+  max-width: 30rem;
   width: 100%;
 }
 
@@ -74,6 +74,10 @@
 
 .width-fit-content {
   width: fit-content;
+}
+
+.usa-date-picker__calendar {
+  font-size: 14px !important;
 }
 
 .usa-checkbox {

@@ -93,7 +93,9 @@ const Frequency = () => {
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (redirect?: 'task-list' | 'back' | string) => {
+  const handleFormSubmit = (
+    redirect?: 'back' | 'task-list' | 'next' | string
+  ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -117,10 +119,10 @@ const Frequency = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
           } else if (redirect) {
             history.push(redirect);
-          } else {
-            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
           }
         }
       })
@@ -182,7 +184,7 @@ const Frequency = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit();
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}

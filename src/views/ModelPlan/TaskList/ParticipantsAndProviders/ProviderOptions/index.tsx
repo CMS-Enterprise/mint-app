@@ -109,7 +109,9 @@ export const ProviderOptions = () => {
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+  const handleFormSubmit = (
+    redirect?: 'back' | 'task-list' | 'next' | string
+  ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -133,10 +135,10 @@ export const ProviderOptions = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/beneficiaries`);
           } else if (redirect) {
             history.push(redirect);
-          } else {
-            history.push(`/models/${modelID}/task-list/beneficiaries`);
           }
         }
       })
@@ -201,7 +203,7 @@ export const ProviderOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit();
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -235,7 +237,7 @@ export const ProviderOptions = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-providers-form"
                 onSubmit={e => {
                   handleSubmit(e);

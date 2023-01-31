@@ -264,7 +264,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="usa-form-group margin-top-6"
+            class="usa-form-group margin-top-6 margin-right-4"
             data-scroll="paymentStartDate"
           >
             <label

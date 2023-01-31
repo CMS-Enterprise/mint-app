@@ -46,7 +46,7 @@ export const MINTDatePicker = ({
       <FieldGroup
         scrollElement={fieldName}
         error={!!error}
-        className={classNames(className)}
+        className={classNames(className, 'margin-right-4')}
       >
         <Label
           htmlFor={id}
