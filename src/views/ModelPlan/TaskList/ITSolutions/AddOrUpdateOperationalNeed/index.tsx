@@ -31,7 +31,9 @@ import {
   UpdateCustomOperationalNeed_addOrUpdateCustomOperationalNeed as FormTypes,
   UpdateCustomOperationalNeedVariables
 } from 'queries/ITSolutions/types/UpdateCustomOperationalNeed';
+import { UpdateCustomOperationalNeedByIdVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalNeedById';
 import UpdateCustomOperationalNeed from 'queries/ITSolutions/UpdateCustomOperationalNeed';
+import UpdateCustomOperationalNeedById from 'queries/ITSolutions/UpdateCustomOperationalNeedById';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
@@ -71,44 +73,88 @@ const AddOrUpdateOperationalNeed = () => {
     UpdateCustomOperationalNeedVariables
   >(UpdateCustomOperationalNeed);
 
+  const [
+    updateNeedByID
+  ] = useMutation<UpdateCustomOperationalNeedByIdVariables>(
+    UpdateCustomOperationalNeedById
+  );
+
   const handleFormSubmit = (
     formikValues: CustomOperationalNeedFormType,
     redirect?: 'it-tracker'
   ) => {
-    addCustomOperationalNeed({
-      variables: {
-        modelPlanID: modelID,
-        customNeedType: formikValues.nameOther,
-        needed: true
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'it-tracker') {
+    debugger;
+    if (isUpdating) {
+      updateNeedByID({
+        variables: {
+          id: operationalNeedID,
+          customNeedType: formikValues.nameOther,
+          needed: true
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {t('successMessage.onlyOperationalNeed', {
-                    operationalNeedName:
-                      response.data?.addOrUpdateCustomOperationalNeed.nameOther
-                  })}
+                  wip
+                  {/* {t('successMessage.onlyOperationalNeed', {
+                      operationalNeedName:
+                        response.data?.addOrUpdateCustomOperationalNeed
+                          .nameOther
+                    })} */}
                 </span>
               </Alert>
             );
             // Save without adding solution
             history.push(`/models/${modelID}/task-list/it-solutions`);
-          } else {
             // Contiues to add solution
-            history.push({
-              pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
-              state: { isCustomNeed: true }
-            });
+            // history.push({
+            //   pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
+            //   state: { isCustomNeed: true }
+            // });
           }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    } else {
+      addCustomOperationalNeed({
+        variables: {
+          modelPlanID: modelID,
+          customNeedType: formikValues.nameOther,
+          needed: true
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+        .then(response => {
+          if (!response?.errors) {
+            if (redirect === 'it-tracker') {
+              showMessageOnNextPage(
+                <Alert type="success" slim className="margin-y-4">
+                  <span className="mandatory-fields-alert__text">
+                    {t('successMessage.onlyOperationalNeed', {
+                      operationalNeedName:
+                        response.data?.addOrUpdateCustomOperationalNeed
+                          .nameOther
+                    })}
+                  </span>
+                </Alert>
+              );
+              // Save without adding solution
+              history.push(`/models/${modelID}/task-list/it-solutions`);
+            } else {
+              // Contiues to add solution
+              history.push({
+                pathname: `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution`,
+                state: { isCustomNeed: true }
+              });
+            }
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
   };
 
   const breadcrumbs = [
