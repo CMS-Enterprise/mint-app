@@ -197,7 +197,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const formattedModelLeads = collaborators
     ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
     .map((collaborator, index) => {
-      return `${collaborator.fullName}${
+      return `${collaborator.userAccount.commonName}${
         index ===
         collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
           ? ''

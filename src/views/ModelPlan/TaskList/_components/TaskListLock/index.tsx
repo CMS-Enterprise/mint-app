@@ -32,7 +32,7 @@ const TaskListLock = ({ collaborator, isAssessment }: TaskListLockProps) => {
                 arrayOfColors[randomColorIndex(0, 3)]
               }`}
             >
-              {getUserInitials(collaborator!.fullName)}
+              {getUserInitials(collaborator!.userAccount.commonName)}
             </div>
           )}
 

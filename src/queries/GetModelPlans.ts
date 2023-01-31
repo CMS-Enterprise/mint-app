@@ -25,7 +25,9 @@ export default gql`
       }
       collaborators {
         id
-        fullName
+        userAccount {
+          commonName
+        }
         teamRole
       }
       discussions {

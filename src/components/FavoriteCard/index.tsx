@@ -97,8 +97,8 @@ const FavoriteCard = ({
                 )
                 .map((collaborator, index) =>
                   index === collaborators.length - 1
-                    ? collaborator.fullName
-                    : `${collaborator.fullName}, `
+                    ? collaborator.userAccount.commonName
+                    : `${collaborator.userAccount.commonName}, `
                 )}
             </p>
           </Grid>
