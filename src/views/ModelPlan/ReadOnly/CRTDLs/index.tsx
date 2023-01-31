@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Link } from '@trussworks/react-uswds';
+import { Link } from '@trussworks/react-uswds';
 
+import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import CRTDLTable from 'views/ModelPlan/CRTDL/CRTDLs/table';
 
@@ -30,7 +31,7 @@ const ReadOnlyCRTDLs = ({
       </p>
 
       {crtdlMessage && (
-        <Expire delay={4000}>
+        <Expire delay={45000}>
           <Alert
             type={crtdlStatus}
             slim

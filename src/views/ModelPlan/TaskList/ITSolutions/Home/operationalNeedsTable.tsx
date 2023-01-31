@@ -19,17 +19,14 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import {
-  Alert,
-  IconArrowForward,
-  Table as UswdsTable
-} from '@trussworks/react-uswds';
+import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
