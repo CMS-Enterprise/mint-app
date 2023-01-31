@@ -27,9 +27,6 @@ var planCollaboratorFetchByModelPlanIDSQL string
 //go:embed SQL/plan_collaborator/fetch_by_id.sql
 var planCollaboratorFetchByIDSQL string
 
-//go:embed SQL/plan_collaborator/collection_unique_by_user_id.sql
-var planCollaboratorCollectionUniqueUserID string
-
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 
@@ -117,23 +114,4 @@ func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborato
 	}
 
 	return &collaborator, nil
-}
-
-// PlanCollaboratorCollection returns unique collecion of PlanCollaborators
-func (s *Store) PlanCollaboratorCollection() ([]*models.PlanCollaborator, error) {
-	planCollaborators := []*models.PlanCollaborator{}
-
-	statement, err := s.db.PrepareNamed(planCollaboratorCollectionUniqueUserID)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{}
-
-	err = statement.Select(&planCollaborators, arg)
-	if err != nil {
-		return nil, err
-	}
-
-	return planCollaborators, nil
 }

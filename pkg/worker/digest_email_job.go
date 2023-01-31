@@ -29,7 +29,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 	helper := faktory_worker.HelperFor(ctx)
 
-	collaborators, err := w.Store.PlanCollaboratorCollection()
+	userIDs, err := w.Store.PlanFavoriteCollectionGetUniqueUserIDs()
 	if err != nil {
 		return err
 	}
@@ -41,8 +41,8 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 		batch.Success.Queue = defaultQueue
 
 		return batch.Jobs(func() error {
-			for _, c := range collaborators {
-				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, c.UserID) //TODO verify!
+			for _, id := range userIDs {
+				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, id) //TODO verify!
 				job.Queue = emailQueue
 				err = batch.Push(job)
 				if err != nil {
@@ -116,7 +116,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
 func getDigestAnalyzedAudits(userID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
 
-	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, userID)
+	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
 	if err != nil {
 		return nil, err
 	}
