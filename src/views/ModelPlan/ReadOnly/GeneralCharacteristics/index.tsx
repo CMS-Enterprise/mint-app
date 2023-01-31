@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
+import GetExistingModelPlans from 'queries/GetExistingModelPlans';
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
+import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
 import {
   translateAgreementTypes,
   translateAlternativePaymentTypes,
@@ -31,6 +33,20 @@ const ReadOnlyGeneralCharacteristics = ({
   const { t: p } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
+
+  const { data: existingModelData } = useQuery<ExistingModelPlanType>(
+    GetExistingModelPlans
+  );
+
+  // Converting array of objects to an object with keys of 'id'
+  const existingModelPlans:
+    | {
+        [key: string]: string;
+      }
+    | undefined = existingModelData?.existingModelCollection.reduce(
+    (obj, item) => Object.assign(obj, { [item.id as string]: item.modelName }),
+    {}
+  );
 
   const { data, loading, error } = useQuery<GetAllGeneralCharacteristicsTypes>(
     GetAllGeneralCharacteristics,
@@ -99,6 +115,13 @@ const ReadOnlyGeneralCharacteristics = ({
     status
   } = data?.modelPlan?.generalCharacteristics || {};
 
+  // Convert 'resemblesExistingModelWhich' from and array of string 'id's to an array of model names
+  const mappedExistingModels =
+    existingModelPlans &&
+    resemblesExistingModelWhich?.map(
+      model => existingModelPlans[model] || model
+    );
+
   return (
     <div
       className="read-only-model-plan--general-characteristics"
@@ -140,7 +163,7 @@ const ReadOnlyGeneralCharacteristics = ({
         <ReadOnlySection
           heading={t('modelResemblance')}
           list
-          listItems={resemblesExistingModelWhich}
+          listItems={mappedExistingModels}
         />
 
         <ReadOnlySection
