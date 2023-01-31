@@ -18,58 +18,6 @@ ADD COLUMN created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
 ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;
 
 
-WITH
-UnMatched AS (
-    SELECT
-        audit.table_config.created_by_old,
-        user_account_created.id AS created_by,
-        audit.table_config.modified_by_old,
-        user_account_modified.id AS modified_by
-    FROM audit.table_config
-    LEFT JOIN user_account AS user_account_created ON (audit.table_config.created_by_old = user_account_created.username AND audit.table_config.created_by_old NOT IN ('MINT', 'UNKN'))
-    LEFT JOIN user_account AS user_account_modified ON (audit.table_config.modified_by_old = user_account_modified.username AND audit.table_config.modified_by_old NOT IN ('MINT', 'UNKN'))
-    WHERE user_account_modified.id IS NULL
-),
-
-
-UnMatched_UserNames AS (
-    SELECT created_by_old AS USER_NAME FROM Unmatched
-    WHERE created_by IS NULL AND created_by_old IS NOT NULL
-
-    UNION
-    SELECT modified_by_old AS USER_NAME FROM Unmatched
-    WHERE modified_by IS NULL AND modified_by_old IS NOT NULL
-
-)
-
--- Insert any missing user_accounts besides MINT or UNKN
-INSERT INTO user_account
-(
-    id,
-    username,
-    is_euaid,
-    common_name,
-    locale,
-    email,
-    given_name,
-    family_name,
-    zone_info,
-    has_logged_in
-)
-SELECT
-    gen_random_uuid() AS id,
-    UnMatched_UserNames.user_name AS username,
-    TRUE AS is_euaid,
-    UnMatched_UserNames.user_name AS common_name,
-    'UNKNOWN' AS "locale",
-    'UNKNOWN@UNKOWN.UNKNOWN' AS email,
-    UnMatched_UserNames.user_name AS given_name,
-    UnMatched_UserNames.user_name AS family_name,
-    'UNKNOWN' AS zone_info,
-    FALSE AS has_logged_in
-FROM UnMatched_UserNames
-WHERE UnMatched_UserNames.user_name NOT IN ('MINT', 'UNKN'); --Don't create for these
-
 
 /* Perform the data migration */
 WITH userAccount AS (
