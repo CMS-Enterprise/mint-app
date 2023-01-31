@@ -229,7 +229,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
         {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
-          <Expire delay={3000} callback={setDiscussionStatusMessage}>
+          <Expire delay={45000} callback={setDiscussionStatusMessage}>
             <Alert className="margin-bottom-4" type={discussionStatus}>
               {discussionStatusMessage}
             </Alert>
@@ -451,7 +451,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
         {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
-          <Expire delay={3000} callback={setDiscussionStatusMessage}>
+          <Expire delay={45000} callback={setDiscussionStatusMessage}>
             <Alert type={discussionStatus} className="margin-bottom-4">
               {discussionStatusMessage}
             </Alert>

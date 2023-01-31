@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Button,
   CardGroup,
   Grid,
@@ -19,6 +18,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';

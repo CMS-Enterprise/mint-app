@@ -1,0 +1,11 @@
+.usa-alert__body {
+    padding-right: 2rem !important;
+    max-width: 100% !important;
+}
+
+.mint-alert-text {
+    .usa-alert__text {
+        justify-content: space-between !important;
+        display: flex !important;
+    }
+}

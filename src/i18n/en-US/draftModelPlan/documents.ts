@@ -24,6 +24,9 @@ const documents = {
       body: 'Failed to fetch Model Plan documents'
     }
   },
+  requiredHint: 'All fields marked with ',
+  requiredHint2: ' are required',
+  fileTypes: 'Select a PDF, DOC, DOCX, XLS, or XLSX',
   uploadError: {
     heading: 'There is a problem',
     body:

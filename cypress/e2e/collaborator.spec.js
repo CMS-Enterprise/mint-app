@@ -19,14 +19,15 @@ describe('The Collaborator/Team Member Form', () => {
       });
 
       cy.get('tbody').within(() => {
-        cy.contains('th', 'mint Doe');
+        cy.contains('th', 'MINT Doe');
         cy.contains('td', 'Model Lead');
       });
     });
 
     cy.contains('a', 'Add team member').click();
 
-    cy.get('input')
+    cy.get('#react-select-model-team-cedar-contact-input')
+      .click()
       .type('Jerry{downArrow}{enter}')
       .should('have.value', 'Jerry Seinfeld, SF13');
 

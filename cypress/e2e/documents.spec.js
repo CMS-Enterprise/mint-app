@@ -18,6 +18,10 @@ describe('Model Plan Documents', () => {
       .find('input')
       .check({ force: true });
 
+    cy.get('#document-upload-restricted-true')
+      .check({ force: true })
+      .should('be.checked');
+
     // click upload button
     cy.get('[data-testid="upload-document"]').click();
 
