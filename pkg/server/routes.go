@@ -12,6 +12,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -113,6 +114,10 @@ func (s *Server) routes(
 	dataLoaders := loaders.NewDataLoaders(store)
 	dataLoaderMiddleware := loaders.NewDataLoaderMiddleware(dataLoaders)
 	s.router.Use(dataLoaderMiddleware)
+
+	userAccountServiceMiddleware := userhelpers.NewUserAccountServiceMiddleware(userhelpers.UserAccountGetByIDLOADER)
+
+	s.router.Use(userAccountServiceMiddleware)
 
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 
