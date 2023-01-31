@@ -162,7 +162,8 @@ const AddSolution = () => {
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
-        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
+        { isCustomNeed }
       );
     } else if (!updateMutation || updateMutation.errors) {
       setMutationError(true);
