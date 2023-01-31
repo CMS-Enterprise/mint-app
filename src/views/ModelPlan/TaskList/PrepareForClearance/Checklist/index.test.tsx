@@ -5,7 +5,10 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
-import { TaskStatus } from 'types/graphql-global-types';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 import PrepareForClearanceCheckList, {
   initialPrepareForClearanceValues,
@@ -32,7 +35,10 @@ const clearanceMock = [
         modelPlan: {
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
-          ...clearanceMockData
+          ...clearanceMockData,
+          prepareForClearance: {
+            status: PrepareForClearanceStatus.READY
+          }
         }
       }
     }

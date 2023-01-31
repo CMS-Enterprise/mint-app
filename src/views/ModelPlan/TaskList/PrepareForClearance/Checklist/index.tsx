@@ -33,7 +33,10 @@ import {
 } from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
 import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
-import { TaskStatus } from 'types/graphql-global-types';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
@@ -159,7 +162,12 @@ const PrepareForClearanceCheckList = ({
       });
   };
 
-  if ((!loading && error) || (!loading && !modelPlan)) {
+  if (
+    (!loading && error) ||
+    (!loading && !modelPlan) ||
+    (data as GetClearanceStatusesType)?.modelPlan?.prepareForClearance
+      ?.status === PrepareForClearanceStatus.CANNOT_START
+  ) {
     return <NotFoundPartial />;
   }
 
@@ -269,7 +277,7 @@ const PrepareForClearanceCheckList = ({
 
                         // Bypass/don't render itTools or prepareForClearance task list sections
                         if (
-                          section === 'itTools' ||
+                          section === 'itSolutions' ||
                           section === 'prepareForClearance'
                         )
                           return null;

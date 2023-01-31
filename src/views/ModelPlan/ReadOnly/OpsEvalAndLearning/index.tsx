@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
@@ -21,15 +21,20 @@ import {
   translateMonitoringFileType,
   translateStakeholdersType
 } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
+const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: readOnly } = useTranslation('readOnlyModelPlan');
+  const { t: p } = useTranslation('prepareForClearance');
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<AllOpsEvalAndLeardningTypes>(
     GettAllOpsEvalAndLearning,
@@ -156,9 +161,21 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
       data-testid="read-only-model-plan--ops-eval-and-learning"
     >
       <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4 flex-2">{t('heading')}</h2>
+        <h2 className="margin-top-0 margin-bottom-4">
+          {clearance
+            ? t('operationsEvaluationAndLearningHeading')
+            : t('heading')}
+        </h2>
         {status && <TaskListStatusTag status={status} />}
       </div>
+
+      {clearance && (
+        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
+          {p('forModelPlan', {
+            modelName
+          })}
+        </p>
+      )}
 
       {/* // OpsEvalAndLearningContent */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">

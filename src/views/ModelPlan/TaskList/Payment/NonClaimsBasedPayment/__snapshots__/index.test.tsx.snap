@@ -376,7 +376,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               data-testid="label"
               for="payment-nonclaims-shared-involvement"
             >
-              Will the shared systems be invovled for additional payment of claims?
+              Will the Shared Systems be involved for additional payment of claims?
             </label>
             <fieldset
               class="usa-fieldset"

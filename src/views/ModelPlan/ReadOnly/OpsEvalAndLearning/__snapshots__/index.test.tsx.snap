@@ -10,7 +10,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
       class="display-flex flex-justify flex-align-start"
     >
       <h2
-        class="margin-top-0 margin-bottom-4 flex-2"
+        class="margin-top-0 margin-bottom-4"
       >
         Operations, evaluation, and learning
       </h2>
