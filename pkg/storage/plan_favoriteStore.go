@@ -24,7 +24,7 @@ var planFavoriteGetSQL string
 var planFavoriteGetCollectionByUserIDSQL string
 
 //go:embed SQL/plan_favorite/get_unique_user_id.sql
-var planFavoriteGetUniqueUserIDSQL string
+var planFavoriteGetUniqueUserIDsSQL string
 
 // PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
@@ -100,7 +100,7 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(logger *zap.Logger, use
 func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 
 	userIDs := []uuid.UUID{}
-	stmt, err := s.db.PrepareNamed(planFavoriteGetUniqueUserIDSQL)
+	stmt, err := s.db.PrepareNamed(planFavoriteGetUniqueUserIDsSQL)
 	if err != nil {
 		return nil, err
 	}
