@@ -814,10 +814,8 @@ export interface PlanBeneficiariesChanges {
  */
 export interface PlanCollaboratorCreateInput {
   modelPlanID: UUID;
-  euaUserID: string;
-  fullName: string;
+  userName: string;
   teamRole: TeamRole;
-  email: string;
 }
 
 export interface PlanCrTdlChanges {

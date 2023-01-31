@@ -26,7 +26,7 @@ type AuditChange struct {
 	ForeignKey  uuid.UUID   `json:"foreignKey" db:"foreign_key"`
 	Action      string      `json:"action" db:"action"`
 	Fields      AuditFields `json:"fields" db:"fields"`
-	ModifiedBy  *string     `json:"modifiedBy" db:"modified_by"`
+	ModifiedBy  *uuid.UUID  `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time  `json:"modifiedDts" db:"modified_dts"`
 }
 

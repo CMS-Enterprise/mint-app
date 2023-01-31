@@ -91,7 +91,7 @@ const Authority = () => {
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | 'next') => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -115,7 +115,7 @@ const Authority = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
-          } else {
+          } else if (redirect === 'next') {
             history.push(
               `/models/${modelID}/task-list/participants-and-providers`
             );
@@ -180,7 +180,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit();
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -214,7 +214,7 @@ const Authority = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-authority-form"
                 onSubmit={e => {
                   handleSubmit(e);

@@ -9,12 +9,18 @@ import { TeamRole } from "./../../../types/graphql-global-types";
 // GraphQL mutation operation: UpdateModelPlanCollaborator
 // ====================================================
 
+export interface UpdateModelPlanCollaborator_updatePlanCollaborator_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface UpdateModelPlanCollaborator_updatePlanCollaborator {
   __typename: "PlanCollaborator";
-  fullName: string;
   teamRole: TeamRole;
-  email: string;
-  euaUserID: string;
+  userAccount: UpdateModelPlanCollaborator_updatePlanCollaborator_userAccount;
+  userID: UUID;
   modelPlanID: UUID;
 }
 

@@ -40,10 +40,8 @@ type NDAInfo struct {
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`
-	EuaUserID   string          `json:"euaUserID"`
-	FullName    string          `json:"fullName"`
+	UserName    string          `json:"userName"`
 	TeamRole    models.TeamRole `json:"teamRole"`
-	Email       string          `json:"email"`
 }
 
 type PlanCrTdlCreateInput struct {

@@ -218,7 +218,7 @@ export const ParticipantOptions = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-options-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -239,7 +239,7 @@ export const ParticipantOptions = () => {
                   </FieldErrorMsg>
                   <Field
                     as={RangeInput}
-                    className="maxw-none"
+                    className="maxw-none width-full"
                     error={flatErrors.expectedNumberOfParticipants}
                     id="participants-and-providers-expected-participants"
                     data-testid="participants-and-providers-expected-participants"

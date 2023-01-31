@@ -48,6 +48,8 @@ const crtdl = {
     removeCRTDLFail: 'Failed to remove {{-crtdl}}',
     removeCRTDLSuccess: 'Success! {{-crtdl}} removed from {{-modelName}}'
   },
+  successAdd: 'Success! {{-crtdl}} added to {{-modelName}}',
+  successUpdate: 'Success! {{-crtdl}} updated on {{-modelName}}',
   idNumber: 'ID number',
   idNumberInfo: 'Ex. TDL-123456',
   dateInitiated: 'Date initiated',
@@ -57,7 +59,9 @@ const crtdl = {
     'Add any details about this CR or TDL that would be helpful to know at a glance',
   validDate: 'Please use a valid date format',
   error: 'There was an error loading CR and TDL data.',
-  errorInfo: 'Please try loading the page again.'
+  errorInfo: 'Please try loading the page again.',
+  required1: 'All fields marked with ',
+  required2: ' are required.'
 };
 
 export default crtdl;

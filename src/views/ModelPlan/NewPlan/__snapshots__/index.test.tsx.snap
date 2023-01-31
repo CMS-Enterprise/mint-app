@@ -52,17 +52,21 @@ exports[`New Model Plan page matches snapshot 1`] = `
           Model name
         </h1>
         <div
-          class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+          class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
           data-testid="mandatory-fields-alert"
         >
           <div
             class="usa-alert__body"
           >
-            <span
-              class="mandatory-fields-alert__text"
+            <p
+              class="usa-alert__text"
             >
-              This is not a permanent name. If needed, you may update it later.
-            </span>
+              <span
+                class="mandatory-fields-alert__text"
+              >
+                This is not a permanent name. If needed, you may update it later.
+              </span>
+            </p>
           </div>
         </div>
         <form

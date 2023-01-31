@@ -79,8 +79,8 @@ const csvFields = [
   'beneficiaries.confidenceNote',
 
   // Collaborators
-  'collaborators.euaUserID',
-  'collaborators.fullName',
+  'collaborators.userAccount.username',
+  'collaborators.userAccount.commonName',
   'collaborators.teamRole',
 
   // Discussions

@@ -4,9 +4,13 @@ export default gql`
   mutation DeleteModelPlanCollaborator($id: UUID!) {
     deletePlanCollaborator(id: $id) {
       id
-      fullName
       teamRole
-      euaUserID
+      userAccount {
+        commonName
+        email
+        username
+      }
+      userID
       modelPlanID
     }
   }

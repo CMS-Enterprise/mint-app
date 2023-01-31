@@ -102,7 +102,7 @@ const Learning = () => {
   );
 
   const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
+    redirect?: 'back' | 'task-list' | 'next' | string
   ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
@@ -127,10 +127,10 @@ const Learning = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/payment`);
           } else if (redirect) {
             history.push(redirect);
-          } else {
-            history.push(`/models/${modelID}/task-list/payment`);
           }
         }
       })
@@ -190,7 +190,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit();
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -226,7 +226,7 @@ const Learning = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-learning-form"
                 onSubmit={e => {
                   handleSubmit(e);

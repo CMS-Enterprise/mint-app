@@ -223,7 +223,7 @@ const PeopleImpact = () => {
                         </FieldErrorMsg>
                         <Field
                           as={RangeInput}
-                          className="maxw-none"
+                          className="maxw-none width-full"
                           error={flatErrors.numberPeopleImpacted}
                           id="expected-people-impacted"
                           name="numberPeopleImpacted"

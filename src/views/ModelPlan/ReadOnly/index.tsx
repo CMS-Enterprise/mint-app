@@ -4,7 +4,6 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Alert,
   Button,
   Grid,
   GridContainer,
@@ -20,6 +19,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import {
   DescriptionDefinition,
@@ -197,7 +197,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const formattedModelLeads = collaborators
     ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
     .map((collaborator, index) => {
-      return `${collaborator.fullName}${
+      return `${collaborator.userAccount.commonName}${
         index ===
         collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
           ? ''
