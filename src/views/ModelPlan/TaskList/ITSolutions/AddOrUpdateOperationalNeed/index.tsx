@@ -290,7 +290,9 @@ const AddOrUpdateOperationalNeed = () => {
                           type="button"
                           className="usa-button usa-button--unstyled display-flex flex-align-center"
                           onClick={() => {
-                            history.goBack();
+                            history.push(
+                              `/models/${modelID}/task-list/it-solutions`
+                            );
                           }}
                         >
                           <IconArrowBack
