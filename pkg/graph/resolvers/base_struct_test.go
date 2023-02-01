@@ -5,9 +5,9 @@ import "github.com/cmsgov/mint-app/pkg/models"
 func (suite *ResolverSuite) TestCreatedByUserAccount() {
 	plan := suite.createModelPlan("My Test plan")
 	colab := suite.createPlanCollaborator(plan, "FRND", models.TeamRoleArchitect)
-	createdAcount := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
+	createdAccount := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
 
-	suite.Equal(suite.testConfigs.Principal.UserAccount, createdAcount)
+	suite.Equal(suite.testConfigs.Principal.UserAccount, createdAccount)
 }
 
 func (suite *ResolverSuite) TestModifiedByUserAccount() {
