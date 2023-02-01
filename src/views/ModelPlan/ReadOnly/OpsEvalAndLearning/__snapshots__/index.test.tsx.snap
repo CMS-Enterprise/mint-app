@@ -99,7 +99,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -154,81 +158,6 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
           >
             No answer entered
           </em>
-        </p>
-      </div>
-    </div>
-    <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
-    >
-      <h3>
-        IDDOC Operations
-      </h3>
-      <div
-        class="read-only-section read-only-section--are-you-planning-to-use-iddoc-support margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Are you planning to use IDDOC support?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          No
-        </p>
-      </div>
-      <div
-        class="desktop:display-flex flex-justify"
-      >
-        <div
-          class=""
-        >
-          <div
-            class="read-only-section read-only-section--are-technical-contacts-identified margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-            >
-              Are technical contacts identified?
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4"
-            >
-              No
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="read-only-section read-only-section--notes margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Notes
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--will-you-capture-participant-information margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Will you capture participant information?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          No
         </p>
       </div>
     </div>
@@ -440,7 +369,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -462,7 +395,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -480,7 +417,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -496,7 +437,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -550,7 +495,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -570,7 +519,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -588,7 +541,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -610,7 +567,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -628,28 +589,14 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
-      </div>
-      <div
-        class="read-only-section read-only-section--notes margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Notes
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
-        </p>
       </div>
       <div
         class="desktop:display-flex flex-justify"
@@ -668,7 +615,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -686,7 +637,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -708,7 +663,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
@@ -726,28 +685,14 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
-      </div>
-      <div
-        class="read-only-section read-only-section--notes margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Notes
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
-        </p>
       </div>
     </div>
     <div
@@ -918,7 +863,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
     </div>
@@ -939,7 +888,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -959,28 +912,14 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
             </p>
           </div>
         </div>
-      </div>
-      <div
-        class="read-only-section read-only-section--notes margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Notes
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
-        </p>
       </div>
       <div
         class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
@@ -993,42 +932,11 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
-        </p>
-      </div>
-    </div>
-    <div
-      class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
-    >
-      <h3>
-        Quality
-      </h3>
-      <div
-        class="read-only-section read-only-section--do-you-plan-to-develop-a-new-validated-quality-measure-for-your-model margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Do you plan to develop a new validated quality measure for your model?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          No
-        </p>
-      </div>
-      <div
-        class="read-only-section read-only-section--does-quality-performance-impact-payment margin-bottom-3"
-      >
-        <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
-        >
-          Does quality performance impact payment?
-        </p>
-        <p
-          class="margin-y-0 font-body-md line-height-sans-4"
-        >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
     </div>
