@@ -208,7 +208,7 @@ const itSolutions = {
       'Success! Your operational need “{{-operationalNeedName}}” and solution are added.',
     operationalNeedRemoval:
       'Success! {{-operationalNeedName}} has been removed.',
-    operationalNeedUpdate: 'Success! Your operational need have been updated.'
+    operationalNeedUpdate: 'Success! Your operational need has been updated.'
   },
   errorMessage: {
     operationalNeedRemoval:
