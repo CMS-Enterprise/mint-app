@@ -150,11 +150,6 @@ const AddOrUpdateOperationalNeed = () => {
     { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
     { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
     {
-      text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions`
-      // url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
-    },
-    {
       text: isUpdating
         ? t('updateThisOpertationalNeed')
         : t('addOpertationalNeed')
