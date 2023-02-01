@@ -18,7 +18,7 @@ func NewUserIDRelation(userID uuid.UUID) userIDRelation {
 		UserID: userID,
 	}
 }
-func (b *userIDRelation) UserAccount(ctx context.Context) *authentication.UserAccount { //TODO, can we move this to an embedded struct to just share the method? (we can't )
+func (b *userIDRelation) UserAccount(ctx context.Context) *authentication.UserAccount {
 	service := authentication.UserAccountService(ctx)
 	account, _ := service(ctx, b.UserID)
 	return account
