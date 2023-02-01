@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Row,
@@ -367,13 +367,20 @@ const DraftModelPlansTable = ({
     usePagination
   );
 
-  if (loading) {
-    return <PageLoading />;
+  // Checking if the table is for Assessment and if they have no associated models
+  // If so, do not render the table at all
+  useEffect(() => {
+    if (!loading && isAssessment && userModels && data.length === 0) {
+      if (hideTable) hideTable(true);
+    }
+  }, [loading, isAssessment, userModels, data.length, hideTable]);
+
+  if (hideTable) {
+    return null;
   }
 
-  if (isAssessment && userModels && data.length === 0) {
-    if (hideTable) hideTable(true);
-    return null;
+  if (loading) {
+    return <PageLoading />;
   }
 
   if (error) {
