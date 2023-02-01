@@ -39,8 +39,9 @@ const home = {
       }
     },
     empty: {
-      heading: 'There aren’t any model plans yet.',
-      body: 'Once one is added, it will appear here.'
+      heading: 'You haven’t been added to any Model Plans yet.',
+      body:
+        'Once you create one or are added as a team member to an existing plan, it will appear here.'
     },
     caption:
       'Below is a list of governance requests that are in draft or submitted.',
