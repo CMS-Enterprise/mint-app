@@ -31,7 +31,8 @@ func TestPreUpdateSuite(t *testing.T) {
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
 func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
-	taskList := models.NewBaseTaskListSection("FAKE", uuid.UUID{})
+
+	taskList := models.NewBaseTaskListSectionUserTable(uuid.UUID{}, uuid.UUID{})
 
 	planBasics := models.NewPlanBasics(taskList)
 
