@@ -29,7 +29,7 @@ function useCedarContactLookup(query?: string | null): CedarHookProps {
     GetCedarUser,
     {
       variables: { commonName: searchTerm },
-      skip: !query || query.length < 2
+      skip: !query || query.length < 3
     }
   );
 

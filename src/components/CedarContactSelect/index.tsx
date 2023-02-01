@@ -123,7 +123,7 @@ const IndicatorsContainer = (
       {!loading && resultsWarning && (
         <IconWarning className="text-warning" size={3} />
       )}
-      {loading && <Spinner size="small" />}
+      {loading && <Spinner size="small" className="margin-right-1" />}
       {children}
     </components.IndicatorsContainer>
   );
@@ -152,9 +152,19 @@ export default function CedarContactSelect({
     value ? formatLabel(value) : undefined
   );
 
+  const [userSelected, setUserSelected] = useState(false);
+
+  const [didMount, setDidMount] = useState(false);
+
+  const { debounceValue, debounceLoading } = useDebounce(
+    searchTerm,
+    1500,
+    userSelected
+  );
+
   // If autoSearch, run initial query from name
   const { contacts, queryCedarContacts, loading } = useCedarContactLookup(
-    searchTerm
+    debounceValue
   );
 
   // Selected contact
@@ -177,6 +187,18 @@ export default function CedarContactSelect({
     selectedContact.current = contact?.euaUserId;
     queryContacts(contact ? formatLabel(contact) : '');
   };
+
+  useEffect(() => {
+    if (!didMount) {
+      // required to not call API on initial render
+      // https://stackoverflow.com/questions/53179075/with-useeffect-how-can-i-skip-applying-an-effect-upon-the-initial-render
+      setDidMount(true);
+      return;
+    }
+    if (debounceValue && debounceValue.length > 1) {
+      queryCedarContacts(debounceValue.split(',')[0]);
+    }
+  }, [debounceValue, queryCedarContacts, didMount]);
 
   // React Select styles object
   const customStyles: {
@@ -274,7 +296,12 @@ export default function CedarContactSelect({
         'maxw-none',
         'usa-combo-box',
         { 'cedar-contact-select__warning': showWarning },
-        { 'cedar-contact-select__loading': loading },
+        {
+          'cedar-contact-select__loading':
+            (loading || debounceLoading) &&
+            ((searchTerm && searchTerm.length > 0) || loading) &&
+            !userSelected
+        },
         { 'opacity-70': disabled },
         className
       )}
@@ -308,7 +335,12 @@ export default function CedarContactSelect({
       }}
       onInputChange={(newValue, { action }) => {
         if (action !== 'input-blur' && action !== 'menu-close') {
-          queryContacts(newValue);
+          if (action === 'set-value') {
+            setUserSelected(true);
+          } else {
+            setUserSelected(false);
+            setSearchTerm(newValue);
+          }
         }
       }}
       defaultInputValue={searchTerm}
@@ -323,4 +355,24 @@ export default function CedarContactSelect({
       isClearable
     />
   );
+}
+
+function useDebounce(value: string | undefined, wait: number, stop: boolean) {
+  const [oldValue, setOldValue] = useState(value); // Used to compare again incoming value to reset loading state
+  const [debounceValue, setDebounceValue] = useState(value);
+  const [debounceLoading, setDebounceLoading] = useState<boolean>(false);
+  useEffect(() => {
+    if (!debounceLoading && value !== oldValue && !stop) {
+      // If value changes start loading
+      setDebounceLoading(true);
+    }
+    const timer = setTimeout(() => {
+      setDebounceValue(value);
+      setOldValue(value);
+      setDebounceLoading(false);
+    }, wait);
+    return () => clearTimeout(timer); // cleanup when unmounted
+  }, [value, wait, debounceLoading, oldValue, stop]);
+
+  return { debounceValue, debounceLoading };
 }
