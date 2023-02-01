@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
 import { SummaryBox } from '@trussworks/react-uswds';
 import { Field } from 'formik';
 
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
+import GetUserInfo from 'queries/GetUserInfo';
+import {
+  GetUserInfo as GetUserInfoType,
+  GetUserInfoVariables
+} from 'queries/types/GetUserInfo';
 import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 
@@ -32,6 +38,15 @@ const ReadyForReview = ({
   // This is so that when user unclicks the "Ready for review" checkbox, it will not cause the `markedReady` copy to disappear
   const [persistentCopy] = useState(status === TaskStatus.READY_FOR_REVIEW);
 
+  const { data } = useQuery<GetUserInfoType, GetUserInfoVariables>(
+    GetUserInfo,
+    {
+      variables: {
+        username: readyForReviewBy || ''
+      }
+    }
+  );
+
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
       <SummaryBox heading="" className="bg-white border-base-light padding-2">
@@ -56,7 +71,7 @@ const ReadyForReview = ({
         {persistentCopy && readyForReviewBy && readyForReviewDts && (
           <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
             {t('markedReady', {
-              reviewer: `${readyForReviewBy}`
+              reviewer: data?.userAccount.commonName
             })}
             {formatDate(readyForReviewDts, 'M/d/yyyy')}
           </p>
