@@ -245,10 +245,10 @@ const Milestones = () => {
                   <ProcessList className="read-only-model-plan__timeline">
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
-                        <div className="datepicker__wrapper">
+                        <div className="datepicker__wrapper display-block">
                           <MINTDatePicker
                             className="margin-top-0"
                             fieldName="completeICIP"
@@ -259,6 +259,7 @@ const Milestones = () => {
                             formikValue={values.completeICIP}
                             value={completeICIP}
                             error={flatErrors.completeICIP}
+                            half
                           />
                         </div>
                       </ProcessListHeading>
@@ -266,8 +267,8 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label">{t('clearance')}</legend>
 
@@ -313,10 +314,10 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       />
-                      <div className="datepicker__wrapper">
+                      <div className="datepicker__wrapper display-block">
                         <MINTDatePicker
                           className="margin-top-0"
                           fieldName="announced"
@@ -327,14 +328,15 @@ const Milestones = () => {
                           formikValue={values.announced}
                           value={announced}
                           error={flatErrors.announced}
+                          half
                         />
                       </div>
                     </ProcessListItem>
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label margin-bottom-neg-2">
                           {t('applicationPeriod')}
@@ -379,8 +381,8 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
                         {' '}
                         <legend className="usa-label margin-bottom-neg-2">
@@ -426,10 +428,10 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       />
-                      <div className="datepicker__wrapper">
+                      <div className="datepicker__wrapper display-block">
                         <MINTDatePicker
                           fieldName="wrapUpEnds"
                           className="margin-top-0"
@@ -440,6 +442,7 @@ const Milestones = () => {
                           formikValue={values.wrapUpEnds}
                           value={wrapUpEnds}
                           error={flatErrors.wrapUpEnds}
+                          half
                         />
                       </div>
                     </ProcessListItem>
