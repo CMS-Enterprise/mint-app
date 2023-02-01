@@ -21,6 +21,7 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
         return o('notSureWhatToDoNext');
       case 'status':
         return o('helpTiming');
+      case 'solution':
       default:
         return o('helpChoosing');
     }
