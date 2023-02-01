@@ -11,7 +11,7 @@ import { PlanBasicsChanges, PlanGeneralCharacteristicsChanges, PlanParticipantsA
 
 export interface UpdatePrepareForClearance_updatePlanBasics {
   __typename: "PlanBasics";
-  readyForClearanceBy: string | null;
+  readyForClearanceBy: UUID | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

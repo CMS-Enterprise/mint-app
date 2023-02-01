@@ -13,7 +13,7 @@ type IBaseTaskListSection interface {
 	// GetBaseTaskListSection() *baseTaskListSection
 	CalcStatus(TaskStatus) error
 	//methods from BaseStruct
-	GetBaseStruct() *baseStruct
+	// GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
