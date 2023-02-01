@@ -130,7 +130,7 @@ exports[`Model Plan CR and TDL page matches snapshot 1`] = `
               There is a problem
             </h3>
             <button
-              class="usa-error-message usa-alert__text mint-error-alert__message"
+              class="usa-error-message usa-alert__text mint-error-alert__message text-left"
               type="button"
             >
               Failed to fetch Model Plan CRs and TDLs

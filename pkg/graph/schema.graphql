@@ -128,13 +128,14 @@ PlanCollaborator represents a collaborator on a plan
 type PlanCollaborator {
   id: UUID!
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userID: UUID!
+  userAccount: UserAccount!
   teamRole: TeamRole!
-  email: String!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 """
@@ -180,10 +181,8 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 """
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userName: String!
   teamRole: TeamRole!
-  email: String!
 }
 
 """
@@ -1418,7 +1417,8 @@ type AuditChange {
   tableName: String!
   action: String!
   fields: Map!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -1514,6 +1514,7 @@ type Query {
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  userAccount(username: String!): UserAccount!
   operationalSolutionSubtask(id: UUID!): OperationalSolutionSubtask
 }
 
@@ -2353,6 +2354,20 @@ directive @goModel(
   model: String
   models: [String!]
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+type UserAccount {
+	id: UUID!
+	username: String!
+	isEUAID: Boolean
+	commonName: String!
+	locale: String!
+	email: String!
+	givenName: String!
+	familyName: String!
+	zoneInfo: String!
+	hasLoggedIn: Boolean
+}
+
 
 """
 A user role associated with a job code

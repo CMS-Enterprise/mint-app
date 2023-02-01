@@ -51,7 +51,7 @@ func OperationalSolutionInsertOrUpdate(logger *zap.Logger, operationNeedID uuid.
 		existing = models.NewOperationalSolution(principal.ID(), operationNeedID)
 	}
 
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false) ///TODO!!! update so we can check if the user has access or not!
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func OperationalSolutionInsertOrUpdateCustom(logger *zap.Logger, operationNeedID
 		existing = models.NewOperationalSolution(principal.ID(), operationNeedID)
 	}
 
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false) ///TODO!!! update so we can check if the user has access or not!
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func OperationalSolutionCustomUpdateByID(logger *zap.Logger, id uuid.UUID, custo
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false) ///TODO!!! update so we can check if the user has access or not!
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}

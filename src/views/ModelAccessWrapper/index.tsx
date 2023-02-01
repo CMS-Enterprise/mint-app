@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import GetIsCollaborator from 'queries/Collaborators/GetIsCollaborator';
 import {
@@ -25,6 +26,7 @@ type ModelAccessWrapperProps = {
 const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   const { pathname } = useLocation();
   const history = useHistory();
+  const flags = useFlags();
 
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
@@ -60,7 +62,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       modelID &&
       validModelID &&
       editable &&
-      !isAssessment(groups)
+      !isAssessment(groups, flags)
     ) {
       history.replace(`/models/${modelID}/read-only/model-basics`);
     }
@@ -72,7 +74,8 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     modelID,
     validModelID,
     editable,
-    groups
+    groups,
+    flags
   ]);
 
   return <>{children}</>;

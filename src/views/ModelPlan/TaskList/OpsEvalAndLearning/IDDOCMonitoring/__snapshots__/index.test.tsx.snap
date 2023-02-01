@@ -94,7 +94,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-iddoc-monitoring-form"
   >
     <h3>

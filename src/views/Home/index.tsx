@@ -29,7 +29,7 @@ const Home = () => {
   const { message } = useMessage();
 
   const headingType = (groups: typeof JOB_CODES) => {
-    if (isAssessment(groups)) {
+    if (isAssessment(groups, flags)) {
       return t('requestsTable.admin.heading');
     }
     if (isMAC(userGroups)) {
@@ -78,7 +78,7 @@ const Home = () => {
               </div>
               <DraftModelPlansTable
                 isAssessment={isAssessment(userGroups, flags)}
-                isMAC={isMAC(userGroups, flags)}
+                isMAC={isMAC(userGroups)}
               />
               <SummaryBox
                 heading=""

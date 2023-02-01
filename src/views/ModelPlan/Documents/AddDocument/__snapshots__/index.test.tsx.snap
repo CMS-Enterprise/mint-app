@@ -80,6 +80,17 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
         >
           Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.
         </p>
+        <p
+          class="margin-bottom-2 font-body-md line-height-body-4"
+        >
+          All fields marked with  
+          <span
+            class="text-red margin-x-05"
+          >
+            *
+          </span>
+            are required
+        </p>
         <div>
           <div>
             <form
@@ -95,6 +106,21 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   for="FileUpload-File"
                 >
                   Document upload
+                  <span
+                    class="text-red margin-x-05"
+                  >
+                    *
+                  </span>
+                </label>
+                <label
+                  class="usa-label text-normal text-base margin-y-1"
+                  data-testid="label"
+                  for="FileUpload-File"
+                >
+                  Select a PDF, DOC, DOCX, XLS, or XLSX
+                  <span
+                    class="usa-hint"
+                  />
                 </label>
                 <div
                   aria-disabled="false"
@@ -154,6 +180,11 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                     class="usa-label"
                   >
                     What type of document are you uploading?
+                    <span
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </legend>
                   <div
                     class="usa-radio"
@@ -252,6 +283,11 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   for="document-upload-restricted-yes"
                 >
                   Does this document contain cost information?
+                  <span
+                    class="text-red margin-x-05"
+                  >
+                    *
+                  </span>
                 </label>
                 <p
                   class="margin-0 line-height-body-4"
@@ -323,17 +359,21 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 class="padding-top-2 margin-top-2"
               >
                 <div
-                  class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+                  class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
                   data-testid="mandatory-fields-alert"
                 >
                   <div
                     class="usa-alert__body"
                   >
-                    <span
-                      class="mandatory-fields-alert__text"
+                    <p
+                      class="usa-alert__text"
                     >
-                      To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
-                    </span>
+                      <span
+                        class="mandatory-fields-alert__text"
+                      >
+                        To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
+                      </span>
+                    </p>
                   </div>
                 </div>
                 <button

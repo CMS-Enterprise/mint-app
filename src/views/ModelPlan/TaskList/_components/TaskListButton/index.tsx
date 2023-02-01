@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { Alert, Button } from '@trussworks/react-uswds';
+import { Button } from '@trussworks/react-uswds';
 
+import Alert from 'components/shared/Alert';
 import {
   PrepareForClearanceStatus,
   TaskStatus

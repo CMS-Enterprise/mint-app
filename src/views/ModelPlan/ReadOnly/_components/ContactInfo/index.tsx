@@ -43,16 +43,16 @@ const ContactInfo = ({
         .map(collaborator => {
           return (
             <div
-              key={collaborator.euaUserID}
+              key={collaborator.userAccount.username}
               className="model-lead__member margin-bottom-3"
             >
               <h3 className="system-profile__subheader margin-bottom-1">
-                {collaborator.fullName}
+                {collaborator.userAccount.commonName}
               </h3>
               <Link
                 aria-label={h('contactInfo.sendAnEmail')}
                 className="line-height-body-5"
-                href={`mailto:${collaborator.email}`}
+                href={`mailto:${collaborator.userAccount.email}`}
                 target="_blank"
               >
                 {h('contactInfo.sendAnEmail')}

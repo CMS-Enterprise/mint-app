@@ -11,6 +11,20 @@
 			"item": [
 				{
 					"name": "Create Model Plan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createModelPlan",
+									"",
+									"modelPlanID = responseData.id",
+									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -18,7 +32,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{\n  \"modelName\": \"\"\n}"
+								"variables": "{\n  \"modelName\": \"Test\"\n}"
 							}
 						},
 						"url": {
@@ -39,7 +53,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"modelName\": \"\",\n    \"someNumbers\": [\n      0\n    ],\n    \"archived\": true,\n    \"status\": \"\"\n  }\n}"
+								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -123,7 +137,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation addPlanFavorite ($modelPlanID: UUID!) {\n    addPlanFavorite (modelPlanID: $modelPlanID) {\n        id\n        modelPlanID\n        userID\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"modelPlanID\": \"\"\n}"
+								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\"\n}"
 							}
 						},
 						"url": {
@@ -342,8 +356,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n        id\n        modelPlanID\n        euaUserID\n        fullName\n        teamRole\n        email\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"euaUserID\": \"\",\n    \"fullName\": \"\",\n    \"teamRole\": \"\",\n    \"email\": \"\"\n  }\n}"
+								"query": "mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {\n    createPlanCollaborator (input: $input) {\n    id\n    modelPlanID\n    userID\n    teamRole\n    userAccount \n    {\n        commonName\n        familyName\n        givenName\n        email\n        locale\n    }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"userName\": \"CLAB\",\n    \"teamRole\": \"MODEL_LEAD\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -363,8 +377,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRole: TeamRole!) {\n    updatePlanCollaborator (id: $id, newRole: $newRole) {\n        id\n        modelPlanID\n        euaUserID\n        fullName\n        teamRole\n        email\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRole\": \"\"\n}"
+								"query": "mutation updatePlanCollaborator ($id: UUID!, $newRole: TeamRole!) {\n    updatePlanCollaborator (id: $id, newRole: $newRole) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"{{modelLeadID}}\",\n  \"newRole\": \"LEARNING\"\n}"
 							}
 						},
 						"url": {
@@ -384,7 +398,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        euaUserID\n        fullName\n        teamRole\n        email\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deletePlanCollaborator ($id: UUID!) {\n    deletePlanCollaborator (id: $id) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
@@ -405,7 +419,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query planCollaboratorByID ($id: UUID!) {\n    planCollaboratorByID (id: $id) {\n        id\n        modelPlanID\n        euaUserID\n        fullName\n        teamRole\n        email\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "query planCollaboratorByID ($id: UUID!) {\n    planCollaboratorByID (id: $id) {\n        id\n        modelPlanID\n        userID\n        userAccount \n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelLeadID}}\"\n}"
 							}
 						},
@@ -1116,7 +1130,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      euaUserID\n      teamRole\n      fullName\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    itTools {\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    itTools {\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
 								"variables": ""
 							}
 						},
@@ -1149,8 +1163,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query auditChanges($tableName: String!, $primaryKey: UUID!){\n  auditChanges(tableName: $tableName,primaryKey: $primaryKey)\n   {\n        id\n        primaryKey\n        foreignKey\n        tableName\n        action\n        fields\n        modifiedBy\n        modifiedDts\n  }\n}",
-								"variables": "{\n  \"tableName\": \"\",\n  \"primaryKey\":\"\"\n}"
+								"query": "query auditChanges($tableName: String!, $primaryKey: UUID!){\n  auditChanges(tableName: $tableName,primaryKey: $primaryKey)\n   {\n        id\n        primaryKey\n        foreignKey\n        tableName\n        action\n        fields\n        modifiedBy\n        modifiedByUserAccount\n        {\n            commonName\n            familyName\n            givenName\n            email\n            locale\n        }  \n        modifiedDts\n  }\n}",
+								"variables": "{\n  \"tableName\": \"model_plan\",\n  \"primaryKey\":\"{{modelPlanID}}\"\n}"
 							}
 						},
 						"url": {
@@ -1171,7 +1185,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query ModelPlan($id:UUID!,$sort: SortDirection!){\n  \n  modelPlan(id:$id){\n    id\n    modelName\n    nameHistory(sort: $sort)\n\n  }\n  \n  \n}",
-								"variables": "{\n    \"id\": \"\",\n    \"sort\": \"\"\n}"
+								"variables": "{\n    \"id\": \"{{modelPlanID}}\",\n    \"sort\": \"ASC\"\n}"
 							}
 						},
 						"url": {

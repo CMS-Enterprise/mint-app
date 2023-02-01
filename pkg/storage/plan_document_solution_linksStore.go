@@ -17,16 +17,19 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_document_solution/links_create.sql
+//go:embed SQL/plan_document_solution_link/create.sql
 var planDocumentSolutionLinksCreateSQL string
 
-//go:embed SQL/plan_document_solution/link_delete_by_id.sql
+//go:embed SQL/plan_document_solution_link/delete_by_id.sql
 var planDocumentSolutionLinkDeleteByIDSQL string
 
-//go:embed SQL/plan_document_solution/links_get_by_id.sql
-var planDocumentSolutionLinksGetByIDSQL string
+//go:embed SQL/plan_document_solution_link/get_by_solution_id.sql
+var planDocumentSolutionLinksGetBySolutionIDSQL string
 
-//go:embed SQL/plan_document_solution/num_links_by_document_id.sql
+//go:embed SQL/plan_document_solution_link/get_by_id.sql
+var planDocumentSolutionLinkGetByIDSQL string
+
+//go:embed SQL/plan_document_solution_link/num_links_by_document_id.sql
 var planDocumentNumLinkedSolutionsSQL string
 
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links
@@ -81,7 +84,7 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	logger *zap.Logger,
 	solutionID uuid.UUID,
 ) ([]*models.PlanDocumentSolutionLink, error) {
-	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksGetByIDSQL)
+	statement, err := s.db.PrepareNamed(planDocumentSolutionLinksGetBySolutionIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -111,6 +114,28 @@ func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uu
 	}
 
 	return result, nil
+}
+
+// PlanDocumentSolutionLinkGetByID returns a single plan document solution link by ID
+func (s *Store) PlanDocumentSolutionLinkGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanDocumentSolutionLink, error) {
+	link := models.PlanDocumentSolutionLink{}
+
+	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinkGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+
+		"id": id,
+	}
+
+	err = stmt.Get(&link, arg)
+
+	if err != nil {
+		return nil, err
+	}
+	return &link, nil
 }
 
 // convertToStringArray converts a UUID array to a string array so sqlx can understand the type

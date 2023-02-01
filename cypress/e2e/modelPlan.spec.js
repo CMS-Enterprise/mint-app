@@ -110,7 +110,7 @@ describe('The Model Plan Form', () => {
     });
     cy.contains('h3', 'Anticipated high level timeline');
     cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
-    cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -208,7 +208,7 @@ describe('The Model Plan Form', () => {
       .should('have.value', '05/23/2025');
 
     cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
-    cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);

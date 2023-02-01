@@ -15,7 +15,12 @@ export default gql`
         goal
       }
       collaborators {
-        fullName
+        userAccount {
+          commonName
+          email
+          username
+        }
+        userID
         teamRole
       }
       crTdls {

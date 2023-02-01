@@ -15,6 +15,18 @@ export default gql`
         readyForClearanceDts
         status
       }
+      collaborators {
+        id
+        userAccount {
+          commonName
+          email
+          username
+        }
+        userID
+        teamRole
+        modelPlanID
+        createdDts
+      }
       documents {
         id
         fileName

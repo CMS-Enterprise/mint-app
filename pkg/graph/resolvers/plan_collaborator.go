@@ -32,8 +32,15 @@ func CreatePlanCollaborator(
 	store *storage.Store,
 	checkAccess bool,
 	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
-	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
-	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
+
+	isMacUser := false
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, input.UserName, false, isMacUser, getAccountInformation)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.TeamRole)
+	err = BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -48,19 +55,13 @@ func CreatePlanCollaborator(
 		return nil, nil, err
 	}
 
-	isMacUser := false
-	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, retCollaborator.EUAUserID, false, isMacUser, getAccountInformation)
-	if err != nil {
-		return retCollaborator, nil, err
-	}
-
 	planFavorite, err := PlanFavoriteCreate(logger, principal, collabAccount.ID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
 	}
 
 	if emailService != nil && emailTemplateService != nil {
-		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, collabAccount.Email, modelPlan)
 		if err != nil {
 			return retCollaborator, planFavorite, err
 		}
@@ -152,5 +153,5 @@ func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Stor
 
 // IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
 func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
-	return store.CheckIfCollaborator(logger, principal.ID(), modelPlanID)
+	return store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
 }

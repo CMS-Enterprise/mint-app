@@ -1,0 +1,8 @@
+# This image is used for production only.
+# In local development, we use `faktory-ent` directly in our docker-compose.yml
+
+FROM docker.contribsys.com/contribsys/faktory-ent:1.6.0
+
+COPY faktory_entrypoint.sh ./
+
+ENTRYPOINT [ "./faktory_entrypoint.sh" ]

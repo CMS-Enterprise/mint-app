@@ -154,7 +154,7 @@ const DraftModelPlansTable = ({
             return (
               <>
                 {leads.map((item: CollaboratorsType, index: number) => {
-                  return `${item.fullName}${
+                  return `${item.userAccount.commonName}${
                     index === leads.length - 1 ? '' : ', '
                   }`;
                 })}
@@ -307,7 +307,7 @@ const DraftModelPlansTable = ({
             return (
               <>
                 {leads.map((item: CollaboratorsType, index: number) => {
-                  return `${item.fullName}${
+                  return `${item.userAccount.commonName}${
                     index === leads.length - 1 ? '' : ', '
                   }`;
                 })}

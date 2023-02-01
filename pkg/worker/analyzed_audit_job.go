@@ -10,6 +10,7 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 /*
@@ -40,7 +41,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return err
 	}
 
-	analyzedAuditChange, err := generateChanges(audits)
+	analyzedAuditChange, err := generateChanges(audits, w.Store)
 	if err != nil {
 		return err
 	}
@@ -115,7 +116,7 @@ func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...inter
 */
 
 // generateChanges gets all the audit changes for the specified tables
-func generateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange, error) {
+func generateChanges(audits []*models.AuditChange, store *storage.Store) (*models.AnalyzedAuditChange, error) {
 
 	modelPlanAudits, err := analyzeModelPlanAudits(audits)
 	if err != nil {
@@ -132,7 +133,7 @@ func generateChanges(audits []*models.AuditChange) (*models.AnalyzedAuditChange,
 		return nil, err
 	}
 
-	modelLeadAudits, err := analyzeModelLeads(audits)
+	modelLeadAudits, err := analyzeModelLeads(audits, store)
 	if err != nil {
 		return nil, err
 	}
@@ -226,18 +227,34 @@ func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 }
 
 // analyzeModelLeads analyzes new collaborators to a model plan
-func analyzeModelLeads(audits []*models.AuditChange) (*models.AnalyzedModelLeads, error) {
+func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*models.AnalyzedModelLeads, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_collaborator"
 	})
+	var parseError error
 
-	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "full_name") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
-			return m.Fields["full_name"].New.(string), true
+		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_role") && m.Fields["team_role"].New == "MODEL_LEAD" {
+			idString := m.Fields["user_id"].New.(string)
+			var id uuid.UUID
+			id, parseError = uuid.Parse(idString)
+			if parseError != nil {
+				return models.AnalyzedModelLeadInfo{}, false
+			}
+
+			account, _ := store.UserAccountGetByID(id) //TODO should we handle? The error? I think null is ok if can't get the account
+
+			return models.AnalyzedModelLeadInfo{
+				ID:         id,
+				CommonName: account.CommonName,
+			}, true
 		}
-		return "", false
+		return models.AnalyzedModelLeadInfo{}, false
 	})
+	if parseError != nil {
+		return nil, parseError
+	}
 
 	if len(addedCollaborators) > 0 {
 		return &models.AnalyzedModelLeads{
