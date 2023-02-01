@@ -222,7 +222,6 @@ const AddOrUpdateOperationalNeed = () => {
                     )}
 
                     <Form
-                      className="margin-top-3"
                       data-testid="it-solutions-add-custom-operational-need"
                       onSubmit={e => {
                         handleSubmit(e);
@@ -232,7 +231,6 @@ const AddOrUpdateOperationalNeed = () => {
                         <FieldGroup
                           scrollElement="nameOther"
                           error={!!flatErrors.nameOther}
-                          className="margin-top-3"
                         >
                           <Label htmlFor="it-solution-custom-name-other">
                             {t('customOperationalNeedName')}
