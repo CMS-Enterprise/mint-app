@@ -1,12 +1,15 @@
 package models
 
 import (
+	"context"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // SortDirection represents ASC or DESC for sort directions
@@ -76,4 +79,15 @@ func (a *AuditFields) Scan(src interface{}) error {
 	}
 
 	return nil
+}
+
+// ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
+func (ac *AuditChange) ModifiedByUserAccount(ctx context.Context) *authentication.UserAccount { //TODO should this be moved to a shared struct? This isn't a base struct
+	if ac.ModifiedBy == nil {
+		return nil
+	}
+	service := authentication.UserAccountService(ctx)
+	account, _ := service(ctx, *ac.ModifiedBy)
+	return account
+
 }

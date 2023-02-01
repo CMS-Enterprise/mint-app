@@ -4,6 +4,7 @@ import (
 	_ "embed"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
@@ -13,6 +14,9 @@ var userAccountGetByUsername string
 
 //go:embed SQL/user_account/get_by_id.sql
 var userAccountGetByID string
+
+//go:embed SQL/user_account/get_by_id_LOADER.sql
+var userAccountGetByIDLOADER string
 
 //go:embed SQL/user_account/insert_by_username.sql
 var userAccountInsertByUsername string
@@ -65,6 +69,27 @@ func (s *Store) UserAccountGetByID(id uuid.UUID) (*authentication.UserAccount, e
 	}
 
 	return user, nil
+}
+
+// UserAccountGetByIDLOADER gets multiple User account from the database by it's internal id.
+func (s *Store) UserAccountGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*authentication.UserAccount, error) {
+	userSlice := []*authentication.UserAccount{}
+
+	stmt, err := s.db.PrepareNamed(userAccountGetByIDLOADER)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&userSlice, arg)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return userSlice, nil
 }
 
 // UserAccountInsertByUsername creates a new user account for a given EUAID
