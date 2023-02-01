@@ -389,57 +389,6 @@ exports[`Prepare for clearance checklist matches snapshot 1`] = `
                 </svg>
               </a>
             </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-itSolutions"
-                id="prepare-for-clearance-itSolutions"
-                name="itSolutions.status"
-                type="checkbox"
-                value=""
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-itSolutions"
-              >
-                IT solutions and implementation status
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-itSolutions"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/it-solutions/undefined"
-              >
-                Review it solutions and implementation status
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
-            </div>
           </div>
           <button
             class="usa-button margin-top-4"
