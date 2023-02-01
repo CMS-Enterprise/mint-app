@@ -137,7 +137,7 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
               disabled=""
             >
               <div
-                class="usa-form-group"
+                class="usa-form-group margin-top-0"
                 data-scroll="key"
               >
                 <label
