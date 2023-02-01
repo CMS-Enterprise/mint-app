@@ -47,6 +47,8 @@ const ReadyForReview = ({
     }
   );
 
+  const commonName = data?.userAccount.commonName;
+
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
       <SummaryBox heading="" className="bg-white border-base-light padding-2">
@@ -68,10 +70,10 @@ const ReadyForReview = ({
             }
           }}
         />
-        {persistentCopy && readyForReviewBy && readyForReviewDts && (
+        {persistentCopy && commonName && readyForReviewDts && (
           <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
             {t('markedReady', {
-              reviewer: data?.userAccount.commonName
+              reviewer: commonName
             })}
             {formatDate(readyForReviewDts, 'M/d/yyyy')}
           </p>
