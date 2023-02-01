@@ -12,10 +12,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
-// UserAccountGetByUsername returns a user account by it's EUAID
-func UserAccountGetByUsername(logger *zap.Logger, store *storage.Store, euaID string) (*authentication.UserAccount, error) {
+// UserAccountGetByUsername returns a user account by it's userName
+func UserAccountGetByUsername(logger *zap.Logger, store *storage.Store, userName string) (*authentication.UserAccount, error) {
 
-	return store.UserAccountGetByUsername(euaID)
+	return store.UserAccountGetByUsername(userName)
 
 }
 
