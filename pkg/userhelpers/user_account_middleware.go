@@ -3,12 +3,13 @@ package userhelpers
 import (
 	"net/http"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 func userAccountServiceMiddleware(userFunction authentication.GetUserAccountFromDBFunc, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		nextCtx := authentication.CTXWithUserAccountService(r.Context(), userFunction)
+		nextCtx := appcontext.WithUserAccountService(r.Context(), userFunction)
 		r = r.WithContext(nextCtx)
 		next.ServeHTTP(w, r)
 	})

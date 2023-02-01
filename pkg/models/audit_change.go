@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -86,7 +87,7 @@ func (ac *AuditChange) ModifiedByUserAccount(ctx context.Context) *authenticatio
 	if ac.ModifiedBy == nil {
 		return nil
 	}
-	service := authentication.UserAccountService(ctx)
+	service := appcontext.UserAccountService(ctx)
 	account, _ := service(ctx, *ac.ModifiedBy)
 	return account
 

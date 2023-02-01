@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -62,7 +63,7 @@ func (b baseStructUserTable) GetCreatedBy() string {
 // CreatedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
 func (b *baseStructUserTable) CreatedByUserAccount(ctx context.Context) *authentication.UserAccount {
 
-	service := authentication.UserAccountService(ctx)
+	service := appcontext.UserAccountService(ctx)
 	account, _ := service(ctx, b.CreatedBy)
 	return account
 
@@ -74,7 +75,8 @@ func (b *baseStructUserTable) ModifiedByUserAccount(ctx context.Context) *authen
 	if b.ModifiedBy == nil {
 		return nil
 	}
-	service := authentication.UserAccountService(ctx)
+	service := appcontext.UserAccountService(ctx)
+	// service := authentication.UserAccountService(ctx)
 	account, _ := service(ctx, *b.ModifiedBy)
 	return account
 

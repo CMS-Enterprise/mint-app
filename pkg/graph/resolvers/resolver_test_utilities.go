@@ -78,7 +78,7 @@ func (tc *TestConfigs) GetDefaults() {
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
 	tc.Context = appcontext.WithLogger(tc.Context, tc.Logger)
-	tc.Context = authentication.CTXWithUserAccountService(tc.Context, userhelpers.UserAccountGetByIDLOADER)
+	tc.Context = appcontext.WithUserAccountService(tc.Context, userhelpers.UserAccountGetByIDLOADER)
 
 }
 

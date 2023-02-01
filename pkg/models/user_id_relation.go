@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -19,7 +20,7 @@ func NewUserIDRelation(userID uuid.UUID) userIDRelation {
 	}
 }
 func (b *userIDRelation) UserAccount(ctx context.Context) *authentication.UserAccount {
-	service := authentication.UserAccountService(ctx)
+	service := appcontext.UserAccountService(ctx)
 	account, _ := service(ctx, b.UserID)
 	return account
 
