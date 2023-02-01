@@ -13,8 +13,5 @@ func (suite *ResolverSuite) UserAccount() {
 
 	userAccount := colab.UserAccount(suite.testConfigs.Context)
 
-	suite.EqualValues(updaterPrincipal.UserAccount.ID, userAccount.ID)
-	suite.EqualValues(updaterPrincipal.UserAccount.CommonName, userAccount.CommonName)
-	suite.EqualValues(updaterPrincipal.UserAccount.Email, userAccount.Email)
-	suite.EqualValues(updaterPrincipal.UserAccount.Username, userAccount.Username)
+	suite.Equal(updaterPrincipal.UserAccount, userAccount)
 }

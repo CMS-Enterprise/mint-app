@@ -7,11 +7,7 @@ func (suite *ResolverSuite) TestCreatedByUserAccount() {
 	colab := suite.createPlanCollaborator(plan, "FRND", models.TeamRoleArchitect)
 	createdAcount := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
 
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, createdAcount.ID)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, createdAcount.CommonName)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.Email, createdAcount.Email)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.Username, createdAcount.Username)
-
+	suite.Equal(suite.testConfigs.Principal.UserAccount, createdAcount)
 }
 
 func (suite *ResolverSuite) TestModifiedByUserAccount() {
@@ -19,7 +15,6 @@ func (suite *ResolverSuite) TestModifiedByUserAccount() {
 
 	plan := suite.createModelPlan("My Test plan")
 	colab := suite.createPlanCollaborator(plan, "FRND", models.TeamRoleArchitect)
-	// createdAcount := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
 
 	nilModifiedAccount := colab.ModifiedByUserAccount(suite.testConfigs.Context)
 	suite.Nil(nilModifiedAccount)
@@ -28,9 +23,5 @@ func (suite *ResolverSuite) TestModifiedByUserAccount() {
 	suite.NoError(err)
 	modifiedAccount := updatedCollab.ModifiedByUserAccount(suite.testConfigs.Context)
 
-	suite.EqualValues(updaterPrincipal.UserAccount.ID, modifiedAccount.ID)
-	suite.EqualValues(updaterPrincipal.UserAccount.CommonName, modifiedAccount.CommonName)
-	suite.EqualValues(updaterPrincipal.UserAccount.Email, modifiedAccount.Email)
-	suite.EqualValues(updaterPrincipal.UserAccount.Username, modifiedAccount.Username)
-
+	suite.Equal(updaterPrincipal.UserAccount, modifiedAccount)
 }
