@@ -272,9 +272,9 @@ const PrepareForClearanceCheckList = ({
                             section as keyof ClearanceStatusesModelPlanFormType
                           ]?.readyForClearanceDts;
 
-                        // Bypass/don't render itTools or prepareForClearance task list sections
+                        // Bypass/don't render itSolutions or prepareForClearance task list sections
                         if (
-                          section === 'itTools' ||
+                          section === 'itSolutions' ||
                           section === 'prepareForClearance'
                         )
                           return null;
