@@ -275,6 +275,7 @@ const AddSolution = () => {
                           <FieldGroup
                             scrollElement="key"
                             error={!!flatErrors.key}
+                            className="margin-top-0"
                           >
                             <Label htmlFor="it-solutions-key">
                               {t('howWillYouSolve')}
