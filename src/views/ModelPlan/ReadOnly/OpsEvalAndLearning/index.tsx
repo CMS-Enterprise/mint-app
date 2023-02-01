@@ -9,6 +9,7 @@ import { formatDate } from 'utils/date';
 import {
   translateAgencyOrStateHelpType,
   translateBenchmarkForPerformanceType,
+  translateBooleanOrNull,
   translateCcmInvolvmentType,
   translateContractorSupportType,
   translateDataForMonitoringType,
@@ -23,6 +24,10 @@ import {
 } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
+import {
+  isCCWInvolvement,
+  isQualityMeasures
+} from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
@@ -195,7 +200,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
         />
         <ReadOnlySection
           heading={t('helpDesk')}
-          copy={helpdeskUse ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(helpdeskUse)}
           notes={helpdeskUseNote}
         />
         <ReadOnlySection
@@ -212,46 +217,48 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       </div>
 
       {/* IDDOC */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
-        <ReadOnlySection
-          heading={t('iddocSupport')}
-          copy={iddocSupport ? h('yes') : h('no')}
-          notes={iddocSupportNote}
-        />
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              technicalContactsIdentified ? 'desktop:width-card-lg' : ''
-            }
-          >
-            <ReadOnlySection
-              heading={t('technicalContacts')}
-              copy={technicalContactsIdentified ? h('yes') : h('no')}
-            />
-          </div>
-          {/* Only display specification div if "yes" was selected for technical contacts question above */}
-          {technicalContactsIdentified && (
-            <div className="desktop:width-card-lg">
+      {iddocSupport && (
+        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
+          <ReadOnlySection
+            heading={t('iddocSupport')}
+            copy={translateBooleanOrNull(iddocSupport)}
+            notes={iddocSupportNote}
+          />
+          <div className="desktop:display-flex flex-justify">
+            <div
+              className={
+                technicalContactsIdentified ? 'desktop:width-card-lg' : ''
+              }
+            >
               <ReadOnlySection
-                heading={h('pleaseSpecify')}
-                copy={technicalContactsIdentifiedDetail}
+                heading={t('technicalContacts')}
+                copy={translateBooleanOrNull(technicalContactsIdentified)}
               />
             </div>
-          )}
-        </div>
-        {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection
-          heading={h('note')}
-          copy={technicalContactsIdentifiedNote}
-        />
+            {/* Only display specification div if "yes" was selected for technical contacts question above */}
+            {technicalContactsIdentified && (
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={h('pleaseSpecify')}
+                  copy={technicalContactsIdentifiedDetail}
+                />
+              </div>
+            )}
+          </div>
+          {/* This is a slight "hack" of this component in order to get around the heading being required */}
+          <ReadOnlySection
+            heading={h('note')}
+            copy={technicalContactsIdentifiedNote}
+          />
 
-        <ReadOnlySection
-          heading={t('participantInformation')}
-          copy={captureParticipantInfo ? h('yes') : h('no')}
-          notes={captureParticipantInfoNote}
-        />
-      </div>
+          <ReadOnlySection
+            heading={t('participantInformation')}
+            copy={translateBooleanOrNull(captureParticipantInfo)}
+            notes={captureParticipantInfoNote}
+          />
+        </div>
+      )}
 
       {/* Interface Control Document - ICD */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
@@ -305,7 +312,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('eftAndConnectivity')}
-              copy={eftSetUp ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(eftSetUp)}
             />
           </div>
         </div>
@@ -313,19 +320,19 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('adjustments')}
-              copy={unsolicitedAdjustmentsIncluded ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(unsolicitedAdjustmentsIncluded)}
             />
           </div>
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('diagrams')}
-              copy={dataFlowDiagramsNeeded ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(dataFlowDiagramsNeeded)}
             />
           </div>
         </div>
         <ReadOnlySection
           heading={t('benefitEnhancement')}
-          copy={produceBenefitEnhancementFiles ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(produceBenefitEnhancementFiles)}
         />
         <ReadOnlySection
           heading={t('namingConventions')}
@@ -346,7 +353,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
         />
         <ReadOnlySection
           heading={t('computeScores')}
-          copy={computePerformanceScores ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(computePerformanceScores)}
           notes={computePerformanceScoresNote}
         />
 
@@ -354,13 +361,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.riskAdj.performanceScores')}
-              copy={riskAdjustPerformance ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(riskAdjustPerformance)}
             />
           </div>
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.riskAdj.feedbackResults')}
-              copy={riskAdjustFeedback ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(riskAdjustFeedback)}
             />
           </div>
         </div>
@@ -368,13 +375,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.riskAdj.payments')}
-              copy={riskAdjustPayments ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(riskAdjustPayments)}
             />
           </div>
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.riskAdj.others')}
-              copy={riskAdjustOther ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(riskAdjustOther)}
             />
           </div>
         </div>
@@ -385,13 +392,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.appeal.performanceScores')}
-              copy={appealPerformance ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(appealPerformance)}
             />
           </div>
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.appeal.feedbackResults')}
-              copy={appealFeedback ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(appealFeedback)}
             />
           </div>
         </div>
@@ -400,13 +407,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.appeal.payments')}
-              copy={appealPayments ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(appealPayments)}
             />
           </div>
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={readOnly('opsEvalAndLearning.appeal.others')}
-              copy={appealOther ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(appealOther)}
             />
           </div>
         </div>
@@ -450,60 +457,68 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
         />
         <ReadOnlySection
           heading={t('claimLineFeed')}
-          copy={shareCclfData ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(shareCclfData)}
           notes={shareCclfDataNote}
         />
       </div>
 
       {/* CCWAndQuality */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
-        <ReadOnlySection
-          heading={t('ccwSendFiles')}
-          copy={sendFilesBetweenCcw ? h('yes') : h('no')}
-          notes={sendFilesBetweenCcwNote}
-        />
-        <div className="desktop:display-flex flex-justify">
-          <div className={appToSendFilesToKnown ? 'desktop:width-card-lg' : ''}>
-            <ReadOnlySection
-              heading={t('fileTransfers')}
-              copy={appToSendFilesToKnown ? h('yes') : h('no')}
-            />
-          </div>
-          {/* Only display specification div if "yes" was selected for file transfer question above */}
-          {appToSendFilesToKnown && (
-            <div className="desktop:width-card-lg">
+      {isCCWInvolvement(ccmInvolvment) && (
+        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
+          <ReadOnlySection
+            heading={t('ccwSendFiles')}
+            copy={translateBooleanOrNull(sendFilesBetweenCcw)}
+            notes={sendFilesBetweenCcwNote}
+          />
+          <div className="desktop:display-flex flex-justify">
+            <div
+              className={appToSendFilesToKnown ? 'desktop:width-card-lg' : ''}
+            >
               <ReadOnlySection
-                heading={h('pleaseSpecify')}
-                copy={appToSendFilesToWhich}
+                heading={t('fileTransfers')}
+                copy={translateBooleanOrNull(appToSendFilesToKnown)}
               />
             </div>
-          )}
-        </div>
-        {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
+            {/* Only display specification div if "yes" was selected for file transfer question above */}
+            {appToSendFilesToKnown && (
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={h('pleaseSpecify')}
+                  copy={appToSendFilesToWhich}
+                />
+              </div>
+            )}
+          </div>
+          {/* This is a slight "hack" of this component in order to get around the heading being required */}
+          <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
 
-        <ReadOnlySection
-          heading={t('distributeFiles')}
-          copy={useCcwForFileDistribiutionToParticipants ? h('yes') : h('no')}
-          notes={useCcwForFileDistribiutionToParticipantsNote}
-        />
-      </div>
+          <ReadOnlySection
+            heading={t('distributeFiles')}
+            copy={translateBooleanOrNull(
+              useCcwForFileDistribiutionToParticipants
+            )}
+            notes={useCcwForFileDistribiutionToParticipantsNote}
+          />
+        </div>
+      )}
 
       {/* Quality */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
-        <ReadOnlySection
-          heading={t('validatedQuality')}
-          copy={developNewQualityMeasures ? h('yes') : h('no')}
-          notes={developNewQualityMeasuresNote}
-        />
-        <ReadOnlySection
-          heading={t('impactPayment')}
-          copy={qualityPerformanceImpactsPayment ? h('yes') : h('no')}
-          notes={qualityPerformanceImpactsPaymentNote}
-        />
-      </div>
+      {isQualityMeasures(dataNeededForMonitoring) && (
+        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
+          <ReadOnlySection
+            heading={t('validatedQuality')}
+            copy={translateBooleanOrNull(developNewQualityMeasures)}
+            notes={developNewQualityMeasuresNote}
+          />
+          <ReadOnlySection
+            heading={t('impactPayment')}
+            copy={translateBooleanOrNull(qualityPerformanceImpactsPayment)}
+            notes={qualityPerformanceImpactsPaymentNote}
+          />
+        </div>
+      )}
 
       {/* DataSharing */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
