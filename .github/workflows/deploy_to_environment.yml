@@ -82,7 +82,6 @@ jobs:
       #   run: |
       #     ./scripts/rds-snapshot-app-db
       - name: Deploy Faktory ECS service
-        if: ${{ inputs.env == 'dev' || inputs.env == 'test' }}
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-faktory
