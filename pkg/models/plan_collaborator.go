@@ -1,28 +1,27 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 // PlanCollaborator represents a plan collaborator
 // FullName and Email are stored as a result from the initial CEDAR query that's made when we create the collaborator
 // This _could_ cause drift if either of these values change in CEDAR, but it's unlikely.
 type PlanCollaborator struct {
-	baseStruct
+	baseStructUserTable
 	modelPlanRelation
-	EUAUserID string   `json:"euaUserId" db:"eua_user_id"`
-	FullName  string   `json:"fullName" db:"full_name"`
-	TeamRole  TeamRole `json:"teamRole" db:"team_role"`
-	Email     string   `json:"email" db:"email"`
+	userIDRelation
+	TeamRole TeamRole `json:"teamRole" db:"team_role"`
 }
 
 // NewPlanCollaborator returns a plan collaborator object
-func NewPlanCollaborator(createdBy string, modelPlanID uuid.UUID, euaUserID string, fullName string, teamRole TeamRole, email string) *PlanCollaborator {
+func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRole TeamRole) *PlanCollaborator {
 	return &PlanCollaborator{
-		EUAUserID:         euaUserID,
-		FullName:          fullName,
-		TeamRole:          teamRole,
-		Email:             email,
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		baseStruct:        NewBaseStruct(createdBy),
+		// UserID:              userID,
+		userIDRelation:      NewUserIDRelation(userID),
+		TeamRole:            teamRole,
+		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
+		baseStructUserTable: NewBaseStructUser(createdBy),
 	}
 }
 

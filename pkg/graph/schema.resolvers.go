@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
@@ -30,9 +31,6 @@ func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models
 
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
-	// logger := appcontext.ZLogger(ctx)
-
-	// return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
@@ -416,8 +414,9 @@ func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, 
 
 // RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
 func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store, principal)
 }
 
 // Solutions is the resolver for the solutions field.
@@ -984,6 +983,12 @@ func (r *queryResolver) PossibleOperationalSolutions(ctx context.Context) ([]*mo
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PossibleOperationalSolutionCollectionGetAll(logger, r.store)
+}
+
+// UserAccount is the resolver for the userAccount field.
+func (r *queryResolver) UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.UserAccountGetByUsername(logger, r.store, username)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

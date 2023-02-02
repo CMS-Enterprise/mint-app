@@ -60,7 +60,7 @@ const basics = {
   perforamncePeriod: 'Performance period',
   performanceStartDate: 'Performance start date',
   performanceEndDate: 'Performance end date',
-  demonstrationPerformance: 'Demonstration or model period of performance',
+  demonstrationPerformance: 'Performance period',
   modelWrapUp: 'Model wrap-up end date',
   notes: 'Notes',
   tightTimeline:

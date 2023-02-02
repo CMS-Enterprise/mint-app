@@ -60,12 +60,22 @@ func (suite *ResolverSuite) TestOperationalSolutionLoader() {
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 
 	for _, opNeedID := range opNeedIds {
-		theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
+		theFunc := getSolutionLoaderVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
 		g.Go(theFunc)
 	}
 
 	err := g.Wait()
 	suite.NoError(err)
+}
+func (suite *ResolverSuite) TestOperationalSolutionLoaderNotNeeded() {
+	numModels := 1
+	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
+
+	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, opNeedIds[0], false)
+	suite.Len(opSols, 0) // Should be an empty array, because there are no solutions at this point
+
+	suite.NoError(err)
+
 }
 
 func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
@@ -81,7 +91,7 @@ func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) err
 	}
 	return nil
 }
-func getVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
+func getSolutionLoaderVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
 	return func() error {
 		return verifySolutionsFunc(ctx, operationalNeedID)
 	}

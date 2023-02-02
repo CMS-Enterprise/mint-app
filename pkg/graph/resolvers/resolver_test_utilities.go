@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
@@ -51,6 +52,10 @@ func createS3Client() upload.S3Client {
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
+	//OS ENV won't get environment variables set by VSCODE for debugging
+	_ = os.Setenv(appconfig.LocalMinioAddressKey, config.GetString(appconfig.LocalMinioAddressKey))
+	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
+	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
 	return upload.NewS3Client(s3Cfg)
 }
@@ -73,6 +78,7 @@ func (tc *TestConfigs) GetDefaults() {
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
 	tc.Context = appcontext.WithLogger(tc.Context, tc.Logger)
+	tc.Context = appcontext.WithUserAccountService(tc.Context, userhelpers.UserAccountGetByIDLOADER)
 
 }
 

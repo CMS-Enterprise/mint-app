@@ -66,13 +66,11 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	return pd
 }
 
-func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
+func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
-		EuaUserID:   EUAUserID,
-		FullName:    fullName,
+		UserName:    userName,
 		TeamRole:    teamRole,
-		Email:       emailAddress,
 	}
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
@@ -129,7 +127,7 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 	updatedSections []string,
 	reviewSections []string,
 	clearanceSections []string,
-	addedLeads []string, discussionActivity bool) *models.AnalyzedAuditChange {
+	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
 		ModelPlan: &models.AnalyzedModelPlan{

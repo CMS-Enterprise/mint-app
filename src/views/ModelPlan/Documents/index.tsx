@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -17,12 +16,7 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
-import GetModelPlan from 'queries/GetModelPlan';
-import {
-  GetModelPlan as GetModelPlanType,
-  GetModelPlan_modelPlan as GetModelPlanTypes,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import AddDocument from './AddDocument';
@@ -40,16 +34,7 @@ export const DocumentsContent = () => {
     'error'
   );
 
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
-    GetModelPlan,
-    {
-      variables: {
-        id: modelID
-      }
-    }
-  );
-
-  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+  const { modelName } = useContext(ModelInfoContext);
 
   return (
     <MainContent data-testid="model-documents">
@@ -72,10 +57,10 @@ export const DocumentsContent = () => {
             <Breadcrumb current>{t('heading')}</Breadcrumb>
           </BreadcrumbBar>
 
-          {message && <Expire delay={4000}>{message}</Expire>}
+          {message && <Expire delay={45000}>{message}</Expire>}
 
           {documentMessage && (
-            <Expire delay={4000}>
+            <Expire delay={45000}>
               <Alert
                 type={documentStatus}
                 slim
@@ -97,7 +82,7 @@ export const DocumentsContent = () => {
             className="margin-top-0 margin-bottom-2 font-body-lg"
             data-testid="model-plan-name"
           >
-            {h('for')} {modelPlan.modelName}
+            {h('for')} {modelName}
           </p>
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">

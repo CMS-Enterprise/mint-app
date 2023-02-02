@@ -22,11 +22,10 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
-		EuaUserID:   "CLAB",
-		FullName:    "Clab O' Rater",
+		UserName:    "CLAB",
 		TeamRole:    models.TeamRoleLeadership,
-		Email:       "clab@rater.com",
 	}
+	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 
 	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
@@ -39,7 +38,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Eq([]string{expectedEmail}),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),

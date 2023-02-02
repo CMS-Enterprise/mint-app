@@ -36,6 +36,8 @@ SELECT
     plan_basics.modified_dts,
     plan_basics.ready_for_review_by,
     plan_basics.ready_for_review_dts,
+    plan_basics.ready_for_clearance_by,
+    plan_basics.ready_for_clearance_dts,
     plan_basics.status
 FROM QUERIED_IDS AS qIDs
 INNER JOIN plan_basics ON plan_basics.model_plan_id = qIDs.model_plan_id;

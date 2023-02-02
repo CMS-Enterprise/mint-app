@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import GetUserInfo from 'queries/GetUserInfo';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import { TaskStatus } from 'types/graphql-global-types';
 
@@ -39,6 +40,27 @@ const clearanceMock = [
   }
 ];
 
+const sectionClearanceLabelMock = [
+  {
+    request: {
+      query: GetUserInfo,
+      variables: { username: readyForClearanceBy }
+    },
+    result: {
+      data: {
+        userAccount: {
+          id: '',
+          username: '',
+          commonName: 'Jerry Seinfeld',
+          email: '',
+          givenName: '',
+          familyName: ''
+        }
+      }
+    }
+  }
+];
+
 describe('Prepare for clearance checklist', () => {
   it('renders without errors and unchecks an item', async () => {
     render(
@@ -68,15 +90,17 @@ describe('Prepare for clearance checklist', () => {
 
   it('renders SectionClearanceLabel', async () => {
     render(
-      <SectionClearanceLabel
-        readyForClearanceBy={readyForClearanceBy}
-        readyForClearanceDts={readyForClearanceDts}
-      />
+      <MockedProvider mocks={sectionClearanceLabelMock} addTypename={false}>
+        <SectionClearanceLabel
+          readyForClearanceBy={readyForClearanceBy}
+          readyForClearanceDts={readyForClearanceDts}
+        />
+      </MockedProvider>
     );
 
     await waitFor(() => {
       expect(screen.getByTestId('clearance-label')).toHaveTextContent(
-        'Marked ready for clearance by MINT on 10/24/2022'
+        'Marked ready for clearance by Jerry Seinfeld on 10/24/2022'
       );
     });
   });

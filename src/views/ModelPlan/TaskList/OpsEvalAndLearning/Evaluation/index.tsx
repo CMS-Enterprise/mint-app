@@ -240,7 +240,7 @@ const Evaluation = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-evaluation-form"
                 onSubmit={e => {
                   handleSubmit(e);

@@ -28,10 +28,15 @@ export interface GetModelPlans_modelPlanCollection_payments {
   paymentStartDate: Time | null;
 }
 
+export interface GetModelPlans_modelPlanCollection_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface GetModelPlans_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
+  userAccount: GetModelPlans_modelPlanCollection_collaborators_userAccount;
   teamRole: TeamRole;
 }
 

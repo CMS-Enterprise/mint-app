@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelStatus, TaskStatus, DiscussionStatus, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, TaskStatus, TeamRole, DiscussionStatus, PrepareForClearanceStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -16,6 +16,23 @@ export interface GetModelPlan_modelPlan_basics {
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
+}
+
+export interface GetModelPlan_modelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
+export interface GetModelPlan_modelPlan_collaborators {
+  __typename: "PlanCollaborator";
+  id: UUID;
+  userAccount: GetModelPlan_modelPlan_collaborators_userAccount;
+  userID: UUID;
+  teamRole: TeamRole;
+  modelPlanID: UUID;
+  createdDts: Time;
 }
 
 export interface GetModelPlan_modelPlan_documents {
@@ -125,6 +142,7 @@ export interface GetModelPlan_modelPlan {
   archived: boolean;
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics;
+  collaborators: GetModelPlan_modelPlan_collaborators[];
   documents: GetModelPlan_modelPlan_documents[];
   crTdls: GetModelPlan_modelPlan_crTdls[];
   discussions: GetModelPlan_modelPlan_discussions[];

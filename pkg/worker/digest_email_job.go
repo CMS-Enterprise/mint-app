@@ -29,7 +29,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 	helper := faktory_worker.HelperFor(ctx)
 
-	collaborators, err := w.Store.PlanCollaboratorCollection()
+	userIDs, err := w.Store.PlanFavoriteCollectionGetUniqueUserIDs()
 	if err != nil {
 		return err
 	}
@@ -41,8 +41,8 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 		batch.Success.Queue = defaultQueue
 
 		return batch.Jobs(func() error {
-			for _, c := range collaborators {
-				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, c.EUAUserID)
+			for _, id := range userIDs {
+				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, id) //TODO verify!
 				job.Queue = emailQueue
 				err = batch.Push(job)
 				if err != nil {
@@ -69,15 +69,18 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 
-	userID := args[1].(string)
-
-	// Get the latest collaborator to get their email.
-	// TODO: get email from user_account table when it is ready
-	latestCollaborator, err := w.Store.PlanCollaboratorFetchLatestByUserID(userID)
+	userIDString := args[1].(string) // This is always returned as a string from faktory
+	userID, err := uuid.Parse(userIDString)
 	if err != nil {
 		return err
 	}
-	recipientEmail := latestCollaborator.Email
+
+	account, err := w.Store.UserAccountGetByID(userID)
+	if err != nil {
+		return err
+	}
+
+	recipientEmail := account.Email
 
 	// Get all analyzedAudits based on users favorited models
 	analyzedAudits, err := getDigestAnalyzedAudits(userID, dateAnalyzed, w.Store, w.Logger)
@@ -111,13 +114,9 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 */
 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
-func getDigestAnalyzedAudits(userID string, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
-	account, err := store.UserAccountGetByUsername(userID) //TODO verify
-	if err != nil {
-		return nil, err
-	}
+func getDigestAnalyzedAudits(userID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
 
-	planFavorites, err := store.PlanFavoriteGetByCollectionByUserID(logger, account.ID)
+	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
 	if err != nil {
 		return nil, err
 	}

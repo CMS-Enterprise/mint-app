@@ -5,6 +5,7 @@
 
 // USWDS typography/color theme used below
 @use 'uswds-core' as *;
+@use 'viewports' as *;
 
 // USWDS all packages
 // @forward 'uswds';
@@ -165,8 +166,10 @@ button:disabled {
   margin-bottom: 0rem;
 }
 
-.usa-input, .usa-select {
-  max-width: none !important;
+@media screen and (min-width: $desktop) {
+  .usa-input, .usa-select, .usa-combo-box, .usa-textarea, .usa-date-picker__wrapper {
+    max-width: none !important;
+  }
 }
 
 input[type="text"]:disabled {

@@ -91,12 +91,18 @@ export interface GetAllModelData_modelPlanCollection_discussions {
   replies: GetAllModelData_modelPlanCollection_discussions_replies[];
 }
 
+export interface GetAllModelData_modelPlanCollection_collaborators_userAccount {
+  __typename: "UserAccount";
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetAllModelData_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
-  euaUserID: string;
-  email: string;
+  userAccount: GetAllModelData_modelPlanCollection_collaborators_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
   modelPlanID: UUID;
   createdDts: Time;
