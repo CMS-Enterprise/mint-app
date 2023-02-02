@@ -161,7 +161,6 @@ export default function CedarContactSelect({
     userSelected
   );
 
-  // If autoSearch, run initial query from name
   const { contacts, queryCedarContacts, loading } = useCedarContactLookup(
     debounceValue,
     userSelected
@@ -169,9 +168,6 @@ export default function CedarContactSelect({
 
   // Selected contact
   const selectedContact = useRef(value?.euaUserId);
-
-  // Show warning if autosearch returns multiple or no results
-  const showWarning = autoSearch && !value?.euaUserId && contacts.length !== 1;
 
   /** Update contact and reset search term */
   const updateContact = (contact?: CedarContactProps | null) => {
@@ -273,7 +269,6 @@ export default function CedarContactSelect({
         'cedar-contact-select',
         'maxw-none',
         'usa-combo-box',
-        { 'cedar-contact-select__warning': showWarning },
         {
           'cedar-contact-select__loading':
             (loading || debounceLoading) &&
