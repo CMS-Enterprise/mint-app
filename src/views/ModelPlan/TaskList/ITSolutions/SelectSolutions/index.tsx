@@ -306,7 +306,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
                             history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
+                              { isCustomNeed }
                             );
                           }}
                         >
