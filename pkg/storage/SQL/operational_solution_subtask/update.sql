@@ -1,4 +1,4 @@
-UPDATE operational_solution_subtasks
+UPDATE operational_solution_subtask
 SET
     solution_id = :solution_id,
     name = :name,

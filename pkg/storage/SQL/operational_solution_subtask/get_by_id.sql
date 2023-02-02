@@ -7,5 +7,5 @@ SELECT
     created_dts,
     modified_by,
     modified_dts
-FROM operational_solution_subtasks
+FROM operational_solution_subtask
 WHERE id = :id

@@ -1,4 +1,4 @@
-INSERT INTO operational_solution_subtasks (
+INSERT INTO operational_solution_subtask (
     id,
     solution_id,
     name,

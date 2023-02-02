@@ -4,7 +4,7 @@ CREATE TYPE OPERATIONAL_SOLUTION_SUBTASK_STATUS AS ENUM (
     'DONE'
 );
 
-CREATE TABLE operational_solution_subtasks (
+CREATE TABLE operational_solution_subtask (
     id UUID PRIMARY KEY NOT NULL,
     solution_id UUID NOT NULL,   --foreign key to model plan
     name ZERO_STRING,
@@ -18,8 +18,8 @@ CREATE TABLE operational_solution_subtasks (
 );
 
 
-ALTER TABLE operational_solution_subtasks
-ADD CONSTRAINT fk_operational_solution_subtasks FOREIGN KEY (solution_id)
+ALTER TABLE operational_solution_subtask
+ADD CONSTRAINT fk_operational_solution_subtask FOREIGN KEY (solution_id)
 REFERENCES public.operational_solution (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION
