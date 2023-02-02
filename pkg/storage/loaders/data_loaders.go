@@ -7,6 +7,7 @@ type DataLoaders struct {
 	BasicsLoader            *WrappedDataLoader
 	OperationalNeedLoader   *WrappedDataLoader
 	OperationSolutionLoader *WrappedDataLoader
+	UserAccountLoader       *WrappedDataLoader
 	DataReader              *DataReader
 }
 
@@ -20,6 +21,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.BasicsLoader = newWrappedDataLoader(loaders.GetPlanBasicsByModelPlanID)
 	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
 	loaders.OperationSolutionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
+	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 
 	return loaders
 }
