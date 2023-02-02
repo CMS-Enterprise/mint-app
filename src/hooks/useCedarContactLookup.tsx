@@ -20,7 +20,10 @@ type CedarHookProps = {
 /**
  * Custom hook for retrieving contacts from Cedar by common name
  * */
-function useCedarContactLookup(query?: string | null): CedarHookProps {
+function useCedarContactLookup(
+  query?: string | null,
+  userSelected?: boolean
+): CedarHookProps {
   const [searchTerm, setSearchTerm] = useState<string | null | undefined>(
     query
   );
@@ -29,7 +32,7 @@ function useCedarContactLookup(query?: string | null): CedarHookProps {
     GetCedarUser,
     {
       variables: { commonName: searchTerm },
-      skip: !query || query.length < 3
+      skip: !query || query.length < 3 || userSelected
     }
   );
 

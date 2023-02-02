@@ -13,6 +13,7 @@ import classNames from 'classnames';
 
 import Spinner from 'components/Spinner';
 import useCedarContactLookup from 'hooks/useCedarContactLookup';
+import useDebounce from 'hooks/useDebounce';
 import color from 'utils/uswdsColor';
 
 import './index.scss';
@@ -154,8 +155,6 @@ export default function CedarContactSelect({
 
   const [userSelected, setUserSelected] = useState(false);
 
-  const [didMount, setDidMount] = useState(false);
-
   const { debounceValue, debounceLoading } = useDebounce(
     searchTerm,
     1500,
@@ -164,7 +163,8 @@ export default function CedarContactSelect({
 
   // If autoSearch, run initial query from name
   const { contacts, queryCedarContacts, loading } = useCedarContactLookup(
-    debounceValue
+    debounceValue,
+    userSelected
   );
 
   // Selected contact
@@ -173,32 +173,18 @@ export default function CedarContactSelect({
   // Show warning if autosearch returns multiple or no results
   const showWarning = autoSearch && !value?.euaUserId && contacts.length !== 1;
 
-  /** Query CEDAR by common name and update contacts */
-  const queryContacts = (query: string) => {
-    setSearchTerm(query);
-    if (query.length > 1) {
-      queryCedarContacts(query.split(',')[0]);
-    }
-  };
-
   /** Update contact and reset search term */
   const updateContact = (contact?: CedarContactProps | null) => {
     onChange(contact || null);
     selectedContact.current = contact?.euaUserId;
-    queryContacts(contact ? formatLabel(contact) : '');
+    setSearchTerm(contact ? formatLabel(contact) : '');
   };
 
   useEffect(() => {
-    if (!didMount) {
-      // required to not call API on initial render
-      // https://stackoverflow.com/questions/53179075/with-useeffect-how-can-i-skip-applying-an-effect-upon-the-initial-render
-      setDidMount(true);
-      return;
-    }
-    if (debounceValue && debounceValue.length > 1) {
+    if (debounceValue) {
       queryCedarContacts(debounceValue.split(',')[0]);
     }
-  }, [debounceValue, queryCedarContacts, didMount]);
+  }, [debounceValue, queryCedarContacts]);
 
   // React Select styles object
   const customStyles: {
@@ -278,14 +264,6 @@ export default function CedarContactSelect({
     })
   };
 
-  // Update contact when value changes
-  // Fix for 'same as requester' checkboxes in system intake form
-  useEffect(() => {
-    if (!autoSearch && value?.euaUserId !== selectedContact.current) {
-      updateContact(value);
-    }
-  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <Select
       id={id}
@@ -327,14 +305,9 @@ export default function CedarContactSelect({
       }
       value={value ? { value, label: formatLabel(value) } : undefined}
       onChange={item => updateContact(item?.value || null)}
-      onBlur={e => {
-        // Automatically select on blur if search returns single result
-        if (autoSearch && contacts.length === 1) {
-          updateContact(contacts[0]);
-        }
-      }}
       onInputChange={(newValue, { action }) => {
         if (action !== 'input-blur' && action !== 'menu-close') {
+          // If user selected a value, no need to query and debounce again
           if (action === 'set-value') {
             setUserSelected(true);
           } else {
@@ -355,24 +328,4 @@ export default function CedarContactSelect({
       isClearable
     />
   );
-}
-
-function useDebounce(value: string | undefined, wait: number, stop: boolean) {
-  const [oldValue, setOldValue] = useState(value); // Used to compare again incoming value to reset loading state
-  const [debounceValue, setDebounceValue] = useState(value);
-  const [debounceLoading, setDebounceLoading] = useState<boolean>(false);
-  useEffect(() => {
-    if (!debounceLoading && value !== oldValue && !stop) {
-      // If value changes start loading
-      setDebounceLoading(true);
-    }
-    const timer = setTimeout(() => {
-      setDebounceValue(value);
-      setOldValue(value);
-      setDebounceLoading(false);
-    }, wait);
-    return () => clearTimeout(timer); // cleanup when unmounted
-  }, [value, wait, debounceLoading, oldValue, stop]);
-
-  return { debounceValue, debounceLoading };
 }
