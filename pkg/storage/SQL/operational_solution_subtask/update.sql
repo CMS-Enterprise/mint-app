@@ -1,6 +1,5 @@
 UPDATE operational_solution_subtask
 SET
-    solution_id = :solution_id,
     name = :name,
     status = :status,
     modified_by = :modified_by,
