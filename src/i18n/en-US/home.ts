@@ -40,7 +40,7 @@ const home = {
       }
     },
     empty: {
-      heading: 'You haven’t been added to any Model Plans yet. ',
+      heading: 'You haven’t been added to any Model Plans yet.',
       body:
         'Once you create one or are added as a team member to an existing plan, it will appear here.'
     },
