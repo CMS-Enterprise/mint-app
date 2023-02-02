@@ -22,8 +22,8 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     plan_it_tools,
     plan_favorite,
     plan_cr_tdl,
-    operational_solution,
 	operational_solution_subtasks,
+    operational_solution,
     operational_need,
     analyzed_audit,
     model_plan,
@@ -45,7 +45,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 func removeNonSystemAccounts(s *Store) error {
 
 	script := `DELETE FROM user_account
-    WHERE username NOT IN 
+    WHERE username NOT IN
     `
 	systemAccounts := "( 'UNKNOWN_USER','MINT_SYSTEM')"
 	_, err := s.db.Exec(script + systemAccounts)
