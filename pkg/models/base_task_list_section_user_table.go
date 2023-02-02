@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -98,7 +99,7 @@ func (b *baseTaskListSectionUserTable) ReadyForClearanceByUserAccount(ctx contex
 		return nil
 	}
 
-	service := authentication.UserAccountService(ctx)
+	service := appcontext.UserAccountService(ctx)
 	account, _ := service(ctx, *b.ReadyForClearanceBy)
 	return account
 }
@@ -110,7 +111,7 @@ func (b *baseTaskListSectionUserTable) ReadyForReviewByUserAccount(ctx context.C
 		return nil
 	}
 
-	service := authentication.UserAccountService(ctx)
+	service := appcontext.UserAccountService(ctx)
 	account, _ := service(ctx, *b.ReadyForReviewBy)
 	return account
 }
