@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4380c0a1-33d3-44fc-9e3e-dc0acb6a832d",
+		"_postman_id": "b00b74e9-b996-4094-9cf2-b07e0f88530b",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -1701,42 +1701,34 @@
 			"item": [
 				{
 					"name": "CreateOperationalSolutionSubtasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createOperationalSolutionSubtasks\r",
+									"\r",
+									"operationalSolutionSubtaskID = responseData.id\r",
+									"pm.collectionVariables.set(\"operationalSolutionSubtaskID\", operationalSolutionSubtaskID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "Local { \"EUAID\":\"MINT\", \"favorLocalAuth\":true, \"jobCodes\":[\"MINT_USER_NONPROD\"] }",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation createOperationalSolutionSubtasks ($solutionID: UUID!, $inputs: [CreateOperationalSolutionSubtaskInput!]!) {\r\n    createOperationalSolutionSubtasks (solutionID: $solutionID, inputs: $inputs) {\r\n        id\r\n        solutionID\r\n        name\r\n        status\r\n        createdBy\r\n        createdDts\r\n        modifiedBy\r\n        modifiedDts\r\n    }\r\n}",
-								"variables": "{\r\n  \"solutionID\": \"c3f14574-fd64-4b38-8729-e8dbacd1e148\",\r\n  \"inputs\": [\r\n      {\r\n          \"name\": \"Waffle Fries\",\r\n          \"status\": \"TODO\"\r\n      }\r\n  ]\r\n}"
+								"variables": "{\r\n  \"solutionID\": \"{{solutionID}}\",\r\n  \"inputs\": [\r\n      {\r\n          \"name\": \"Execute an important task\",\r\n          \"status\": \"TODO\"\r\n      }\r\n  ]\r\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1745,41 +1737,19 @@
 				{
 					"name": "DeleteOperationalSolutionSubtasks",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "Local { \"EUAID\":\"MINT\", \"favorLocalAuth\":true, \"jobCodes\":[\"MINT_USER_NONPROD\"] }",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation deleteOperationalSolutionSubtask ($id: UUID!) {\r\n    deleteOperationalSolutionSubtask (id: $id)\r\n}",
-								"variables": "{\r\n  \"id\": \"08b60dfd-b624-4c57-a053-3f42136c190f\"\r\n}"
+								"variables": "{\r\n  \"id\": \"{{operationalSolutionSubtaskID}}\"\r\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1794,20 +1764,13 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updateOperationalSolutionSubtasks ($inputs: [UpdateOperationalSolutionSubtaskInput!]!) {\r\n    updateOperationalSolutionSubtasks (inputs: $inputs) {\r\n        id\r\n        solutionID\r\n        name\r\n        status\r\n        createdBy\r\n        createdDts\r\n        modifiedBy\r\n        modifiedDts\r\n    }\r\n}",
-								"variables": "{\r\n  \"inputs\": [\r\n      {\r\n          \"id\": \"08b60dfd-b624-4c57-a053-3f42136c190f\",\r\n          \"changes\": {\r\n            \"name\": \"Test\",\r\n            \"status\": \"IN_PROGRESS\"\r\n          }\r\n      }\r\n  ]\r\n}"
+								"variables": "{\r\n  \"inputs\": [\r\n      {\r\n          \"id\": \"{{operationalSolutionSubtaskID}}\",\r\n          \"changes\": {\r\n            \"name\": \"Execute multiple important tasks\",\r\n            \"status\": \"IN_PROGRESS\"\r\n          }\r\n      }\r\n  ]\r\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1822,20 +1785,13 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query operationalSolutionSubtask ($id: UUID!) {\r\n    operationalSolutionSubtask (id: $id) {\r\n        id\r\n        solutionID\r\n        name\r\n        status\r\n        createdBy\r\n        createdDts\r\n        modifiedBy\r\n        modifiedDts\r\n    }\r\n}",
-								"variables": "{\r\n    \"id\": \"08b60dfd-b624-4c57-a053-3f42136c190f\"\r\n}"
+								"variables": "{\r\n    \"id\": \"{{operationalSolutionSubtaskID}}\"\r\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
