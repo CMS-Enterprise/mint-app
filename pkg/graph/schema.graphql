@@ -1488,8 +1488,10 @@ type OperationalSolutionSubtask {
   status: OperationalSolutionSubtaskStatus!
 
   createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 

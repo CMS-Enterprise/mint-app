@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -476,6 +477,16 @@ func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Co
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.OperationalSolutionSubtasksGetBySolutionID(logger, r.store, principal, obj.ID)
+}
+
+// CreatedByUserAccount is the resolver for the createdByUserAccount field.
+func (r *operationalSolutionSubtaskResolver) CreatedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error) {
+	panic(fmt.Errorf("not implemented: CreatedByUserAccount - createdByUserAccount"))
+}
+
+// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
+func (r *operationalSolutionSubtaskResolver) ModifiedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error) {
+	panic(fmt.Errorf("not implemented: ModifiedByUserAccount - modifiedByUserAccount"))
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -1103,6 +1114,11 @@ func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
 	return &operationalSolutionResolver{r}
 }
 
+// OperationalSolutionSubtask returns generated.OperationalSolutionSubtaskResolver implementation.
+func (r *Resolver) OperationalSolutionSubtask() generated.OperationalSolutionSubtaskResolver {
+	return &operationalSolutionSubtaskResolver{r}
+}
+
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
 
@@ -1165,6 +1181,7 @@ type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
+type operationalSolutionSubtaskResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planCollaboratorResolver struct{ *Resolver }

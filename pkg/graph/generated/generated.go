@@ -47,6 +47,7 @@ type ResolverRoot interface {
 	Mutation() MutationResolver
 	OperationalNeed() OperationalNeedResolver
 	OperationalSolution() OperationalSolutionResolver
+	OperationalSolutionSubtask() OperationalSolutionSubtaskResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
 	PlanCollaborator() PlanCollaboratorResolver
@@ -236,14 +237,16 @@ type ComplexityRoot struct {
 	}
 
 	OperationalSolutionSubtask struct {
-		CreatedBy   func(childComplexity int) int
-		CreatedDts  func(childComplexity int) int
-		ID          func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		Name        func(childComplexity int) int
-		SolutionID  func(childComplexity int) int
-		Status      func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		Name                  func(childComplexity int) int
+		SolutionID            func(childComplexity int) int
+		Status                func(childComplexity int) int
 	}
 
 	PlanBasics struct {
@@ -958,6 +961,11 @@ type OperationalNeedResolver interface {
 type OperationalSolutionResolver interface {
 	Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error)
 	OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error)
+}
+type OperationalSolutionSubtaskResolver interface {
+	CreatedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error)
+
+	ModifiedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -2323,6 +2331,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.OperationalSolutionSubtask.CreatedBy(childComplexity), true
 
+	case "OperationalSolutionSubtask.createdByUserAccount":
+		if e.complexity.OperationalSolutionSubtask.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.OperationalSolutionSubtask.CreatedByUserAccount(childComplexity), true
+
 	case "OperationalSolutionSubtask.createdDts":
 		if e.complexity.OperationalSolutionSubtask.CreatedDts == nil {
 			break
@@ -2343,6 +2358,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalSolutionSubtask.ModifiedBy(childComplexity), true
+
+	case "OperationalSolutionSubtask.modifiedByUserAccount":
+		if e.complexity.OperationalSolutionSubtask.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.OperationalSolutionSubtask.ModifiedByUserAccount(childComplexity), true
 
 	case "OperationalSolutionSubtask.modifiedDts":
 		if e.complexity.OperationalSolutionSubtask.ModifiedDts == nil {
@@ -8031,8 +8053,10 @@ type OperationalSolutionSubtask {
   status: OperationalSolutionSubtaskStatus!
 
   createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -18485,10 +18509,14 @@ func (ec *executionContext) fieldContext_Mutation_createOperationalSolutionSubta
 				return ec.fieldContext_OperationalSolutionSubtask_status(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolutionSubtask_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_OperationalSolutionSubtask_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedDts(ctx, field)
 			}
@@ -18579,10 +18607,14 @@ func (ec *executionContext) fieldContext_Mutation_updateOperationalSolutionSubta
 				return ec.fieldContext_OperationalSolutionSubtask_status(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolutionSubtask_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_OperationalSolutionSubtask_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedDts(ctx, field)
 			}
@@ -19959,10 +19991,14 @@ func (ec *executionContext) fieldContext_OperationalSolution_operationalSolution
 				return ec.fieldContext_OperationalSolutionSubtask_status(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolutionSubtask_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_OperationalSolutionSubtask_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedDts(ctx, field)
 			}
@@ -20362,6 +20398,72 @@ func (ec *executionContext) fieldContext_OperationalSolutionSubtask_createdBy(ct
 	return fc, nil
 }
 
+func (ec *executionContext) _OperationalSolutionSubtask_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolutionSubtask) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.OperationalSolutionSubtask().CreatedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "OperationalSolutionSubtask",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _OperationalSolutionSubtask_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolutionSubtask) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_OperationalSolutionSubtask_createdDts(ctx, field)
 	if err != nil {
@@ -20442,6 +20544,69 @@ func (ec *executionContext) fieldContext_OperationalSolutionSubtask_modifiedBy(c
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _OperationalSolutionSubtask_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolutionSubtask) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.OperationalSolutionSubtask().ModifiedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "OperationalSolutionSubtask",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -44360,10 +44525,14 @@ func (ec *executionContext) fieldContext_Query_operationalSolutionSubtask(ctx co
 				return ec.fieldContext_OperationalSolutionSubtask_status(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_OperationalSolutionSubtask_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_OperationalSolutionSubtask_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_OperationalSolutionSubtask_modifiedDts(ctx, field)
 			}
@@ -49114,47 +49283,84 @@ func (ec *executionContext) _OperationalSolutionSubtask(ctx context.Context, sel
 			out.Values[i] = ec._OperationalSolutionSubtask_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "solutionID":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_solutionID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "name":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_name(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "status":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_status(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "createdBy":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_createdBy(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._OperationalSolutionSubtask_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdDts":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_createdDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_modifiedBy(ctx, field, obj)
 
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._OperationalSolutionSubtask_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._OperationalSolutionSubtask_modifiedDts(ctx, field, obj)
