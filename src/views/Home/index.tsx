@@ -99,6 +99,7 @@ const Home = () => {
                   isAssessment={isAssessment(userGroups, flags)}
                   isMAC={isMAC(userGroups)}
                   hideTable={hideTable}
+                  tableHidden={tableHidden}
                 />
               )}
 

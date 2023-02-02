@@ -88,6 +88,7 @@ type TableProps = {
   isMAC: boolean;
   // callback used to hide parent header if assessment user has no associated model plans
   hideTable?: (tableHidden: boolean) => void;
+  tableHidden?: boolean;
 };
 
 const DraftModelPlansTable = ({
@@ -95,7 +96,8 @@ const DraftModelPlansTable = ({
   userModels,
   isAssessment,
   isMAC,
-  hideTable
+  hideTable,
+  tableHidden
 }: TableProps) => {
   const { t } = useTranslation('home');
 
@@ -373,9 +375,9 @@ const DraftModelPlansTable = ({
     if (!loading && isAssessment && userModels && data.length === 0) {
       if (hideTable) hideTable(true);
     }
-  }, [loading, isAssessment, userModels, data.length, hideTable]);
+  }, [loading, isAssessment, userModels, data, hideTable]);
 
-  if (hideTable) {
+  if (tableHidden) {
     return null;
   }
 
