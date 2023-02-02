@@ -157,7 +157,7 @@ export default function CedarContactSelect({
 
   const { debounceValue, debounceLoading } = useDebounce(
     searchTerm,
-    1500,
+    250,
     userSelected
   );
 
