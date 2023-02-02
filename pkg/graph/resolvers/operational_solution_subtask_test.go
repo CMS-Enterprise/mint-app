@@ -47,7 +47,6 @@ func (suite *ResolverSuite) TestOperationalSolutionSubtaskGetBySolutionID() {
 	result, err := OperationalSolutionSubtasksGetBySolutionID(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
-		suite.testConfigs.Principal,
 		solution.ID,
 	)
 	suite.NoError(err)

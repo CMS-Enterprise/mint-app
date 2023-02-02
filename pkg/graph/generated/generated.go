@@ -838,7 +838,6 @@ type ComplexityRoot struct {
 		NdaInfo                      func(childComplexity int) int
 		OperationalNeed              func(childComplexity int, id uuid.UUID) int
 		OperationalSolution          func(childComplexity int, id uuid.UUID) int
-		OperationalSolutionSubtask   func(childComplexity int, id uuid.UUID) int
 		OperationalSolutions         func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
 		PlanCollaboratorByID         func(childComplexity int, id uuid.UUID) int
 		PlanDocument                 func(childComplexity int, id uuid.UUID) int
@@ -1142,7 +1141,6 @@ type QueryResolver interface {
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
-	OperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (*models.OperationalSolutionSubtask, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -6209,18 +6207,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.OperationalSolution(childComplexity, args["id"].(uuid.UUID)), true
 
-	case "Query.operationalSolutionSubtask":
-		if e.complexity.Query.OperationalSolutionSubtask == nil {
-			break
-		}
-
-		args, err := ec.field_Query_operationalSolutionSubtask_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.OperationalSolutionSubtask(childComplexity, args["id"].(uuid.UUID)), true
-
 	case "Query.operationalSolutions":
 		if e.complexity.Query.OperationalSolutions == nil {
 			break
@@ -8082,7 +8068,6 @@ type Query {
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   userAccount(username: String!): UserAccount!
-  operationalSolutionSubtask(id: UUID!): OperationalSolutionSubtask
 }
 
 enum ModelPlanFilter {
@@ -9954,21 +9939,6 @@ func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawA
 }
 
 func (ec *executionContext) field_Query_operationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_operationalSolutionSubtask_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -44479,80 +44449,6 @@ func (ec *executionContext) fieldContext_Query_userAccount(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_operationalSolutionSubtask(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_operationalSolutionSubtask(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().OperationalSolutionSubtask(rctx, fc.Args["id"].(uuid.UUID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.OperationalSolutionSubtask)
-	fc.Result = res
-	return ec.marshalOOperationalSolutionSubtask2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionSubtask(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_operationalSolutionSubtask(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalSolutionSubtask_id(ctx, field)
-			case "solutionID":
-				return ec.fieldContext_OperationalSolutionSubtask_solutionID(ctx, field)
-			case "name":
-				return ec.fieldContext_OperationalSolutionSubtask_name(ctx, field)
-			case "status":
-				return ec.fieldContext_OperationalSolutionSubtask_status(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalSolutionSubtask_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_OperationalSolutionSubtask_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalSolutionSubtask_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalSolutionSubtask_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_OperationalSolutionSubtask_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalSolutionSubtask_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalSolutionSubtask", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_operationalSolutionSubtask_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -53688,26 +53584,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return rrm(innerCtx)
-			})
-		case "operationalSolutionSubtask":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_operationalSolutionSubtask(ctx, field)
 				return res
 			}
 
@@ -63487,13 +63363,6 @@ func (ec *executionContext) marshalOOperationalSolutionSubtask2ᚕᚖgithubᚗco
 	}
 
 	return ret
-}
-
-func (ec *executionContext) marshalOOperationalSolutionSubtask2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionSubtask(ctx context.Context, sel ast.SelectionSet, v *models.OperationalSolutionSubtask) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._OperationalSolutionSubtask(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOOverlapType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOverlapType(ctx context.Context, v interface{}) (*models.OverlapType, error) {

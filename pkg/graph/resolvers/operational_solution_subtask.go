@@ -1,15 +1,12 @@
 package resolvers
 
 import (
-	"errors"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 
-	"github.com/cmsgov/mint-app/pkg/accesscontrol"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -64,18 +61,8 @@ func OperationalSolutionSubtaskGetByID(
 func OperationalSolutionSubtasksGetBySolutionID(
 	logger *zap.Logger,
 	store *storage.Store,
-	principal authentication.Principal,
 	solutionID uuid.UUID,
 ) ([]*models.OperationalSolutionSubtask, error) {
-
-	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, solutionID)
-	if err != nil {
-		return nil, err
-	}
-
-	if !isCollaborator {
-		return nil, errors.New("user is not a collaborator for the provided solution id")
-	}
 
 	subtasks, err := store.OperationalSolutionSubtasksGetBySolutionID(logger, solutionID)
 

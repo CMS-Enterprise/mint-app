@@ -22,4 +22,6 @@ ALTER TABLE operational_solution_subtask
 ADD CONSTRAINT fk_operational_solution_subtask FOREIGN KEY (solution_id)
 REFERENCES public.operational_solution (id) MATCH SIMPLE
 ON UPDATE NO ACTION
-ON DELETE NO ACTION
+ON DELETE NO ACTION;
+
+SELECT audit.AUDIT_TABLE('public', 'operational_solution_subtask', 'id', 'solution_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{name, status}'::TEXT[]);
