@@ -19,7 +19,7 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, basics.ModelPlanID)
 	suite.EqualValues(models.TaskReady, basics.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, basics.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, basics.CreatedBy)
 
 	// Many of the fields are nil upon creation
 	suite.Nil(basics.ModelType)
@@ -96,7 +96,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	updatedBasics, err := UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedBasics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedBasics.ModifiedBy)
 	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
 	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)
