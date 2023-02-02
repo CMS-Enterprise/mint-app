@@ -32,7 +32,7 @@ function useCedarContactLookup(
     GetCedarUser,
     {
       variables: { commonName: searchTerm },
-      skip: !query || query.length < 3 || userSelected
+      skip: !searchTerm || searchTerm.length < 3 || userSelected
     }
   );
 
