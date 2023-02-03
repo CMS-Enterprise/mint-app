@@ -11,7 +11,7 @@ import MainContent from 'components/MainContent';
 import Alert from 'components/shared/Alert';
 import UpdateNDA from 'queries/NDA/UpdateNDA';
 import { setUser } from 'reducers/authReducer';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 
 type NDAType = {
   agreed: boolean;
@@ -65,7 +65,7 @@ const NDA = () => {
                 isClosable={false}
               >
                 {t('accepted')}
-                {formatDate(acceptedNDA?.agreedDts, 'MM/d/yyyy')}
+                {formatDateLocal(acceptedNDA?.agreedDts, 'MM/dd/yyyy')}
               </Alert>
               <UswdsReactLink
                 to="/"

@@ -22,7 +22,6 @@ import { useQuery } from '@apollo/client';
 import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -37,6 +36,7 @@ import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeedsVariables
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
+import { formatDateUtc } from 'utils/date';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -158,9 +158,7 @@ const OperationalNeedsTable = ({
         Header: t<string>('itSolutionsTable.finishBy'),
         accessor: ({ mustFinishDts }: any) => {
           if (mustFinishDts) {
-            return DateTime.fromISO(mustFinishDts).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(mustFinishDts, 'MM/dd/yyyy');
           }
           return null;
         }

@@ -6,7 +6,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { DateTime } from 'luxon';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -20,6 +19,7 @@ import {
   GetModelPlanDocuments_modelPlan_documents as DocumentType,
   GetModelPlanDocumentsVariables
 } from 'queries/Documents/types/GetModelPlanDocuments';
+import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateDocumentType } from 'utils/modelPlan';
@@ -231,7 +231,7 @@ const Table = ({
         Header: t('documentTable.uploadDate'),
         accessor: 'createdDts',
         Cell: ({ value }: any) => {
-          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_SHORT);
+          return formatDateLocal(value, 'MM/dd/yyyy');
         }
       },
       {
