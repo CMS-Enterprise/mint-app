@@ -15,7 +15,6 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
@@ -26,6 +25,7 @@ import {
   GetAllModelPlans_modelPlanCollection as AllModelPlansType,
   GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
+import { formatDateUtc } from 'utils/date';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   translateModelCategory,
@@ -133,9 +133,7 @@ const Table = ({
         Header: t('allModels.tableHeading.startDate'),
         accessor: ({ basics: { applicationsStart } }: any) => {
           if (applicationsStart) {
-            return DateTime.fromISO(applicationsStart).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(applicationsStart, 'MM/dd/yyyy');
           }
           return null;
         },

@@ -12,7 +12,6 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -32,6 +31,7 @@ import {
   ModelPlanFilter,
   ModelStatus
 } from 'types/graphql-global-types';
+import { formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
@@ -168,9 +168,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.clearanceDate'),
         accessor: ({ basics: { clearanceStarts } }: any) => {
           if (clearanceStarts) {
-            return DateTime.fromISO(clearanceStarts).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(clearanceStarts, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -239,9 +237,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.startDate'),
         accessor: ({ basics: { applicationsStart } }: any) => {
           if (applicationsStart) {
-            return DateTime.fromISO(applicationsStart).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(applicationsStart, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -256,9 +252,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.paymentDate'),
         accessor: ({ payments: { paymentStartDate } }: any) => {
           if (paymentStartDate) {
-            return DateTime.fromISO(paymentStartDate).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(paymentStartDate, 'MM/dd/yyyy');
           }
           return null;
         },
