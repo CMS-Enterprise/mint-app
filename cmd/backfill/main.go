@@ -33,8 +33,8 @@ func main() { //TODO make this a command
 	testUpload := true
 	useEdit := false
 	useDecember13 := false
-	useJanuary19 := true
-	// useFeb2 :=true
+	useJanuary19 := false
+	useFeb2 := true
 	testUserInfo := false
 
 	testTransform = true
@@ -61,6 +61,12 @@ func main() { //TODO make this a command
 		outputTranslatePath = `cmd/backfill/data/sensitive/databackfillJan19Translated.json`
 		outputUploadPath = `cmd/backfill/data/sensitive/databackfillJan19Uploaded.json`
 		outputUploadWorklistPath = `cmd/backfill/data/sensitive/databackfillJan19UploadedWorklist.json`
+	}
+	if useFeb2 {
+		filePath = "cmd/backfill/data/sensitive/dataBackfillFeb2.csv"
+		outputTranslatePath = `cmd/backfill/data/sensitive/databackfillFeb2Translated.json`
+		outputUploadPath = `cmd/backfill/data/sensitive/databackfillFeb2Uploaded.json`
+		outputUploadWorklistPath = `cmd/backfill/data/sensitive/databackfillFeb2UploadedWorklist.json`
 	}
 
 	backfiller := getDefaultBackfiller()

@@ -163,6 +163,14 @@ func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentica
 		}
 	}
 	collab := models.NewPlanCollaborator(princ.Account().ID, entry.ModelPlan.ID, collabAccount.ID, sCollab.Role)
+	_, favErr := resolvers.PlanFavoriteCreate(&u.Logger, princ, collab.UserID, &u.Store, entry.ModelPlan.ID)
+	if favErr != nil {
+		return nil, &UploadError{
+			Model:   "PlanCollaborator",
+			Message: favErr.Error(),
+			DBError: favErr,
+		}
+	}
 
 	retCollaborator, err := u.Store.PlanCollaboratorCreate(&u.Logger, collab)
 	if err != nil {
