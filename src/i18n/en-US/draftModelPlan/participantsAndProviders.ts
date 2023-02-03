@@ -72,12 +72,12 @@ const participantsAndProviders = {
     reviewApplications: 'Model team will review applications',
     solicitSupport: 'Solicit support for CMII staff',
     anotherComponent: 'Another CMS component or process will provide support',
-    applicationReview: 'Use an Application Review and Scoring tool',
+    applicationReview: 'Use an application review and scoring tool',
     applicationSupport: 'Get an application support contractor',
     criteria:
       'We have a basic set of criteria and plan to accept any participant that meets them',
     other: 'Other',
-    notApplicable: 'Not applicable, it is a mandatory model'
+    notApplicable: 'We won’t be selecting participants'
   },
   providerConditions: 'What are the provider model enrollment conditions?',
   providerConditionsInfo:

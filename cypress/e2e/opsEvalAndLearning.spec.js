@@ -277,11 +277,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#ops-eval-and-learning-develop-measures-true')
-      .check({ force: true })
-      .should('be.checked');
-
-    cy.get('#ops-eval-and-learning-performance-impact-true')
+    cy.get('#ops-eval-and-learning-distribute-files-true')
       .check({ force: true })
       .should('be.checked');
 
@@ -361,7 +357,5 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
-
-    cy.get('h1.mint-h1').contains('Payment');
   });
 });

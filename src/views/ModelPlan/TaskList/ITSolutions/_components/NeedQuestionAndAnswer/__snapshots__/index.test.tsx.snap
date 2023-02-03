@@ -53,6 +53,51 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
           </svg>
           Why is this a part of my operational needs?
         </button>
+        <div
+          class="margin-left-neg-2px padding-1"
+        >
+          <div
+            class="border-left-05 border-base-dark padding-left-2 padding-y-1"
+          >
+            <p
+              class="text-bold margin-top-0"
+            >
+              In the Model Plan, you answered:
+            </p>
+            <p
+              data-testid="need-question"
+            >
+              How will you select participants? Select all that appy.
+            </p>
+            <ul
+              class="padding-left-4"
+            >
+              <li
+                class="margin-y-1"
+                data-testid="APPLICATION_REVIEW_AND_SCORING_TOOL"
+              >
+                Use an application review and scoring tool
+              </li>
+              <li
+                class="margin-y-1"
+                data-testid="APPLICATION_SUPPORT_CONTRACTOR"
+              >
+                Get an application support contractor
+              </li>
+            </ul>
+            <p
+              class="margin-bottom-0"
+            >
+              Want to change your answer? 
+              <a
+                class="usa-link"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options"
+              >
+                Go to the question.
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

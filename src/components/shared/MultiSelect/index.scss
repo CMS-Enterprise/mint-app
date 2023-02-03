@@ -4,6 +4,7 @@
 .easi-multiselect--tag {
   .usa-icon {
     cursor: pointer;
+    flex-shrink: 0;
   }
 }
 
@@ -22,5 +23,12 @@
 
   label {
     margin-top: 0;
+  }
+}
+
+.easi-multiselect {
+  .usa-checkbox {
+    display: flex;
+    align-items: center;
   }
 }

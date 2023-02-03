@@ -266,7 +266,7 @@ const ReadOnlyParticipantsAndProviders = ({
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div className="margin-bottom-4 padding-bottom-2">
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
         <ReadOnlySection

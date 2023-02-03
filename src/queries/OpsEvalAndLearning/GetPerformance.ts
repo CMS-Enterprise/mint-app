@@ -8,6 +8,7 @@ export default gql`
       opsEvalAndLearning {
         id
         ccmInvolvment
+        dataNeededForMonitoring
         iddocSupport
         benchmarkForPerformance
         benchmarkForPerformanceNote

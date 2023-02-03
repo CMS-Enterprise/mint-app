@@ -12,6 +12,8 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const mockData = [
   {
+    id: '123',
+    userID: 'LUKE',
     userAccount: {
       __typename: 'UserAccount',
       email: 'luke@skywalker.com',
@@ -24,6 +26,8 @@ const mockData = [
     __typename: 'PlanCollaborator'
   },
   {
+    id: '456',
+    userID: 'BOBA',
     userAccount: {
       __typename: 'UserAccount',
       email: 'boba@fett.com',

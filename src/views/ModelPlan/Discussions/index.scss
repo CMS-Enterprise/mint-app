@@ -1,4 +1,5 @@
 @use 'uswds-core' as *;
+@use 'viewports' as *;
 
 .mint-discussions {
     &__overlay {
@@ -21,9 +22,9 @@
       z-index: 1;
       line-height: 1.6em;
   
-      // @media screen and (max-width: $desktop) {
-      //   width: 100%;
-      // }
+      @media screen and (max-width: $desktop) {
+        width: 100%;
+      }
     }
 
     &__x-button-container {
@@ -50,6 +51,7 @@
       border-left: .25rem solid color('base-lightest');
       margin-left: .9rem;
       padding-left: 1.4rem;
+      margin-top: 0.25rem;
     }
 
     &__not-connected {
@@ -58,10 +60,15 @@
 
     &__single-discussion:last-of-type {
       margin-bottom: -1rem;
+      margin-top: -.5rem;
     }
 
   }
 
   .no-button > .usa-accordion__heading > .usa-accordion__button {
     background-size: 0rem !important;
+  }
+
+  .usa-accordion__content {
+    padding: 0.75rem 1.25rem calc(1rem - 0.25rem) 1.25rem !important;
   }

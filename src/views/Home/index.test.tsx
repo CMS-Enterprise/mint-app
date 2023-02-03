@@ -49,7 +49,6 @@ describe('The home page', () => {
           );
           component.update();
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
-          expect(component.find('hr').exists()).toBeTruthy();
           expect(component.find(Table).exists()).toBeTruthy();
           expect(component.text()).toContain('My model plans');
         });
@@ -83,9 +82,9 @@ describe('The home page', () => {
           );
           component.update();
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
-          expect(component.find('hr').exists()).toBeTruthy();
           expect(component.find(Table).exists()).toBeTruthy();
-          expect(component.text()).toContain('Model plans');
+          const header = component.find('h2').at(1).text();
+          expect(header).toContain('All model plans');
         });
       });
     });
