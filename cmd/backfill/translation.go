@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/icza/gox/stringsx"
 	"github.com/lib/pq"
 
@@ -295,8 +294,14 @@ func (t *Translation) addCollaborator(entry *BackfillEntry, valString string, us
 
 	role := models.TeamRole(t.Field)
 
-	collab := models.NewPlanCollaborator(user.EUAID, uuid.UUID{}, user.EUAID, user.Name, role, user.Email)
-	entry.Collaborators = append(entry.Collaborators, collab)
+	sCollab := SimplifiedCollaborator{
+		Role: role,
+		Name: valString,
+	}
+
+	// collab := models.NewPlanCollaborator(user.EUAID, uuid.UUID{}, user.EUAID, user.Name, role, user.Email)
+	// collab := models.NewPlanCollaborator(user.EUAID, uuid.UUID{}, user.EUAID, user.Name, role, user.Email)
+	entry.SimplifiedCollaborators = append(entry.SimplifiedCollaborators, &sCollab)
 
 }
 

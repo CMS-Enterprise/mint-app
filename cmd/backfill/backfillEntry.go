@@ -41,9 +41,16 @@ type BackfillEntry struct {
 	PlanBeneficiaries            *models.PlanBeneficiaries
 	PlanOpsEvalAndLearning       *models.PlanOpsEvalAndLearning
 	PlanPayments                 *models.PlanPayments
+	SimplifiedCollaborators      []*SimplifiedCollaborator
 	Collaborators                []*models.PlanCollaborator
 	TErrors                      []TranslationError
 	UErrors                      []UploadError
+}
+
+// SimplifiedCollaborator representes information needed to generate a collaborator before knowing if a user account exists
+type SimplifiedCollaborator struct {
+	Role models.TeamRole
+	Name string
 }
 
 // NewBackFillEntry instantiates a BackfillEntry

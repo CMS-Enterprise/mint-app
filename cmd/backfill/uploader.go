@@ -139,22 +139,22 @@ func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Pr
 }
 
 func (u *Uploader) uploadPlanCollaborators(entry *BackfillEntry, princ authentication.Principal) {
-	for i, collab := range entry.Collaborators {
+	for _, simpleCollab := range entry.SimplifiedCollaborators {
 		var uErr *UploadError
-		collab, uErr = u.uploadPlanCollaborator(entry, princ, collab)
-		// TODO need to add a user account to the DB!!!
+		collab, uErr := u.uploadPlanCollaborator(entry, princ, simpleCollab)
 
 		entry.addNonNullUError(uErr)
-		entry.Collaborators[i] = collab //if error, replaced with null..
+		entry.Collaborators = append(entry.Collaborators, collab) //if error, replaced with null..
 
 	}
 
 }
 
-func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentication.Principal, collab *models.PlanCollaborator) (*models.PlanCollaborator, *UploadError) {
+func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentication.Principal, sCollab *SimplifiedCollaborator) (*models.PlanCollaborator, *UploadError) {
 
-	user := u.Backfiller.UDictionary.tryGetUserByName(collab.FullName)
-	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), &u.Store, user.EUAID, false, false, backfillUserWrapperAccountInfoFunc(context.Background(), user.EUAID, user))
+	user := u.Backfiller.UDictionary.tryGetUserByName(sCollab.Name)
+
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(context.Background(), &u.Store, user.EUAID, false, false, backfillUserWrapperAccountInfoFunc(context.Background(), user.EUAID, user))
 	if err != nil {
 		return nil, &UploadError{
 			Model:   "UserAccount",
@@ -162,9 +162,8 @@ func (u *Uploader) uploadPlanCollaborator(entry *BackfillEntry, princ authentica
 			DBError: err,
 		}
 	}
+	collab := models.NewPlanCollaborator(princ.Account().ID, entry.ModelPlan.ID, collabAccount.ID, sCollab.Role)
 
-	collab.CreatedBy = entry.ModelPlan.CreatedBy
-	collab.ModelPlanID = entry.ModelPlan.ID
 	retCollaborator, err := u.Store.PlanCollaboratorCreate(&u.Logger, collab)
 	if err != nil {
 		return nil, &UploadError{
