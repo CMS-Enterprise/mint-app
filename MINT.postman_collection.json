@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "aba4d6c3-f5bd-4389-84e4-aed0f6f24907",
+		"_postman_id": "7bf591bd-a4d3-471a-9b16-26556fecb415",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "20435042"
 	},
 	"item": [
 		{
@@ -1777,27 +1777,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "GetOperationalSolutionSubtaskByID",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query operationalSolutionSubtask ($id: UUID!) {\r\n    operationalSolutionSubtask (id: $id) {\r\n        id\r\n        solutionID\r\n        name\r\n        status\r\n        createdBy\r\n        createdDts\r\n        modifiedBy\r\n        modifiedDts\r\n    }\r\n}",
-								"variables": "{\r\n    \"id\": \"{{operationalSolutionSubtaskID1}}\"\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}
@@ -1903,6 +1882,14 @@
 		},
 		{
 			"key": "discussionReplyID",
+			"value": ""
+		},
+		{
+			"key": "operationalSolutionSubtaskID0",
+			"value": ""
+		},
+		{
+			"key": "operationalSolutionSubtaskID1",
 			"value": ""
 		}
 	]
