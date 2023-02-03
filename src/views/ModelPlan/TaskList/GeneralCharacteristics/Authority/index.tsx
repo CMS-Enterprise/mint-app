@@ -40,7 +40,8 @@ import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateAuthorityAllowance,
-  translateWaiverTypes
+  translateWaiverTypes,
+  translateWaiverTypesLabel
 } from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
@@ -418,6 +419,7 @@ const Authority = () => {
                                 id={`plan-characteristics-waiver-types-${type}`}
                                 name="waiversRequiredTypes"
                                 label={translateWaiverTypes(type)}
+                                subLabel={translateWaiverTypesLabel(type)}
                                 value={type}
                                 checked={values.waiversRequiredTypes.includes(
                                   type as WaiverType

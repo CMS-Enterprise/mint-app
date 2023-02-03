@@ -40,6 +40,9 @@ export default gql`
         readyForClearanceDts
         status
       }
+      prepareForClearance {
+        status
+      }
     }
   }
 `;

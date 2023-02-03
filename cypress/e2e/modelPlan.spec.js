@@ -30,6 +30,8 @@ describe('The Model Plan Form', () => {
   it('create and renames a model plan', () => {
     cy.visit('/');
 
+    cy.wait(250);
+
     cy.contains('a', 'Start a new Model Plan').click();
     cy.contains('h1', 'Start a new model plan');
     cy.get('[data-testid="continue-link"]').click();
@@ -266,12 +268,15 @@ describe('The Model Plan Form', () => {
   it('favorites and unfavorites a model plan', () => {
     cy.visit('/models');
 
-    cy.contains('tr', 'Empty Plan').find(
-      'th button svg[data-cy="unfavorited"]'
-    );
+    cy.wait(500);
 
-    cy.contains('tr', 'Empty Plan').find('th button').click();
+    // cy.contains('tr', 'Empty Plan').find('th button svg[data-cy="favorited"]');
+    cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 
-    cy.contains('tr', 'Empty Plan').find('th button svg[data-cy="favorited"]');
+    cy.contains('tr', 'Empty Plan')
+      .get('[data-testid="Empty Plan-favorite"]')
+      .click();
+
+    cy.contains('tr', 'Empty Plan').get('[data-cy="unfavorited"]');
   });
 });

@@ -21,6 +21,7 @@ const home = {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models'
   },
+  yourModels: 'You have been added as a team member to the model plans below.',
   downloadAllCSV: 'Download all plans as CSV',
   downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
@@ -28,7 +29,7 @@ const home = {
       heading: 'My model plans'
     },
     admin: {
-      heading: 'Model plans'
+      heading: 'All model plans'
     },
     mac: {
       heading: 'Upcoming models',

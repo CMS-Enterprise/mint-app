@@ -239,7 +239,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
         {/* If renderType is reply, render the related question that is being answered */}
         {renderType === 'reply' && reply && (
           <div>
-            <div className="display-flex">
+            <div className="display-flex flex-wrap flex-justify">
               {reply.isAssessment ? (
                 <div className="display-flex flex-align-center">
                   <AssessmentIcon size={3} />{' '}
@@ -248,9 +248,13 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                   </span>
                 </div>
               ) : (
-                <IconInitial user={reply.createdByUser.commonName} index={0} />
+                <IconInitial
+                  className="margin-bottom-1"
+                  user={reply.createdByUser.commonName}
+                  index={0}
+                />
               )}
-              <span className="margin-left-2 margin-top-05 text-base">
+              <span className="margin-left-5 margin-top-05 text-base">
                 {getTimeElapsed(reply.createdDts)
                   ? getTimeElapsed(reply.createdDts) + t('ago')
                   : t('justNow')}
@@ -389,7 +393,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                     setReply={setReply}
                   />
                 ),
-                expanded: openStatus(DiscussionStatus[status]),
+                expanded: true,
                 id: status,
                 headingLevel: 'h4'
               }

@@ -268,7 +268,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         data-testid="label"
         for="plan-characteristics-resembles-existing-model"
       >
-        Does your proposed track/model resemble any existing model?
+        Does your proposed track/model resemble any existing models?
       </label>
       <fieldset
         class="usa-fieldset"

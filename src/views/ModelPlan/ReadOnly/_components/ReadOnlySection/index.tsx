@@ -52,6 +52,11 @@ const ReadOnlySection = ({
     );
   };
 
+  // If no notes are written, do not render
+  if (heading === t('notes') && !copy) {
+    return null;
+  }
+
   return (
     <>
       <div

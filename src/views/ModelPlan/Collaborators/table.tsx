@@ -38,7 +38,13 @@ const CollaboratorsTable = ({
         Header: t('table.name'),
         accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
-          return <IconInitial user={value} index={row.index} />;
+          return (
+            <IconInitial
+              className="margin-bottom-1"
+              user={value}
+              index={row.index}
+            />
+          );
         }
       },
       {

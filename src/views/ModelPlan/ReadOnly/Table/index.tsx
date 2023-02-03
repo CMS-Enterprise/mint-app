@@ -66,7 +66,7 @@ const Table = ({
             <Button
               onClick={() => updateFavorite(row.original.id, 'removeFavorite')}
               type="button"
-              data-testid={row.original.id}
+              data-testid={`${row.original.modelName}-favorite`}
               className="display-block"
               unstyled
             >
@@ -76,7 +76,7 @@ const Table = ({
             <Button
               onClick={() => updateFavorite(row.original.id, 'addFavorite')}
               type="button"
-              data-testid={row.original.id}
+              data-testid={`${row.original.modelName}-unfavorite`}
               className="display-block"
               unstyled
             >

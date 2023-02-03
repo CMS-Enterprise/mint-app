@@ -13,6 +13,7 @@ const performanceMockData: GetPerformanceType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  dataNeededForMonitoring: [],
   iddocSupport: true,
   benchmarkForPerformance: null,
   benchmarkForPerformanceNote: '',

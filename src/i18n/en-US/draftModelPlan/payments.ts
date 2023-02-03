@@ -221,7 +221,7 @@ const payments = {
   numberPaymentsPerPayCycleSubcopy:
     'This only applies if you are making non-claims-based payments',
   sharedSystemsInvolvedAdditionalClaimPayment:
-    'Will the shared systems be invovled for additional payment of claims?',
+    'Will the Shared Systems be involved for additional payment of claims?',
   planningToUseInnovationPaymentContractor:
     'Are you planning to use the Innovation Payment Contractor?',
   planningToUseInnovationPaymentContractorSubcopy:
