@@ -297,7 +297,9 @@ const AddOrUpdateOperationalNeed = () => {
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {t('dontAddandReturnToTracker')}
+                          {isUpdating
+                            ? t('dontUpdateandReturnToTracker')
+                            : t('dontAddandReturnToTracker')}
                         </Button>
                       </Fieldset>
                     </Form>
