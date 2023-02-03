@@ -43,11 +43,6 @@ func (b *baseTaskListSectionUserTable) GetStatus() TaskStatus {
 	return b.Status
 }
 
-// // GetBaseStruct returns the Base Struct
-// func (b *baseTaskListSectionUserTable) GetBaseStruct() *baseStruct {
-// 	return b.baseStructUserTable
-// }
-
 // CalcStatus updates the TaskStatus if it is in ready, but it has been modified.
 func (b *baseTaskListSectionUserTable) CalcStatus(oldStatus TaskStatus) error {
 

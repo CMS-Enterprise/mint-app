@@ -10,10 +10,8 @@ import (
 
 // IBaseTaskListSection returns the embedded BaseTaskListSection
 type IBaseTaskListSection interface {
-	// GetBaseTaskListSection() *baseTaskListSection
 	CalcStatus(TaskStatus) error
 	//methods from BaseStruct
-	// GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
