@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
 
 import AskAQuestion from 'components/AskAQuestion';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 
-import { OperationalNeedModalContext } from '../OperationalNeedModalContext';
+import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
 
 type ITSolutionsSidebarTypes = {
   modelID: string;
@@ -19,12 +19,19 @@ const ITSolutionsSidebar = ({
   operationalNeed
 }: ITSolutionsSidebarTypes) => {
   const { t } = useTranslation('itSolutions');
-  const { setIsModalOpen, setOperationalNeed } = useContext(
-    OperationalNeedModalContext
-  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
+      {!!operationalNeed && (
+        <OperationalNeedRemovalModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          modelID={modelID}
+          id={operationalNeed.id}
+          nameOther={operationalNeed.nameOther ?? ''}
+        />
+      )}
       <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
         <AskAQuestion modelID={modelID} renderTextFor={renderTextFor} />
       </div>
@@ -34,11 +41,6 @@ const ITSolutionsSidebar = ({
           <Button
             type="button"
             onClick={() => {
-              setOperationalNeed({
-                modelID,
-                id: operationalNeed.id,
-                nameOther: operationalNeed.nameOther ?? ''
-              });
               setIsModalOpen(true);
             }}
             className="usa-button usa-button--unstyled line-height-body-5"

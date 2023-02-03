@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
@@ -16,7 +16,7 @@ import {
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
-import { OperationalNeedModalContext } from '../OperationalNeedModalContext';
+import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
 import SolutionCard from '../SolutionCard';
 
 import InfoToggle from './_component/InfoToggle';
@@ -91,9 +91,7 @@ const NeedQuestionAndAnswer = ({
   isRenderingOnSolutionsDetails = false
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
-  const { setIsModalOpen, setOperationalNeed } = useContext(
-    OperationalNeedModalContext
-  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch operational need answer to question
   const { data: need } = useQuery<
@@ -162,6 +160,13 @@ const NeedQuestionAndAnswer = ({
     if (isRenderingOnSolutionsDetails) {
       return (
         <>
+          <OperationalNeedRemovalModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            modelID={modelID}
+            id={operationalNeed.id}
+            nameOther={operationalNeed.nameOther ?? ''}
+          />
           <UswdsReactLink
             to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
           >
@@ -171,11 +176,6 @@ const NeedQuestionAndAnswer = ({
             <Button
               type="button"
               onClick={() => {
-                setOperationalNeed({
-                  modelID,
-                  id: operationalNeed.id,
-                  nameOther: operationalNeed.nameOther ?? ''
-                });
                 setIsModalOpen(true);
               }}
               className="usa-button usa-button--unstyled line-height-body-5 text-red"

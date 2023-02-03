@@ -5,7 +5,6 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { OperationalNeedModalContextProvider } from './_components/OperationalNeedModalContext';
 import AddCustomSolution from './AddCustomSolution';
 import AddOrUpdateOperationalNeed from './AddOrUpdateOperationalNeed';
 import AddSolution from './AddSolution';
@@ -17,82 +16,80 @@ import SolutionImplementation from './SolutionImplementation';
 const ITSolutions = () => {
   return (
     <MainContent data-testid="it-solutions">
-      <OperationalNeedModalContextProvider>
-        <GridContainer>
-          <Grid desktop={{ col: 12 }}>
-            <Switch>
-              <Route path="/models/:modelID/task-list/it-solutions" exact>
-                <ITSolutionsHome />
-              </Route>
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
+          <Switch>
+            <Route path="/models/:modelID/task-list/it-solutions" exact>
+              <ITSolutionsHome />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/add-an-operational-need"
-                exact
-              >
-                <AddOrUpdateOperationalNeed />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/add-an-operational-need"
+              exact
+            >
+              <AddOrUpdateOperationalNeed />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
-                exact
-              >
-                <AddOrUpdateOperationalNeed />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
+              exact
+            >
+              <AddOrUpdateOperationalNeed />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions"
-                exact
-              >
-                <SelectSolutions />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions"
+              exact
+            >
+              <SelectSolutions />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-solutions"
-                exact
-              >
-                <SelectSolutions update />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-solutions"
+              exact
+            >
+              <SelectSolutions update />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
-                exact
-              >
-                <AddSolution />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
+              exact
+            >
+              <AddSolution />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
-                exact
-              >
-                <AddCustomSolution />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
+              exact
+            >
+              <AddCustomSolution />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details"
-                exact
-              >
-                <SolutionImplementation />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details"
+              exact
+            >
+              <SolutionImplementation />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-status/:solutionId?"
-                exact
-              >
-                <SolutionImplementation isUpdatingStatus />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-status/:solutionId?"
+              exact
+            >
+              <SolutionImplementation isUpdatingStatus />
+            </Route>
 
-              <Route
-                path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
-                exact
-              >
-                <SolutionDetails />
-              </Route>
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
+              exact
+            >
+              <SolutionDetails />
+            </Route>
 
-              <Route path="*" render={() => <NotFoundPartial />} />
-            </Switch>
-          </Grid>
-        </GridContainer>
-      </OperationalNeedModalContextProvider>
+            <Route path="*" render={() => <NotFoundPartial />} />
+          </Switch>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };
