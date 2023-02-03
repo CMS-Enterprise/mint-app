@@ -31,11 +31,14 @@ export const getTimeElapsed = (discussionCreated: string) => {
   Object.keys(timePassed).forEach(time => {
     if (timePassed[time as keyof typeof getTimeElapsed] >= 1) {
       const floatTime = timePassed[time as keyof typeof getTimeElapsed];
-      dateString += `${parseInt(floatTime, 10)} ${
-        timePassed[time as keyof typeof getTimeElapsed] >= 2
-          ? time
-          : time.slice(0, -1) // If singular, remove last letter 's's from time string
-      } `;
+      // Only show parent most level of time, rather than all increments
+      if (dateString === '') {
+        dateString += `${parseInt(floatTime, 10)} ${
+          timePassed[time as keyof typeof getTimeElapsed] >= 2
+            ? time
+            : time.slice(0, -1) // If singular, remove last letter 's's from time string
+        } `;
+      }
     }
   });
 

@@ -38,7 +38,10 @@ import {
   GetUserInfo as GetUserInfoType,
   GetUserInfoVariables
 } from 'queries/types/GetUserInfo';
-import { TaskStatus } from 'types/graphql-global-types';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
@@ -164,7 +167,12 @@ const PrepareForClearanceCheckList = ({
       });
   };
 
-  if ((!loading && error) || (!loading && !modelPlan)) {
+  if (
+    (!loading && error) ||
+    (!loading && !modelPlan) ||
+    (data as GetClearanceStatusesType)?.modelPlan?.prepareForClearance
+      ?.status === PrepareForClearanceStatus.CANNOT_START
+  ) {
     return <NotFoundPartial />;
   }
 

@@ -293,7 +293,12 @@ export const ParticipantOptions = () => {
                     {flatErrors.participantsCurrentlyInModels}
                   </FieldErrorMsg>
                   <Fieldset>
-                    {Object.keys(ConfidenceType).map(key => (
+                    {[
+                      ConfidenceType.NOT_AT_ALL,
+                      ConfidenceType.SLIGHTLY,
+                      ConfidenceType.FAIRLY,
+                      ConfidenceType.COMPLETELY
+                    ].map(key => (
                       <Field
                         as={Radio}
                         key={key}
@@ -348,31 +353,32 @@ export const ParticipantOptions = () => {
                               setFieldValue('recruitmentMethod', key);
                             }}
                           />
-                          {key === 'RFA' && (
+                          {key === RecruitmentType.NOFO && (
                             <p className="text-base margin-bottom-neg-05 margin-left-4 margin-top-1 line-height-body-3">
                               {t('recruitOptions.recruitInfo')}
                             </p>
                           )}
-                          {key === 'OTHER' && values.recruitmentMethod === key && (
-                            <div className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor="participants-and-providers-recruitment-other"
-                                className="text-normal"
-                              >
-                                {h('pleaseSpecify')}
-                              </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.recruitmentOther}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextInput}
-                                className="maxw-none"
-                                id="participants-and-providers-recruitment-other"
-                                maxLength={50}
-                                name="recruitmentOther"
-                              />
-                            </div>
-                          )}
+                          {key === RecruitmentType.OTHER &&
+                            values.recruitmentMethod === key && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Label
+                                  htmlFor="participants-and-providers-recruitment-other"
+                                  className="text-normal"
+                                >
+                                  {h('pleaseSpecify')}
+                                </Label>
+                                <FieldErrorMsg>
+                                  {flatErrors.recruitmentOther}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextInput}
+                                  className="maxw-none"
+                                  id="participants-and-providers-recruitment-other"
+                                  maxLength={50}
+                                  name="recruitmentOther"
+                                />
+                              </div>
+                            )}
                         </Fragment>
                       ))}
                   </Fieldset>
