@@ -36,7 +36,7 @@ const SingleDiscussion = ({
 
   return (
     <div className="mint-discussions__single-discussion">
-      <div className="display-flex">
+      <div className="display-flex flex-wrap flex-justify">
         {discussion.isAssessment ? (
           <div className="display-flex flex-align-center">
             <AssessmentIcon size={3} />{' '}
@@ -48,10 +48,9 @@ const SingleDiscussion = ({
           <IconInitial
             user={discussion.createdByUser.commonName}
             index={index}
-            className="margin-bottom-2"
           />
         )}
-        <span className="margin-left-2 margin-top-05 text-base">
+        <span className="margin-left-5 margin-top-05 text-base">
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
             : t('justNow')}

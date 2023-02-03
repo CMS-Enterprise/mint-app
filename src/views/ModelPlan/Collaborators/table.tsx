@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { formatDateLocal } from 'utils/date';
 import { translateTeamRole } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
@@ -38,7 +38,13 @@ const CollaboratorsTable = ({
         Header: t('table.name'),
         accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
-          return <IconInitial user={value} index={row.index} />;
+          return (
+            <IconInitial
+              className="margin-bottom-1"
+              user={value}
+              index={row.index}
+            />
+          );
         }
       },
       {
@@ -52,7 +58,7 @@ const CollaboratorsTable = ({
         Header: t('table.dateAdded'),
         accessor: 'createdDts',
         Cell: ({ value }: any) => {
-          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_FULL);
+          return formatDateLocal(value, 'MMMM d, yyyy');
         }
       },
       {

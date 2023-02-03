@@ -27,7 +27,7 @@ const modelPlanOverview = {
       heading:
         'Fill out the sections of the draft model plan form and document model requirements',
       description:
-        'Tell the Model Intake Team about your model and collaborate with the rest of your team to draft model requirements around participants, population, operations, payment options, and more.'
+        'Tell the MINT Team about your model and collaborate with the rest of your team to draft model requirements around participants, population, operations, payment options, and more.'
     },
     second: {
       heading: 'Upload any existing model documentation',

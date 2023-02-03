@@ -4,6 +4,7 @@ const beneficiaries = {
   breadcrumb: 'Beneficiaries',
   beneficiaries:
     'Who are the beneficiaries of this model? Select all that apply.',
+  diseaseSubLabel: '(based on a diagnosis, procedure code, condition, etc.)',
   beneficiariesQuestion: 'Who are the beneficiaries of this model?',
   beneficiariesOther:
     'Please describe the other groups this model will impact.',
@@ -22,7 +23,7 @@ const beneficiaries = {
   beneficiariesNA:
     'If you will not have beneficiaries, you can skip the rest of the questions in this section. Feel free to add any additional notes or details that would be helpful to others.',
   dualEligibility:
-    'Should dual-eligible beneficiaries be treated differently than non-dually eligibles?',
+    'Should dually-eligible beneficiaries be treated differently than non-dually eligibles?',
   excluded:
     'Should beneficiaries with certain characteristics or enrollments be excluded?',
   excludedNestedQuestion: 'What are the exclusionary criteria?',

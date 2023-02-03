@@ -36,7 +36,7 @@ import {
   GetModelSummary_modelPlan_crTdls as CRTDLsTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
@@ -182,7 +182,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     (isCollaborator || isAssessment(groups, flags));
 
   const formattedApplicationStartDate =
-    basics?.applicationsStart && formatDate(basics?.applicationsStart);
+    basics?.applicationsStart &&
+    formatDateLocal(basics?.applicationsStart, 'MMMM d, yyyy');
 
   const formattedKeyCharacteristics = generalCharacteristics?.keyCharacteristics.map(
     (item, index) => {

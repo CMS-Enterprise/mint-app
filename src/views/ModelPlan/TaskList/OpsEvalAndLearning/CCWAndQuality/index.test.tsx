@@ -5,7 +5,10 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
 import { GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityType } from 'queries/OpsEvalAndLearning/types/GetCCWAndQuality';
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  DataForMonitoringType
+} from 'types/graphql-global-types';
 
 import CCWAndQuality from '.';
 
@@ -13,6 +16,9 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  dataNeededForMonitoring: [
+    DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
+  ],
   iddocSupport: true,
   sendFilesBetweenCcw: null,
   sendFilesBetweenCcwNote: '',

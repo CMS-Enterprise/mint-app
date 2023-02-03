@@ -17,6 +17,7 @@ import './index.scss';
 type MultiSelectOptionProps = {
   value: string;
   label: string;
+  subLabel?: string;
 };
 
 const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
@@ -31,7 +32,7 @@ const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
     >
       <CheckboxField
         label={data.label}
-        id={`option-${data.value}`}
+        id={innerProps.id!}
         testid={`option-${data.value}`}
         name={data.value}
         checked={isSelected}
@@ -39,6 +40,9 @@ const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
         onBlur={() => null}
         value={data.value}
       />
+      {data.subLabel && (
+        <span className="text-base margin-left-4">{data.subLabel}</span>
+      )}
     </div>
   );
 };

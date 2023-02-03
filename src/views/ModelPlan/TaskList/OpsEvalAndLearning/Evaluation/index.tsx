@@ -53,7 +53,12 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Evaluation = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -120,7 +125,10 @@ const Evaluation = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             if (
-              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment || [])
+              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
+              isQualityMeasures(
+                formikRef?.current?.values.dataNeededForMonitoring
+              )
             ) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
@@ -334,6 +342,8 @@ const Evaluation = () => {
                   render={arrayHelpers => (
                     <>
                       <legend className="usa-label">{t('ccw')}</legend>
+
+                      <p className="text-base margin-y-1">{t('ccwInfo')}</p>
 
                       <FieldErrorMsg>{flatErrors.ccmInvolvment}</FieldErrorMsg>
 
@@ -613,11 +623,13 @@ const Evaluation = () => {
           currentPage={renderCurrentPage(
             6,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

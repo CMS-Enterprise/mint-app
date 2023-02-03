@@ -5,7 +5,6 @@ import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -20,6 +19,7 @@ import {
   GetCRTDLs as GetCRTDLsType,
   GetCRTDLs_modelPlan_crTdls as CDTRLType
 } from 'queries/CRTDL/types/GetCRTDLs';
+import { formatDateUtc } from 'utils/date';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -209,9 +209,7 @@ const Table = ({
         Header: t<string>('crtdlsTable.date'),
         accessor: ({ dateInitiated }: any) => {
           if (dateInitiated) {
-            return DateTime.fromISO(dateInitiated).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(dateInitiated, 'MM/dd/yyyy');
           }
           return null;
         }

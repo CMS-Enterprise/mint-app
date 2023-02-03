@@ -149,6 +149,7 @@ const TaskListSideNav = ({
               {collaborators.map((collaborator, index) => {
                 return (
                   <IconInitial
+                    className="margin-bottom-1"
                     key={collaborator.userAccount.username}
                     user={collaborator.userAccount.commonName}
                     index={index}
