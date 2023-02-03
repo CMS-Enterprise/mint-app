@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
 import { GetAllPayments as GetModelPlanPaymentType } from 'queries/ReadOnly/types/GetAllPayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateUtc } from 'utils/date';
 import {
   translateAnticipatedPaymentFrequencyType,
   translateBooleanOrNull,
@@ -430,7 +430,9 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
 
         <ReadOnlySection
           heading={t('paymentStartDateQuestion')}
-          copy={paymentStartDate && formatDate(paymentStartDate, 'MM/dd/yyyy')}
+          copy={
+            paymentStartDate && formatDateUtc(paymentStartDate, 'MM/dd/yyyy')
+          }
           notes={paymentStartDateNote}
         />
       </div>

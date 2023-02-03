@@ -39,7 +39,7 @@ import {
   GetUserInfoVariables
 } from 'queries/types/GetUserInfo';
 import { TaskStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -396,7 +396,7 @@ export const SectionClearanceLabel = ({
     >
       {t('markedAsReady', {
         readyForClearanceBy: data?.userAccount.commonName,
-        readyForClearanceDts: formatDate(readyForClearanceDts, 'MM/d/yyyy')
+        readyForClearanceDts: formatDateUtc(readyForClearanceDts, 'MM/dd/yyyy')
       })}
     </p>
   );

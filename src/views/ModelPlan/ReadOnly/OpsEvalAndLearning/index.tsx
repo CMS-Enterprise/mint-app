@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import GettAllOpsEvalAndLearning from 'queries/ReadOnly/GettAllOpsEvalAndLearning';
 import { GetAllOpsEvalAndLearning as AllOpsEvalAndLeardningTypes } from 'queries/ReadOnly/types/GetAllOpsEvalAndLearning';
 import { DataStartsType } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateUtc } from 'utils/date';
 import {
   translateAgencyOrStateHelpType,
   translateBenchmarkForPerformanceType,
@@ -242,7 +242,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
         <ReadOnlySection
           heading={t('draftIDC')}
-          copy={draftIcdDueDate && formatDate(draftIcdDueDate, 'MM/dd/yyyy')}
+          copy={draftIcdDueDate && formatDateUtc(draftIcdDueDate, 'MM/dd/yyyy')}
           notes={icdNote}
         />
       </div>
