@@ -18,6 +18,7 @@ const (
 	traceKey
 	principalKey
 	jwtKey
+	userAccountServiceKey
 )
 
 // WithLogger returns a context with the given logger
@@ -80,4 +81,14 @@ func EnhancedJWT(c context.Context) *authentication.EnhancedJwt {
 		return &jwt
 	}
 	return nil
+}
+
+// UserAccountService returns a GetUserAccountFromDBFunc that is decorating the context
+func UserAccountService(ctx context.Context) authentication.GetUserAccountFromDBFunc {
+	return ctx.Value(userAccountServiceKey).(authentication.GetUserAccountFromDBFunc)
+}
+
+// WithUserAccountService decorates the context with a GetUserAccountFromDBFunc
+func WithUserAccountService(ctx context.Context, accountFunction authentication.GetUserAccountFromDBFunc) context.Context {
+	return context.WithValue(ctx, userAccountServiceKey, accountFunction)
 }

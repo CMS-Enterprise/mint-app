@@ -48,7 +48,7 @@ import {
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -282,9 +282,9 @@ const TaskList = () => {
                         heading={t(`numberedList.${key}.heading`)}
                         lastUpdated={
                           taskListSections[key].modifiedDts &&
-                          formatDate(
+                          formatDateLocal(
                             taskListSections[key].modifiedDts!,
-                            'MM/d/yyyy'
+                            'MM/dd/yyyy'
                           )
                         }
                         status={taskListSections[key].status}

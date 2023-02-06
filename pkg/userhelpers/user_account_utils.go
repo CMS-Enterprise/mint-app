@@ -13,6 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // OktaAccountInfo represents the information you get if you query an account from Okta
@@ -182,5 +183,23 @@ func GetUserInfoFromOktaLocal(ctx context.Context, username string) (*OktaAccoun
 		ZoneInfo:          "America/Los_Angeles",
 	}
 	return accountInfo, nil
+
+}
+
+// UserAccountGetByIDLOADER uses a data loader to return a user account from the database
+func UserAccountGetByIDLOADER(ctx context.Context, id uuid.UUID) (*authentication.UserAccount, error) {
+	allLoaders := loaders.Loaders(ctx)
+	userAccountLoader := allLoaders.UserAccountLoader
+
+	key := loaders.NewKeyArgs()
+	key.Args["id"] = id
+
+	thunk := userAccountLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*authentication.UserAccount), nil
 
 }

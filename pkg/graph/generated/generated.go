@@ -50,7 +50,6 @@ type ResolverRoot interface {
 	OperationalSolutionSubtask() OperationalSolutionSubtaskResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
-	PlanCollaborator() PlanCollaboratorResolver
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
 	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
@@ -888,8 +887,6 @@ type ComplexityRoot struct {
 
 type AuditChangeResolver interface {
 	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
-
-	ModifiedByUserAccount(ctx context.Context, obj *models.AuditChange) (*authentication.UserAccount, error)
 }
 type DiscussionReplyResolver interface {
 	CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error)
@@ -975,13 +972,6 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
-}
-type PlanCollaboratorResolver interface {
-	UserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error)
-
-	CreatedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error)
-
-	ModifiedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -10451,7 +10441,7 @@ func (ec *executionContext) _AuditChange_modifiedByUserAccount(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.AuditChange().ModifiedByUserAccount(rctx, obj)
+		return obj.ModifiedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10470,7 +10460,7 @@ func (ec *executionContext) fieldContext_AuditChange_modifiedByUserAccount(ctx c
 		Object:     "AuditChange",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -23435,7 +23425,7 @@ func (ec *executionContext) _PlanCollaborator_userAccount(ctx context.Context, f
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCollaborator().UserAccount(rctx, obj)
+		return obj.UserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -23457,7 +23447,7 @@ func (ec *executionContext) fieldContext_PlanCollaborator_userAccount(ctx contex
 		Object:     "PlanCollaborator",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -23589,7 +23579,7 @@ func (ec *executionContext) _PlanCollaborator_createdByUserAccount(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCollaborator().CreatedByUserAccount(rctx, obj)
+		return obj.CreatedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -23611,7 +23601,7 @@ func (ec *executionContext) fieldContext_PlanCollaborator_createdByUserAccount(c
 		Object:     "PlanCollaborator",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -23740,7 +23730,7 @@ func (ec *executionContext) _PlanCollaborator_modifiedByUserAccount(ctx context.
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCollaborator().ModifiedByUserAccount(rctx, obj)
+		return obj.ModifiedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -23759,7 +23749,7 @@ func (ec *executionContext) fieldContext_PlanCollaborator_modifiedByUserAccount(
 		Object:     "PlanCollaborator",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":

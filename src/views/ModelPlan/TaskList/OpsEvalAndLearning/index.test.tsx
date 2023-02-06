@@ -18,6 +18,7 @@ const opsEvalAndLearningMockData: GetOpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [],
+  dataNeededForMonitoring: [],
   agencyOrStateHelp: [],
   agencyOrStateHelpOther: '',
   agencyOrStateHelpNote: '',

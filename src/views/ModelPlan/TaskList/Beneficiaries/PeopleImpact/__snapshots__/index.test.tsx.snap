@@ -176,42 +176,6 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="beneficiaries-impact-confidence-COMPLETELY"
-                  name="participantsCurrentlyInModels"
-                  type="radio"
-                  value="COMPLETELY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-impact-confidence-COMPLETELY"
-                >
-                  Completely confident
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-impact-confidence-FAIRLY"
-                  name="participantsCurrentlyInModels"
-                  type="radio"
-                  value="FAIRLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-impact-confidence-FAIRLY"
-                >
-                  Fairly confident
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
                   id="beneficiaries-impact-confidence-NOT_AT_ALL"
                   name="participantsCurrentlyInModels"
                   type="radio"
@@ -240,6 +204,42 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   for="beneficiaries-impact-confidence-SLIGHTLY"
                 >
                   Slightly confident
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="beneficiaries-impact-confidence-FAIRLY"
+                  name="participantsCurrentlyInModels"
+                  type="radio"
+                  value="FAIRLY"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-impact-confidence-FAIRLY"
+                >
+                  Fairly confident
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="beneficiaries-impact-confidence-COMPLETELY"
+                  name="participantsCurrentlyInModels"
+                  type="radio"
+                  value="COMPLETELY"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-impact-confidence-COMPLETELY"
+                >
+                  Completely confident
                 </label>
               </div>
             </fieldset>

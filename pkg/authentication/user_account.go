@@ -1,6 +1,10 @@
 package authentication
 
-import "github.com/google/uuid"
+import (
+	"context"
+
+	"github.com/google/uuid"
+)
 
 // UserAccount represents a user from the database
 type UserAccount struct {
@@ -15,3 +19,22 @@ type UserAccount struct {
 	ZoneInfo    string    `json:"zoneinfo" db:"zone_info"`
 	HasLoggedIn bool      `json:"hasLoggedIn" db:"has_logged_in"`
 }
+
+// type ctxKey string
+
+// const (
+// 	userAccountServiceKey = ctxKey("userAccountService")
+// )
+
+// GetUserAccountFromDBFunc represents a type of function which takes a context and a user_id uuid and returns a UserAccount
+type GetUserAccountFromDBFunc func(ctx context.Context, id uuid.UUID) (*UserAccount, error)
+
+// // UserAccountService returns a GetUserAccountFromDBFunc that is decorating the context
+// func UserAccountService(ctx context.Context) GetUserAccountFromDBFunc {
+// 	return ctx.Value(userAccountServiceKey).(GetUserAccountFromDBFunc)
+// }
+
+// // WithUserAccountService decorates the context with a GetUserAccountFromDBFunc
+// func WithUserAccountService(ctx context.Context, accountFunction GetUserAccountFromDBFunc) context.Context {
+// 	return context.WithValue(ctx, userAccountServiceKey, accountFunction)
+// }

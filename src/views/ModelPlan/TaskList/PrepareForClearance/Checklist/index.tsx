@@ -26,6 +26,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import GetUserInfo from 'queries/GetUserInfo';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   GetClearanceStatuses as GetClearanceStatusesType,
@@ -33,8 +34,15 @@ import {
 } from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
 import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
-import { TaskStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import {
+  GetUserInfo as GetUserInfoType,
+  GetUserInfoVariables
+} from 'queries/types/GetUserInfo';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
+import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -159,7 +167,12 @@ const PrepareForClearanceCheckList = ({
       });
   };
 
-  if ((!loading && error) || (!loading && !modelPlan)) {
+  if (
+    (!loading && error) ||
+    (!loading && !modelPlan) ||
+    (data as GetClearanceStatusesType)?.modelPlan?.prepareForClearance
+      ?.status === PrepareForClearanceStatus.CANNOT_START
+  ) {
     return <NotFoundPartial />;
   }
 
@@ -267,9 +280,9 @@ const PrepareForClearanceCheckList = ({
                             section as keyof ClearanceStatusesModelPlanFormType
                           ]?.readyForClearanceDts;
 
-                        // Bypass/don't render itTools or prepareForClearance task list sections
+                        // Bypass/don't render itSolutions or prepareForClearance task list sections
                         if (
-                          section === 'itTools' ||
+                          section === 'itSolutions' ||
                           section === 'prepareForClearance'
                         )
                           return null;
@@ -374,14 +387,24 @@ export const SectionClearanceLabel = ({
   readyForClearanceDts
 }: SectionClearanceLabelProps): JSX.Element => {
   const { t } = useTranslation('prepareForClearance');
+
+  const { data } = useQuery<GetUserInfoType, GetUserInfoVariables>(
+    GetUserInfo,
+    {
+      variables: {
+        username: readyForClearanceBy
+      }
+    }
+  );
+
   return (
     <p
       data-testid="clearance-label"
       className={classNames(className, 'margin-left-4 text-base margin-y-0')}
     >
       {t('markedAsReady', {
-        readyForClearanceBy,
-        readyForClearanceDts: formatDate(readyForClearanceDts, 'MM/d/yyyy')
+        readyForClearanceBy: data?.userAccount.commonName,
+        readyForClearanceDts: formatDateUtc(readyForClearanceDts, 'MM/dd/yyyy')
       })}
     </p>
   );
