@@ -246,3 +246,29 @@ func getTestPrincipal(store *storage.Store, userName string) *authentication.App
 	return princ
 
 }
+
+// operationalSolutionSubtasksCreate is a wrapper for resolvers.OperationalSolutionSubtasksCreate
+// It will panic if an error occurs, rather than bubbling the error up
+func operationalSolutionSubtasksCreate(
+	logger *zap.Logger,
+	store *storage.Store,
+	mp *models.ModelPlan,
+	solutionID uuid.UUID,
+	inputs []*model.CreateOperationalSolutionSubtaskInput,
+) []*models.OperationalSolutionSubtask {
+
+	principal := getTestPrincipal(store, mp.CreatedBy)
+
+	subtasks, err := resolvers.OperationalSolutionSubtasksCreate(
+		logger,
+		store,
+		inputs,
+		solutionID,
+		principal,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return subtasks
+}
