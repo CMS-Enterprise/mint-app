@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "09a62f1e-db81-4932-b615-7d93398505ab",
+		"_postman_id": "7bf591bd-a4d3-471a-9b16-26556fecb415",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "20435042"
 	},
 	"item": [
 		{
@@ -1492,8 +1492,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\r\n  \"id\": \"\"\r\n}"
+								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\r\n  \"id\": \"c3f14574-fd64-4b38-8729-e8dbacd1e148\"\r\n}"
 							}
 						},
 						"url": {
@@ -1695,6 +1695,90 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Operational Solution Subtasks",
+			"item": [
+				{
+					"name": "CreateOperationalSolutionSubtasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createOperationalSolutionSubtasks",
+									"",
+									"for (let i =0; i< responseData.length; i++){",
+									"    subtaskID = responseData[i].id",
+									"    pm.collectionVariables.set(\"operationalSolutionSubtaskID\"+i, subtaskID);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createOperationalSolutionSubtasks ($solutionID: UUID!, $inputs: [CreateOperationalSolutionSubtaskInput!]!) {\r\n    createOperationalSolutionSubtasks (solutionID: $solutionID, inputs: $inputs) {\r\n        id\r\n        solutionID\r\n        name\r\n        status\r\n        createdBy\r\n        createdDts\r\n        modifiedBy\r\n        modifiedDts\r\n    }\r\n}",
+								"variables": "{\r\n  \"solutionID\": \"{{operationalSolutionID}}\",\r\n  \"inputs\": [\r\n      {\r\n          \"name\": \"Waffle Fries\",\r\n          \"status\": \"TODO\"\r\n      },\r\n      {\r\n          \"name\": \"Pancake Fries\",\r\n          \"status\": \"IN_PROGRESS\"\r\n      }\r\n  ]\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOperationalSolutionSubtasks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteOperationalSolutionSubtask ($id: UUID!) {\r\n    deleteOperationalSolutionSubtask (id: $id)\r\n}",
+								"variables": "{\r\n  \"id\": \"{{operationalSolutionSubtaskID0}}\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOperationalSolutionSubtasks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateOperationalSolutionSubtasks ($inputs: [UpdateOperationalSolutionSubtaskInput!]!) {\r\n    updateOperationalSolutionSubtasks (inputs: $inputs) {\r\n        id\r\n        solutionID\r\n        name\r\n        status\r\n        createdBy\r\n        createdDts\r\n        modifiedBy\r\n        modifiedDts\r\n    }\r\n}",
+								"variables": "{\r\n  \"inputs\": [\r\n      {\r\n          \"id\": \"{{operationalSolutionSubtaskID1}}\",\r\n          \"changes\": {\r\n            \"name\": \"Test\",\r\n            \"status\": \"IN_PROGRESS\"\r\n          }\r\n      }\r\n  ]\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -1798,6 +1882,14 @@
 		},
 		{
 			"key": "discussionReplyID",
+			"value": ""
+		},
+		{
+			"key": "operationalSolutionSubtaskID0",
+			"value": ""
+		},
+		{
+			"key": "operationalSolutionSubtaskID1",
 			"value": ""
 		}
 	]
