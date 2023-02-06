@@ -388,6 +388,28 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           </label>
         </div>
       </fieldset>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <div
+          class="usa-form-group"
+        >
+          <label
+            class="usa-label"
+            for="plan-characteristics-has-component-or-tracks-note"
+          >
+            Notes
+          </label>
+          <textarea
+            class="usa-textarea height-15"
+            data-testid="plan-characteristics-has-component-or-tracks-note"
+            id="plan-characteristics-has-component-or-tracks-note"
+            name="hasComponentsOrTracksNote"
+          >
+            Component note
+          </textarea>
+        </div>
+      </div>
     </div>
     <div
       class="margin-top-6 margin-bottom-3"
