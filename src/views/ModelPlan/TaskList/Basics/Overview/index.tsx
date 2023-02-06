@@ -216,7 +216,6 @@ const Overview = () => {
                 >
                   <Field
                     as={TextAreaField}
-                    className="height-15"
                     error={flatErrors.problem}
                     id="ModelType-Problem"
                     name="problem"
@@ -231,7 +230,6 @@ const Overview = () => {
                 >
                   <Field
                     as={TextAreaField}
-                    className="height-15"
                     error={flatErrors.goal}
                     id="ModelType-Goal"
                     name="goal"
@@ -247,7 +245,6 @@ const Overview = () => {
                 >
                   <Field
                     as={TextAreaField}
-                    className="height-15"
                     error={flatErrors.testInterventions}
                     id="ModelType-testInterventions"
                     name="testInterventions"

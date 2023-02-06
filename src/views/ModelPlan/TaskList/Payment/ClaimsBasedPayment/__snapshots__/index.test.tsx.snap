@@ -601,7 +601,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
             </label>
             <textarea
-              class="usa-textarea height-15"
+              class="height-15 usa-textarea"
               data-testid="payment-affect-current-policy"
               id="payment-affect-current-policy"
               name="payModelDifferentiation"

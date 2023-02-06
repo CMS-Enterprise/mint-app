@@ -13,6 +13,7 @@ import {
   translateBooleanOrNull,
   translateCommunicationType,
   translateConfidenceType,
+  translateFrequencyType,
   translateOverlapType,
   translateParticipantIDType,
   translateParticipantSelectiontType,
@@ -278,10 +279,10 @@ const ReadOnlyParticipantsAndProviders = ({
           copy={
             providerAdditionFrequency &&
             (providerAdditionFrequency === FrequencyType.OTHER
-              ? `${translateRecruitmentType(
+              ? `${translateFrequencyType(
                   providerAdditionFrequency
                 )} \u2014  ${providerAdditionFrequencyOther}`
-              : translateRecruitmentType(providerAdditionFrequency))
+              : translateFrequencyType(providerAdditionFrequency))
           }
           notes={providerAdditionFrequencyNote}
         />

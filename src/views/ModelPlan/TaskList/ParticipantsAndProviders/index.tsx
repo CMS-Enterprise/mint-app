@@ -235,7 +235,7 @@ export const ParticipantsAndProvidersContent = () => {
                         />
 
                         {((values?.participants || []).includes(
-                          ParticipantsType.MEDICAID_PROVIDERS
+                          ParticipantsType.MEDICARE_PROVIDERS
                         ) ||
                           (values?.participants || []).includes(
                             ParticipantsType.STATES
@@ -249,7 +249,7 @@ export const ParticipantsAndProvidersContent = () => {
                         )}
 
                         {(values?.participants || []).includes(
-                          ParticipantsType.MEDICAID_PROVIDERS
+                          ParticipantsType.MEDICARE_PROVIDERS
                         ) && (
                           <FieldGroup
                             scrollElement="medicareProviderType"
@@ -266,7 +266,6 @@ export const ParticipantsAndProvidersContent = () => {
                             </FieldErrorMsg>
                             <Field
                               as={TextAreaField}
-                              className="height-15"
                               error={flatErrors.medicareProviderType}
                               id="participants-and-providers-medicare-type"
                               data-testid="participants-and-providers-medicare-type"
@@ -293,7 +292,6 @@ export const ParticipantsAndProvidersContent = () => {
                             </FieldErrorMsg>
                             <Field
                               as={TextAreaField}
-                              className="height-15"
                               error={flatErrors.statesEngagement}
                               id="participants-and-providers-states-engagement"
                               data-testid="participants-and-providers-states-engagement"
@@ -320,7 +318,6 @@ export const ParticipantsAndProvidersContent = () => {
                             </FieldErrorMsg>
                             <Field
                               as={TextAreaField}
-                              className="height-15"
                               error={flatErrors.participantsOther}
                               id="participants-and-providers-participants-other"
                               data-testid="participants-and-providers-participants-other"
@@ -404,7 +401,6 @@ export const ParticipantsAndProvidersContent = () => {
                         </FieldErrorMsg>
                         <Field
                           as={TextAreaField}
-                          className="height-15"
                           error={flatErrors.modelApplicationLevel}
                           id="participants-and-providers-application-level"
                           name="modelApplicationLevel"

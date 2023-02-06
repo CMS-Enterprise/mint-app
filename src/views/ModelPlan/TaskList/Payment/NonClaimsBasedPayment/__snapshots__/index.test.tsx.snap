@@ -564,7 +564,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               If possible, upload a copy of the allotment and allowance.
             </p>
             <textarea
-              class="usa-textarea height-15"
+              class="height-15 usa-textarea"
               data-testid="payment-funding-structure"
               id="payment-funding-structure"
               name="fundingStructure"

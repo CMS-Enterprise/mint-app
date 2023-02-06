@@ -431,7 +431,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
           Please describe the other method for deciding which providers to add.
         </label>
         <textarea
-          class="usa-textarea height-15"
+          class="height-15 usa-textarea"
           data-testid="participants-and-providers-provider-add-method-other"
           id="participants-and-providers-provider-add-method-other"
           name="providerAddMethodOther"
