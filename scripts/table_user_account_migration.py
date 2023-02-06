@@ -20,7 +20,7 @@ migration_config = [
 ]
 
 safe_mode = False
-deploy_remote_branch = True
+deploy_remote_branch = False
 
 
 def generate_branch_name(table, ticket) -> str:
