@@ -13,11 +13,29 @@ SQL_VARIANT_BASE_TASK_LIST = "base_task_list"
 SQL_VARIANT_BASE_STRUCT = "base_struct"
 
 migration_config = [
-    ('Plan_Ops_Eval_and_Learning', 'EASI-2612', SQL_VARIANT_BASE_TASK_LIST),
-    ('Plan_Participants_and_Providers', 'EASI-2613', SQL_VARIANT_BASE_TASK_LIST),
-    ('Plan_Payments', 'EASI-2614', SQL_VARIANT_BASE_TASK_LIST),
-    ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_BASE_TASK_LIST),
-    ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
+    # Base Task List
+    # ('Plan_Ops_Eval_and_Learning', 'EASI-2612', SQL_VARIANT_BASE_TASK_LIST),
+    # ('Plan_Participants_and_Providers', 'EASI-2613', SQL_VARIANT_BASE_TASK_LIST),
+    # ('Plan_Payments', 'EASI-2614', SQL_VARIANT_BASE_TASK_LIST),
+    # ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_BASE_TASK_LIST),
+    # ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
+
+    # Base Struct
+    ('plan_cr_tdl', 'EASI-2618', SQL_VARIANT_BASE_STRUCT),
+    # ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
+    # ('discussion_reply', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
+    # ('plan_document', 'EASI-2620', SQL_VARIANT_BASE_STRUCT),
+    # ('plan_document_solution_link', 'EASI-2621', SQL_VARIANT_BASE_STRUCT),
+    # ('operational_need', 'EASI-2623', SQL_VARIANT_BASE_STRUCT),
+    # ('operational_solution', 'EASI-2624', SQL_VARIANT_BASE_STRUCT),
+    # ('analyzed_audit', '', SQL_VARIANT_BASE_STRUCT),
+    # ('possible_operational_need', '', SQL_VARIANT_BASE_STRUCT),
+    # ('possible_operational_solution', '', SQL_VARIANT_BASE_STRUCT),
+    # ('possible_need_solution_link', '', SQL_VARIANT_BASE_STRUCT),
+
+    # TODO: Something
+    # ('existing_model', 'EASI-2622', SQL_VARIANT_BASE_STRUCT),
+
 ]
 
 safe_mode = False
