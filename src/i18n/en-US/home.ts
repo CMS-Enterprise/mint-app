@@ -22,6 +22,7 @@ const home = {
     cta: 'View all models'
   },
   yourModels: 'You have been added as a team member to the model plans below.',
+  fetchError: 'There was an error fetching models plans.  Please try again.',
   downloadAllCSV: 'Download all plans as CSV',
   downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
