@@ -125,6 +125,21 @@ func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Pr
 		entry.ModelPlan.ModelName = "unknown" //TODO handle this and log error
 		u.Logger.Error("model name is not defined")
 	}
+	nameHistory := []string{}
+	if entry.ModelPlan.ModelName == "Enhancing Oncology Model (formerly Oncology Care First (OCF))" {
+		entry.ModelPlan.ModelName = "Oncology Transformation (OncT)"
+		nameHistory = []string{
+			"Oncology Care First (OCF)",
+			"Enhancing Oncology Model",
+		}
+	}
+
+	if entry.ModelPlan.ModelName == "ACO Reach (formerly Geographic & Professional Direct Contracting)" {
+		entry.ModelPlan.ModelName = "Geographic & Professional Direct Contracting"
+		nameHistory = []string{
+			"ACO Reach",
+		}
+	}
 
 	modelPlan, err := resolvers.ModelPlanCreate(context.Background(), &u.Logger, entry.ModelPlan.ModelName, &u.Store, princ, backfillUserWrapperAccountInfoFunc(context.Background(), user.Name, user))
 	if err != nil {
@@ -134,6 +149,25 @@ func (u *Uploader) uploadModelPlan(entry *BackfillEntry, princ authentication.Pr
 		}
 	}
 	entry.ModelPlan = modelPlan
+
+	if len(nameHistory) > 0 {
+
+		for _, name := range nameHistory {
+			changes := map[string]interface{}{
+				"modelName": name,
+			}
+			ModelPlanUpdate, err := resolvers.ModelPlanUpdate(&u.Logger, modelPlan.ID, changes, princ, &u.Store)
+			if err != nil {
+				return nil, &UploadError{
+					Model:   "ModelPLan",
+					DBError: err,
+				}
+			}
+			entry.ModelPlan = ModelPlanUpdate
+		}
+
+	}
+
 	u.Logger.Log(zap.DebugLevel, "created modelPlan "+modelPlan.ModelName) //TODO need better logging?
 	return modelPlan, nil
 }
