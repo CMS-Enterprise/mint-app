@@ -27,6 +27,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
   GetModelPlanInfo as GetModelPlanInfoType,
@@ -368,9 +369,10 @@ const BasicsContent = () => {
                                     {flatErrors['basics.cmsOther']}
                                   </FieldErrorMsg>
                                   <Field
-                                    as={TextInput}
+                                    as={TextAreaField}
                                     id="plan-basics-cmsCategory--Other"
-                                    maxLength={50}
+                                    maxLength={5000}
+                                    className="mint-textarea"
                                     name="basics.cmsOther"
                                   />
                                 </FieldGroup>

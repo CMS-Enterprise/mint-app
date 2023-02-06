@@ -130,15 +130,19 @@ const ReadOnlyParticipantsAndProviders = ({
           notes={participantsNote}
         />
 
-        <ReadOnlySection
-          heading={t('typeMedicateProvider')}
-          copy={medicareProviderType}
-        />
+        {medicareProviderType && (
+          <ReadOnlySection
+            heading={t('typeMedicateProvider')}
+            copy={medicareProviderType}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('describeStates')}
-          copy={statesEngagement}
-        />
+        {statesEngagement && (
+          <ReadOnlySection
+            heading={t('describeStates')}
+            copy={statesEngagement}
+          />
+        )}
 
         <ReadOnlySection
           heading={t('participantsCMMI')}

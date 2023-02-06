@@ -8,8 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   IconArrowBack,
-  Label,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -295,10 +294,10 @@ const Learning = () => {
                                       {flatErrors.modelLearningSystemsOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-learning-systems-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="modelLearningSystemsOther"
                                     />
                                   </div>

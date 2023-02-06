@@ -235,13 +235,13 @@ export const ParticipantsAndProvidersContent = () => {
                         />
 
                         {((values?.participants || []).includes(
-                          'MEDICARE_PROVIDERS' as ParticipantsType
+                          ParticipantsType.MEDICAID_PROVIDERS
                         ) ||
                           (values?.participants || []).includes(
-                            'STATES' as ParticipantsType
+                            ParticipantsType.STATES
                           ) ||
                           (values?.participants || []).includes(
-                            'OTHER' as ParticipantsType
+                            ParticipantsType.OTHER
                           )) && (
                           <p className="margin-top-4 text-bold">
                             {t('participantQuestions')}
@@ -249,7 +249,7 @@ export const ParticipantsAndProvidersContent = () => {
                         )}
 
                         {(values?.participants || []).includes(
-                          'MEDICARE_PROVIDERS' as ParticipantsType
+                          ParticipantsType.MEDICAID_PROVIDERS
                         ) && (
                           <FieldGroup
                             scrollElement="medicareProviderType"
@@ -276,7 +276,7 @@ export const ParticipantsAndProvidersContent = () => {
                         )}
 
                         {(values?.participants || []).includes(
-                          'STATES' as ParticipantsType
+                          ParticipantsType.STATES
                         ) && (
                           <FieldGroup
                             scrollElement="statesEngagement"
@@ -303,7 +303,7 @@ export const ParticipantsAndProvidersContent = () => {
                         )}
 
                         {(values?.participants || []).includes(
-                          'OTHER' as ParticipantsType
+                          ParticipantsType.OTHER
                         ) && (
                           <FieldGroup
                             scrollElement="participantsOther"

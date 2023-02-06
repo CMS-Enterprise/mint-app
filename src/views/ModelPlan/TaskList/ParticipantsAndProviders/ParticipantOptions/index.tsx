@@ -371,10 +371,10 @@ export const ParticipantOptions = () => {
                                   {flatErrors.recruitmentOther}
                                 </FieldErrorMsg>
                                 <Field
-                                  as={TextInput}
-                                  className="maxw-none"
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
                                   id="participants-and-providers-recruitment-other"
-                                  maxLength={50}
+                                  maxLength={5000}
                                   name="recruitmentOther"
                                 />
                               </div>

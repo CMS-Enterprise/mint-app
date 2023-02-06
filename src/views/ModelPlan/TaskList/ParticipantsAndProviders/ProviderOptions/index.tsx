@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -287,10 +286,10 @@ export const ProviderOptions = () => {
                                   {flatErrors.providerAdditionFrequencyOther}
                                 </FieldErrorMsg>
                                 <Field
-                                  as={TextInput}
-                                  className="maxw-none"
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
                                   id="participants-and-providers-additional-frequency-other"
-                                  maxLength={50}
+                                  maxLength={5000}
                                   name="providerAdditionFrequencyOther"
                                 />
                               </div>
@@ -424,10 +423,10 @@ export const ProviderOptions = () => {
                                     {flatErrors.providerLeaveMethodOther}
                                   </FieldErrorMsg>
                                   <Field
-                                    as={TextInput}
-                                    className="maxw-none"
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
                                     id="participants-and-providers-leave-method-other"
-                                    maxLength={50}
+                                    maxLength={5000}
                                     name="providerLeaveMethodOther"
                                   />
                                 </div>

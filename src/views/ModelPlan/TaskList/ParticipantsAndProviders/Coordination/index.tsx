@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -24,6 +23,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
 import {
   GetCoordination as GetCoordinationType,
@@ -365,11 +365,11 @@ export const Coordination = () => {
                                       {flatErrors.participantsIdsOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="participants-and-providers-participant-id-other"
                                       data-testid="participants-and-providers-participant-id-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="participantsIdsOther"
                                     />
                                   </div>

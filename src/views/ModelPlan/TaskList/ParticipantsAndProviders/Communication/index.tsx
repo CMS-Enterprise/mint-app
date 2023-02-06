@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -25,6 +24,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import useScrollElement from 'hooks/useScrollElement';
 import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
 import {
@@ -281,10 +281,10 @@ export const Communication = () => {
                                       {flatErrors.communicationMethodOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="participants-and-providers-communication-method-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="communicationMethodOther"
                                     />
                                   </div>
@@ -373,11 +373,11 @@ export const Communication = () => {
                                     {flatErrors.riskOther}
                                   </FieldErrorMsg>
                                   <Field
-                                    as={TextInput}
-                                    className="maxw-none"
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
                                     id="participants-and-providers-risk-type-other"
                                     data-testid="participants-and-providers-risk-type-other"
-                                    maxLength={50}
+                                    maxLength={5000}
                                     name="riskOther"
                                   />
                                 </div>

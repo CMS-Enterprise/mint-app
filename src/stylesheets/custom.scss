@@ -28,6 +28,12 @@
   width: 100%;
 }
 
+.mint-textarea {
+  min-height: 2.5rem !important;
+  resize: both !important;
+  height: 2.5rem;
+}
+
 // The default font for this project should be Public Sans
 [class*='font-heading-'],
 .usa-accordion,
