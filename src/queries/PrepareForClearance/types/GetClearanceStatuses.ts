@@ -12,7 +12,7 @@ import { TaskStatus, PrepareForClearanceStatus } from "./../../../types/graphql-
 export interface GetClearanceStatuses_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
-  readyForClearanceBy: string | null;
+  readyForClearanceBy: UUID | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

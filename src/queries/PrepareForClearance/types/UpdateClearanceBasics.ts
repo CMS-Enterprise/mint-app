@@ -11,7 +11,7 @@ import { PlanBasicsChanges, TaskStatus } from "./../../../types/graphql-global-t
 
 export interface UpdateClearanceBasics_updatePlanBasics {
   __typename: "PlanBasics";
-  readyForClearanceBy: string | null;
+  readyForClearanceBy: UUID | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
