@@ -20,6 +20,7 @@ migration_config = [
 ]
 
 safe_mode = False
+deploy_remote_branch = True
 
 
 def generate_branch_name(table, ticket) -> str:
@@ -31,7 +32,7 @@ def create_git_branch(repo, branch_name):
     repo.git.pull()
     repo.create_head(branch_name)
 
-    if not safe_mode:
+    if not safe_mode and deploy_remote_branch:
         repo.git.push('--set-upstream', repo.remote().name, branch_name)
 
     repo.git.checkout(branch_name)
@@ -43,7 +44,8 @@ def create_branch(repo, table, ticket):
     if not safe_mode:
         create_git_branch(repo, branch_name)
 
-    repo.remote().push()
+    if not safe_mode and deploy_remote_branch:
+        repo.remote().push()
 
 
 def generate_sql_migration_content(table, variant) -> str:
