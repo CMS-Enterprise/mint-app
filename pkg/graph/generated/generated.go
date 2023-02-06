@@ -47,7 +47,6 @@ type ResolverRoot interface {
 	Mutation() MutationResolver
 	OperationalNeed() OperationalNeedResolver
 	OperationalSolution() OperationalSolutionResolver
-	OperationalSolutionSubtask() OperationalSolutionSubtaskResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
 	PlanDiscussion() PlanDiscussionResolver
@@ -957,11 +956,6 @@ type OperationalNeedResolver interface {
 type OperationalSolutionResolver interface {
 	Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error)
 	OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error)
-}
-type OperationalSolutionSubtaskResolver interface {
-	CreatedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error)
-
-	ModifiedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -20372,7 +20366,7 @@ func (ec *executionContext) _OperationalSolutionSubtask_createdByUserAccount(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.OperationalSolutionSubtask().CreatedByUserAccount(rctx, obj)
+		return obj.CreatedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -20394,7 +20388,7 @@ func (ec *executionContext) fieldContext_OperationalSolutionSubtask_createdByUse
 		Object:     "OperationalSolutionSubtask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -20523,7 +20517,7 @@ func (ec *executionContext) _OperationalSolutionSubtask_modifiedByUserAccount(ct
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.OperationalSolutionSubtask().ModifiedByUserAccount(rctx, obj)
+		return obj.ModifiedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -20542,7 +20536,7 @@ func (ec *executionContext) fieldContext_OperationalSolutionSubtask_modifiedByUs
 		Object:     "OperationalSolutionSubtask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":

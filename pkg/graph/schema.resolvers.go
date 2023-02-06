@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -467,16 +466,6 @@ func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Co
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.OperationalSolutionSubtasksGetBySolutionID(logger, r.store, obj.ID)
-}
-
-// CreatedByUserAccount is the resolver for the createdByUserAccount field.
-func (r *operationalSolutionSubtaskResolver) CreatedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: CreatedByUserAccount - createdByUserAccount"))
-}
-
-// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
-func (r *operationalSolutionSubtaskResolver) ModifiedByUserAccount(ctx context.Context, obj *models.OperationalSolutionSubtask) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: ModifiedByUserAccount - modifiedByUserAccount"))
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -1076,11 +1065,6 @@ func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
 	return &operationalSolutionResolver{r}
 }
 
-// OperationalSolutionSubtask returns generated.OperationalSolutionSubtaskResolver implementation.
-func (r *Resolver) OperationalSolutionSubtask() generated.OperationalSolutionSubtaskResolver {
-	return &operationalSolutionSubtaskResolver{r}
-}
-
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
 
@@ -1138,7 +1122,6 @@ type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
-type operationalSolutionSubtaskResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
@@ -1152,15 +1135,3 @@ type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *queryResolver) OperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (*models.OperationalSolutionSubtask, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.OperationalSolutionSubtaskGetByID(logger, r.store, id)
-}
