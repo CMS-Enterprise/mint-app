@@ -25,6 +25,8 @@ def generate_branch_name(table, ticket) -> str:
 
 
 def create_git_branch(repo, branch_name):
+    repo.git.checkout('main')
+    repo.git.pull()
     repo.create_head(branch_name)
     repo.git.push('--set-upstream', repo.remote().name, branch_name)
     repo.git.checkout(branch_name)
