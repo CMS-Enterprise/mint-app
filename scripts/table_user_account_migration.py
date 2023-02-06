@@ -50,7 +50,7 @@ def create_branch(repo, table, ticket):
 
 def generate_sql_migration_content(table, variant) -> str:
     if variant == SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE:
-        return generate_sql_migration_content_ready_review_clearance()
+        return generate_sql_migration_content_ready_review_clearance(table)
 
     assert False and "No Valid Variant Found"
 
