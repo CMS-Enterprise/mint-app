@@ -33,7 +33,7 @@ def create_git_branch(repo, branch_name):
 
 
 def create_branch(repo, table, ticket):
-    branch_name = generate_branch_name(table.lower(), ticket)
+    branch_name = generate_branch_name(table, ticket)
     print(f"Create a branch named {branch_name}")
     if not safe_mode:
         create_git_branch(repo, branch_name)
@@ -42,6 +42,7 @@ def create_branch(repo, table, ticket):
 
 
 def generate_sql_migration_content(table) -> str:
+    table = table.lower()
     return (f"/* ADD Temp data column for this */\n\n"
             f"ALTER TABLE {table}\n"
             f"RENAME COLUMN ready_for_clearance_by TO ready_for_clearance_by_old;\n\n"
