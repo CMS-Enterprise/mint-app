@@ -9,14 +9,15 @@ global_git.update_environment(
 repo_path = "./"
 migration_path = f"{repo_path}/migrations"
 
-SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE = "ready_review_clearance"
+SQL_VARIANT_BASE_TASK_LIST = "base_task_list"
+SQL_VARIANT_BASE_STRUCT = "base_struct"
 
 migration_config = [
-    ('Plan_Ops_Eval_and_Learning', 'EASI-2612', SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE),
-    # ('Plan_Participants_and_Providers', 'EASI-2613', SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE),
-    # ('Plan_Payments', 'EASI-2614', SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE),
-    # ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE),
-    # ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE),
+    ('Plan_Ops_Eval_and_Learning', 'EASI-2612', SQL_VARIANT_BASE_TASK_LIST),
+    ('Plan_Participants_and_Providers', 'EASI-2613', SQL_VARIANT_BASE_TASK_LIST),
+    ('Plan_Payments', 'EASI-2614', SQL_VARIANT_BASE_TASK_LIST),
+    ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_BASE_TASK_LIST),
+    ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
 ]
 
 safe_mode = False
@@ -49,13 +50,15 @@ def create_branch(repo, table, ticket):
 
 
 def generate_sql_migration_content(table, variant) -> str:
-    if variant == SQL_VARIANT_READY_FOR_REVIEW_AND_CLEARANCE:
-        return generate_sql_migration_content_ready_review_clearance(table)
+    if variant == SQL_VARIANT_BASE_TASK_LIST:
+        return generate_sql_migration_content_base_task_list(table)
+    if variant == SQL_VARIANT_BASE_STRUCT:
+        return generate_sql_migration_content_base_struct(table)
 
     assert False and "No Valid Variant Found"
 
 
-def generate_sql_migration_content_ready_review_clearance(table) -> str:
+def generate_sql_migration_content_base_task_list(table) -> str:
     table = table.lower()
     return (f"/* ADD Temp data column for this */\n\n"
             f"ALTER TABLE {table}\n"
@@ -112,6 +115,56 @@ def generate_sql_migration_content_ready_review_clearance(table) -> str:
             f"    modified_by = '00000001-0001-0001-0001-000000000001', --System Account\n"
             f"    modified_dts = current_timestamp\n"
             f"WHERE name = '{table}';\n\n"
+            f"/* turn on audit trigger */\n\n"
+            f"ALTER TABLE {table}\n"
+            f"ENABLE TRIGGER audit_trigger;\n"
+            )
+
+
+def generate_sql_migration_content_base_struct(table) -> str:
+    table = table.lower()
+    return (f"/* ADD Temp data column for this */\n\n"
+            f"ALTER TABLE {table}\n"
+            f"RENAME COLUMN created_by TO created_by_old;\n"
+            f"ALTER TABLE {table}\n"
+            f"RENAME COLUMN modified_by TO modified_by_old;\n"
+            f"/* ADD Correct Column */\n\n"
+            f"ALTER TABLE {table}\n"
+            f"ADD COLUMN created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,\n"
+            f"ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;\n"
+            f"ALTER TABLE {table}\n"
+            f"DISABLE TRIGGER audit_trigger;\n"
+            f"/* Perform the data migration */\n\n"
+            f"WITH userAccount AS (\n"
+            f"    SELECT\n"
+            f"        {table}.id AS primaryID,\n"
+            f"        user_account_created.id AS created_by,\n"
+            f"        user_account_modified.id AS modified_by\n"
+            f"    FROM {table}\n"
+            f"        LEFT JOIN user_account AS user_account_created ON {table}.created_by_old = user_account_created.username\n"
+            f"        LEFT JOIN user_account AS user_account_modified ON {table}.modified_by_old = user_account_modified.username\n"
+            f")\n"
+            f"--\n"
+            f"UPDATE {table}\n"
+            f"SET\n"
+            f"    created_by = userAccount.created_by,\n"
+            f"    modified_by = userAccount.modified_by\n"
+            f"FROM userAccount\n"
+            f"WHERE userAccount.primaryID\n"
+            f"= {table}.id;\n"
+            f"/*remove the old columns */\n\n"
+            f"ALTER TABLE {table}\n"
+            f"DROP COLUMN created_by_old,\n"
+            f"DROP COLUMN modified_by_old;\n"
+            f"/*add constraints */\n\n"
+            f"ALTER TABLE {table}\n"
+            f"ALTER COLUMN created_by SET NOT NULL;\n"
+            f"/* update audit config */\n\n"
+            f"UPDATE audit.table_config\n"
+            f"SET uses_user_id = TRUE,\n"
+            f"    modified_by = '00000001-0001-0001-0001-000000000001', --System Account\n"
+            f"    modified_dts = current_timestamp\n"
+            f"WHERE name = '{table}';\n"
             f"/* turn on audit trigger */\n\n"
             f"ALTER TABLE {table}\n"
             f"ENABLE TRIGGER audit_trigger;\n"
