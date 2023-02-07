@@ -21,6 +21,8 @@ services:
     environment:
       - CEDAR_API_KEY
       - CEDAR_API_URL
+      - OKTA_API_URL
+      - OKTA_API_TOKEN
       - HTTP_PROXY
       - HTTPS_PROXY
       - APP_ENV

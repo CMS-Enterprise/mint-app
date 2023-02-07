@@ -38,6 +38,14 @@ require github.com/xhit/go-simple-mail/v2 v2.12.0
 require github.com/contribsys/faktory v1.6.2
 
 require (
+	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
+	github.com/kelseyhightower/envconfig v1.4.0 // indirect
+	github.com/okta/okta-sdk-golang/v2 v2.16.0
+	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
+)
+
+require (
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/graph-gophers/dataloader v5.0.0+incompatible

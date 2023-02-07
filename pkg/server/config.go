@@ -55,12 +55,6 @@ func (s Server) NewS3Config() upload.Config {
 	}
 }
 
-// NewCEDARClientCheck checks if CEDAR clients are not connectable
-func (s Server) NewCEDARClientCheck() {
-	s.checkRequiredConfig(appconfig.CEDARAPIURL)
-	s.checkRequiredConfig(appconfig.CEDARAPIKey)
-}
-
 // OktaClientConfig is the okta client configuration
 type OktaClientConfig struct {
 	OktaClientID string
@@ -76,6 +70,12 @@ func (s Server) NewOktaClientConfig() OktaClientConfig {
 		OktaClientID: s.Config.GetString(appconfig.OktaClientID),
 		OktaIssuer:   s.Config.GetString(appconfig.OktaIssuer),
 	}
+}
+
+// NewOktaAPIClientCheck checks if the Okta API client is configured
+func (s Server) NewOktaAPIClientCheck() {
+	s.checkRequiredConfig(appconfig.OKTAApiURL)
+	s.checkRequiredConfig(appconfig.OKTAAPIToken)
 }
 
 // NewLocalAuthIsEnabled returns if local auth is enabled
