@@ -218,128 +218,137 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
 
       {/* IDDOC */}
       {iddocSupport && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-          <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
-          <ReadOnlySection
-            heading={t('iddocSupport')}
-            copy={translateBooleanOrNull(iddocSupport)}
-            notes={iddocSupportNote}
-          />
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={
-                technicalContactsIdentified ? 'desktop:width-card-lg' : ''
-              }
-            >
-              <ReadOnlySection
-                heading={t('technicalContacts')}
-                copy={translateBooleanOrNull(technicalContactsIdentified)}
-              />
-            </div>
-            {/* Only display specification div if "yes" was selected for technical contacts question above */}
-            {technicalContactsIdentified && (
-              <div className="desktop:width-card-lg">
+        <>
+          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+            <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
+            <ReadOnlySection
+              heading={t('iddocSupport')}
+              copy={translateBooleanOrNull(iddocSupport)}
+              notes={iddocSupportNote}
+            />
+            <div className="desktop:display-flex flex-justify">
+              <div
+                className={
+                  technicalContactsIdentified ? 'desktop:width-card-lg' : ''
+                }
+              >
                 <ReadOnlySection
-                  heading={h('pleaseSpecify')}
-                  copy={technicalContactsIdentifiedDetail}
+                  heading={t('technicalContacts')}
+                  copy={translateBooleanOrNull(technicalContactsIdentified)}
                 />
               </div>
-            )}
-          </div>
-          {/* This is a slight "hack" of this component in order to get around the heading being required */}
-          <ReadOnlySection
-            heading={h('note')}
-            copy={technicalContactsIdentifiedNote}
-          />
-
-          <ReadOnlySection
-            heading={t('participantInformation')}
-            copy={translateBooleanOrNull(captureParticipantInfo)}
-            notes={captureParticipantInfoNote}
-          />
-        </div>
-      )}
-
-      {/* Interface Control Document - ICD */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
-        <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
-        <ReadOnlySection
-          heading={t('draftIDC')}
-          copy={draftIcdDueDate && formatDateUtc(draftIcdDueDate, 'MM/dd/yyyy')}
-          notes={icdNote}
-        />
-      </div>
-
-      {/* IDDOCTesting */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
-        <ReadOnlySection heading={t('uatNeeds')} copy={uatNeeds} />
-        <ReadOnlySection heading={t('stcNeeds')} copy={stcNeeds} />
-        <ReadOnlySection
-          heading={t('testingTimelines')}
-          copy={testingTimelines}
-          notes={testingNote}
-        />
-      </div>
-
-      {/* IDDOCMonitoring */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
-        <ReadOnlySection
-          heading={t('fileTypes')}
-          list
-          listItems={dataMonitoringFileTypes?.map(translateMonitoringFileType)}
-          listOtherItem={dataMonitoringFileOther}
-        />
-        <ReadOnlySection heading={t('responseTypes')} copy={dataResponseType} />
-        <ReadOnlySection
-          heading={t('fileFrequency')}
-          copy={dataResponseFileFrequency}
-        />
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
+              {/* Only display specification div if "yes" was selected for technical contacts question above */}
+              {technicalContactsIdentified && (
+                <div className="desktop:width-card-lg">
+                  <ReadOnlySection
+                    heading={h('pleaseSpecify')}
+                    copy={technicalContactsIdentifiedDetail}
+                  />
+                </div>
+              )}
+            </div>
+            {/* This is a slight "hack" of this component in order to get around the heading being required */}
             <ReadOnlySection
-              heading={t('timeFrequency')}
+              heading={h('note')}
+              copy={technicalContactsIdentifiedNote}
+            />
+
+            <ReadOnlySection
+              heading={t('participantInformation')}
+              copy={translateBooleanOrNull(captureParticipantInfo)}
+              notes={captureParticipantInfoNote}
+            />
+          </div>
+
+          {/* Interface Control Document - ICD */}
+          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+            <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
+            <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
+            <ReadOnlySection
+              heading={t('draftIDC')}
               copy={
-                dataFullTimeOrIncremental &&
-                translateDataFullTimeOrIncrementalType(
-                  dataFullTimeOrIncremental
-                )
+                draftIcdDueDate && formatDateUtc(draftIcdDueDate, 'MM/dd/yyyy')
               }
+              notes={icdNote}
             />
           </div>
-          <div className="desktop:width-card-lg">
+
+          {/* IDDOCTesting */}
+          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+            <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
+            <ReadOnlySection heading={t('uatNeeds')} copy={uatNeeds} />
+            <ReadOnlySection heading={t('stcNeeds')} copy={stcNeeds} />
             <ReadOnlySection
-              heading={t('eftAndConnectivity')}
-              copy={translateBooleanOrNull(eftSetUp)}
+              heading={t('testingTimelines')}
+              copy={testingTimelines}
+              notes={testingNote}
             />
           </div>
-        </div>
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
+
+          {/* IDDOCMonitoring */}
+          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+            <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
             <ReadOnlySection
-              heading={t('adjustments')}
-              copy={translateBooleanOrNull(unsolicitedAdjustmentsIncluded)}
+              heading={t('fileTypes')}
+              list
+              listItems={dataMonitoringFileTypes?.map(
+                translateMonitoringFileType
+              )}
+              listOtherItem={dataMonitoringFileOther}
             />
-          </div>
-          <div className="desktop:width-card-lg">
             <ReadOnlySection
-              heading={t('diagrams')}
-              copy={translateBooleanOrNull(dataFlowDiagramsNeeded)}
+              heading={t('responseTypes')}
+              copy={dataResponseType}
+            />
+            <ReadOnlySection
+              heading={t('fileFrequency')}
+              copy={dataResponseFileFrequency}
+            />
+            <div className="desktop:display-flex flex-justify">
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={t('timeFrequency')}
+                  copy={
+                    dataFullTimeOrIncremental &&
+                    translateDataFullTimeOrIncrementalType(
+                      dataFullTimeOrIncremental
+                    )
+                  }
+                />
+              </div>
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={t('eftAndConnectivity')}
+                  copy={translateBooleanOrNull(eftSetUp)}
+                />
+              </div>
+            </div>
+            <div className="desktop:display-flex flex-justify">
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={t('adjustments')}
+                  copy={translateBooleanOrNull(unsolicitedAdjustmentsIncluded)}
+                />
+              </div>
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={t('diagrams')}
+                  copy={translateBooleanOrNull(dataFlowDiagramsNeeded)}
+                />
+              </div>
+            </div>
+            <ReadOnlySection
+              heading={t('benefitEnhancement')}
+              copy={translateBooleanOrNull(produceBenefitEnhancementFiles)}
+            />
+            <ReadOnlySection
+              heading={t('namingConventions')}
+              copy={fileNamingConventions}
+              notes={dataMonitoringNote}
             />
           </div>
-        </div>
-        <ReadOnlySection
-          heading={t('benefitEnhancement')}
-          copy={translateBooleanOrNull(produceBenefitEnhancementFiles)}
-        />
-        <ReadOnlySection
-          heading={t('namingConventions')}
-          copy={fileNamingConventions}
-          notes={dataMonitoringNote}
-        />
-      </div>
+        </>
+      )}
 
       {/* Performance */}
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
