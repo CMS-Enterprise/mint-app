@@ -177,16 +177,13 @@ const ReadOnlyGeneralCharacteristics = ({
           copy={translateBooleanOrNull(hasComponentsOrTracks)}
         />
 
-        <ReadOnlySection
-          heading={t('differentComponents')}
-          copy={translateBooleanOrNull(hasComponentsOrTracks)}
-        />
-
-        <ReadOnlySection
-          heading={t('tracksDiffer')}
-          copy={hasComponentsOrTracksDiffer}
-          notes={hasComponentsOrTracksNote}
-        />
+        {hasComponentsOrTracks && (
+          <ReadOnlySection
+            heading={t('tracksDiffer')}
+            copy={hasComponentsOrTracksDiffer}
+            notes={hasComponentsOrTracksNote}
+          />
+        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">

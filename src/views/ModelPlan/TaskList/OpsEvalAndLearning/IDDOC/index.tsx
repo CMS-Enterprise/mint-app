@@ -24,6 +24,7 @@ import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetIDDOC from 'queries/OpsEvalAndLearning/GetIDDOC';
 import {
   GetIDDOC as GetIDDOCType,
@@ -262,9 +263,10 @@ const IDDOC = () => {
                                 {flatErrors.technicalContactsIdentifiedDetail}
                               </FieldErrorMsg>
                               <Field
-                                as={TextInput}
+                                as={TextAreaField}
                                 id="ops-eval-and-learning-technical-contacts-identified-detail"
-                                maxLength={50}
+                                maxLength={5000}
+                                className="mint-textarea"
                                 name="technicalContactsIdentifiedDetail"
                               />
                             </div>

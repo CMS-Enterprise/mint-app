@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -23,6 +22,7 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
 import {
   GetCCWAndQuality as GetCCWAndQualityType,
@@ -296,10 +296,10 @@ const CCWAndQuality = () => {
                                     {flatErrors.appToSendFilesToWhich}
                                   </FieldErrorMsg>
                                   <Field
-                                    as={TextInput}
-                                    className="maxw-none"
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
                                     id="ops-eval-and-learning-app-to-send-files-which"
-                                    maxLength={50}
+                                    maxLength={5000}
                                     name="appToSendFilesToWhich"
                                   />
                                 </div>

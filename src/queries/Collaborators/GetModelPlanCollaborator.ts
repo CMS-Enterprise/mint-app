@@ -5,6 +5,7 @@ export default gql`
     planCollaboratorByID(id: $id) {
       id
       userAccount {
+        id
         commonName
         email
         username

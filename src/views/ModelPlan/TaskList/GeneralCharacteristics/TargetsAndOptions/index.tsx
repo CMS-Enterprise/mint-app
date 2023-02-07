@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -24,6 +23,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
 import {
   GetTargetsAndOptions as GetTargetsAndOptionsType,
@@ -312,10 +312,11 @@ const TargetsAndOptions = () => {
                                             }
                                           </FieldErrorMsg>
                                           <Field
-                                            as={TextInput}
+                                            as={TextAreaField}
                                             data-testid="plan-characteristics-geographies-targeted-other"
                                             id="plan-characteristics-geographies-targeted-other"
-                                            maxLength={50}
+                                            maxLength={5000}
+                                            className="mint-textarea"
                                             name="geographiesTargetedTypesOther"
                                           />
                                         </FieldGroup>
@@ -390,9 +391,10 @@ const TargetsAndOptions = () => {
                                             }
                                           </FieldErrorMsg>
                                           <Field
-                                            as={TextInput}
+                                            as={TextAreaField}
                                             id="plan-characteristics-geographies-applied-to-other"
-                                            maxLength={50}
+                                            maxLength={5000}
+                                            className="mint-textarea"
                                             name="geographiesTargetedAppliedToOther"
                                           />
                                         </FieldGroup>
@@ -511,9 +513,10 @@ const TargetsAndOptions = () => {
                                       {flatErrors.agreementTypesOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
+                                      as={TextAreaField}
+                                      className="mint-textarea"
                                       id="plan-characteristics-agreement-type-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="agreementTypesOther"
                                     />
                                   </FieldGroup>

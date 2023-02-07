@@ -358,8 +358,8 @@ const PeopleImpact = () => {
                         )}
 
                         <AddNote
-                          id="beneficiaries-note"
-                          field="beneficiariesNote"
+                          id="beneficiaries-selection-note"
+                          field="beneficiarySelectionNote"
                         />
                       </FieldGroup>
 

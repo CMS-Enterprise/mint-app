@@ -340,7 +340,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="usa-textarea"
                   data-testid="beneficiaries-note"
                   id="beneficiaries-note"
                   name="beneficiariesNote"
@@ -395,7 +395,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   How so?
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="height-15 usa-textarea"
                   data-testid="beneficiaries-dual-eligibility-how"
                   id="beneficiaries-dual-eligibility-how"
                   name="treatDualElligibleDifferentHow"
@@ -453,7 +453,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="usa-textarea"
                   data-testid="beneficiaries-dual-eligibility-note"
                   id="beneficiaries-dual-eligibility-note"
                   name="treatDualElligibleDifferentNote"
@@ -508,7 +508,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   What are the exclusionary criteria?
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="height-15 usa-textarea"
                   data-testid="beneficiaries-exclude-criteria"
                   id="beneficiaries-exclude-criteria"
                   name="excludeCertainCharacteristicsCriteria"
@@ -566,7 +566,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="usa-textarea"
                   data-testid="beneficiaries-exclude-note"
                   id="beneficiaries-exclude-note"
                   name="excludeCertainCharacteristicsNote"

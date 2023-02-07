@@ -18,6 +18,7 @@ export interface GetAllModelPlans_modelPlanCollection_basics {
 
 export interface GetAllModelPlans_modelPlanCollection_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;
