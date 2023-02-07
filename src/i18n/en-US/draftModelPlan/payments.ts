@@ -70,8 +70,7 @@ const payments = {
       'Payments for services not covered through Traditional Medicare',
     other: 'Other'
   },
-  selectClaimsOther:
-    'Please describe the other claims-based payments you will pay.',
+  selectClaimsOther: 'Please describe the other payment frequency.',
   excludedFromPayment:
     'Should any model providers be excluded from existing Fee-for-Service payment systems?',
   howSo: 'How so?',

@@ -560,14 +560,15 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         >
           Please specify
         </label>
-        <input
-          class="usa-input maxw-none"
+        <textarea
+          class="maxw-none mint-textarea usa-textarea"
           data-testid="ops-eval-and-learning-data-reporting-starts-other"
           id="ops-eval-and-learning-data-reporting-starts-other"
-          maxlength="50"
+          maxlength="5000"
           name="qualityReportingStartsOther"
-          value="Other Value"
-        />
+        >
+          Other Value
+        </textarea>
       </div>
       <div
         class="margin-top-4 margin-bottom-8"

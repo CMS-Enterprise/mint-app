@@ -29,13 +29,9 @@ const TextAreaField = ({
   value,
   ...props
 }: TextAreaFieldProps) => {
-  const textAreaClasses = classnames(
-    'usa-textarea',
-    {
-      'usa-input--error': error
-    },
-    className
-  );
+  const textAreaClasses = classnames(className, 'usa-textarea', {
+    'usa-input--error': error
+  });
   return (
     <>
       {label && (

@@ -16,6 +16,7 @@ const mockData = [
     userID: 'LUKE',
     userAccount: {
       __typename: 'UserAccount',
+      id: '890',
       email: 'luke@skywalker.com',
       username: '123',
       commonName: 'Luke Skywalker'
@@ -30,6 +31,7 @@ const mockData = [
     userID: 'BOBA',
     userAccount: {
       __typename: 'UserAccount',
+      id: '891',
       email: 'boba@fett.com',
       username: '321',
       commonName: 'Boba Fett'

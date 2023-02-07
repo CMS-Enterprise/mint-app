@@ -34,6 +34,7 @@ const mockModel: ModelPlanType = {
   collaborators: [
     {
       userAccount: {
+        id: '890',
         __typename: 'UserAccount',
         email: '',
         username: 'MINT',

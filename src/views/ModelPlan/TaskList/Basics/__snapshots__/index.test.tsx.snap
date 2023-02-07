@@ -359,14 +359,14 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     >
                       Please specify
                     </label>
-                    <input
-                      class="usa-input"
-                      data-testid="textInput"
+                    <textarea
+                      class="mint-textarea usa-textarea"
                       id="plan-basics-cmsCategory--Other"
-                      maxlength="50"
+                      maxlength="5000"
                       name="basics.cmsOther"
-                      value="The Center for Awesomeness "
-                    />
+                    >
+                      The Center for Awesomeness 
+                    </textarea>
                   </div>
                 </div>
                 <div

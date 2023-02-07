@@ -288,7 +288,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                 data-testid="label"
                 for="nonClaimsPaymentOther"
               >
-                Please describe the other claims-based payments you will pay.
+                Please describe the other payment frequency.
               </label>
               <input
                 class="usa-input"
@@ -298,6 +298,35 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                 type="text"
                 value="Lorem Ipsum"
               />
+            </div>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
             </div>
           </div>
           <div
@@ -564,7 +593,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               If possible, upload a copy of the allotment and allowance.
             </p>
             <textarea
-              class="usa-textarea height-15"
+              class="height-15 usa-textarea"
               data-testid="payment-funding-structure"
               id="payment-funding-structure"
               name="fundingStructure"

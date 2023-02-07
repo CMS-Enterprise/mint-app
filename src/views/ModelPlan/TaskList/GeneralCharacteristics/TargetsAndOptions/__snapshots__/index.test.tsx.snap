@@ -225,14 +225,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         >
           Please specify what the other geography type is.
         </label>
-        <input
-          class="usa-input"
+        <textarea
+          class="mint-textarea usa-textarea"
           data-testid="plan-characteristics-geographies-targeted-other"
           id="plan-characteristics-geographies-targeted-other"
-          maxlength="50"
+          maxlength="5000"
           name="geographiesTargetedTypesOther"
-          value="Other geography type"
-        />
+        >
+          Other geography type
+        </textarea>
       </div>
       <legend
         class="usa-label text-normal"

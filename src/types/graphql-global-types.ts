@@ -1205,6 +1205,7 @@ export interface PlanPaymentsChanges {
   waiveBeneficiaryCostSharingNote?: string | null;
   nonClaimsPayments?: NonClaimsBasedPayType[] | null;
   nonClaimsPaymentOther?: string | null;
+  nonClaimsPaymentsNote?: string | null;
   paymentCalculationOwner?: string | null;
   numberPaymentsPerPayCycle?: string | null;
   numberPaymentsPerPayCycleNote?: string | null;
