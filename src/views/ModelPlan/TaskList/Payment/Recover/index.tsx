@@ -384,7 +384,7 @@ const Recover = () => {
                         >
                           {h('back')}
                         </Button>
-                        {flags.hideITLeadExperience && (
+                        {!flags.hideITLeadExperience && (
                           <Button type="submit" onClick={() => setErrors({})}>
                             {t('continueToITSolutions')}
                           </Button>

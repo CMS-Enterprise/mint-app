@@ -43,6 +43,7 @@ export interface CreateModelPlan_createModelPlan_basics {
 
 export interface CreateModelPlan_createModelPlan_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;

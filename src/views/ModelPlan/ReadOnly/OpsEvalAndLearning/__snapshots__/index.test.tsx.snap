@@ -28,7 +28,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Will another Agency or State help design/operate the model?
         </p>
@@ -64,7 +64,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--what-stakeholders-do-you-plan-to-communicate-with margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           What stakeholders do you plan to communicate with?
         </p>
@@ -92,12 +92,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--do-you-plan-to-use-a-helpdesk margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Do you plan to use a helpdesk?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -110,7 +110,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--what-contractors-will-support-your-model margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           What contractors will support your model?
         </p>
@@ -146,12 +146,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--in-what-capacity-will-they-support-your-model margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           In what capacity will they support your model?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -168,12 +168,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--will-you-establish-a-benchmark-to-capture-performance margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Will you establish a benchmark to capture performance?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -186,12 +186,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--will-you-compute-performance-scores margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Will you compute performance scores?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -210,12 +210,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-you-make-risk-adjustments-to-performance-scores margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you make risk adjustments to performance scores?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -232,12 +232,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-you-make-risk-adjustments-to-feedback-results margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you make risk adjustments to feedback results?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -258,12 +258,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you make risk adjustments to payments?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -280,12 +280,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-you-make-risk-adjustments-to-others margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you make risk adjustments to others?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -306,12 +306,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-participants-be-able-to-appeal-performance-scores margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will participants be able to appeal performance scores?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -328,12 +328,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-participants-be-able-to-appeal-feedback-results margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will participants be able to appeal feedback results?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -354,12 +354,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will participants be able to appeal payments?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -376,12 +376,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--will-participants-be-able-to-appeal-others margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will participants be able to appeal others?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -400,7 +400,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--what-type-of-evaluation-approach-are-you-considering margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           What type of evaluation approach are you considering?
         </p>
@@ -436,7 +436,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--is-chronic-conditions-warehouse--ccw--involved-in-the-model margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Is Chronic Conditions Warehouse (CCW) involved in the model?
         </p>
@@ -472,7 +472,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--what-data-do-you-need-to-monitor-the-model margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           What data do you need to monitor the model?
         </p>
@@ -513,7 +513,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--what-data-will-you-send-to-participants margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           What data will you send to participants?
         </p>
@@ -554,12 +554,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -579,12 +579,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Will you need to send files between the CCW and other applications?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -603,12 +603,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
             class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers margin-bottom-3"
           >
             <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Do you know which applications will be on the other sides of the file transfers?
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
             >
               <em
                 class="text-base"
@@ -623,12 +623,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Will you use the CCW to distribute files to and from model participants?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -648,12 +648,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--data-sharing-starts margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Data sharing starts
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -666,7 +666,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--how-often-do-you-anticipate-sharing-data margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           How often do you anticipate sharing data?
         </p>
@@ -684,12 +684,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--data-collection-starts margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Data collection starts
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -702,7 +702,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--how-often-do-you-anticipate-collecting-data margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           How often do you anticipate collecting data?
         </p>
@@ -720,12 +720,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--quality-reporting-starts margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Quality reporting starts
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"
@@ -742,7 +742,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--will-the-model-have-a-learning-strategy margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           Will the model have a learning strategy?
         </p>
@@ -783,12 +783,12 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning ma
         class="read-only-section read-only-section--what-challenges-do-you-anticipate-during-model-design-and-implementation margin-bottom-3"
       >
         <p
-          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
         >
           What challenges do you anticipate during Model design and implementation?
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
         >
           <em
             class="text-base"

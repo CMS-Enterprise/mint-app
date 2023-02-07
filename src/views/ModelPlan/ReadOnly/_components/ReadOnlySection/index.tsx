@@ -27,7 +27,7 @@ const ReadOnlySection = ({
   const renderCopyOrList = () => {
     if (!list || listItems.length === 0) {
       return (
-        <p className="margin-y-0 font-body-md line-height-sans-4">
+        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           {copy || <em className="text-base">{t('na')}</em>}
         </p>
       );
@@ -62,7 +62,7 @@ const ReadOnlySection = ({
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
-        <p className="text-bold margin-y-0 font-body-sm line-height-sans-4">
+        <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
           {heading}
         </p>
         {renderCopyOrList()}
