@@ -132,10 +132,10 @@ export const Communication = () => {
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
     participantAssumeRisk: participantAssumeRisk ?? null,
-    riskType: riskType || null,
+    riskType: riskType ?? null,
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
-    willRiskChange: willRiskChange || null,
+    willRiskChange: willRiskChange ?? null,
     willRiskChangeNote: willRiskChangeNote ?? ''
   };
 

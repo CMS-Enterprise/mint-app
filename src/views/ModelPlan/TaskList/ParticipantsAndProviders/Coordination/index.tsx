@@ -109,10 +109,10 @@ export const Coordination = () => {
     coordinateWork: coordinateWork ?? null,
     coordinateWorkNote: coordinateWorkNote ?? '',
     gainsharePayments: gainsharePayments ?? null,
-    gainsharePaymentsTrack: gainsharePaymentsTrack || null,
+    gainsharePaymentsTrack: gainsharePaymentsTrack ?? null,
     gainsharePaymentsNote: gainsharePaymentsNote ?? '',
     participantsIds: participantsIds ?? [],
-    participantsIdsOther: participantsIdsOther || '',
+    participantsIdsOther: participantsIdsOther ?? '',
     participantsIDSNote: participantsIDSNote ?? ''
   };
 

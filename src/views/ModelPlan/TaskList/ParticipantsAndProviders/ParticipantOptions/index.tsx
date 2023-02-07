@@ -140,7 +140,7 @@ export const ParticipantOptions = () => {
     recruitmentMethod: recruitmentMethod ?? null,
     recruitmentOther: recruitmentOther ?? '',
     recruitmentNote: recruitmentNote ?? '',
-    selectionMethod: selectionMethod || [],
+    selectionMethod: selectionMethod ?? [],
     selectionOther: selectionOther ?? '',
     selectionNote: selectionNote ?? ''
   };
