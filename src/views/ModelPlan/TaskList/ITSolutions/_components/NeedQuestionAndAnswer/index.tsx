@@ -99,7 +99,8 @@ const NeedQuestionAndAnswer = ({
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
     variables: {
-      id: operationalNeedID
+      id: operationalNeedID,
+      includeNotNeeded: false
     }
   });
 
