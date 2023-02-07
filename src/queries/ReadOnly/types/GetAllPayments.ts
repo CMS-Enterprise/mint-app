@@ -47,6 +47,7 @@ export interface GetAllPayments_modelPlan_payments {
   waiverOnlyAppliesPartOfPayment: boolean | null;
   waiveBeneficiaryCostSharingNote: string | null;
   nonClaimsPayments: NonClaimsBasedPayType[];
+  nonClaimsPaymentsNote: string | null;
   nonClaimsPaymentOther: string | null;
   paymentCalculationOwner: string | null;
   numberPaymentsPerPayCycle: string | null;
