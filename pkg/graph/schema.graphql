@@ -802,6 +802,7 @@ type PlanPayments {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]!
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                   String
@@ -888,6 +889,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                  String
