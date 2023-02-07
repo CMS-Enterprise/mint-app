@@ -94,7 +94,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
     variables: {
-      id: operationalNeedID
+      id: operationalNeedID,
+      includeNotNeeded: false
     }
   });
 
