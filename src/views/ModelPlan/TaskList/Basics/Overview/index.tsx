@@ -280,15 +280,17 @@ const Overview = () => {
                   {h('saveAndReturn')}
                 </Button>
               </Form>
-              <AutoSave
-                values={values}
-                onSave={() => {
-                  if (Object.keys(formikRef.current!.touched).length !== 0) {
-                    handleFormSubmit();
-                  }
-                }}
-                debounceDelay={3000}
-              />
+              {id && (
+                <AutoSave
+                  values={values}
+                  onSave={() => {
+                    if (Object.keys(formikRef.current!.touched).length !== 0) {
+                      handleFormSubmit();
+                    }
+                  }}
+                  debounceDelay={3000}
+                />
+              )}
             </>
           );
         }}

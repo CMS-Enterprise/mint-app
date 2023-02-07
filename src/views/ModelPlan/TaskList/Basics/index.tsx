@@ -466,14 +466,16 @@ const BasicsContent = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-              <AutoSave
-                values={values}
-                onSave={() => {
-                  if (formikRef.current!.values.modelName)
-                    handleFormSubmit(formikRef.current!.values);
-                }}
-                debounceDelay={3000}
-              />
+              {id && (
+                <AutoSave
+                  values={values}
+                  onSave={() => {
+                    if (formikRef.current!.values.modelName)
+                      handleFormSubmit(formikRef.current!.values);
+                  }}
+                  debounceDelay={3000}
+                />
+              )}
             </>
           );
         }}
