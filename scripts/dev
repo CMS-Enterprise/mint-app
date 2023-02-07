@@ -382,6 +382,7 @@ namespace :db do
     plan_it_tools,
     plan_favorite,
     plan_cr_tdl,
+    operational_solution_subtask,
     operational_solution,
     operational_need,
     model_plan,
@@ -392,7 +393,7 @@ namespace :db do
 
     #remove all non system accounts
     systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"
-    `echo "DELETE FROM user_account WHERE username NOT IN #{systemAccounts}" | psql` 
+    `echo "DELETE FROM user_account WHERE username NOT IN #{systemAccounts}" | psql`
 
   end
 end
