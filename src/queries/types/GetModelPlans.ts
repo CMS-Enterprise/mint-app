@@ -30,6 +30,7 @@ export interface GetModelPlans_modelPlanCollection_payments {
 
 export interface GetModelPlans_modelPlanCollection_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

@@ -16,6 +16,7 @@ export default gql`
       }
       collaborators {
         userAccount {
+          id
           commonName
           email
           username

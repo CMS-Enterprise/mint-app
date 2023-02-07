@@ -11,6 +11,7 @@ import { PlanCollaboratorCreateInput, TeamRole } from "./../../../types/graphql-
 
 export interface CreateModelPlanCollaborator_createPlanCollaborator_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
 }

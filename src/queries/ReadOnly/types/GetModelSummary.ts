@@ -22,6 +22,7 @@ export interface GetModelSummary_modelPlan_generalCharacteristics {
 
 export interface GetModelSummary_modelPlan_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;
