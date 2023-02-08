@@ -52,7 +52,7 @@ jobs:
     needs: run_tests
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
-      env: ${{ github.even.inputs.env }}
+      env: ${{ inputs.env }}
     secrets:
       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
