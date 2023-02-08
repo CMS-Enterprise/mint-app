@@ -78,6 +78,7 @@ const [protocol, gqlAddressWithoutProtocol] = (process.env
 const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecting over HTTPs
 const wsLink = new WebSocketLink(
   new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
+    reconnect: true,
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
     }
@@ -107,6 +108,9 @@ const client = new ApolloClient({
     typePolicies: {
       OperationalSolution: {
         keyFields: ['key', 'nameOther', 'id']
+      },
+      TaskListSectionLockStatus: {
+        keyFields: ['section', 'lockedBy']
       }
     }
   }),

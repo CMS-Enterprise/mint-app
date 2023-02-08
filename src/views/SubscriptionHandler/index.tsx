@@ -71,6 +71,7 @@ export const findLockedSection = (
 const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Gets the modelID and tasklist section route from any location within the application
   const { pathname } = useLocation();
+
   const modelID = pathname.split('/')[2];
   const taskList = pathname.split('/')[3] === 'task-list';
   const taskListRoute = pathname.split('/')[4];
@@ -128,6 +129,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
+    setPrevPath(pathname);
     return () => {
       setPrevPath(pathname);
     };
@@ -150,6 +152,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const removeLockedSection = (section: LockSectionType | undefined) => {
     const prevModelID = prevPath.split('/')[2];
 
+    console.log(section, isUUID(prevModelID), prevPath, pathname);
     // Check if the prev path was a part of a model plan
     if (section && isUUID(prevModelID) && prevPath !== pathname) {
       removeLock({
@@ -191,7 +194,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Checks to see if section should be locked and calls mutation to add lock
   if (
-    lockState === LockStatus.UNLOCKED &&
+    (lockState === LockStatus.UNLOCKED || lockState === LockStatus.OCCUPYING) &&
     taskList &&
     taskListSection &&
     validModelID &&
