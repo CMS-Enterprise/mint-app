@@ -186,7 +186,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     prevPath
   ) {
     const lockedSection = taskListSectionLocks.find(
-      (section: LockSectionType) => section.lockedBy === euaId
+      (section: LockSectionType) =>
+        section.lockedBy === euaId &&
+        section.section === taskListSectionMap[prevPath.split('/')[4]]
     );
 
     removeLockedSection(lockedSection);
@@ -205,10 +207,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   ) {
     const prevLockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
-        section.lockedBy === euaId && taskListSection !== section.section
+        section.lockedBy === euaId &&
+        taskListSectionMap[prevPath.split('/')[4]] === section.section
     );
 
-    // If coming from IT Tools
+    // If coming from IT Tools or end of task list section
     // (Or any react-router redirect from one section directly to another)
     if (prevLockedSection) removeLockedSection(prevLockedSection);
 
