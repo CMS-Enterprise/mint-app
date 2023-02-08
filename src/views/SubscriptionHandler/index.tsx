@@ -190,13 +190,13 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !loading &&
     prevPath
   ) {
-    const lockedSection = taskListSectionLocks.find(
-      (section: LockSectionType) =>
-        section.lockedBy === euaId &&
-        section.section === taskListSectionMap[taskListRouteParser(prevPath)]
+    const lockedSections = taskListSectionLocks.filter(
+      (section: LockSectionType) => section.lockedBy === euaId
     );
 
-    removeLockedSection(lockedSection);
+    lockedSections.forEach(section => {
+      removeLockedSection(section);
+    });
   }
 
   // Checks to see if section should be locked and calls mutation to add lock
@@ -210,15 +210,13 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !locking.current &&
     !loading
   ) {
-    const prevLockedSection = taskListSectionLocks.find(
-      (section: LockSectionType) =>
-        section.lockedBy === euaId &&
-        taskListSectionMap[taskListRouteParser(prevPath)] === section.section
+    const prevLockedSections = taskListSectionLocks.filter(
+      (section: LockSectionType) => section.lockedBy === euaId
     );
 
-    // If coming from IT Tools or end of task list section
-    // (Or any react-router redirect from one section directly to another)
-    if (prevLockedSection) removeLockedSection(prevLockedSection);
+    prevLockedSections.forEach(section => {
+      removeLockedSection(section);
+    });
 
     locking.current = true;
 
