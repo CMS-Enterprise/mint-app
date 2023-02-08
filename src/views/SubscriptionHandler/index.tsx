@@ -152,7 +152,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const removeLockedSection = (section: LockSectionType | undefined) => {
     const prevModelID = prevPath.split('/')[2];
 
-    console.log(section, isUUID(prevModelID), prevPath, pathname);
+    // console.log(section, isUUID(prevModelID), prevPath, pathname);
     // Check if the prev path was a part of a model plan
     if (section && isUUID(prevModelID) && prevPath !== pathname) {
       removeLock({
