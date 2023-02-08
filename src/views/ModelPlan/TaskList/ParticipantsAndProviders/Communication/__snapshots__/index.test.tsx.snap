@@ -357,14 +357,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
           >
             Please specify
           </label>
-          <input
-            class="usa-input maxw-none"
+          <textarea
+            class="maxw-none mint-textarea usa-textarea"
             data-testid="participants-and-providers-risk-type-other"
             id="participants-and-providers-risk-type-other"
-            maxlength="50"
+            maxlength="5000"
             name="riskOther"
-            value="Programmatic Risk"
-          />
+          >
+            Programmatic Risk
+          </textarea>
         </div>
       </fieldset>
       <div

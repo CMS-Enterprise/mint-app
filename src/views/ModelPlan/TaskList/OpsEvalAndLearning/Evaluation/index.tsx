@@ -26,6 +26,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import useScrollElement from 'hooks/useScrollElement';
 import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
@@ -53,7 +54,12 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Evaluation = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -120,7 +126,10 @@ const Evaluation = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             if (
-              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment || [])
+              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
+              isQualityMeasures(
+                formikRef?.current?.values.dataNeededForMonitoring
+              )
             ) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
@@ -335,6 +344,8 @@ const Evaluation = () => {
                     <>
                       <legend className="usa-label">{t('ccw')}</legend>
 
+                      <p className="text-base margin-y-1">{t('ccwInfo')}</p>
+
                       <FieldErrorMsg>{flatErrors.ccmInvolvment}</FieldErrorMsg>
 
                       {Object.keys(CcmInvolvmentType)
@@ -377,10 +388,10 @@ const Evaluation = () => {
                                       {flatErrors.ccmInvolvmentOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-cmmi-involvement-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="ccmInvolvmentOther"
                                     />
                                   </div>
@@ -613,11 +624,13 @@ const Evaluation = () => {
           currentPage={renderCurrentPage(
             6,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

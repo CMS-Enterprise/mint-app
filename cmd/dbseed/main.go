@@ -220,4 +220,20 @@ func seedData(config *viper.Viper) {
 			unrestrictedDocument.ID,
 		},
 	)
+
+	_ = operationalSolutionSubtasksCreate(
+		logger,
+		store,
+		planWithBasics,
+		operationalSolution.ID,
+		[]*model.CreateOperationalSolutionSubtaskInput{
+			{
+				Name:   "Create the thing!",
+				Status: models.OperationalSolutionSubtaskStatusInProgress,
+			}, {
+				Name:   "Do the thing!",
+				Status: models.OperationalSolutionSubtaskStatusTodo,
+			},
+		},
+	)
 }

@@ -23,9 +23,15 @@
 
 // Textarea
 .usa-textarea {
-  height: 300px;
-  max-width: 30rem;
+  height: 7.5rem;
+  max-width: 100%;
   width: 100%;
+}
+
+.mint-textarea {
+  min-height: 2.5rem !important;
+  resize: both !important;
+  height: 2.5rem;
 }
 
 // The default font for this project should be Public Sans
@@ -78,9 +84,4 @@
 
 .usa-date-picker__calendar {
   font-size: 14px !important;
-}
-
-.usa-checkbox {
-  display: flex;
-  align-items: center;
 }

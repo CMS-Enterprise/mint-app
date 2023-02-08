@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { TaskStatus } from "./../../../types/graphql-global-types";
+import { TaskStatus, PrepareForClearanceStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetClearanceStatuses
@@ -12,7 +12,7 @@ import { TaskStatus } from "./../../../types/graphql-global-types";
 export interface GetClearanceStatuses_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
-  readyForClearanceBy: string | null;
+  readyForClearanceBy: UUID | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
@@ -57,6 +57,11 @@ export interface GetClearanceStatuses_modelPlan_payments {
   status: TaskStatus;
 }
 
+export interface GetClearanceStatuses_modelPlan_prepareForClearance {
+  __typename: "PrepareForClearance";
+  status: PrepareForClearanceStatus;
+}
+
 export interface GetClearanceStatuses_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -66,6 +71,7 @@ export interface GetClearanceStatuses_modelPlan {
   beneficiaries: GetClearanceStatuses_modelPlan_beneficiaries;
   opsEvalAndLearning: GetClearanceStatuses_modelPlan_opsEvalAndLearning;
   payments: GetClearanceStatuses_modelPlan_payments;
+  prepareForClearance: GetClearanceStatuses_modelPlan_prepareForClearance;
 }
 
 export interface GetClearanceStatuses {

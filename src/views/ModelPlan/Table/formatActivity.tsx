@@ -1,9 +1,9 @@
 import React from 'react';
 import { IconComment } from '@trussworks/react-uswds';
 import i18next from 'i18next';
-import { DateTime } from 'luxon';
 
 import { GetModelPlans_modelPlanCollection_discussions as DiscussionType } from 'queries/types/GetModelPlans';
+import { formatDateLocal } from 'utils/date';
 
 const formatRecentActivity = (
   date: string,
@@ -12,9 +12,10 @@ const formatRecentActivity = (
   let discussionActivity;
 
   // Formatting date string of last updated model plan
-  const updated = `${i18next.t(
-    'home:requestsTable.updated'
-  )} ${DateTime.fromISO(date).toLocaleString(DateTime.DATE_SHORT)}`;
+  const updated = `${i18next.t('home:requestsTable.updated')} ${formatDateLocal(
+    date,
+    'MM/dd/yyyy'
+  )}`;
 
   // Filtering for answered/unanswered question on model plan
   if (discussions.length > 0) {

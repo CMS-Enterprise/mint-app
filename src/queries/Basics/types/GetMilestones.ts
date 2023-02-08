@@ -24,7 +24,7 @@ export interface GetMilestones_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }

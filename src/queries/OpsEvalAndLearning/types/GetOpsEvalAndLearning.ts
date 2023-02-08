@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOpsEvalAndLearning
@@ -13,6 +13,7 @@ export interface GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  dataNeededForMonitoring: DataForMonitoringType[];
   agencyOrStateHelp: AgencyOrStateHelpType[];
   agencyOrStateHelpOther: string | null;
   agencyOrStateHelpNote: string | null;

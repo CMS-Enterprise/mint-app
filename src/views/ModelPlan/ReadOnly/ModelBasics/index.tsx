@@ -10,7 +10,7 @@ import {
 import SectionWrapper from 'components/shared/SectionWrapper';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
-import { formatDate } from 'utils/date';
+import { formatDateUtc } from 'utils/date';
 import {
   translateBooleanOrNull,
   translateCmmiGroups,
@@ -78,7 +78,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
 
   const dateOrNoAnswer = (value: string | null | undefined) => {
     if (value) {
-      return formatDate(value, 'MM/dd/yyyy');
+      return formatDateUtc(value, 'MM/dd/yyyy');
     }
     return <em className="text-base">{t('na')}</em>;
   };

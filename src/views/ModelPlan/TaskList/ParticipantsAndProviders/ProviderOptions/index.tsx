@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -153,10 +152,10 @@ export const ProviderOptions = () => {
     providerAdditionFrequency: providerAdditionFrequency ?? null,
     providerAdditionFrequencyOther: providerAdditionFrequencyOther ?? '',
     providerAdditionFrequencyNote: providerAdditionFrequencyNote ?? '',
-    providerAddMethod: providerAddMethod || [],
+    providerAddMethod: providerAddMethod ?? [],
     providerAddMethodOther: providerAddMethodOther ?? '',
     providerAddMethodNote: providerAddMethodNote ?? '',
-    providerLeaveMethod: providerLeaveMethod || [],
+    providerLeaveMethod: providerLeaveMethod ?? [],
     providerLeaveMethodOther: providerLeaveMethodOther ?? '',
     providerLeaveMethodNote: providerLeaveMethodNote ?? '',
     providerOverlap: providerOverlap ?? null,
@@ -287,10 +286,10 @@ export const ProviderOptions = () => {
                                   {flatErrors.providerAdditionFrequencyOther}
                                 </FieldErrorMsg>
                                 <Field
-                                  as={TextInput}
-                                  className="maxw-none"
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
                                   id="participants-and-providers-additional-frequency-other"
-                                  maxLength={50}
+                                  maxLength={5000}
                                   name="providerAdditionFrequencyOther"
                                 />
                               </div>
@@ -379,57 +378,62 @@ export const ProviderOptions = () => {
                         {flatErrors.providerLeaveMethod}
                       </FieldErrorMsg>
 
-                      {Object.keys(ProviderLeaveType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`participants-and-providers-leave-method-${type}`}
-                                name="providerLeaveMethod"
-                                label={translateProviderLeaveType(type)}
-                                value={type}
-                                checked={values?.providerLeaveMethod.includes(
-                                  type as ProviderLeaveType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.providerLeaveMethod.indexOf(
-                                      e.target.value as ProviderLeaveType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === ('OTHER' as ProviderLeaveType) &&
-                                values.providerLeaveMethod.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="participants-and-providers-leave-method-other"
-                                      className="text-normal"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.providerLeaveMethodOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="participants-and-providers-leave-method-other"
-                                      maxLength={50}
-                                      name="providerLeaveMethodOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
+                      {[
+                        ProviderLeaveType.VARIES_BY_TYPE_OF_PROVIDER,
+                        ProviderLeaveType.NOT_ALLOWED_TO_LEAVE,
+                        ProviderLeaveType.AFTER_A_CERTAIN_WITH_IMPLICATIONS,
+                        ProviderLeaveType.VOLUNTARILY_WITHOUT_IMPLICATIONS,
+                        ProviderLeaveType.OTHER,
+                        ProviderLeaveType.NOT_APPLICABLE
+                      ].map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`participants-and-providers-leave-method-${type}`}
+                              name="providerLeaveMethod"
+                              label={translateProviderLeaveType(type)}
+                              value={type}
+                              checked={values?.providerLeaveMethod.includes(
+                                type as ProviderLeaveType
+                              )}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(e.target.value);
+                                } else {
+                                  const idx = values.providerLeaveMethod.indexOf(
+                                    e.target.value as ProviderLeaveType
+                                  );
+                                  arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            {type === ('OTHER' as ProviderLeaveType) &&
+                              values.providerLeaveMethod.includes(type) && (
+                                <div className="margin-left-4 margin-top-neg-3">
+                                  <Label
+                                    htmlFor="participants-and-providers-leave-method-other"
+                                    className="text-normal"
+                                  >
+                                    {h('pleaseSpecify')}
+                                  </Label>
+                                  <FieldErrorMsg>
+                                    {flatErrors.providerLeaveMethodOther}
+                                  </FieldErrorMsg>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
+                                    id="participants-and-providers-leave-method-other"
+                                    maxLength={5000}
+                                    name="providerLeaveMethodOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      })}
                       <AddNote
                         id="participants-and-providers-leave-method-note"
                         field="providerLeaveMethodNote"

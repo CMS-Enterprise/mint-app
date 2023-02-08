@@ -163,7 +163,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           Problem statement
         </label>
         <textarea
-          class="usa-textarea height-15"
+          class="usa-textarea"
           id="ModelType-Problem"
           name="problem"
         />
@@ -184,7 +184,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           Please include the high level goal of the program and a description of the project.
         </span>
         <textarea
-          class="usa-textarea height-15"
+          class="usa-textarea"
           id="ModelType-Goal"
           name="goal"
         />
@@ -200,7 +200,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           Test Interventions
         </label>
         <textarea
-          class="usa-textarea height-15"
+          class="usa-textarea"
           id="ModelType-testInterventions"
           name="testInterventions"
         />

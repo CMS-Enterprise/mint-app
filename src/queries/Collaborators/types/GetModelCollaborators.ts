@@ -11,6 +11,7 @@ import { TeamRole } from "./../../../types/graphql-global-types";
 
 export interface GetModelCollaborators_modelPlan_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;

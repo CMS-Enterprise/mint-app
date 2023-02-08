@@ -279,7 +279,12 @@ const PeopleImpact = () => {
                           {flatErrors.participantsCurrentlyInModels}
                         </FieldErrorMsg>
                         <Fieldset>
-                          {Object.keys(ConfidenceType).map(key => (
+                          {[
+                            ConfidenceType.NOT_AT_ALL,
+                            ConfidenceType.SLIGHTLY,
+                            ConfidenceType.FAIRLY,
+                            ConfidenceType.COMPLETELY
+                          ].map(key => (
                             <Field
                               as={Radio}
                               key={key}
@@ -353,8 +358,8 @@ const PeopleImpact = () => {
                         )}
 
                         <AddNote
-                          id="beneficiaries-note"
-                          field="beneficiariesNote"
+                          id="beneficiaries-selection-note"
+                          field="beneficiarySelectionNote"
                         />
                       </FieldGroup>
 

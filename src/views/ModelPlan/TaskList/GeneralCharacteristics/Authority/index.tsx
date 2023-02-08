@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -40,7 +39,8 @@ import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateAuthorityAllowance,
-  translateWaiverTypes
+  translateWaiverTypes,
+  translateWaiverTypesLabel
 } from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
@@ -344,9 +344,10 @@ const Authority = () => {
                                       {flatErrors.authorityAllowancesOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
+                                      as={TextAreaField}
+                                      className="mint-textarea"
                                       id="plan-characteristics-authority-allowance-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="authorityAllowancesOther"
                                     />
                                   </FieldGroup>
@@ -418,6 +419,7 @@ const Authority = () => {
                                 id={`plan-characteristics-waiver-types-${type}`}
                                 name="waiversRequiredTypes"
                                 label={translateWaiverTypes(type)}
+                                subLabel={translateWaiverTypesLabel(type)}
                                 value={type}
                                 checked={values.waiversRequiredTypes.includes(
                                   type as WaiverType

@@ -38,6 +38,7 @@ SELECT
     waive_beneficiary_cost_sharing_note,
     non_claims_payments,
     non_claims_payments_other,
+    non_claims_payments_note,
     payment_calculation_owner,
     number_payments_per_pay_cycle,
     number_payments_per_pay_cycle_note,

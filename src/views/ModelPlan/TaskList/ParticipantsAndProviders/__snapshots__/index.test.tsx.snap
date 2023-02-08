@@ -359,7 +359,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Which type of medicare providers?
               </label>
               <textarea
-                class="usa-textarea height-15"
+                class="usa-textarea"
                 data-testid="participants-and-providers-medicare-type"
                 id="participants-and-providers-medicare-type"
                 name="medicareProviderType"
@@ -379,7 +379,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Please describe how states will engage with your model.
               </label>
               <textarea
-                class="usa-textarea height-15"
+                class="usa-textarea"
                 data-testid="participants-and-providers-states-engagement"
                 id="participants-and-providers-states-engagement"
                 name="statesEngagement"
@@ -399,7 +399,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Please describe the other participants engaging with this model
               </label>
               <textarea
-                class="usa-textarea height-15"
+                class="usa-textarea"
                 data-testid="participants-and-providers-participants-other"
                 id="participants-and-providers-participants-other"
                 name="participantsOther"
@@ -541,7 +541,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
             </p>
             <textarea
-              class="usa-textarea height-15"
+              class="usa-textarea"
               id="participants-and-providers-application-level"
               name="modelApplicationLevel"
             >

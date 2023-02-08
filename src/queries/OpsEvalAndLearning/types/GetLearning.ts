@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, ModelLearningSystemType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetLearning
@@ -13,6 +13,7 @@ export interface GetLearning_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  dataNeededForMonitoring: DataForMonitoringType[];
   iddocSupport: boolean | null;
   modelLearningSystems: ModelLearningSystemType[];
   modelLearningSystemsOther: string | null;

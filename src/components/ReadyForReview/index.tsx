@@ -12,7 +12,7 @@ import {
   GetUserInfoVariables
 } from 'queries/types/GetUserInfo';
 import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 
 type ReadyForReviewType = {
   id: string;
@@ -75,7 +75,7 @@ const ReadyForReview = ({
             {t('markedReady', {
               reviewer: commonName
             })}
-            {formatDate(readyForReviewDts, 'M/d/yyyy')}
+            {formatDateLocal(readyForReviewDts, 'MM/dd/yyyy')}
           </p>
         )}
       </SummaryBox>

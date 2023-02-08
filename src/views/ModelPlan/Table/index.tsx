@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Row,
@@ -12,7 +12,6 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -32,6 +31,7 @@ import {
   ModelPlanFilter,
   ModelStatus
 } from 'types/graphql-global-types';
+import { formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
@@ -83,20 +83,27 @@ export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
 
 type TableProps = {
   hiddenColumns?: string[];
+  userModels: boolean;
   isAssessment: boolean;
   isMAC: boolean;
+  // callback used to hide parent header if assessment user has no associated model plans
+  hideTable?: (tableHidden: boolean) => void;
+  tableHidden?: boolean;
 };
 
 const DraftModelPlansTable = ({
   hiddenColumns,
+  userModels,
   isAssessment,
-  isMAC
+  isMAC,
+  hideTable,
+  tableHidden
 }: TableProps) => {
   const { t } = useTranslation('home');
 
   let queryType = ModelPlanFilter.COLLAB_ONLY;
 
-  if (isAssessment) {
+  if (!userModels && !isMAC) {
     queryType = ModelPlanFilter.INCLUDE_ALL;
   } else if (isMAC) {
     queryType = ModelPlanFilter.WITH_CR_TDLS;
@@ -168,9 +175,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.clearanceDate'),
         accessor: ({ basics: { clearanceStarts } }: any) => {
           if (clearanceStarts) {
-            return DateTime.fromISO(clearanceStarts).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(clearanceStarts, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -239,9 +244,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.startDate'),
         accessor: ({ basics: { applicationsStart } }: any) => {
           if (applicationsStart) {
-            return DateTime.fromISO(applicationsStart).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(applicationsStart, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -256,9 +259,7 @@ const DraftModelPlansTable = ({
         Header: t('requestsTable.headers.paymentDate'),
         accessor: ({ payments: { paymentStartDate } }: any) => {
           if (paymentStartDate) {
-            return DateTime.fromISO(paymentStartDate).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(paymentStartDate, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -362,12 +363,24 @@ const DraftModelPlansTable = ({
     usePagination
   );
 
+  // Checking if the table is for Assessment and if they have no associated models
+  // If so, do not render the table at all
+  useEffect(() => {
+    if (!loading && isAssessment && userModels && data.length === 0) {
+      if (hideTable) hideTable(true);
+    }
+  }, [loading, isAssessment, userModels, data, hideTable]);
+
+  if (tableHidden) {
+    return null;
+  }
+
   if (loading) {
     return <PageLoading />;
   }
 
   if (error) {
-    return <div>{JSON.stringify(error)}</div>;
+    return <Alert type="error">{t('fetchError')}</Alert>;
   }
 
   if (data.length === 0) {
@@ -390,28 +403,33 @@ const DraftModelPlansTable = ({
   return (
     <div className="model-plan-table">
       <div className="mint-header__basic">
-        <GlobalClientFilter
-          setGlobalFilter={setGlobalFilter}
-          tableID={t('requestsTable.id')}
-          tableName={t('requestsTable.title')}
-          className="margin-bottom-4"
-        />
+        {!userModels && (
+          <GlobalClientFilter
+            setGlobalFilter={setGlobalFilter}
+            tableID={t('requestsTable.id')}
+            tableName={t('requestsTable.title')}
+            className="margin-bottom-4"
+          />
+        )}
 
-        {isAssessment && (
+        {isAssessment && !userModels && (
           <div className="flex-align-self-center">
             <CsvExportLink includeAll />
           </div>
         )}
       </div>
 
-      <TableResults
-        globalFilter={state.globalFilter}
-        pageIndex={state.pageIndex}
-        pageSize={state.pageSize}
-        filteredRowLength={page.length}
-        rowLength={data.length}
-        className="margin-bottom-4"
-      />
+      {!userModels && (
+        <TableResults
+          globalFilter={state.globalFilter}
+          pageIndex={state.pageIndex}
+          pageSize={state.pageSize}
+          filteredRowLength={page.length}
+          rowLength={data.length}
+          className="margin-bottom-4"
+        />
+      )}
+
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
@@ -464,9 +482,7 @@ const DraftModelPlansTable = ({
                           {...cell.getCellProps()}
                           scope="row"
                           style={{
-                            paddingLeft: '0',
-                            borderBottom:
-                              index === page.length - 1 ? 'none' : 'auto'
+                            paddingLeft: '0'
                           }}
                         >
                           {cell.render('Cell')}
@@ -477,9 +493,7 @@ const DraftModelPlansTable = ({
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          paddingLeft: '0',
-                          borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                          paddingLeft: '0'
                         }}
                       >
                         {cell.render('Cell')}
@@ -492,19 +506,21 @@ const DraftModelPlansTable = ({
         </tbody>
       </UswdsTable>
 
-      <TablePagination
-        gotoPage={gotoPage}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canNextPage={canNextPage}
-        pageIndex={state.pageIndex}
-        pageOptions={pageOptions}
-        canPreviousPage={canPreviousPage}
-        pageCount={pageCount}
-        pageSize={state.pageSize}
-        setPageSize={setPageSize}
-        page={[]}
-      />
+      {!userModels && (
+        <TablePagination
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canNextPage={canNextPage}
+          pageIndex={state.pageIndex}
+          pageOptions={pageOptions}
+          canPreviousPage={canPreviousPage}
+          pageCount={pageCount}
+          pageSize={state.pageSize}
+          setPageSize={setPageSize}
+          page={[]}
+        />
+      )}
 
       <div
         className="usa-sr-only usa-table__announcement-region"

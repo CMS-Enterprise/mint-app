@@ -285,6 +285,19 @@ export const translateWaiverTypes = (type: string) => {
   }
 };
 
+export const translateWaiverTypesLabel = (type: string) => {
+  switch (type) {
+    case 'FRAUD_ABUSE':
+      return i18next.t('generalCharacteristics:fraudAndAbuseNote');
+    case 'PROGRAM_PAYMENT':
+      return i18next.t('generalCharacteristics:programPaymentNote');
+    case 'MEDICAID':
+      return i18next.t('generalCharacteristics:medicaidNote');
+    default:
+      return '';
+  }
+};
+
 export const translateKeyCharacteristics = (characteristic: string) => {
   switch (characteristic) {
     case 'EPISODE_BASED':

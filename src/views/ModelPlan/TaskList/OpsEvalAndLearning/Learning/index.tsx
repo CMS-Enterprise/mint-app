@@ -8,8 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   IconArrowBack,
-  Label,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -44,7 +43,12 @@ import {
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Learning = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -73,6 +77,7 @@ const Learning = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     modelLearningSystems,
     modelLearningSystemsOther,
     modelLearningSystemsNote,
@@ -138,6 +143,7 @@ const Learning = () => {
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     modelLearningSystems: modelLearningSystems ?? [],
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
@@ -288,10 +294,10 @@ const Learning = () => {
                                       {flatErrors.modelLearningSystemsOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-learning-systems-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="modelLearningSystemsOther"
                                     />
                                   </div>
@@ -382,11 +388,13 @@ const Learning = () => {
           currentPage={renderCurrentPage(
             9,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />
