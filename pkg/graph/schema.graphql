@@ -46,9 +46,11 @@ type ModelPlan {
   id: UUID!
   modelName: String!
   archived: Boolean!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
   basics: PlanBasics!
   generalCharacteristics: PlanGeneralCharacteristics!
@@ -1372,10 +1374,13 @@ type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
     userID: UUID!
+    userAccount: UserAccount!
 
     createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
     modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 
 }

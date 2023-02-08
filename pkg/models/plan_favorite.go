@@ -6,13 +6,13 @@ import "github.com/google/uuid"
 type PlanFavorite struct {
 	baseStructUserTable
 	modelPlanRelation
-	UserID uuid.UUID `json:"userID" db:"user_id"`
+	userIDRelation
 }
 
 // NewPlanFavorite returns a plan collaborator object
 func NewPlanFavorite(createdBy uuid.UUID, userID uuid.UUID, modelPlanID uuid.UUID) PlanFavorite {
 	return PlanFavorite{
-		UserID:              userID,
+		userIDRelation:      NewUserIDRelation(userID),
 		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
 		baseStructUserTable: NewBaseStructUser(createdBy),
 	}

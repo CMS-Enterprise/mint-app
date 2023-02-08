@@ -479,9 +479,9 @@ export interface GetAllSingleModelData_modelPlan {
   id: UUID;
   modelName: string;
   archived: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   basics: GetAllSingleModelData_modelPlan_basics;
   beneficiaries: GetAllSingleModelData_modelPlan_beneficiaries;

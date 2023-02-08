@@ -34,7 +34,7 @@ func main() {
 		Run: func(cmd *cobra.Command, args []string) {
 			config := viper.New()
 			config.AutomaticEnv()
-			seedData(config)
+			seed(config)
 		},
 	}
 
@@ -90,19 +90,23 @@ func getResolverDependencies(config *viper.Viper) (
 	return store, logger, &s3Client, nil, nil
 }
 
-// seedData gets resolver dependencies and calls wrapped resolver functions to seed data.
+// SeedData uses seeder to seed data in the database
+func seed(config *viper.Viper) {
+	seeder := newDefaultSeeder(config)
+	seeder.SeedData()
+}
+
+// SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
 // If you want to add more seeded data, or edit seeded data, this is the function to edit!
 // NOTE: Some of this data _is_ relied on by Cypress tests, but most of it is freely editable.
-func seedData(config *viper.Viper) {
-	// Get dependencies for resolvers (store and logger)
-	store, logger, s3Client, _, _ := getResolverDependencies(config)
+func (s *Seeder) SeedData() {
 
 	// Seed an empty plan
-	createModelPlan(store, logger, "Empty Plan", "MINT")
+	s.createModelPlan("Empty Plan", "MINT")
 
 	// Seed a plan with some information already in it
-	planWithBasics := createModelPlan(store, logger, "Plan with Basics", "MINT")
-	updatePlanBasics(store, logger, planWithBasics, map[string]interface{}{
+	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
+	s.updatePlanBasics(planWithBasics, map[string]interface{}{
 		"modelType":       models.MTVoluntary,
 		"goal":            "Some goal",
 		"cmsCenters":      []string{"CMMI", "OTHER"},
@@ -115,12 +119,10 @@ func seedData(config *viper.Viper) {
 	})
 
 	// Seed a plan with collaborators
-	planWithCollaborators := createModelPlan(store, logger, "Plan With Collaborators", "MINT")
-	addPlanCollaborator(
-		store,
+	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
+	s.addPlanCollaborator(
 		nil,
 		nil,
-		logger,
 		planWithCollaborators,
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: planWithCollaborators.ID,
@@ -129,8 +131,8 @@ func seedData(config *viper.Viper) {
 		})
 
 	// Seed a plan with CRs / TDLs
-	planWithCrTDLs := createModelPlan(store, logger, "Plan With CRs and TDLs", "MINT")
-	addCrTdl(store, logger, planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
+	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
 		ModelPlanID:   planWithCrTDLs.ID,
 		IDNumber:      "CR-123",
 		DateInitiated: time.Now(),
@@ -138,7 +140,7 @@ func seedData(config *viper.Viper) {
 		Note:          nil,
 	})
 	tdlNote := "My TDL note"
-	addCrTdl(store, logger, planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
 		ModelPlanID:   planWithCrTDLs.ID,
 		IDNumber:      "TDL-123",
 		DateInitiated: time.Now(),
@@ -147,39 +149,37 @@ func seedData(config *viper.Viper) {
 	})
 
 	// Seed a plan that is already archived
-	archivedPlan := createModelPlan(store, logger, "Archived Plan", "MINT")
-	updateModelPlan(store, logger, archivedPlan, map[string]interface{}{
+	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
+	s.updateModelPlan(archivedPlan, map[string]interface{}{
 		"archived": true,
 	})
 
 	// Seed a plan with some documents
-	planWithDocuments := createModelPlan(store, logger, "Plan with Documents", "MINT")
-	restrictedDocument := planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, true, nil, nil, false, false)
-	unrestrictedDocument := planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
-	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, false, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
+	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT")
+	restrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, true, nil, nil, false, false)
+	unrestrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
+	_ = s.planDocumentCreate(planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, false, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
 
 	sampleModelName := "Enhancing Oncology Model"
-	sampleModelPlan := createModelPlan(store, logger, sampleModelName, "MINT")
-	addCrTdl(store, logger, planWithCrTDLs, &model.PlanCrTdlCreateInput{
+	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT")
+	s.addCrTdl(planWithCrTDLs, &model.PlanCrTdlCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
 		DateInitiated: time.Now(),
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
-	_ = planDocumentCreate(store, logger, s3Client, sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
-	addPlanCollaborator(
-		store,
+	_ = s.planDocumentCreate(sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
+	s.addPlanCollaborator(
 		nil,
 		nil,
-		logger,
 		sampleModelPlan,
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: sampleModelPlan.ID,
 			UserName:    "BTAL",
 			TeamRole:    models.TeamRoleLeadership,
 		})
-	updatePlanBasics(store, logger, sampleModelPlan, map[string]interface{}{
+	s.updatePlanBasics(sampleModelPlan, map[string]interface{}{
 		"modelType":       models.MTVoluntary,
 		"goal":            "Some goal",
 		"cmsCenters":      []string{"CMMI", "OTHER"},
@@ -191,14 +191,12 @@ func seedData(config *viper.Viper) {
 		"highLevelNote":   "Some high level note",
 	})
 
-	operationalNeeds := getOperationalNeedsByModelPlanID(logger, store, planWithDocuments.ID)
+	operationalNeeds := s.getOperationalNeedsByModelPlanID(planWithDocuments.ID)
 	if len(operationalNeeds) < 1 {
 		panic("operational needs must be populated in order to create an operational solution")
 	}
 
-	operationalSolution := addOperationalSolution(
-		store,
-		logger,
+	operationalSolution := s.addOperationalSolution(
 		planWithDocuments,
 		operationalNeeds[0].ID,
 		map[string]interface{}{
@@ -210,9 +208,7 @@ func seedData(config *viper.Viper) {
 		},
 	)
 
-	_ = addPlanDocumentSolutionLinks(
-		logger,
-		store,
+	_ = s.addPlanDocumentSolutionLinks(
 		planWithDocuments,
 		operationalSolution.ID,
 		[]uuid.UUID{

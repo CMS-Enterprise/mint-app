@@ -59,7 +59,7 @@ export interface CreateModelPlan_createModelPlan_collaborators {
 export interface CreateModelPlan_createModelPlan {
   __typename: "ModelPlan";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   modelName: string;
   basics: CreateModelPlan_createModelPlan_basics;
   collaborators: CreateModelPlan_createModelPlan_collaborators[];
