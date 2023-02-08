@@ -68,13 +68,18 @@ export const findLockedSection = (
   return LockStatus.OCCUPYING;
 };
 
+// Parses task list route to map to taskListSectionMap
+const taskListRouteParser = (route: string): string => {
+  return route.split('/')[4];
+};
+
 const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Gets the modelID and tasklist section route from any location within the application
   const { pathname } = useLocation();
 
   const modelID = pathname.split('/')[2];
   const taskList = pathname.split('/')[3] === 'task-list';
-  const taskListRoute = pathname.split('/')[4];
+  const taskListRoute = taskListRouteParser(pathname);
 
   const history = useHistory();
 
@@ -188,7 +193,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     const lockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
         section.lockedBy === euaId &&
-        section.section === taskListSectionMap[prevPath.split('/')[4]]
+        section.section === taskListSectionMap[taskListRouteParser(prevPath)]
     );
 
     removeLockedSection(lockedSection);
@@ -208,7 +213,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     const prevLockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
         section.lockedBy === euaId &&
-        taskListSectionMap[prevPath.split('/')[4]] === section.section
+        taskListSectionMap[taskListRouteParser(prevPath)] === section.section
     );
 
     // If coming from IT Tools or end of task list section
