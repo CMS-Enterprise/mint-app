@@ -1,7 +1,10 @@
 /* You can't drop enum values in GQL. This renames the old type, creates a new type, then updated the data type to the new type */
 ALTER TYPE CMMI_GROUP RENAME TO CMMI_GROUP_OLD;
 
-ALTER TYPE CMMI_GROUP_OLD ADD VALUE 'STATE_AND_POPULATION_HEALTH_GROUP'; --Add new value to old ENUM so we can add the type directly
+
+/* Convert to text array for the sake of updating values*/
+ALTER TABLE plan_basics
+ALTER COLUMN cmmi_groups TYPE TEXT[];
 
 CREATE TYPE CMMI_GROUP AS ENUM (
     'PATIENT_CARE_MODELS_GROUP',
@@ -42,7 +45,7 @@ WHERE plan_basics.id = modifiedBasics.id;
 /* Update the type on the column to be the new type, and provide a casting mechanism to convert to the new type */
 ALTER TABLE plan_basics
 ALTER COLUMN cmmi_groups TYPE CMMI_GROUP[]
-USING (cmmi_groups::TEXT[]::CMMI_GROUP[]);
+USING (cmmi_groups::CMMI_GROUP[]);
 
 /* Drop the old type */
 DROP TYPE CMMI_GROUP_OLD;
