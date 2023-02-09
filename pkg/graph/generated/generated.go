@@ -49,6 +49,7 @@ type ResolverRoot interface {
 	OperationalSolution() OperationalSolutionResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
+	PlanCrTdl() PlanCrTdlResolver
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
 	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
@@ -336,16 +337,18 @@ type ComplexityRoot struct {
 	}
 
 	PlanCrTdl struct {
-		CreatedBy     func(childComplexity int) int
-		CreatedDts    func(childComplexity int) int
-		DateInitiated func(childComplexity int) int
-		ID            func(childComplexity int) int
-		IDNumber      func(childComplexity int) int
-		ModelPlanID   func(childComplexity int) int
-		ModifiedBy    func(childComplexity int) int
-		ModifiedDts   func(childComplexity int) int
-		Note          func(childComplexity int) int
-		Title         func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		DateInitiated         func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		IDNumber              func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		Note                  func(childComplexity int) int
+		Title                 func(childComplexity int) int
 	}
 
 	PlanDiscussion struct {
@@ -971,6 +974,13 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
+}
+type PlanCrTdlResolver interface {
+	CreatedBy(ctx context.Context, obj *models.PlanCrTdl) (uuid.UUID, error)
+	CreatedByUserAccount(ctx context.Context, obj *models.PlanCrTdl) (*authentication.UserAccount, error)
+
+	ModifiedBy(ctx context.Context, obj *models.PlanCrTdl) (*uuid.UUID, error)
+	ModifiedByUserAccount(ctx context.Context, obj *models.PlanCrTdl) (*authentication.UserAccount, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -2941,6 +2951,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanCrTdl.CreatedBy(childComplexity), true
 
+	case "PlanCrTdl.createdByUserAccount":
+		if e.complexity.PlanCrTdl.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.CreatedByUserAccount(childComplexity), true
+
 	case "PlanCrTdl.createdDts":
 		if e.complexity.PlanCrTdl.CreatedDts == nil {
 			break
@@ -2982,6 +2999,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanCrTdl.ModifiedBy(childComplexity), true
+
+	case "PlanCrTdl.modifiedByUserAccount":
+		if e.complexity.PlanCrTdl.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.ModifiedByUserAccount(childComplexity), true
 
 	case "PlanCrTdl.modifiedDts":
 		if e.complexity.PlanCrTdl.ModifiedDts == nil {
@@ -7966,9 +7990,11 @@ type PlanCrTdl {
     title: String!
     note: String
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -13868,10 +13894,14 @@ func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, f
 				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
 			}
@@ -17503,10 +17533,14 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCrTdl(ctx context.Co
 				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
 			}
@@ -17604,10 +17638,14 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCrTdl(ctx context.Co
 				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
 			}
@@ -17705,10 +17743,14 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Co
 				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
 			}
@@ -24412,7 +24454,7 @@ func (ec *executionContext) _PlanCrTdl_createdBy(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedBy, nil
+		return ec.resolvers.PlanCrTdl().CreatedBy(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -24424,19 +24466,85 @@ func (ec *executionContext) _PlanCrTdl_createdBy(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCrTdl_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanCrTdl",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanCrTdl().CreatedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -24500,7 +24608,7 @@ func (ec *executionContext) _PlanCrTdl_modifiedBy(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedBy, nil
+		return ec.resolvers.PlanCrTdl().ModifiedBy(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -24509,19 +24617,82 @@ func (ec *executionContext) _PlanCrTdl_modifiedBy(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanCrTdl",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanCrTdl().ModifiedByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -44232,10 +44403,14 @@ func (ec *executionContext) fieldContext_Query_crTdl(ctx context.Context, field 
 				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanCrTdl_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanCrTdl_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
 			}
@@ -50228,58 +50403,121 @@ func (ec *executionContext) _PlanCrTdl(ctx context.Context, sel ast.SelectionSet
 			out.Values[i] = ec._PlanCrTdl_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "modelPlanID":
 
 			out.Values[i] = ec._PlanCrTdl_modelPlanID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "idNumber":
 
 			out.Values[i] = ec._PlanCrTdl_idNumber(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "dateInitiated":
 
 			out.Values[i] = ec._PlanCrTdl_dateInitiated(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "title":
 
 			out.Values[i] = ec._PlanCrTdl_title(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "note":
 
 			out.Values[i] = ec._PlanCrTdl_note(ctx, field, obj)
 
 		case "createdBy":
+			field := field
 
-			out.Values[i] = ec._PlanCrTdl_createdBy(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCrTdl_createdBy(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
 			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCrTdl_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdDts":
 
 			out.Values[i] = ec._PlanCrTdl_createdDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "modifiedBy":
+			field := field
 
-			out.Values[i] = ec._PlanCrTdl_modifiedBy(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCrTdl_modifiedBy(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanCrTdl_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanCrTdl_modifiedDts(ctx, field, obj)
