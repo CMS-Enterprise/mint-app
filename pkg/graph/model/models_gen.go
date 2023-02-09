@@ -86,9 +86,10 @@ type TaskListSectionLockStatus struct {
 }
 
 type TaskListSectionLockStatusChanged struct {
-	ChangeType ChangeType                 `json:"changeType"`
-	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
-	ActionType ActionType                 `json:"actionType"`
+	ChangeType      ChangeType                   `json:"changeType"`
+	LockStatus      *TaskListSectionLockStatus   `json:"lockStatus"`
+	ActionType      ActionType                   `json:"actionType"`
+	AllLockStatuses []*TaskListSectionLockStatus `json:"allLockStatuses"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

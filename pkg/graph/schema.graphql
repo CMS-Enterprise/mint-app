@@ -167,6 +167,7 @@ type TaskListSectionLockStatusChanged {
   changeType: ChangeType!
   lockStatus: TaskListSectionLockStatus!
   actionType: ActionType!
+  allLockStatuses: [TaskListSectionLockStatus!]!
 }
 
 type TaskListSectionLockStatus {

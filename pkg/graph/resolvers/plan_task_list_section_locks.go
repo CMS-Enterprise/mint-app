@@ -105,13 +105,25 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 
 	if !sectionWasLocked {
 		ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
-			ChangeType: model.ChangeTypeAdded,
-			LockStatus: &status,
-			ActionType: model.ActionTypeNormal,
+			ChangeType:      model.ChangeTypeAdded,
+			LockStatus:      &status,
+			ActionType:      model.ActionTypeNormal,
+			AllLockStatuses: getAllTaskListSectionLockStatusesForModel(modelPlanID),
 		})
 	}
 
 	return true, nil
+}
+
+func getAllTaskListSectionLockStatusesForModel(modelPlanID uuid.UUID) []*model.TaskListSectionLockStatus {
+	var allLockStatuses []*model.TaskListSectionLockStatus
+
+	for _, lockStatus := range planTaskListSessionLocks.modelSections[modelPlanID] {
+		clone := lockStatus
+		allLockStatuses = append(allLockStatuses, &clone)
+	}
+
+	return allLockStatuses
 }
 
 // UnlockTaskListSection will unlock the provided task list section on the provided model
@@ -137,9 +149,10 @@ func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section 
 	planTaskListSessionLocks.Unlock()
 
 	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
-		ChangeType: model.ChangeTypeRemoved,
-		LockStatus: &status,
-		ActionType: actionType,
+		ChangeType:      model.ChangeTypeRemoved,
+		LockStatus:      &status,
+		ActionType:      actionType,
+		AllLockStatuses: getAllTaskListSectionLockStatusesForModel(modelPlanID),
 	})
 }
 

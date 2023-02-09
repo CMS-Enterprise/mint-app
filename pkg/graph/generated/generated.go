@@ -863,9 +863,10 @@ type ComplexityRoot struct {
 	}
 
 	TaskListSectionLockStatusChanged struct {
-		ActionType func(childComplexity int) int
-		ChangeType func(childComplexity int) int
-		LockStatus func(childComplexity int) int
+		ActionType      func(childComplexity int) int
+		AllLockStatuses func(childComplexity int) int
+		ChangeType      func(childComplexity int) int
+		LockStatus      func(childComplexity int) int
 	}
 
 	UserAccount struct {
@@ -6368,6 +6369,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaskListSectionLockStatusChanged.ActionType(childComplexity), true
 
+	case "TaskListSectionLockStatusChanged.allLockStatuses":
+		if e.complexity.TaskListSectionLockStatusChanged.AllLockStatuses == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatusChanged.AllLockStatuses(childComplexity), true
+
 	case "TaskListSectionLockStatusChanged.changeType":
 		if e.complexity.TaskListSectionLockStatusChanged.ChangeType == nil {
 			break
@@ -6734,6 +6742,7 @@ type TaskListSectionLockStatusChanged {
   changeType: ChangeType!
   lockStatus: TaskListSectionLockStatus!
   actionType: ActionType!
+  allLockStatuses: [TaskListSectionLockStatus!]!
 }
 
 type TaskListSectionLockStatus {
@@ -44954,6 +44963,8 @@ func (ec *executionContext) fieldContext_Subscription_onTaskListSectionLocksChan
 				return ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
 			case "actionType":
 				return ec.fieldContext_TaskListSectionLockStatusChanged_actionType(ctx, field)
+			case "allLockStatuses":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_allLockStatuses(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatusChanged", field.Name)
 		},
@@ -45055,6 +45066,8 @@ func (ec *executionContext) fieldContext_Subscription_onLockTaskListSectionConte
 				return ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
 			case "actionType":
 				return ec.fieldContext_TaskListSectionLockStatusChanged_actionType(ctx, field)
+			case "allLockStatuses":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_allLockStatuses(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatusChanged", field.Name)
 		},
@@ -45386,6 +45399,60 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_action
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ActionType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged_allLockStatuses(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_allLockStatuses(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AllLockStatuses, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_allLockStatuses(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatusChanged",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
 	}
 	return fc, nil
@@ -54079,6 +54146,13 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Contex
 		case "actionType":
 
 			out.Values[i] = ec._TaskListSectionLockStatusChanged_actionType(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "allLockStatuses":
+
+			out.Values[i] = ec._TaskListSectionLockStatusChanged_allLockStatuses(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
