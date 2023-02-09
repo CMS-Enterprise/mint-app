@@ -182,7 +182,7 @@ func SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID
 
 // OnLockTaskListSectionContext maintains a webhook monitoring changes to task list sections. Once that webhook dies it will auto-unlock any section locked by that EUAID.
 func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	onDone := make(chan struct{})
+	onDisconnectRelay := make(chan struct{})
 
 	go func(ps pubsub.PubSub, modelPlanID uuid.UUID) {
 		r := <-onDisconnect
@@ -199,14 +199,14 @@ func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, princ
 			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.ActionTypeNormal)
 
 			if err != nil {
-				fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
+				fmt.Printf("uncapturable error on websocket disconnect: %v\n", err.Error())
 			}
 		}
 
-		onDone <- r
+		onDisconnectRelay <- r
 	}(ps, modelPlanID)
 
-	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnect)
+	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnectRelay)
 }
 
 // LockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
