@@ -144,12 +144,12 @@ export const translateCmmiGroups = (category: string) => {
       return 'Patient Care Models Group (PCMG)';
     case 'POLICY_AND_PROGRAMS_GROUP':
       return 'Policy and Programs Group (PPG)';
-    case 'PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP':
-      return 'Preventative and Population Health Care Models Group (PPHCMG)';
     case 'SEAMLESS_CARE_MODELS_GROUP':
       return 'Seamless Care Models Group (SCMG)';
-    case 'STATE_INNOVATIONS_GROUP':
-      return 'State Innovations Group (SIG)';
+    case 'STATE_AND_POPULATION_HEALTH_GROUP':
+      return 'State adn Population Health Group (SPHG)';
+    case 'TBD':
+      return 'To be determined';
     default:
       return '';
   }

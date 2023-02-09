@@ -31,9 +31,9 @@ const basics = {
   cmmiGroups: [
     'Patient Care Models Group (PCMG)',
     'Policy and Programs Group (PPG)',
-    'Preventative and Population Health Care Models Group (PPHCMG)',
     'Seamless Care Models Group (SCMG)',
-    'State Innovations Group (SIG)'
+    'State and Population Health Group (SPHG)',
+    'To be determined'
   ],
   cmmiGroupInfo:
     'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
