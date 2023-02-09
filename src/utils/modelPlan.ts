@@ -147,7 +147,7 @@ export const translateCmmiGroups = (category: string) => {
     case 'SEAMLESS_CARE_MODELS_GROUP':
       return 'Seamless Care Models Group (SCMG)';
     case 'STATE_AND_POPULATION_HEALTH_GROUP':
-      return 'State adn Population Health Group (SPHG)';
+      return 'State and Population Health Group (SPHG)';
     case 'TBD':
       return 'To be determined';
     default:
