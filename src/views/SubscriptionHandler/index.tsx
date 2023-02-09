@@ -5,7 +5,7 @@
   Redirects locked and errors states to /locked-task-list-section view
  */
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -16,7 +16,7 @@ import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSec
 import { UnlockTaskListSectionVariables } from 'queries/TaskListSubscription/types/UnlockTaskListSection';
 import UnlockTackListSection from 'queries/TaskListSubscription/UnlockTackListSection';
 import { TaskListSection } from 'types/graphql-global-types';
-import { wait as waitBeforeUnload } from 'utils/general';
+// import { wait as waitBeforeUnload } from 'utils/general';
 import { isUUID } from 'utils/modelPlan';
 import { RouterContext } from 'views/RouterContext';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -131,13 +131,13 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     lockState = LockStatus.CANT_LOCK;
   }
 
-  // Unmount method to close lock upon tab closing
-  useEffect(() => {
-    window.addEventListener('beforeunload', findAndRemoveSection);
-    return () => {
-      window.removeEventListener('beforeunload', findAndRemoveSection);
-    };
-  });
+  // // Unmount method to close lock upon tab closing
+  // useEffect(() => {
+  //   window.addEventListener('beforeunload', findAndRemoveSection);
+  //   return () => {
+  //     window.removeEventListener('beforeunload', findAndRemoveSection);
+  //   };
+  // });
 
   if (lockState === LockStatus.LOCKED) {
     return (
@@ -185,9 +185,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
     if (lockedSection) removeLockedSection(lockedSection);
 
-    // Give a slight delay before closing tab to ensure unlock mutation fires
-    // Was getting intermittent inconsistencies with syncronous code block
-    if (e) waitBeforeUnload(100);
+    // // Give a slight delay before closing tab to ensure unlock mutation fires
+    // // Was getting intermittent inconsistencies with syncronous code block
+    // if (e) waitBeforeUnload(100);
   };
 
   // Checks to see if section should be unlocked
