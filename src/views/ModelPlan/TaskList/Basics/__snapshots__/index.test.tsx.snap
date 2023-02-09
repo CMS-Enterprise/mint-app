@@ -432,27 +432,6 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     <input
                       class="usa-checkbox__input"
                       disabled=""
-                      id="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                      name="basics.cmmiGroups"
-                      type="checkbox"
-                      value="PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                    >
-                      Preventative and Population Health Care Models Group (PPHCMG)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      disabled=""
                       id="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
                       name="basics.cmmiGroups"
                       type="checkbox"
@@ -474,16 +453,37 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     <input
                       class="usa-checkbox__input"
                       disabled=""
-                      id="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
+                      id="new-plan-cmmiGroup-STATE_AND_POPULATION_HEALTH_GROUP"
                       name="basics.cmmiGroups"
                       type="checkbox"
-                      value="STATE_INNOVATIONS_GROUP"
+                      value="STATE_AND_POPULATION_HEALTH_GROUP"
                     />
                     <label
                       class="usa-checkbox__label"
-                      for="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
+                      for="new-plan-cmmiGroup-STATE_AND_POPULATION_HEALTH_GROUP"
                     >
-                      State Innovations Group (SIG)
+                      State and Population Health Group (SPHG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-TBD"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="TBD"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-TBD"
+                    >
+                      To be determined
                     </label>
                     <p
                       class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
