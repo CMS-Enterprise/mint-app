@@ -19,22 +19,22 @@ const basics = {
     unknown: 'Unknown'
   },
   cmsComponent: 'CMS component',
-  cmsComponents: [
-    'CMMI',
-    'Center for Medicare (CM)',
-    'Federal Coordinated Health Care',
-    'Center for Clinical Standards and Quality (CCSQ)',
-    'Center for Program Integrity (CPI)',
-    'Other'
-  ],
+  cmsComponents: {
+    cmmi: 'CMMI',
+    cm: 'Center for Medicare (CM)',
+    federalCoordinateHealthCare: 'Federal Coordinated Health Care',
+    ccsq: 'Center for Clinical Standards and Quality (CCSQ)',
+    cpi: 'Center for Program Integrity (CPI)',
+    other: 'Other'
+  },
   cmmiGroup: 'CMMI Group',
-  cmmiGroups: [
-    'Patient Care Models Group (PCMG)',
-    'Policy and Programs Group (PPG)',
-    'Seamless Care Models Group (SCMG)',
-    'State and Population Health Group (SPHG)',
-    'To be determined'
-  ],
+  cmmiGroups: {
+    pcmg: 'Patient Care Models Group (PCMG)',
+    ppg: 'Policy and Programs Group (PPG)',
+    scmg: 'Seamless Care Models Group (SCMG)',
+    sphg: 'State and Population Health Group (SPHG)',
+    tbd: 'To be determined'
+  },
   cmmiGroupInfo:
     'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
   modelType: 'Model Type',
