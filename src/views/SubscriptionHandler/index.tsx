@@ -5,7 +5,7 @@
   Redirects locked and errors states to /locked-task-list-section view
  */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -17,6 +17,7 @@ import { UnlockTaskListSectionVariables } from 'queries/TaskListSubscription/typ
 import UnlockTackListSection from 'queries/TaskListSubscription/UnlockTackListSection';
 import { TaskListSection } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
+import { RouterContext } from 'views/RouterContext';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 type SubscriptionHandlerProps = {
@@ -86,9 +87,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   // Used in addtion to mutation loading states to catch delayed updates to the context
-  const locking = useRef<boolean>(false);
+  const [locking, setLocking] = useState<boolean>(false);
 
-  const [prevPath, setPrevPath] = useState<string>('');
+  const [removed, setRemoved] = useState<boolean>(true);
 
   let lockState: LockStatus;
 
@@ -98,6 +99,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Get the subscription context - messages (locks, unlocks), loading
   const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
+
+  const { from } = useContext(RouterContext);
 
   const [
     addLock,
@@ -120,7 +123,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     euaId &&
     !addLockLoading &&
     !removeLockLoading &&
-    !locking.current &&
+    !locking &&
     !loading
   ) {
     lockState = findLockedSection(
@@ -132,11 +135,10 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     lockState = LockStatus.CANT_LOCK;
   }
 
-  // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
-    setPrevPath(pathname);
+    setRemoved(false);
     return () => {
-      setPrevPath(pathname);
+      setRemoved(false);
     };
   }, [pathname]);
 
@@ -155,11 +157,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Removes a section that is locked
   const removeLockedSection = (section: LockSectionType | undefined) => {
-    const prevModelID = prevPath.split('/')[2];
+    const prevModelID = from.split('/')[2];
 
-    // console.log(section, isUUID(prevModelID), prevPath, pathname);
     // Check if the prev path was a part of a model plan
-    if (section && isUUID(prevModelID) && prevPath !== pathname) {
+    if (section && isUUID(prevModelID) && from !== pathname) {
+      setRemoved(false);
       removeLock({
         variables: {
           modelPlanID: section.modelPlanID,
@@ -167,7 +169,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
         }
       })
         .then(() => {
-          setPrevPath(pathname);
+          setRemoved(true);
         })
         .catch(() => {
           history.push({
@@ -186,17 +188,18 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     taskListSectionLocks?.length > 0 &&
     !addLockLoading &&
     !removeLockLoading &&
-    !locking.current &&
+    !locking &&
     !loading &&
-    prevPath
+    from &&
+    !removed
   ) {
-    const lockedSections = taskListSectionLocks.filter(
-      (section: LockSectionType) => section.lockedBy === euaId
+    const lockedSection = taskListSectionLocks.find(
+      (section: LockSectionType) =>
+        section.lockedBy === euaId &&
+        section.section === taskListSectionMap[taskListRouteParser(from)]
     );
 
-    lockedSections.forEach(section => {
-      removeLockedSection(section);
-    });
+    removeLockedSection(lockedSection);
   }
 
   // Checks to see if section should be locked and calls mutation to add lock
@@ -207,36 +210,44 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     validModelID &&
     !addLockLoading &&
     !removeLockLoading &&
-    !locking.current &&
+    !locking &&
     !loading
   ) {
-    const prevLockedSections = taskListSectionLocks.filter(
-      (section: LockSectionType) => section.lockedBy === euaId
+    const prevLockedSection = taskListSectionLocks.find(
+      (section: LockSectionType) =>
+        section.lockedBy === euaId &&
+        taskListSectionMap[taskListRouteParser(from)] === section.section &&
+        taskListSectionMap[taskListRouteParser(pathname)] !== section.section &&
+        !removed
     );
 
-    prevLockedSections.forEach(section => {
-      removeLockedSection(section);
-    });
+    // If coming from IT Tools or end of task list section
+    // (Or any react-router redirect from one section directly to another)
+    if (prevLockedSection) {
+      removeLockedSection(prevLockedSection);
+    }
 
-    locking.current = true;
+    if (lockState === LockStatus.UNLOCKED) {
+      setLocking(true);
 
-    addLock({
-      variables: {
-        modelPlanID: modelID,
-        section: taskListSection
-      }
-    })
-      .then(() => {
-        locking.current = false;
+      addLock({
+        variables: {
+          modelPlanID: modelID,
+          section: taskListSection
+        }
       })
-      .catch(() => {
-        locking.current = false;
-        history.push({
-          pathname: `/models/${modelID}/locked-task-list-section`,
-          // Passing error status to default error page
-          state: { route: taskListRoute, error: true }
+        .then(() => {
+          setLocking(false);
+        })
+        .catch(() => {
+          setLocking(false);
+          history.push({
+            pathname: `/models/${modelID}/locked-task-list-section`,
+            // Passing error status to default error page
+            state: { route: taskListRoute, error: true }
+          });
         });
-      });
+    }
   }
 
   return <div>{children}</div>;
