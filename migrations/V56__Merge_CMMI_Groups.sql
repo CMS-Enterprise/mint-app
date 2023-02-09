@@ -37,7 +37,9 @@ modifiedBasics AS (
 )
 
 UPDATE plan_basics
-SET cmmi_groups = modifiedBasics.cmmi_groupsUpdate
+SET cmmi_groups = modifiedBasics.cmmi_groupsUpdate,
+    modified_by = '00000001-0001-0001-0001-000000000001', --SYSTEM account
+    modified_dts = current_timestamp
 FROM modifiedBasics
 WHERE plan_basics.id = modifiedBasics.id;
 
