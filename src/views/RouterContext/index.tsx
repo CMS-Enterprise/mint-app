@@ -10,13 +10,17 @@ type RouterProviderProps = {
 };
 
 // Create the model Info context - can be used anywhere in a model plan
-export const RouterContext = createContext({ to: '', from: '' });
+export const RouterContext = createContext<any>({
+  to: '',
+  from: '',
+  setRoute: () => null
+});
 
 const RouterProvider = ({ children }: RouterProviderProps) => {
   const location = useLocation();
   const [route, setRoute] = useState({
     to: '',
-    from: '' // --> previous pathname
+    from: ''
   });
 
   useEffect(() => {
@@ -32,7 +36,9 @@ const RouterProvider = ({ children }: RouterProviderProps) => {
   }, [location, route]);
 
   return (
-    <RouterContext.Provider value={route}>{children}</RouterContext.Provider>
+    <RouterContext.Provider value={{ ...route, setRoute }}>
+      {children}
+    </RouterContext.Provider>
   );
 };
 

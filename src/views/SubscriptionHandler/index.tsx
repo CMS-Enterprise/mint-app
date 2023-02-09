@@ -89,8 +89,6 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Used in addtion to mutation loading states to catch delayed updates to the context
   const [locking, setLocking] = useState<boolean>(false);
 
-  const [removed, setRemoved] = useState<boolean>(true);
-
   let lockState: LockStatus;
 
   const taskListSection: TaskListSection = taskListSectionMap[taskListRoute];
@@ -100,7 +98,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Get the subscription context - messages (locks, unlocks), loading
   const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
 
-  const { from } = useContext(RouterContext);
+  // Context used to get/set previous routes
+  const { from, setRoute } = useContext(RouterContext);
 
   const [
     addLock,
@@ -135,12 +134,15 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     lockState = LockStatus.CANT_LOCK;
   }
 
+  // Used to remove lock on duplicated tab close
   useEffect(() => {
-    setRemoved(false);
     return () => {
-      setRemoved(false);
+      setRoute({
+        to: '',
+        from: pathname
+      });
     };
-  }, [pathname]);
+  }, [pathname, setRoute]);
 
   if (lockState === LockStatus.LOCKED) {
     return (
@@ -161,7 +163,6 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
     // Check if the prev path was a part of a model plan
     if (section && isUUID(prevModelID) && from !== pathname) {
-      setRemoved(false);
       removeLock({
         variables: {
           modelPlanID: section.modelPlanID,
@@ -169,7 +170,10 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
         }
       })
         .then(() => {
-          setRemoved(true);
+          setRoute((prev: any) => ({
+            to: pathname,
+            from: prev.to
+          }));
         })
         .catch(() => {
           history.push({
@@ -191,7 +195,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !locking &&
     !loading &&
     from &&
-    !removed
+    from !== pathname
   ) {
     const lockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
@@ -218,7 +222,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
         section.lockedBy === euaId &&
         taskListSectionMap[taskListRouteParser(from)] === section.section &&
         taskListSectionMap[taskListRouteParser(pathname)] !== section.section &&
-        !removed
+        from !== pathname
     );
 
     // If coming from IT Tools or end of task list section
