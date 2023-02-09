@@ -216,4 +216,18 @@ func (s *Seeder) SeedData() {
 			unrestrictedDocument.ID,
 		},
 	)
+
+	_ = s.operationalSolutionSubtasksCreate(
+		planWithBasics,
+		operationalSolution.ID,
+		[]*model.CreateOperationalSolutionSubtaskInput{
+			{
+				Name:   "Create the thing!",
+				Status: models.OperationalSolutionSubtaskStatusInProgress,
+			}, {
+				Name:   "Do the thing!",
+				Status: models.OperationalSolutionSubtaskStatusTodo,
+			},
+		},
+	)
 }

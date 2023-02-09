@@ -176,7 +176,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="usa-textarea"
                   data-testid="payment-recover-payment-note"
                   id="payment-recover-payment-note"
                   name="willRecoverPaymentsNote"
@@ -253,7 +253,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  class="usa-textarea"
                   data-testid="payment-anticipate-reconciling-payment-retro-note"
                   id="payment-anticipate-reconciling-payment-retro-note"
                   name="anticipateReconcilingPaymentsRetrospectivelyNote"
@@ -357,7 +357,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                 Notes
               </label>
               <textarea
-                class="usa-textarea height-15"
+                class="usa-textarea"
                 data-testid="payment-payment-start-date-note"
                 id="payment-payment-start-date-note"
                 name="paymentStartDateNote"
@@ -421,6 +421,13 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               type="button"
             >
               Back
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Continue to IT solutions and implementation status
             </button>
           </div>
           <button

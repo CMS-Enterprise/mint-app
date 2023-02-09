@@ -12,8 +12,7 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -274,10 +273,10 @@ const Frequency = () => {
                                         }
                                       </FieldErrorMsg>
                                       <Field
-                                        as={TextInput}
-                                        className="maxw-none"
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
                                         id="beneficiaries-beneficiary-selection-frequency-other"
-                                        maxLength={50}
+                                        maxLength={5000}
                                         name="beneficiarySelectionFrequencyOther"
                                       />
                                     </div>

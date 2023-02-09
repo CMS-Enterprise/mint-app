@@ -58,6 +58,7 @@ const mockData: PaymentTypes = {
   waiverOnlyAppliesPartOfPayment: true,
   waiveBeneficiaryCostSharingNote: null,
   nonClaimsPayments: [NonClaimsBasedPayType.ADVANCED_PAYMENT],
+  nonClaimsPaymentsNote: '',
   nonClaimsPaymentOther: null,
   paymentCalculationOwner: null,
   numberPaymentsPerPayCycle: null,

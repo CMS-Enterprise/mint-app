@@ -26,6 +26,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import useScrollElement from 'hooks/useScrollElement';
 import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
@@ -387,10 +388,10 @@ const Evaluation = () => {
                                       {flatErrors.ccmInvolvmentOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-cmmi-involvement-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="ccmInvolvmentOther"
                                     />
                                   </div>

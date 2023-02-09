@@ -804,6 +804,7 @@ type PlanPayments {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]!
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                   String
@@ -890,6 +891,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                  String
@@ -1430,7 +1432,7 @@ type AuditChange {
   fields: Map!
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
-  modifiedDts: Time  
+  modifiedDts: Time
 }
 
 
@@ -1450,6 +1452,7 @@ type OperationalSolution {
     mustFinishDts: Time
     status: OpSolutionStatus!
     documents: [PlanDocument!]!
+    operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
 
     createdBy: String!
     createdDts: Time!
@@ -1474,6 +1477,35 @@ createdBy: String!
 createdDts: Time!
 modifiedBy: String
 modifiedDts: Time
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+type OperationalSolutionSubtask {
+  id: UUID!
+  solutionID: UUID!
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -1618,6 +1650,15 @@ createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [Plan
 @hasRole(role: MINT_USER)
 
 removePlanDocumentSolutionLink(id: UUID!): Boolean!
+@hasRole(role: MINT_USER)
+
+createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
+
+updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
+
+deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 }
 
@@ -2311,6 +2352,13 @@ enum OperationalSolutionKey{
   MAC
   RMADA_CONTRACTOR
 }
+
+enum OperationalSolutionSubtaskStatus {
+  TODO,
+  IN_PROGRESS,
+  DONE
+}
+
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION

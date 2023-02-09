@@ -167,7 +167,7 @@ button:disabled {
 }
 
 @media screen and (min-width: $desktop) {
-  .usa-input, .usa-select, .usa-combo-box, .usa-textarea, .usa-date-picker__wrapper {
+  .usa-input, .usa-select, .usa-combo-box, .usa-date-picker__wrapper {
     max-width: none !important;
   }
 }
