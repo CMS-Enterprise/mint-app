@@ -418,24 +418,24 @@ func (e BeneficiariesType) MarshalGQL(w io.Writer) {
 type CMMIGroup string
 
 const (
-	CMMIGroupPatientCareModelsGroup                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
-	CMMIGroupPolicyAndProgramsGroup                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
-	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-	CMMIGroupSeamlessCareModelsGroup                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
-	CMMIGroupStateInnovationsGroup                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
+	CMMIGroupPatientCareModelsGroup        CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
+	CMMIGroupPolicyAndProgramsGroup        CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
+	CMMIGroupSeamlessCareModelsGroup       CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
+	CMMIGroupStateAndPopulationHealthGroup CMMIGroup = "STATE_AND_POPULATION_HEALTH_GROUP"
+	CMMIGroupTbd                           CMMIGroup = "TBD"
 )
 
 var AllCMMIGroup = []CMMIGroup{
 	CMMIGroupPatientCareModelsGroup,
 	CMMIGroupPolicyAndProgramsGroup,
-	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup,
 	CMMIGroupSeamlessCareModelsGroup,
-	CMMIGroupStateInnovationsGroup,
+	CMMIGroupStateAndPopulationHealthGroup,
+	CMMIGroupTbd,
 }
 
 func (e CMMIGroup) IsValid() bool {
 	switch e {
-	case CMMIGroupPatientCareModelsGroup, CMMIGroupPolicyAndProgramsGroup, CMMIGroupPreventiveAndPopulationHealthCareModelsGroup, CMMIGroupSeamlessCareModelsGroup, CMMIGroupStateInnovationsGroup:
+	case CMMIGroupPatientCareModelsGroup, CMMIGroupPolicyAndProgramsGroup, CMMIGroupSeamlessCareModelsGroup, CMMIGroupStateAndPopulationHealthGroup, CMMIGroupTbd:
 		return true
 	}
 	return false

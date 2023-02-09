@@ -23,7 +23,7 @@ const basicMockData: GetModelPlanInfoType = {
     __typename: 'PlanBasics',
     modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
     cmmiGroups: [
-      CMMIGroup.STATE_INNOVATIONS_GROUP,
+      CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
       CMMIGroup.POLICY_AND_PROGRAMS_GROUP
     ],
     cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
