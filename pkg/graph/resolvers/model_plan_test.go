@@ -17,7 +17,7 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 	suite.NotNil(result.ID)
 	suite.EqualValues(planName, result.ModelName)
 	suite.EqualValues(false, result.Archived)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, result.CreatedBy)
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
 	suite.EqualValues(models.ModelStatusPlanDraft, result.Status)
@@ -39,10 +39,10 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.EqualValues(changes["archived"], result.Archived)
 
 	suite.EqualValues(changes["status"], result.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, result.CreatedBy)
 	suite.NotNil(result.ModifiedBy)
 	suite.NotNil(result.ModifiedDts)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {

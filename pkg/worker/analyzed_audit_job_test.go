@@ -137,7 +137,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
 
 	// Dont create if there are no changes
-	mp := models.NewModelPlan("TEST", "NO CHANGES")
+	mp := models.NewModelPlan(suite.testConfigs.Principal.UserAccount.ID, "NO CHANGES")
 
 	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Logger, mp)
 	suite.NoError(err)
