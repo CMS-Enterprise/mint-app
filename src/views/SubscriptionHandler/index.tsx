@@ -7,7 +7,7 @@
 
 import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
@@ -76,26 +76,25 @@ const taskListRouteParser = (route: string): string => {
 };
 
 const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
-  // Gets the modelID and tasklist section route from any location within the application
-  const { pathname } = useLocation();
+  // Context used to get/set previous routes
+  const { to, from, setRoute } = useContext(RouterContext);
 
-  const modelID = pathname.split('/')[2];
-  const taskList = pathname.split('/')[3] === 'task-list';
-  const taskListRoute = taskListRouteParser(pathname);
+  // Get the subscription context - messages (locks, unlocks), loading
+  const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
 
   const history = useHistory();
+
+  const modelID = to.split('/')[2];
+
+  const isTaskList = to.split('/')[3] === 'task-list';
+
+  const taskListRoute = taskListRouteParser(to);
 
   const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
   const validModelID: boolean = isUUID(modelID);
 
   const taskListSection: TaskListSection = taskListSectionMap[taskListRoute];
-
-  // Get the subscription context - messages (locks, unlocks), loading
-  const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
-
-  // Context used to get/set previous routes
-  const { from, setRoute } = useContext(RouterContext);
 
   const [
     addLock,
@@ -152,7 +151,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     })
       .then(() => {
         setRoute((prev: any) => ({
-          to: pathname,
+          to,
           from: prev.to
         }));
       })
@@ -189,8 +188,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !addLockLoading &&
     !removeLockLoading &&
     !loading &&
-    from &&
-    from !== pathname
+    from && // from will be undefined or empty string if refreshed
+    from !== to
   ) {
     // Located section to be removed
     const lockedSection = taskListSectionLocks.find(
@@ -205,7 +204,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Checks to see if section should be locked and calls mutation to add lock
   if (
     (lockState === LockStatus.UNLOCKED || lockState === LockStatus.OCCUPYING) &&
-    taskList &&
+    isTaskList &&
     taskListSection &&
     validModelID &&
     !addLockLoading &&
@@ -218,8 +217,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       (section: LockSectionType) =>
         section.lockedBy === euaId &&
         taskListSectionMap[taskListRouteParser(from)] === section.section &&
-        taskListSectionMap[taskListRouteParser(pathname)] !== section.section &&
-        from !== pathname
+        taskListSectionMap[taskListRouteParser(to)] !== section.section &&
+        from !== to
     );
 
     if (prevLockedSection) {
