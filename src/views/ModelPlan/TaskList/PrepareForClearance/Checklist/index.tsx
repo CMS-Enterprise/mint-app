@@ -26,7 +26,6 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetUserInfo from 'queries/GetUserInfo';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   GetClearanceStatuses as GetClearanceStatusesType,
@@ -34,10 +33,6 @@ import {
 } from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
 import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
-import {
-  GetUserInfo as GetUserInfoType,
-  GetUserInfoVariables
-} from 'queries/types/GetUserInfo';
 import {
   PrepareForClearanceStatus,
   TaskStatus
@@ -49,14 +44,17 @@ import { NotFoundPartial } from 'views/NotFound';
 // Initial form values and types for each task-list clearance checkbox
 interface ClearanceFormValues {
   id: string;
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: { commonName: string } | null;
   readyForClearanceDts: string | null;
   status: TaskStatus;
 }
 
 const initialClearanceFormValues = {
   id: '',
-  readyForClearanceBy: null,
+  readyForClearanceBy: '',
+  readyForClearanceByUserAccount: {
+    commonName: ''
+  },
   readyForClearanceDts: null,
   status: TaskStatus.READY
 };
@@ -270,10 +268,10 @@ const PrepareForClearanceCheckList = ({
                             section as keyof ClearanceStatusesModelPlanFormType
                           ]?.status;
 
-                        const readyForClearanceBy =
+                        const readyForClearanceByUserAccount =
                           values[
                             section as keyof ClearanceStatusesModelPlanFormType
-                          ]?.readyForClearanceBy;
+                          ]?.readyForClearanceByUserAccount;
 
                         const readyForClearanceDts =
                           values[
@@ -315,12 +313,15 @@ const PrepareForClearanceCheckList = ({
                             />
 
                             {/* Label to render who marked readyForClearance and when */}
-                            {readyForClearanceBy && (
-                              <SectionClearanceLabel
-                                readyForClearanceBy={readyForClearanceBy!}
-                                readyForClearanceDts={readyForClearanceDts!}
-                              />
-                            )}
+                            {readyForClearanceByUserAccount &&
+                              readyForClearanceDts && (
+                                <SectionClearanceLabel
+                                  commonName={
+                                    readyForClearanceByUserAccount.commonName
+                                  }
+                                  readyForClearanceDts={readyForClearanceDts}
+                                />
+                              )}
 
                             <Grid tablet={{ col: 8 }}>
                               {/* Need to pass in section ID to update readyForClearance state on next route */}
@@ -376,26 +377,17 @@ const PrepareForClearanceCheckList = ({
 
 type SectionClearanceLabelProps = {
   className?: string;
-  readyForClearanceBy: string;
+  commonName: string;
   readyForClearanceDts: string;
 };
 
 // Label to render who marked readyForClearance and when
 export const SectionClearanceLabel = ({
   className,
-  readyForClearanceBy,
+  commonName,
   readyForClearanceDts
 }: SectionClearanceLabelProps): JSX.Element => {
   const { t } = useTranslation('prepareForClearance');
-
-  const { data } = useQuery<GetUserInfoType, GetUserInfoVariables>(
-    GetUserInfo,
-    {
-      variables: {
-        username: readyForClearanceBy
-      }
-    }
-  );
 
   return (
     <p
@@ -403,8 +395,8 @@ export const SectionClearanceLabel = ({
       className={classNames(className, 'margin-left-4 text-base margin-y-0')}
     >
       {t('markedAsReady', {
-        readyForClearanceBy: data?.userAccount.commonName,
-        readyForClearanceDts: formatDateUtc(readyForClearanceDts, 'MM/dd/yyyy')
+        name: commonName,
+        date: formatDateUtc(readyForClearanceDts, 'MM/dd/yyyy')
       })}
     </p>
   );
