@@ -109,11 +109,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   let lockState: LockStatus;
 
-  /**
-   * Checks to see the status of task list section
-   * Returns - 'LOCKED', 'UNLOCKED', 'OCCUPYING', or 'CANT_LOCK' (pages that don't require locking)
-   * 'OCCUPYING' refers to the current user already occupying the page
-   */
+  // Checks to see the status of task list section
+  // Returns - 'LOCKED', 'UNLOCKED', 'OCCUPYING', or 'CANT_LOCK' (pages that don't require locking)
+  // 'OCCUPYING' refers to the current user already occupying the page
   if (
     taskListSection &&
     taskListSectionLocks &&
@@ -130,14 +128,6 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   } else {
     lockState = LockStatus.CANT_LOCK;
   }
-
-  // // Unmount method to close lock upon tab closing
-  // useEffect(() => {
-  //   window.addEventListener('beforeunload', findAndRemoveSection);
-  //   return () => {
-  //     window.removeEventListener('beforeunload', findAndRemoveSection);
-  //   };
-  // });
 
   if (lockState === LockStatus.LOCKED) {
     return (
@@ -175,19 +165,20 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       });
   };
 
-  // Located section to be removed and call function to send unlock mutation
-  const findAndRemoveSection = (e?: any) => {
-    const lockedSection = taskListSectionLocks.find(
-      (section: LockSectionType) =>
-        section.lockedBy === euaId &&
-        section.section === taskListSectionMap[taskListRouteParser(from)]
-    );
-
-    if (lockedSection) removeLockedSection(lockedSection);
-
-    // // Give a slight delay before closing tab to ensure unlock mutation fires
-    // // Was getting intermittent inconsistencies with syncronous code block
-    // if (e) waitBeforeUnload(100);
+  // Removes a section that is locked
+  const addLockedSection = (section: TaskListSection) => {
+    addLock({
+      variables: {
+        modelPlanID: modelID,
+        section
+      }
+    }).catch(() => {
+      history.push({
+        pathname: `/models/${modelID}/locked-task-list-section`,
+        // Passing error status to default error page
+        state: { route: taskListRoute, error: true }
+      });
+    });
   };
 
   // Checks to see if section should be unlocked
@@ -201,7 +192,14 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     from &&
     from !== pathname
   ) {
-    findAndRemoveSection();
+    // Located section to be removed
+    const lockedSection = taskListSectionLocks.find(
+      (section: LockSectionType) =>
+        section.lockedBy === euaId &&
+        section.section === taskListSectionMap[taskListRouteParser(from)]
+    );
+
+    if (lockedSection) removeLockedSection(lockedSection);
   }
 
   // Checks to see if section should be locked and calls mutation to add lock
@@ -214,6 +212,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !removeLockLoading &&
     !loading
   ) {
+    // Check if need to unlock previous section before adding new section
+    // i.e. end of task list section or any react-router redirect from one section directly to another
     const prevLockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
         section.lockedBy === euaId &&
@@ -222,25 +222,12 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
         from !== pathname
     );
 
-    // If coming from IT Tools or end of task list section
-    // (Or any react-router redirect from one section directly to another)
     if (prevLockedSection) {
       removeLockedSection(prevLockedSection);
     }
 
     if (lockState === LockStatus.UNLOCKED) {
-      addLock({
-        variables: {
-          modelPlanID: modelID,
-          section: taskListSection
-        }
-      }).catch(() => {
-        history.push({
-          pathname: `/models/${modelID}/locked-task-list-section`,
-          // Passing error status to default error page
-          state: { route: taskListRoute, error: true }
-        });
-      });
+      addLockedSection(taskListSection);
     }
   }
 

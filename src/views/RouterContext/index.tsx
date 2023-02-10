@@ -9,7 +9,7 @@ type RouterProviderProps = {
   children: React.ReactNode;
 };
 
-// Create the model Info context - can be used anywhere in a model plan
+// Create the inital properties of router/location context
 export const RouterContext = createContext<any>({
   to: '',
   from: '',
@@ -24,6 +24,7 @@ const RouterProvider = ({ children }: RouterProviderProps) => {
   });
 
   useEffect(() => {
+    // If new location is different that prev, update state
     setRoute(prev => {
       if (prev.to !== location.pathname) {
         return { to: location.pathname, from: prev.to };
@@ -31,7 +32,7 @@ const RouterProvider = ({ children }: RouterProviderProps) => {
       return route;
     });
     return () => {
-      setRoute(prev => ({ to: location.pathname, from: location.pathname }));
+      setRoute({ to: location.pathname, from: location.pathname });
     };
   }, [location, route]);
 
