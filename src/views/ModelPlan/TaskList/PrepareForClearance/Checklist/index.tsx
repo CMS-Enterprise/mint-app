@@ -51,7 +51,7 @@ interface ClearanceFormValues {
 
 const initialClearanceFormValues = {
   id: '',
-  readyForClearanceBy: '',
+  readyForClearanceBy: null,
   readyForClearanceByUserAccount: {
     commonName: ''
   },
