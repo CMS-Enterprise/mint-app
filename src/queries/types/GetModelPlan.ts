@@ -20,6 +20,7 @@ export interface GetModelPlan_modelPlan_basics {
 
 export interface GetModelPlan_modelPlan_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;

@@ -13,6 +13,7 @@ import classNames from 'classnames';
 
 import Spinner from 'components/Spinner';
 import useCedarContactLookup from 'hooks/useCedarContactLookup';
+import useDebounce from 'hooks/useDebounce';
 import color from 'utils/uswdsColor';
 
 import './index.scss';
@@ -123,7 +124,7 @@ const IndicatorsContainer = (
       {!loading && resultsWarning && (
         <IconWarning className="text-warning" size={3} />
       )}
-      {loading && <Spinner size="small" />}
+      {loading && <Spinner size="small" className="margin-right-1" />}
       {children}
     </components.IndicatorsContainer>
   );
@@ -152,31 +153,34 @@ export default function CedarContactSelect({
     value ? formatLabel(value) : undefined
   );
 
-  // If autoSearch, run initial query from name
+  const [userSelected, setUserSelected] = useState(false);
+
+  const { debounceValue, debounceLoading } = useDebounce(
+    searchTerm,
+    250,
+    userSelected
+  );
+
   const { contacts, queryCedarContacts, loading } = useCedarContactLookup(
-    searchTerm
+    debounceValue,
+    userSelected
   );
 
   // Selected contact
   const selectedContact = useRef(value?.euaUserId);
 
-  // Show warning if autosearch returns multiple or no results
-  const showWarning = autoSearch && !value?.euaUserId && contacts.length !== 1;
-
-  /** Query CEDAR by common name and update contacts */
-  const queryContacts = (query: string) => {
-    setSearchTerm(query);
-    if (query.length > 1) {
-      queryCedarContacts(query.split(',')[0]);
-    }
-  };
-
   /** Update contact and reset search term */
   const updateContact = (contact?: CedarContactProps | null) => {
     onChange(contact || null);
     selectedContact.current = contact?.euaUserId;
-    queryContacts(contact ? formatLabel(contact) : '');
+    setSearchTerm(contact ? formatLabel(contact) : '');
   };
+
+  useEffect(() => {
+    if (debounceValue) {
+      queryCedarContacts(debounceValue.split(',')[0]);
+    }
+  }, [debounceValue, queryCedarContacts]);
 
   // React Select styles object
   const customStyles: {
@@ -256,14 +260,6 @@ export default function CedarContactSelect({
     })
   };
 
-  // Update contact when value changes
-  // Fix for 'same as requester' checkboxes in system intake form
-  useEffect(() => {
-    if (!autoSearch && value?.euaUserId !== selectedContact.current) {
-      updateContact(value);
-    }
-  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <Select
       id={id}
@@ -273,8 +269,12 @@ export default function CedarContactSelect({
         'cedar-contact-select',
         'maxw-none',
         'usa-combo-box',
-        { 'cedar-contact-select__warning': showWarning },
-        { 'cedar-contact-select__loading': loading },
+        {
+          'cedar-contact-select__loading':
+            (loading || debounceLoading) &&
+            ((searchTerm && searchTerm.length > 0) || loading) &&
+            !userSelected
+        },
         { 'opacity-70': disabled },
         className
       )}
@@ -300,15 +300,15 @@ export default function CedarContactSelect({
       }
       value={value ? { value, label: formatLabel(value) } : undefined}
       onChange={item => updateContact(item?.value || null)}
-      onBlur={e => {
-        // Automatically select on blur if search returns single result
-        if (autoSearch && contacts.length === 1) {
-          updateContact(contacts[0]);
-        }
-      }}
       onInputChange={(newValue, { action }) => {
         if (action !== 'input-blur' && action !== 'menu-close') {
-          queryContacts(newValue);
+          // If user selected a value, no need to query and debounce again
+          if (action === 'set-value') {
+            setUserSelected(true);
+          } else {
+            setUserSelected(false);
+            setSearchTerm(newValue);
+          }
         }
       }}
       defaultInputValue={searchTerm}

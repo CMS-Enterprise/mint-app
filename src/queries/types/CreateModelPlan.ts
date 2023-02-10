@@ -34,15 +34,16 @@ export interface CreateModelPlan_createModelPlan_basics {
   highLevelNote: string | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   status: TaskStatus;
 }
 
 export interface CreateModelPlan_createModelPlan_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;
@@ -59,7 +60,7 @@ export interface CreateModelPlan_createModelPlan_collaborators {
 export interface CreateModelPlan_createModelPlan {
   __typename: "ModelPlan";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   modelName: string;
   basics: CreateModelPlan_createModelPlan_basics;
   collaborators: CreateModelPlan_createModelPlan_collaborators[];

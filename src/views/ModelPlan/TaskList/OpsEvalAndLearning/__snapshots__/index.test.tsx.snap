@@ -539,7 +539,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         (implementation, data analysis, quality, etc.)
       </p>
       <textarea
-        class="usa-textarea height-card"
+        class="height-card usa-textarea"
         data-testid="ops-eval-and-learning-contractor-support-how"
         id="ops-eval-and-learning-contractor-support-how"
         name="contractorSupportHow"

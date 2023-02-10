@@ -380,7 +380,7 @@ const DraftModelPlansTable = ({
   }
 
   if (error) {
-    return <div>{JSON.stringify(error)}</div>;
+    return <Alert type="error">{t('fetchError')}</Alert>;
   }
 
   if (data.length === 0) {

@@ -487,6 +487,11 @@ export const CharacteristicsContent = () => {
                       }}
                     />
                   </Fieldset>
+
+                  <AddNote
+                    id="plan-characteristics-has-component-or-tracks-note"
+                    field="hasComponentsOrTracksNote"
+                  />
                 </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">

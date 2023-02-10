@@ -380,7 +380,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)
             </p>
             <textarea
-              class="usa-textarea height-15"
+              class="height-15 usa-textarea"
               data-testid="beneficiaries-precedence-rules"
               id="beneficiaries-precedence-rules"
               name="precedenceRules"

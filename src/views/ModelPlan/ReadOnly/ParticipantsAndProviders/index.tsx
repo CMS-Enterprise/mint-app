@@ -13,6 +13,7 @@ import {
   translateBooleanOrNull,
   translateCommunicationType,
   translateConfidenceType,
+  translateFrequencyType,
   translateOverlapType,
   translateParticipantIDType,
   translateParticipantSelectiontType,
@@ -130,15 +131,19 @@ const ReadOnlyParticipantsAndProviders = ({
           notes={participantsNote}
         />
 
-        <ReadOnlySection
-          heading={t('typeMedicateProvider')}
-          copy={medicareProviderType}
-        />
+        {medicareProviderType && (
+          <ReadOnlySection
+            heading={t('typeMedicateProvider')}
+            copy={medicareProviderType}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('describeStates')}
-          copy={statesEngagement}
-        />
+        {statesEngagement && (
+          <ReadOnlySection
+            heading={t('describeStates')}
+            copy={statesEngagement}
+          />
+        )}
 
         <ReadOnlySection
           heading={t('participantsCMMI')}
@@ -274,10 +279,10 @@ const ReadOnlyParticipantsAndProviders = ({
           copy={
             providerAdditionFrequency &&
             (providerAdditionFrequency === FrequencyType.OTHER
-              ? `${translateRecruitmentType(
+              ? `${translateFrequencyType(
                   providerAdditionFrequency
                 )} \u2014  ${providerAdditionFrequencyOther}`
-              : translateRecruitmentType(providerAdditionFrequency))
+              : translateFrequencyType(providerAdditionFrequency))
           }
           notes={providerAdditionFrequencyNote}
         />

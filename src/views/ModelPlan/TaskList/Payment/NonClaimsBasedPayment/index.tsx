@@ -77,6 +77,7 @@ const NonClaimsBasedPayment = () => {
     payType,
     payClaims,
     nonClaimsPayments,
+    nonClaimsPaymentsNote,
     nonClaimsPaymentOther,
     paymentCalculationOwner,
     numberPaymentsPerPayCycle,
@@ -150,6 +151,7 @@ const NonClaimsBasedPayment = () => {
     payType: payType ?? [],
     payClaims: payClaims ?? [],
     nonClaimsPayments: nonClaimsPayments ?? [],
+    nonClaimsPaymentsNote: nonClaimsPaymentsNote ?? '',
     nonClaimsPaymentOther: nonClaimsPaymentOther ?? '',
     paymentCalculationOwner: paymentCalculationOwner ?? '',
     numberPaymentsPerPayCycle: numberPaymentsPerPayCycle ?? '',
@@ -317,6 +319,11 @@ const NonClaimsBasedPayment = () => {
                             />
                           </FieldGroup>
                         )}
+
+                        <AddNote
+                          id="payment-nonclaims-payments-note"
+                          field="nonClaimsPaymentsNote"
+                        />
                       </FieldGroup>
 
                       <FieldGroup

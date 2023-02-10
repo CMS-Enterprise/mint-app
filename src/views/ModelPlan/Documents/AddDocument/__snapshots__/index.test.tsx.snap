@@ -349,7 +349,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   Optional notes about the document
                 </label>
                 <textarea
-                  class="usa-textarea model-plan-document__optional-notes height-10"
+                  class="model-plan-document__optional-notes height-10 usa-textarea"
                   id="ModelPlanDocument-optionalNotes"
                   maxlength="2000"
                   name="optionalNotes"
