@@ -33,11 +33,11 @@ export interface GetAllModelData_modelPlanCollection_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   status: TaskStatus;
 }
@@ -93,6 +93,7 @@ export interface GetAllModelData_modelPlanCollection_discussions {
 
 export interface GetAllModelData_modelPlanCollection_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;
@@ -479,9 +480,9 @@ export interface GetAllModelData_modelPlanCollection {
   id: UUID;
   modelName: string;
   archived: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   basics: GetAllModelData_modelPlanCollection_basics;
   beneficiaries: GetAllModelData_modelPlanCollection_beneficiaries;

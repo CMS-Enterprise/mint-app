@@ -18,6 +18,7 @@ export default gql`
       isCollaborator
       collaborators {
         userAccount {
+          id
           commonName
           email
           username

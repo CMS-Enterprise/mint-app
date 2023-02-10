@@ -6,6 +6,7 @@ export default gql`
       id
       teamRole
       userAccount {
+        id
         commonName
         email
         username

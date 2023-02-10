@@ -419,6 +419,30 @@ func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, i
 	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store, principal)
 }
 
+// CreateOperationalSolutionSubtasks is the resolver for the createOperationalSolutionSubtasks field.
+func (r *mutationResolver) CreateOperationalSolutionSubtasks(ctx context.Context, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.OperationalSolutionSubtasksCreate(logger, r.store, inputs, solutionID, principal)
+}
+
+// UpdateOperationalSolutionSubtasks is the resolver for the updateOperationalSolutionSubtasks field.
+func (r *mutationResolver) UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionSubtasksUpdateByID(logger, r.store, principal, inputs)
+}
+
+// DeleteOperationalSolutionSubtask is the resolver for the deleteOperationalSolutionSubtask field.
+func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -435,6 +459,13 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 		r.store,
 		r.s3Client,
 	)
+}
+
+// OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
+func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionSubtasksGetBySolutionID(logger, r.store, obj.ID)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

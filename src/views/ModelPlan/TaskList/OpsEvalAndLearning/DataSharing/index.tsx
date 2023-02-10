@@ -9,8 +9,7 @@ import {
   Button,
   Dropdown,
   IconArrowBack,
-  Label,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -23,6 +22,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetDataSharing from 'queries/OpsEvalAndLearning/GetDataSharing';
 import {
   GetDataSharing as GetDataSharingType,
@@ -303,10 +303,10 @@ const DataSharing = () => {
                         {flatErrors.dataSharingStartsOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        className="maxw-none"
+                        as={TextAreaField}
+                        className="maxw-none mint-textarea"
                         id="ops-eval-and-learning-data-sharing-starts-other"
-                        maxLength={50}
+                        maxLength={5000}
                         name="dataSharingStartsOther"
                       />
                     </div>
@@ -356,8 +356,9 @@ const DataSharing = () => {
                         {flatErrors.dataSharingFrequencyOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        maxLength={50}
+                        as={TextAreaField}
+                        maxLength={5000}
+                        className="mint-textarea"
                         error={flatErrors.dataSharingFrequencyOther}
                         id="ops-eval-and-learning-data-sharing-frequency-other"
                         name="dataSharingFrequencyOther"
@@ -418,10 +419,10 @@ const DataSharing = () => {
                         {flatErrors.dataCollectionStartsOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        className="maxw-none"
+                        as={TextAreaField}
+                        className="maxw-none mint-textarea"
                         id="ops-eval-and-learning-data-collection-starts-other"
-                        maxLength={50}
+                        maxLength={5000}
                         name="dataCollectionStartsOther"
                       />
                     </div>
@@ -471,8 +472,9 @@ const DataSharing = () => {
                         {flatErrors.dataCollectionFrequencyOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        maxLength={50}
+                        as={TextAreaField}
+                        maxLength={5000}
+                        className="mint-textarea"
                         error={flatErrors.dataCollectionFrequencyOther}
                         id="ops-eval-and-learning-data-collection-frequency-other"
                         name="dataCollectionFrequencyOther"
@@ -532,11 +534,11 @@ const DataSharing = () => {
                         {flatErrors.qualityReportingStartsOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        className="maxw-none"
+                        as={TextAreaField}
+                        className="maxw-none mint-textarea"
                         id="ops-eval-and-learning-data-reporting-starts-other"
                         data-testid="ops-eval-and-learning-data-reporting-starts-other"
-                        maxLength={50}
+                        maxLength={5000}
                         name="qualityReportingStartsOther"
                       />
                     </div>

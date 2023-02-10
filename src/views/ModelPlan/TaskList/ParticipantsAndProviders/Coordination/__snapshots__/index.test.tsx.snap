@@ -366,14 +366,15 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
       >
         Please specify
       </label>
-      <input
-        class="usa-input maxw-none"
+      <textarea
+        class="maxw-none mint-textarea usa-textarea"
         data-testid="participants-and-providers-participant-id-other"
         id="participants-and-providers-participant-id-other"
-        maxlength="50"
+        maxlength="5000"
         name="participantsIdsOther"
-        value="Candy Kingdom Operations Number"
-      />
+      >
+        Candy Kingdom Operations Number
+      </textarea>
     </div>
     <div
       class="mint-checkbox usa-checkbox"

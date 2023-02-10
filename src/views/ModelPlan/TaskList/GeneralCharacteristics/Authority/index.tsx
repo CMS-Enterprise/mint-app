@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -345,9 +344,10 @@ const Authority = () => {
                                       {flatErrors.authorityAllowancesOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
+                                      as={TextAreaField}
+                                      className="mint-textarea"
                                       id="plan-characteristics-authority-allowance-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="authorityAllowancesOther"
                                     />
                                   </FieldGroup>

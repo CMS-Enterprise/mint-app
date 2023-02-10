@@ -154,7 +154,7 @@ const ModelPlan = () => {
             {t('allModels.subheading')}
           </p>
           {loading && <PageLoading />}
-          {error && <div>{JSON.stringify(error)}</div>}
+          {error && <Alert type="error">{h('fetchError')}</Alert>}
           {!loading && !error && (
             <Table
               data={modelPlans}

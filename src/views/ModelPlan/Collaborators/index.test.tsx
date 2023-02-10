@@ -33,6 +33,7 @@ const mockCollaborator: GetModelPlanCollaboratorsType = {
       id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',
       modelPlanID: 'f11eb129-2c80-4080-9440-439cbe1a286f',
       userAccount: {
+        id: '890',
         __typename: 'UserAccount',
         email: '',
         username: 'ABCD',

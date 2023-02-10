@@ -54,7 +54,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy),
+			zap.String("user", plan.CreatedBy.String()),
 		)
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy),
+			zap.String("user", plan.CreatedBy.String()),
 		)
 		return nil, err
 
@@ -84,7 +84,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
-			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
+			zap.String("user", models.UUIDValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
-			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
+			zap.String("user", models.UUIDValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
