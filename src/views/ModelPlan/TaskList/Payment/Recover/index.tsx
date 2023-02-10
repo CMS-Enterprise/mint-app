@@ -119,6 +119,8 @@ const Recover = () => {
             history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
           } else if (redirect) {
             history.push(redirect);
           }
@@ -185,7 +187,7 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}

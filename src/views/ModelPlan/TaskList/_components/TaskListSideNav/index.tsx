@@ -14,6 +14,7 @@ import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
+import { TeamRole } from 'types/graphql-global-types';
 import CsvExportLink from 'utils/export/CsvExportLink';
 
 const TaskListSideNav = ({
@@ -146,7 +147,14 @@ const TaskListSideNav = ({
           </div>
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              {collaborators.map((collaborator, index) => {
+              {[
+                ...collaborators.filter(
+                  collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD
+                ),
+                ...collaborators.filter(
+                  collaborator => collaborator.teamRole !== TeamRole.MODEL_LEAD
+                )
+              ].map((collaborator, index) => {
                 return (
                   <IconInitial
                     className="margin-bottom-1"
