@@ -49,7 +49,7 @@ const mocks = [
       query: GetOperationalNeed,
       variables: {
         id: operationalNeedID,
-        includeNotNeeded: false
+        includeNotNeeded: true
       }
     },
     result: {
