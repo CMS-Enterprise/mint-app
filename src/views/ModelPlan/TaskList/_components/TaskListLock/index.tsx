@@ -11,14 +11,21 @@ import './index.scss';
 type TaskListLockProps = {
   collaborator: GetCollaboratorsType | undefined;
   isAssessment: boolean;
+  selfLocked: boolean;
 };
 
-const TaskListLock = ({ collaborator, isAssessment }: TaskListLockProps) => {
+const TaskListLock = ({
+  collaborator,
+  isAssessment,
+  selfLocked
+}: TaskListLockProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   const randomColorIndex = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+
+  const lockMessage = isAssessment ? t('assessmentLocked') : t('locked');
 
   return (
     <>
@@ -37,7 +44,7 @@ const TaskListLock = ({ collaborator, isAssessment }: TaskListLockProps) => {
           )}
 
           <div className="display-flex flex-align-center line-height-body-4">
-            {isAssessment ? t('assessmentLocked') : t('locked')}
+            {selfLocked ? t('selfLocked') : lockMessage}
           </div>
         </div>
       )}

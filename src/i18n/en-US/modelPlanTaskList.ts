@@ -132,6 +132,7 @@ const modelPlanTaskList = {
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
   locked: ' is editing this section. You may access it when they’re done.',
+  selfLocked: 'You are editing this section.',
   assessmentLocked:
     'The MINT Team is editing this section. You may access it when they’re done.',
   lockedHeading:
