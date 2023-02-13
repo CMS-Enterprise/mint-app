@@ -9,9 +9,15 @@ import { PlanOpsEvalAndLearningChanges, TaskStatus } from "./../../../types/grap
 // GraphQL mutation operation: UpdateClearanceOpsEvalAndLearning
 // ====================================================
 
+export interface UpdateClearanceOpsEvalAndLearning_updatePlanOpsEvalAndLearning_readyForClearanceByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface UpdateClearanceOpsEvalAndLearning_updatePlanOpsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: UpdateClearanceOpsEvalAndLearning_updatePlanOpsEvalAndLearning_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

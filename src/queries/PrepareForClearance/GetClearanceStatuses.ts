@@ -6,37 +6,55 @@ export default gql`
       id
       basics {
         id
-        readyForClearanceBy
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
         readyForClearanceDts
         status
       }
       generalCharacteristics {
         id
-        readyForClearanceBy
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
         readyForClearanceDts
         status
       }
       participantsAndProviders {
         id
-        readyForClearanceBy
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
         readyForClearanceDts
         status
       }
       beneficiaries {
         id
-        readyForClearanceBy
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
         readyForClearanceDts
         status
       }
       opsEvalAndLearning {
         id
-        readyForClearanceBy
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
         readyForClearanceDts
         status
       }
       payments {
         id
-        readyForClearanceBy
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
         readyForClearanceDts
         status
       }
