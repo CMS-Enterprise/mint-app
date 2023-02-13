@@ -11,6 +11,7 @@ import { PlanBasicsChanges, PlanGeneralCharacteristicsChanges, PlanParticipantsA
 
 export interface UpdatePrepareForClearance_updatePlanBasics_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -23,6 +24,7 @@ export interface UpdatePrepareForClearance_updatePlanBasics {
 
 export interface UpdatePrepareForClearance_updatePlanGeneralCharacteristics_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -35,6 +37,7 @@ export interface UpdatePrepareForClearance_updatePlanGeneralCharacteristics {
 
 export interface UpdatePrepareForClearance_updatePlanParticipantsAndProviders_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -47,6 +50,7 @@ export interface UpdatePrepareForClearance_updatePlanParticipantsAndProviders {
 
 export interface UpdatePrepareForClearance_updatePlanBeneficiaries_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -59,6 +63,7 @@ export interface UpdatePrepareForClearance_updatePlanBeneficiaries {
 
 export interface UpdatePrepareForClearance_updatePlanOpsEvalAndLearning_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -71,6 +76,7 @@ export interface UpdatePrepareForClearance_updatePlanOpsEvalAndLearning {
 
 export interface UpdatePrepareForClearance_updatePlanPayments_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

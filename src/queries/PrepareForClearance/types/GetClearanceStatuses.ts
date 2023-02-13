@@ -11,6 +11,7 @@ import { TaskStatus, PrepareForClearanceStatus } from "./../../../types/graphql-
 
 export interface GetClearanceStatuses_modelPlan_basics_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -24,6 +25,7 @@ export interface GetClearanceStatuses_modelPlan_basics {
 
 export interface GetClearanceStatuses_modelPlan_generalCharacteristics_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -37,6 +39,7 @@ export interface GetClearanceStatuses_modelPlan_generalCharacteristics {
 
 export interface GetClearanceStatuses_modelPlan_participantsAndProviders_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -50,6 +53,7 @@ export interface GetClearanceStatuses_modelPlan_participantsAndProviders {
 
 export interface GetClearanceStatuses_modelPlan_beneficiaries_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -63,6 +67,7 @@ export interface GetClearanceStatuses_modelPlan_beneficiaries {
 
 export interface GetClearanceStatuses_modelPlan_opsEvalAndLearning_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -76,6 +81,7 @@ export interface GetClearanceStatuses_modelPlan_opsEvalAndLearning {
 
 export interface GetClearanceStatuses_modelPlan_payments_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

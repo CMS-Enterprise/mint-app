@@ -11,6 +11,7 @@ import { PlanOpsEvalAndLearningChanges, TaskStatus } from "./../../../types/grap
 
 export interface UpdateClearanceOpsEvalAndLearning_updatePlanOpsEvalAndLearning_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

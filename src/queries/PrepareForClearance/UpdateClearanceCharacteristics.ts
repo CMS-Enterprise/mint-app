@@ -7,6 +7,7 @@ export default gql`
   ) {
     updatePlanGeneralCharacteristics(id: $id, changes: $changes) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts

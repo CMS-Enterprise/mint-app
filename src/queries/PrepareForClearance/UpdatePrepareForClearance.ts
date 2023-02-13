@@ -17,6 +17,7 @@ export default gql`
   ) {
     updatePlanBasics(id: $basicsID, changes: $basicsChanges) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts
@@ -27,6 +28,7 @@ export default gql`
       changes: $characteristicsChanges
     ) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts
@@ -37,6 +39,7 @@ export default gql`
       changes: $participantsAndProvidersChanges
     ) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts
@@ -47,6 +50,7 @@ export default gql`
       changes: $benficiariesChanges
     ) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts
@@ -57,6 +61,7 @@ export default gql`
       changes: $opsEvalAndLearningChanges
     ) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts
@@ -64,6 +69,7 @@ export default gql`
     }
     updatePlanPayments(id: $paymentsID, changes: $paymentsChanges) {
       readyForClearanceByUserAccount {
+        id
         commonName
       }
       readyForClearanceDts

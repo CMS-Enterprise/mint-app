@@ -11,6 +11,7 @@ import { PlanPaymentsChanges, TaskStatus } from "./../../../types/graphql-global
 
 export interface UpdateClearancePayments_updatePlanPayments_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

@@ -11,6 +11,7 @@ import { PlanGeneralCharacteristicsChanges, TaskStatus } from "./../../../types/
 
 export interface UpdateClearanceCharacteristics_updatePlanGeneralCharacteristics_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

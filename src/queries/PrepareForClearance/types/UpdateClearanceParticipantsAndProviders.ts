@@ -11,6 +11,7 @@ import { PlanParticipantsAndProvidersChanges, TaskStatus } from "./../../../type
 
 export interface UpdateClearanceParticipantsAndProviders_updatePlanParticipantsAndProviders_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 

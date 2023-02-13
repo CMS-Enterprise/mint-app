@@ -11,6 +11,7 @@ import { PlanBeneficiariesChanges, TaskStatus } from "./../../../types/graphql-g
 
 export interface UpdateClearanceBeneficiaries_updatePlanBeneficiaries_readyForClearanceByUserAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
