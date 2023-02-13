@@ -20,7 +20,7 @@ export interface GetRecover_modelPlan_payments {
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }

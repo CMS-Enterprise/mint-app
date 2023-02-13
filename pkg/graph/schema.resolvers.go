@@ -919,15 +919,6 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planPaymentsResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanPayments) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // PossibleSolutions is the resolver for the possibleSolutions field.
 func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)

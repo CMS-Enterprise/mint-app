@@ -115,9 +115,9 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
 export interface GetModelPlan_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

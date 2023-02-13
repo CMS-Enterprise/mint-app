@@ -96,7 +96,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default PlanPayments object
-	planPayments := models.NewPlanPayments(baseTaskList)
+	planPayments := models.NewPlanPayments(baseTaskListUser)
 
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
