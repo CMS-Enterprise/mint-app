@@ -49,7 +49,6 @@ type ResolverRoot interface {
 	OperationalSolution() OperationalSolutionResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
-	PlanCrTdl() PlanCrTdlResolver
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
 	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
@@ -979,13 +978,6 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
-}
-type PlanCrTdlResolver interface {
-	CreatedBy(ctx context.Context, obj *models.PlanCrTdl) (uuid.UUID, error)
-	CreatedByUserAccount(ctx context.Context, obj *models.PlanCrTdl) (*authentication.UserAccount, error)
-
-	ModifiedBy(ctx context.Context, obj *models.PlanCrTdl) (*uuid.UUID, error)
-	ModifiedByUserAccount(ctx context.Context, obj *models.PlanCrTdl) (*authentication.UserAccount, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -24648,7 +24640,7 @@ func (ec *executionContext) _PlanCrTdl_createdBy(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCrTdl().CreatedBy(rctx, obj)
+		return obj.CreatedBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -24669,8 +24661,8 @@ func (ec *executionContext) fieldContext_PlanCrTdl_createdBy(ctx context.Context
 	fc = &graphql.FieldContext{
 		Object:     "PlanCrTdl",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
 		},
@@ -24692,7 +24684,7 @@ func (ec *executionContext) _PlanCrTdl_createdByUserAccount(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCrTdl().CreatedByUserAccount(rctx, obj)
+		return obj.CreatedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -24714,7 +24706,7 @@ func (ec *executionContext) fieldContext_PlanCrTdl_createdByUserAccount(ctx cont
 		Object:     "PlanCrTdl",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -24802,7 +24794,7 @@ func (ec *executionContext) _PlanCrTdl_modifiedBy(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCrTdl().ModifiedBy(rctx, obj)
+		return obj.ModifiedBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -24820,8 +24812,8 @@ func (ec *executionContext) fieldContext_PlanCrTdl_modifiedBy(ctx context.Contex
 	fc = &graphql.FieldContext{
 		Object:     "PlanCrTdl",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
 		},
@@ -24843,7 +24835,7 @@ func (ec *executionContext) _PlanCrTdl_modifiedByUserAccount(ctx context.Context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanCrTdl().ModifiedByUserAccount(rctx, obj)
+		return obj.ModifiedByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -24862,7 +24854,7 @@ func (ec *executionContext) fieldContext_PlanCrTdl_modifiedByUserAccount(ctx con
 		Object:     "PlanCrTdl",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -50872,25 +50864,12 @@ func (ec *executionContext) _PlanCrTdl(ctx context.Context, sel ast.SelectionSet
 			out.Values[i] = ec._PlanCrTdl_note(ctx, field, obj)
 
 		case "createdBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanCrTdl_createdBy(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
+			out.Values[i] = ec._PlanCrTdl_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
 			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "createdByUserAccount":
 			field := field
 
@@ -50919,22 +50898,9 @@ func (ec *executionContext) _PlanCrTdl(ctx context.Context, sel ast.SelectionSet
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "modifiedBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanCrTdl_modifiedBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanCrTdl_modifiedBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "modifiedByUserAccount":
 			field := field
 

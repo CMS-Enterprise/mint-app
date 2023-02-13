@@ -14,7 +14,7 @@ import (
 // PlanCrTdlCreate creates a new plan_cr_tdl record in the database
 func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCrTdl, error) {
 
-	planCrTdl := models.NewPlanCrTdl(principal.ID(), input.ModelPlanID)
+	planCrTdl := models.NewPlanCrTdl(principal.Account().ID, input.ModelPlanID)
 	planCrTdl.IDNumber = input.IDNumber
 	planCrTdl.DateInitiated = &input.DateInitiated
 	planCrTdl.Title = input.Title
@@ -35,6 +35,8 @@ func PlanCrTdlUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	if err != nil {
 		return nil, err
 	}
+
+	print("testa1")
 
 	err = BaseStructPreUpdate(logger, existingPlanCrTdl, changes, principal, store, true, true)
 	if err != nil {

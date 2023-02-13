@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -491,26 +490,6 @@ func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *mode
 func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
 	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
 	return sTypes, nil
-}
-
-// CreatedBy is the resolver for the createdBy field.
-func (r *planCrTdlResolver) CreatedBy(ctx context.Context, obj *models.PlanCrTdl) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: CreatedBy - createdBy"))
-}
-
-// CreatedByUserAccount is the resolver for the createdByUserAccount field.
-func (r *planCrTdlResolver) CreatedByUserAccount(ctx context.Context, obj *models.PlanCrTdl) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: CreatedByUserAccount - createdByUserAccount"))
-}
-
-// ModifiedBy is the resolver for the modifiedBy field.
-func (r *planCrTdlResolver) ModifiedBy(ctx context.Context, obj *models.PlanCrTdl) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: ModifiedBy - modifiedBy"))
-}
-
-// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
-func (r *planCrTdlResolver) ModifiedByUserAccount(ctx context.Context, obj *models.PlanCrTdl) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: ModifiedByUserAccount - modifiedByUserAccount"))
 }
 
 // Replies is the resolver for the replies field.
@@ -1094,9 +1073,6 @@ func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
 	return &planBeneficiariesResolver{r}
 }
 
-// PlanCrTdl returns generated.PlanCrTdlResolver implementation.
-func (r *Resolver) PlanCrTdl() generated.PlanCrTdlResolver { return &planCrTdlResolver{r} }
-
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.
 func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 	return &planDiscussionResolver{r}
@@ -1148,7 +1124,6 @@ type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
-type planCrTdlResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
