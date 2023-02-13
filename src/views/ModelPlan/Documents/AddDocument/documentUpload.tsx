@@ -23,7 +23,11 @@ import flattenErrors from 'utils/flattenErrors';
 import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
-const DocumentUpload = () => {
+const DocumentUpload = ({
+  fromSolutionDetails
+}: {
+  fromSolutionDetails?: boolean;
+}) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
@@ -70,7 +74,11 @@ const DocumentUpload = () => {
                 </Alert>
               </>
             );
-            history.push(`/models/${modelID}/documents`);
+            if (fromSolutionDetails) {
+              history.goBack();
+            } else {
+              history.push(`/models/${modelID}/documents`);
+            }
           }
         })
         .catch(errors => {

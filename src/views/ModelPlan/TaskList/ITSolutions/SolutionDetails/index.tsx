@@ -213,7 +213,11 @@ const SolutionDetails = () => {
                   onClick={() => {
                     history.push({
                       pathname: `/models/${modelID}/documents/add-document`,
-                      state: { fromSolutionDetails: true }
+                      state: {
+                        fromSolutionDetails: true,
+                        operationalNeedID,
+                        operationalSolutionID
+                      }
                     });
                   }}
                 >

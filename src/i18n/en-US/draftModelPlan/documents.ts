@@ -3,6 +3,8 @@ const documents = {
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'Upload Document',
+  itTracker: 'IT solutions tracker',
+  solutionDetails: 'Solution details',
   description:
     'Upload any documents relevant to your Model Plan.  This could include recent concept documents, policy papers, or any additional model background information.',
   addADocument: 'Add a document',

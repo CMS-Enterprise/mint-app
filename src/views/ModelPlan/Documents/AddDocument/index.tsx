@@ -1,16 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
   IconArrowBack
 } from '@trussworks/react-uswds';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
@@ -25,41 +23,50 @@ const AddDocument = () => {
   const history = useHistory();
 
   const { state } = useLocation<{
-    state: { fromSolutionDetails?: boolean };
+    state: {
+      fromSolutionDetails?: boolean;
+      operationalNeedID?: boolean;
+      operationalSolutionID?: boolean;
+    };
     fromSolutionDetails?: boolean;
+    operationalNeedID?: boolean;
+    operationalSolutionID?: boolean;
   }>();
 
-  const fromSolutionDetails = state?.fromSolutionDetails;
+  const { fromSolutionDetails, operationalNeedID, operationalSolutionID } =
+    state || {};
+
+  const breadcrumbs = [
+    { text: h('home'), url: '/' },
+    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/` },
+    {
+      text: fromSolutionDetails ? t('itTracker') : t('heading'),
+      url: fromSolutionDetails
+        ? `/models/${modelID}/task-list/it-solutions`
+        : `/models/${modelID}/documents`
+    },
+    {
+      text: t('solutionDetails'),
+      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+    },
+    { text: t('breadcrumb2') }
+  ];
 
   return (
     <MainContent data-testid="add-document">
       <GridContainer>
+        <Grid desktop={{ col: 12 }}>
+          <Breadcrumbs
+            items={
+              fromSolutionDetails
+                ? breadcrumbs
+                : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+            }
+          />
+        </Grid>
+      </GridContainer>
+      <GridContainer>
         <Grid desktop={{ col: 6 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list`}
-              >
-                <span>{t('breadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/documents`}
-              >
-                <span>{t('heading')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('breadcrumb2')}</Breadcrumb>
-          </BreadcrumbBar>
-
           <PageHeading className="margin-top-4 margin-bottom-0">
             {t('uploadDocument')}
           </PageHeading>
@@ -72,7 +79,7 @@ const AddDocument = () => {
             {t('requiredHint')} <RequiredAsterisk /> {t('requiredHint2')}
           </p>
 
-          <DocumentUpload />
+          <DocumentUpload fromSolutionDetails />
 
           <div className="display-block">
             <Button
