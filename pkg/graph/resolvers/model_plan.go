@@ -80,7 +80,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		return nil, err
 	}
 	//Create a default Plan Participants and Providers object
-	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskList)
+	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {

@@ -78,7 +78,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
 	suite.Nil(pp.ModifiedBy)
 
 	//Asset these fields are nil upon creation

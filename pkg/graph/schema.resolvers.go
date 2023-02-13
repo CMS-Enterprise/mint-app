@@ -870,15 +870,6 @@ func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.C
 	return providerLeaveTypes, nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planParticipantsAndProvidersResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // FundingSource is the resolver for the fundingSource field.
 func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
 	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
