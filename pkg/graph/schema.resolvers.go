@@ -492,15 +492,6 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planBeneficiariesResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanBeneficiaries) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies

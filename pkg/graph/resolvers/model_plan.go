@@ -73,7 +73,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		return nil, err
 	}
 	// Create a default Plan Beneficiares object
-	beneficiaries := models.NewPlanBeneficiaries(baseTaskList)
+	beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
