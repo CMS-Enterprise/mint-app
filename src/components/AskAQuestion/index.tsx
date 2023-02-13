@@ -7,13 +7,25 @@ import DiscussionModalWrapper from 'views/ModelPlan/Discussions/DiscussionModalW
 
 type AskAQuestionType = {
   modelID: string;
-  opNeeds?: boolean;
+  renderTextFor?: 'need' | 'solution' | 'status';
 };
 
-const AskAQuestion = ({ modelID, opNeeds }: AskAQuestionType) => {
+const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
   const { t } = useTranslation('discussions');
   const { t: o } = useTranslation('itSolutions');
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+
+  const renderText = (text: string | undefined) => {
+    switch (text) {
+      case 'need':
+        return o('notSureWhatToDoNext');
+      case 'status':
+        return o('helpTiming');
+      case 'solution':
+      default:
+        return o('helpChoosing');
+    }
+  };
 
   return (
     <>
@@ -27,8 +39,8 @@ const AskAQuestion = ({ modelID, opNeeds }: AskAQuestionType) => {
       )}
 
       <div className="padding-2 bg-primary-lighter">
-        {opNeeds && (
-          <p className="text-bold margin-top-0">{o('helpChoosing')}</p>
+        {renderTextFor && (
+          <p className="text-bold margin-top-0">{renderText(renderTextFor)}</p>
         )}
 
         <div className="display-flex" data-testid="ask-a-question">

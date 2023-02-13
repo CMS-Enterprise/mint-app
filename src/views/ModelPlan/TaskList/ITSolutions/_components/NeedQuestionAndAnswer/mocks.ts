@@ -15,7 +15,7 @@ const needQuestionAndAnswerMock = [
       query: GetOperationalNeed,
       variables: {
         id: operationalNeedID,
-        includeNotNeeded: true
+        includeNotNeeded: false
       }
     },
     result: {
