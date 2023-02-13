@@ -113,11 +113,13 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 //	This method will fail if the provided principal is not the person who locked the task list section
 func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
 	if !isSectionLocked(modelPlanID, section) {
+		fmt.Printf("[WSDEBUG - ??] Model Plan %v section %v was not locked\n", modelPlanID.String(), section)
 		return false, nil
 	}
 
 	status := planTaskListSessionLocks.modelSections[modelPlanID][section]
 	if !isUserAuthorizedToEditLock(status, principal) {
+		fmt.Printf("[WSDEBUG - ??] Model Plan %v section %v - user not authorized (%v)\n", modelPlanID.String(), section, principal)
 		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
 	}
 
@@ -130,6 +132,7 @@ func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section 
 	delete(planTaskListSessionLocks.modelSections[modelPlanID], section)
 	planTaskListSessionLocks.Unlock()
 
+	fmt.Printf("[WSDEBUG - ??] Model Plan %v section %v - Publishing unlock\n", modelPlanID.String(), section)
 	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 		ChangeType: model.ChangeTypeRemoved,
 		LockStatus: &status,
