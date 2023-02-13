@@ -36,8 +36,6 @@ func PlanCrTdlUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	print("testa1")
-
 	err = BaseStructPreUpdate(logger, existingPlanCrTdl, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err

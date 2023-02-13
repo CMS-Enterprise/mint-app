@@ -3,18 +3,12 @@ package resolvers
 import (
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
 // TestPlanCrTdlCreate tests creating a new plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 
-	princ := &authentication.ApplicationPrincipal{
-		Username:          suite.testConfigs.UserInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true,
-	}
 	plan := suite.createModelPlan("My Plan")
 	dateInitiated := time.Now()
 	note := "My comments"
@@ -27,7 +21,7 @@ func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 		Note:          &note,
 	}
 
-	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, princ, suite.testConfigs.Store)
+	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(crTdl.ModelPlanID, plan.ID)
@@ -40,11 +34,6 @@ func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 // TestPlanCrTdlUpdate tests updateing a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 
-	princ := &authentication.ApplicationPrincipal{
-		Username:          suite.testConfigs.UserInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true,
-	}
 	plan := suite.createModelPlan("My Plan")
 	crTdl := suite.createPlanCrTdl(plan, "123-456", time.Now(), "My CR", "My comments")
 
@@ -54,7 +43,7 @@ func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 		"note":     "new comments",
 	}
 
-	result, err := PlanCrTdlUpdate(suite.testConfigs.Logger, crTdl.ID, changes, princ, suite.testConfigs.Store)
+	result, err := PlanCrTdlUpdate(suite.testConfigs.Logger, crTdl.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(crTdl.ID, result.ID)
@@ -67,16 +56,11 @@ func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 // TestPlanCrTdlDelete tests deleting a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCrTdlDelete() {
 
-	princ := &authentication.ApplicationPrincipal{
-		Username:          suite.testConfigs.UserInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true,
-	}
 	plan := suite.createModelPlan("My Plan")
 
 	crTdl := suite.createPlanCrTdl(plan, "123-456", time.Now(), "My CR", "My comments")
 
-	del, err := PlanCrTdlDelete(suite.testConfigs.Logger, crTdl.ID, princ, suite.testConfigs.Store)
+	del, err := PlanCrTdlDelete(suite.testConfigs.Logger, crTdl.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.EqualValues(del.ID, crTdl.ID)
 
