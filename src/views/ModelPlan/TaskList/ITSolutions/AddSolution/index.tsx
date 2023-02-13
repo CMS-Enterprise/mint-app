@@ -6,7 +6,7 @@ Queries and displays SolutionCard component when a custom solution/operationalSo
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -21,7 +21,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -50,6 +49,7 @@ import { sortPossibleOperationalNeeds } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 import SolutionCard from '../_components/SolutionCard';
 
@@ -63,13 +63,17 @@ const AddSolution = () => {
     operationalNeedID: string;
     operationalSolutionID?: string;
   }>();
+  const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('draftModelPlan');
+  const formikRef = useRef<FormikProps<OperationalSolutionFormType>>(null);
 
   const history = useHistory();
 
-  const { t } = useTranslation('itSolutions');
-  const { t: h } = useTranslation('draftModelPlan');
-
-  const formikRef = useRef<FormikProps<OperationalSolutionFormType>>(null);
+  const {
+    state: { isCustomNeed }
+  } = useLocation<{
+    isCustomNeed: boolean;
+  }>();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -158,7 +162,8 @@ const AddSolution = () => {
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
-        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
+        { isCustomNeed }
       );
     } else if (!updateMutation || updateMutation.errors) {
       setMutationError(true);
@@ -270,6 +275,7 @@ const AddSolution = () => {
                           <FieldGroup
                             scrollElement="key"
                             error={!!flatErrors.key}
+                            className="margin-top-0"
                           >
                             <Label htmlFor="it-solutions-key">
                               {t('howWillYouSolve')}
@@ -352,7 +358,10 @@ const AddSolution = () => {
                             className="usa-button usa-button--unstyled display-flex flex-align-center"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+                                isCustomNeed
+                                  ? // To update this to go to new update operational need page
+                                    `/models/${modelID}/task-list/it-solutions`
+                                  : `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
                               );
                             }}
                           >
@@ -372,21 +381,7 @@ const AddSolution = () => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-            <AskAQuestion modelID={modelID} opNeeds />
-          </div>
-          <div className="margin-top-4">
-            <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
-            <Button
-              type="button"
-              onClick={() =>
-                window.open('/help-and-knowledge/model-plan-overview', '_blank')
-              }
-              className="usa-button usa-button--unstyled line-height-body-5"
-            >
-              <p>{t('availableSolutions')}</p>
-            </Button>
-          </div>
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
     </>

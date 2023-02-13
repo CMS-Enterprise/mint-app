@@ -6,6 +6,7 @@ import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
 import AddCustomSolution from './AddCustomSolution';
+import AddOrUpdateOperationalNeed from './AddOrUpdateOperationalNeed';
 import AddSolution from './AddSolution';
 import ITSolutionsHome from './Home';
 import SelectSolutions from './SelectSolutions';
@@ -20,6 +21,20 @@ const ITSolutions = () => {
           <Switch>
             <Route path="/models/:modelID/task-list/it-solutions" exact>
               <ITSolutionsHome />
+            </Route>
+
+            <Route
+              path="/models/:modelID/task-list/it-solutions/add-an-operational-need"
+              exact
+            >
+              <AddOrUpdateOperationalNeed />
+            </Route>
+
+            <Route
+              path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
+              exact
+            >
+              <AddOrUpdateOperationalNeed />
             </Route>
 
             <Route

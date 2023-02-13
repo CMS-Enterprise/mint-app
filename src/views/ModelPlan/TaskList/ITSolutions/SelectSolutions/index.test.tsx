@@ -65,7 +65,10 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { getByText, getByRole } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
+            state: { isCustomNeed: false }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
@@ -110,7 +113,10 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
+            state: { isCustomNeed: false }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
