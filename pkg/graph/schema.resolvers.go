@@ -825,15 +825,6 @@ func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Contex
 	return modelLearningSystemTypes, nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planOpsEvalAndLearningResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // Participants is the resolver for the participants field.
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
 	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)

@@ -596,6 +596,7 @@ type ComplexityRoot struct {
 		ContractorSupportNote                        func(childComplexity int) int
 		ContractorSupportOther                       func(childComplexity int) int
 		CreatedBy                                    func(childComplexity int) int
+		CreatedByUserAccount                         func(childComplexity int) int
 		CreatedDts                                   func(childComplexity int) int
 		DataCollectionFrequency                      func(childComplexity int) int
 		DataCollectionFrequencyNote                  func(childComplexity int) int
@@ -640,6 +641,7 @@ type ComplexityRoot struct {
 		ModelLearningSystemsOther                    func(childComplexity int) int
 		ModelPlanID                                  func(childComplexity int) int
 		ModifiedBy                                   func(childComplexity int) int
+		ModifiedByUserAccount                        func(childComplexity int) int
 		ModifiedDts                                  func(childComplexity int) int
 		ProduceBenefitEnhancementFiles               func(childComplexity int) int
 		QualityPerformanceImpactsPayment             func(childComplexity int) int
@@ -651,6 +653,7 @@ type ComplexityRoot struct {
 		ReadyForClearanceByUserAccount               func(childComplexity int) int
 		ReadyForClearanceDts                         func(childComplexity int) int
 		ReadyForReviewBy                             func(childComplexity int) int
+		ReadyForReviewByUserAccount                  func(childComplexity int) int
 		ReadyForReviewDts                            func(childComplexity int) int
 		RiskAdjustFeedback                           func(childComplexity int) int
 		RiskAdjustNote                               func(childComplexity int) int
@@ -1092,8 +1095,6 @@ type PlanOpsEvalAndLearningResolver interface {
 	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
 
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
-
-	ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*authentication.UserAccount, error)
 }
 type PlanParticipantsAndProvidersResolver interface {
 	Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error)
@@ -4627,6 +4628,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.CreatedBy(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.createdByUserAccount":
+		if e.complexity.PlanOpsEvalAndLearning.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CreatedByUserAccount(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.createdDts":
 		if e.complexity.PlanOpsEvalAndLearning.CreatedDts == nil {
 			break
@@ -4935,6 +4943,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.ModifiedBy(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.modifiedByUserAccount":
+		if e.complexity.PlanOpsEvalAndLearning.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModifiedByUserAccount(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.modifiedDts":
 		if e.complexity.PlanOpsEvalAndLearning.ModifiedDts == nil {
 			break
@@ -5011,6 +5026,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanOpsEvalAndLearning.ReadyForReviewBy(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.readyForReviewByUserAccount":
+		if e.complexity.PlanOpsEvalAndLearning.ReadyForReviewByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ReadyForReviewByUserAccount(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.readyForReviewDts":
 		if e.complexity.PlanOpsEvalAndLearning.ReadyForReviewDts == nil {
@@ -7907,17 +7929,20 @@ type PlanOpsEvalAndLearning {
     modelLearningSystemsNote: String
     anticipatedChallenges: String
 
-
-
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
-    readyForReviewBy: String
+
+    readyForReviewBy: UUID
+    readyForReviewByUserAccount: UserAccount
     readyForReviewDts: Time
-    readyForClearanceBy: String
+    readyForClearanceBy: UUID
     readyForClearanceByUserAccount: UserAccount
     readyForClearanceDts: Time
+
     status: TaskStatus!
 }
 
@@ -13259,14 +13284,20 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
 			case "readyForReviewBy":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewDts(ctx, field)
 			case "readyForClearanceBy":
@@ -16088,14 +16119,20 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
 			case "readyForReviewBy":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewDts(ctx, field)
 			case "readyForClearanceBy":
@@ -37415,9 +37452,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_createdBy(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37427,7 +37464,73 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_createdBy(ctx co
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -37500,9 +37603,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_modifiedBy(ctx context.Conte
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37512,7 +37615,70 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx c
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -37582,9 +37748,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_readyForReviewBy(ctx context
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37594,7 +37760,70 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForReviewBy
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -37664,9 +37893,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_readyForClearanceBy(ctx cont
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37676,7 +37905,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForClearanc
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -37696,7 +37925,7 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_readyForClearanceByUserAccou
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanOpsEvalAndLearning().ReadyForClearanceByUserAccount(rctx, obj)
+		return obj.ReadyForClearanceByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -37715,7 +37944,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForClearanc
 		Object:     "PlanOpsEvalAndLearning",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -53465,6 +53694,26 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdDts":
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_createdDts(ctx, field, obj)
@@ -53476,6 +53725,23 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_modifiedBy(ctx, field, obj)
 
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_modifiedDts(ctx, field, obj)
@@ -53484,6 +53750,23 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_readyForReviewBy(ctx, field, obj)
 
+		case "readyForReviewByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_readyForReviewByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForReviewDts":
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_readyForReviewDts(ctx, field, obj)

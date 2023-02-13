@@ -322,7 +322,7 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   agencyOrStateHelp: AgencyOrStateHelpType[];

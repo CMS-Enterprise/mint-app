@@ -104,9 +104,9 @@ export interface GetModelPlan_modelPlan_beneficiaries {
 export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

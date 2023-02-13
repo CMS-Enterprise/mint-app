@@ -88,7 +88,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskList)
+	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {

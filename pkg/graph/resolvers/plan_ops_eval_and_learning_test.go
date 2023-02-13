@@ -126,7 +126,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 
 	suite.EqualValues(plan.ID, oel.ModelPlanID)
 	suite.EqualValues(models.TaskReady, oel.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, oel.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, oel.CreatedBy)
 	suite.Nil(oel.ModifiedBy)
 
 	//Assert these fields are nil upon creation
