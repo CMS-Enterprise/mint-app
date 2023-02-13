@@ -73,3 +73,8 @@ WHERE name = 'plan_beneficiaries';
 
 ALTER TABLE plan_beneficiaries
 ENABLE TRIGGER audit_trigger;
+
+/* disable need trigger as it is currently non-functional until needs are migrated */
+
+ALTER TABLE plan_beneficiaries
+DISABLE TRIGGER operational_need_trigger;
