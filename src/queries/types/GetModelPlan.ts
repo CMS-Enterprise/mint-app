@@ -71,9 +71,9 @@ export interface GetModelPlan_modelPlan_discussions {
 export interface GetModelPlan_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

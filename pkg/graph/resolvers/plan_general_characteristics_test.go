@@ -13,7 +13,7 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, gc.ModelPlanID)
 	suite.EqualValues(models.TaskReady, gc.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, gc.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, gc.CreatedBy)
 	suite.Nil(gc.ModifiedBy)
 
 	// Many of the fields are nil upon creation
