@@ -73,3 +73,8 @@ WHERE name = 'plan_general_characteristics';
 
 ALTER TABLE plan_general_characteristics
 ENABLE TRIGGER audit_trigger;
+
+/* disable need trigger as it is currently non-functional until needs are migrated */
+
+ALTER TABLE plan_general_characteristics
+DISABLE TRIGGER operational_need_trigger;
