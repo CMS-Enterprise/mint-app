@@ -17,7 +17,6 @@ export interface GetClearanceStatuses_modelPlan_basics_readyForClearanceByUserAc
 export interface GetClearanceStatuses_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
-  readyForClearanceBy: UUID | null;
   readyForClearanceByUserAccount: GetClearanceStatuses_modelPlan_basics_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -31,7 +30,6 @@ export interface GetClearanceStatuses_modelPlan_generalCharacteristics_readyForC
 export interface GetClearanceStatuses_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: GetClearanceStatuses_modelPlan_generalCharacteristics_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -45,7 +43,6 @@ export interface GetClearanceStatuses_modelPlan_participantsAndProviders_readyFo
 export interface GetClearanceStatuses_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: GetClearanceStatuses_modelPlan_participantsAndProviders_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -59,7 +56,6 @@ export interface GetClearanceStatuses_modelPlan_beneficiaries_readyForClearanceB
 export interface GetClearanceStatuses_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: GetClearanceStatuses_modelPlan_beneficiaries_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -73,7 +69,6 @@ export interface GetClearanceStatuses_modelPlan_opsEvalAndLearning_readyForClear
 export interface GetClearanceStatuses_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: GetClearanceStatuses_modelPlan_opsEvalAndLearning_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -87,7 +82,6 @@ export interface GetClearanceStatuses_modelPlan_payments_readyForClearanceByUser
 export interface GetClearanceStatuses_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: GetClearanceStatuses_modelPlan_payments_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

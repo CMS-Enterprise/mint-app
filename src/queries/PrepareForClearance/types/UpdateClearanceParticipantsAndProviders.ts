@@ -9,9 +9,14 @@ import { PlanParticipantsAndProvidersChanges, TaskStatus } from "./../../../type
 // GraphQL mutation operation: UpdateClearanceParticipantsAndProviders
 // ====================================================
 
+export interface UpdateClearanceParticipantsAndProviders_updatePlanParticipantsAndProviders_readyForClearanceByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface UpdateClearanceParticipantsAndProviders_updatePlanParticipantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: UpdateClearanceParticipantsAndProviders_updatePlanParticipantsAndProviders_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

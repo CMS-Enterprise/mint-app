@@ -16,7 +16,6 @@ export interface UpdatePrepareForClearance_updatePlanBasics_readyForClearanceByU
 
 export interface UpdatePrepareForClearance_updatePlanBasics {
   __typename: "PlanBasics";
-  readyForClearanceBy: UUID | null;
   readyForClearanceByUserAccount: UpdatePrepareForClearance_updatePlanBasics_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -29,7 +28,6 @@ export interface UpdatePrepareForClearance_updatePlanGeneralCharacteristics_read
 
 export interface UpdatePrepareForClearance_updatePlanGeneralCharacteristics {
   __typename: "PlanGeneralCharacteristics";
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: UpdatePrepareForClearance_updatePlanGeneralCharacteristics_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -42,7 +40,6 @@ export interface UpdatePrepareForClearance_updatePlanParticipantsAndProviders_re
 
 export interface UpdatePrepareForClearance_updatePlanParticipantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: UpdatePrepareForClearance_updatePlanParticipantsAndProviders_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -55,7 +52,6 @@ export interface UpdatePrepareForClearance_updatePlanBeneficiaries_readyForClear
 
 export interface UpdatePrepareForClearance_updatePlanBeneficiaries {
   __typename: "PlanBeneficiaries";
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: UpdatePrepareForClearance_updatePlanBeneficiaries_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -68,7 +64,6 @@ export interface UpdatePrepareForClearance_updatePlanOpsEvalAndLearning_readyFor
 
 export interface UpdatePrepareForClearance_updatePlanOpsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: UpdatePrepareForClearance_updatePlanOpsEvalAndLearning_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -81,7 +76,6 @@ export interface UpdatePrepareForClearance_updatePlanPayments_readyForClearanceB
 
 export interface UpdatePrepareForClearance_updatePlanPayments {
   __typename: "PlanPayments";
-  readyForClearanceBy: string | null;
   readyForClearanceByUserAccount: UpdatePrepareForClearance_updatePlanPayments_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

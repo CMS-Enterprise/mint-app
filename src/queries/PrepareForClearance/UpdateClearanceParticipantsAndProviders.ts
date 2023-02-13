@@ -6,7 +6,9 @@ export default gql`
     $changes: PlanParticipantsAndProvidersChanges!
   ) {
     updatePlanParticipantsAndProviders(id: $id, changes: $changes) {
-      readyForClearanceBy
+      readyForClearanceByUserAccount {
+        commonName
+      }
       readyForClearanceDts
       status
     }

@@ -6,7 +6,6 @@ export default gql`
       id
       basics {
         id
-        readyForClearanceBy
         readyForClearanceByUserAccount {
           commonName
         }
@@ -15,7 +14,6 @@ export default gql`
       }
       generalCharacteristics {
         id
-        readyForClearanceBy
         readyForClearanceByUserAccount {
           commonName
         }
@@ -24,7 +22,6 @@ export default gql`
       }
       participantsAndProviders {
         id
-        readyForClearanceBy
         readyForClearanceByUserAccount {
           commonName
         }
@@ -33,7 +30,6 @@ export default gql`
       }
       beneficiaries {
         id
-        readyForClearanceBy
         readyForClearanceByUserAccount {
           commonName
         }
@@ -42,7 +38,6 @@ export default gql`
       }
       opsEvalAndLearning {
         id
-        readyForClearanceBy
         readyForClearanceByUserAccount {
           commonName
         }
@@ -51,7 +46,6 @@ export default gql`
       }
       payments {
         id
-        readyForClearanceBy
         readyForClearanceByUserAccount {
           commonName
         }

@@ -9,9 +9,14 @@ import { PlanGeneralCharacteristicsChanges, TaskStatus } from "./../../../types/
 // GraphQL mutation operation: UpdateClearanceCharacteristics
 // ====================================================
 
+export interface UpdateClearanceCharacteristics_updatePlanGeneralCharacteristics_readyForClearanceByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
 export interface UpdateClearanceCharacteristics_updatePlanGeneralCharacteristics {
   __typename: "PlanGeneralCharacteristics";
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: UpdateClearanceCharacteristics_updatePlanGeneralCharacteristics_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

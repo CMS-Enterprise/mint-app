@@ -6,7 +6,9 @@ export default gql`
     $changes: PlanGeneralCharacteristicsChanges!
   ) {
     updatePlanGeneralCharacteristics(id: $id, changes: $changes) {
-      readyForClearanceBy
+      readyForClearanceByUserAccount {
+        commonName
+      }
       readyForClearanceDts
       status
     }
