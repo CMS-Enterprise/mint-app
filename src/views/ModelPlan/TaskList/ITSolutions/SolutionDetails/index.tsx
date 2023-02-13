@@ -214,9 +214,7 @@ const SolutionDetails = () => {
                     history.push({
                       pathname: `/models/${modelID}/documents/add-document`,
                       state: {
-                        fromSolutionDetails: true,
-                        operationalNeedID,
-                        operationalSolutionID
+                        solutionDetailsLink: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
                       }
                     });
                   }}

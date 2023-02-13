@@ -24,9 +24,9 @@ import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
 const DocumentUpload = ({
-  fromSolutionDetails
+  solutionDetailsLink
 }: {
-  fromSolutionDetails?: boolean;
+  solutionDetailsLink?: string;
 }) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
@@ -74,8 +74,8 @@ const DocumentUpload = ({
                 </Alert>
               </>
             );
-            if (fromSolutionDetails) {
-              history.goBack();
+            if (solutionDetailsLink) {
+              history.push(solutionDetailsLink);
             } else {
               history.push(`/models/${modelID}/documents`);
             }

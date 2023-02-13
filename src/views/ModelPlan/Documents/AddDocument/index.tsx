@@ -24,30 +24,25 @@ const AddDocument = () => {
 
   const { state } = useLocation<{
     state: {
-      fromSolutionDetails?: boolean;
-      operationalNeedID?: boolean;
-      operationalSolutionID?: boolean;
+      solutionDetailsLink?: string;
     };
-    fromSolutionDetails?: boolean;
-    operationalNeedID?: boolean;
-    operationalSolutionID?: boolean;
+    solutionDetailsLink?: string;
   }>();
 
-  const { fromSolutionDetails, operationalNeedID, operationalSolutionID } =
-    state || {};
+  const solutionDetailsLink = state?.solutionDetailsLink;
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
     { text: t('breadcrumb'), url: `/models/${modelID}/task-list/` },
     {
-      text: fromSolutionDetails ? t('itTracker') : t('heading'),
-      url: fromSolutionDetails
+      text: solutionDetailsLink ? t('itTracker') : t('heading'),
+      url: solutionDetailsLink
         ? `/models/${modelID}/task-list/it-solutions`
         : `/models/${modelID}/documents`
     },
     {
       text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+      url: solutionDetailsLink
     },
     { text: t('breadcrumb2') }
   ];
@@ -58,7 +53,7 @@ const AddDocument = () => {
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
             items={
-              fromSolutionDetails
+              solutionDetailsLink
                 ? breadcrumbs
                 : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
             }
@@ -79,7 +74,9 @@ const AddDocument = () => {
             {t('requiredHint')} <RequiredAsterisk /> {t('requiredHint2')}
           </p>
 
-          <DocumentUpload fromSolutionDetails />
+          <DocumentUpload
+            solutionDetailsLink={solutionDetailsLink || undefined}
+          />
 
           <div className="display-block">
             <Button
@@ -88,7 +85,7 @@ const AddDocument = () => {
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />
-              {fromSolutionDetails
+              {solutionDetailsLink
                 ? t('dontUploadFromSolution')
                 : t('dontUpload')}
             </Button>
