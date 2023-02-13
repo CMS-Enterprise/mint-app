@@ -21,8 +21,8 @@ migration_config = [
     # ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
 
     # Base Struct
-    ('plan_cr_tdl', 'EASI-2618', SQL_VARIANT_BASE_STRUCT),
-    # ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
+    # ('plan_cr_tdl', 'EASI-2618', SQL_VARIANT_BASE_STRUCT),
+    ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
     # ('discussion_reply', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document', 'EASI-2620', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document_solution_link', 'EASI-2621', SQL_VARIANT_BASE_STRUCT),
@@ -215,7 +215,7 @@ def generate_sql_migration_filename(migration_index, table) -> str:
 
 
 def generate_sql_migration(repo, table, migration_variant, migration_index):
-    assert not repo.is_dirty()
+    #assert not repo.is_dirty()
 
     migration_filename = generate_sql_migration_filename(migration_index, table)
     print(f"Generate a SQL Migration: {migration_filename}")
@@ -231,9 +231,9 @@ def generate_sql_migration(repo, table, migration_variant, migration_index):
 
 
 def generate_user_account_table_migration(repo, table, ticket, migration_variant, migration_index):
-    create_branch(repo, table, ticket)
+    #create_branch(repo, table, ticket)
     generate_sql_migration(repo, table, migration_variant, migration_index)
-    repo.git.checkout('main')
+    #repo.git.checkout('main')
 
 
 def main():
