@@ -47,6 +47,7 @@ import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
+import RouterProvider from 'views/RouterContext';
 import Sandbox from 'views/Sandbox';
 import SubscriptionHandler from 'views/SubscriptionHandler';
 import SubscriptionWrapper from 'views/SubscriptionWrapper';
@@ -216,33 +217,35 @@ const App = () => {
         Skip to main content
       </button>
       <BrowserRouter>
-        <AuthenticationWrapper>
-          <SubscriptionWrapper>
-            <SubscriptionHandler>
-              <MessageProvider>
-                <FlagsWrapper>
-                  <UserInfoWrapper>
-                    <NDAWrapper>
-                      <ModelAccessWrapper>
-                        <ModelInfoWrapper>
-                          <TimeOutWrapper>
-                            <NavContextProvider>
-                              <PageWrapper>
-                                <Header />
-                                <AppRoutes />
-                                <Footer />
-                              </PageWrapper>
-                            </NavContextProvider>
-                          </TimeOutWrapper>
-                        </ModelInfoWrapper>
-                      </ModelAccessWrapper>
-                    </NDAWrapper>
-                  </UserInfoWrapper>
-                </FlagsWrapper>
-              </MessageProvider>
-            </SubscriptionHandler>
-          </SubscriptionWrapper>
-        </AuthenticationWrapper>
+        <RouterProvider>
+          <AuthenticationWrapper>
+            <SubscriptionWrapper>
+              <SubscriptionHandler>
+                <MessageProvider>
+                  <FlagsWrapper>
+                    <UserInfoWrapper>
+                      <NDAWrapper>
+                        <ModelAccessWrapper>
+                          <ModelInfoWrapper>
+                            <TimeOutWrapper>
+                              <NavContextProvider>
+                                <PageWrapper>
+                                  <Header />
+                                  <AppRoutes />
+                                  <Footer />
+                                </PageWrapper>
+                              </NavContextProvider>
+                            </TimeOutWrapper>
+                          </ModelInfoWrapper>
+                        </ModelAccessWrapper>
+                      </NDAWrapper>
+                    </UserInfoWrapper>
+                  </FlagsWrapper>
+                </MessageProvider>
+              </SubscriptionHandler>
+            </SubscriptionWrapper>
+          </AuthenticationWrapper>
+        </RouterProvider>
       </BrowserRouter>
     </>
   );
