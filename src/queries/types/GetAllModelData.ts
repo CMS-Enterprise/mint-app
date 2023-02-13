@@ -480,9 +480,9 @@ export interface GetAllModelData_modelPlanCollection {
   id: UUID;
   modelName: string;
   archived: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   basics: GetAllModelData_modelPlanCollection_basics;
   beneficiaries: GetAllModelData_modelPlanCollection_beneficiaries;

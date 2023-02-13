@@ -195,7 +195,7 @@ const DraftModelPlansTable = ({
       },
       {
         Header: t('requestsTable.headers.recentActivity'),
-        accessor: 'createdDts',
+        accessor: 'modifiedDts',
         Cell: ({
           row,
           value
@@ -204,7 +204,8 @@ const DraftModelPlansTable = ({
           value: string;
         }) => {
           const { discussions } = row.original;
-          return formatRecentActivity(value, discussions);
+          const lastUpdated = value || row.original.createdDts;
+          return formatRecentActivity(lastUpdated, discussions);
         }
       }
     ];

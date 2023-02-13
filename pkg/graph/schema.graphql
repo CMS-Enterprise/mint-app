@@ -46,9 +46,11 @@ type ModelPlan {
   id: UUID!
   modelName: String!
   archived: Boolean!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
   basics: PlanBasics!
   generalCharacteristics: PlanGeneralCharacteristics!
@@ -1374,10 +1376,13 @@ type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
     userID: UUID!
+    userAccount: UserAccount!
 
     createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
     modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 
 }
@@ -1759,9 +1764,9 @@ enum CMSCenter {
 enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP
   POLICY_AND_PROGRAMS_GROUP
-  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
   SEAMLESS_CARE_MODELS_GROUP
-  STATE_INNOVATIONS_GROUP
+  STATE_AND_POPULATION_HEALTH_GROUP
+  TBD
 }
 
 enum DiscussionStatus {
