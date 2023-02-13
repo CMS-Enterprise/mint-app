@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -23,6 +23,13 @@ const AddDocument = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
+
+  const { state } = useLocation<{
+    state: { fromSolutionDetails?: boolean };
+    fromSolutionDetails?: boolean;
+  }>();
+
+  const fromSolutionDetails = state?.fromSolutionDetails;
 
   return (
     <MainContent data-testid="add-document">
@@ -74,7 +81,9 @@ const AddDocument = () => {
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />
-              {t('dontUpload')}
+              {fromSolutionDetails
+                ? t('dontUploadFromSolution')
+                : t('dontUpload')}
             </Button>
           </div>
         </Grid>

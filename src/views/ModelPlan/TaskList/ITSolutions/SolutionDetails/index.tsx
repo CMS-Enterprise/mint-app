@@ -211,7 +211,10 @@ const SolutionDetails = () => {
                   id="upload-document"
                   className="usa-button usa-button--outline"
                   onClick={() => {
-                    history.push(`/models/${modelID}/documents/add-document`);
+                    history.push({
+                      pathname: `/models/${modelID}/documents/add-document`,
+                      state: { fromSolutionDetails: true }
+                    });
                   }}
                 >
                   {t(`links.uploadDocuments`)}
