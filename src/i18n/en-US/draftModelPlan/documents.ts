@@ -89,7 +89,12 @@ const documents = {
     documentType: 'Select the type of document you are uploading.',
     restricted: 'Please select if this document contains cost information.',
     otherDescr: 'Enter a document name.'
-  }
+  },
+  linkDocumentsHeader: 'Link model documents',
+  linkDocumentsInfo:
+    'Link any model documents previously uploaded that are associated with this solution.',
+  linkDocumentsButton: 'Link documents',
+  dontLink: 'Don’t link documents and return to solution details'
 };
 
 export default documents;

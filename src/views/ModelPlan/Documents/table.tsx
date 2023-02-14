@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Button, Checkbox, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -31,12 +31,15 @@ import {
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
 
+import './index.scss';
+
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
   isHelpArticle?: boolean;
+  solutionDetailsLink?: boolean;
   className?: string;
 };
 
@@ -48,6 +51,7 @@ const PlanDocumentsTable = ({
   setDocumentMessage,
   setDocumentStatus,
   isHelpArticle,
+  solutionDetailsLink,
   className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
@@ -96,6 +100,7 @@ const PlanDocumentsTable = ({
         setDocumentMessage={setDocumentMessage}
         setDocumentStatus={setDocumentStatus}
         hasEditAccess={hasEditAccess}
+        solutionDetailsLink={solutionDetailsLink}
       />
     </div>
   );
@@ -109,6 +114,7 @@ type TableProps = {
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
+  solutionDetailsLink?: boolean;
   hasEditAccess?: boolean;
 };
 
@@ -118,6 +124,7 @@ const Table = ({
   refetch,
   setDocumentMessage,
   setDocumentStatus,
+  solutionDetailsLink,
   hasEditAccess
 }: TableProps) => {
   const { t } = useTranslation('documents');
@@ -208,10 +215,27 @@ const Table = ({
   }, [setDocumentMessage, setDocumentStatus]);
 
   const columns = useMemo(() => {
-    return [
+    const documentColumns = [
       {
-        Header: t('documentTable.name'),
-        accessor: 'fileName'
+        Header: () => {
+          return t('documentTable.name');
+        },
+        accessor: 'fileName',
+        Cell: ({ row, value }: any) => {
+          if (solutionDetailsLink) {
+            return (
+              <Checkbox
+                id={`link-document-${row.original.id}`}
+                onChange={() => null}
+                label={value}
+                name={`link-document-${row.original.id}`}
+                onBlur={() => null}
+                value="true"
+              />
+            );
+          }
+          return value;
+        }
       },
       {
         Header: t('documentTable.type'),
@@ -235,13 +259,6 @@ const Table = ({
         }
       },
       {
-        Header: t('documentTable.visibility'),
-        accessor: 'restricted',
-        Cell: ({ row, value }: any) => {
-          return value ? t('restricted') : t('all');
-        }
-      },
-      {
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
@@ -256,7 +273,7 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                {hasEditAccess && (
+                {hasEditAccess && !solutionDetailsLink && (
                   <Button
                     type="button"
                     unstyled
@@ -279,7 +296,18 @@ const Table = ({
         }
       }
     ];
-  }, [t, handleDownload, hasEditAccess]);
+    if (!solutionDetailsLink) {
+      const visibilityColumn = {
+        Header: t('documentTable.visibility'),
+        accessor: 'restricted',
+        Cell: ({ row, value }: any) => {
+          return value ? t('restricted') : t('all');
+        }
+      };
+      documentColumns.splice(3, 0, visibilityColumn);
+    }
+    return documentColumns;
+  }, [t, handleDownload, hasEditAccess, solutionDetailsLink]);
 
   const {
     getTableProps,
@@ -366,9 +394,7 @@ const Table = ({
                           {...cell.getCellProps()}
                           scope="row"
                           style={{
-                            paddingLeft: '0',
-                            borderBottom:
-                              index === page.length - 1 ? 'none' : 'auto'
+                            paddingLeft: '0'
                           }}
                         >
                           {cell.render('Cell')}
@@ -379,9 +405,7 @@ const Table = ({
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          paddingLeft: '0',
-                          borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                          paddingLeft: '0'
                         }}
                       >
                         {cell.render('Cell')}
