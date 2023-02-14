@@ -226,8 +226,8 @@ def generate_sql_migration(repo, table, migration_variant, migration_index):
         print(f"Writing Migration File...")
         write_sql_migration_file(migration_filename, migration_sql)
 
-    repo.git.add(all=True)
-    repo.git.commit("-am", f"feat: generated SQL for updating {table} to use the User Account table")
+    #repo.git.add(all=True)
+    #repo.git.commit("-am", f"feat: generated SQL for updating {table} to use the User Account table")
 
 
 def generate_user_account_table_migration(repo, table, ticket, migration_variant, migration_index):
