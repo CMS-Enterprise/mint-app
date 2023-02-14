@@ -244,13 +244,13 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                 <div className="display-flex flex-align-center">
                   <AssessmentIcon size={3} />{' '}
                   <span>
-                    {t('assessment')} | {reply.createdByUser.commonName}
+                    {t('assessment')} | {reply.createdByUserAccount.commonName}
                   </span>
                 </div>
               ) : (
                 <IconInitial
                   className="margin-bottom-1"
-                  user={reply.createdByUser.commonName}
+                  user={reply.createdByUserAccount.commonName}
                   index={0}
                 />
               )}
