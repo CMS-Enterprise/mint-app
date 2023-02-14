@@ -19,6 +19,13 @@ The data backfill command was created to be a one time use tool to import data f
 * Keeping the branch in main means that we would need to spend development time updating functionality that we likely won't need.
 * If we need this logic in the future, it might be more efficient to use the old logic as inspiration, instead of trying to use the existing functionality.
 
+Steps to use if needed in the future
+
+1. Checkout the old commit.
+2. Update the code logic to use the new paradigm.
+3. Create a list of users JSON file.
+4. Get the new data to be imported in CSV format.
+
 ## Pros and Cons of the Alternatives <!-- optional -->
 
 ### Continue to update the backfill tool with each code change
