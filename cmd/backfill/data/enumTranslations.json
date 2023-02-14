@@ -1,0 +1,2528 @@
+[
+    {
+        "value": "Medicare FFS Beneficiaries",
+        "enum": "MEDICARE_FFS",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries"
+    },
+    {
+        "value": "Medicare Advantage",
+        "enum": "MEDICARE_ADVANTAGE",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries"
+    },
+    {
+        "value": "Medicare Part D",
+        "enum": "MEDICARE_PART_D",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries"
+    },
+    {
+        "value": "Medicaid Recipient",
+        "enum": "MEDICAID",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries"
+    },
+    {
+        "value": "Dual Eligible Beneficiaries",
+        "enum": "DUALLY_ELIGIBLE",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries"
+    },
+    {
+        "value": "Disease-specific",
+        "enum": "DISEASE_SPECIFIC",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries",
+        "outliers": "Multi-payer alignment"
+    },
+    {
+        "enum": "NA",
+        "dbtype": "beneficiaries_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaries",
+        "outliers": "CHIP, maybe commercial payers"
+    },
+    {
+        "enum": "YES",
+        "dbtype": "tri_state_answer"
+    },
+    {
+        "enum": "NO",
+        "dbtype": "tri_state_answer"
+    },
+    {
+        "value": "TBD",
+        "enum": "TBD",
+        "dbtype": "tri_state_answer"
+    },
+    {
+        "enum": "READY",
+        "dbtype": "task_status"
+    },
+    {
+        "enum": "IN_PROGRESS",
+        "dbtype": "task_status"
+    },
+    {
+        "enum": "READY_FOR_REVIEW",
+        "dbtype": "task_status"
+    },
+    {
+        "enum": "READY_FOR_CLEARANCE",
+        "dbtype": "task_status"
+    },
+    {
+        "enum": "NOT_AT_ALL",
+        "dbtype": "confidence_type"
+    },
+    {
+        "enum": "SLIGHTLY",
+        "dbtype": "confidence_type"
+    },
+    {
+        "enum": "FAIRLY",
+        "dbtype": "confidence_type"
+    },
+    {
+        "enum": "COMPLETELY",
+        "dbtype": "confidence_type"
+    },
+    {
+        "enum": "ANNUALLY",
+        "dbtype": "frequency_type"
+    },
+    {
+        "enum": "BIANNUALLY",
+        "dbtype": "frequency_type"
+    },
+    {
+        "value": "Quarterly",
+        "enum": "QUARTERLY",
+        "dbtype": "frequency_type"
+    },
+    {
+        "enum": "MONTHLY",
+        "dbtype": "frequency_type"
+    },
+    {
+        "enum": "ROLLING",
+        "dbtype": "frequency_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "frequency_type"
+    },
+    {
+        "value": "Yes, and we expect to develop policies to manage the overlaps",
+        "enum": "YES_NEED_POLICIES",
+        "dbtype": "overlap_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "ProviderOverlap"
+    },
+    {
+        "value": "Yes, therefore overlaps would not be an issue",
+        "enum": "YES_NO_ISSUES",
+        "dbtype": "overlap_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "ProviderOverlap"
+    },
+    {
+        "value": "No, and we expect to develop policies to manage the overlaps",
+        "enum": "NO",
+        "dbtype": "overlap_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "ProviderOverlap"
+    },
+    {
+        "value": "Yes, and we expect to develop policies to manage the overlaps",
+        "enum": "YES_NEED_POLICIES",
+        "dbtype": "overlap_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaryOverlap"
+    },
+    {
+        "value": "Yes, therefore overlaps would not be an issue",
+        "enum": "YES_NO_ISSUES",
+        "dbtype": "overlap_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaryOverlap"
+    },
+    {
+        "value": "No, and we expect to develop policies to manage the overlaps",
+        "enum": "NO",
+        "dbtype": "overlap_type",
+        "model": "PlanBeneficiaries",
+        "field": "beneficiaryOverlap",
+        "outliers": "No, and we expect to develop policies to manage the overlaps"
+    },
+    {
+        "enum": "PLAN_DRAFT",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "PLAN_COMPLETE",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "ICIP_COMPLETE",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "INTERNAL_CMMI_CLEARANCE",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "CMS_CLEARANCE",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "HHS_CLEARANCE",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "OMB_ASRF_CLEARANCE",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "CLEARED",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "ANNOUNCED",
+        "dbtype": "model_plan_status"
+    },
+    {
+        "enum": "MODEL_LEAD",
+        "dbtype": "team_role"
+    },
+    {
+        "enum": "MODEL_TEAM",
+        "dbtype": "team_role"
+    },
+    {
+        "enum": "LEADERSHIP",
+        "dbtype": "team_role"
+    },
+    {
+        "enum": "LEARNING",
+        "dbtype": "team_role"
+    },
+    {
+        "enum": "EVALUATION",
+        "dbtype": "team_role"
+    },
+    {
+        "enum": "IT_LEAD",
+        "dbtype": "team_role"
+    },
+    {
+        "value": "Accountable Care",
+        "enum": "ACCOUNTABLE_CARE",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "enum": "DEMONSTRATION",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "value": "Episode-based Payment Initiatives",
+        "enum": "EPISODE_BASED_PAYMENT_INITIATIVES",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "enum": "INIT_MEDICAID_CHIP_POP",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "enum": "INIT__MEDICARE_MEDICAID_ENROLLEES",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "value": "Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models",
+        "enum": "INIT_ACCEL_DEV_AND_TEST",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "enum": "INIT_SPEED_ADOPT_BEST_PRACTICE",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "value": "Primary Care Transformation",
+        "enum": "PRIMARY_CARE_TRANSFORMATION",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "enum": "UNKNOWN",
+        "dbtype": "model_category",
+        "model": "PlanBasics",
+        "field": "ModelCategory"
+    },
+    {
+        "value": "CMMI",
+        "enum": "CMMI",
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
+    },
+    {
+        "enum": "CENTER_FOR_MEDICARE",
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
+    },
+    {
+        "enum": "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE",
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
+    },
+    {
+        "enum": "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY",
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
+    },
+    {
+        "enum": "CENTER_FOR_PROGRAM_INTEGRITY",
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "cms_center",
+        "model": "PlanBasics",
+        "field": "CMSCenters"
+    },
+    {
+        "value": "Patient Care Models Group (PCMG)",
+        "enum": "PATIENT_CARE_MODELS_GROUP",
+        "dbtype": "cmmi_group",
+        "model": "PlanBasics",
+        "field": "cMMIGroups"
+    },
+    {
+        "enum": "POLICY_AND_PROGRAMS_GROUP",
+        "dbtype": "cmmi_group",
+        "model": "PlanBasics",
+        "field": "cMMIGroups"
+    },
+    {
+        "value": "Preventive and Population Health Care Models Group (PPHCMG)",
+        "enum": "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP",
+        "dbtype": "cmmi_group",
+        "model": "PlanBasics",
+        "field": "cMMIGroups"
+    },
+    {
+        "value": "Seamless Care Models Group (SCMG)",
+        "enum": "SEAMLESS_CARE_MODELS_GROUP",
+        "dbtype": "cmmi_group",
+        "model": "PlanBasics",
+        "field": "cMMIGroups"
+    },
+    {
+        "value": "State Innovations Group (SIG)",
+        "enum": "STATE_INNOVATIONS_GROUP",
+        "dbtype": "cmmi_group",
+        "model": "PlanBasics",
+        "field": "cMMIGroups"
+    },
+    {
+        "value": "TBD",
+        "enum": "TBD",
+        "dbtype": "cmmi_group",
+        "model": "PlanBasics",
+        "field": "cMMIGroups"
+    },
+    {
+        "value": "Voluntary",
+        "enum": "VOLUNTARY",
+        "dbtype": "model_type",
+        "model": "PlanBasics",
+        "field": "ModelType"
+    },
+    {
+        "value": "Mandatory",
+        "enum": "MANDATORY",
+        "dbtype": "model_type",
+        "model": "PlanBasics",
+        "field": "ModelType"
+    },
+    {
+        "value": "TBD",
+        "enum": "TBD",
+        "dbtype": "model_type",
+        "model": "PlanBasics",
+        "field": "ModelType"
+    },
+    {
+        "enum": "CONCEPT_PAPER",
+        "dbtype": "document_type"
+    },
+    {
+        "enum": "POLICY_PAPER",
+        "dbtype": "document_type"
+    },
+    {
+        "enum": "ICIP_DRAFT",
+        "dbtype": "document_type"
+    },
+    {
+        "enum": "MARKET_RESEARCH",
+        "dbtype": "document_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "document_type"
+    },
+    {
+        "enum": "ANSWERED",
+        "dbtype": "discussion_status"
+    },
+    {
+        "enum": "WAITING_FOR_RESPONSE",
+        "dbtype": "discussion_status"
+    },
+    {
+        "enum": "UNANSWERED",
+        "dbtype": "discussion_status"
+    },
+    {
+        "value": "Regular APM",
+        "enum": "REGULAR",
+        "dbtype": "alternative_payment_model_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "alternativePaymentModelTypes",
+        "outliers": "TBD"
+    },
+    {
+        "enum": "MIPS",
+        "dbtype": "alternative_payment_model_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "alternativePaymentModelTypes",
+        "outliers": "No"
+    },
+    {
+        "value": "Advanced APM",
+        "enum": "ADVANCED",
+        "dbtype": "alternative_payment_model_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "alternativePaymentModelTypes",
+        "outliers": "Yes"
+    },
+    {
+        "enum": "NOT_APM",
+        "dbtype": "alternative_payment_model_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "alternativePaymentModelTypes"
+    },
+    {
+        "value": "Episode-Based Model",
+        "enum": "EPISODE_BASED",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "enum": "PART_C",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "enum": "PART_D",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "enum": "PAYMENT",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "value": "Population-Based Model",
+        "enum": "POPULATION_BASED",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "value": "Preventative Model",
+        "enum": "PREVENTATIVE",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "value": "Service Delivery Model",
+        "enum": "SERVICE_DELIVERY",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "value": "Shared Savings Model",
+        "enum": "SHARED_SAVINGS",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "key_characteristic",
+        "model": "PlanGeneralCharacteristics",
+        "field": "keyCharacteristics",
+        "outliers": "Capacity building model"
+    },
+    {
+        "value": "State",
+        "enum": "STATE",
+        "dbtype": "geography_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedTypes"
+    },
+    {
+        "value": "Region (CBSA/MSA/HRR/etc.)",
+        "enum": "REGION",
+        "dbtype": "geography_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedTypes"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "geography_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedTypes"
+    },
+    {
+        "value": "Participants",
+        "enum": "PARTICIPANTS",
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
+    },
+    {
+        "value": "Providers",
+        "enum": "PROVIDERS",
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
+    },
+    {
+        "value": "Beneficiaries",
+        "enum": "BENEFICIARIES",
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "geography_application",
+        "model": "PlanGeneralCharacteristics",
+        "field": "geographiesTargetedAppliedTo"
+    },
+    {
+        "value": "Participant Agreement",
+        "enum": "PARTICIPATION",
+        "dbtype": "agreement_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "agreementTypes",
+        "note": "Unsure"
+    },
+    {
+        "value": "Cooperative Agreement/Grant",
+        "enum": "COOPERATIVE",
+        "dbtype": "agreement_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "agreementTypes"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "agreement_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "agreementTypes",
+        "outliers": "Mandatory with potential voluntary component "
+    },
+    {
+        "value": "3021 (ACA)",
+        "enum": "ACA",
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
+    },
+    {
+        "enum": "CONGRESSIONALLY_MANDATED",
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
+    },
+    {
+        "enum": "SSA_PART_B",
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "authority_allowance",
+        "model": "PlanGeneralCharacteristics",
+        "field": "authorityAllowances"
+    },
+    {
+        "value": "Fraud and Abuse (Note: Federal Waiver team writes)",
+        "enum": "FRAUD_ABUSE",
+        "dbtype": "waiver_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "waiversRequiredTypes"
+    },
+    {
+        "value": "Program/payment (Note: CMMI writes, OGC advises, full clearance process is required)",
+        "enum": "PROGRAM_PAYMENT",
+        "dbtype": "waiver_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "waiversRequiredTypes"
+    },
+    {
+        "value": "Medicaid (1115, Other)",
+        "enum": "MEDICAID",
+        "dbtype": "waiver_type",
+        "model": "PlanGeneralCharacteristics",
+        "field": "waiversRequiredTypes"
+    },
+    {
+        "enum": "HISTORICAL",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "enum": "PROSPECTIVE",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "value": "Select retrospective",
+        "enum": "RETROSPECTIVE",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "enum": "VOLUNTARY",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "value": "Beneficiary would sign up through their provider",
+        "enum": "PROVIDER_SIGN_UP",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "enum": "NA",
+        "dbtype": "selection_method_type",
+        "model": "PlanBeneficiaries",
+        "field": "BeneficiarySelectionMethod"
+    },
+    {
+        "value": "Medicare providers",
+        "enum": "MEDICARE_PROVIDERS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "Entities (e.g., ACO, Direct Contracting Entity)",
+        "enum": "ENTITIES",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "enum": "CONVENER",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "enum": "MEDICARE_ADVANTAGE_PLANS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "enum": "STANDALONE_PART_D_PLANS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "enum": "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "State Medicaid Agencies",
+        "enum": "STATE_MEDICAID_AGENCIES",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "enum": "MEDICAID_MANAGED_CARE_ORGANIZATIONS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants",
+        "outliers": "Non-clinical provider types and sites"
+    },
+    {
+        "value": "Medicaid providers",
+        "enum": "MEDICAID_PROVIDERS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "States",
+        "enum": "STATES",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "Community-based Organizations",
+        "enum": "COMMUNITY_BASED_ORGANIZATIONS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "Non-Profit organizations",
+        "enum": "NON_PROFIT_ORGANIZATIONS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "Commercial payers",
+        "enum": "COMMERCIAL_PAYERS",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "participants_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participants"
+    },
+    {
+        "enum": "LOI",
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
+    },
+    {
+        "value": "RFA (Request for Applications) (Note: CMMI writes, OGC reviews and approves)",
+        "enum": "APPLICATION_COLLECTION_TOOL",
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod",
+        "note": "THIS WAS RFA, but was removed"
+    },
+    {
+        "value": "NOFO (Notice of Funding Opportunity, for grants/cooperative agreements) (Note: OAGM reviews and approves)",
+        "enum": "NOFO",
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
+    },
+    {
+        "value": "N/A, it is mandatory",
+        "enum": "NA",
+        "dbtype": "recruitment_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "RecruitmentMethod"
+    },
+    {
+        "value": "Model team will review applications",
+        "enum": "MODEL_TEAM_REVIEW_APPLICATIONS",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod"
+    },
+    {
+        "enum": "SUPPORT_FROM_CMMI",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod"
+    },
+    {
+        "enum": "CMS_COMPONENT_OR_PROCESS",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod"
+    },
+    {
+        "value": "Model team will use an Application Review and Scoring tool",
+        "enum": "APPLICATION_REVIEW_AND_SCORING_TOOL",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod"
+    },
+    {
+        "value": "Model team will get an application support contractor",
+        "enum": "APPLICATION_SUPPORT_CONTRACTOR",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod"
+    },
+    {
+        "enum": "BASIC_CRITERIA",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod",
+        "outliers": "Rulemaking"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod",
+        "outliers": "Mandatory Model"
+    },
+    {
+        "enum": "NO_SELECTING_PARTICIPANTS",
+        "dbtype": "participant_selection_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "selectionMethod"
+    },
+    {
+        "value": "Send mass e-mails to new participants",
+        "enum": "MASS_EMAIL",
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
+    },
+    {
+        "value": "Manage ongoing communications with participants by using an IT tool",
+        "enum": "IT_TOOL",
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod",
+        "outliers": "Automate communication between systems using APIs"
+    },
+    {
+        "enum": "NO_COMMUNICATION",
+        "dbtype": "participant_communication_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "communicationMethod"
+    },
+    {
+        "value": "Two-sided",
+        "enum": "TWO_SIDED",
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
+    },
+    {
+        "value": "One-sided",
+        "enum": "ONE_SIDED",
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
+    },
+    {
+        "value": "Capitation",
+        "enum": "CAPITATION",
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "participant_risk_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "riskType"
+    },
+    {
+        "value": "TINs",
+        "enum": "TINS",
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
+    },
+    {
+        "value": "NPIs",
+        "enum": "NPIS",
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
+    },
+    {
+        "value": "CCNs",
+        "enum": "CCNS",
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
+    },
+    {
+        "enum": "NO_IDENTIFIERS",
+        "dbtype": "participants_id_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "participantsIds"
+    },
+    {
+        "value": "Enroll prospectively (based on previous year’s interactions)",
+        "enum": "PROSPECTIVELY",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "enum": "RETROSPECTIVELY",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "value": "Enroll voluntarily",
+        "enum": "VOLUNTARILY",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "value": "Enroll mandatorily",
+        "enum": "MANDATORILY",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "value": "Use online tools to view what types of participant files and data have been uploaded and downloaded",
+        "enum": "ONLINE_TOOLS",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "enum": "NA",
+        "dbtype": "provider_add_type",
+        "model": "PlanParticipantsAndProviders",
+        "field": "providerAddMethod"
+    },
+    {
+        "enum": "VOLUNTARILY_WITHOUT_IMPLICATIONS",
+        "dbtype": "provider_leave_type"
+    },
+    {
+        "enum": "AFTER_A_CERTAIN_WITH_IMPLICATIONS",
+        "dbtype": "provider_leave_type"
+    },
+    {
+        "enum": "VARIES_BY_TYPE_OF_PROVIDER",
+        "dbtype": "provider_leave_type"
+    },
+    {
+        "enum": "NOT_ALLOWED_TO_LEAVE",
+        "dbtype": "provider_leave_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "provider_leave_type"
+    },
+    {
+        "enum": "NOT_APPLICABLE",
+        "dbtype": "provider_leave_type"
+    },
+    {
+        "value": "Yes, we will partner with states",
+        "enum": "YES_STATE",
+        "dbtype": "agency_or_state_help_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "agencyOrStateHelp"
+    },
+    {
+        "value": "Yes, we will get ideas from another agency",
+        "enum": "YES_AGENCY_IDEAS",
+        "dbtype": "agency_or_state_help_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "agencyOrStateHelp"
+    },
+    {
+        "value": "Yes, we will get support from another agency through an IAA",
+        "enum": "YES_AGENCY_IAA",
+        "dbtype": "agency_or_state_help_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "agencyOrStateHelp"
+    },
+    {
+        "value": "No",
+        "enum": "NO",
+        "dbtype": "agency_or_state_help_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "agencyOrStateHelp"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "agency_or_state_help_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "agencyOrStateHelp",
+        "outliers": "TBD"
+    },
+    {
+        "value": "Beneficiaries",
+        "enum": "BENEFICIARIES",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders"
+    },
+    {
+        "value": "Community partners",
+        "enum": "COMMUNITY_ORGANIZATIONS",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders"
+    },
+    {
+        "value": "Participants",
+        "enum": "PARTICIPANTS",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders"
+    },
+    {
+        "value": "Professional organizations",
+        "enum": "PROFESSIONAL_ORGANIZATIONS",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders"
+    },
+    {
+        "value": "Providers",
+        "enum": "PROVIDERS",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders"
+    },
+    {
+        "value": "States",
+        "enum": "STATES",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "stakeholders_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "stakeholders",
+        "outliers": "Payors"
+    },
+    {
+        "value": "One contractor to support implementation",
+        "enum": "ONE",
+        "dbtype": "contractor_support_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport",
+        "outliers": "May have separate contractors for different implementation functions"
+    },
+    {
+        "value": "May have separate contractors for different implementation functions",
+        "enum": "MULTIPLE",
+        "dbtype": "contractor_support_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport"
+    },
+    {
+        "enum": "NONE",
+        "dbtype": "contractor_support_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "contractor_support_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "contractorSupport"
+    },
+    {
+        "enum": "BENEFICIARY",
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
+    },
+    {
+        "enum": "PROVIDER",
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
+    },
+    {
+        "enum": "PROVIDER",
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
+    },
+    {
+        "enum": "PART_B",
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "monitoring_file_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataMonitoringFileTypes"
+    },
+    {
+        "value": "Establish control and intervention groups",
+        "enum": "CONTROL_INTERVENTION",
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
+    },
+    {
+        "value": "Identify a comparison/match group",
+        "enum": "COMPARISON_MATCH",
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
+    },
+    {
+        "value": "Interrupted time series",
+        "enum": "INTERRUPTED_TIME",
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
+    },
+    {
+        "enum": "NON_MEDICARE_DATA",
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "evaluation_approach_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "evaluationApproaches"
+    },
+    {
+        "enum": "YES_EVALUATION",
+        "dbtype": "ccm_involvment_type"
+    },
+    {
+        "enum": "YES__IMPLEMENTATION",
+        "dbtype": "ccm_involvment_type"
+    },
+    {
+        "enum": "NO",
+        "dbtype": "ccm_involvment_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "ccm_involvment_type"
+    },
+    {
+        "enum": "SITE_VISITS",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Medicare claims",
+        "enum": "MEDICARE_CLAIMS",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Medicaid claims",
+        "enum": "MEDICAID_CLAIMS",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "enum": "ENCOUNTER_DATA",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "enum": "NO_PAY_CLAIMS",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Quality Claims-based measures",
+        "enum": "QUALITY_CLAIMS_BASED_MEASURES",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Quality reported measures",
+        "enum": "QUALITY_REPORTED_MEASURES",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "enum": "CLINICAL_DATA",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Non-clinical data (e.g., surveys)",
+        "enum": "NON_CLINICAL_DATA",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Non-medical data (e.g., housing, nutrition)",
+        "enum": "NON_MEDICAL_DATA",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "enum": "NOT_PLANNING_TO_COLLECT_DATA",
+        "dbtype": "data_for_monitoring_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataNeededForMonitoring"
+    },
+    {
+        "value": "Baseline/historical data",
+        "enum": "BASELINE_HISTORICAL_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
+    },
+    {
+        "value": "Claims-level data",
+        "enum": "CLAIMS_LEVEL_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
+    },
+    {
+        "value": "Beneficiary-level data",
+        "enum": "BENEFICIARY_LEVEL_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
+    },
+    {
+        "value": "Participant-level data",
+        "enum": "PARTICIPANT_LEVEL_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
+    },
+    {
+        "value": "Provider-level data",
+        "enum": "PROVIDER_LEVEL_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
+    },
+    {
+        "value": "Other - MIPS data",
+        "enum": "OTHER_MIPS_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants",
+        "outliers": "Data feedback reports/dashboards"
+    },
+    {
+        "value": "No data will be sent",
+        "enum": "NOT_PLANNING_TO_SEND_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER_MIPS_DATA",
+        "dbtype": "data_to_send_participants_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "dataToSendParticicipants",
+        "outliers": "Data feedback reports/dashboards",
+        "note": "DOUBLE CHECK THIS!!!"
+    },
+    {
+        "enum": "ANNUALLY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "BIANNUALLY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "QUARTERLY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "MONTHLY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "SEMI_MONTHLY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "WEEKLY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "value": "Daily",
+        "enum": "DAILY",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "NOT_PLANNING_TO_DO_THIS",
+        "dbtype": "data_frequency_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "LEARNING_CONTRACTOR",
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems"
+    },
+    {
+        "value": "We plan to use CONNECT",
+        "enum": "IT_PLATFORM_CONNECT",
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems"
+    },
+    {
+        "value": "We plan to promote peer-to-peer learning with most model participants",
+        "enum": "PARTICIPANT_COLLABORATION",
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems",
+        "outliers": "We plan to promote peer-to-peer learning with most model participants"
+    },
+    {
+        "enum": "EDUCATE_BENEFICIARIES",
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems",
+        "outliers": "Yes"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems",
+        "outliers": "ADVANCED"
+    },
+    {
+        "enum": "NO_LEARNING_SYSTEM",
+        "dbtype": "model_learning_system_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "modelLearningSystems",
+        "outliers": "TBD"
+    },
+    {
+        "enum": "FULL_TIME",
+        "dbtype": "data_full_time_or_incremental_type"
+    },
+    {
+        "enum": "INCREMENTAL",
+        "dbtype": "data_full_time_or_incremental_type"
+    },
+    {
+        "value": "Yes, and we will reconcile actual performance against it",
+        "enum": "YES_RECONCILE",
+        "dbtype": "benchmark_for_performance_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "BenchmarkForPerformance"
+    },
+    {
+        "value": "Yes, but we will not reconcile actual performance against it",
+        "enum": "YES_NO_RECONCILE",
+        "dbtype": "benchmark_for_performance_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "BenchmarkForPerformance"
+    },
+    {
+        "value": "No",
+        "enum": "NO",
+        "dbtype": "benchmark_for_performance_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "BenchmarkForPerformance"
+    },
+    {
+        "enum": "DURING_APPLICATION_PERIOD",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "value": "Shortly before the start date",
+        "enum": "SHORTLY_BEFORE_THE_START_DATE",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "value": "Early in the first performance year",
+        "enum": "EARLY_IN_THE_FIRST_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "value": "Later in the first performance year",
+        "enum": "LATER_IN_THE_FIRST_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "enum": "IN_THE_SUBSEQUENT_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "value": "At some other point in time",
+        "enum": "AT_SOME_OTHER_POINT_IN_TIME",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "value": "Not planning to collect data",
+        "enum": "NOT_PLANNING_TO_DO_THIS",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataCollectionStarts"
+    },
+    {
+        "enum": "DURING_APPLICATION_PERIOD",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Shortly before the start date",
+        "enum": "SHORTLY_BEFORE_THE_START_DATE",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Early in the first performance year",
+        "enum": "EARLY_IN_THE_FIRST_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Later in the first performance year",
+        "enum": "LATER_IN_THE_FIRST_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "enum": "IN_THE_SUBSEQUENT_PERFORMANCE_YEAR",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "At some other point in time",
+        "enum": "AT_SOME_OTHER_POINT_IN_TIME",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Not planning to collect data",
+        "enum": "NOT_PLANNING_TO_DO_THIS",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "data_starts_type",
+        "model": "PlanOpsEvalAndLearning",
+        "field": "DataSharingStarts"
+    },
+    {
+        "value": "3021",
+        "enum": "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT",
+        "dbtype": "pp_funding_source",
+        "model": "PlanPayments",
+        "field": "fundingSource"
+    },
+    {
+        "value": "Trust Fund",
+        "enum": "TRUST_FUND",
+        "dbtype": "pp_funding_source",
+        "model": "PlanPayments",
+        "field": "fundingSource"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_funding_source",
+        "model": "PlanPayments",
+        "field": "fundingSource"
+    },
+    {
+        "value": "Providers",
+        "enum": "PROVIDERS",
+        "dbtype": "pp_pay_recipient",
+        "model": "PlanPayments",
+        "field": "payRecipients"
+    },
+    {
+        "enum": "BENEFICIARIES",
+        "dbtype": "pp_pay_recipient",
+        "model": "PlanPayments",
+        "field": "payRecipients"
+    },
+    {
+        "value": "Participants",
+        "enum": "PARTICIPANTS",
+        "dbtype": "pp_pay_recipient",
+        "model": "PlanPayments",
+        "field": "payRecipients"
+    },
+    {
+        "value": "States",
+        "enum": "STATES",
+        "dbtype": "pp_pay_recipient",
+        "model": "PlanPayments",
+        "field": "payRecipients"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_pay_recipient",
+        "model": "PlanPayments",
+        "field": "payRecipients"
+    },
+    {
+        "enum": "CLAIMS_BASED_PAYMENTS",
+        "dbtype": "pp_pay_type",
+        "model": "PlanPayments",
+        "field": "payType",
+        "outliers": "FALSE"
+    },
+    {
+        "enum": "NON_CLAIMS_BASED_PAYMENTS",
+        "dbtype": "pp_pay_type",
+        "model": "PlanPayments",
+        "field": "payType"
+    },
+    {
+        "enum": "GRANTS",
+        "dbtype": "pp_pay_type",
+        "model": "PlanPayments",
+        "field": "payType"
+    },
+    {
+        "value": "Adjustments to FFS Payments",
+        "enum": "ADJUSTMENTS_TO_FFS_PAYMENTS",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments",
+        "note": "Might be mapped wrong"
+    },
+    {
+        "enum": "CARE_MANAGEMENT_HOME_VISITS",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "REDUCTIONS_TO_BENEFICIARY_COST_SHARING",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
+    },
+    {
+        "enum": "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_claims_based_pay_type",
+        "model": "PlanPayments"
+    },
+    {
+        "value": "Advanced Payment",
+        "enum": "ADVANCED_PAYMENT",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Bundled/Episode of Care",
+        "enum": "BUNDLED_EPISODE_OF_CARE",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Capitation/Population Based - Full",
+        "enum": "CAPITATION_POPULATION_BASED_FULL",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Capitation/Population Based - Partial",
+        "enum": "CAPITATION_POPULATION_BASED_PARTIAL",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Care Coordination/Management Fee",
+        "enum": "CARE_COORDINATION_MANAGEMENT_FEE",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Global Budget",
+        "enum": "GLOBAL_BUDGET",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Grants",
+        "enum": "GRANTS",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "value": "Incentive Payment",
+        "enum": "INCENTIVE_PAYMENT",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments"
+    },
+    {
+        "enum": "MAPD_SHARED_SAVINGS",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments",
+        "outliers": "Payment for respite (new service)"
+    },
+    {
+        "value": "Shared Savings Program",
+        "enum": "SHARED_SAVINGS",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments",
+        "outliers": "Chronic disease care management reward"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_non_claim_based_payment_type",
+        "model": "PlanPayments",
+        "field": "nonClaimsPayments",
+        "outliers": "Performance-Based Payments"
+    },
+    {
+        "enum": "LOW",
+        "dbtype": "pp_complexity_calculation_level_type",
+        "model": "PlanPayments",
+        "field": "ExpectedCalculationComplexityLevel"
+    },
+    {
+        "value": "Middle-level",
+        "enum": "MIDDLE",
+        "dbtype": "pp_complexity_calculation_level_type",
+        "model": "PlanPayments",
+        "field": "ExpectedCalculationComplexityLevel"
+    },
+    {
+        "value": "High-level",
+        "enum": "HIGH",
+        "dbtype": "pp_complexity_calculation_level_type",
+        "model": "PlanPayments",
+        "field": "ExpectedCalculationComplexityLevel"
+    },
+    {
+        "value": "Annually",
+        "enum": "ANNUALLY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "enum": "BIANNUALLY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "value": "Quarterly",
+        "enum": "QUARTERLY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "value": "Monthly",
+        "enum": "MONTHLY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "value": "Semi-monthly",
+        "enum": "SEMIMONTHLY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "value": "Weekly",
+        "enum": "WEEKLY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "value": "Daily",
+        "enum": "DAILY",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_anticipated_payment_frequency_type",
+        "model": "PlanPayments",
+        "field": "anticipatedPaymentFrequency"
+    },
+    {
+        "enum": "MARX",
+        "dbtype": "gc_part_c_d_type",
+        "model": "PlanPayments"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "gc_part_c_d_type"
+    },
+    {
+        "enum": "HPMS",
+        "dbtype": "gc_collect_bids_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "gc_collect_bids_type"
+    },
+    {
+        "enum": "HPMS",
+        "dbtype": "gc_update_contract_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "gc_update_contract_type"
+    },
+    {
+        "enum": "SALESFORCE",
+        "dbtype": "pp_to_advertise_type"
+    },
+    {
+        "enum": "GRANT_SOLUTIONS",
+        "dbtype": "pp_to_advertise_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_to_advertise_type"
+    },
+    {
+        "enum": "RFA",
+        "dbtype": "pp_collect_score_review_type"
+    },
+    {
+        "enum": "ARS",
+        "dbtype": "pp_collect_score_review_type"
+    },
+    {
+        "enum": "GRANT_SOLUTIONS",
+        "dbtype": "pp_collect_score_review_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_collect_score_review_type"
+    },
+    {
+        "enum": "RMDA",
+        "dbtype": "pp_app_support_contractor_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_app_support_contractor_type"
+    },
+    {
+        "enum": "OUTLOOK_MAILBOX",
+        "dbtype": "pp_communicate_with_participant_type"
+    },
+    {
+        "enum": "GOV_DELIVERY",
+        "dbtype": "pp_communicate_with_participant_type"
+    },
+    {
+        "enum": "SALESFORCE_PORTAL",
+        "dbtype": "pp_communicate_with_participant_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_communicate_with_participant_type"
+    },
+    {
+        "enum": "MDM",
+        "dbtype": "pp_manage_provider_overlap_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "pp_manage_provider_overlap_type"
+    },
+    {
+        "enum": "NA",
+        "dbtype": "pp_manage_provider_overlap_type"
+    },
+    {
+        "enum": "MDM",
+        "dbtype": "b_manage_beneficiary_overlap_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "b_manage_beneficiary_overlap_type"
+    },
+    {
+        "enum": "NA",
+        "dbtype": "b_manage_beneficiary_overlap_type"
+    },
+    {
+        "enum": "CBOSC",
+        "dbtype": "oel_helpdesk_support_type"
+    },
+    {
+        "enum": "CONTRACTOR",
+        "dbtype": "oel_helpdesk_support_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_helpdesk_support_type"
+    },
+    {
+        "enum": "ACO_OS",
+        "dbtype": "oel_manage_aco_type"
+    },
+    {
+        "enum": "ACO_UI",
+        "dbtype": "oel_manage_aco_type"
+    },
+    {
+        "enum": "INNOVATION",
+        "dbtype": "oel_manage_aco_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_manage_aco_type"
+    },
+    {
+        "enum": "IDR",
+        "dbtype": "oel_performance_benchmark_type"
+    },
+    {
+        "enum": "CCW",
+        "dbtype": "oel_performance_benchmark_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_performance_benchmark_type"
+    },
+    {
+        "enum": "MEDICARE_APPEAL_SYSTEM",
+        "dbtype": "oel_process_appeals_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_process_appeals_type"
+    },
+    {
+        "enum": "RMDA",
+        "dbtype": "oel_evaluation_contractor_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_evaluation_contractor_type"
+    },
+    {
+        "enum": "IDR",
+        "dbtype": "oel_collect_data_type"
+    },
+    {
+        "enum": "CCW",
+        "dbtype": "oel_collect_data_type"
+    },
+    {
+        "enum": "IDOS",
+        "dbtype": "oel_collect_data_type"
+    },
+    {
+        "enum": "ISP",
+        "dbtype": "oel_collect_data_type"
+    },
+    {
+        "enum": "CONTRACTOR",
+        "dbtype": "oel_collect_data_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_collect_data_type"
+    },
+    {
+        "enum": "CCW",
+        "dbtype": "oel_obtain_data_type"
+    },
+    {
+        "enum": "IDOS",
+        "dbtype": "oel_obtain_data_type"
+    },
+    {
+        "enum": "ISP",
+        "dbtype": "oel_obtain_data_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_obtain_data_type"
+    },
+    {
+        "enum": "IDR",
+        "dbtype": "oel_claims_based_measures_type"
+    },
+    {
+        "enum": "CCW",
+        "dbtype": "oel_claims_based_measures_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_claims_based_measures_type"
+    },
+    {
+        "enum": "EXISTING_DATA_AND_PROCESS",
+        "dbtype": "oel_quality_scores_type"
+    },
+    {
+        "enum": "NEW_DATA_AND_CMMI_PROCESS",
+        "dbtype": "oel_quality_scores_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_quality_scores_type"
+    },
+    {
+        "enum": "NONE",
+        "dbtype": "oel_quality_scores_type"
+    },
+    {
+        "enum": "IDOS",
+        "dbtype": "oel_send_reports_type"
+    },
+    {
+        "enum": "RMADA",
+        "dbtype": "oel_send_reports_type"
+    },
+    {
+        "enum": "INTERNAL_STAFF",
+        "dbtype": "oel_send_reports_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_send_reports_type"
+    },
+    {
+        "enum": "RMADA",
+        "dbtype": "oel_learning_contractor_type"
+    },
+    {
+        "enum": "CROSS_MODEL_CONTRACT",
+        "dbtype": "oel_learning_contractor_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_learning_contractor_type"
+    },
+    {
+        "enum": "CONNECT",
+        "dbtype": "oel_participant_collaboration_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_participant_collaboration_type"
+    },
+    {
+        "enum": "OC",
+        "dbtype": "oel_educate_beneficiaries_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "oel_educate_beneficiaries_type"
+    },
+    {
+        "enum": "SHARED_SYSTEMS",
+        "dbtype": "p_make_claims_payments_type"
+    },
+    {
+        "enum": "HIGLAS",
+        "dbtype": "p_make_claims_payments_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "p_make_claims_payments_type"
+    },
+    {
+        "enum": "FFS_COMPETENCY_CENTER",
+        "dbtype": "p_inform_ffs_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "p_inform_ffs_type"
+    },
+    {
+        "enum": "APPS",
+        "dbtype": "p_non_claims_based_payments_type"
+    },
+    {
+        "enum": "HIGLAS",
+        "dbtype": "p_non_claims_based_payments_type"
+    },
+    {
+        "enum": "IPC",
+        "dbtype": "p_non_claims_based_payments_type"
+    },
+    {
+        "enum": "MAC",
+        "dbtype": "p_non_claims_based_payments_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "p_non_claims_based_payments_type"
+    },
+    {
+        "enum": "RMADA",
+        "dbtype": "p_shared_savings_plan_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "p_shared_savings_plan_type"
+    },
+    {
+        "enum": "APPS",
+        "dbtype": "p_recover_payments_type"
+    },
+    {
+        "enum": "IPC",
+        "dbtype": "p_recover_payments_type"
+    },
+    {
+        "enum": "MAC",
+        "dbtype": "p_recover_payments_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "p_recover_payments_type"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "MANAGE_CD",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "REV_COL_BIDS",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "UPDATE_CONTRACT",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "ADVERTISE_MODEL",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "COL_REV_SCORE_APP",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "APP_SUPPORT_CON",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "COMM_W_PART",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "MANAGE_PROV_OVERLAP",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "MANAGE_BEN_OVERLAP",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "HELPDESK_SUPPORT",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "IDDOC_SUPPORT",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "ESTABLISH_BENCH",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "PROCESS_PART_APPEALS",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "ACQUIRE_AN_EVAL_CONT",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "DATA_TO_MONITOR",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "DATA_TO_SUPPORT_EVAL",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "CLAIMS_BASED_MEASURES",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "QUALITY_PERFORMANCE_SCORES",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "SEND_REPDATA_TO_PART",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "ACQUIRE_A_LEARN_CONT",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "PART_TO_PART_COLLAB",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "EDUCATE_BENEF",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "ADJUST_FFS_CLAIMS",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "MANAGE_FFS_EXCL_PAYMENTS",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "MAKE_NON_CLAIMS_BASED_PAYMENTS",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "COMPUTE_SHARED_SAVINGS_PAYMENT",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "RECOVER_PAYMENTS",
+        "dbtype": "operational_need_key"
+    },
+    {
+        "enum": "BASICS",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "GENERAL_CHARACTERISTICS",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "PARTICIPANTS_AND_PROVIDERS",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "BENEFICIARIES",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "OPERATIONS_EVALUATION_AND_LEARNING",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "PAYMENT",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "IT_TOOLS",
+        "dbtype": "task_list_section"
+    },
+    {
+        "enum": "PREPARE_FOR_CLEARANCE",
+        "dbtype": "task_list_section"
+    },
+    {
+        "value": "Other",
+        "enum": "OTHER",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "MARX",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "HPMS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "SALESFORCE",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "GRANT_SOLUTIONS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "RFA",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "ARS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "RMADA",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "OUTLOOK_MAILBOX",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "GOVDELIVERY",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "SALESFORCE_PORTAL",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "MDM",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "CBOSC",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "THROUGH_A_CONTRACTOR",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "ACO_OS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "ACO_UI",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "INNOVATION",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "IDR",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "CCW",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "MEDICARE_APPEAL_SYSTEM",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "IDOS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "ISP",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "ANOTHER_CONTRACTOR",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "EXISTING_CMS_DATA_AND_PROCESS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "NEW_CMMI_PROCESS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "OTHER_NEW_PROCESS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "INTERNAL_STAFF",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "CROSS_MODEL_CONTRACT",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "CONNECT",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "OC",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "SHARED_SYSTEMS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "HIGLAS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "FFS_COMPETENCY_CENTER",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "APPS",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "IPC",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "MAC",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "RMADA_CONTRACTOR",
+        "dbtype": "operational_solution_key"
+    },
+    {
+        "enum": "NOT_STARTED",
+        "dbtype": "op_solution_status"
+    },
+    {
+        "enum": "ONBOARDING",
+        "dbtype": "op_solution_status"
+    },
+    {
+        "enum": "BACKLOG",
+        "dbtype": "op_solution_status"
+    },
+    {
+        "enum": "IN_PROGRESS",
+        "dbtype": "op_solution_status"
+    },
+    {
+        "enum": "COMPLETED",
+        "dbtype": "op_solution_status"
+    },
+    {
+        "enum": "AT_RISK",
+        "dbtype": "op_solution_status"
+    }
+]
