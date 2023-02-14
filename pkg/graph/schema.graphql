@@ -841,15 +841,21 @@ type PlanPayments {
   paymentStartDateNote:                              String
 
   # Meta
-  createdBy:   String!
-  createdDts:  Time!
-  modifiedBy:  String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status:      TaskStatus!
 }
 
