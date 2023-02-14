@@ -60,6 +60,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 }
 func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
+	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for complex need")
 
 	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
