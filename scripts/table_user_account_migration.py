@@ -22,7 +22,7 @@ migration_config = [
 
     # Base Struct
     # ('plan_cr_tdl', 'EASI-2618', SQL_VARIANT_BASE_STRUCT),
-    # ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
+    ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
     # ('discussion_reply', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document', 'EASI-2620', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document_solution_link', 'EASI-2621', SQL_VARIANT_BASE_STRUCT),
@@ -143,51 +143,51 @@ def generate_sql_migration_content_base_struct(table) -> str:
     table = table.lower()
     return (f"/* ADD Temp data column for this */\n"
             f"\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"RENAME COLUMN created_by TO created_by_old;\n"
             f"\n"
             f"\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"RENAME COLUMN modified_by TO modified_by_old;\n"
             f"\n"
             f"\n"
             f"/* ADD Correct Column */\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"ADD COLUMN created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,\n"
             f"ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;\n"
             f"\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"DISABLE TRIGGER audit_trigger;\n"
             f"\n"
             f"/* Perform the data migration */\n"
             f"WITH userAccount AS (\n"
             f"    SELECT\n"
-            f"        model_plan.id AS primaryID,\n"
+            f"        {table}.id AS primaryID,\n"
             f"        user_account_created.id AS created_by,\n"
             f"        user_account_modified.id AS modified_by\n"
-            f"    FROM model_plan\n"
-            f"    LEFT JOIN user_account AS user_account_created ON model_plan.created_by_old = user_account_created.username\n"
-            f"    LEFT JOIN user_account AS user_account_modified ON model_plan.modified_by_old = user_account_modified.username\n"
+            f"    FROM {table}\n"
+            f"    LEFT JOIN user_account AS user_account_created ON {table}.created_by_old = user_account_created.username\n"
+            f"    LEFT JOIN user_account AS user_account_modified ON {table}.modified_by_old = user_account_modified.username\n"
             f")\n"
             f"--\n"
             f"\n"
-            f"UPDATE model_plan\n"
+            f"UPDATE {table}\n"
             f"SET\n"
             f"    created_by = userAccount.created_by,\n"
             f"    modified_by = userAccount.modified_by\n"
             f"\n"
             f"FROM userAccount\n"
             f"WHERE userAccount.primaryID\n"
-            f"      = model_plan.id;\n"
+            f"      = {table}.id;\n"
             f"\n"
             f"\n"
             f"/*remove the old columns */\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"DROP COLUMN created_by_old,\n"
             f"DROP COLUMN modified_by_old;\n"
             f"\n"
             f"/*add constraints */\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"ALTER COLUMN created_by SET NOT NULL;\n"
             f"\n"
             f"\n"
@@ -196,11 +196,11 @@ def generate_sql_migration_content_base_struct(table) -> str:
             f"SET uses_user_id = TRUE,\n"
             f"    modified_by = '00000001-0001-0001-0001-000000000001', --System Account\n"
             f"    modified_dts = current_timestamp\n"
-            f"WHERE name = 'model_plan';\n"
+            f"WHERE name = '{table}';\n"
             f"\n"
             f"/* turn on audit trigger */\n"
             f"\n"
-            f"ALTER TABLE model_plan\n"
+            f"ALTER TABLE {table}\n"
             f"ENABLE TRIGGER audit_trigger;\n"
             )
 
@@ -215,7 +215,7 @@ def generate_sql_migration_filename(migration_index, table) -> str:
 
 
 def generate_sql_migration(repo, table, migration_variant, migration_index):
-    assert not repo.is_dirty()
+    #assert not repo.is_dirty()
 
     migration_filename = generate_sql_migration_filename(migration_index, table)
     print(f"Generate a SQL Migration: {migration_filename}")
@@ -226,14 +226,14 @@ def generate_sql_migration(repo, table, migration_variant, migration_index):
         print(f"Writing Migration File...")
         write_sql_migration_file(migration_filename, migration_sql)
 
-    repo.git.add(all=True)
-    repo.git.commit("-am", f"feat: generated SQL for updating {table} to use the User Account table")
+    #repo.git.add(all=True)
+    #repo.git.commit("-am", f"feat: generated SQL for updating {table} to use the User Account table")
 
 
 def generate_user_account_table_migration(repo, table, ticket, migration_variant, migration_index):
-    create_branch(repo, table, ticket)
+    #create_branch(repo, table, ticket)
     generate_sql_migration(repo, table, migration_variant, migration_index)
-    repo.git.checkout('main')
+    #repo.git.checkout('main')
 
 
 def main():

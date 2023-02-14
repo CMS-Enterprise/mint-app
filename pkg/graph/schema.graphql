@@ -1425,9 +1425,11 @@ type PlanCrTdl {
     title: String!
     note: String
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
