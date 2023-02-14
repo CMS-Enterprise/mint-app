@@ -24,7 +24,11 @@ const mockData: GetRecoverType = {
   anticipateReconcilingPaymentsRetrospectivelyNote: 'string',
   paymentStartDate: null,
   paymentStartDateNote: 'string',
-  readyForReviewBy: 'ASDF',
+  readyForReviewByUserAccount: {
+    commonName: 'ASDF',
+    id: '000',
+    __typename: 'UserAccount'
+  },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
 };
@@ -43,6 +47,7 @@ const paymentsMock = [
           payments: mockData,
           operationalNeeds: [
             {
+              id: '111',
               modifiedDts: ''
             }
           ]

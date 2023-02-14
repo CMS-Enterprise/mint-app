@@ -53,7 +53,7 @@ const Authority = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     AuthorityFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -65,7 +65,8 @@ const Authority = () => {
   >(GetAuthority, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -81,7 +82,7 @@ const Authority = () => {
     waiversRequired,
     waiversRequiredTypes,
     waiversRequiredNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
@@ -450,15 +451,17 @@ const Authority = () => {
                   field="waiversRequiredNote"
                 />
 
-                <ReadyForReview
-                  id="characteristics-status"
-                  field="status"
-                  sectionName={t('heading')}
-                  status={values.status}
-                  setFieldValue={setFieldValue}
-                  readyForReviewBy={readyForReviewBy}
-                  readyForReviewDts={readyForReviewDts}
-                />
+                {!loading && values.status && (
+                  <ReadyForReview
+                    id="characteristics-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
