@@ -73,8 +73,3 @@ WHERE name = 'plan_ops_eval_and_learning';
 
 ALTER TABLE plan_ops_eval_and_learning
 ENABLE TRIGGER audit_trigger;
-
-/* disable need trigger as it is currently non-functional until needs are migrated */
-
-ALTER TABLE plan_ops_eval_and_learning
-DISABLE TRIGGER operational_need_trigger;
