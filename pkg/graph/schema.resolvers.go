@@ -579,15 +579,6 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planGeneralCharacteristicsResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // GcPartCd is the resolver for the gcPartCD field.
 func (r *planITToolsResolver) GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error) {
 	GcPartCDs := models.ConvertEnums[model.GcPartCDType](obj.GcPartCD)

@@ -66,7 +66,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	// Create a default plan general characteristics object
-	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskList)
+	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
