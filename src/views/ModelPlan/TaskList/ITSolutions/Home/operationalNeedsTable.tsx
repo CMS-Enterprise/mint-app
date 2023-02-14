@@ -131,9 +131,19 @@ const OperationalNeedsTable = ({
             if (!hasEditAccess) {
               return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
             }
+            const selectSolutionHref =
+              row.original.key !== null
+                ? {
+                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`,
+                    state: { isCustomNeed: false }
+                  }
+                : {
+                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
+                    state: { isCustomNeed: true }
+                  };
             return (
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
+                to={selectSolutionHref}
                 className="display-flex flex-align-center"
               >
                 {value}

@@ -4,7 +4,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import GetUserInfo from 'queries/GetUserInfo';
 import GetClearanceStatuses from 'queries/PrepareForClearance/GetClearanceStatuses';
 import {
   PrepareForClearanceStatus,
@@ -22,7 +21,6 @@ clearanceMockData.basics.status = TaskStatus.READY_FOR_CLEARANCE;
 
 const modelID = 'd94958a4-2259-4fe9-b94c-f62492c43287';
 
-const readyForClearanceBy = 'MINT';
 const readyForClearanceDts = '2022-10-24T19:32:24.412662Z';
 
 const clearanceMock = [
@@ -40,27 +38,6 @@ const clearanceMock = [
           prepareForClearance: {
             status: PrepareForClearanceStatus.READY
           }
-        }
-      }
-    }
-  }
-];
-
-const sectionClearanceLabelMock = [
-  {
-    request: {
-      query: GetUserInfo,
-      variables: { username: readyForClearanceBy }
-    },
-    result: {
-      data: {
-        userAccount: {
-          id: '',
-          username: '',
-          commonName: 'Jerry Seinfeld',
-          email: '',
-          givenName: '',
-          familyName: ''
         }
       }
     }
@@ -96,12 +73,10 @@ describe('Prepare for clearance checklist', () => {
 
   it('renders SectionClearanceLabel', async () => {
     render(
-      <MockedProvider mocks={sectionClearanceLabelMock} addTypename={false}>
-        <SectionClearanceLabel
-          readyForClearanceBy={readyForClearanceBy}
-          readyForClearanceDts={readyForClearanceDts}
-        />
-      </MockedProvider>
+      <SectionClearanceLabel
+        commonName="Jerry Seinfeld"
+        readyForClearanceDts={readyForClearanceDts}
+      />
     );
 
     await waitFor(() => {

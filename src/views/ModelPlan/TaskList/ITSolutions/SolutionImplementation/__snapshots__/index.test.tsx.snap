@@ -104,7 +104,9 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
               </p>
               <p
                 class="margin-top-0 font-body-sm"
-              />
+              >
+                Obtain an application support contractor
+              </p>
             </div>
             <div
               class="desktop:grid-col-12"
@@ -645,7 +647,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         class="margin-top-4"
       >
         <p
-          class="text-bold margin-bottom-0"
+          class="text-bold margin-bottom-2"
         >
           Helpful links
         </p>
@@ -654,9 +656,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
           data-testid="button"
           type="button"
         >
-          <p>
-            Available operational solutions (opens in a new tab)
-          </p>
+          Available operational solutions (opens in a new tab)
         </button>
       </div>
     </div>

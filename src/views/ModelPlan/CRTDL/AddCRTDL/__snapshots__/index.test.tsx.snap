@@ -189,14 +189,15 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                       *
                     </span>
                   </label>
-                  <input
-                    class="usa-input"
+                  <textarea
+                    class="maxw-none mint-textarea usa-textarea"
                     data-testid="cr-tdl-title"
                     id="cr-tdl-title"
-                    maxlength="50"
+                    maxlength="5000"
                     name="title"
-                    value="My CR"
-                  />
+                  >
+                    My CR
+                  </textarea>
                 </div>
                 <div
                   class="mint-divider margin-y-4"

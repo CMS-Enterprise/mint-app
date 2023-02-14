@@ -23,6 +23,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import TextAreaField from 'components/shared/TextAreaField';
 import useMessage from 'hooks/useMessage';
 import CreateCRTDL from 'queries/CRTDL/CreateCRTDL';
 import GetCRTDL from 'queries/CRTDL/GetCRTDL';
@@ -325,11 +326,12 @@ const AddCRTDL = () => {
 
                             <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
                             <Field
-                              as={TextInput}
+                              as={TextAreaField}
                               error={!!flatErrors.title}
+                              className="maxw-none mint-textarea"
                               id="cr-tdl-title"
                               data-testid="cr-tdl-title"
-                              maxLength={50}
+                              maxLength={5000}
                               name="title"
                             />
                           </FieldGroup>

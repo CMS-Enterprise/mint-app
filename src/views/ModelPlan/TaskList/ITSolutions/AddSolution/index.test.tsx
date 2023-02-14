@@ -86,7 +86,10 @@ describe('IT Solutions AddSolution', () => {
     const { getByTestId, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
+            state: { isCustomNeed: false }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
@@ -114,7 +117,10 @@ describe('IT Solutions AddSolution', () => {
     const { getByTestId, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
+            state: { isCustomNeed: false }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
@@ -138,7 +144,10 @@ describe('IT Solutions AddSolution', () => {
     const { getByTestId, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${operationalSolutionID}`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${operationalSolutionID}`,
+            state: { isCustomNeed: false }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID">
@@ -160,7 +169,10 @@ describe('IT Solutions AddSolution', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
+            state: { isCustomNeed: false }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
