@@ -13,6 +13,9 @@ export default gql`
       status
       mustFinishDts
       mustStartDts
+      documents {
+        id
+      }
     }
   }
 `;

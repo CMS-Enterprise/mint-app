@@ -10,6 +10,7 @@ import {
   GetOperationalNeed_operationalNeed as OperationNeedType,
   GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes
 } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import { translateOpNeedsStatusType } from 'utils/modelPlan';
 
@@ -81,7 +82,7 @@ const Solution = ({
       ) : (
         <SolutionDetailCard
           className="margin-bottom-3"
-          solution={solution}
+          solution={solution as GetOperationalSolutionType}
           operationalNeedID={operationalNeedID}
           operationalSolutionID={operationalSolutionID}
           modelID={modelID}

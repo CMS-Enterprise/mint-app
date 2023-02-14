@@ -9,6 +9,11 @@ import { OperationalSolutionKey, OpSolutionStatus } from "./../../../types/graph
 // GraphQL query operation: GetOperationalSolution
 // ====================================================
 
+export interface GetOperationalSolution_operationalSolution_documents {
+  __typename: "PlanDocument";
+  id: UUID;
+}
+
 export interface GetOperationalSolution_operationalSolution {
   __typename: "OperationalSolution";
   id: UUID;
@@ -21,6 +26,7 @@ export interface GetOperationalSolution_operationalSolution {
   status: OpSolutionStatus;
   mustFinishDts: Time | null;
   mustStartDts: Time | null;
+  documents: GetOperationalSolution_operationalSolution_documents[];
 }
 
 export interface GetOperationalSolution {

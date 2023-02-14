@@ -3,7 +3,7 @@ View for selecting/toggled 'needed' bool on possible solutions and custom soluti
 Displays relevant operational need question and answers
 */
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -16,11 +16,17 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
+import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalNeed as GetOperationalNeedType,
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
+import {
+  GetOperationalSolution as GetOperationalSolutionType,
+  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
+  GetOperationalSolutionVariables
+} from 'queries/ITSolutions/types/GetOperationalSolution';
 import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
@@ -55,7 +61,7 @@ const LinkDocuments = ({
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
-    operationalSolutionID?: string | undefined;
+    operationalSolutionID: string;
   }>();
 
   const history = useHistory();
@@ -70,26 +76,35 @@ const LinkDocuments = ({
     'error'
   );
 
+  // State management for linking/unlinking docs
+  const [linkedDocs, setLinkedDocs] = useState<string[]>([]);
+
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+    GetOperationalSolutionType,
+    GetOperationalSolutionVariables
+  >(GetOperationalSolution, {
     variables: {
-      id: operationalNeedID,
-      includeNotNeeded: false
+      id: operationalSolutionID
     }
   });
 
-  const operationalNeed = data?.operationalNeed || initialValues;
+  const solution = useMemo(() => {
+    return (
+      data?.operationalSolution ||
+      ({} as GetOperationalSolutionOperationalSolutionType)
+    );
+  }, [data?.operationalSolution]);
 
-  const solution = operationalNeed.solutions.find(
-    opNeedSolution => opNeedSolution.id === operationalSolutionID
-  );
+  useEffect(() => {
+    setLinkedDocs(solution?.documents?.map(solutionDoc => solutionDoc.id));
+  }, [solution]);
+
+  console.log(linkedDocs);
 
   const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
     UpdateOperationalNeedSolution
@@ -164,12 +179,12 @@ const LinkDocuments = ({
   const breadcrumbs = [
     { text: h('home'), url: '/' },
     { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    { text: t('itTracker'), url: `/models/${modelID}/task-list/it-solutions` },
     {
       text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
+      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
     },
-    { text: isUpdatingStatus ? t('updateStatus') : t('selectSolution') }
+    { text: t('linkDocumentsHeader') }
   ];
 
   return (
@@ -218,11 +233,16 @@ const LinkDocuments = ({
         </Grid>
       </Grid>
 
+      <h3 className="margin-top-8 margin-bottom-neg-1">
+        {t('modelDocuments')}
+      </h3>
+
       <PlanDocumentsTable
         modelID={modelID}
         setDocumentMessage={setDocumentMessage}
         setDocumentStatus={setDocumentStatus}
-        solutionDetailsLink
+        linkedDocs={linkedDocs}
+        setLinkedDocs={setLinkedDocs}
       />
 
       <Grid tablet={{ col: 6 }}>
@@ -234,15 +254,13 @@ const LinkDocuments = ({
           {t('linkDocumentsButton')}
         </Button>
 
-        <div className="display-block">
-          <UswdsReactLink
-            className="display-flex"
-            to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`}
-          >
-            <IconArrowBack className="margin-right-1" aria-hidden />
-            {t('dontLink')}
-          </UswdsReactLink>
-        </div>
+        <UswdsReactLink
+          className="display-flex"
+          to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`}
+        >
+          <IconArrowBack className="margin-right-1" aria-hidden />
+          {t('dontLink')}
+        </UswdsReactLink>
       </Grid>
     </>
   );

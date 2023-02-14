@@ -94,6 +94,7 @@ const documents = {
   linkDocumentsInfo:
     'Link any model documents previously uploaded that are associated with this solution.',
   linkDocumentsButton: 'Link documents',
+  modelDocuments: 'Model documents',
   dontLink: 'Don’t link documents and return to solution details'
 };
 

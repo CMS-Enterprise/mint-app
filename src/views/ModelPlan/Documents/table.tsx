@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
@@ -19,6 +19,7 @@ import {
   GetModelPlanDocuments_modelPlan_documents as DocumentType,
   GetModelPlanDocumentsVariables
 } from 'queries/Documents/types/GetModelPlanDocuments';
+import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import globalTableFilter from 'utils/globalTableFilter';
@@ -39,7 +40,8 @@ type PlanDocumentsTableProps = {
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
   isHelpArticle?: boolean;
-  solutionDetailsLink?: boolean;
+  linkedDocs?: string[];
+  setLinkedDocs?: Dispatch<SetStateAction<string[]>>;
   className?: string;
 };
 
@@ -51,7 +53,8 @@ const PlanDocumentsTable = ({
   setDocumentMessage,
   setDocumentStatus,
   isHelpArticle,
-  solutionDetailsLink,
+  linkedDocs,
+  setLinkedDocs,
   className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
@@ -100,7 +103,8 @@ const PlanDocumentsTable = ({
         setDocumentMessage={setDocumentMessage}
         setDocumentStatus={setDocumentStatus}
         hasEditAccess={hasEditAccess}
-        solutionDetailsLink={solutionDetailsLink}
+        linkedDocs={linkedDocs}
+        setLinkedDocs={setLinkedDocs}
       />
     </div>
   );
@@ -108,23 +112,40 @@ const PlanDocumentsTable = ({
 
 export default PlanDocumentsTable;
 
+const findDocIDAndRemoveOrInsert = (
+  id: string,
+  linkedDocs: string[]
+): string[] => {
+  const linkedDocsCopy = [...linkedDocs];
+  const index = linkedDocs.indexOf(id);
+  if (index > -1) {
+    // Removed from list of docs if already exists
+    linkedDocsCopy.splice(index, 1);
+  } else {
+    linkedDocsCopy.push(id); // Add to list of linked docs
+  }
+  return linkedDocsCopy;
+};
+
 type TableProps = {
-  data: DocumentType[];
+  data: DocumentType[] | SolutionDocumentType[];
   hiddenColumns?: string[];
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
-  solutionDetailsLink?: boolean;
+  linkedDocs?: string[];
+  setLinkedDocs?: Dispatch<SetStateAction<string[]>>;
   hasEditAccess?: boolean;
 };
 
-const Table = ({
+export const Table = ({
   data,
   hiddenColumns,
   refetch,
   setDocumentMessage,
   setDocumentStatus,
-  solutionDetailsLink,
+  linkedDocs,
+  setLinkedDocs,
   hasEditAccess
 }: TableProps) => {
   const { t } = useTranslation('documents');
@@ -222,15 +243,21 @@ const Table = ({
         },
         accessor: 'fileName',
         Cell: ({ row, value }: any) => {
-          if (solutionDetailsLink) {
+          if (linkedDocs) {
             return (
               <Checkbox
                 id={`link-document-${row.original.id}`}
-                onChange={() => null}
+                onChange={() => {
+                  const updatedDocs = findDocIDAndRemoveOrInsert(
+                    row.original.id,
+                    linkedDocs
+                  );
+                  if (setLinkedDocs) setLinkedDocs(updatedDocs);
+                }}
                 label={value}
                 name={`link-document-${row.original.id}`}
                 onBlur={() => null}
-                value="true"
+                checked={linkedDocs.includes(row.original.id)}
               />
             );
           }
@@ -273,7 +300,7 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                {hasEditAccess && !solutionDetailsLink && (
+                {hasEditAccess && !linkedDocs && (
                   <Button
                     type="button"
                     unstyled
@@ -296,7 +323,7 @@ const Table = ({
         }
       }
     ];
-    if (!solutionDetailsLink) {
+    if (!linkedDocs) {
       const visibilityColumn = {
         Header: t('documentTable.visibility'),
         accessor: 'restricted',
@@ -307,7 +334,7 @@ const Table = ({
       documentColumns.splice(3, 0, visibilityColumn);
     }
     return documentColumns;
-  }, [t, handleDownload, hasEditAccess, solutionDetailsLink]);
+  }, [t, handleDownload, hasEditAccess, linkedDocs, setLinkedDocs]);
 
   const {
     getTableProps,

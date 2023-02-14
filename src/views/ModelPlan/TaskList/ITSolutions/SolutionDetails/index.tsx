@@ -29,7 +29,7 @@ import {
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
+import { Table } from 'views/ModelPlan/Documents/table';
 import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
@@ -58,7 +58,7 @@ const SolutionDetails = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
+  const { data, loading, error, refetch } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -183,9 +183,9 @@ const SolutionDetails = () => {
             <div className="margin-top-6">
               <h3 className="margin-bottom-0">{t('documents')}</h3>
 
-              <PlanDocumentsTable
-                className="margin-top-neg-2"
-                modelID={modelID}
+              <Table
+                data={solution.documents}
+                refetch={refetch}
                 setDocumentMessage={setDocumentMessage}
                 setDocumentStatus={setDocumentStatus}
               />
