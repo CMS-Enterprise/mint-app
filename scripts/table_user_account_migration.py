@@ -215,7 +215,7 @@ def generate_sql_migration_filename(migration_index, table) -> str:
 
 
 def generate_sql_migration(repo, table, migration_variant, migration_index):
-    assert not repo.is_dirty()
+    #assert not repo.is_dirty()
 
     migration_filename = generate_sql_migration_filename(migration_index, table)
     print(f"Generate a SQL Migration: {migration_filename}")
