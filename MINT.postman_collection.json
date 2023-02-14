@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "77a2a352-91b5-4367-aa7c-c28c300c403f",
+		"_postman_id": "8ded0b68-81a7-42b1-b2eb-2d13a6bf4710",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12341016"
+		"_exporter_id": "20320964"
 	},
 	"item": [
 		{
@@ -461,7 +461,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\"\n  }\n}"
 							}
 						},
@@ -482,7 +482,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {\n    updatePlanDiscussion (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionID}}\",\n  \"changes\": {\n    \"content\": \"Great Changes\",\n    \"status\": \"UNANSWERED\"\n  }\n}"
 							}
 						},
@@ -503,7 +503,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deletePlanDiscussion ($id: UUID!) {\n    deletePlanDiscussion (id: $id) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionID}}\"\n}"
 							}
 						},
@@ -540,7 +540,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation createDiscussionReply ($input: DiscussionReplyCreateInput!) {\n    createDiscussionReply (input: $input) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"input\": {\n    \"discussionID\": \"{{discussionID}}\",\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
 							}
 						},
@@ -561,7 +561,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {\n    updateDiscussionReply (id: $id, changes: $changes) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionReplyID}}\",\n  \"changes\": {\n    \"content\": \"This is a resolution\",\n    \"resolution\": true\n  }\n}"
 							}
 						},
@@ -582,7 +582,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdByUser{\n            commonName\n            email\n            euaUserId\n        }\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation deleteDiscussionReply ($id: UUID!) {\n    deleteDiscussionReply (id: $id) {\n        id\n        discussionID\n        content\n        resolution\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
 								"variables": "{\n  \"id\": \"{{discussionReplyID}}\"\n}"
 							}
 						},
