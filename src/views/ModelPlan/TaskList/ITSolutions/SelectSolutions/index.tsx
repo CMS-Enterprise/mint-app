@@ -5,7 +5,7 @@ Displays relevant operational need question and answers
 
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
@@ -15,7 +15,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 
-import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -43,6 +42,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import CheckboxCard from '../_components/CheckboxCard';
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 // Passing in operationalNeed to Formik instead of array of solutions
@@ -63,15 +63,20 @@ type SelectSolutionsProps = {
 };
 
 const SelectSolutions = ({ update }: SelectSolutionsProps) => {
+  const { t } = useTranslation('itSolutions');
+  const { t: h } = useTranslation('draftModelPlan');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
   }>();
 
-  const history = useHistory();
+  const {
+    state: { isCustomNeed }
+  } = useLocation<{
+    isCustomNeed?: boolean;
+  }>();
 
-  const { t } = useTranslation('itSolutions');
-  const { t: h } = useTranslation('draftModelPlan');
+  const history = useHistory();
 
   const { showMessageOnNextPage } = useMessage();
 
@@ -89,7 +94,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
     variables: {
-      id: operationalNeedID
+      id: operationalNeedID,
+      includeNotNeeded: true
     }
   });
 
@@ -157,7 +163,10 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
                 update ? 'update-status' : 'solution-implementation-details'
               }`,
-              { fromSolutionDetails: false }
+              {
+                fromSolutionDetails: false,
+                isCustomNeed
+              }
             );
           } else {
             history.push(`/models/${modelID}/task-list/it-solutions`);
@@ -298,7 +307,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
                             history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
+                              { isCustomNeed }
                             );
                           }}
                         >
@@ -342,21 +352,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-            <AskAQuestion modelID={modelID} opNeeds />
-          </div>
-          <div className="margin-top-4">
-            <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
-            <Button
-              type="button"
-              onClick={() =>
-                window.open('/help-and-knowledge/model-plan-overview', '_blank')
-              }
-              className="usa-button usa-button--unstyled line-height-body-5"
-            >
-              <p>{t('availableSolutions')}</p>
-            </Button>
-          </div>
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
     </>

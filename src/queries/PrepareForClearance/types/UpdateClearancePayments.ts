@@ -9,9 +9,15 @@ import { PlanPaymentsChanges, TaskStatus } from "./../../../types/graphql-global
 // GraphQL mutation operation: UpdateClearancePayments
 // ====================================================
 
+export interface UpdateClearancePayments_updatePlanPayments_readyForClearanceByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface UpdateClearancePayments_updatePlanPayments {
   __typename: "PlanPayments";
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: UpdateClearancePayments_updatePlanPayments_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }
