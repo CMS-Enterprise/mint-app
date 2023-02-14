@@ -60,7 +60,7 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   numberPeopleImpacted: number | null;

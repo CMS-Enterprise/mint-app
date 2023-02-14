@@ -16,8 +16,8 @@ migration_config = [
     # Base Task List
     # ('Plan_Ops_Eval_and_Learning', 'EASI-2612', SQL_VARIANT_BASE_TASK_LIST),
     # ('Plan_Participants_and_Providers', 'EASI-2613', SQL_VARIANT_BASE_TASK_LIST),
-    ('Plan_Payments', 'EASI-2614', SQL_VARIANT_BASE_TASK_LIST),
-    # ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_BASE_TASK_LIST),
+    # ('Plan_Payments', 'EASI-2614', SQL_VARIANT_BASE_TASK_LIST),
+    ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_BASE_TASK_LIST),
     # ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
 
     # Base Struct
@@ -240,7 +240,7 @@ def main():
     repo = Repo(repo_path)
     assert not repo.bare
 
-    root_migration_index = 61
+    root_migration_index = 62
 
     migration_index = root_migration_index
     for migration in migration_config:

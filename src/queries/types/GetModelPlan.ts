@@ -93,9 +93,9 @@ export interface GetModelPlan_modelPlan_participantsAndProviders {
 export interface GetModelPlan_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

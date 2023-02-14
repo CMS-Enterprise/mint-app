@@ -302,6 +302,7 @@ type ComplexityRoot struct {
 		BeneficiarySelectionOther             func(childComplexity int) int
 		ConfidenceNote                        func(childComplexity int) int
 		CreatedBy                             func(childComplexity int) int
+		CreatedByUserAccount                  func(childComplexity int) int
 		CreatedDts                            func(childComplexity int) int
 		EstimateConfidence                    func(childComplexity int) int
 		ExcludeCertainCharacteristics         func(childComplexity int) int
@@ -310,6 +311,7 @@ type ComplexityRoot struct {
 		ID                                    func(childComplexity int) int
 		ModelPlanID                           func(childComplexity int) int
 		ModifiedBy                            func(childComplexity int) int
+		ModifiedByUserAccount                 func(childComplexity int) int
 		ModifiedDts                           func(childComplexity int) int
 		NumberPeopleImpacted                  func(childComplexity int) int
 		PrecedenceRules                       func(childComplexity int) int
@@ -317,6 +319,7 @@ type ComplexityRoot struct {
 		ReadyForClearanceByUserAccount        func(childComplexity int) int
 		ReadyForClearanceDts                  func(childComplexity int) int
 		ReadyForReviewBy                      func(childComplexity int) int
+		ReadyForReviewByUserAccount           func(childComplexity int) int
 		ReadyForReviewDts                     func(childComplexity int) int
 		Status                                func(childComplexity int) int
 		TreatDualElligibleDifferent           func(childComplexity int) int
@@ -990,8 +993,6 @@ type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
-
-	ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanBeneficiaries) (*authentication.UserAccount, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -2761,6 +2762,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBeneficiaries.CreatedBy(childComplexity), true
 
+	case "PlanBeneficiaries.createdByUserAccount":
+		if e.complexity.PlanBeneficiaries.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.CreatedByUserAccount(childComplexity), true
+
 	case "PlanBeneficiaries.createdDts":
 		if e.complexity.PlanBeneficiaries.CreatedDts == nil {
 			break
@@ -2817,6 +2825,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBeneficiaries.ModifiedBy(childComplexity), true
 
+	case "PlanBeneficiaries.modifiedByUserAccount":
+		if e.complexity.PlanBeneficiaries.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.ModifiedByUserAccount(childComplexity), true
+
 	case "PlanBeneficiaries.modifiedDts":
 		if e.complexity.PlanBeneficiaries.ModifiedDts == nil {
 			break
@@ -2865,6 +2880,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.ReadyForReviewBy(childComplexity), true
+
+	case "PlanBeneficiaries.readyForReviewByUserAccount":
+		if e.complexity.PlanBeneficiaries.ReadyForReviewByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.ReadyForReviewByUserAccount(childComplexity), true
 
 	case "PlanBeneficiaries.readyForReviewDts":
 		if e.complexity.PlanBeneficiaries.ReadyForReviewDts == nil {
@@ -7301,15 +7323,20 @@ type PlanBeneficiaries {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -13089,14 +13116,20 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanBeneficiaries_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanBeneficiaries_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanBeneficiaries_modifiedDts(ctx, field)
 			case "readyForReviewBy":
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_readyForReviewByUserAccount(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewDts(ctx, field)
 			case "readyForClearanceBy":
@@ -15437,14 +15470,20 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_precedenceRules(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanBeneficiaries_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanBeneficiaries_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanBeneficiaries_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanBeneficiaries_modifiedDts(ctx, field)
 			case "readyForReviewBy":
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_PlanBeneficiaries_readyForReviewByUserAccount(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewDts(ctx, field)
 			case "readyForClearanceBy":
@@ -23629,9 +23668,9 @@ func (ec *executionContext) _PlanBeneficiaries_createdBy(ctx context.Context, fi
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -23641,7 +23680,73 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_createdBy(ctx context
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -23714,9 +23819,9 @@ func (ec *executionContext) _PlanBeneficiaries_modifiedBy(ctx context.Context, f
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -23726,7 +23831,70 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_modifiedBy(ctx contex
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -23796,9 +23964,9 @@ func (ec *executionContext) _PlanBeneficiaries_readyForReviewBy(ctx context.Cont
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForReviewBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -23808,7 +23976,70 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForReviewBy(ctx 
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_readyForReviewByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_readyForReviewByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForReviewByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -23878,9 +24109,9 @@ func (ec *executionContext) _PlanBeneficiaries_readyForClearanceBy(ctx context.C
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -23890,7 +24121,7 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForClearanceBy(c
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
 		},
 	}
 	return fc, nil
@@ -23910,7 +24141,7 @@ func (ec *executionContext) _PlanBeneficiaries_readyForClearanceByUserAccount(ct
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBeneficiaries().ReadyForClearanceByUserAccount(rctx, obj)
+		return obj.ReadyForClearanceByUserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -23929,7 +24160,7 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForClearanceByUs
 		Object:     "PlanBeneficiaries",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -51560,6 +51791,26 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdDts":
 
 			out.Values[i] = ec._PlanBeneficiaries_createdDts(ctx, field, obj)
@@ -51571,6 +51822,23 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 
 			out.Values[i] = ec._PlanBeneficiaries_modifiedBy(ctx, field, obj)
 
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanBeneficiaries_modifiedDts(ctx, field, obj)
@@ -51579,6 +51847,23 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 
 			out.Values[i] = ec._PlanBeneficiaries_readyForReviewBy(ctx, field, obj)
 
+		case "readyForReviewByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_readyForReviewByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForReviewDts":
 
 			out.Values[i] = ec._PlanBeneficiaries_readyForReviewDts(ctx, field, obj)
