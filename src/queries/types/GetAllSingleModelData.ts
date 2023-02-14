@@ -76,7 +76,7 @@ export interface GetAllSingleModelData_modelPlan_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -85,7 +85,7 @@ export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllSingleModelData_modelPlan_discussions_replies[];

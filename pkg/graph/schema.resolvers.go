@@ -24,11 +24,6 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
-// CreatedByUser is the resolver for the createdByUser field.
-func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error) {
-	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
-}
-
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -506,11 +501,6 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
-}
-
-// CreatedByUser is the resolver for the createdByUser field.
-func (r *planDiscussionResolver) CreatedByUser(ctx context.Context, obj *models.PlanDiscussion) (*models.UserInfo, error) {
-	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
 }
 
 // OtherType is the resolver for the otherType field.
@@ -1089,11 +1079,6 @@ func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (str
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
-// DiscussionReply returns generated.DiscussionReplyResolver implementation.
-func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
-	return &discussionReplyResolver{r}
-}
-
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -1162,7 +1147,6 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
-type discussionReplyResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
