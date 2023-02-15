@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import { SummaryBox } from '@trussworks/react-uswds';
 import { Field } from 'formik';
 
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetUserInfo from 'queries/GetUserInfo';
-import {
-  GetUserInfo as GetUserInfoType,
-  GetUserInfoVariables
-} from 'queries/types/GetUserInfo';
 import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 
@@ -20,7 +14,7 @@ type ReadyForReviewType = {
   sectionName: string;
   status: TaskStatus;
   setFieldValue: (field: string, value: any) => void;
-  readyForReviewBy: string | null;
+  readyForReviewBy: string | null | undefined;
   readyForReviewDts: string | null;
 };
 
@@ -34,20 +28,12 @@ const ReadyForReview = ({
   readyForReviewDts
 }: ReadyForReviewType) => {
   const { t } = useTranslation('draftModelPlan');
+
   // Status state is checked before rendering
   // This is so that when user unclicks the "Ready for review" checkbox, it will not cause the `markedReady` copy to disappear
-  const [persistentCopy] = useState(status === TaskStatus.READY_FOR_REVIEW);
-
-  const { data } = useQuery<GetUserInfoType, GetUserInfoVariables>(
-    GetUserInfo,
-    {
-      variables: {
-        username: readyForReviewBy || ''
-      }
-    }
+  const [persistentCopy] = useState<boolean>(
+    status === TaskStatus.READY_FOR_REVIEW
   );
-
-  const commonName = data?.userAccount.commonName;
 
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
@@ -70,10 +56,10 @@ const ReadyForReview = ({
             }
           }}
         />
-        {persistentCopy && commonName && readyForReviewDts && (
+        {persistentCopy && readyForReviewBy && readyForReviewDts && (
           <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
             {t('markedReady', {
-              reviewer: commonName
+              reviewer: readyForReviewBy
             })}
             {formatDateLocal(readyForReviewDts, 'MM/dd/yyyy')}
           </p>
