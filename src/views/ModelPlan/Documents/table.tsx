@@ -353,7 +353,7 @@ export const Table = ({
         }
       }
     ];
-    if (!linkedDocs) {
+    if (!linkedDocs && !handleDocumentUnlink) {
       const visibilityColumn = {
         Header: t('documentTable.visibility'),
         accessor: 'restricted',
@@ -364,7 +364,14 @@ export const Table = ({
       documentColumns.splice(3, 0, visibilityColumn);
     }
     return documentColumns;
-  }, [t, handleDownload, hasEditAccess, linkedDocs, setLinkedDocs]);
+  }, [
+    t,
+    handleDownload,
+    hasEditAccess,
+    linkedDocs,
+    setLinkedDocs,
+    handleDocumentUnlink
+  ]);
 
   const {
     getTableProps,
