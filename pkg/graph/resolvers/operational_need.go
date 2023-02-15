@@ -48,7 +48,7 @@ func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UU
 		return nil, err
 	}
 	if existing == nil {
-		existing = models.NewOperationalNeed(principal.ID(), modelPlanID)
+		existing = models.NewOperationalNeed(principal.Account().ID, modelPlanID)
 	}
 	changes := map[string]interface{}{
 		"needed": needed,
