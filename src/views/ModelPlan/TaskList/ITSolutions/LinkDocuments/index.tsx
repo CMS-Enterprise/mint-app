@@ -85,8 +85,6 @@ const LinkDocuments = () => {
     );
   }, [data?.operationalSolution]);
 
-  console.log(solution);
-
   // Sets state of linked docs after fetched from query
   useEffect(() => {
     const linkedDocsFiltered = solution?.documents?.map(
@@ -109,6 +107,8 @@ const LinkDocuments = () => {
   // Checks which documents need to be linked/unlinked and calls/handles mutations
   const handleDocumentLink = async (redirect?: 'back' | null) => {
     const documentsToUpdate = docsToUpdate(linkedDocs, linkedDocsInit);
+
+    console.log(documentsToUpdate);
 
     if (documentsToUpdate.links.length > 0) {
       createSolutionLinks({
@@ -136,7 +136,7 @@ const LinkDocuments = () => {
         });
     }
 
-    if (documentsToUpdate.unlink) {
+    if (documentsToUpdate.unlink.length > 0) {
       await Promise.all(
         documentsToUpdate.unlink.map(documentID => {
           // Map through all documents that need to be unlink and send mutation for each
@@ -148,7 +148,6 @@ const LinkDocuments = () => {
         })
       )
         .then(response => {
-          console.log(response);
           const errors = response?.find(result => result?.errors);
 
           if (response && !errors) {

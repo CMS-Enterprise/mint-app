@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -17,6 +17,8 @@ import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
 import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
 import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
+import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
+import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { FileUploadForm } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -24,9 +26,11 @@ import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
 const DocumentUpload = ({
-  solutionDetailsLink
+  solutionDetailsLink,
+  solutionID
 }: {
   solutionDetailsLink?: string;
+  solutionID?: string;
 }) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
@@ -35,8 +39,28 @@ const DocumentUpload = ({
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
+  // State management for mutation errors
+  const [mutationError, setMutationError] = useState<boolean>(false);
+
   const [uploadFile, uploadFileStatus] = useMutation<UploadNewPlanDocumentType>(
     UploadNewPlanDocument
+  );
+
+  const messageOnNextPage = (message: string, fileName: string) =>
+    showMessageOnNextPage(
+      <Alert type="success" slim className="margin-y-4">
+        <span className="mandatory-fields-alert__text">
+          {t(message, {
+            documentName: fileName
+          })}
+        </span>
+      </Alert>
+    );
+
+  const [
+    createSolutionLinks
+  ] = useMutation<CreateDocumentSolutionLinksVariables>(
+    CreateDocumentSolutionLinks
   );
 
   // Uploads the document to s3 bucket and create document on BE
@@ -58,26 +82,40 @@ const DocumentUpload = ({
       })
         .then(response => {
           if (!response.errors) {
-            showMessageOnNextPage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-y-4"
-                >
-                  <span className="mandatory-fields-alert__text">
-                    {t('documentUploadSuccess', {
-                      documentName: file.name
-                    })}
-                  </span>
-                </Alert>
-              </>
-            );
-            if (solutionDetailsLink) {
-              history.push(solutionDetailsLink);
+            // Checking if need to link new doc to existing solution
+            if (
+              solutionID &&
+              solutionDetailsLink &&
+              response?.data?.uploadNewPlanDocument?.id
+            ) {
+              createSolutionLinks({
+                variables: {
+                  solutionID,
+                  documentIDs: [response?.data?.uploadNewPlanDocument?.id]
+                }
+              })
+                .then(res => {
+                  if (res && !res.errors) {
+                    messageOnNextPage(
+                      'documentUploadSolutionSuccess',
+                      file.name
+                    );
+                    history.push(solutionDetailsLink);
+                  } else if (response.errors) {
+                    setMutationError(true);
+                  }
+                })
+                .catch(() => {
+                  setMutationError(true);
+                });
             } else {
-              history.push(`/models/${modelID}/documents`);
+              messageOnNextPage('documentUploadSuccess', file.name);
+
+              if (solutionDetailsLink) {
+                history.push(solutionDetailsLink);
+              } else {
+                history.push(`/models/${modelID}/documents`);
+              }
             }
           }
         })
@@ -89,6 +127,12 @@ const DocumentUpload = ({
 
   return (
     <div>
+      {mutationError && (
+        <Alert type="error" slim>
+          {t('documentLinkError')}
+        </Alert>
+      )}
+
       <Formik
         initialValues={{
           file: null,

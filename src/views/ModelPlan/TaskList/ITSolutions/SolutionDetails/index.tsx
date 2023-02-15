@@ -64,7 +64,8 @@ const SolutionDetails = () => {
   >(GetOperationalSolution, {
     variables: {
       id: operationalSolutionID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const solution =
@@ -214,6 +215,7 @@ const SolutionDetails = () => {
                     history.push({
                       pathname: `/models/${modelID}/documents/add-document`,
                       state: {
+                        solutionID: operationalSolutionID,
                         solutionDetailsLink: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
                       }
                     });

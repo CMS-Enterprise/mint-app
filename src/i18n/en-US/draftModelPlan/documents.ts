@@ -99,7 +99,9 @@ const documents = {
   documentLinkSuccess: 'Success! Your documents are linked to this solution.',
   documentUnLinkSuccess:
     'Success! Your documents are unlinked to this solution.',
-  documentLinkError: 'There was an error linking your documents.'
+  documentLinkError: 'There was an error linking your documents.',
+  documentUploadSolutionSuccess:
+    'Success! {{-documentName}} has been added to this solution.'
 };
 
 export default documents;

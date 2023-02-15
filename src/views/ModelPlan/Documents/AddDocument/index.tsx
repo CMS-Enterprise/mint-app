@@ -25,11 +25,14 @@ const AddDocument = () => {
   const { state } = useLocation<{
     state: {
       solutionDetailsLink?: string;
+      solutionID?: string;
     };
     solutionDetailsLink?: string;
+    solutionID?: string;
   }>();
 
   const solutionDetailsLink = state?.solutionDetailsLink;
+  const solutionID = state?.solutionID;
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
@@ -75,7 +78,8 @@ const AddDocument = () => {
           </p>
 
           <DocumentUpload
-            solutionDetailsLink={solutionDetailsLink || undefined}
+            solutionDetailsLink={solutionDetailsLink}
+            solutionID={solutionID}
           />
 
           <div className="display-block">
