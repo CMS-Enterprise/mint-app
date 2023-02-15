@@ -601,27 +601,6 @@
 			"name": "Plan Documents",
 			"item": [
 				{
-					"name": "Generate Presigned Upload URL",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation generatePresignedUploadURL ($input: GeneratePresignedUploadURLInput!) {\n    generatePresignedUploadURL (input: $input) {\n        url\n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"fileName\": \"\",\n    \"mimeType\": \"\",\n    \"size\": 0\n  }\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Create Plan Document",
 					"request": {
 						"method": "POST",
@@ -692,50 +671,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query planDocument ($id: UUID!) {\n    planDocument (id: $id) {\n        id\n        modelPlanID\n        fileType\n        bucket\n        fileKey\n        virusScanned\n        virusClean\n        fileName\n        fileSize\n        documentType\n        otherType\n        optionalNotes\n        deletedAt\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Plan Document Download URL",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query planDocumentDownloadURL ($id: UUID!) {\n    planDocumentDownloadURL (id: $id) {\n        presignedURL\n    }\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Plan Document By Model ID",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query readPlanDocumentByModelID ($id: UUID!) {\n    readPlanDocumentByModelID (id: $id) {\n        id\n        modelPlanID\n        fileType\n        bucket\n        fileKey\n        virusScanned\n        virusClean\n        fileName\n        fileSize\n        documentType\n        otherType\n        optionalNotes\n        deletedAt\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
+								"query": "query planDocument ($id: UUID!) {\n    planDocument (id: $id) {\n        id\n        modelPlanID\n        fileType\n        bucket\n        fileKey\n        virusScanned\n        virusClean\n        fileName\n        fileSize\n        documentType\n        otherType\n        optionalNotes\n        deletedAt\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }            \n    }\n}",
+								"variables": "{\n  \"id\": \"{{documentID}}\"\n}"
 							}
 						},
 						"url": {
@@ -1870,6 +1807,11 @@
 		{
 			"key": "operationalSolutionSubtaskID1",
 			"value": ""
+		},
+		{
+			"key": "documentID",
+			"value": "0b188e43-21a6-45b4-8dc2-a09929d3402d",
+			"type": "string"
 		}
 	]
 }

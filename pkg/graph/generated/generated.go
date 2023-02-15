@@ -372,26 +372,28 @@ type ComplexityRoot struct {
 	}
 
 	PlanDocument struct {
-		Bucket             func(childComplexity int) int
-		CreatedBy          func(childComplexity int) int
-		CreatedDts         func(childComplexity int) int
-		DeletedAt          func(childComplexity int) int
-		DocumentType       func(childComplexity int) int
-		DownloadURL        func(childComplexity int) int
-		FileKey            func(childComplexity int) int
-		FileName           func(childComplexity int) int
-		FileSize           func(childComplexity int) int
-		FileType           func(childComplexity int) int
-		ID                 func(childComplexity int) int
-		ModelPlanID        func(childComplexity int) int
-		ModifiedBy         func(childComplexity int) int
-		ModifiedDts        func(childComplexity int) int
-		NumLinkedSolutions func(childComplexity int) int
-		OptionalNotes      func(childComplexity int) int
-		OtherType          func(childComplexity int) int
-		Restricted         func(childComplexity int) int
-		VirusClean         func(childComplexity int) int
-		VirusScanned       func(childComplexity int) int
+		Bucket                func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		DeletedAt             func(childComplexity int) int
+		DocumentType          func(childComplexity int) int
+		DownloadURL           func(childComplexity int) int
+		FileKey               func(childComplexity int) int
+		FileName              func(childComplexity int) int
+		FileSize              func(childComplexity int) int
+		FileType              func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		NumLinkedSolutions    func(childComplexity int) int
+		OptionalNotes         func(childComplexity int) int
+		OtherType             func(childComplexity int) int
+		Restricted            func(childComplexity int) int
+		VirusClean            func(childComplexity int) int
+		VirusScanned          func(childComplexity int) int
 	}
 
 	PlanDocumentSolutionLink struct {
@@ -3188,6 +3190,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanDocument.CreatedBy(childComplexity), true
 
+	case "PlanDocument.createdByUserAccount":
+		if e.complexity.PlanDocument.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanDocument.CreatedByUserAccount(childComplexity), true
+
 	case "PlanDocument.createdDts":
 		if e.complexity.PlanDocument.CreatedDts == nil {
 			break
@@ -3264,6 +3273,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDocument.ModifiedBy(childComplexity), true
+
+	case "PlanDocument.modifiedByUserAccount":
+		if e.complexity.PlanDocument.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.PlanDocument.ModifiedByUserAccount(childComplexity), true
 
 	case "PlanDocument.modifiedDts":
 		if e.complexity.PlanDocument.ModifiedDts == nil {
@@ -7008,9 +7024,12 @@ type PlanDocument {
   downloadUrl: String
   deletedAt: Time
   numLinkedSolutions: Int!
-  createdBy: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -13698,10 +13717,14 @@ func (ec *executionContext) fieldContext_ModelPlan_documents(ctx context.Context
 				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
 			}
@@ -16530,10 +16553,14 @@ func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx cont
 				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
 			}
@@ -20559,10 +20586,14 @@ func (ec *executionContext) fieldContext_OperationalSolution_documents(ctx conte
 				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
 			}
@@ -26862,9 +26893,9 @@ func (ec *executionContext) _PlanDocument_createdBy(ctx context.Context, field g
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -26874,7 +26905,73 @@ func (ec *executionContext) fieldContext_PlanDocument_createdBy(ctx context.Cont
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDocument_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDocument_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDocument",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -26947,9 +27044,9 @@ func (ec *executionContext) _PlanDocument_modifiedBy(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*uuid.UUID)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -26959,7 +27056,70 @@ func (ec *executionContext) fieldContext_PlanDocument_modifiedBy(ctx context.Con
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDocument_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDocument_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDocument",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -45800,10 +45960,14 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 				return ec.fieldContext_PlanDocument_numLinkedSolutions(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_PlanDocument_createdByUserAccount(ctx, field)
 			case "createdDts":
 				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
 			case "modifiedBy":
 				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_PlanDocument_modifiedByUserAccount(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
 			}
@@ -53064,6 +53228,26 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdDts":
 
 			out.Values[i] = ec._PlanDocument_createdDts(ctx, field, obj)
@@ -53075,6 +53259,23 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanDocument_modifiedBy(ctx, field, obj)
 
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanDocument_modifiedDts(ctx, field, obj)
