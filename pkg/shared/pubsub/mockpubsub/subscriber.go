@@ -8,6 +8,9 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	uuid "github.com/google/uuid"
+
+	pubsub "github.com/cmsgov/mint-app/pkg/shared/pubsub"
 )
 
 // MockSubscriber is a mock of Subscriber interface.
@@ -71,4 +74,16 @@ func (m *MockSubscriber) Notify(payload interface{}) {
 func (mr *MockSubscriberMockRecorder) Notify(payload interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Notify", reflect.TypeOf((*MockSubscriber)(nil).Notify), payload)
+}
+
+// NotifyUnsubscribed mocks base method.
+func (m *MockSubscriber) NotifyUnsubscribed(ps *pubsub.ServicePubSub, sessionID uuid.UUID) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "NotifyUnsubscribed", ps, sessionID)
+}
+
+// NotifyUnsubscribed indicates an expected call of NotifyUnsubscribed.
+func (mr *MockSubscriberMockRecorder) NotifyUnsubscribed(ps, sessionID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NotifyUnsubscribed", reflect.TypeOf((*MockSubscriber)(nil).NotifyUnsubscribed), ps, sessionID)
 }
