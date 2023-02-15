@@ -207,9 +207,12 @@ type PlanDocument {
   downloadUrl: String
   deletedAt: Time
   numLinkedSolutions: Int!
-  createdBy: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
