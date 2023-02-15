@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/constants"
+
 	"github.com/google/uuid"
 	"github.com/samber/lo"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 // AnalyzedAudit represents a analyzed_audit to a table row in the database
@@ -293,22 +293,20 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Section updates
 	if len(a.Updated) > 0 {
-		updatedSectionNames := lo.Map(a.Updated, func(name string, index int) string {
-			s := strings.Replace(name, "_", " ", -1)
-			caser := cases.Title(language.AmericanEnglish)
-			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
+		updatedSectionNames := lo.Map(a.Updated, func(name string, _ int) string {
+			return a.getHumanizedTableName(name)
 		})
+
 		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
 			fmt.Sprintf(AnalyzedPlanSectionsHumanizedUpdated, strings.Join(updatedSectionNames, ", ")))
 	}
 
 	// Ready for clearance
 	if len(a.ReadyForClearance) > 0 {
-		updatedSectionNames := lo.Map(a.ReadyForClearance, func(name string, index int) string {
-			s := strings.Replace(name, "_", " ", -1)
-			caser := cases.Title(language.AmericanEnglish)
-			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
+		updatedSectionNames := lo.Map(a.ReadyForClearance, func(name string, _ int) string {
+			return a.getHumanizedTableName(name)
 		})
+
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
 				fmt.Sprintf(AnalyzedPlanSectionsHumanizedClearance, updatedSectionNames[0]))
@@ -320,11 +318,10 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Ready for review
 	if len(a.ReadyForReview) > 0 {
-		updatedSectionNames := lo.Map(a.ReadyForReview, func(name string, index int) string {
-			s := strings.Replace(name, "_", " ", -1)
-			caser := cases.Title(language.AmericanEnglish)
-			return strings.Trim(caser.String(strings.Replace(s, "plan", "", -1)), " ")
+		updatedSectionNames := lo.Map(a.ReadyForReview, func(name string, _ int) string {
+			return a.getHumanizedTableName(name)
 		})
+
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
 				fmt.Sprintf(AnalyzedPlanSectionsHumanizedReview, updatedSectionNames[0]))
@@ -334,6 +331,11 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 		}
 	}
 	return humanizedAnalyzedPlanSections
+}
+
+func (a *AnalyzedPlanSections) getHumanizedTableName(name string) string {
+	humanizedName, _ := constants.GetHumanizedTableName(name)
+	return strings.Trim(humanizedName, " ")
 }
 
 // AnalyzedModelLeads represents an AnalyzedModelLeads in an AnalyzedAuditChange
