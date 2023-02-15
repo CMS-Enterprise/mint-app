@@ -1497,16 +1497,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1629,44 +1622,30 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "RemovePlanDocumentSolutionLink",
+					"name": "RemovePlanDocumentSolutionLinks",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation removePlanDocumentSolutionLink ($id: UUID!) {\n    removePlanDocumentSolutionLink (id: $id)\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
+								"query": "mutation removePlanDocumentSolutionLinks ($solutionID: UUID!, $documentIDs: [UUID!]!) {\n    removePlanDocumentSolutionLinks (solutionID: $solutionID, documentIDs: $documentIDs)\n}",
+								"variables": "{\n  \"solutionID\": \"\",\n  \"documentIDs\": [\n    \"\"\n  ]\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},

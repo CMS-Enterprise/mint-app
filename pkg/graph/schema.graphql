@@ -1680,7 +1680,7 @@ updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String change
 createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
 @hasRole(role: MINT_USER)
 
-removePlanDocumentSolutionLink(id: UUID!): Boolean!
+removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
 @hasRole(role: MINT_USER)
 
 createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]

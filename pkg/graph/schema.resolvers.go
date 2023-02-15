@@ -412,11 +412,11 @@ func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, 
 	return resolvers.PlanDocumentSolutionLinksCreate(logger, r.store, solutionID, documentIDs, principal)
 }
 
-// RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
-func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
+// RemovePlanDocumentSolutionLinks is the resolver for the removePlanDocumentSolutionLinks field.
+func (r *mutationResolver) RemovePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) (bool, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store, principal)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, solutionID, documentIDs, r.store, principal)
 }
 
 // CreateOperationalSolutionSubtasks is the resolver for the createOperationalSolutionSubtasks field.
