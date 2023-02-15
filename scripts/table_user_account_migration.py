@@ -22,9 +22,9 @@ migration_config = [
 
     # Base Struct
     # ('plan_cr_tdl', 'EASI-2618', SQL_VARIANT_BASE_STRUCT),
-    ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
+    # ('plan_discussion', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
     # ('discussion_reply', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
-    # ('plan_document', 'EASI-2620', SQL_VARIANT_BASE_STRUCT),
+    ('plan_document', 'EASI-2620', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document_solution_link', 'EASI-2621', SQL_VARIANT_BASE_STRUCT),
     # ('operational_need', 'EASI-2623', SQL_VARIANT_BASE_STRUCT),
     # ('operational_solution', 'EASI-2624', SQL_VARIANT_BASE_STRUCT),
@@ -240,7 +240,7 @@ def main():
     repo = Repo(repo_path)
     assert not repo.bare
 
-    root_migration_index = 53
+    root_migration_index = 67
 
     migration_index = root_migration_index
     for migration in migration_config:
