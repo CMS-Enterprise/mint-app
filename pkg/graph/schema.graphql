@@ -1480,9 +1480,12 @@ type PlanDocumentSolutionLink {
 id: UUID!
 solutionID: UUID!
 documentID: UUID!
-createdBy: String!
+
+createdBy: UUID!
+createdByUserAccount: UserAccount!
 createdDts: Time!
-modifiedBy: String
+modifiedBy: UUID
+modifiedByUserAccount: UserAccount
 modifiedDts: Time
 }
 

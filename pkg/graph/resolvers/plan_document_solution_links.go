@@ -14,7 +14,7 @@ import (
 func PlanDocumentSolutionLinksCreate(logger *zap.Logger, store *storage.Store, solutionID uuid.UUID, documentIDs []uuid.UUID, principal authentication.Principal) ([]*models.PlanDocumentSolutionLink, error) {
 
 	//check one link, since all are for the same solution
-	link := models.NewPlanDocumentSolutionLink(principal.ID(), solutionID)
+	link := models.NewPlanDocumentSolutionLink(principal.Account().ID, solutionID)
 
 	err := BaseStructPreCreate(logger, &link, principal, store, true)
 	if err != nil {
