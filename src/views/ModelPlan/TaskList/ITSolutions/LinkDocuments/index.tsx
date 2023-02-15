@@ -16,10 +16,7 @@ import useMessage from 'hooks/useMessage';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  CreateDocumentSolutionLinks as CreateDocumentSolutionLinksType,
-  CreateDocumentSolutionLinksVariables
-} from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
+import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
@@ -108,7 +105,7 @@ const LinkDocuments = () => {
   );
 
   // Checks which documents need to be linked/unlinked and calls/handles mutations
-  const handleDocumentLink = async (redirect?: 'back' | null) => {
+  const handleDocumentLink = async () => {
     const documentsToUpdate = docsToUpdate(linkedDocs, linkedDocsInit);
 
     Object.keys(documentsToUpdate).forEach(linkType => {

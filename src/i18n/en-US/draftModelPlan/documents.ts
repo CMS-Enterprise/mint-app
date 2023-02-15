@@ -38,8 +38,13 @@ const documents = {
     header: 'Confirm you want to remove {{-documentName}}.',
     warning:
       'You will not be able to access this document after it is removed.',
+    warningSolution:
+      'Removing this document will delete it from your model completely, and you will no longer be able to access it. Unlinking this document will remove it only from this solution. It will still be available with the rest of your model documents.',
     confirm: 'Remove document',
-    cancel: 'Keep document',
+    confirmSolutionRemove: 'Remove',
+    unlink: 'Unlink',
+    keepDocument: 'Keep document',
+    cancel: 'Cancel',
     confirmationText_name:
       'The document for {{-documentName}} has been removed',
     confirmationText_noName: 'The document has been removed'
@@ -100,8 +105,10 @@ const documents = {
   documentUnLinkSuccess:
     'Success! Your documents are unlinked to this solution.',
   documentLinkError: 'There was an error linking your documents.',
+  documentUnLinkError: 'There was an error unlinking your document.',
   documentUploadSolutionSuccess:
-    'Success! {{-documentName}} has been added to this solution.'
+    'Success! {{-documentName}} has been added to this solution.',
+  noLinkedDocs: 'No documents associated with this solution yet'
 };
 
 export default documents;
