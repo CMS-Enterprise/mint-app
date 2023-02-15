@@ -189,6 +189,7 @@ const SolutionDetails = () => {
                 refetch={refetch}
                 setDocumentMessage={setDocumentMessage}
                 setDocumentStatus={setDocumentStatus}
+                hasEditAccess
               />
 
               <div className="display-flex margin-y-4">

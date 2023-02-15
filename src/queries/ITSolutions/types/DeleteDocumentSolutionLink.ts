@@ -8,9 +8,10 @@
 // ====================================================
 
 export interface DeleteDocumentSolutionLink {
-  removePlanDocumentSolutionLink: boolean;
+  removePlanDocumentSolutionLinks: boolean;
 }
 
 export interface DeleteDocumentSolutionLinkVariables {
-  id: UUID;
+  solutionID: UUID;
+  documentIDs: UUID[];
 }

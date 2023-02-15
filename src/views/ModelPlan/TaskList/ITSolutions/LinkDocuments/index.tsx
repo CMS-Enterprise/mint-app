@@ -14,9 +14,12 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import useMessage from 'hooks/useMessage';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
-import DeleteDocumentSolutionLink from 'queries/ITSolutions/DeleteDocumentSolutionLink';
+import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
+import {
+  CreateDocumentSolutionLinks as CreateDocumentSolutionLinksType,
+  CreateDocumentSolutionLinksVariables
+} from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
 import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
@@ -101,20 +104,27 @@ const LinkDocuments = () => {
   );
 
   const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
-    DeleteDocumentSolutionLink
+    DeleteDocumentSolutionLinks
   );
 
   // Checks which documents need to be linked/unlinked and calls/handles mutations
   const handleDocumentLink = async (redirect?: 'back' | null) => {
     const documentsToUpdate = docsToUpdate(linkedDocs, linkedDocsInit);
 
-    console.log(documentsToUpdate);
+    Object.keys(documentsToUpdate).forEach(linkType => {
+      const mutationType =
+        linkType === 'links' ? createSolutionLinks : deleteSolutionLink;
 
-    if (documentsToUpdate.links.length > 0) {
-      createSolutionLinks({
+      const linksToUpdate =
+        documentsToUpdate[linkType as keyof typeof documentsToUpdate];
+
+      // If no docs to link/unlink - return
+      if (linksToUpdate.length === 0) return;
+
+      mutationType({
         variables: {
           solutionID: solution.id,
-          documentIDs: documentsToUpdate.links
+          documentIDs: linksToUpdate
         }
       })
         .then(response => {
@@ -122,7 +132,9 @@ const LinkDocuments = () => {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {t('documentLinkSuccess')}
+                  {linkType === 'links'
+                    ? t('documentLinkSuccess')
+                    : t('documentUnLinkSuccess')}
                 </span>
               </Alert>
             );
@@ -134,39 +146,7 @@ const LinkDocuments = () => {
         .catch(() => {
           setMutationError(true);
         });
-    }
-
-    if (documentsToUpdate.unlink.length > 0) {
-      await Promise.all(
-        documentsToUpdate.unlink.map(documentID => {
-          // Map through all documents that need to be unlink and send mutation for each
-          return deleteSolutionLink({
-            variables: {
-              id: documentID
-            }
-          });
-        })
-      )
-        .then(response => {
-          const errors = response?.find(result => result?.errors);
-
-          if (response && !errors) {
-            showMessageOnNextPage(
-              <Alert type="success" slim className="margin-y-4">
-                <span className="mandatory-fields-alert__text">
-                  {t('documentUnLinkSuccess')}
-                </span>
-              </Alert>
-            );
-            history.push(solutionDetailsURL);
-          } else if (errors) {
-            setMutationError(true);
-          }
-        })
-        .catch(() => {
-          setMutationError(true);
-        });
-    }
+    });
   };
 
   if (error || !solution) {
@@ -261,9 +241,9 @@ const LinkDocuments = () => {
 };
 
 const docsToUpdate = (linkedDocs: string[], originalDocs: string[]) => {
-  const unlink = originalDocs.filter(doc => !linkedDocs.includes(doc));
+  const unlinks = originalDocs.filter(doc => !linkedDocs.includes(doc));
   const links = linkedDocs.filter(doc => !originalDocs.includes(doc));
-  return { unlink, links };
+  return { unlinks, links };
 };
 
 export default LinkDocuments;
