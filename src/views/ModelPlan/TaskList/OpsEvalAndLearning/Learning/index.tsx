@@ -58,7 +58,7 @@ const Learning = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     GetLearningFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -70,7 +70,8 @@ const Learning = () => {
   >(GetLearning, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const {
@@ -82,7 +83,7 @@ const Learning = () => {
     modelLearningSystemsOther,
     modelLearningSystemsNote,
     anticipatedChallenges,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
@@ -336,15 +337,17 @@ const Learning = () => {
                   />
                 </FieldGroup>
 
-                <ReadyForReview
-                  id="ops-eval-and-learning-learning-status"
-                  field="status"
-                  sectionName={t('heading')}
-                  status={values.status}
-                  setFieldValue={setFieldValue}
-                  readyForReviewBy={readyForReviewBy}
-                  readyForReviewDts={readyForReviewDts}
-                />
+                {!loading && values.status && (
+                  <ReadyForReview
+                    id="ops-eval-and-learning-learning-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

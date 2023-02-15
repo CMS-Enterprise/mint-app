@@ -19,11 +19,15 @@ export default gql`
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
         readyForReviewDts
         status
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

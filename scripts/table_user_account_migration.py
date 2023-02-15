@@ -18,7 +18,7 @@ migration_config = [
     # ('Plan_Participants_and_Providers', 'EASI-2613', SQL_VARIANT_BASE_TASK_LIST),
     # ('Plan_Payments', 'EASI-2614', SQL_VARIANT_BASE_TASK_LIST),
     # ('Plan_Beneficiaries', 'EASI-2616', SQL_VARIANT_BASE_TASK_LIST),
-    # ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
+    ('Plan_General_Characteristics', 'EASI-2617', SQL_VARIANT_BASE_TASK_LIST),
 
     # Base Struct
     # ('plan_cr_tdl', 'EASI-2618', SQL_VARIANT_BASE_STRUCT),

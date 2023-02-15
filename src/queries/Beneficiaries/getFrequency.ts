@@ -13,11 +13,15 @@ export default gql`
         beneficiaryOverlap
         beneficiaryOverlapNote
         precedenceRules
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
         readyForReviewDts
         status
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

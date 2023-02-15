@@ -6,7 +6,7 @@ import (
 
 // PlanGeneralCharacteristics represents the "general characteristics" section of a plan
 type PlanGeneralCharacteristics struct {
-	baseTaskListSection
+	baseTaskListSectionUserTable
 
 	// Page 1
 	IsNewModel                  *bool          `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
@@ -70,8 +70,8 @@ type PlanGeneralCharacteristics struct {
 }
 
 // NewPlanGeneralCharacteristics returns a new GeneralCharacteristics object
-func NewPlanGeneralCharacteristics(tls baseTaskListSection) *PlanGeneralCharacteristics {
+func NewPlanGeneralCharacteristics(tls baseTaskListSectionUserTable) *PlanGeneralCharacteristics {
 	return &PlanGeneralCharacteristics{
-		baseTaskListSection: tls,
+		baseTaskListSectionUserTable: tls,
 	}
 }
