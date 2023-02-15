@@ -16,7 +16,10 @@ export default gql`
         waiversRequired
         waiversRequiredTypes
         waiversRequiredNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
         readyForReviewDts
         status
       }

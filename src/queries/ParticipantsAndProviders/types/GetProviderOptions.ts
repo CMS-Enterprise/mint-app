@@ -9,6 +9,12 @@ import { FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType, TaskSta
 // GraphQL query operation: GetProviderOptions
 // ====================================================
 
+export interface GetProviderOptions_modelPlan_participantsAndProviders_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface GetProviderOptions_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
@@ -24,13 +30,14 @@ export interface GetProviderOptions_modelPlan_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewByUserAccount: GetProviderOptions_modelPlan_participantsAndProviders_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
 export interface GetProviderOptions_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

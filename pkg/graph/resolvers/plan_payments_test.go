@@ -20,7 +20,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)
@@ -94,15 +94,10 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
 	suite.Nil(pp.ModifiedBy)
 
 	//Asset these fields are nil upon creation
-	suite.NoError(err)
-	suite.EqualValues(plan.ID, pp.ModelPlanID)
-	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
-	suite.Nil(pp.ModifiedBy)
 
 	suite.Nil(pp.FundingSource)
 	suite.Nil(pp.FundingSourceTrustFund)

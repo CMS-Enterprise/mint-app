@@ -66,21 +66,21 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	// Create a default plan general characteristics object
-	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskList)
+	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
 	// Create a default Plan Beneficiares object
-	beneficiaries := models.NewPlanBeneficiaries(baseTaskList)
+	beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
 	//Create a default Plan Participants and Providers object
-	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskList)
+	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
@@ -88,7 +88,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskList)
+	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
@@ -96,7 +96,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default PlanPayments object
-	planPayments := models.NewPlanPayments(baseTaskList)
+	planPayments := models.NewPlanPayments(baseTaskListUser)
 
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
