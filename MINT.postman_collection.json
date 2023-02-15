@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "77a2a352-91b5-4367-aa7c-c28c300c403f",
+		"_postman_id": "114c8078-bb6f-493c-a602-8b22e755e60a",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "12341016"
@@ -1497,16 +1497,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1629,44 +1622,30 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "RemovePlanDocumentSolutionLink",
+					"name": "RemovePlanDocumentSolutionLinks",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation removePlanDocumentSolutionLink ($id: UUID!) {\n    removePlanDocumentSolutionLink (id: $id)\n}",
-								"variables": "{\n  \"id\": \"\"\n}"
+								"query": "mutation removePlanDocumentSolutionLinks ($solutionID: UUID!, $documentIDs: [UUID!]!) {\n    removePlanDocumentSolutionLinks (solutionID: $solutionID, documentIDs: $documentIDs)\n}",
+								"variables": "{\n  \"solutionID\": \"\",\n  \"documentIDs\": [\n    \"\"\n  ]\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
