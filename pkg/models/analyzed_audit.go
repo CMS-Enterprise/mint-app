@@ -293,9 +293,7 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Section updates
 	if len(a.Updated) > 0 {
-		updatedSectionNames := lo.Map(a.Updated, func(name string, _ int) string {
-			return a.getHumanizedTableName(name)
-		})
+		updatedSectionNames := a.humanizeDatabaseTableNames(a.Updated)
 
 		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
 			fmt.Sprintf(AnalyzedPlanSectionsHumanizedUpdated, strings.Join(updatedSectionNames, ", ")))
@@ -303,9 +301,7 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Ready for clearance
 	if len(a.ReadyForClearance) > 0 {
-		updatedSectionNames := lo.Map(a.ReadyForClearance, func(name string, _ int) string {
-			return a.getHumanizedTableName(name)
-		})
+		updatedSectionNames := a.humanizeDatabaseTableNames(a.ReadyForClearance)
 
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
@@ -318,9 +314,7 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Ready for review
 	if len(a.ReadyForReview) > 0 {
-		updatedSectionNames := lo.Map(a.ReadyForReview, func(name string, _ int) string {
-			return a.getHumanizedTableName(name)
-		})
+		updatedSectionNames := a.humanizeDatabaseTableNames(a.ReadyForReview)
 
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
@@ -333,7 +327,13 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 	return humanizedAnalyzedPlanSections
 }
 
-func (a *AnalyzedPlanSections) getHumanizedTableName(name string) string {
+func (a AnalyzedPlanSections) humanizeDatabaseTableNames(x []string) []string {
+	return lo.Map(x, func(name string, _ int) string {
+		return a.getHumanizedTableName(name)
+	})
+}
+
+func (a AnalyzedPlanSections) getHumanizedTableName(name string) string {
 	humanizedName, _ := constants.GetHumanizedTableName(name)
 	return strings.Trim(humanizedName, " ")
 }
