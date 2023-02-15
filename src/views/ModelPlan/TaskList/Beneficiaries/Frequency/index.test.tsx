@@ -26,7 +26,11 @@ const mockData: BeneficiaryFrequencyType = {
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
   precedenceRules: 'lorem ipsum',
-  readyForReviewBy: 'ASDF',
+  readyForReviewByUserAccount: {
+    commonName: 'ASDF',
+    id: '000',
+    __typename: 'UserAccount'
+  },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
 };
@@ -105,6 +109,12 @@ describe('Model Plan Beneficiaries', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('beneficiaries-frequency-form')
+      ).toBeInTheDocument();
+    });
 
     expect(asFragment()).toMatchSnapshot();
   });

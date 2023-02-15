@@ -7,4 +7,4 @@ SELECT
     modified_by,
     modified_dts
 FROM plan_document_solution_link
-WHERE id = :id
+WHERE solution_id = :solution_id AND document_id = :document_id
