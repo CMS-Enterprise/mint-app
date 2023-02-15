@@ -108,15 +108,21 @@ const LinkDocuments = () => {
   const handleDocumentLink = async () => {
     const documentsToUpdate = docsToUpdate(linkedDocs, linkedDocsInit);
 
+    // If no docs to link/unlink - return
+    if (
+      documentsToUpdate.links.length === 0 &&
+      documentsToUpdate.unlinks.length === 0
+    ) {
+      history.push(solutionDetailsURL);
+      return;
+    }
+
     Object.keys(documentsToUpdate).forEach(linkType => {
       const mutationType =
         linkType === 'links' ? createSolutionLinks : deleteSolutionLink;
 
       const linksToUpdate =
         documentsToUpdate[linkType as keyof typeof documentsToUpdate];
-
-      // If no docs to link/unlink - return
-      if (linksToUpdate.length === 0) return;
 
       mutationType({
         variables: {
@@ -130,8 +136,8 @@ const LinkDocuments = () => {
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
                   {linkType === 'links'
-                    ? t('documentLinkSuccess')
-                    : t('documentUnLinkSuccess')}
+                    ? t('documentUnLinkSuccess')
+                    : t('documentLinkSuccess')}
                 </span>
               </Alert>
             );
