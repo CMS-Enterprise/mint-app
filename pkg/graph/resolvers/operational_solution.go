@@ -48,7 +48,7 @@ func OperationalSolutionInsertOrUpdate(logger *zap.Logger, operationNeedID uuid.
 		return nil, err
 	}
 	if existing == nil {
-		existing = models.NewOperationalSolution(principal.ID(), operationNeedID)
+		existing = models.NewOperationalSolution(principal.Account().ID, operationNeedID)
 	}
 
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
@@ -68,7 +68,7 @@ func OperationalSolutionInsertOrUpdateCustom(logger *zap.Logger, operationNeedID
 		return nil, err
 	}
 	if existing == nil {
-		existing = models.NewOperationalSolution(principal.ID(), operationNeedID)
+		existing = models.NewOperationalSolution(principal.Account().ID, operationNeedID)
 	}
 
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
