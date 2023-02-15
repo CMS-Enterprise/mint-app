@@ -9,6 +9,12 @@ import { CcmInvolvmentType, DataForMonitoringType, ModelLearningSystemType, Task
 // GraphQL query operation: GetLearning
 // ====================================================
 
+export interface GetLearning_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface GetLearning_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
@@ -19,13 +25,14 @@ export interface GetLearning_modelPlan_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewByUserAccount: GetLearning_modelPlan_opsEvalAndLearning_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
 export interface GetLearning_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

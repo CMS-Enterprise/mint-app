@@ -8,6 +8,7 @@ import (
 )
 
 func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
+	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for need")
 
 	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -59,6 +60,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 }
 func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
+	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for complex need")
 
 	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -135,6 +137,7 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 }
 
 func (suite *ResolverSuite) TestSelectionTypeTrigger() {
+	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for selection need")
 
 	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -211,6 +214,7 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 
 }
 
+//lint:ignore U1000 We are currently calling `t.Skip()` on tests, and this method is unused because of it.
 func findOpNeed(collection []*models.OperationalNeed, key models.OperationalNeedKey) *models.OperationalNeed {
 
 	for i := 0; i < len(collection); i++ {

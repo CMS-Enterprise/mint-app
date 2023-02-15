@@ -456,15 +456,20 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -570,15 +575,20 @@ type PlanBeneficiaries {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -675,15 +685,20 @@ type PlanParticipantsAndProviders {
   providerOverlapNote:            String
 
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 
 }
@@ -836,15 +851,21 @@ type PlanPayments {
   paymentStartDateNote:                              String
 
   # Meta
-  createdBy:   String!
-  createdDts:  Time!
-  modifiedBy:  String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status:      TaskStatus!
 }
 
@@ -1242,17 +1263,20 @@ type PlanOpsEvalAndLearning {
     modelLearningSystemsNote: String
     anticipatedChallenges: String
 
-
-
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
-    readyForReviewBy: String
+
+    readyForReviewBy: UUID
+    readyForReviewByUserAccount: UserAccount
     readyForReviewDts: Time
-    readyForClearanceBy: String
+    readyForClearanceBy: UUID
     readyForClearanceByUserAccount: UserAccount
     readyForClearanceDts: Time
+
     status: TaskStatus!
 }
 

@@ -492,15 +492,6 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planBeneficiariesResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanBeneficiaries) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
@@ -586,15 +577,6 @@ func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Con
 func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
 	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
 	return waiverTypes, nil
-}
-
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planGeneralCharacteristicsResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
 }
 
 // GcPartCd is the resolver for the gcPartCD field.
@@ -825,15 +807,6 @@ func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Contex
 	return modelLearningSystemTypes, nil
 }
 
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planOpsEvalAndLearningResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
-}
-
 // Participants is the resolver for the participants field.
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
 	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
@@ -868,15 +841,6 @@ func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Con
 func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
 	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
 	return providerLeaveTypes, nil
-}
-
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planParticipantsAndProvidersResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
 }
 
 // FundingSource is the resolver for the fundingSource field.
@@ -917,15 +881,6 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
 func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
-}
-
-// ReadyForClearanceByUserAccount is the resolver for the readyForClearanceByUserAccount field.
-func (r *planPaymentsResolver) ReadyForClearanceByUserAccount(ctx context.Context, obj *models.PlanPayments) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ReadyForClearanceBy == nil {
-		return nil, nil
-	}
-	return resolvers.UserAccountGetByUsername(logger, r.store, *obj.ReadyForClearanceBy)
 }
 
 // PossibleSolutions is the resolver for the possibleSolutions field.

@@ -21,7 +21,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	}
 	updatedBeneficiary, err := PlanBeneficiariesUpdate(suite.testConfigs.Logger, b.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedBeneficiary.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *updatedBeneficiary.ModifiedBy)
 
 	// Assert that the updated fields are right
 	suite.EqualValues(*updatedBeneficiary.TreatDualElligibleDifferent, models.TriYes)
@@ -58,7 +58,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesGetByModelPlanID() {
 
 	suite.EqualValues(plan.ID, b.ModelPlanID)
 	suite.EqualValues(models.TaskReady, b.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, b.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, b.CreatedBy)
 	suite.Nil(b.ModifiedBy)
 
 	// Many of the fields are nil upon creation
