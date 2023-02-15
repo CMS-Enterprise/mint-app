@@ -329,11 +329,12 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
-  createdByUser: UserInfo!
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -365,12 +366,12 @@ type DiscussionReply  {
 	resolution: Boolean
   isAssessment: Boolean!
 
-  createdByUser: UserInfo!
-
-	createdBy: String!
-	createdDts: Time!
-	modifiedBy: String
-	modifiedDts: Time
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """

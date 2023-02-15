@@ -63,8 +63,8 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	suite.EqualValues(discussion.ID, result.ID)
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["status"], result.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
@@ -149,8 +149,8 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	suite.NoError(err)
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["resolution"], result.Resolution)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {

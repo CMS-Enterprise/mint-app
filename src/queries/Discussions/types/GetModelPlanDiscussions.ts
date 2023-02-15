@@ -9,13 +9,13 @@ import { DiscussionStatus } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetModelPlanDiscussions
 // ====================================================
 
-export interface GetModelPlanDiscussions_modelPlan_discussions_createdByUser {
-  __typename: "UserInfo";
+export interface GetModelPlanDiscussions_modelPlan_discussions_createdByUserAccount {
+  __typename: "UserAccount";
   commonName: string;
 }
 
-export interface GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUser {
-  __typename: "UserInfo";
+export interface GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUserAccount {
+  __typename: "UserAccount";
   commonName: string;
 }
 
@@ -25,21 +25,21 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   discussionID: UUID;
   content: string | null;
   isAssessment: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
-  createdByUser: GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUser;
+  createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUserAccount;
 }
 
 export interface GetModelPlanDiscussions_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   isAssessment: boolean;
-  createdByUser: GetModelPlanDiscussions_modelPlan_discussions_createdByUser;
+  createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_createdByUserAccount;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];
 }
 

@@ -14,6 +14,8 @@ import Discussions from './index';
 const discussionResult = {
   modelPlan: {
     __typename: 'ModelPlan',
+    id: '00000000-0000-0000-0000-000000000000',
+    isCollaborator: true,
     discussions: [
       {
         __typename: 'PlanDiscussion',
@@ -22,7 +24,7 @@ const discussionResult = {
         createdBy: 'TIDA',
         createdDts: '2022-05-12T15:01:39.190679Z',
         status: 'UNANSWERED',
-        createdByUser: {
+        createdByUserAccount: {
           commonName: 'John Doe'
         },
         replies: []
@@ -34,7 +36,7 @@ const discussionResult = {
         createdBy: 'JFCS',
         createdDts: '2022-05-12T15:01:39.190679Z',
         status: 'ANSWERED',
-        createdByUser: {
+        createdByUserAccount: {
           commonName: 'Jane Doe'
         },
         replies: [
@@ -45,7 +47,7 @@ const discussionResult = {
             id: 'abc',
             content: 'This is an answer.',
             createdBy: 'UISX',
-            createdByUser: {
+            createdByUserAccount: {
               commonName: 'Jack Doe'
             },
             createdDts: '2022-05-12T15:01:39.190679Z'
