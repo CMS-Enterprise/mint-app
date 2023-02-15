@@ -95,7 +95,11 @@ const documents = {
     'Link any model documents previously uploaded that are associated with this solution.',
   linkDocumentsButton: 'Link documents',
   modelDocuments: 'Model documents',
-  dontLink: 'Don’t link documents and return to solution details'
+  dontLink: 'Don’t link documents and return to solution details',
+  documentLinkSuccess: 'Success! Your documents are linked to this solution.',
+  documentUnLinkSuccess:
+    'Success! Your documents are unlinked to this solution.',
+  documentLinkError: 'There was an error linking your documents.'
 };
 
 export default documents;

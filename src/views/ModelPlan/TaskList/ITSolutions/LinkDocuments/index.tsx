@@ -1,11 +1,10 @@
 /*
-View for selecting/toggled 'needed' bool on possible solutions and custom solutions
-Displays relevant operational need question and answers
+View for linking and unlinking existing model plan documents for operational need solutions
 */
 
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Grid, IconArrowBack } from '@trussworks/react-uswds';
 
@@ -13,35 +12,26 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
+import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
+import DeleteDocumentSolutionLink from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
+import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
+import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
+import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
-import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
-import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
-import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
-import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-// Passing in operationalNeed to Formik instead of array of solutions
-// Fomik does not take an array structure
 export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',
   id: '',
@@ -53,11 +43,7 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const LinkDocuments = ({
-  isUpdatingStatus = false
-}: {
-  isUpdatingStatus?: boolean;
-}) => {
+const LinkDocuments = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -65,26 +51,25 @@ const LinkDocuments = ({
   }>();
 
   const history = useHistory();
+  const { showMessageOnNextPage } = useMessage();
 
   const { t } = useTranslation('documents');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const { showMessageOnNextPage, message } = useMessage();
+  const { modelName } = useContext(ModelInfoContext);
 
-  const [documentMessage, setDocumentMessage] = useState('');
-  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
-    'error'
-  );
+  const solutionDetailsURL = `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`;
 
   // State management for linking/unlinking docs
   const [linkedDocs, setLinkedDocs] = useState<string[]>([]);
 
+  // Original state of linked/unlinked docs
+  const [linkedDocsInit, setLinkedDocsInit] = useState<string[]>([]);
+
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const { modelName } = useContext(ModelInfoContext);
-
-  const { data, loading, error } = useQuery<
+  const { data, error } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -100,76 +85,89 @@ const LinkDocuments = ({
     );
   }, [data?.operationalSolution]);
 
+  console.log(solution);
+
+  // Sets state of linked docs after fetched from query
   useEffect(() => {
-    setLinkedDocs(solution?.documents?.map(solutionDoc => solutionDoc.id));
+    const linkedDocsFiltered = solution?.documents?.map(
+      solutionDoc => solutionDoc.id
+    );
+    setLinkedDocs(linkedDocsFiltered);
+    setLinkedDocsInit(linkedDocsFiltered);
   }, [solution]);
 
-  console.log(linkedDocs);
-
-  const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
-    UpdateOperationalNeedSolution
-  );
-
   const [
-    updateCustomSolution
-  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
-    UpdateCustomOperationalSolution
+    createSolutionLinks
+  ] = useMutation<CreateDocumentSolutionLinksVariables>(
+    CreateDocumentSolutionLinks
   );
 
-  // Cycles and updates all solutions on a need
-  const handleFormSubmit = async (
-    formikValues: GetOperationalNeedOperationalNeedType,
-    redirect?: 'back' | null,
-    dontAdd?: boolean // False if user selects 'Don’t add solutions and return to tracker'
-  ) => {
-    const { solutions } = formikValues;
+  const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
+    DeleteDocumentSolutionLink
+  );
 
-    await Promise.all(
-      solutions.map(solution => {
-        const solutionNeeded = dontAdd ? false : solution.needed || false;
+  // Checks which documents need to be linked/unlinked and calls/handles mutations
+  const handleDocumentLink = async (redirect?: 'back' | null) => {
+    const documentsToUpdate = docsToUpdate(linkedDocs, linkedDocsInit);
 
-        // Update possibleSolution needed bool and status
-        if (solution.key) {
-          return updateSolution({
+    if (documentsToUpdate.links.length > 0) {
+      createSolutionLinks({
+        variables: {
+          solutionID: solution.id,
+          documentIDs: documentsToUpdate.links
+        }
+      })
+        .then(response => {
+          if (response && !response.errors) {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('documentLinkSuccess')}
+                </span>
+              </Alert>
+            );
+            history.push(solutionDetailsURL);
+          } else if (response.errors) {
+            setMutationError(true);
+          }
+        })
+        .catch(() => {
+          setMutationError(true);
+        });
+    }
+
+    if (documentsToUpdate.unlink) {
+      await Promise.all(
+        documentsToUpdate.unlink.map(documentID => {
+          // Map through all documents that need to be unlink and send mutation for each
+          return deleteSolutionLink({
             variables: {
-              operationalNeedID,
-              solutionType: solution.key,
-              changes: {
-                needed: solutionNeeded,
-                mustStartDts: solution.mustStartDts,
-                mustFinishDts: solution.mustFinishDts,
-                status: solution.status
-              }
+              id: documentID
             }
           });
-        }
-        // Update custom solution needed bool - status should already be set
-        return updateCustomSolution({
-          variables: {
-            operationalNeedID,
-            customSolutionType: solution.nameOther,
-            changes: {
-              needed: solutionNeeded,
-              mustStartDts: solution.mustStartDts,
-              mustFinishDts: solution.mustFinishDts,
-              status: solution.status
-            }
-          }
-        });
-      })
-    )
-      .then(response => {
-        const errors = response?.find(result => result?.errors);
+        })
+      )
+        .then(response => {
+          console.log(response);
+          const errors = response?.find(result => result?.errors);
 
-        if (response && !errors) {
-          history.push(`/models/${modelID}/task-list/it-solutions`);
-        } else if (errors) {
+          if (response && !errors) {
+            showMessageOnNextPage(
+              <Alert type="success" slim className="margin-y-4">
+                <span className="mandatory-fields-alert__text">
+                  {t('documentUnLinkSuccess')}
+                </span>
+              </Alert>
+            );
+            history.push(solutionDetailsURL);
+          } else if (errors) {
+            setMutationError(true);
+          }
+        })
+        .catch(() => {
           setMutationError(true);
-        }
-      })
-      .catch(() => {
-        setMutationError(true);
-      });
+        });
+    }
   };
 
   if (error || !solution) {
@@ -182,7 +180,7 @@ const LinkDocuments = ({
     { text: t('itTracker'), url: `/models/${modelID}/task-list/it-solutions` },
     {
       text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+      url: solutionDetailsURL
     },
     { text: t('linkDocumentsHeader') }
   ];
@@ -193,7 +191,7 @@ const LinkDocuments = ({
 
       {mutationError && (
         <Alert type="error" slim>
-          {t('addError')}
+          {t('documentLinkError')}
         </Alert>
       )}
 
@@ -239,8 +237,8 @@ const LinkDocuments = ({
 
       <PlanDocumentsTable
         modelID={modelID}
-        setDocumentMessage={setDocumentMessage}
-        setDocumentStatus={setDocumentStatus}
+        setDocumentMessage={() => null}
+        setDocumentStatus={() => null}
         linkedDocs={linkedDocs}
         setLinkedDocs={setLinkedDocs}
       />
@@ -248,22 +246,25 @@ const LinkDocuments = ({
       <Grid tablet={{ col: 6 }}>
         <Button
           type="button"
-          onClick={() => history.goBack()}
+          onClick={() => handleDocumentLink()}
           className="display-inline-flex flex-align-center margin-y-3"
         >
           {t('linkDocumentsButton')}
         </Button>
 
-        <UswdsReactLink
-          className="display-flex"
-          to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`}
-        >
+        <UswdsReactLink className="display-flex" to={solutionDetailsURL}>
           <IconArrowBack className="margin-right-1" aria-hidden />
           {t('dontLink')}
         </UswdsReactLink>
       </Grid>
     </>
   );
+};
+
+const docsToUpdate = (linkedDocs: string[], originalDocs: string[]) => {
+  const unlink = originalDocs.filter(doc => !linkedDocs.includes(doc));
+  const links = linkedDocs.filter(doc => !originalDocs.includes(doc));
+  return { unlink, links };
 };
 
 export default LinkDocuments;

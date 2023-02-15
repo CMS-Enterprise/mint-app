@@ -15,6 +15,16 @@ export default gql`
       mustStartDts
       documents {
         id
+        virusScanned
+        virusClean
+        fileName
+        fileType
+        downloadUrl
+        restricted
+        documentType
+        createdDts
+        optionalNotes
+        otherType
       }
     }
   }

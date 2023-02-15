@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation DeleteDocumentSolutionLinks($id: UUID!) {
+  mutation DeleteDocumentSolutionLink($id: UUID!) {
     removePlanDocumentSolutionLink(id: $id)
   }
 `;
