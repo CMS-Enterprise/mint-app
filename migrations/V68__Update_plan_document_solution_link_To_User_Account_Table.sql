@@ -13,9 +13,6 @@ ALTER TABLE plan_document_solution_link
 ADD COLUMN created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
 ADD COLUMN modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE;
 
-ALTER TABLE plan_document_solution_link
-DISABLE TRIGGER audit_trigger;
-
 /* Perform the data migration */
 WITH userAccount AS (
     SELECT
@@ -48,14 +45,6 @@ ALTER TABLE plan_document_solution_link
 ALTER COLUMN created_by SET NOT NULL;
 
 
-/* update audit config */
-UPDATE audit.table_config
-SET uses_user_id = TRUE,
-    modified_by = '00000001-0001-0001-0001-000000000001', --System Account
-    modified_dts = current_timestamp
-WHERE name = 'plan_document_solution_link';
 
-/* turn on audit trigger */
-
-ALTER TABLE plan_document_solution_link
-ENABLE TRIGGER audit_trigger;
+/* Turn on auditing */
+SELECT audit.AUDIT_TABLE('public', 'plan_document_solution_link', 'id', 'solution_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{document_id}'::TEXT[]);

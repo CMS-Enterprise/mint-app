@@ -44,7 +44,7 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 	arg := map[string]interface{}{
 		"solution_id":  solutionID,
 		"document_ids": docIDs,
-		"created_by":   principal.ID(),
+		"created_by":   principal.Account().ID,
 	}
 
 	var ret []*models.PlanDocumentSolutionLink
