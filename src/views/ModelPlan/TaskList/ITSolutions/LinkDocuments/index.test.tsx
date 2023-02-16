@@ -90,7 +90,7 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('IT Solutions Link Documents', () => {
   it('renders correctly', async () => {
-    const { getByTestId, getByText } = render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
           {
@@ -118,10 +118,19 @@ describe('IT Solutions Link Documents', () => {
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     // Click checkbox table cell to toggle document selection
-    const solutionDocument = getByText('My MINT document');
-    userEvent.click(solutionDocument);
+    const solutionDocument1 = getByTestId(
+      'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
+    );
+
+    userEvent.click(solutionDocument1);
+
+    const solutionDocument2 = getByTestId(
+      'link-document-07d0d06f-9ecd-42a0-ad84-bc8c8ddea084'
+    );
 
     await waitFor(() => {
+      expect(solutionDocument1).not.toBeChecked();
+      expect(solutionDocument2).toBeChecked();
       expect(linkButton).not.toHaveAttribute('disabled');
     });
   });
@@ -149,6 +158,12 @@ describe('IT Solutions Link Documents', () => {
 
     // Wait for page to load
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
+    // Click checkbox table cell to toggle document selection
+    const solutionDocument1 = getByTestId(
+      'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
+    );
+    userEvent.click(solutionDocument1);
 
     expect(asFragment()).toMatchSnapshot();
   });

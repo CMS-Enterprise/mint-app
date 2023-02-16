@@ -277,6 +277,7 @@ export const Table = ({
             return (
               <Checkbox
                 id={`link-document-${row.original.id}`}
+                data-testid={`link-document-${row.original.id}`}
                 onChange={() => {
                   const updatedDocs = findDocIDAndRemoveOrInsert(
                     row.original.id,

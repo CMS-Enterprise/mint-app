@@ -21,7 +21,7 @@ const docMock: GetModelPlanDocumentsType = {
     documents: [
       {
         __typename: 'PlanDocument',
-        id: '123',
+        id: '07d0d06f-9ecd-42a0-ad84-bc8c8ddea084',
         virusScanned: true,
         virusClean: true,
         fileName: 'My MINT document',
@@ -29,7 +29,21 @@ const docMock: GetModelPlanDocumentsType = {
         downloadUrl: '',
         restricted: false,
         documentType: DocumentType.CONCEPT_PAPER,
-        createdDts: '',
+        createdDts: '2023-02-16T13:51:31.026147Z',
+        optionalNotes: '',
+        otherType: ''
+      },
+      {
+        __typename: 'PlanDocument',
+        id: '9d828454-9ecd-42a0-ad84-bc8c8ddea634',
+        virusScanned: true,
+        virusClean: true,
+        fileName: 'Second document',
+        fileType: '',
+        downloadUrl: '',
+        restricted: false,
+        documentType: DocumentType.CONCEPT_PAPER,
+        createdDts: '2023-02-16T13:51:31.026147Z',
         optionalNotes: '',
         otherType: ''
       }
