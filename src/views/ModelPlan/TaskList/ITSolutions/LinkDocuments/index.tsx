@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Grid, IconArrowBack } from '@trussworks/react-uswds';
+import { isEqual } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -229,6 +230,8 @@ const LinkDocuments = () => {
         <Button
           type="button"
           onClick={() => handleDocumentLink()}
+          data-testid="link-documents-button"
+          disabled={isEqual(linkedDocs?.sort(), linkedDocsInit?.sort())}
           className="display-inline-flex flex-align-center margin-y-3"
         >
           {t('linkDocumentsButton')}

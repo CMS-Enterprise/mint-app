@@ -16,7 +16,7 @@ import { DocumentsContent } from './index';
 const docMock: GetModelPlanDocumentsType = {
   modelPlan: {
     __typename: 'ModelPlan',
-    id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+    id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
     isCollaborator: true,
     documents: [
       {
@@ -37,17 +37,19 @@ const docMock: GetModelPlanDocumentsType = {
   }
 };
 
-const mocks = [
+const documentMocks = [
   {
     request: {
       query: GetModelPlanDocuments,
-      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
       data: docMock
     }
   }
 ];
+
+export default documentMocks;
 
 const mockAuthReducer = {
   isUserSet: true,
@@ -63,10 +65,10 @@ describe('Model Plan Documents page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/documents'
         ]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={documentMocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
               <Route path="/models/:modelID/documents">
