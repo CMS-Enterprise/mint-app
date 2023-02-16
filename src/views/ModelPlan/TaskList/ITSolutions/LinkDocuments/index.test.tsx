@@ -11,10 +11,8 @@ import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
-import { GetModelPlanDocuments as GetModelPlanDocumentsType } from 'queries/Documents/types/GetModelPlanDocuments';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { DocumentType, OpSolutionStatus } from 'types/graphql-global-types';
+import { OpSolutionStatus } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import documentMocks from 'views/ModelPlan/Documents/index.test';
 
@@ -126,22 +124,6 @@ describe('IT Solutions Link Documents', () => {
     await waitFor(() => {
       expect(linkButton).not.toHaveAttribute('disabled');
     });
-
-    // const datePicker = getAllByTestId('date-picker-external-input')[0];
-    // userEvent.type(datePicker, '12/10/2030');
-
-    // await waitFor(() => {
-    //   expect(datePicker).toHaveValue('12/10/2030');
-    // });
-
-    // const atRisk = getByRole('radio', { name: 'At risk' });
-    // const backlog = getByRole('radio', { name: 'Backlog' });
-    // userEvent.click(backlog);
-
-    // await waitFor(() => {
-    //   expect(atRisk).not.toBeChecked();
-    //   expect(backlog).toBeChecked();
-    // });
   });
 
   it('matches snapshot', async () => {
