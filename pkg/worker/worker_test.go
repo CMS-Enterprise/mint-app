@@ -157,7 +157,8 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 }
 
 func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
-	newAnalyzedAudit, err := models.NewAnalyzedAudit("TEST", mp.ID, mp.ModelName, date, changes)
+	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 
 	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditCreate(suite.testConfigs.Logger, newAnalyzedAudit)
