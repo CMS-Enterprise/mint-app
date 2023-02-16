@@ -41,12 +41,12 @@ const SingleDiscussion = ({
           <div className="display-flex flex-align-center">
             <AssessmentIcon size={3} />{' '}
             <span>
-              {t('assessment')} | {discussion.createdByUser.commonName}
+              {t('assessment')} | {discussion.createdByUserAccount.commonName}
             </span>
           </div>
         ) : (
           <IconInitial
-            user={discussion.createdByUser.commonName}
+            user={discussion.createdByUserAccount.commonName}
             index={index}
           />
         )}
