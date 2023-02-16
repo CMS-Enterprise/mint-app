@@ -73,6 +73,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
     wrapUpEnds,
     phasedIn,
     phasedInNote,
+    highLevelNote,
     status
   } = data?.modelPlan?.basics || {};
 
@@ -286,6 +287,8 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
             </p>
           </ProcessListItem>
         </ProcessList>
+
+        <ReadOnlySection heading={t('notes')} copy={highLevelNote} />
       </SectionWrapper>
 
       <ReadOnlySection
@@ -293,7 +296,6 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
         copy={translateBooleanOrNull(phasedIn)}
         notes={phasedInNote}
       />
-      <ReadOnlySection heading={t('notes')} copy={phasedInNote} />
     </div>
   );
 };
