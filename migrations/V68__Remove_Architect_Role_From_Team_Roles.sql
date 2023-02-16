@@ -1,4 +1,4 @@
-DISABLE TRIGGER collaborator_lead_req_update;
+ALTER TABLE plan_collaborator DISABLE TRIGGER collaborator_lead_req_update;
 
 UPDATE plan_collaborator SET team_role = 'IT_LEAD' WHERE team_role = 'ARCHITECT';
 
@@ -17,4 +17,4 @@ ALTER TABLE plan_collaborator ALTER COLUMN team_role TYPE TEAM_ROLE USING team_r
 
 DROP TYPE TEAM_ROLE_OLD;
 
-ENABLE TRIGGER collaborator_lead_req_update;
+ALTER TABLE plan_collaborator ENABLE TRIGGER collaborator_lead_req_update;
