@@ -60,7 +60,7 @@ export interface GetAllModelData_modelPlanCollection_beneficiaries {
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   numberPeopleImpacted: number | null;
@@ -76,7 +76,7 @@ export interface GetAllModelData_modelPlanCollection_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -85,7 +85,7 @@ export interface GetAllModelData_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllModelData_modelPlanCollection_discussions_replies[];
@@ -121,7 +121,7 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   isNewModel: boolean | null;
@@ -322,7 +322,7 @@ export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   agencyOrStateHelp: AgencyOrStateHelpType[];
@@ -403,7 +403,7 @@ export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
@@ -470,7 +470,7 @@ export interface GetAllModelData_modelPlanCollection_payments {
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }

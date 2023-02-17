@@ -155,11 +155,6 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
                 -Select-
               </option>
               <option
-                value="ARCHITECT"
-              >
-                Architect
-              </option>
-              <option
                 value="EVALUATION"
               >
                 Evaluation

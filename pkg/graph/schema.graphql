@@ -207,9 +207,12 @@ type PlanDocument {
   downloadUrl: String
   deletedAt: Time
   numLinkedSolutions: Int!
-  createdBy: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -326,11 +329,12 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
-  createdByUser: UserInfo!
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -362,12 +366,12 @@ type DiscussionReply  {
 	resolution: Boolean
   isAssessment: Boolean!
 
-  createdByUser: UserInfo!
-
-	createdBy: String!
-	createdDts: Time!
-	modifiedBy: String
-	modifiedDts: Time
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -456,15 +460,20 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -570,15 +579,20 @@ type PlanBeneficiaries {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -675,15 +689,20 @@ type PlanParticipantsAndProviders {
   providerOverlapNote:            String
 
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 
 }
@@ -836,15 +855,21 @@ type PlanPayments {
   paymentStartDateNote:                              String
 
   # Meta
-  createdBy:   String!
-  createdDts:  Time!
-  modifiedBy:  String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status:      TaskStatus!
 }
 
@@ -1242,17 +1267,20 @@ type PlanOpsEvalAndLearning {
     modelLearningSystemsNote: String
     anticipatedChallenges: String
 
-
-
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
-    readyForReviewBy: String
+
+    readyForReviewBy: UUID
+    readyForReviewByUserAccount: UserAccount
     readyForReviewDts: Time
-    readyForClearanceBy: String
+    readyForClearanceBy: UUID
     readyForClearanceByUserAccount: UserAccount
     readyForClearanceDts: Time
+
     status: TaskStatus!
 }
 
@@ -1656,7 +1684,7 @@ updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String change
 createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
 @hasRole(role: MINT_USER)
 
-removePlanDocumentSolutionLink(id: UUID!): Boolean!
+removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
 @hasRole(role: MINT_USER)
 
 createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
@@ -1721,7 +1749,6 @@ enum TeamRole {
   LEARNING
   EVALUATION
   IT_LEAD
-  ARCHITECT
 }
 
 enum ModelType

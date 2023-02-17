@@ -54,7 +54,7 @@ const Recover = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     RecoverFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -66,7 +66,8 @@ const Recover = () => {
   >(GetRecover, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   // If redirected from IT Tools, scrolls to the relevant question
@@ -82,7 +83,7 @@ const Recover = () => {
     anticipateReconcilingPaymentsRetrospectivelyNote,
     paymentStartDate,
     paymentStartDateNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.payments || ({} as RecoverFormType);
@@ -366,15 +367,19 @@ const Recover = () => {
                         </>
                       )}
 
-                      <ReadyForReview
-                        id="payment-status"
-                        field="status"
-                        sectionName={t('heading')}
-                        status={values.status}
-                        setFieldValue={setFieldValue}
-                        readyForReviewBy={readyForReviewBy}
-                        readyForReviewDts={readyForReviewDts}
-                      />
+                      {!loading && values.status && (
+                        <ReadyForReview
+                          id="payment-status"
+                          field="status"
+                          sectionName={t('heading')}
+                          status={values.status}
+                          setFieldValue={setFieldValue}
+                          readyForReviewBy={
+                            readyForReviewByUserAccount?.commonName
+                          }
+                          readyForReviewDts={readyForReviewDts}
+                        />
+                      )}
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button

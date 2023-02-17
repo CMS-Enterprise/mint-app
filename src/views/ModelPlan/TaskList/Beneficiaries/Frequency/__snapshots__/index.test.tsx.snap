@@ -52,7 +52,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for 
+    for My excellent plan that I just initiated
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -232,6 +232,25 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   Other
                 </label>
               </div>
+              <div
+                class="margin-left-4 margin-top-1"
+              >
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="beneficiaries-beneficiary-selection-frequency-other"
+                >
+                  Please specify
+                </label>
+                <textarea
+                  class="maxw-none mint-textarea usa-textarea"
+                  id="beneficiaries-beneficiary-selection-frequency-other"
+                  maxlength="5000"
+                  name="beneficiarySelectionFrequencyOther"
+                >
+                  Very often
+                </textarea>
+              </div>
             </fieldset>
             <div
               class="margin-top-4 margin-bottom-8"
@@ -384,7 +403,9 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               data-testid="beneficiaries-precedence-rules"
               id="beneficiaries-precedence-rules"
               name="precedenceRules"
-            />
+            >
+              lorem ipsum
+            </textarea>
           </div>
           <div
             class="usa-form-group margin-top-8 margin-bottom-3"
@@ -416,7 +437,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                       id="beneficiaries-status"
                       name="status"
                       type="checkbox"
-                      value=""
+                      value="IN_PROGRESS"
                     />
                     <label
                       class="usa-checkbox__label"

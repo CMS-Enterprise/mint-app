@@ -51,7 +51,7 @@ const Milestones = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     MilestonesFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const history = useHistory();
@@ -63,7 +63,8 @@ const Milestones = () => {
   >(GetMilestones, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const { modelName } = data?.modelPlan || {};
@@ -82,7 +83,7 @@ const Milestones = () => {
     wrapUpEnds,
     phasedIn,
     phasedInNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.basics || ({} as MilestonesFormType);
@@ -488,15 +489,17 @@ const Milestones = () => {
 
                   <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
 
-                  <ReadyForReview
-                    id="milestones-status"
-                    field="status"
-                    sectionName={t('heading')}
-                    status={values.status}
-                    setFieldValue={setFieldValue}
-                    readyForReviewBy={readyForReviewBy}
-                    readyForReviewDts={readyForReviewDts}
-                  />
+                  {!loading && values.status && (
+                    <ReadyForReview
+                      id="milestones-status"
+                      field="status"
+                      sectionName={t('heading')}
+                      status={values.status}
+                      setFieldValue={setFieldValue}
+                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                      readyForReviewDts={readyForReviewDts}
+                    />
+                  )}
 
                   <div className="margin-top-6 margin-bottom-3">
                     <Button

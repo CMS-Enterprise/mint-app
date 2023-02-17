@@ -53,7 +53,7 @@ export interface GetModelPlan_modelPlan_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -62,7 +62,7 @@ export interface GetModelPlan_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetModelPlan_modelPlan_discussions_replies[];
@@ -71,9 +71,9 @@ export interface GetModelPlan_modelPlan_discussions {
 export interface GetModelPlan_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -82,9 +82,9 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
 export interface GetModelPlan_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -93,9 +93,9 @@ export interface GetModelPlan_modelPlan_participantsAndProviders {
 export interface GetModelPlan_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -104,9 +104,9 @@ export interface GetModelPlan_modelPlan_beneficiaries {
 export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
@@ -115,9 +115,9 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
 export interface GetModelPlan_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;

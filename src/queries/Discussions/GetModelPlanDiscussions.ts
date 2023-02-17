@@ -12,7 +12,7 @@ export default gql`
         createdDts
         status
         isAssessment
-        createdByUser {
+        createdByUserAccount {
           commonName
         }
         replies {
@@ -23,7 +23,7 @@ export default gql`
           createdBy
           createdDts
           resolution
-          createdByUser {
+          createdByUserAccount {
             commonName
           }
         }
