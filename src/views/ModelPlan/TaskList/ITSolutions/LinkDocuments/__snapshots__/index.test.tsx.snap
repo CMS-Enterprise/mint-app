@@ -532,6 +532,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                   data-testid="checkbox"
                 >
                   <input
+                    checked=""
                     class="usa-checkbox__input"
                     data-testid="link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634"
                     id="link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634"
@@ -550,7 +551,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px;"
               >
-                ICIP Draft
+                Concept Paper
               </td>
               <td
                 role="cell"
@@ -928,7 +929,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                         title="Toggle SortBy"
                         type="button"
                       >
-                        Visibility
+                        Upload date
                         <svg
                           class="usa-icon margin-left-05 position-absolute"
                           data-testid="caret--sort"
@@ -963,7 +964,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                         title="Toggle SortBy"
                         type="button"
                       >
-                        Upload date
+                        Visibility
                         <svg
                           class="usa-icon margin-left-05 position-absolute"
                           data-testid="caret--sort"
@@ -1048,13 +1049,13 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                       role="cell"
                       style="padding-left: 0px;"
                     >
-                      All
+                      02/16/2023
                     </td>
                     <td
                       role="cell"
                       style="padding-left: 0px;"
                     >
-                      02/16/2023
+                      All
                     </td>
                     <td
                       role="cell"
@@ -1100,13 +1101,13 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                       role="cell"
                       style="padding-left: 0px;"
                     >
-                      All
+                      02/16/2023
                     </td>
                     <td
                       role="cell"
                       style="padding-left: 0px;"
                     >
-                      02/16/2023
+                      All
                     </td>
                     <td
                       role="cell"

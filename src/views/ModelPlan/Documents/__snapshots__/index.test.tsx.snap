@@ -41,7 +41,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <a
                 class="usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
               >
                 <span>
                   Model Plan task list
@@ -76,7 +76,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         </p>
         <a
           class="usa-link display-inline-flex flex-align-center margin-y-3"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
         >
           <svg
             aria-hidden="true"
@@ -105,7 +105,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         </h4>
         <a
           class="usa-button"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents/add-document"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/documents/add-document"
         >
           Add a document
         </a>
@@ -356,6 +356,58 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                       scope="row"
                       style="padding-left: 0px;"
                     >
+                      Second document
+                    </th>
+                    <td
+                      role="cell"
+                      style="padding-left: 0px;"
+                    >
+                      Concept Paper
+                    </td>
+                    <td
+                      role="cell"
+                      style="padding-left: 0px;"
+                    />
+                    <td
+                      role="cell"
+                      style="padding-left: 0px;"
+                    >
+                      02/16/2023
+                    </td>
+                    <td
+                      role="cell"
+                      style="padding-left: 0px;"
+                    >
+                      All
+                    </td>
+                    <td
+                      role="cell"
+                      style="padding-left: 0px;"
+                    >
+                      <button
+                        class="usa-button usa-button--unstyled margin-right-1"
+                        data-testid="button"
+                        type="button"
+                      >
+                        View
+                      </button>
+                      <button
+                        class="usa-button usa-button--unstyled text-red"
+                        data-testid="remove-document"
+                        type="button"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                  <tr
+                    role="row"
+                  >
+                    <th
+                      role="cell"
+                      scope="row"
+                      style="padding-left: 0px;"
+                    >
                       My MINT document
                     </th>
                     <td
@@ -372,7 +424,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                       role="cell"
                       style="padding-left: 0px;"
                     >
-                      Invalid DateTime
+                      02/16/2023
                     </td>
                     <td
                       role="cell"

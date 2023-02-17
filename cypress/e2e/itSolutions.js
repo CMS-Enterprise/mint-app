@@ -144,5 +144,37 @@ describe('The Model Plan IT solutions tracker', () => {
     );
 
     cy.get('#submit-solutions').click();
+
+    cy.get('[data-testid="it-solutions"]').click();
+
+    // Add new custom need
+    cy.get('[data-testid="add-new-operational-need"]').click();
+
+    cy.get('button')
+      .contains('Save without adding a solution')
+      .should('be.disabled');
+
+    cy.get('[data-testid="it-solution-custom-name-other"]')
+      .type('My custom need')
+      .should('have.value', 'My custom need');
+
+    cy.get('button')
+      .contains('Save without adding a solution')
+      .should('not.be.disabled');
+
+    // Submit need
+    cy.get('#submit-custom-solution').click();
+
+    cy.get('#it-solutions-key').select('A cross-model contract');
+
+    cy.get('[data-testid="add-solution-details-button"]').click();
+
+    cy.get('button').contains('Continue').click();
+
+    cy.get('#submit-solutions').click().click();
+
+    cy.get('span').contains(
+      'Success! Your operational need “My custom need” and solution are added.'
+    );
   });
 });

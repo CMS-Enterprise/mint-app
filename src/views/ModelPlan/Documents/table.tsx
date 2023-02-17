@@ -362,7 +362,7 @@ export const Table = ({
           return value ? t('restricted') : t('all');
         }
       };
-      documentColumns.splice(3, 0, visibilityColumn);
+      documentColumns.splice(4, 0, visibilityColumn);
     }
     return documentColumns;
   }, [
