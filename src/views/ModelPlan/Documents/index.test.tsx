@@ -31,7 +31,8 @@ const docMock: GetModelPlanDocumentsType = {
         documentType: DocumentType.CONCEPT_PAPER,
         createdDts: '2023-02-16T13:51:31.026147Z',
         optionalNotes: '',
-        otherType: ''
+        otherType: '',
+        numLinkedSolutions: 1
       },
       {
         __typename: 'PlanDocument',
@@ -45,7 +46,8 @@ const docMock: GetModelPlanDocumentsType = {
         documentType: DocumentType.CONCEPT_PAPER,
         createdDts: '2023-02-16T13:51:31.026147Z',
         optionalNotes: '',
-        otherType: ''
+        otherType: '',
+        numLinkedSolutions: 1
       }
     ]
   }

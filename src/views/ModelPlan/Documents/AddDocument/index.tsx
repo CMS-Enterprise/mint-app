@@ -89,9 +89,7 @@ const AddDocument = () => {
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />
-              {solutionDetailsLink
-                ? t('dontUploadFromSolution')
-                : t('dontUpload')}
+              {t('dontUpload')}
             </Button>
           </div>
         </Grid>

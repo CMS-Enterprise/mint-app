@@ -22,6 +22,7 @@ export interface GetOperationalSolution_operationalSolution_documents {
   createdDts: Time;
   optionalNotes: string | null;
   otherType: string | null;
+  numLinkedSolutions: number;
 }
 
 export interface GetOperationalSolution_operationalSolution {

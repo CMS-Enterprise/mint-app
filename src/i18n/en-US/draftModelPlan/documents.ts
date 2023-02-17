@@ -38,8 +38,20 @@ const documents = {
     header: 'Confirm you want to remove {{-documentName}}.',
     warning:
       'You will not be able to access this document after it is removed.',
-    warningSolution:
-      'Removing this document will delete it from your model completely, and you will no longer be able to access it. Unlinking this document will remove it only from this solution. It will still be available with the rest of your model documents.',
+    warning2:
+      'You will not be able to access this document after it is removed. It will also be removed from any linked solutions within the IT solutions tracker.',
+    warningRemoveSolution:
+      ' this document will delete it from your model completely, and you will no longer be able to access it. It will also be removed from any other linked solutions.',
+    warningRemoveSolution2:
+      ' this document will delete it from your model completely, and you will no longer be able to access it.',
+    warningUnlinkSolution:
+      ' this document will remove it only from this solution. It will still be available with the rest of your model documents.',
+    linkDocsWarning:
+      'This document is linked to {{-numLinkedSolutions}} solution{{-plural}}.',
+    linkDocsWarning2:
+      'This document is linked to {{-numLinkedSolutions}} other solution{{-plural}}.',
+    removing: 'Removing',
+    unlinking: 'Unlinking',
     confirm: 'Remove document',
     confirmSolutionRemove: 'Remove',
     unlink: 'Unlink',
@@ -78,7 +90,6 @@ const documents = {
     'To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know',
   uploadButton: 'Upload document',
   dontUpload: 'Don’t upload and return to previous page',
-  dontUploadFromSolution: 'Don’t upload and return to solution details',
   selectFile: 'Select file',
   documentKind: 'What kind of document is this?',
   restricted: 'Restricted',
@@ -104,8 +115,10 @@ const documents = {
   documentLinkSuccess: 'Success! Your documents are linked to this solution.',
   documentUnLinkSuccess:
     'Success! Your documents are unlinked to this solution.',
-  documentLinkError: 'There was an error linking your documents.',
-  documentUnLinkError: 'There was an error unlinking your document.',
+  documentLinkError:
+    'There was a problem linking the selected model documents to this solution. Please try again.',
+  documentUnLinkError:
+    'There was a problem unlinking the selected model documents to this solution. Please try again.',
   documentUploadSolutionSuccess:
     'Success! {{-documentName}} has been added to this solution.',
   noLinkedDocs: 'No documents associated with this solution yet'

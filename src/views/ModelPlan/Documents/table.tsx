@@ -3,7 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Checkbox, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -197,56 +202,6 @@ export const Table = ({
     };
   }, [mutate, refetch, t, setDocumentMessage, setDocumentStatus]);
 
-  const renderModal = () => {
-    return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-0">
-          {t('removeDocumentModal.header', {
-            documentName: fileToRemove.fileName
-          })}
-        </PageHeading>
-        <p>
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.warningSolution')
-            : t('removeDocumentModal.warning')}
-        </p>
-        <Button
-          type="button"
-          className="bg-red"
-          onClick={() => {
-            handleDelete(fileToRemove);
-            setModalOpen(false);
-          }}
-        >
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.confirmSolutionRemove')
-            : t('removeDocumentModal.confirm')}
-        </Button>
-        {handleDocumentUnlink && (
-          <Button
-            type="button"
-            onClick={() => {
-              handleDocumentUnlink(fileToRemove.id);
-              setModalOpen(false);
-            }}
-          >
-            {t('removeDocumentModal.unlink')}
-          </Button>
-        )}
-        <Button
-          type="button"
-          className="margin-left-2"
-          unstyled
-          onClick={() => setModalOpen(false)}
-        >
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.cancel')
-            : t('removeDocumentModal.keepDocument')}
-        </Button>
-      </Modal>
-    );
-  };
-
   const handleDownload = useMemo(() => {
     return (file: DocumentType) => {
       if (!file.fileName || !file.fileType) return;
@@ -264,6 +219,98 @@ export const Table = ({
         });
     };
   }, [setDocumentMessage, setDocumentStatus]);
+
+  const renderModal = () => {
+    return (
+      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
+        <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-0">
+          {t('removeDocumentModal.header', {
+            documentName: fileToRemove.fileName
+          })}
+        </PageHeading>
+
+        {((fileToRemove.numLinkedSolutions > 0 && !handleDocumentUnlink) ||
+          (fileToRemove.numLinkedSolutions > 1 && handleDocumentUnlink)) && (
+          <Alert type="warning">
+            {handleDocumentUnlink
+              ? t('removeDocumentModal.linkDocsWarning2', {
+                  numLinkedSolutions: fileToRemove.numLinkedSolutions - 1,
+                  plural: fileToRemove.numLinkedSolutions - 1 > 1 ? 's' : ''
+                })
+              : t('removeDocumentModal.linkDocsWarning', {
+                  numLinkedSolutions: fileToRemove.numLinkedSolutions,
+                  plural: fileToRemove.numLinkedSolutions > 1 ? 's' : ''
+                })}
+          </Alert>
+        )}
+
+        {handleDocumentUnlink && (
+          <>
+            <p>
+              <span className="text-bold">
+                {t('removeDocumentModal.removing')}
+              </span>
+              {fileToRemove.numLinkedSolutions > 1
+                ? t('removeDocumentModal.warningRemoveSolution')
+                : t('removeDocumentModal.warningRemoveSolution2')}
+            </p>
+            <p>
+              <span className="text-bold">
+                {t('removeDocumentModal.unlinking')}
+              </span>
+              {t('removeDocumentModal.warningUnlinkSolution')}
+            </p>
+          </>
+        )}
+
+        {!handleDocumentUnlink && (
+          <>
+            <p>
+              {fileToRemove.numLinkedSolutions > 0
+                ? t('removeDocumentModal.warning2')
+                : t('removeDocumentModal.warning')}
+            </p>
+          </>
+        )}
+
+        <Button
+          type="button"
+          className="bg-red"
+          onClick={() => {
+            handleDelete(fileToRemove);
+            setModalOpen(false);
+          }}
+        >
+          {handleDocumentUnlink
+            ? t('removeDocumentModal.confirmSolutionRemove')
+            : t('removeDocumentModal.confirm')}
+        </Button>
+
+        {handleDocumentUnlink && (
+          <Button
+            type="button"
+            onClick={() => {
+              handleDocumentUnlink(fileToRemove.id);
+              setModalOpen(false);
+            }}
+          >
+            {t('removeDocumentModal.unlink')}
+          </Button>
+        )}
+
+        <Button
+          type="button"
+          className="margin-left-2"
+          unstyled
+          onClick={() => setModalOpen(false)}
+        >
+          {handleDocumentUnlink
+            ? t('removeDocumentModal.cancel')
+            : t('removeDocumentModal.keepDocument')}
+        </Button>
+      </Modal>
+    );
+  };
 
   const columns = useMemo(() => {
     const documentColumns = [
@@ -317,62 +364,55 @@ export const Table = ({
         }
       },
       {
-        Header: t('documentTable.actions'),
-        accessor: 'virusScanned',
-        Cell: ({ row, value }: any) => {
-          if (value) {
-            return row.original.virusClean ? (
-              <>
-                <Button
-                  type="button"
-                  unstyled
-                  className="margin-right-1"
-                  onClick={() => handleDownload(row.original)}
-                >
-                  {t('documentTable.view')}
-                </Button>
-                {hasEditAccess && !linkedDocs && (
-                  <Button
-                    type="button"
-                    unstyled
-                    className="text-red"
-                    data-testid="remove-document"
-                    onClick={() => {
-                      setModalOpen(true);
-                      setFileToRemove(row.original);
-                    }}
-                  >
-                    {t('documentTable.remove')}
-                  </Button>
-                )}
-              </>
-            ) : (
-              t('documentTable.virusFound')
-            );
-          }
-          return t('documentTable.scanInProgress');
-        }
-      }
-    ];
-    if (!linkedDocs && !handleDocumentUnlink) {
-      const visibilityColumn = {
         Header: t('documentTable.visibility'),
         accessor: 'restricted',
         Cell: ({ row, value }: any) => {
           return value ? t('restricted') : t('all');
         }
-      };
-      documentColumns.splice(4, 0, visibilityColumn);
-    }
+      },
+      {
+        Header: t('documentTable.actions'),
+        accessor: 'virusScanned',
+        Cell: ({ row, value }: any) => {
+          // if (value) {
+          //   return row.original.virusClean ? (
+          return (
+            <>
+              <Button
+                type="button"
+                unstyled
+                className="margin-right-1"
+                onClick={() => handleDownload(row.original)}
+              >
+                {t('documentTable.view')}
+              </Button>
+              {hasEditAccess && !linkedDocs && (
+                <Button
+                  type="button"
+                  unstyled
+                  className="text-red"
+                  data-testid="remove-document"
+                  onClick={() => {
+                    setModalOpen(true);
+                    setFileToRemove(row.original);
+                  }}
+                >
+                  {t('documentTable.remove')}
+                </Button>
+              )}
+            </>
+          );
+          //   ) : (
+          //     t('documentTable.virusFound')
+          //   );
+          // }
+          // return t('documentTable.scanInProgress');
+        }
+      }
+    ];
+
     return documentColumns;
-  }, [
-    t,
-    handleDownload,
-    hasEditAccess,
-    linkedDocs,
-    setLinkedDocs,
-    handleDocumentUnlink
-  ]);
+  }, [t, handleDownload, hasEditAccess, linkedDocs, setLinkedDocs]);
 
   const {
     getTableProps,
