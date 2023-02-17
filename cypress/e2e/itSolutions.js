@@ -176,5 +176,59 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.get('span').contains(
       'Success! Your operational need “My custom need” and solution are added.'
     );
+
+    // Link document
+    // Click to view solution details view
+    cy.get('[data-testid="needs-table"] tbody tr')
+      // .should('have.length', 4)
+      .should('have.length', 1)
+      .eq(0)
+      .within(() => {
+        cy.contains('My custom need');
+        cy.contains('A cross-model contract');
+        cy.contains('View details').click();
+      });
+
+    cy.contains('button', 'Upload a document').click();
+
+    // select document
+    cy.get('[data-testid="file-upload-input"]').attachFile('test.pdf');
+
+    // enter the document type
+    cy.contains('.usa-radio', 'Concept Paper')
+      .find('input')
+      .check({ force: true });
+
+    cy.get('#document-upload-restricted-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    // click upload button
+    cy.get('[data-testid="upload-document"]').click();
+
+    cy.get('[data-testid="model-plan-documents-table"] tbody tr')
+      .should('have.length', 1)
+      .eq(0)
+      .within(() => {
+        cy.contains('test.pdf');
+      });
+
+    cy.get('#link-documents').click();
+
+    cy.get('[data-testid="model-plan-documents-table"] tbody tr')
+      .should('have.length', 1)
+      .eq(0)
+      .within(() => {
+        cy.contains('test.pdf');
+        cy.get('[type="checkbox"]').should('be.checked');
+        cy.get('[type="checkbox"]').uncheck({ force: true });
+      });
+
+    cy.get('[data-testid="link-documents-button"]').click();
+
+    cy.get('[data-testid="model-plan-documents-table"] tbody tr').should(
+      'have.length',
+      0
+    );
   });
 });
