@@ -3,6 +3,7 @@ package subscribers
 import (
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -14,13 +15,13 @@ type OnTaskListSectionLockChangedUnsubscribedCallback func(ps pubsub.PubSub, sub
 // TaskListSectionLockChangedSubscriber is a Subscriber definition to receive TaskListSectionLockStatusChanged payloads
 type TaskListSectionLockChangedSubscriber struct {
 	ID             uuid.UUID
-	Principal      string
+	Principal      authentication.Principal
 	Channel        chan *model.TaskListSectionLockStatusChanged
 	onUnsubscribed OnTaskListSectionLockChangedUnsubscribedCallback
 }
 
 // NewTaskListSectionLockChangedSubscriber is a constructor to create a new TaskListSectionLockChangedSubscriber
-func NewTaskListSectionLockChangedSubscriber(Principal string) (*TaskListSectionLockChangedSubscriber, error) {
+func NewTaskListSectionLockChangedSubscriber(Principal authentication.Principal) (*TaskListSectionLockChangedSubscriber, error) {
 	id, err := uuid.NewUUID()
 	if err != nil {
 		return nil, err
@@ -40,7 +41,7 @@ func (t *TaskListSectionLockChangedSubscriber) GetID() string {
 }
 
 // GetPrincipal returns this Subscriber's associated EUAID
-func (t *TaskListSectionLockChangedSubscriber) GetPrincipal() string {
+func (t *TaskListSectionLockChangedSubscriber) GetPrincipal() authentication.Principal {
 	return t.Principal
 }
 

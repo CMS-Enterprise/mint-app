@@ -7,7 +7,11 @@ export default gql`
       lockStatus {
         modelPlanID
         section
-        lockedBy
+        lockedByUserAccount {
+          id
+          username
+          commonName
+        }
         isAssessment
       }
       actionType

@@ -82,15 +82,15 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 	}
 
 	lockStatus, sectionWasLocked := modelLocks[section]
-	if sectionWasLocked && lockStatus.LockedBy != principal.ID() {
-		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedBy)
+	if sectionWasLocked && lockStatus.LockedByUserAccount.ID != principal.Account().ID {
+		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedByUserAccount.ID)
 	}
 
 	status := model.TaskListSectionLockStatus{
-		ModelPlanID:  modelPlanID,
-		Section:      section,
-		LockedBy:     principal.ID(),
-		IsAssessment: principal.AllowASSESSMENT(),
+		ModelPlanID:         modelPlanID,
+		Section:             section,
+		LockedByUserAccount: principal.Account(),
+		IsAssessment:        principal.AllowASSESSMENT(),
 	}
 
 	planTaskListSessionLocks.Lock()
@@ -111,14 +111,14 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 // UnlockTaskListSection will unlock the provided task list section on the provided model
 //
 //	This method will fail if the provided principal is not the person who locked the task list section
-func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
+func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, userID uuid.UUID, actionType model.ActionType) (bool, error) {
 	if !isSectionLocked(modelPlanID, section) {
 		return false, nil
 	}
 
 	status := planTaskListSessionLocks.modelSections[modelPlanID][section]
-	if !isUserAuthorizedToEditLock(status, principal) {
-		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
+	if !isUserAuthorizedToEditLock(status, userID) {
+		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, userID, status.LockedByUserAccount.ID)
 	}
 
 	deleteTaskListLockSection(ps, modelPlanID, section, status, actionType)
@@ -137,8 +137,8 @@ func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section 
 	})
 }
 
-func isUserAuthorizedToEditLock(status model.TaskListSectionLockStatus, principal string) bool {
-	return principal == status.LockedBy
+func isUserAuthorizedToEditLock(status model.TaskListSectionLockStatus, userID uuid.UUID) bool {
+	return userID == status.LockedByUserAccount.ID
 }
 
 // UnlockAllTaskListSections will unlock all task list sections on the provided model
@@ -175,7 +175,7 @@ func GetTaskListSectionLocks(modelPlanID uuid.UUID) ([]*model.TaskListSectionLoc
 func internalSubscribeToTaskListSectionLockChanges(
 	ps pubsub.PubSub,
 	modelPlanID uuid.UUID,
-	principal string,
+	principal authentication.Principal,
 	onDisconnect <-chan struct{},
 	onUnsubscribedCallback subscribers.OnTaskListSectionLockChangedUnsubscribedCallback,
 ) (<-chan *model.TaskListSectionLockStatusChanged, error) {
@@ -199,7 +199,7 @@ func getOwnedSections(modelSectionLocks sectionMap, subscriber pubsub.Subscriber
 	var ownedSections []models.TaskListSection
 
 	for section, status := range modelSectionLocks {
-		if status.LockedBy == subscriber.GetPrincipal() {
+		if status.LockedByUserAccount.ID == subscriber.GetPrincipal().Account().ID {
 			ownedSections = append(ownedSections, section)
 		}
 	}
@@ -212,7 +212,7 @@ func getOwnedSections(modelSectionLocks sectionMap, subscriber pubsub.Subscriber
 func SubscribeTaskListSectionLockChanges(
 	ps pubsub.PubSub,
 	modelPlanID uuid.UUID,
-	principal string,
+	principal authentication.Principal,
 	onDisconnect <-chan struct{},
 ) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	return internalSubscribeToTaskListSectionLockChanges(
@@ -230,7 +230,7 @@ func SubscribeTaskListSectionLockChanges(
 func OnLockTaskListSectionContext(
 	ps pubsub.PubSub,
 	modelPlanID uuid.UUID,
-	principal string,
+	principal authentication.Principal,
 	onDisconnect <-chan struct{},
 ) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	return internalSubscribeToTaskListSectionLockChanges(
@@ -250,7 +250,7 @@ func onLockTaskListSectionUnsubscribeComplete(
 	ownedSectionLocks := getOwnedSections(planTaskListSessionLocks.modelSections[modelPlanID], subscriber)
 
 	for _, section := range ownedSectionLocks {
-		_, err := UnlockTaskListSection(ps, modelPlanID, section, subscriber.GetPrincipal(), model.ActionTypeNormal)
+		_, err := UnlockTaskListSection(ps, modelPlanID, section, subscriber.GetPrincipal().Account().ID, model.ActionTypeNormal)
 
 		if err != nil {
 			fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
@@ -264,8 +264,8 @@ func LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models
 }
 
 // UnlockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
-func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
-	return NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, principal, actionType)
+func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, userID uuid.UUID, actionType model.ActionType) (bool, error) {
+	return NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, userID, actionType)
 }
 
 // UnlockAllTaskListSections is a convenience relay method to call the corresponding method on a resolver implementation

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 )
@@ -79,10 +80,10 @@ type PrepareForClearance struct {
 }
 
 type TaskListSectionLockStatus struct {
-	ModelPlanID  uuid.UUID              `json:"modelPlanID"`
-	Section      models.TaskListSection `json:"section"`
-	LockedBy     string                 `json:"lockedBy"`
-	IsAssessment bool                   `json:"isAssessment"`
+	ModelPlanID         uuid.UUID                   `json:"modelPlanID"`
+	Section             models.TaskListSection      `json:"section"`
+	LockedByUserAccount *authentication.UserAccount `json:"lockedByUserAccount"`
+	IsAssessment        bool                        `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {

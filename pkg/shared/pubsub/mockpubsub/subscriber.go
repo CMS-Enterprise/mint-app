@@ -10,6 +10,7 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	pubsub "github.com/cmsgov/mint-app/pkg/shared/pubsub"
 )
 
@@ -51,10 +52,10 @@ func (mr *MockSubscriberMockRecorder) GetID() *gomock.Call {
 }
 
 // GetPrincipal mocks base method.
-func (m *MockSubscriber) GetPrincipal() string {
+func (m *MockSubscriber) GetPrincipal() authentication.Principal {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetPrincipal")
-	ret0, _ := ret[0].(string)
+	ret0, _ := ret[0].(authentication.Principal)
 	return ret0
 }
 
