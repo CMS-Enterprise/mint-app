@@ -20,6 +20,17 @@ export const HelpAndKnowledge = () => {
         <ModelPlanOverview />
       </Route>
 
+      <Route path="/help-and-knowledge/operational-solutions" exact>
+        <ModelPlanOverview />
+      </Route>
+
+      <Route
+        path="/help-and-knowledge/operational-solutions/categories/:category"
+        exact
+      >
+        <ModelPlanOverview />
+      </Route>
+
       <Redirect
         exact
         from="/help-and-knowledge/sample-model-plan"

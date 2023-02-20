@@ -14,7 +14,16 @@ const helpAndKnowledge = {
   close: 'Close tab',
   relatedHelp: 'Related help articles',
   relatedDescription:
-    'Below are some additional help articles that you may find useful.'
+    'Below are some additional help articles that you may find useful.',
+  operationalSolutions: 'Operational solutions',
+  operationalSolutionsInfo:
+    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.',
+  viewAllButton: 'View all operational solutions',
+  learnMore: 'Learn more',
+  categories: {
+    applications: 'Applications',
+    communicationTools: 'Communication tools'
+  }
 };
 
 export default helpAndKnowledge;

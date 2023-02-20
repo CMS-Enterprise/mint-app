@@ -6,6 +6,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
+import OperationalSolutionsHelp from './Articles/_components/OperationalSolutions';
 
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -20,6 +21,7 @@ export const HelpAndKnowledgeHome = () => {
           <PageHeading className="margin-0 line-height-sans-2">
             {t('heading')}
           </PageHeading>
+
           <div className="description-truncated margin-y-2 font-body-lg">
             {t('description')}
           </div>
@@ -27,9 +29,12 @@ export const HelpAndKnowledgeHome = () => {
       </SummaryBox>
       <GridContainer>
         <h2 className="margin-bottom-0">{t('gettingStarted')}</h2>
+
         <p className="margin-bottom-3">{t('instructions')}</p>
+
         <HelpCardGroup className="margin-y-2" />
       </GridContainer>
+      <OperationalSolutionsHelp />
     </MainContent>
   );
 };

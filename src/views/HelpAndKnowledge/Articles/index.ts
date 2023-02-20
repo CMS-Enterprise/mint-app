@@ -31,3 +31,20 @@ const helpAndKnowledgeArticles: (ArticleProps & ArticleTypeProps)[] = [
 ];
 
 export default helpAndKnowledgeArticles;
+
+type CategoryProps = {
+  key: string;
+  route: string; // route for hitting rendered article component
+};
+
+// Operational Solution categories
+export const operationalSolutionCategories: CategoryProps[] = [
+  {
+    key: 'applications',
+    route: 'applications'
+  },
+  {
+    key: 'communicationTools',
+    route: 'communication-tools'
+  }
+];
