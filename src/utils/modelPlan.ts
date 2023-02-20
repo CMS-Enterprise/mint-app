@@ -64,8 +64,6 @@ export const translateTeamRole = (teamRole: string) => {
       return i18next.t('modelPlan:teamRoles.evaluation');
     case 'IT_LEAD':
       return i18next.t('modelPlan:teamRoles.itLead');
-    case 'ARCHITECT':
-      return i18next.t('modelPlan:teamRoles.architect');
     case 'LEADERSHIP':
       return i18next.t('modelPlan:teamRoles.leadership');
     case 'LEARNING':
