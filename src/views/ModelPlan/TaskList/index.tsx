@@ -318,7 +318,7 @@ const TaskList = () => {
                           }
                           selfLocked={
                             getTaskListLockedStatus(key)?.lockedByUserAccount
-                              .username !== euaId
+                              .username === euaId
                           }
                           collaborator={collaborators.find(
                             collaborator =>
