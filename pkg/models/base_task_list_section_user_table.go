@@ -10,6 +10,17 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
+// IBaseTaskListSection returns the embedded BaseTaskListSection
+type IBaseTaskListSection interface {
+	CalcStatus(TaskStatus) error
+	//methods from BaseStruct
+	GetID() uuid.UUID
+	GetCreatedBy() string
+	GetModifiedBy() *string
+	SetModifiedBy(principal authentication.Principal) error
+	GetStatus() TaskStatus
+}
+
 // baseTaskListSection represents all the shared fields in common to a task list section
 type baseTaskListSectionUserTable struct {
 	baseStructUserTable
