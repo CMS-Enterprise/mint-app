@@ -54,7 +54,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		return nil, err
 	}
 
-	baseTaskListUser := models.NewBaseTaskListSectionUserTable(userAccount.ID, createdPlan.ID)
+	baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 	// Create a default plan basics object
 	basics := models.NewPlanBasics(baseTaskListUser)

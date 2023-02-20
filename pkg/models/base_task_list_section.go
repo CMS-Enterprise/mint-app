@@ -22,7 +22,7 @@ type IBaseTaskListSection interface {
 }
 
 // baseTaskListSection represents all the shared fields in common to a task list section
-type baseTaskListSectionUserTable struct {
+type baseTaskListSection struct {
 	baseStructUserTable
 	modelPlanRelation
 	ReadyForReviewBy     *uuid.UUID `json:"readyForReviewBy" db:"ready_for_review_by"`
@@ -32,10 +32,10 @@ type baseTaskListSectionUserTable struct {
 	Status               TaskStatus `json:"status" db:"status"`
 }
 
-// NewBaseTaskListSectionUserTable makes a task list section by a modelPlanID and user id of the user creating it
-func NewBaseTaskListSectionUserTable(createdBy uuid.UUID, modelPlanID uuid.UUID) baseTaskListSectionUserTable {
+// NewBaseTaskListSection makes a task list section by a modelPlanID and user id of the user creating it
+func NewBaseTaskListSection(createdBy uuid.UUID, modelPlanID uuid.UUID) baseTaskListSection {
 
-	return baseTaskListSectionUserTable{
+	return baseTaskListSection{
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 
 		Status:              TaskReady,
@@ -44,18 +44,13 @@ func NewBaseTaskListSectionUserTable(createdBy uuid.UUID, modelPlanID uuid.UUID)
 
 }
 
-// GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
-func (b *baseTaskListSectionUserTable) GetBaseTaskListSectionUserTable() *baseTaskListSectionUserTable {
-	return b
-}
-
 // GetStatus returns the status of a basesTaskListSection
-func (b *baseTaskListSectionUserTable) GetStatus() TaskStatus {
+func (b *baseTaskListSection) GetStatus() TaskStatus {
 	return b.Status
 }
 
 // CalcStatus updates the TaskStatus if it is in ready, but it has been modified.
-func (b *baseTaskListSectionUserTable) CalcStatus(oldStatus TaskStatus) error {
+func (b *baseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 
 	// If model is moved out of READY_FOR_CLEARANCE it should be set to IN_PROGRESS
 	if oldStatus == TaskReadyForClearance && b.Status != TaskReadyForClearance {
@@ -94,12 +89,12 @@ func (b *baseTaskListSectionUserTable) CalcStatus(oldStatus TaskStatus) error {
 }
 
 // GetModelPlanID returns the modelPlanID of the task list section
-func (b baseTaskListSectionUserTable) GetModelPlanID() uuid.UUID {
+func (b baseTaskListSection) GetModelPlanID() uuid.UUID {
 	return b.ModelPlanID
 }
 
 // ReadyForClearanceByUserAccount returns the user account for user ID set for Ready for Clearance By
-func (b *baseTaskListSectionUserTable) ReadyForClearanceByUserAccount(ctx context.Context) *authentication.UserAccount {
+func (b *baseTaskListSection) ReadyForClearanceByUserAccount(ctx context.Context) *authentication.UserAccount {
 
 	if b.ReadyForClearanceBy == nil {
 		return nil
@@ -111,7 +106,7 @@ func (b *baseTaskListSectionUserTable) ReadyForClearanceByUserAccount(ctx contex
 }
 
 // ReadyForReviewByUserAccount returns the user account for user ID set for Ready for Review By
-func (b *baseTaskListSectionUserTable) ReadyForReviewByUserAccount(ctx context.Context) *authentication.UserAccount {
+func (b *baseTaskListSection) ReadyForReviewByUserAccount(ctx context.Context) *authentication.UserAccount {
 
 	if b.ReadyForReviewBy == nil {
 		return nil
