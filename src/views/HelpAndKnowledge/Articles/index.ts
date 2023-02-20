@@ -46,5 +46,45 @@ export const operationalSolutionCategories: CategoryProps[] = [
   {
     key: 'communicationTools',
     route: 'communication-tools'
+  },
+  {
+    key: 'contractorsContractVehicles',
+    route: 'contractors-and-contract-vehicles'
+  },
+  {
+    key: 'databaseDataManagement',
+    route: 'database-and-data-management'
+  },
+  {
+    key: 'dataExchange',
+    route: 'data-exchange'
+  },
+  {
+    key: 'dataReporting',
+    route: 'data-reporting'
+  },
+  {
+    key: 'helpDesks',
+    route: 'help-desks'
+  },
+  {
+    key: 'learning',
+    route: 'learning'
+  },
+  {
+    key: 'legal',
+    route: 'legal'
+  },
+  {
+    key: 'medicareAdvantagePartD',
+    route: 'medicare-advantage-and-part-d'
+  },
+  {
+    key: 'medicareFeeForService',
+    route: 'medicare-fee-for-service'
+  },
+  {
+    key: 'quality',
+    route: 'quality'
   }
 ];

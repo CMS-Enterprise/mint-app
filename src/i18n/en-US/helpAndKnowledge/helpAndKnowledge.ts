@@ -22,7 +22,17 @@ const helpAndKnowledge = {
   learnMore: 'Learn more',
   categories: {
     applications: 'Applications',
-    communicationTools: 'Communication tools'
+    communicationTools: 'Communication tools',
+    contractorsContractVehicles: 'Contractors and contract vehicles',
+    databaseDataManagement: 'Databases and data management',
+    dataExchange: 'Data exchange',
+    dataReporting: 'Data reporting',
+    helpDesks: 'Help desks',
+    learning: 'Learning',
+    legal: 'Legal',
+    medicareAdvantagePartD: 'Medicare Advantage and Part D',
+    medicareFeeForService: 'Medicare Fee-for-Service',
+    quality: 'Quality'
   }
 };
 

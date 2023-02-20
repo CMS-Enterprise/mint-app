@@ -1,6 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, CardGroup, GridContainer } from '@trussworks/react-uswds';
+import {
+  Button,
+  CardGroup,
+  Grid,
+  GridContainer
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import { operationalSolutionCategories } from '../..';
@@ -25,15 +30,17 @@ const OperationalSolutionsHelp = ({
       <GridContainer>
         <h2 className="margin-0">{t('operationalSolutions')}</h2>
 
-        <p>{t('operationalSolutionsInfo')}</p>
+        <p className="margin-bottom-4">{t('operationalSolutionsInfo')}</p>
 
         <CardGroup className={className}>
           {operationalSolutionCategories.map(category => (
-            <CategoryCard
-              key={category.key}
-              category={t(`categories.${category.key}`)}
-              route={category.route}
-            />
+            <Grid tablet={{ col: 3 }}>
+              <CategoryCard
+                key={category.key}
+                category={t(`categories.${category.key}`)}
+                route={category.route}
+              />
+            </Grid>
           ))}
         </CardGroup>
 
