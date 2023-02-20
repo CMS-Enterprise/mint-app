@@ -320,12 +320,9 @@ const TaskList = () => {
                             getTaskListLockedStatus(key)?.lockedByUserAccount
                               .username === euaId
                           }
-                          collaborator={collaborators.find(
-                            collaborator =>
-                              collaborator.userAccount.username ===
-                              getTaskListLockedStatus(key)?.lockedByUserAccount
-                                .username
-                          )}
+                          lockedByUserAccount={
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                          }
                         />
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (
