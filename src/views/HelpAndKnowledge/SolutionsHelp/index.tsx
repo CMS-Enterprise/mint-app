@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
 import CategoryFooter from './_components/CategoryFooter';
-import SolutionHelpCard from './_components/SolutionHelpCard';
+import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
 import SolutionsHeader from './_components/SolutionsHeader';
 import {
   helpSolutions,
@@ -55,15 +55,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   return (
     <div className={classNames(className)}>
       <SolutionsHeader />
+
+      <SolutionHelpCardGroup solutions={solutions} />
+
       <GridContainer className="margin-top-4">
-        <Grid row gap={2}>
-          {solutions.map(solution => (
-            <Grid tablet={{ col: 4 }} key={solution.key}>
-              <SolutionHelpCard solution={solution} />
-            </Grid>
-          ))}
-        </Grid>
         <Divider />
+
         <CategoryFooter />
       </GridContainer>
     </div>

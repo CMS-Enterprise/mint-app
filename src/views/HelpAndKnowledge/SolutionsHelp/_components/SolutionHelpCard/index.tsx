@@ -35,7 +35,12 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
 
   return (
     <CardGroup className="flex-column flex-no-wrap">
-      <Card className={classNames('solution-card', 'shadow', className)}>
+      <Card
+        className={classNames(
+          'solution-card margin-bottom-2 shadow',
+          className
+        )}
+      >
         <div className="padding-3">
           <h3
             className="margin-bottom-0 margin-top-0 solutions-checkbox__header"

@@ -1,13 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  CardGroup,
-  Grid,
-  GridContainer
-} from '@trussworks/react-uswds';
+import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
 import CategoryCard from '../_components/CategoryCard';
@@ -52,7 +48,13 @@ const OperationalSolutionsHelp = ({
           })}
         </CardGroup>
 
-        <Button type="button">{t('viewAllButton')}</Button>
+        <UswdsReactLink
+          to="/help-and-knowledge/operational-solutions"
+          variant="unstyled"
+          className="usa-button text-white"
+        >
+          {t('viewAllButton')}
+        </UswdsReactLink>
       </GridContainer>
     </div>
   );
