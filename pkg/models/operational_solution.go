@@ -8,7 +8,7 @@ import (
 
 // OperationalSolution represents the specific implemented solution to an Operational Need
 type OperationalSolution struct {
-	baseStruct
+	baseStructUserTable
 	operationalNeedRelation
 	SolutionType  *int                    `json:"solutionType" db:"solution_type"`
 	Needed        *bool                   `json:"needed" db:"needed"` // Null means that it is not an actual record
@@ -23,11 +23,11 @@ type OperationalSolution struct {
 }
 
 // NewOperationalSolution creates a Operation Solution with the required fields
-func NewOperationalSolution(createdBy string, operationalNeedID uuid.UUID) *OperationalSolution {
+func NewOperationalSolution(createdBy uuid.UUID, operationalNeedID uuid.UUID) *OperationalSolution {
 	needed := true
 
 	return &OperationalSolution{
-		baseStruct:              NewBaseStruct(createdBy),
+		baseStructUserTable:     NewBaseStructUser(createdBy),
 		operationalNeedRelation: NewOperationalNeedRelation(operationalNeedID),
 		Status:                  OpSNotStarted,
 		Needed:                  &needed,

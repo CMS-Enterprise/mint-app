@@ -208,7 +208,7 @@ func (s *Store) OperationalNeedUpdateByID(logger *zap.Logger, need *models.Opera
 }
 
 // OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
-func (s *Store) OperationalNeedInsertAllPossible(logger *zap.Logger, modelPlanID uuid.UUID, createdBy string) ([]*models.OperationalNeed, error) {
+func (s *Store) OperationalNeedInsertAllPossible(logger *zap.Logger, modelPlanID uuid.UUID, createdBy uuid.UUID) ([]*models.OperationalNeed, error) {
 
 	needs := []*models.OperationalNeed{}
 	statement, err := s.db.PrepareNamed(operationalNeedInsertAllPossibleSQL)
