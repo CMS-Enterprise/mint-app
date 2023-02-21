@@ -26,12 +26,12 @@ migration_config = [
     # ('discussion_reply', 'EASI-2619', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document', 'EASI-2620', SQL_VARIANT_BASE_STRUCT),
     # ('plan_document_solution_link', 'EASI-2621', SQL_VARIANT_BASE_STRUCT),
-    ('operational_need', 'EASI-2623', SQL_VARIANT_BASE_STRUCT),
-    ('operational_solution', 'EASI-2624', SQL_VARIANT_BASE_STRUCT),
-    # ('analyzed_audit', '', SQL_VARIANT_BASE_STRUCT),
-    ('possible_operational_need', '', SQL_VARIANT_BASE_STRUCT),
-    ('possible_operational_solution', '', SQL_VARIANT_BASE_STRUCT),
-    ('possible_need_solution_link', '', SQL_VARIANT_BASE_STRUCT),
+    # ('operational_need', 'EASI-2623', SQL_VARIANT_BASE_STRUCT),
+    # ('operational_solution', 'EASI-2624', SQL_VARIANT_BASE_STRUCT),
+    ('analyzed_audit', 'EASI-2685', SQL_VARIANT_BASE_STRUCT),
+    # ('possible_operational_need', '', SQL_VARIANT_BASE_STRUCT),
+    # ('possible_operational_solution', '', SQL_VARIANT_BASE_STRUCT),
+    # ('possible_need_solution_link', '', SQL_VARIANT_BASE_STRUCT),
 
     # TODO: Something
     # ('existing_model', 'EASI-2622', SQL_VARIANT_BASE_STRUCT),
@@ -240,7 +240,7 @@ def main():
     repo = Repo(repo_path)
     assert not repo.bare
 
-    root_migration_index = 70
+    root_migration_index = 76
 
     migration_index = root_migration_index
     for migration in migration_config:
