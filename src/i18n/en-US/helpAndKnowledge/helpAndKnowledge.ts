@@ -45,6 +45,10 @@ const helpAndKnowledge = {
   browseCategories: 'Browse solutions by category',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
+  pageInfo: '{{-pageStart}} of {{-totalPages}} articles',
+  browseAll: 'Browse all help articles',
+  viewGettingStarted: 'View getting started articles',
+  viewITImplementation: 'View IT implementation articles',
 
   categories: solutionCategoryies,
   solutions

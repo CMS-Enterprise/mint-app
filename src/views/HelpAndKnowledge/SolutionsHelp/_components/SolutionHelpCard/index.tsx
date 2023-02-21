@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -27,6 +28,7 @@ type SolutionCardProps = {
 
 const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const { category: categoryRoute } = useParams<{ category: string }>();
 
   return (
     <CardGroup className="flex-column flex-no-wrap">
@@ -49,18 +51,19 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
               <p className="margin-y-0">{solution.acronym}</p>
             )}
 
-            {solution.categories.map(category => (
-              <SolutionsTag
-                className="margin-bottom-1"
-                key={category}
-                category={category}
-                route={
-                  operationalSolutionCategoryMap[
-                    category as OperationalSolutionCategories
-                  ].route
-                }
-              />
-            ))}
+            {!categoryRoute &&
+              solution.categories.map(category => (
+                <SolutionsTag
+                  className="margin-bottom-1"
+                  key={category}
+                  category={category}
+                  route={
+                    operationalSolutionCategoryMap[
+                      category as OperationalSolutionCategories
+                    ].route
+                  }
+                />
+              ))}
 
             <p className="solution-card__body">
               {t(`solutions.${solution.key}.about`)}
