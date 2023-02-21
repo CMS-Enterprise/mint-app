@@ -10,6 +10,15 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
+// IBaseStruct is an interface that all models must implement
+type IBaseStruct interface {
+	// GetBaseStruct() *baseStruct
+	GetID() uuid.UUID
+	GetCreatedBy() string
+	GetModifiedBy() *string
+	SetModifiedBy(principal authentication.Principal) error
+}
+
 // baseStructUserTable represents the shared data in common betwen all models
 // this struct will replace baseStruct, and be renamed baseStruct once all data objects get migrated to use the user table
 type baseStructUserTable struct {
