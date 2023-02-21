@@ -21,6 +21,7 @@ import {
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
@@ -345,7 +346,7 @@ const SolutionImplementation = ({
                             <Solution
                               key={solution.id}
                               formikProps={formikProps}
-                              solution={solution}
+                              solution={solution as GetOperationalSolutionType}
                               identifier={identifier}
                               index={index}
                               length={formikNeed.solutions.length}

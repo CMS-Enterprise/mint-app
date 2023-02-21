@@ -21,6 +21,7 @@ const HelpBox = ({ className }: HelpBoxProps) => {
       <UswdsReactLink
         className="usa-button usa-button--outline text-white border-white border-2px bg-transparent"
         variant="unstyled"
+        data-testid="add-new-operational-need"
         to={`${window.location.pathname}/add-an-operational-need`}
       >
         {t('helpBox.button')}

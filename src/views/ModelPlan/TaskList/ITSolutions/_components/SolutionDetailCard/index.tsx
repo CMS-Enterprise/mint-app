@@ -111,7 +111,9 @@ const SolutionDetailCard = ({
                 onClick={() => {
                   history.push({
                     pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
-                    state: { fromSolutionDetails: true }
+                    state: {
+                      fromSolutionDetails: true
+                    }
                   });
                 }}
               >
