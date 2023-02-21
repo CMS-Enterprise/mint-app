@@ -8,7 +8,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import { operationalSolutionCategories } from '../..';
+import { operationalSolutionCategoryMap } from '../..';
 import CategoryCard from '../CategoryCard';
 
 type OperationalSolutionsHelpProps = {
@@ -33,7 +33,7 @@ const OperationalSolutionsHelp = ({
         <p className="margin-bottom-4">{t('operationalSolutionsInfo')}</p>
 
         <CardGroup className={className}>
-          {operationalSolutionCategories.map(category => (
+          {operationalSolutionCategoryMap.map(category => (
             <Grid tablet={{ col: 3 }}>
               <CategoryCard
                 key={category.key}
