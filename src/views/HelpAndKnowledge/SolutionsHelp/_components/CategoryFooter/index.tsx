@@ -4,7 +4,9 @@ import { Grid, IconArrowForward } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { operationalSolutionCategoryMap } from 'views/HelpAndKnowledge/Articles';
+import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+
+import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
 type CategoryFooterProps = {
   className?: string;
@@ -18,14 +20,18 @@ const CategoryFooter = ({ className }: CategoryFooterProps) => {
       <h2 className="margin-bottom-1">{t('browseCategories')}</h2>
 
       <Grid row>
-        {operationalSolutionCategoryMap.map(category => (
-          <Grid tablet={{ col: 6 }} key={category.key}>
+        {Object.keys(operationalSolutionCategoryMap).map(key => (
+          <Grid tablet={{ col: 6 }} key={key}>
             <UswdsReactLink
               className="display-flex flex-align-center margin-y-1"
-              key={category.key}
-              to={category.route}
+              key={key}
+              to={
+                operationalSolutionCategoryMap[
+                  key as OperationalSolutionCategories
+                ].route
+              }
             >
-              {t(`categories.${category.key}`)}
+              {t(`categories.${key}`)}
               <IconArrowForward className="margin-left-1" />
             </UswdsReactLink>
           </Grid>

@@ -34,7 +34,8 @@ const helpAndKnowledge = {
     medicareFeeForService: 'Medicare Fee-for-Service',
     quality: 'Quality'
   },
-  browseCategories: 'Browse solutions by category'
+  browseCategories: 'Browse solutions by category',
+  contact: 'Point of contact'
 };
 
 export default helpAndKnowledge;

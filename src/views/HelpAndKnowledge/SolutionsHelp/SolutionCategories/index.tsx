@@ -8,8 +8,10 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import { operationalSolutionCategoryMap } from '../../Articles';
+import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+
 import CategoryCard from '../_components/CategoryCard';
+import { operationalSolutionCategoryMap } from '../solutionsMap';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
@@ -33,15 +35,21 @@ const OperationalSolutionsHelp = ({
         <p className="margin-bottom-4">{t('operationalSolutionsInfo')}</p>
 
         <CardGroup className={className}>
-          {operationalSolutionCategoryMap.map(category => (
-            <Grid tablet={{ col: 3 }} key={category.key}>
-              <CategoryCard
-                key={category.key}
-                category={t(`categories.${category.key}`)}
-                route={category.route}
-              />
-            </Grid>
-          ))}
+          {Object.keys(operationalSolutionCategoryMap).map(key => {
+            const category =
+              operationalSolutionCategoryMap[
+                key as OperationalSolutionCategories
+              ];
+            return (
+              <Grid tablet={{ col: 3 }} key={key}>
+                <CategoryCard
+                  key={key}
+                  category={t(`categories.${key}`)}
+                  route={category.route}
+                />
+              </Grid>
+            );
+          })}
         </CardGroup>
 
         <Button type="button">{t('viewAllButton')}</Button>
