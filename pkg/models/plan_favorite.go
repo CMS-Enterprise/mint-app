@@ -4,7 +4,7 @@ import "github.com/google/uuid"
 
 // PlanFavorite represents a relation that shows a model plan has been favorited
 type PlanFavorite struct {
-	baseStructUserTable
+	baseStruct
 	modelPlanRelation
 	userIDRelation
 }
@@ -12,8 +12,8 @@ type PlanFavorite struct {
 // NewPlanFavorite returns a plan collaborator object
 func NewPlanFavorite(createdBy uuid.UUID, userID uuid.UUID, modelPlanID uuid.UUID) PlanFavorite {
 	return PlanFavorite{
-		userIDRelation:      NewUserIDRelation(userID),
-		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
-		baseStructUserTable: NewBaseStructUser(createdBy),
+		userIDRelation:    NewUserIDRelation(userID),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+		baseStruct:        NewBaseStruct(createdBy),
 	}
 }
