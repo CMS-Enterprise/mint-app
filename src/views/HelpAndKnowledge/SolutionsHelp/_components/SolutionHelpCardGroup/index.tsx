@@ -49,31 +49,33 @@ const SolutionHelpCardGroup = ({
   return (
     <GridContainer className={classNames(className, 'margin-top-4')}>
       <Solutions currentSolutions={currentItems} />
-      <ReactPaginate
-        breakLabel="..."
-        breakClassName="usa-pagination__item usa-pagination__overflow"
-        nextLabel="Next >"
-        containerClassName="mint-pagination usa-pagination usa-pagination__list"
-        previousLinkClassName={
-          itemOffset === 0
-            ? 'display-none'
-            : 'usa-pagination__link usa-pagination__previous-page prev-page'
-        }
-        nextLinkClassName={
-          itemOffset / itemsPerPage === pageCount - 1
-            ? 'display-none'
-            : 'usa-pagination__link usa-pagination__previous-page next-page'
-        }
-        disabledClassName="pagination__link--disabled"
-        activeClassName="usa-current"
-        activeLinkClassName="usa-current"
-        pageClassName="usa-pagination__item"
-        pageLinkClassName="usa-pagination__button"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< Previous"
-      />
+      {pageCount > 1 && (
+        <ReactPaginate
+          breakLabel="..."
+          breakClassName="usa-pagination__item usa-pagination__overflow"
+          nextLabel="Next >"
+          containerClassName="mint-pagination usa-pagination usa-pagination__list"
+          previousLinkClassName={
+            itemOffset === 0
+              ? 'display-none'
+              : 'usa-pagination__link usa-pagination__previous-page prev-page'
+          }
+          nextLinkClassName={
+            itemOffset / itemsPerPage === pageCount - 1
+              ? 'display-none'
+              : 'usa-pagination__link usa-pagination__previous-page next-page'
+          }
+          disabledClassName="pagination__link--disabled"
+          activeClassName="usa-current"
+          activeLinkClassName="usa-current"
+          pageClassName="usa-pagination__item"
+          pageLinkClassName="usa-pagination__button"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< Previous"
+        />
+      )}
     </GridContainer>
   );
 };

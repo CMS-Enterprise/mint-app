@@ -4,10 +4,12 @@ import {
   BreadcrumbBar,
   BreadcrumbLink
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
 export interface BreadcrumbsProps {
+  className?: string;
   items: {
     text: string;
     url?: string;
@@ -18,9 +20,9 @@ export interface BreadcrumbsProps {
  * Generate a `BreadcrumbBar` from links.
  */
 
-const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
+const Breadcrumbs = ({ items, className }: BreadcrumbsProps) => {
   return (
-    <BreadcrumbBar variant="wrap">
+    <BreadcrumbBar variant="wrap" className={classNames(className)}>
       {items.map((link, idx) => {
         if (idx === items.length - 1) {
           return (

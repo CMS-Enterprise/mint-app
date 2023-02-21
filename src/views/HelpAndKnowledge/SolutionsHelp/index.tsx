@@ -19,12 +19,10 @@ type OperationalSolutionsHelpProps = {
   className?: string;
 };
 
-const findCategoryMapByRoute = (
-  route: string,
-  solutions: HelpSolutionType[]
-): HelpSolutionType[] => {
-  let filteredSolutions = { ...solutions };
-  let categoryKey: OperationalSolutionCategories;
+export const findCategoryKey = (
+  route: string
+): OperationalSolutionCategories => {
+  let categoryKey!: OperationalSolutionCategories;
 
   Object.keys(operationalSolutionCategoryMap).forEach(key => {
     if (
@@ -34,6 +32,16 @@ const findCategoryMapByRoute = (
       categoryKey = key as OperationalSolutionCategories;
     }
   });
+
+  return categoryKey;
+};
+
+const findCategoryMapByRoute = (
+  route: string,
+  solutions: HelpSolutionType[]
+): HelpSolutionType[] => {
+  let filteredSolutions = { ...solutions };
+  const categoryKey: OperationalSolutionCategories = findCategoryKey(route);
 
   filteredSolutions = solutions.filter(solution => {
     return solution.categories.includes(
