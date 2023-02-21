@@ -11,7 +11,7 @@ SELECT
     OpSol.must_start_dts,
     OpSol.must_finish_dts,
     COALESCE(OpSol.status, 'NOT_STARTED') AS status,
-    COALESCE(OpSol.created_by, 'NULL') AS created_by,
+    COALESCE(OpNd.created_by, '00000000-0000-0000-0000-000000000000') AS created_by, -- This is UUID.NIL, the same as the UNKNOWN_USER account in the DB
     COALESCE(OpSol.created_dts, CURRENT_TIMESTAMP) AS created_dts,
     OpSol.modified_by,
     OpSol.modified_dts

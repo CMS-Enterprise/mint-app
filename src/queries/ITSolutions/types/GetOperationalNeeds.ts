@@ -21,7 +21,7 @@ export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions {
   key: OperationalSolutionKey | null;
   pocEmail: string | null;
   pocName: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
 }
 
