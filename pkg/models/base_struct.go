@@ -1,12 +1,10 @@
 package models
 
 import (
-	"context"
 	"time"
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -20,17 +18,19 @@ type IBaseStruct interface {
 
 // baseStruct represents the shared data in common betwen all models
 type baseStruct struct {
-	ID          uuid.UUID  `json:"id" db:"id"`
-	CreatedBy   uuid.UUID  `json:"createdBy" db:"created_by"`
+	ID uuid.UUID `json:"id" db:"id"`
+	createdByRelation
+	modifiedByRelation
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *uuid.UUID `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
 // NewBaseStruct returns a base struct object
 func NewBaseStruct(createdBy uuid.UUID) baseStruct {
 	return baseStruct{
-		CreatedBy: createdBy,
+		createdByRelation: createdByRelation{
+			CreatedBy: createdBy,
+		},
 	}
 }
 func (b *baseStruct) SetModifiedBy(principal authentication.Principal) error {
@@ -65,26 +65,4 @@ func (b baseStruct) GetModifiedBy() *string {
 // GetCreatedBy implements the CreatedBy property
 func (b baseStruct) GetCreatedBy() string {
 	return b.CreatedBy.String()
-}
-
-// CreatedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
-func (b *baseStruct) CreatedByUserAccount(ctx context.Context) *authentication.UserAccount {
-
-	service := appcontext.UserAccountService(ctx)
-	account, _ := service(ctx, b.CreatedBy)
-	return account
-
-}
-
-// ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
-func (b *baseStruct) ModifiedByUserAccount(ctx context.Context) *authentication.UserAccount {
-
-	if b.ModifiedBy == nil {
-		return nil
-	}
-	service := appcontext.UserAccountService(ctx)
-	// service := authentication.UserAccountService(ctx)
-	account, _ := service(ctx, *b.ModifiedBy)
-	return account
-
 }
