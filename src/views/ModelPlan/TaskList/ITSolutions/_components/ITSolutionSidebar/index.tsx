@@ -11,12 +11,14 @@ type ITSolutionsSidebarTypes = {
   modelID: string;
   renderTextFor: 'need' | 'solution' | 'status';
   operationalNeed?: GetOperationalNeedType;
+  helpfulLinks?: boolean;
 };
 
 const ITSolutionsSidebar = ({
   modelID,
   renderTextFor,
-  operationalNeed
+  operationalNeed,
+  helpfulLinks = true
 }: ITSolutionsSidebarTypes) => {
   const { t } = useTranslation('itSolutions');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,18 +51,20 @@ const ITSolutionsSidebar = ({
           </Button>
         </div>
       )}
-      <div className="margin-top-4">
-        <p className="text-bold margin-bottom-2">{t('helpfulLinks')}</p>
-        <Button
-          type="button"
-          onClick={() =>
-            window.open('/help-and-knowledge/model-plan-overview', '_blank')
-          }
-          className="usa-button usa-button--unstyled line-height-body-5"
-        >
-          {t('availableSolutions')}
-        </Button>
-      </div>
+      {helpfulLinks && (
+        <div className="margin-top-4">
+          <p className="text-bold margin-bottom-2">{t('helpfulLinks')}</p>
+          <Button
+            type="button"
+            onClick={() =>
+              window.open('/help-and-knowledge/model-plan-overview', '_blank')
+            }
+            className="usa-button usa-button--unstyled line-height-body-5"
+          >
+            {t('availableSolutions')}
+          </Button>
+        </div>
+      )}
     </>
   );
 };

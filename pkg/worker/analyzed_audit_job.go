@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -51,7 +52,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 		return nil
 	}
 
-	analyzedAudit, err := models.NewAnalyzedAudit("WRKR", mp.ID, mp.ModelName, dayToAnalyze, *analyzedAuditChange)
+	analyzedAudit, err := models.NewAnalyzedAudit(constants.GetSystemAccountUUID(), mp.ID, mp.ModelName, dayToAnalyze, *analyzedAuditChange)
 	if err != nil {
 		return err
 	}

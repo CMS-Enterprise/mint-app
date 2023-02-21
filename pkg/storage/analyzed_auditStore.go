@@ -35,7 +35,7 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create analyzed_audit with error %s", err),
-			zap.String("user", AnalyzedAudit.CreatedBy),
+			zap.String("user", AnalyzedAudit.CreatedBy.String()),
 		)
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to analyzed_audit with error %s", err),
-			zap.String("user", AnalyzedAudit.CreatedBy),
+			zap.String("user", AnalyzedAudit.CreatedBy.String()),
 		)
 		return nil, err
 

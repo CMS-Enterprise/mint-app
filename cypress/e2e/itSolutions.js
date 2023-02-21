@@ -144,5 +144,91 @@ describe('The Model Plan IT solutions tracker', () => {
     );
 
     cy.get('#submit-solutions').click();
+
+    cy.get('[data-testid="it-solutions"]').click();
+
+    // Add new custom need
+    cy.get('[data-testid="add-new-operational-need"]').click();
+
+    cy.get('button')
+      .contains('Save without adding a solution')
+      .should('be.disabled');
+
+    cy.get('[data-testid="it-solution-custom-name-other"]')
+      .type('My custom need')
+      .should('have.value', 'My custom need');
+
+    cy.get('button')
+      .contains('Save without adding a solution')
+      .should('not.be.disabled');
+
+    // Submit need
+    cy.get('#submit-custom-solution').click();
+
+    cy.get('#it-solutions-key').select('A cross-model contract');
+
+    cy.get('[data-testid="add-solution-details-button"]').click();
+
+    cy.get('button').contains('Continue').click();
+
+    cy.get('#submit-solutions').click().click();
+
+    cy.get('span').contains(
+      'Success! Your operational need “My custom need” and solution are added.'
+    );
+
+    // Link document
+    // Click to view solution details view
+    cy.get('[data-testid="needs-table"] tbody tr')
+      // .should('have.length', 4)
+      .should('have.length', 1)
+      .eq(0)
+      .within(() => {
+        cy.contains('My custom need');
+        cy.contains('A cross-model contract');
+        cy.contains('View details').click();
+      });
+
+    cy.contains('button', 'Upload a document').click();
+
+    // select document
+    cy.get('[data-testid="file-upload-input"]').attachFile('test.pdf');
+
+    // enter the document type
+    cy.contains('.usa-radio', 'Concept Paper')
+      .find('input')
+      .check({ force: true });
+
+    cy.get('#document-upload-restricted-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    // click upload button
+    cy.get('[data-testid="upload-document"]').click();
+
+    cy.get('[data-testid="model-plan-documents-table"] tbody tr')
+      .should('have.length', 1)
+      .eq(0)
+      .within(() => {
+        cy.contains('test.pdf');
+      });
+
+    cy.get('#link-documents').click();
+
+    cy.get('[data-testid="model-plan-documents-table"] tbody tr')
+      .should('have.length', 1)
+      .eq(0)
+      .within(() => {
+        cy.contains('test.pdf');
+        cy.get('[type="checkbox"]').should('be.checked');
+        cy.get('[type="checkbox"]').uncheck({ force: true });
+      });
+
+    cy.get('[data-testid="link-documents-button"]').click();
+
+    cy.get('[data-testid="model-plan-documents-table"] tbody tr').should(
+      'have.length',
+      0
+    );
   });
 });

@@ -7,7 +7,7 @@ SELECT
     pOpNd.section AS section,
     OpNd.name_other,
     COALESCE(OpNd.needed, FALSE) AS needed,
-    COALESCE(OpNd.created_by, 'NULL') AS created_by,
+    COALESCE(OpNd.created_by, '00000000-0000-0000-0000-000000000000') AS created_by, -- This is UUID.NIL, the same as the UNKNOWN_USER account in the Db
     COALESCE(OpNd.created_dts, CURRENT_TIMESTAMP) AS created_dts,
     OpNd.modified_by,
     OpNd.modified_dts

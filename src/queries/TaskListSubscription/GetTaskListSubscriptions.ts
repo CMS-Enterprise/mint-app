@@ -5,7 +5,12 @@ export default gql`
     taskListSectionLocks(modelPlanID: $modelPlanID) {
       modelPlanID
       section
-      lockedBy
+      # lockedBy
+      lockedByUserAccount {
+        id
+        username
+        commonName
+      }
       isAssessment
     }
   }

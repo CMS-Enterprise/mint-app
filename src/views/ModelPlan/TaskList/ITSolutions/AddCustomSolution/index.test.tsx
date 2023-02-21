@@ -36,6 +36,7 @@ const returnMockedData = (results: boolean) => {
                 pocEmail: 'j.doe@oddball.io',
                 nameOther: 'My custom solution',
                 status: OpSolutionStatus.COMPLETED,
+                documents: [],
                 mustFinishDts: '2022-05-12T15:01:39.190679Z',
                 mustStartDts: '2022-05-12T15:01:39.190679Z'
               }

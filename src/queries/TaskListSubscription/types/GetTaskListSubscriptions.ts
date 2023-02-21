@@ -9,11 +9,18 @@ import { TaskListSection } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetTaskListSubscriptions
 // ====================================================
 
+export interface GetTaskListSubscriptions_taskListSectionLocks_lockedByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  username: string;
+  commonName: string;
+}
+
 export interface GetTaskListSubscriptions_taskListSectionLocks {
   __typename: "TaskListSectionLockStatus";
   modelPlanID: UUID;
   section: TaskListSection;
-  lockedBy: string;
+  lockedByUserAccount: GetTaskListSubscriptions_taskListSectionLocks_lockedByUserAccount;
   isAssessment: boolean;
 }
 
