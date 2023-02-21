@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -21,8 +19,6 @@ type baseStruct struct {
 	ID uuid.UUID `json:"id" db:"id"`
 	createdByRelation
 	modifiedByRelation
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
 // NewBaseStruct returns a base struct object

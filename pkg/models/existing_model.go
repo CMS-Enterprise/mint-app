@@ -24,7 +24,4 @@ type ExistingModel struct {
 	Keywords                      *string    `json:"keywords" db:"keywords"`
 	URL                           *string    `json:"url" db:"url"`
 	DisplayModelSummary           *bool      `json:"displayModelSummary" db:"display_model_summary"`
-
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
