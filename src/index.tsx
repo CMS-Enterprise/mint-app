@@ -110,7 +110,7 @@ const client = new ApolloClient({
         keyFields: ['key', 'nameOther', 'id']
       },
       TaskListSectionLockStatus: {
-        keyFields: ['section', 'lockedBy', 'modelPlanID']
+        keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
       }
     }
   }),

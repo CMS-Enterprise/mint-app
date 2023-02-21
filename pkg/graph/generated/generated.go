@@ -899,10 +899,10 @@ type ComplexityRoot struct {
 	}
 
 	TaskListSectionLockStatus struct {
-		IsAssessment func(childComplexity int) int
-		LockedBy     func(childComplexity int) int
-		ModelPlanID  func(childComplexity int) int
-		Section      func(childComplexity int) int
+		IsAssessment        func(childComplexity int) int
+		LockedByUserAccount func(childComplexity int) int
+		ModelPlanID         func(childComplexity int) int
+		Section             func(childComplexity int) int
 	}
 
 	TaskListSectionLockStatusChanged struct {
@@ -6686,12 +6686,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaskListSectionLockStatus.IsAssessment(childComplexity), true
 
-	case "TaskListSectionLockStatus.lockedBy":
-		if e.complexity.TaskListSectionLockStatus.LockedBy == nil {
+	case "TaskListSectionLockStatus.lockedByUserAccount":
+		if e.complexity.TaskListSectionLockStatus.LockedByUserAccount == nil {
 			break
 		}
 
-		return e.complexity.TaskListSectionLockStatus.LockedBy(childComplexity), true
+		return e.complexity.TaskListSectionLockStatus.LockedByUserAccount(childComplexity), true
 
 	case "TaskListSectionLockStatus.modelPlanID":
 		if e.complexity.TaskListSectionLockStatus.ModelPlanID == nil {
@@ -7096,7 +7096,7 @@ type TaskListSectionLockStatusChanged {
 type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
-  lockedBy: String!
+  lockedByUserAccount: UserAccount!
   isAssessment: Boolean!
 }
 
@@ -17751,8 +17751,8 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
 			case "section":
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
-			case "lockedBy":
-				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "lockedByUserAccount":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
 			}
@@ -47289,8 +47289,8 @@ func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.
 				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
 			case "section":
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
-			case "lockedBy":
-				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "lockedByUserAccount":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
 			}
@@ -48631,8 +48631,8 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatus_section(ctx c
 	return fc, nil
 }
 
-func (ec *executionContext) _TaskListSectionLockStatus_lockedBy(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+func (ec *executionContext) _TaskListSectionLockStatus_lockedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -48645,7 +48645,7 @@ func (ec *executionContext) _TaskListSectionLockStatus_lockedBy(ctx context.Cont
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.LockedBy, nil
+		return obj.LockedByUserAccount, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -48657,19 +48657,41 @@ func (ec *executionContext) _TaskListSectionLockStatus_lockedBy(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*authentication.UserAccount)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "TaskListSectionLockStatus",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -48806,8 +48828,8 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockSt
 				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
 			case "section":
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
-			case "lockedBy":
-				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "lockedByUserAccount":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedByUserAccount(ctx, field)
 			case "isAssessment":
 				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
 			}
@@ -58280,9 +58302,9 @@ func (ec *executionContext) _TaskListSectionLockStatus(ctx context.Context, sel 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "lockedBy":
+		case "lockedByUserAccount":
 
-			out.Values[i] = ec._TaskListSectionLockStatus_lockedBy(ctx, field, obj)
+			out.Values[i] = ec._TaskListSectionLockStatus_lockedByUserAccount(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++

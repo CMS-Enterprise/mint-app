@@ -3,19 +3,19 @@ import { useTranslation } from 'react-i18next';
 
 import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { arrayOfColors } from 'components/shared/IconInitial';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus_lockedByUserAccount as LockedByUserAccount } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { getUserInitials } from 'utils/modelPlan';
 
 import './index.scss';
 
 type TaskListLockProps = {
-  collaborator: GetCollaboratorsType | undefined;
+  lockedByUserAccount: LockedByUserAccount | undefined;
   isAssessment: boolean;
   selfLocked: boolean;
 };
 
 const TaskListLock = ({
-  collaborator,
+  lockedByUserAccount,
   isAssessment,
   selfLocked
 }: TaskListLockProps) => {
@@ -29,7 +29,7 @@ const TaskListLock = ({
 
   return (
     <>
-      {(collaborator || isAssessment) && (
+      {(lockedByUserAccount || isAssessment) && (
         <div className="display-inline-flex">
           {isAssessment ? (
             <AssessmentIcon size={3} />
@@ -39,7 +39,7 @@ const TaskListLock = ({
                 arrayOfColors[randomColorIndex(0, 3)]
               }`}
             >
-              {getUserInitials(collaborator!.userAccount.commonName)}
+              {getUserInitials(lockedByUserAccount!.commonName)}
             </div>
           )}
 
