@@ -48,6 +48,7 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
 
           {solution.categories.map(category => (
             <SolutionsTag
+              className="margin-bottom-1"
               category={category}
               route={
                 operationalSolutionCategoryMap[
@@ -56,6 +57,10 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
               }
             />
           ))}
+
+          <p className="solution-card__body">
+            {t(`solutions.${solution.key}.about`)}
+          </p>
 
           <Grid
             tablet={{ col: 6 }}

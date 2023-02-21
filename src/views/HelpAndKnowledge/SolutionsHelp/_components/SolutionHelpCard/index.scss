@@ -2,6 +2,14 @@
     .usa-card__container {   
         border-radius: .25rem;
     }
+
+    &__body {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: .75rem;
+    }
 }
 
 .shadow {

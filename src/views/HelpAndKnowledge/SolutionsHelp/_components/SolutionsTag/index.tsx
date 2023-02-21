@@ -20,7 +20,7 @@ export default function SolutionsTag({
   const { t } = useTranslation('helpAndKnowledge');
   return (
     <UswdsReactLink
-      to={`/help-and-knowledge/operational-solutions/${route}`}
+      to={`/help-and-knowledge/operational-solutions/categories/${route}`}
       className={classNames(className, 'width-fit-content display-block')}
     >
       <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">

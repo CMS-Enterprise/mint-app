@@ -23,7 +23,7 @@ const CategoryFooter = ({ className }: CategoryFooterProps) => {
         {Object.keys(operationalSolutionCategoryMap).map(key => (
           <Grid tablet={{ col: 6 }} key={key}>
             <UswdsReactLink
-              className="display-flex flex-align-center margin-y-1"
+              className="fit-content display-flex flex-align-center margin-y-1"
               key={key}
               to={
                 operationalSolutionCategoryMap[
