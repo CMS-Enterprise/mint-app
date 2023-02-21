@@ -6,7 +6,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
-import OperationalSolutionsHelp from './Articles/_components/OperationalSolutions';
+import OperationalSolutionsHelp from './SolutionsHelp/SolutionCategories';
 
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');

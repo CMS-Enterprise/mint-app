@@ -33,7 +33,8 @@ const helpAndKnowledge = {
     medicareAdvantagePartD: 'Medicare Advantage and Part D',
     medicareFeeForService: 'Medicare Fee-for-Service',
     quality: 'Quality'
-  }
+  },
+  browseCategories: 'Browse solutions by category'
 };
 
 export default helpAndKnowledge;

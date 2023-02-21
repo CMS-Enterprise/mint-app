@@ -34,7 +34,7 @@ const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
       <CardBody className="padding-y-0 flex-1">
         <UswdsReactLink
           className="display-flex flex-align-center"
-          to={`/help-and-knowledge/operational-solution/categories/${route}`}
+          to={`/help-and-knowledge/operational-solutions/categories/${route}`}
         >
           {t('learnMore')}
           <IconArrowForward className="margin-left-1" />

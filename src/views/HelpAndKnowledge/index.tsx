@@ -8,6 +8,7 @@ import ITImplementation from './Articles/ITImplementation';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import HelpAndKnowledgeHome from './home';
+import SolutionsHelp from './SolutionsHelp';
 
 export const HelpAndKnowledge = () => {
   return (
@@ -21,14 +22,14 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       <Route path="/help-and-knowledge/operational-solutions" exact>
-        <ModelPlanOverview />
+        <SolutionsHelp />
       </Route>
 
       <Route
         path="/help-and-knowledge/operational-solutions/categories/:category"
         exact
       >
-        <ModelPlanOverview />
+        <SolutionsHelp />
       </Route>
 
       <Redirect
