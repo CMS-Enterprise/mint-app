@@ -115,15 +115,6 @@ export const helpSolutions: HelpSolutionType[] = [
     pocName: ''
   },
   {
-    enum: OperationalSolutionKey.CCW,
-    key: 'innovation',
-    route: '4-innovation',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: '',
-    name: '',
-    pocName: ''
-  },
-  {
     enum: null,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',

@@ -59,7 +59,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       <SolutionHelpCardGroup solutions={solutions} />
 
       <GridContainer className="margin-top-4">
-        <Divider />
+        <Divider className="margin-top-6" />
 
         <CategoryFooter />
       </GridContainer>

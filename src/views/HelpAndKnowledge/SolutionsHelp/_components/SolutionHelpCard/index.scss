@@ -10,6 +10,14 @@
         overflow: hidden;
         margin-bottom: .75rem;
     }
+
+    &__container {
+        min-height: 22rem !important;
+    }
+
+    &__header {
+        min-height: 16.7rem !important;
+    }
 }
 
 .shadow {

@@ -1,0 +1,28 @@
+.mint-pagination {
+    display: inline-flex !important;
+
+    .usa-pagination__button {
+        width: 2.75rem;
+
+        &:focus {
+            color: white !important;
+        }
+    }
+    
+    .usa-current {
+        border-radius: .25rem;
+        color: white !important;
+    }
+
+    .next-page {
+        margin-left: .75rem;
+    }
+
+    .prev-page {
+        margin-right: .75rem;
+    }
+}
+
+.display-none {
+    display: none;
+}

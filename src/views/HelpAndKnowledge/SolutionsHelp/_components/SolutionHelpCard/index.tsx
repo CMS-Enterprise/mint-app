@@ -1,8 +1,3 @@
-/*
-SolutionCard component for rendering custom solution details
-Contains links to edit solution details or remove details
-*/
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -41,42 +36,47 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
           className
         )}
       >
-        <div className="padding-3">
-          <h3
-            className="margin-bottom-0 margin-top-0 solutions-checkbox__header"
-            style={{ wordBreak: 'break-word' }}
-          >
-            {solution.name}
-          </h3>
+        <div className="padding-3 solution-card__container">
+          <div className="solution-card__header">
+            <h3
+              className="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+              style={{ wordBreak: 'break-word' }}
+            >
+              {solution.name}
+            </h3>
 
-          {solution.acronym && <p className="margin-y-0">{solution.acronym}</p>}
+            {solution.acronym && (
+              <p className="margin-y-0">{solution.acronym}</p>
+            )}
 
-          {solution.categories.map(category => (
-            <SolutionsTag
-              className="margin-bottom-1"
-              category={category}
-              route={
-                operationalSolutionCategoryMap[
-                  category as OperationalSolutionCategories
-                ].route
-              }
-            />
-          ))}
+            {solution.categories.map(category => (
+              <SolutionsTag
+                className="margin-bottom-1"
+                key={category}
+                category={category}
+                route={
+                  operationalSolutionCategoryMap[
+                    category as OperationalSolutionCategories
+                  ].route
+                }
+              />
+            ))}
 
-          <p className="solution-card__body">
-            {t(`solutions.${solution.key}.about`)}
-          </p>
+            <p className="solution-card__body">
+              {t(`solutions.${solution.key}.about`)}
+            </p>
 
-          <Grid
-            tablet={{ col: 6 }}
-            className={classNames({ 'margin-bottom-2': solution.name })}
-          >
-            <p className="text-bold margin-bottom-0">{t('contact')}</p>
+            <Grid
+              tablet={{ col: 6 }}
+              className={classNames({ 'margin-bottom-2': solution.name })}
+            >
+              <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-            <p className="margin-y-0">{solution.pocName}</p>
-          </Grid>
+              <p className="margin-y-0">{solution.pocName}</p>
+            </Grid>
+          </div>
 
-          <>
+          <div>
             <Divider />
 
             <Button
@@ -86,7 +86,7 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
               {t('aboutSolution')}
               <IconArrowForward className="margin-left-1" />
             </Button>
-          </>
+          </div>
         </div>
       </Card>
     </CardGroup>
