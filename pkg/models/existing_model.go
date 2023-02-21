@@ -51,7 +51,6 @@ func (eM *ExistingModel) ModifiedByUserAccount(ctx context.Context) *authenticat
 		return nil
 	}
 	service := appcontext.UserAccountService(ctx)
-	// service := authentication.UserAccountService(ctx)
 	account, _ := service(ctx, *eM.ModifiedBy)
 	return account
 
