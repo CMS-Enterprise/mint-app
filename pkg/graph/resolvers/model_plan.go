@@ -103,7 +103,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default Operational Needs
-	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.ID())
+	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}

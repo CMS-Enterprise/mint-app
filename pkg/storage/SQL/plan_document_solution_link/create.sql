@@ -2,7 +2,7 @@ WITH PlanDocumentSolutionLink AS (
     SELECT
         unnest(cast(:document_ids AS UUID[])) AS DocumentID,
         cast(:solution_id AS UUID) AS SolutionID,
-        :created_by AS CreatedBy
+        cast(:created_by AS UUID) AS CreatedBy
 )
 
 INSERT INTO plan_document_solution_link (

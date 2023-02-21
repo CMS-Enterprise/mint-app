@@ -306,7 +306,8 @@ const TaskList = () => {
                           path={t(`numberedList.${key}.path`)}
                           disabled={
                             !!getTaskListLockedStatus(key) &&
-                            getTaskListLockedStatus(key)?.lockedBy !== euaId
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                              .username !== euaId
                           }
                           status={taskListSections[key].status}
                         />
@@ -316,13 +317,12 @@ const TaskList = () => {
                             !!getTaskListLockedStatus(key)?.isAssessment
                           }
                           selfLocked={
-                            getTaskListLockedStatus(key)?.lockedBy === euaId
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                              .username === euaId
                           }
-                          collaborator={collaborators.find(
-                            collaborator =>
-                              collaborator.userAccount.username ===
-                              getTaskListLockedStatus(key)?.lockedBy
-                          )}
+                          lockedByUserAccount={
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                          }
                         />
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (

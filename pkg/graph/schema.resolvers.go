@@ -291,9 +291,9 @@ func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID 
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
 func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
-	principal := appcontext.Principal(ctx).ID()
+	userID := appcontext.Principal(ctx).Account().ID
 
-	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
+	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, userID, model.ActionTypeNormal)
 }
 
 // UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.
@@ -838,14 +838,14 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 
 	return resolvers.SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 // OnLockTaskListSectionContext is the resolver for the onLockTaskListSectionContext field.
 func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }

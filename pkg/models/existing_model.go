@@ -1,7 +1,13 @@
 package models
 
 import (
+	"context"
 	"time"
+
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // ExistingModel represents an existing innovation model that is already in use
@@ -23,8 +29,29 @@ type ExistingModel struct {
 	URL                           *string    `json:"url" db:"url"`
 	DisplayModelSummary           *bool      `json:"displayModelSummary" db:"display_model_summary"`
 
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedBy   uuid.UUID  `json:"createdBy" db:"created_by"`
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
+	ModifiedBy  *uuid.UUID `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
+}
+
+// CreatedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
+func (eM *ExistingModel) CreatedByUserAccount(ctx context.Context) *authentication.UserAccount {
+
+	service := appcontext.UserAccountService(ctx)
+	account, _ := service(ctx, eM.CreatedBy)
+	return account
+
+}
+
+// ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
+func (eM *ExistingModel) ModifiedByUserAccount(ctx context.Context) *authentication.UserAccount {
+
+	if eM.ModifiedBy == nil {
+		return nil
+	}
+	service := appcontext.UserAccountService(ctx)
+	account, _ := service(ctx, *eM.ModifiedBy)
+	return account
+
 }
