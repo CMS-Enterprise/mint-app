@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8ded0b68-81a7-42b1-b2eb-2d13a6bf4710",
+		"_postman_id": "b4cf58aa-c5b3-4b99-8f4a-709d670f397c",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1554,7 +1554,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDocumentSolutionLinks ($solutionID: UUID!, $documentIDs: [UUID!]!) {\n    createPlanDocumentSolutionLinks (solutionID: $solutionID, documentIDs: $documentIDs) {\n        id\n        solutionID\n        documentID\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"query": "mutation createPlanDocumentSolutionLinks ($solutionID: UUID!, $documentIDs: [UUID!]!) {\n    createPlanDocumentSolutionLinks (solutionID: $solutionID, documentIDs: $documentIDs) {\n        id\n        solutionID\n        documentID\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }           \n    }\n}",
 								"variables": "{\n  \"solutionID\": \"\",\n  \"documentIDs\": [\n    \"\"\n  ]\n}"
 							}
 						},
