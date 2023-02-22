@@ -42,7 +42,7 @@ func (b baseStruct) GetID() uuid.UUID {
 	return b.ID
 }
 
-// GetModifiedBy returns the ModifiedBy property for an i base struct
+// GetModifiedBy returns the ModifiedBy property for an IBaseStruct
 func (b baseStruct) GetModifiedBy() *string {
 
 	if b.ModifiedBy == nil {
