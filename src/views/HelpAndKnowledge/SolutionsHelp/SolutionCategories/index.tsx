@@ -40,7 +40,7 @@ const OperationalSolutionsHelp = ({
               <Grid tablet={{ col: 3 }} key={key}>
                 <CategoryCard
                   key={key}
-                  category={t(`categories.${key}`)}
+                  category={t(`categories.${key}.header`)}
                   route={category.route}
                 />
               </Grid>

@@ -31,7 +31,7 @@ const CategoryFooter = ({ className }: CategoryFooterProps) => {
                 ].route
               }`}
             >
-              {t(`categories.${key}`)}
+              {t(`categories.${key}.header`)}
               <IconArrowForward className="margin-left-1" />
             </UswdsReactLink>
           </Grid>

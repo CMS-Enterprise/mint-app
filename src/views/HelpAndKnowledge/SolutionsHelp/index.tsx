@@ -70,17 +70,6 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const [querySolutions, setQuerySolutions] = useState<HelpSolutionType[]>(
     helpSolutions
   );
-  const [categorySolutions, setCategorySolutions] = useState<
-    HelpSolutionType[]
-  >(helpSolutions);
-
-  useEffect(() => {
-    if (category) {
-      setCategorySolutions(findCategoryMapByRoute(category, helpSolutions));
-    } else {
-      setCategorySolutions(helpSolutions);
-    }
-  }, [category]);
 
   useEffect(() => {
     setQuery('');
@@ -94,7 +83,9 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     }
   }, [query]);
 
-  const solutions = query ? querySolutions : categorySolutions;
+  const solutions = category
+    ? findCategoryMapByRoute(category, helpSolutions)
+    : querySolutions;
 
   return (
     <div className={classNames(className)}>

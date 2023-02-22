@@ -24,7 +24,7 @@ export default function SolutionsTag({
       className={classNames(className, 'width-fit-content display-block')}
     >
       <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">
-        {t(`categories.${category}`)}
+        {t(`categories.${category}.header`)}
       </Tag>
     </UswdsReactLink>
   );

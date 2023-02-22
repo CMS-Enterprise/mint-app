@@ -1,18 +1,56 @@
 const solutionCategoryies = {
-  applications: 'Applications',
-  communicationTools: 'Communication tools',
-  contractorsContractVehicles: 'Contractors and contract vehicles',
-  databaseDataManagement: 'Databases and data management',
-  dataExchange: 'Data exchange',
-  dataReporting: 'Data reporting',
-  helpDesks: 'Help desks',
-  learning: 'Learning',
-  legal: 'Legal',
-  medicareAdvantagePartD: 'Medicare Advantage and Part D',
-  medicareFeeForService: 'Medicare Fee-for-Service',
-  quality: 'Quality'
+  applications: {
+    header: 'Applications',
+    description: 'Learn about the solutions available for applications.'
+  },
+  communicationTools: {
+    header: 'Communication tools',
+    description: 'Learn about the solutions available for communication tools.'
+  },
+  contractorsContractVehicles: {
+    header: 'Contractors and contract vehicles',
+    description:
+      'Learn about the solutions available for contractors and contract vehicles.'
+  },
+  databaseDataManagement: {
+    header: 'Databases and data management',
+    description:
+      'Learn about the solutions available for databases and data management.'
+  },
+  dataExchange: {
+    header: 'Data exchange',
+    description: 'Learn about the solutions available for data exchange.'
+  },
+  dataReporting: {
+    header: 'Data reporting',
+    description: 'Learn about the solutions available for data reporting.'
+  },
+  helpDesks: {
+    header: 'Help desks',
+    description: 'Learn about the solutions available for help desks.'
+  },
+  learning: {
+    header: 'Learning',
+    description: 'Learn about the solutions available for learning.'
+  },
+  legal: {
+    header: 'Legal',
+    description: 'Learn about the solutions available for legal.'
+  },
+  medicareAdvantagePartD: {
+    header: 'Medicare Advantage and Part D',
+    description: 'Learn about the solutions available for legal.'
+  },
+  medicareFeeForService: {
+    header: 'Medicare Fee-for-Service',
+    description:
+      'Learn about the solutions available for Medicare Fee-for-Service.'
+  },
+  quality: {
+    header: 'Quality',
+    description: 'Learn about the solutions available for quality.'
+  }
 };
-
 const solutions = {
   innovation: {
     about: {
