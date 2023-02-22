@@ -34,7 +34,7 @@ const operationalNeedMap: NeedMapType = {
     question: 'generalCharacteristics:updatedContract',
     answer: 'translateBoolean'
   },
-  ADVERTISE_MODEL: {
+  RECRUIT_PARTICIPANTS: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
     parentField: 'participantsAndProviders',
@@ -48,7 +48,7 @@ const operationalNeedMap: NeedMapType = {
     question: 'participantsAndProviders:howWillYouSelect',
     answer: 'translateParticipantSelectiontType'
   },
-  COL_REV_SCORE_APP: {
+  REV_SCORE_APP: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'selectionMethod',
     parentField: 'participantsAndProviders',

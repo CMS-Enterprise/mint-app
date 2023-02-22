@@ -204,12 +204,12 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
-	colRevScoreApp := findOpNeed(opNeeds, models.OpNKColRevScoreApp)
-	suite.NotNil(colRevScoreApp)
+	revScoreApp := findOpNeed(opNeeds, models.OpNKRevScoreApp)
+	suite.NotNil(revScoreApp)
 	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon)
 	suite.NotNil(appSuppCont)
 
-	suite.True(*colRevScoreApp.Needed)
+	suite.True(*revScoreApp.Needed)
 	suite.True(*appSuppCont.Needed)
 
 }
