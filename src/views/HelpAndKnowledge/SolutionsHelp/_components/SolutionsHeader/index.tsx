@@ -76,7 +76,7 @@ const SolutionsHeader = ({
             <p className="margin-y-0">
               {t('queryResultsInfo', {
                 resultsNum,
-                plural: resultsNum > 1 ? 's' : ''
+                plural: resultsNum === 1 ? '' : 's'
               })}
               <span className="text-bold">{`"${query}"`}</span>
             </p>
