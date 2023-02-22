@@ -12,6 +12,7 @@ import './index.scss';
 type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
+  setResultsNum: (offset: number) => void;
 };
 
 function Solutions({
@@ -32,7 +33,8 @@ function Solutions({
 
 const SolutionHelpCardGroup = ({
   className,
-  solutions
+  solutions,
+  setResultsNum
 }: SolutionHelpCardGroupProps) => {
   const { pathname } = useLocation();
 
@@ -47,11 +49,16 @@ const SolutionHelpCardGroup = ({
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % solutions.length;
     setItemOffset(newOffset);
+    setResultsNum(newOffset + itemsPerPage);
   };
 
   useEffect(() => {
     setItemOffset(0);
   }, [pathname]);
+
+  useEffect(() => {
+    setResultsNum(currentItems.length);
+  }, [setResultsNum, currentItems]);
 
   return (
     <GridContainer className={classNames(className, 'margin-top-4')}>

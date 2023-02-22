@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -51,20 +51,49 @@ const findCategoryMapByRoute = (
   return filteredSolutions;
 };
 
+const seachSolutions = (query: string): HelpSolutionType[] => {
+  return helpSolutions.filter(
+    solution =>
+      solution.name.toLowerCase().includes(query.toLowerCase()) ||
+      solution?.acronym?.toLowerCase().includes(query.toLowerCase())
+  );
+};
+
 const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { category } = useParams<{ category: string }>();
 
-  let solutions = helpSolutions;
+  const [query, setQuery] = useState<string>('');
+  const [resultsNum, setResultsNum] = useState<number>(0);
+  const [solutions, setSolutions] = useState<HelpSolutionType[]>(helpSolutions);
 
-  if (category) {
-    solutions = findCategoryMapByRoute(category, solutions);
-  }
+  useEffect(() => {
+    if (category) {
+      setSolutions(findCategoryMapByRoute(category, helpSolutions));
+    } else {
+      setSolutions(helpSolutions);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    if (query.trim()) {
+      setSolutions(seachSolutions(query));
+    } else {
+      setSolutions(helpSolutions);
+    }
+  }, [query]);
 
   return (
     <div className={classNames(className)}>
-      <SolutionsHeader />
+      <SolutionsHeader
+        resultsNum={resultsNum}
+        resultsMax={solutions.length}
+        setQuery={setQuery}
+      />
 
-      <SolutionHelpCardGroup solutions={solutions} />
+      <SolutionHelpCardGroup
+        solutions={solutions}
+        setResultsNum={setResultsNum}
+      />
 
       <GridContainer className="margin-top-4">
         <Divider className="margin-top-6" />

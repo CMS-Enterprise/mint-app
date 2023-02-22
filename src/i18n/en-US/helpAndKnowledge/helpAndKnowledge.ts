@@ -293,6 +293,8 @@ const helpAndKnowledge = {
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
   pageInfo: '{{-pageStart}} of {{-totalPages}} articles',
+  resultsInfo:
+    'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
   browseAll: 'Browse all help articles',
   viewGettingStarted: 'View getting started articles',
   viewITImplementation: 'View IT implementation articles',

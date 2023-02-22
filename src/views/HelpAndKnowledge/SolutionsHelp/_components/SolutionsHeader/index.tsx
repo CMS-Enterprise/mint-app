@@ -5,6 +5,7 @@ import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Breadcrumbs from 'components/Breadcrumbs';
+import GlobalClientFilter from 'components/TableFilter';
 
 import { findCategoryKey } from '../..';
 
@@ -12,9 +13,17 @@ import './index.scss';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
+  resultsNum: number;
+  resultsMax: number;
+  setQuery: (query: string) => void;
 };
 
-const SolutionsHeader = ({ className }: OperationalSolutionsHelpProps) => {
+const SolutionsHeader = ({
+  className,
+  resultsNum,
+  resultsMax,
+  setQuery
+}: OperationalSolutionsHelpProps) => {
   const { category } = useParams<{ category: string }>();
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -36,7 +45,7 @@ const SolutionsHeader = ({ className }: OperationalSolutionsHelpProps) => {
     <div
       className={classNames(
         className,
-        'padding-y-4 padding-bottom-6 bg-primary-darker text-white'
+        'padding-y-4 padding-bottom-4 bg-primary-darker text-white'
       )}
     >
       <GridContainer>
@@ -48,6 +57,22 @@ const SolutionsHeader = ({ className }: OperationalSolutionsHelpProps) => {
         <h2 className="margin-0">{t('operationalSolutions')}</h2>
 
         <p className="margin-bottom-4">{t('operationalSolutionsInfo')}</p>
+
+        <GlobalClientFilter
+          setGlobalFilter={setQuery}
+          tableID="table-id"
+          tableName="table-name"
+          className="width-half margin-bottom-3"
+        />
+
+        <div className="display-flex">
+          <p className="margin-y-0">
+            {t('resultsInfo', {
+              resultsNum,
+              resultsMax
+            })}
+          </p>
+        </div>
       </GridContainer>
     </div>
   );

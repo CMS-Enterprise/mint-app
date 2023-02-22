@@ -54,7 +54,7 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
             {!categoryRoute &&
               solution.categories.map(category => (
                 <SolutionsTag
-                  className="margin-bottom-1"
+                  className="margin-bottom-1 margin-top-05"
                   key={category}
                   category={category}
                   route={
