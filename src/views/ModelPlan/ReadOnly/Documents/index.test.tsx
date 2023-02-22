@@ -43,7 +43,8 @@ const mocks = [
               documentType: DocumentType.MARKET_RESEARCH,
               otherType: null,
               optionalNotes: null,
-              createdDts: '2022-05-12T15:01:39.190679Z'
+              createdDts: '2022-05-12T15:01:39.190679Z',
+              numLinkedSolutions: 0
             }
           ]
         }

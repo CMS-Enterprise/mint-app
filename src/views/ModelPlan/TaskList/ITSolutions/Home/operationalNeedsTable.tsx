@@ -37,7 +37,7 @@ import {
   GetOperationalNeedsVariables
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
 import { formatDateUtc } from 'utils/date';
-import globalTableFilter from 'utils/globalTableFilter';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -261,7 +261,7 @@ const OperationalNeedsTable = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {

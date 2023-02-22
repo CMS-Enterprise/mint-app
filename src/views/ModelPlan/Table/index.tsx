@@ -33,7 +33,7 @@ import {
 } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
-import globalTableFilter from 'utils/globalTableFilter';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   translateKeyCharacteristics,
   translateModelPlanStatus
@@ -350,7 +350,7 @@ const DraftModelPlansTable = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
