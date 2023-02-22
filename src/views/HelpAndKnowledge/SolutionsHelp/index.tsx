@@ -88,6 +88,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
         resultsNum={resultsNum}
         resultsMax={solutions.length}
         setQuery={setQuery}
+        query={query}
       />
 
       <SolutionHelpCardGroup

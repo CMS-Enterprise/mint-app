@@ -295,9 +295,16 @@ const helpAndKnowledge = {
   pageInfo: '{{-pageStart}} of {{-totalPages}} articles',
   resultsInfo:
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
+  queryResultsInfo:
+    'Showing {{-resultsNum}} operational solution{{-plural}} for ',
   browseAll: 'Browse all help articles',
   viewGettingStarted: 'View getting started articles',
   viewITImplementation: 'View IT implementation articles',
+  noResults: {
+    header: 'There are no operational solutions that match your search.',
+    content:
+      'Please double-check your search and try again. If you’re searching for a solution that you believe should be a part of MINT, please contact the MINT Team at '
+  },
 
   categories: solutionCategoryies,
   solutions

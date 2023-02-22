@@ -16,13 +16,15 @@ type OperationalSolutionsHelpProps = {
   resultsNum: number;
   resultsMax: number;
   setQuery: (query: string) => void;
+  query: string;
 };
 
 const SolutionsHeader = ({
   className,
   resultsNum,
   resultsMax,
-  setQuery
+  setQuery,
+  query
 }: OperationalSolutionsHelpProps) => {
   const { category } = useParams<{ category: string }>();
   const { t } = useTranslation('helpAndKnowledge');
@@ -53,11 +55,8 @@ const SolutionsHeader = ({
           items={breadcrumbs}
           className="help-header__breadcrumbs bg-primary-darker text-white padding-top-0 margin-top-neg-2 margin-bottom-4"
         />
-
         <h2 className="margin-0">{t('operationalSolutions')}</h2>
-
         <p className="margin-bottom-4">{t('operationalSolutionsInfo')}</p>
-
         <GlobalClientFilter
           setGlobalFilter={setQuery}
           tableID="table-id"
@@ -66,12 +65,22 @@ const SolutionsHeader = ({
         />
 
         <div className="display-flex">
-          <p className="margin-y-0">
-            {t('resultsInfo', {
-              resultsNum,
-              resultsMax
-            })}
-          </p>
+          {!query ? (
+            <p className="margin-y-0">
+              {t('resultsInfo', {
+                resultsNum,
+                resultsMax
+              })}
+            </p>
+          ) : (
+            <p className="margin-y-0">
+              {t('queryResultsInfo', {
+                resultsNum,
+                plural: resultsNum > 1 ? 's' : ''
+              })}
+              <span className="text-bold">{`"${query}"`}</span>
+            </p>
+          )}
         </div>
       </GridContainer>
     </div>

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useLocation } from 'react-router-dom';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+
+import Alert from 'components/shared/Alert';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
@@ -36,6 +39,9 @@ const SolutionHelpCardGroup = ({
   solutions,
   setResultsNum
 }: SolutionHelpCardGroupProps) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const { t: h } = useTranslation('generalReadOnly');
+
   const { pathname } = useLocation();
 
   const [itemOffset, setItemOffset] = useState(0);
@@ -62,33 +68,56 @@ const SolutionHelpCardGroup = ({
 
   return (
     <GridContainer className={classNames(className, 'margin-top-4')}>
-      <Solutions currentSolutions={currentItems} />
-      {pageCount > 1 && (
-        <ReactPaginate
-          breakLabel="..."
-          breakClassName="usa-pagination__item usa-pagination__overflow"
-          nextLabel="Next >"
-          containerClassName="mint-pagination usa-pagination usa-pagination__list"
-          previousLinkClassName={
-            itemOffset === 0
-              ? 'display-none'
-              : 'usa-pagination__link usa-pagination__previous-page prev-page'
-          }
-          nextLinkClassName={
-            itemOffset / itemsPerPage === pageCount - 1
-              ? 'display-none'
-              : 'usa-pagination__link usa-pagination__previous-page next-page'
-          }
-          disabledClassName="pagination__link--disabled"
-          activeClassName="usa-current"
-          activeLinkClassName="usa-current"
-          pageClassName="usa-pagination__item"
-          pageLinkClassName="usa-pagination__button"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="< Previous"
-        />
+      {currentItems.length === 0 ? (
+        <Alert
+          type="info"
+          heading={t('noResults.header')}
+          className="margin-top-6"
+        >
+          <span className="mandatory-fields-alert__text">
+            <span>{t('noResults.content')}</span>
+            <Link
+              aria-label={h('contactInfo.sendAnEmail')}
+              className="line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+            </Link>
+            .
+          </span>
+        </Alert>
+      ) : (
+        <>
+          <Solutions currentSolutions={currentItems} />
+          {pageCount > 1 && (
+            <ReactPaginate
+              breakLabel="..."
+              breakClassName="usa-pagination__item usa-pagination__overflow"
+              nextLabel="Next >"
+              containerClassName="mint-pagination usa-pagination usa-pagination__list"
+              previousLinkClassName={
+                itemOffset === 0
+                  ? 'display-none'
+                  : 'usa-pagination__link usa-pagination__previous-page prev-page'
+              }
+              nextLinkClassName={
+                itemOffset / itemsPerPage === pageCount - 1
+                  ? 'display-none'
+                  : 'usa-pagination__link usa-pagination__previous-page next-page'
+              }
+              disabledClassName="pagination__link--disabled"
+              activeClassName="usa-current"
+              activeLinkClassName="usa-current"
+              pageClassName="usa-pagination__item"
+              pageLinkClassName="usa-pagination__button"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="< Previous"
+            />
+          )}
+        </>
       )}
     </GridContainer>
   );

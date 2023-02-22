@@ -25,11 +25,11 @@ const CategoryFooter = ({ className }: CategoryFooterProps) => {
             <UswdsReactLink
               className="fit-content display-flex flex-align-center margin-y-1"
               key={key}
-              to={
+              to={`/help-and-knowledge/operational-solutions/categories/${
                 operationalSolutionCategoryMap[
                   key as OperationalSolutionCategories
                 ].route
-              }
+              }`}
             >
               {t(`categories.${key}`)}
               <IconArrowForward className="margin-left-1" />
