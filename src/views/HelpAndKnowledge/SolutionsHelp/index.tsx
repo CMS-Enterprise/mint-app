@@ -66,35 +66,35 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
-  const [solutions, setSolutions] = useState<HelpSolutionType[]>(helpSolutions);
+
+  const [querySolutions, setQuerySolutions] = useState<HelpSolutionType[]>(
+    helpSolutions
+  );
+  const [categorySolutions, setCategorySolutions] = useState<
+    HelpSolutionType[]
+  >(helpSolutions);
 
   useEffect(() => {
     if (category) {
-      setSolutions(findCategoryMapByRoute(category, helpSolutions));
+      setCategorySolutions(findCategoryMapByRoute(category, helpSolutions));
     } else {
-      setSolutions(helpSolutions);
+      setCategorySolutions(helpSolutions);
     }
   }, [category]);
 
   useEffect(() => {
     setQuery('');
-  }, [pathname]);
-
-  useEffect(() => {
-    if (category) {
-      setSolutions(findCategoryMapByRoute(category, helpSolutions));
-    } else {
-      setSolutions(helpSolutions);
-    }
-  }, [category]);
+  }, [pathname, category]);
 
   useEffect(() => {
     if (query.trim()) {
-      setSolutions(seachSolutions(query));
+      setQuerySolutions(seachSolutions(query));
     } else {
-      setSolutions(helpSolutions);
+      setQuerySolutions(helpSolutions);
     }
   }, [query]);
+
+  const solutions = query ? querySolutions : categorySolutions;
 
   return (
     <div className={classNames(className)}>
