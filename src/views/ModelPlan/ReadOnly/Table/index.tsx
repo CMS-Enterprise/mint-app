@@ -131,9 +131,9 @@ const Table = ({
       },
       {
         Header: t('allModels.tableHeading.startDate'),
-        accessor: ({ basics: { applicationsStart } }: any) => {
-          if (applicationsStart) {
-            return formatDateUtc(applicationsStart, 'MM/dd/yyyy');
+        accessor: ({ basics: { performancePeriodStarts } }: any) => {
+          if (performancePeriodStarts) {
+            return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
           }
           return null;
         },

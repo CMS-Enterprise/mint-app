@@ -27,7 +27,7 @@ const mockData: GetModelSummaryTypes = {
   basics: {
     __typename: 'PlanBasics',
     goal: 'This is the goal',
-    applicationsStart: '2022-08-20T04:00:00Z'
+    performancePeriodStarts: '2022-08-20T04:00:00Z'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',

@@ -10,7 +10,7 @@ export default gql`
       isFavorite
       isCollaborator
       basics {
-        applicationsStart
+        performancePeriodStarts
         modelCategory
         goal
       }
