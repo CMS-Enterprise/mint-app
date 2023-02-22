@@ -75,7 +75,7 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-y-0">{solution.pocName}</p>
+              <p className="margin-y-0">{solution.pointsOfContact[0].name}</p>
             </Grid>
           </div>
 

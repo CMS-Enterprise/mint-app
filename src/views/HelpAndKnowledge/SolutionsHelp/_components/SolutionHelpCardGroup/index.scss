@@ -1,8 +1,10 @@
 .mint-pagination {
     display: inline-flex !important;
+    cursor: pointer;
 
     .usa-pagination__button {
         width: 2.75rem;
+        line-height: 0rem;
 
         &:focus {
             color: white !important;

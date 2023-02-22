@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import { useLocation } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -33,6 +34,8 @@ const SolutionHelpCardGroup = ({
   className,
   solutions
 }: SolutionHelpCardGroupProps) => {
+  const { pathname } = useLocation();
+
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 9;
   const endOffset = itemOffset + itemsPerPage;
@@ -45,6 +48,10 @@ const SolutionHelpCardGroup = ({
     const newOffset = (event.selected * itemsPerPage) % solutions.length;
     setItemOffset(newOffset);
   };
+
+  useEffect(() => {
+    setItemOffset(0);
+  }, [pathname]);
 
   return (
     <GridContainer className={classNames(className, 'margin-top-4')}>

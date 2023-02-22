@@ -50,9 +50,17 @@ export const operationalSolutionCategoryMap: CategoryType = {
 };
 
 type ContactRoles =
+  | 'Product Owner'
+  | 'Senior Lead'
+  | 'Chief Quality Officer and Lead'
+  | 'Interim Lead'
+  | 'Quality Analyst'
   | 'Technical Lead'
+  | 'Platform Lead'
   | 'Project Lead'
+  | 'Point of Contact'
   | 'Subject Matter Expert'
+  | 'CMMI Government Task Lead'
   | 'Contracting Officer Representative'
   | 'Operations and Management Lead '
   | 'Director, Division of Payment Operations'
@@ -78,7 +86,8 @@ type ContactRoles =
   | 'Quality Vertical'
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
-  | 'Director, Division of Portfolio Management & Strategy';
+  | 'Director, Division of Portfolio Management & Strategy'
+  | 'Division Director, Division of System Support, Operation and Security (DSSOS)';
 
 type SolutionContactType = {
   name: string;
@@ -96,9 +105,9 @@ export interface HelpSolutionType {
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
-  acronym: string | null;
+  acronym?: string;
   name: string;
-  pointOfContact: SolutionContactType[];
+  pointsOfContact: SolutionContactType[];
   systemOwner?: SystemOwnerType;
   contractors?: SystemOwnerType[];
 }
@@ -111,7 +120,7 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_REPORTING],
     acronym: '4i',
     name: '4innovation',
-    pointOfContact: [
+    pointsOfContact: [
       {
         name: '4i/ACO-OS Team',
         email: 'ACO-OIT@cms.hhs.gov'
@@ -123,13 +132,12 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: 'Accountable Care Organization - Operational System',
-    name: 'ACO-OS',
-    pointOfContact: [
+    acronym: 'CO-OS',
+    name: 'Accountable Care Organization - Operational System',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: '4i/ACO-OS Team',
+        email: 'ACO-OIT@cms.hhs.gov'
       }
     ]
   },
@@ -138,13 +146,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'automatedPlanPayment',
     route: 'automated-plan-payment-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'APPS',
+    name: 'Automated Plan Payment System',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Aliza Kim',
+        email: 'aliza.kim@cms.hhs.gov',
+        role: 'Project Lead'
       }
     ]
   },
@@ -153,13 +161,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'centralizedDataExhange',
     route: 'centralized-data-exchange',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'CDX',
+    name: 'Centralized Data Exchange',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Yolanda Villanova',
+        email: 'yolanda.villanova@cms.hhs.gov',
+        role: 'Product Owner'
       }
     ]
   },
@@ -168,13 +176,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'ccWarehouse',
     route: 'chronic-conditions-warehouse',
     categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'CCW',
+    name: 'Chronic Conditions Warehouse',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Cheryl Brown',
+        email: 'cheryl.brown@cms.hhs.gov',
+        role: 'CMMI Government Task Lead'
       }
     ]
   },
@@ -183,13 +191,11 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cmsBox',
     route: 'cms-box',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'CMS Box',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -198,13 +204,11 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'CMS Qualtrics',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -213,13 +217,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cbosc',
     route: 'consolidated-business-operations-support-center',
     categories: [OperationalSolutionCategories.HELP_DESKS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'CBOSC',
+    name: 'Consolidated Business Operations Support Center',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Richard Speights',
+        email: 'richard.speights@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
       }
     ]
   },
@@ -228,13 +232,11 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cpiVetting',
     route: 'cpi-vetting',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'CPI Vetting',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -243,13 +245,12 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'electronicFileTransfer',
     route: 'electronic-file-transfer',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'EFT',
+    name: 'Electronic File Transfer',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -258,13 +259,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'expandedDataFeedback',
     route: 'expanded-data-feedback-reporting',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'eDFR',
+    name: 'Expanded Data Feedback Reporting',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Zach Nall',
+        email: 'r.nall@cms.hhs.gov',
+        role: 'Product Owner'
       }
     ]
   },
@@ -273,13 +274,12 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'govDelivery',
     route: 'gov-delivery',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'GovDelivery',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Andrew Rushton',
+        email: 'andrew.rushton@cms.hhs.gov',
+        role: 'Administrator'
       }
     ]
   },
@@ -291,13 +291,13 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS,
       OperationalSolutionCategories.COMMUNICATION_TOOLS
     ],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'GS',
+    name: 'GrantSolutions',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Mary Greene',
+        email: 'mary.greene@cms.hhs.gov',
+        role: 'Director, Division of Grants Management'
       }
     ]
   },
@@ -306,13 +306,14 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'higlas',
     route: 'healthcare-integrated-general-kedger-accounting-system',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'HIGLAS',
+    name: 'Healthcare Integrated General Ledger Accounting System',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Director, Division of System Support, Operation and Security (DSSOS)'
       }
     ]
   },
@@ -321,13 +322,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'healthDataReporting',
     route: 'health-data-reporting',
     categories: [OperationalSolutionCategories.QUALITY],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'HDR',
+    name: 'Health Data Reporting',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
       }
     ]
   },
@@ -336,13 +337,12 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'healthPlanManagement',
     route: 'health-plan-management-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'HPMS',
+    name: 'Health Plan Management System',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -351,13 +351,14 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'innovationPayment',
     route: 'innovation-payment-contract',
     categories: [OperationalSolutionCategories.CC_VEHICLES],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'IPC',
+    name: 'Innovation Payment Contractor',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Director, Division of System Support, Operation and Security (DSSOS)'
       }
     ]
   },
@@ -366,13 +367,14 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'integratedDataRepository',
     route: 'integrated-data-repository',
     categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'IDR',
+    name: 'Integrated Data Repository',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Jim Brogan',
+        email: 'jim.brogan@cms.hhs.gov',
+        role:
+          'Deputy Director, Division of Enterprise Information Management Services'
       }
     ]
   },
@@ -381,13 +383,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'learningAndDiffusion',
     route: 'learning-and-diffusion-group',
     categories: [OperationalSolutionCategories.LEARNING],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'LDG',
+    name: 'Learning and Diffusion Group',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Andrew Philip',
+        email: 'andrew.philip@cms.hhs.gov',
+        role: 'Director, Division of Model Learning Systems (DMLS)'
       }
     ]
   },
@@ -396,13 +398,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'legalVertical',
     route: 'legal-vertical',
     categories: [OperationalSolutionCategories.LEGAL],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'LV',
+    name: 'Legal Vertical',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Andrew Philip',
+        email: 'megan.hyde@cms.hhs.gov',
+        role: 'Co-team Lead'
       }
     ]
   },
@@ -411,13 +413,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'masterDataManagement',
     route: 'master-data-management',
     categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'MDM',
+    name: 'Master Data Management',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Cheryl Brown',
+        email: 'cheryl.brown@cms.hhs.gov',
+        role: 'CMMI/BSG Point of Contact'
       }
     ]
   },
@@ -426,13 +428,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
     categories: [OperationalSolutionCategories.CC_VEHICLES],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'MIDS',
+    name: 'Measure and Instrument Development and Support',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Dustin Allison',
+        email: 'dustin.allison@cms.hhs.gov',
+        role: 'Quality Vertical'
       }
     ]
   },
@@ -441,13 +443,12 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'marx',
     route: 'medicare-advantage-prescription-drug-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'MARx',
+    name: 'Medicare Advantage Prescription Drug System',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -456,13 +457,11 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'outlookMailbox',
     route: 'outlook-mailbox',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'Outlook Mailbox',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
       }
     ]
   },
@@ -471,13 +470,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'qualityVertical',
     route: 'quality-vertical',
     categories: [OperationalSolutionCategories.QUALITY],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'QV',
+    name: 'Quality Vertical',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Alesia Hovatter',
+        email: 'alesia.hovatter@cms.hhs.gov',
+        role: 'Senior Lead'
       }
     ]
   },
@@ -486,13 +485,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'rmada',
     route: 'research-measurement-assessment-design-and-analysis',
     categories: [OperationalSolutionCategories.CC_VEHICLES],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'RMADA',
+    name: 'Research, Measurement, Assessment, Design, and Analysis',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Joe Pusateri',
+        email: 'joseph.pusateri@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
       }
     ]
   },
@@ -501,13 +500,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'ars',
     route: 'salesforce-application-review-and-scoring',
     categories: [OperationalSolutionCategories.APPLICATIONS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'ARS',
+    name: 'Salesforce Application Review and Scoring',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
       }
     ]
   },
@@ -516,13 +515,12 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforceConnect',
     route: 'salesforce-connect',
     categories: [OperationalSolutionCategories.LEARNING],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'Salesforce Connect',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
       }
     ]
   },
@@ -531,13 +529,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforceLOI',
     route: 'salesforce-letter-of-intent',
     categories: [OperationalSolutionCategories.APPLICATIONS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'LOI',
+    name: 'Salesforce Letter of Intent',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
       }
     ]
   },
@@ -546,13 +544,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'POST / PORTAL',
+    name: 'Salesforce Project Officer Support Tool / Portal',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
       }
     ]
   },
@@ -561,13 +559,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforceRequestApplication',
     route: 'salesforce-request-for-application',
     categories: [OperationalSolutionCategories.APPLICATIONS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    acronym: 'RFA',
+    name: 'Salesforce Request for Application',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
       }
     ]
   },
@@ -576,13 +574,13 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'sharedSystems',
     route: 'shared-systems',
     categories: [OperationalSolutionCategories.MEDICARE_FFS],
-    acronym: '',
-    name: '',
-    pointOfContact: [
+    name: 'Shared Systems',
+    pointsOfContact: [
       {
-        name: '',
-        email: '',
-        role: ''
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Division Director, Division of System Support, Operation and Security (DSSOS)'
       }
     ]
   }
