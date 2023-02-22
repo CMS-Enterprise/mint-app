@@ -60,7 +60,7 @@ func (suite *ResolverSuite) TestOperationalSolutionLoader() {
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 
 	for _, opNeedID := range opNeedIds {
-		theFunc := getVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
+		theFunc := getSolutionLoaderVerificationFunction(ctx, opNeedID, verifySolutionsLoader)
 		g.Go(theFunc)
 	}
 
@@ -91,7 +91,7 @@ func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) err
 	}
 	return nil
 }
-func getVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
+func getSolutionLoaderVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
 	return func() error {
 		return verifySolutionsFunc(ctx, operationalNeedID)
 	}
@@ -138,7 +138,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 
 	suite.NotNil(sol.OperationalNeedID)
 
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Username)
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
 	suite.NotNil(sol.CreatedDts)
 	suite.NotNil(sol.Name)
 	suite.EqualValues(*sol.Needed, false)
@@ -163,8 +163,8 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 
 	//modified fields correct
 	suite.NotNil(sol.ModifiedDts)
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Username)
-	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.Username)
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
+	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.Account().ID)
 
 	//update correct
 	suite.EqualValues(*sol.Needed, true)
@@ -205,7 +205,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 
 	suite.NotNil(sol.OperationalNeedID)
 
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Username)
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
 	suite.EqualValues(sol.NameOther, &solTypeCustom)
 	suite.NotNil(sol.CreatedDts)
 
@@ -231,8 +231,8 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 
 	//modified fields correct
 	suite.NotNil(sol.ModifiedDts)
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Username)
-	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.Username)
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
+	suite.EqualValues(sol.ModifiedBy, &suite.testConfigs.Principal.Account().ID)
 
 	//update correct
 	suite.EqualValues(*sol.Needed, true)
@@ -261,7 +261,7 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	suite.NotNil(sol)
 
 	newSolType := "A Modified unit test to test operational Solutions"
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Username)
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
 
 	sol2, err := OperationalSolutionCustomUpdateByID(suite.testConfigs.Logger, sol.ID, &newSolType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -269,8 +269,8 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	suite.EqualValues(sol2.NameOther, &newSolType)
 	suite.EqualValues(sol2.ID, sol.ID)
 	suite.NotNil(sol2.ModifiedDts)
-	suite.EqualValues(sol2.CreatedBy, suite.testConfigs.Principal.Username)
-	suite.EqualValues(sol2.ModifiedBy, &suite.testConfigs.Principal.Username)
+	suite.EqualValues(sol2.CreatedBy, suite.testConfigs.Principal.Account().ID)
+	suite.EqualValues(sol2.ModifiedBy, &suite.testConfigs.Principal.Account().ID)
 
 	// 2. Fail update when set solution type to null
 	_, err = OperationalSolutionCustomUpdateByID(suite.testConfigs.Logger, sol.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

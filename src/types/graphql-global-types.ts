@@ -77,9 +77,9 @@ export enum BeneficiariesType {
 export enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
   POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
-  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP",
   SEAMLESS_CARE_MODELS_GROUP = "SEAMLESS_CARE_MODELS_GROUP",
-  STATE_INNOVATIONS_GROUP = "STATE_INNOVATIONS_GROUP",
+  STATE_AND_POPULATION_HEALTH_GROUP = "STATE_AND_POPULATION_HEALTH_GROUP",
+  TBD = "TBD",
 }
 
 export enum CMSCenter {
@@ -703,7 +703,6 @@ export enum TaskStatusInput {
 }
 
 export enum TeamRole {
-  ARCHITECT = "ARCHITECT",
   EVALUATION = "EVALUATION",
   IT_LEAD = "IT_LEAD",
   LEADERSHIP = "LEADERSHIP",
@@ -1205,6 +1204,7 @@ export interface PlanPaymentsChanges {
   waiveBeneficiaryCostSharingNote?: string | null;
   nonClaimsPayments?: NonClaimsBasedPayType[] | null;
   nonClaimsPaymentOther?: string | null;
+  nonClaimsPaymentsNote?: string | null;
   paymentCalculationOwner?: string | null;
   numberPaymentsPerPayCycle?: string | null;
   numberPaymentsPerPayCycleNote?: string | null;

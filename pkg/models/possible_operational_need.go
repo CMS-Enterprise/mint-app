@@ -1,16 +1,10 @@
 package models
 
-import (
-	"time"
-)
-
 // PossibleOperationalNeed represents the need of a model plan
 type PossibleOperationalNeed struct {
-	ID          int        `json:"id" db:"id"`
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
+	ID int `json:"id" db:"id"`
+	createdByRelation
+	modifiedByRelation
 
 	Name    string             `json:"name" db:"need_name"`
 	Key     OperationalNeedKey `json:"key" db:"need_key"`

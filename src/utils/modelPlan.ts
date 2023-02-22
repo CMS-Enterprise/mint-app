@@ -64,8 +64,6 @@ export const translateTeamRole = (teamRole: string) => {
       return i18next.t('modelPlan:teamRoles.evaluation');
     case 'IT_LEAD':
       return i18next.t('modelPlan:teamRoles.itLead');
-    case 'ARCHITECT':
-      return i18next.t('modelPlan:teamRoles.architect');
     case 'LEADERSHIP':
       return i18next.t('modelPlan:teamRoles.leadership');
     case 'LEARNING':
@@ -122,17 +120,17 @@ export const translateModelCategory = (category: string) => {
 export const translateCmsCenter = (category: string) => {
   switch (category) {
     case 'CMMI':
-      return 'CMMI';
+      return i18next.t('basics:cmsComponents.cmmi');
     case 'CENTER_FOR_MEDICARE':
-      return 'Center for Medicare (CM)';
+      return i18next.t('basics:cmsComponents.cm');
     case 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE':
-      return 'Federal Coordinated Health Care';
+      return i18next.t('basics:cmsComponents.federalCoordinateHealthCare');
     case 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY':
-      return 'Center for Clinical Standards and Quality (CCSQ)';
+      return i18next.t('basics:cmsComponents.ccsq');
     case 'CENTER_FOR_PROGRAM_INTEGRITY':
-      return 'Center for Program Integrity (CPI)';
+      return i18next.t('basics:cmsComponents.cpi');
     case 'OTHER':
-      return 'Other';
+      return i18next.t('basics:cmsComponents.other');
     default:
       return '';
   }
@@ -141,15 +139,15 @@ export const translateCmsCenter = (category: string) => {
 export const translateCmmiGroups = (category: string) => {
   switch (category) {
     case 'PATIENT_CARE_MODELS_GROUP':
-      return 'Patient Care Models Group (PCMG)';
+      return i18next.t('basics:cmmiGroups.pcmg');
     case 'POLICY_AND_PROGRAMS_GROUP':
-      return 'Policy and Programs Group (PPG)';
-    case 'PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP':
-      return 'Preventative and Population Health Care Models Group (PPHCMG)';
+      return i18next.t('basics:cmmiGroups.ppg');
     case 'SEAMLESS_CARE_MODELS_GROUP':
-      return 'Seamless Care Models Group (SCMG)';
-    case 'STATE_INNOVATIONS_GROUP':
-      return 'State Innovations Group (SIG)';
+      return i18next.t('basics:cmmiGroups.scmg');
+    case 'STATE_AND_POPULATION_HEALTH_GROUP':
+      return i18next.t('basics:cmmiGroups.sphg');
+    case 'TBD':
+      return i18next.t('basics:cmmiGroups.tbd');
     default:
       return '';
   }
@@ -280,6 +278,19 @@ export const translateWaiverTypes = (type: string) => {
       return i18next.t('generalCharacteristics:programPayment');
     case 'MEDICAID':
       return i18next.t('generalCharacteristics:medicaid');
+    default:
+      return '';
+  }
+};
+
+export const translateWaiverTypesLabel = (type: string) => {
+  switch (type) {
+    case 'FRAUD_ABUSE':
+      return i18next.t('generalCharacteristics:fraudAndAbuseNote');
+    case 'PROGRAM_PAYMENT':
+      return i18next.t('generalCharacteristics:programPaymentNote');
+    case 'MEDICAID':
+      return i18next.t('generalCharacteristics:medicaidNote');
     default:
       return '';
   }

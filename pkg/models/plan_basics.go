@@ -8,7 +8,7 @@ import (
 
 // PlanBasics represents the "plan basics" section of a plan
 type PlanBasics struct {
-	baseTaskListSection
+	baseTaskListSectionUserTable
 
 	ModelCategory *ModelCategory `json:"modelCategory" db:"model_category"`
 	CMSCenters    pq.StringArray `json:"cmsCenters" db:"cms_centers"`
@@ -38,9 +38,9 @@ type PlanBasics struct {
 }
 
 // NewPlanBasics returns a new plan basics object
-func NewPlanBasics(tls baseTaskListSection) *PlanBasics {
+func NewPlanBasics(tls baseTaskListSectionUserTable) *PlanBasics {
 	return &PlanBasics{
-		baseTaskListSection: tls,
+		baseTaskListSectionUserTable: tls,
 	}
 }
 

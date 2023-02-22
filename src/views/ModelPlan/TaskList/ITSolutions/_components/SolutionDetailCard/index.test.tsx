@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
+import { MessageProvider } from 'hooks/useMessage';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
   OperationalSolutionKey,
@@ -27,6 +28,7 @@ const solution: GetOperationalSolutionType = {
   needed: true,
   nameOther: null,
   status: OpSolutionStatus.IN_PROGRESS,
+  documents: [],
   mustFinishDts: '2022-12-30T15:01:39.190679Z',
   mustStartDts: null
 };
@@ -44,12 +46,14 @@ describe('SolutionDetailsCard', () => {
             mocks={needQuestionAndAnswerMock}
             addTypename={false}
           >
-            <SolutionDetailCard
-              solution={solution}
-              modelID={modelID}
-              operationalNeedID={operationalNeedID}
-              operationalSolutionID={operationalSolutionID}
-            />
+            <MessageProvider>
+              <SolutionDetailCard
+                solution={solution}
+                modelID={modelID}
+                operationalNeedID={operationalNeedID}
+                operationalSolutionID={operationalSolutionID}
+              />
+            </MessageProvider>
           </VerboseMockedProvider>
         </Route>
       </MemoryRouter>
@@ -77,13 +81,15 @@ describe('SolutionDetailsCard', () => {
             mocks={needQuestionAndAnswerMock}
             addTypename={false}
           >
-            <SolutionDetailCard
-              solution={solution}
-              modelID={modelID}
-              operationalNeedID={operationalNeedID}
-              operationalSolutionID={operationalSolutionID}
-              isUpdatingStatus
-            />
+            <MessageProvider>
+              <SolutionDetailCard
+                solution={solution}
+                modelID={modelID}
+                operationalNeedID={operationalNeedID}
+                operationalSolutionID={operationalSolutionID}
+                isUpdatingStatus
+              />
+            </MessageProvider>
           </VerboseMockedProvider>
         </Route>
       </MemoryRouter>

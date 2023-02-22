@@ -20,14 +20,14 @@ import (
 //go:embed SQL/plan_document_solution_link/create.sql
 var planDocumentSolutionLinksCreateSQL string
 
-//go:embed SQL/plan_document_solution_link/delete_by_id.sql
-var planDocumentSolutionLinkDeleteByIDSQL string
+//go:embed SQL/plan_document_solution_link/delete_by_ids.sql
+var planDocumentSolutionLinkDeleteByIDsSQL string
 
 //go:embed SQL/plan_document_solution_link/get_by_solution_id.sql
 var planDocumentSolutionLinksGetBySolutionIDSQL string
 
-//go:embed SQL/plan_document_solution_link/get_by_id.sql
-var planDocumentSolutionLinkGetByIDSQL string
+//go:embed SQL/plan_document_solution_link/get_by_ids.sql
+var planDocumentSolutionLinkGetByIDsSQL string
 
 //go:embed SQL/plan_document_solution_link/num_links_by_document_id.sql
 var planDocumentNumLinkedSolutionsSQL string
@@ -44,7 +44,7 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 	arg := map[string]interface{}{
 		"solution_id":  solutionID,
 		"document_ids": docIDs,
-		"created_by":   principal.ID(),
+		"created_by":   principal.Account().ID,
 	}
 
 	var ret []*models.PlanDocumentSolutionLink
@@ -61,19 +61,26 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 	return ret, nil
 }
 
-// PlanDocumentSolutionLinkRemove deletes a plan document object by id
-func (s *Store) PlanDocumentSolutionLinkRemove(
+// PlanDocumentSolutionLinksRemove deletes a plan document object by id
+func (s *Store) PlanDocumentSolutionLinksRemove(
 	logger *zap.Logger,
-	id uuid.UUID,
+	solutionID uuid.UUID,
+	documentIDs []uuid.UUID,
 ) (bool, error) {
-	statement, err := s.db.PrepareNamed(planDocumentSolutionLinkDeleteByIDSQL)
+	statement, err := s.db.PrepareNamed(planDocumentSolutionLinkDeleteByIDsSQL)
 	if err != nil {
 		return false, err
 	}
 
-	_, err = statement.Exec(utilitySQL.CreateIDQueryMap(id))
+	docIDs := convertToStringArray(documentIDs)
+	arg := map[string]interface{}{
+		"solution_id":  solutionID,
+		"document_ids": docIDs,
+	}
+
+	_, err = statement.Exec(arg)
 	if err != nil {
-		return false, genericmodel.HandleModelDeleteByIDError(logger, err, id)
+		return false, err
 	}
 
 	return true, nil
@@ -116,26 +123,26 @@ func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uu
 	return result, nil
 }
 
-// PlanDocumentSolutionLinkGetByID returns a single plan document solution link by ID
-func (s *Store) PlanDocumentSolutionLinkGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanDocumentSolutionLink, error) {
-	link := models.PlanDocumentSolutionLink{}
+// PlanDocumentSolutionLinkGetByIDs returns a single plan document solution link by ID
+func (s *Store) PlanDocumentSolutionLinkGetByIDs(logger *zap.Logger, solutionID uuid.UUID, documentID uuid.UUID) (*models.PlanDocumentSolutionLink, error) {
+	link := &models.PlanDocumentSolutionLink{}
 
-	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinkGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinkGetByIDsSQL)
 	if err != nil {
 		return nil, err
 	}
 
 	arg := map[string]interface{}{
-
-		"id": id,
+		"solution_id": solutionID,
+		"document_id": documentID,
 	}
 
-	err = stmt.Get(&link, arg)
+	err = stmt.Get(link, arg)
 
 	if err != nil {
 		return nil, err
 	}
-	return &link, nil
+	return link, nil
 }
 
 // convertToStringArray converts a UUID array to a string array so sqlx can understand the type

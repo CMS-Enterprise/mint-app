@@ -51,7 +51,7 @@ const Milestones = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     MilestonesFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const history = useHistory();
@@ -63,7 +63,8 @@ const Milestones = () => {
   >(GetMilestones, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const { modelName } = data?.modelPlan || {};
@@ -82,7 +83,7 @@ const Milestones = () => {
     wrapUpEnds,
     phasedIn,
     phasedInNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.basics || ({} as MilestonesFormType);
@@ -245,10 +246,10 @@ const Milestones = () => {
                   <ProcessList className="read-only-model-plan__timeline">
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
-                        <div className="datepicker__wrapper">
+                        <div className="datepicker__wrapper display-block">
                           <MINTDatePicker
                             className="margin-top-0"
                             fieldName="completeICIP"
@@ -259,6 +260,7 @@ const Milestones = () => {
                             formikValue={values.completeICIP}
                             value={completeICIP}
                             error={flatErrors.completeICIP}
+                            half
                           />
                         </div>
                       </ProcessListHeading>
@@ -266,8 +268,8 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label">{t('clearance')}</legend>
 
@@ -313,10 +315,10 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       />
-                      <div className="datepicker__wrapper">
+                      <div className="datepicker__wrapper display-block">
                         <MINTDatePicker
                           className="margin-top-0"
                           fieldName="announced"
@@ -327,14 +329,15 @@ const Milestones = () => {
                           formikValue={values.announced}
                           value={announced}
                           error={flatErrors.announced}
+                          half
                         />
                       </div>
                     </ProcessListItem>
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label margin-bottom-neg-2">
                           {t('applicationPeriod')}
@@ -379,8 +382,8 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       >
                         {' '}
                         <legend className="usa-label margin-bottom-neg-2">
@@ -426,10 +429,10 @@ const Milestones = () => {
 
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
                       <ProcessListHeading
-                        type="p"
-                        className="font-body-sm line-height-sans-4"
+                        type="h5"
+                        className="font-body-sm line-height-sans-4 text-normal"
                       />
-                      <div className="datepicker__wrapper">
+                      <div className="datepicker__wrapper display-block">
                         <MINTDatePicker
                           fieldName="wrapUpEnds"
                           className="margin-top-0"
@@ -440,6 +443,7 @@ const Milestones = () => {
                           formikValue={values.wrapUpEnds}
                           value={wrapUpEnds}
                           error={flatErrors.wrapUpEnds}
+                          half
                         />
                       </div>
                     </ProcessListItem>
@@ -485,15 +489,17 @@ const Milestones = () => {
 
                   <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
 
-                  <ReadyForReview
-                    id="milestones-status"
-                    field="status"
-                    sectionName={t('heading')}
-                    status={values.status}
-                    setFieldValue={setFieldValue}
-                    readyForReviewBy={readyForReviewBy}
-                    readyForReviewDts={readyForReviewDts}
-                  />
+                  {!loading && values.status && (
+                    <ReadyForReview
+                      id="milestones-status"
+                      field="status"
+                      sectionName={t('heading')}
+                      status={values.status}
+                      setFieldValue={setFieldValue}
+                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                      readyForReviewDts={readyForReviewDts}
+                    />
+                  )}
 
                   <div className="margin-top-6 margin-bottom-3">
                     <Button

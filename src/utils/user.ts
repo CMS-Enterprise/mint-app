@@ -1,11 +1,17 @@
-import { ASSESSMENT, BASIC, MAC } from 'constants/jobCodes';
+import {
+  ASSESSMENT,
+  ASSESSMENT_NONPROD,
+  BASIC,
+  BASIC_NONPROD,
+  MAC
+} from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
 export const isAssessment = (groups: Array<String> = [], flags: Flags) => {
   if (flags?.downgradeAssessmentTeam) {
     return false;
   }
-  if (groups.includes(ASSESSMENT)) {
+  if (groups.includes(ASSESSMENT) || groups.includes(ASSESSMENT_NONPROD)) {
     return true;
   }
 
@@ -13,7 +19,7 @@ export const isAssessment = (groups: Array<String> = [], flags: Flags) => {
 };
 
 export const isBasicUser = (groups: Array<String> = []) => {
-  if (groups.includes(BASIC)) {
+  if (groups.includes(BASIC) || groups.includes(BASIC_NONPROD)) {
     return true;
   }
 

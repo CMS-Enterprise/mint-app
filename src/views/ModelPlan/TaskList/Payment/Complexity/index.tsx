@@ -43,13 +43,23 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import {
-  mapMultiSelectOptions,
   translateAnticipatedPaymentFrequencyType,
   translateComplexityLevel
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
+
+const dataFrequencyOptions: AnticipatedPaymentFrequencyType[] = [
+  AnticipatedPaymentFrequencyType.ANNUALLY,
+  AnticipatedPaymentFrequencyType.BIANNUALLY,
+  AnticipatedPaymentFrequencyType.QUARTERLY,
+  AnticipatedPaymentFrequencyType.MONTHLY,
+  AnticipatedPaymentFrequencyType.SEMIMONTHLY,
+  AnticipatedPaymentFrequencyType.WEEKLY,
+  AnticipatedPaymentFrequencyType.DAILY,
+  AnticipatedPaymentFrequencyType.OTHER
+];
 
 const Complexity = () => {
   const { t } = useTranslation('payments');
@@ -397,10 +407,10 @@ const Complexity = () => {
                           as={MultiSelect}
                           id="payment-frequency-payments"
                           name="anticipatedPaymentFrequency"
-                          options={mapMultiSelectOptions(
-                            translateAnticipatedPaymentFrequencyType,
-                            AnticipatedPaymentFrequencyType
-                          )}
+                          options={dataFrequencyOptions.map(key => ({
+                            value: key,
+                            label: translateAnticipatedPaymentFrequencyType(key)
+                          }))}
                           selectedLabel={t(
                             'selectedAnticipatedPaymentFrequency'
                           )}

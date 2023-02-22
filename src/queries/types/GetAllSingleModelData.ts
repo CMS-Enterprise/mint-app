@@ -33,11 +33,11 @@ export interface GetAllSingleModelData_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   status: TaskStatus;
 }
@@ -60,7 +60,7 @@ export interface GetAllSingleModelData_modelPlan_beneficiaries {
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   numberPeopleImpacted: number | null;
@@ -76,7 +76,7 @@ export interface GetAllSingleModelData_modelPlan_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -85,7 +85,7 @@ export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllSingleModelData_modelPlan_discussions_replies[];
@@ -93,6 +93,7 @@ export interface GetAllSingleModelData_modelPlan_discussions {
 
 export interface GetAllSingleModelData_modelPlan_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
   email: string;
   username: string;
@@ -120,7 +121,7 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   isNewModel: boolean | null;
@@ -321,7 +322,7 @@ export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   agencyOrStateHelp: AgencyOrStateHelpType[];
@@ -402,7 +403,7 @@ export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
@@ -469,7 +470,7 @@ export interface GetAllSingleModelData_modelPlan_payments {
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
@@ -479,9 +480,9 @@ export interface GetAllSingleModelData_modelPlan {
   id: UUID;
   modelName: string;
   archived: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   basics: GetAllSingleModelData_modelPlan_basics;
   beneficiaries: GetAllSingleModelData_modelPlan_beneficiaries;

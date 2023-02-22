@@ -24,20 +24,6 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
-// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
-func (r *auditChangeResolver) ModifiedByUserAccount(ctx context.Context, obj *models.AuditChange) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ModifiedBy == nil {
-		return nil, nil //no user
-	}
-	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
-}
-
-// CreatedByUser is the resolver for the createdByUser field.
-func (r *discussionReplyResolver) CreatedByUser(ctx context.Context, obj *models.DiscussionReply) (*models.UserInfo, error) {
-	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
-}
-
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -319,9 +305,9 @@ func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID 
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
 func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
-	principal := appcontext.Principal(ctx).ID()
+	userID := appcontext.Principal(ctx).Account().ID
 
-	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
+	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, userID, model.ActionTypeNormal)
 }
 
 // UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.
@@ -421,11 +407,35 @@ func (r *mutationResolver) CreatePlanDocumentSolutionLinks(ctx context.Context, 
 	return resolvers.PlanDocumentSolutionLinksCreate(logger, r.store, solutionID, documentIDs, principal)
 }
 
-// RemovePlanDocumentSolutionLink is the resolver for the removePlanDocumentSolutionLink field.
-func (r *mutationResolver) RemovePlanDocumentSolutionLink(ctx context.Context, id uuid.UUID) (bool, error) {
+// RemovePlanDocumentSolutionLinks is the resolver for the removePlanDocumentSolutionLinks field.
+func (r *mutationResolver) RemovePlanDocumentSolutionLinks(ctx context.Context, solutionID uuid.UUID, documentIDs []uuid.UUID) (bool, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanDocumentSolutionLinkRemove(logger, id, r.store, principal)
+	return resolvers.PlanDocumentSolutionLinkRemove(logger, solutionID, documentIDs, r.store, principal)
+}
+
+// CreateOperationalSolutionSubtasks is the resolver for the createOperationalSolutionSubtasks field.
+func (r *mutationResolver) CreateOperationalSolutionSubtasks(ctx context.Context, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.OperationalSolutionSubtasksCreate(logger, r.store, inputs, solutionID, principal)
+}
+
+// UpdateOperationalSolutionSubtasks is the resolver for the updateOperationalSolutionSubtasks field.
+func (r *mutationResolver) UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionSubtasksUpdateByID(logger, r.store, principal, inputs)
+}
+
+// DeleteOperationalSolutionSubtask is the resolver for the deleteOperationalSolutionSubtask field.
+func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
 }
 
 // Solutions is the resolver for the solutions field.
@@ -444,6 +454,13 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 		r.store,
 		r.s3Client,
 	)
+}
+
+// OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
+func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.OperationalSolutionSubtasksGetBySolutionID(logger, r.store, obj.ID)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -470,37 +487,11 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 	return sTypes, nil
 }
 
-// UserAccount is the resolver for the userAccount field.
-func (r *planCollaboratorResolver) UserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.UserAccountGetByID(logger, r.store, obj.UserID)
-}
-
-// CreatedByUserAccount is the resolver for the createdByUserAccount field.
-func (r *planCollaboratorResolver) CreatedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.UserAccountGetByID(logger, r.store, obj.CreatedBy)
-}
-
-// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
-func (r *planCollaboratorResolver) ModifiedByUserAccount(ctx context.Context, obj *models.PlanCollaborator) (*authentication.UserAccount, error) {
-	logger := appcontext.ZLogger(ctx)
-	if obj.ModifiedBy == nil {
-		return nil, nil //no user
-	}
-	return resolvers.UserAccountGetByID(logger, r.store, *obj.ModifiedBy)
-}
-
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
-}
-
-// CreatedByUser is the resolver for the createdByUser field.
-func (r *planDiscussionResolver) CreatedByUser(ctx context.Context, obj *models.PlanDiscussion) (*models.UserInfo, error) {
-	return r.service.FetchUserInfo(ctx, obj.CreatedBy)
 }
 
 // OtherType is the resolver for the otherType field.
@@ -1023,14 +1014,14 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 
 	return resolvers.SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 // OnLockTaskListSectionContext is the resolver for the onLockTaskListSectionContext field.
 func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
@@ -1042,11 +1033,6 @@ func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (str
 
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
-
-// DiscussionReply returns generated.DiscussionReplyResolver implementation.
-func (r *Resolver) DiscussionReply() generated.DiscussionReplyResolver {
-	return &discussionReplyResolver{r}
-}
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
@@ -1070,11 +1056,6 @@ func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasic
 // PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
 func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
 	return &planBeneficiariesResolver{r}
-}
-
-// PlanCollaborator returns generated.PlanCollaboratorResolver implementation.
-func (r *Resolver) PlanCollaborator() generated.PlanCollaboratorResolver {
-	return &planCollaboratorResolver{r}
 }
 
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.
@@ -1121,14 +1102,12 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
-type discussionReplyResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
 type operationalSolutionResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
-type planCollaboratorResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }

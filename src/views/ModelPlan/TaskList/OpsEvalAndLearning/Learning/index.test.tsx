@@ -13,12 +13,17 @@ const learningMockData: GetLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  dataNeededForMonitoring: [],
   iddocSupport: true,
   modelLearningSystems: [],
   modelLearningSystemsOther: '',
   modelLearningSystemsNote: '',
   anticipatedChallenges: 'Hard challenges',
-  readyForReviewBy: 'ASDF',
+  readyForReviewByUserAccount: {
+    commonName: 'ASDF',
+    id: '000',
+    __typename: 'UserAccount'
+  },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
 };
@@ -37,6 +42,7 @@ const learningMock = [
           opsEvalAndLearning: learningMockData,
           operationalNeeds: [
             {
+              id: '111',
               modifiedDts: ''
             }
           ]

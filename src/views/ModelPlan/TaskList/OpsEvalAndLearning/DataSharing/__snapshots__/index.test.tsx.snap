@@ -129,14 +129,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           -Select-
         </option>
         <option
-          value="AT_SOME_OTHER_POINT_IN_TIME"
-        >
-          At some other point in time
-        </option>
-        <option
           value="DURING_APPLICATION_PERIOD"
         >
           During application period
+        </option>
+        <option
+          value="SHORTLY_BEFORE_THE_START_DATE"
+        >
+          Shortly before the start date
         </option>
         <option
           value="EARLY_IN_THE_FIRST_PERFORMANCE_YEAR"
@@ -144,24 +144,24 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Early in the first performance year
         </option>
         <option
-          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
-        >
-          In the subsequent performance year
-        </option>
-        <option
           value="LATER_IN_THE_FIRST_PERFORMANCE_YEAR"
         >
           Later in the first performance year
         </option>
         <option
+          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
+        >
+          In the subsequent performance year
+        </option>
+        <option
+          value="AT_SOME_OTHER_POINT_IN_TIME"
+        >
+          At some other point in time
+        </option>
+        <option
           value="NOT_PLANNING_TO_DO_THIS"
         >
           Not planning to do this
-        </option>
-        <option
-          value="SHORTLY_BEFORE_THE_START_DATE"
-        >
-          Shortly before the start date
         </option>
         <option
           value="OTHER"
@@ -321,14 +321,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           -Select-
         </option>
         <option
-          value="AT_SOME_OTHER_POINT_IN_TIME"
-        >
-          At some other point in time
-        </option>
-        <option
           value="DURING_APPLICATION_PERIOD"
         >
           During application period
+        </option>
+        <option
+          value="SHORTLY_BEFORE_THE_START_DATE"
+        >
+          Shortly before the start date
         </option>
         <option
           value="EARLY_IN_THE_FIRST_PERFORMANCE_YEAR"
@@ -336,24 +336,24 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Early in the first performance year
         </option>
         <option
-          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
-        >
-          In the subsequent performance year
-        </option>
-        <option
           value="LATER_IN_THE_FIRST_PERFORMANCE_YEAR"
         >
           Later in the first performance year
         </option>
         <option
+          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
+        >
+          In the subsequent performance year
+        </option>
+        <option
+          value="AT_SOME_OTHER_POINT_IN_TIME"
+        >
+          At some other point in time
+        </option>
+        <option
           value="NOT_PLANNING_TO_DO_THIS"
         >
           Not planning to do this
-        </option>
-        <option
-          value="SHORTLY_BEFORE_THE_START_DATE"
-        >
-          Shortly before the start date
         </option>
         <option
           value="OTHER"
@@ -510,14 +510,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           -Select-
         </option>
         <option
-          value="AT_SOME_OTHER_POINT_IN_TIME"
-        >
-          At some other point in time
-        </option>
-        <option
           value="DURING_APPLICATION_PERIOD"
         >
           During application period
+        </option>
+        <option
+          value="SHORTLY_BEFORE_THE_START_DATE"
+        >
+          Shortly before the start date
         </option>
         <option
           value="EARLY_IN_THE_FIRST_PERFORMANCE_YEAR"
@@ -525,24 +525,24 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Early in the first performance year
         </option>
         <option
-          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
-        >
-          In the subsequent performance year
-        </option>
-        <option
           value="LATER_IN_THE_FIRST_PERFORMANCE_YEAR"
         >
           Later in the first performance year
         </option>
         <option
+          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
+        >
+          In the subsequent performance year
+        </option>
+        <option
+          value="AT_SOME_OTHER_POINT_IN_TIME"
+        >
+          At some other point in time
+        </option>
+        <option
           value="NOT_PLANNING_TO_DO_THIS"
         >
           Not planning to do this
-        </option>
-        <option
-          value="SHORTLY_BEFORE_THE_START_DATE"
-        >
-          Shortly before the start date
         </option>
         <option
           value="OTHER"
@@ -560,14 +560,15 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         >
           Please specify
         </label>
-        <input
-          class="usa-input maxw-none"
+        <textarea
+          class="maxw-none mint-textarea usa-textarea"
           data-testid="ops-eval-and-learning-data-reporting-starts-other"
           id="ops-eval-and-learning-data-reporting-starts-other"
-          maxlength="50"
+          maxlength="5000"
           name="qualityReportingStartsOther"
-          value="Other Value"
-        />
+        >
+          Other Value
+        </textarea>
       </div>
       <div
         class="margin-top-4 margin-bottom-8"

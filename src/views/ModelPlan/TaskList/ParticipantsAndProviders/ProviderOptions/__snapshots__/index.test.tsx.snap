@@ -431,7 +431,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
           Please describe the other method for deciding which providers to add.
         </label>
         <textarea
-          class="usa-textarea height-15"
+          class="height-15 usa-textarea"
           data-testid="participants-and-providers-provider-add-method-other"
           id="participants-and-providers-provider-add-method-other"
           name="providerAddMethodOther"
@@ -484,16 +484,16 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+        id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
         name="providerLeaveMethod"
         type="checkbox"
-        value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+        value="VARIES_BY_TYPE_OF_PROVIDER"
       />
       <label
         class="usa-checkbox__label"
-        for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+        for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
       >
-        They can leave after a certain date but there are implications
+        It varies by type of provider
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -524,16 +524,16 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+        id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
         name="providerLeaveMethod"
         type="checkbox"
-        value="VARIES_BY_TYPE_OF_PROVIDER"
+        value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
       />
       <label
         class="usa-checkbox__label"
-        for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+        for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
       >
-        It varies by type of provider
+        They can leave after a certain date but there are implications
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

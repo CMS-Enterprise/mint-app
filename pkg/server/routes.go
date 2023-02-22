@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -11,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -28,7 +27,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
-	"github.com/okta/okta-sdk-golang/v2/okta/query"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -117,6 +115,10 @@ func (s *Server) routes(
 	dataLoaderMiddleware := loaders.NewDataLoaderMiddleware(dataLoaders)
 	s.router.Use(dataLoaderMiddleware)
 
+	userAccountServiceMiddleware := userhelpers.NewUserAccountServiceMiddleware(userhelpers.UserAccountGetByIDLOADER)
+
+	s.router.Use(userAccountServiceMiddleware)
+
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 
 	// set up handler base
@@ -127,37 +129,37 @@ func (s *Server) routes(
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
 	// Create Okta API Client
-	var ctx context.Context
-	var oktaClient *oktaapi.OktaApiClientWrapper
-	var oktaClientErr error
-	if s.environment.Local() {
-		// TODO Replace this with a mock
-		// Ensure Okta API Variables are set
-		s.NewOktaAPIClientCheck()
-		oktaClient, oktaClientErr = oktaapi.NewOktaApiClientWrapper(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
-		if oktaClientErr != nil {
-			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
-		}
-	} else {
-		// Ensure Okta API Variables are set
-		s.NewOktaAPIClientCheck()
-		oktaapi.NewOktaApiClientWrapper(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
-		if oktaClientErr != nil {
-			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
-		}
-	}
+	// var ctx context.Context
+	// var oktaClient *oktaapi.OktaApiClientWrapper
+	// var oktaClientErr error
+	// if s.environment.Local() {
+	// 	// TODO Replace this with a mock
+	// 	// Ensure Okta API Variables are set
+	// 	s.NewOktaAPIClientCheck()
+	// 	oktaClient, oktaClientErr = oktaapi.NewOktaApiClientWrapper(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+	// 	if oktaClientErr != nil {
+	// 		s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+	// 	}
+	// } else {
+	// 	// Ensure Okta API Variables are set
+	// 	s.NewOktaAPIClientCheck()
+	// 	oktaapi.NewOktaApiClientWrapper(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+	// 	if oktaClientErr != nil {
+	// 		s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+	// 	}
+	// }
 
-	filter := query.NewQueryParams(query.WithFilter(`profile.firstName eq "Clay"`))
+	// filter := query.NewQueryParams(query.WithFilter(`profile.firstName eq "Clay"`))
 
-	filteredUsers, _, err := oktaClient.User.ListUsers(ctx, filter)
-	if err != nil {
-		fmt.Printf("Error Getting Users: %v\n", err)
-	}
+	// filteredUsers, _, err := oktaClient.User.ListUsers(ctx, filter)
+	// if err != nil {
+	// 	fmt.Printf("Error Getting Users: %v\n", err)
+	// }
 
-	for index, user := range filteredUsers {
-		marshalledUserProfile, _ := json.MarshalIndent(user.Profile, "", "  ")
-		fmt.Printf("User %d: %+v\n", index, string(marshalledUserProfile))
-	}
+	// for index, user := range filteredUsers {
+	// 	marshalledUserProfile, _ := json.MarshalIndent(user.Profile, "", "  ")
+	// 	fmt.Printf("User %d: %+v\n", index, string(marshalledUserProfile))
+	// }
 
 	var cedarLDAPClient cedarldap.Client
 	cedarLDAPClient = cedarldap.NewTranslatedClient(

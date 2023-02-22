@@ -13,8 +13,8 @@ const intialValues = {
   field: 'field',
   sectionName: 'Basics',
   status: TaskStatus.IN_PROGRESS,
-  readyForReviewBy: 'ASDF',
-  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  readyForReviewBy: 'Jerry Seinfeld',
+  readyForReviewDts: '2024-05-12T15:01:39.190679Z',
   setFieldValue: (field: string, value: any) => {}
 };
 
@@ -35,7 +35,7 @@ describe('The ReadyForReview Component', () => {
 
   it('renders the component with status = READY_FOR_REVIEW', async () => {
     await act(async () => {
-      const { getByTestId } = render(
+      const { getByText, getByTestId } = render(
         <Formik initialValues={intialValues} onSubmit={onSubmit}>
           <ReadyForReview
             {...intialValues}
@@ -48,13 +48,14 @@ describe('The ReadyForReview Component', () => {
         const component = getByTestId('readyForReview') as HTMLInputElement;
         expect(component).toBeInTheDocument();
         expect(component.checked).toEqual(true);
+        expect(getByText(/Jerry Seinfeld/)).toBeInTheDocument();
       });
     });
   });
 
   it('matches snapshot', async () => {
     const { asFragment } = render(
-      <Formik initialValues={{ testNote: '' }} onSubmit={onSubmit}>
+      <Formik initialValues={intialValues} onSubmit={onSubmit}>
         <ReadyForReview {...intialValues} />
       </Formik>
     );

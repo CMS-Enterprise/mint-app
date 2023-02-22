@@ -312,19 +312,18 @@ const Collaborators = () => {
                     </Alert>
 
                     <div className="margin-y-4 display-block">
-                      {loading || updateLoading ? (
-                        <Spinner />
-                      ) : (
-                        <Button
-                          type="submit"
-                          disabled={
-                            !values.userAccount.commonName || !values.teamRole
-                          }
-                        >
-                          {!collaboratorId
-                            ? t('addTeamMemberButton')
-                            : t('updateTeamMember')}
-                        </Button>
+                      <Button
+                        type="submit"
+                        disabled={
+                          !values.userAccount.commonName || !values.teamRole
+                        }
+                      >
+                        {!collaboratorId
+                          ? t('addTeamMemberButton')
+                          : t('updateTeamMember')}
+                      </Button>
+                      {(loading || updateLoading) && (
+                        <Spinner className="margin-left-2" />
                       )}
                     </div>
                   </Form>

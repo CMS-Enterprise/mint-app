@@ -9,9 +9,15 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 )
+
+type CreateOperationalSolutionSubtaskInput struct {
+	Name   string                                  `json:"name"`
+	Status models.OperationalSolutionSubtaskStatus `json:"status"`
+}
 
 // The current user of the application
 type CurrentUser struct {
@@ -74,16 +80,21 @@ type PrepareForClearance struct {
 }
 
 type TaskListSectionLockStatus struct {
-	ModelPlanID  uuid.UUID              `json:"modelPlanID"`
-	Section      models.TaskListSection `json:"section"`
-	LockedBy     string                 `json:"lockedBy"`
-	IsAssessment bool                   `json:"isAssessment"`
+	ModelPlanID         uuid.UUID                   `json:"modelPlanID"`
+	Section             models.TaskListSection      `json:"section"`
+	LockedByUserAccount *authentication.UserAccount `json:"lockedByUserAccount"`
+	IsAssessment        bool                        `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                 `json:"changeType"`
 	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
 	ActionType ActionType                 `json:"actionType"`
+}
+
+type UpdateOperationalSolutionSubtaskInput struct {
+	ID      uuid.UUID              `json:"id"`
+	Changes map[string]interface{} `json:"changes"`
 }
 
 type ActionType string
@@ -408,24 +419,24 @@ func (e BeneficiariesType) MarshalGQL(w io.Writer) {
 type CMMIGroup string
 
 const (
-	CMMIGroupPatientCareModelsGroup                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
-	CMMIGroupPolicyAndProgramsGroup                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
-	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-	CMMIGroupSeamlessCareModelsGroup                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
-	CMMIGroupStateInnovationsGroup                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
+	CMMIGroupPatientCareModelsGroup        CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
+	CMMIGroupPolicyAndProgramsGroup        CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
+	CMMIGroupSeamlessCareModelsGroup       CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
+	CMMIGroupStateAndPopulationHealthGroup CMMIGroup = "STATE_AND_POPULATION_HEALTH_GROUP"
+	CMMIGroupTbd                           CMMIGroup = "TBD"
 )
 
 var AllCMMIGroup = []CMMIGroup{
 	CMMIGroupPatientCareModelsGroup,
 	CMMIGroupPolicyAndProgramsGroup,
-	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup,
 	CMMIGroupSeamlessCareModelsGroup,
-	CMMIGroupStateInnovationsGroup,
+	CMMIGroupStateAndPopulationHealthGroup,
+	CMMIGroupTbd,
 }
 
 func (e CMMIGroup) IsValid() bool {
 	switch e {
-	case CMMIGroupPatientCareModelsGroup, CMMIGroupPolicyAndProgramsGroup, CMMIGroupPreventiveAndPopulationHealthCareModelsGroup, CMMIGroupSeamlessCareModelsGroup, CMMIGroupStateInnovationsGroup:
+	case CMMIGroupPatientCareModelsGroup, CMMIGroupPolicyAndProgramsGroup, CMMIGroupSeamlessCareModelsGroup, CMMIGroupStateAndPopulationHealthGroup, CMMIGroupTbd:
 		return true
 	}
 	return false

@@ -8,8 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   IconArrowBack,
-  Label,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -44,7 +43,12 @@ import {
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Learning = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -54,7 +58,7 @@ const Learning = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     GetLearningFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -66,18 +70,20 @@ const Learning = () => {
   >(GetLearning, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     modelLearningSystems,
     modelLearningSystemsOther,
     modelLearningSystemsNote,
     anticipatedChallenges,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
@@ -138,6 +144,7 @@ const Learning = () => {
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     modelLearningSystems: modelLearningSystems ?? [],
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
@@ -288,10 +295,10 @@ const Learning = () => {
                                       {flatErrors.modelLearningSystemsOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-learning-systems-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="modelLearningSystemsOther"
                                     />
                                   </div>
@@ -330,15 +337,17 @@ const Learning = () => {
                   />
                 </FieldGroup>
 
-                <ReadyForReview
-                  id="ops-eval-and-learning-learning-status"
-                  field="status"
-                  sectionName={t('heading')}
-                  status={values.status}
-                  setFieldValue={setFieldValue}
-                  readyForReviewBy={readyForReviewBy}
-                  readyForReviewDts={readyForReviewDts}
-                />
+                {!loading && values.status && (
+                  <ReadyForReview
+                    id="ops-eval-and-learning-learning-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
@@ -382,11 +391,13 @@ const Learning = () => {
           currentPage={renderCurrentPage(
             9,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

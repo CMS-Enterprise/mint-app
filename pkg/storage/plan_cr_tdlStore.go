@@ -29,7 +29,6 @@ var planCrTdlCollectionByModelPlanIDSQL string
 
 // PlanCrTdlCreate creates  returns a plan_cr_tdl object
 func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl) (*models.PlanCrTdl, error) {
-
 	if planCrTdl.ID == uuid.Nil {
 		planCrTdl.ID = uuid.New()
 	}
@@ -38,16 +37,17 @@ func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create cr__tdl with error %s", err),
-			zap.String("user", planCrTdl.CreatedBy),
+			zap.String("user", planCrTdl.CreatedBy.String()),
 		)
 		return nil, err
 	}
+
 	retCrTdl := models.PlanCrTdl{}
 	err = stmt.Get(&retCrTdl, planCrTdl)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to cr__tdl with error %s", err),
-			zap.String("user", planCrTdl.CreatedBy),
+			zap.String("user", planCrTdl.CreatedBy.String()),
 		)
 		return nil, err
 

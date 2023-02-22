@@ -1,10 +1,12 @@
 package models
 
 import (
+	"context"
 	"time"
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -56,4 +58,26 @@ func (b baseStructUserTable) GetModifiedBy() *string {
 // GetCreatedBy implements the CreatedBy property
 func (b baseStructUserTable) GetCreatedBy() string {
 	return b.CreatedBy.String()
+}
+
+// CreatedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
+func (b *baseStructUserTable) CreatedByUserAccount(ctx context.Context) *authentication.UserAccount {
+
+	service := appcontext.UserAccountService(ctx)
+	account, _ := service(ctx, b.CreatedBy)
+	return account
+
+}
+
+// ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
+func (b *baseStructUserTable) ModifiedByUserAccount(ctx context.Context) *authentication.UserAccount {
+
+	if b.ModifiedBy == nil {
+		return nil
+	}
+	service := appcontext.UserAccountService(ctx)
+	// service := authentication.UserAccountService(ctx)
+	account, _ := service(ctx, *b.ModifiedBy)
+	return account
+
 }

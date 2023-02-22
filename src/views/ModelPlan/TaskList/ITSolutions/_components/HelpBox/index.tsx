@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+
+import UswdsReactLink from 'components/LinkWrapper';
 
 type HelpBoxProps = {
   className?: string;
@@ -10,7 +10,6 @@ type HelpBoxProps = {
 
 const HelpBox = ({ className }: HelpBoxProps) => {
   const { t } = useTranslation('itSolutions');
-  const history = useHistory();
 
   return (
     <div
@@ -18,13 +17,15 @@ const HelpBox = ({ className }: HelpBoxProps) => {
     >
       <h3 className="margin-top-0">{t('helpBox.heading')}</h3>
       <p className="line-height-body-4">{t('helpBox.info')}</p>
-      <Button
-        type="button"
-        onClick={() => history.push('/')}
+
+      <UswdsReactLink
         className="usa-button usa-button--outline text-white border-white border-2px bg-transparent"
+        variant="unstyled"
+        data-testid="add-new-operational-need"
+        to={`${window.location.pathname}/add-an-operational-need`}
       >
         {t('helpBox.button')}
-      </Button>
+      </UswdsReactLink>
     </div>
   );
 };

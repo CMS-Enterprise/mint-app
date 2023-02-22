@@ -38,7 +38,12 @@ import { dirtyInput } from 'utils/formDiff';
 import { sortOtherEnum, translateMonitoringFileType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const IDDOCTesting = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -61,6 +66,7 @@ const IDDOCTesting = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     uatNeeds,
     stcNeeds,
     testingTimelines,
@@ -111,6 +117,7 @@ const IDDOCTesting = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     uatNeeds: uatNeeds ?? '',
     stcNeeds: stcNeeds ?? '',
@@ -324,10 +331,10 @@ const IDDOCTesting = () => {
                                       {flatErrors.dataMonitoringFileOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-data-monitoring-file-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="dataMonitoringFileOther"
                                     />
                                   </div>
@@ -419,11 +426,13 @@ const IDDOCTesting = () => {
           currentPage={renderCurrentPage(
             3,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

@@ -22,6 +22,7 @@ export interface GetModelPlanDocuments_modelPlan_documents {
   createdDts: Time;
   optionalNotes: string | null;
   otherType: string | null;
+  numLinkedSolutions: number;
 }
 
 export interface GetModelPlanDocuments_modelPlan {

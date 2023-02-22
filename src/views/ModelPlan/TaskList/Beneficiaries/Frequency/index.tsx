@@ -12,8 +12,7 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -55,7 +54,7 @@ const Frequency = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     FrequencyFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -67,7 +66,8 @@ const Frequency = () => {
   >(getFrequency, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const {
@@ -78,7 +78,7 @@ const Frequency = () => {
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.beneficiaries || ({} as FrequencyFormType);
@@ -274,10 +274,10 @@ const Frequency = () => {
                                         }
                                       </FieldErrorMsg>
                                       <Field
-                                        as={TextInput}
-                                        className="maxw-none"
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
                                         id="beneficiaries-beneficiary-selection-frequency-other"
-                                        maxLength={50}
+                                        maxLength={5000}
                                         name="beneficiarySelectionFrequencyOther"
                                       />
                                     </div>
@@ -364,15 +364,19 @@ const Frequency = () => {
                         />
                       </FieldGroup>
 
-                      <ReadyForReview
-                        id="beneficiaries-status"
-                        field="status"
-                        sectionName={t('heading')}
-                        status={values.status}
-                        setFieldValue={setFieldValue}
-                        readyForReviewBy={readyForReviewBy}
-                        readyForReviewDts={readyForReviewDts}
-                      />
+                      {!loading && values.status && (
+                        <ReadyForReview
+                          id="beneficiaries-status"
+                          field="status"
+                          sectionName={t('heading')}
+                          status={values.status}
+                          setFieldValue={setFieldValue}
+                          readyForReviewBy={
+                            readyForReviewByUserAccount?.commonName
+                          }
+                          readyForReviewDts={readyForReviewDts}
+                        />
+                      )}
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button

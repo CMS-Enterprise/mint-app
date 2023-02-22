@@ -20,7 +20,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)
@@ -60,6 +60,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.WaiveBeneficiaryCostSharingNote)
 	suite.Nil(updatedPP.NonClaimsPayments)
 	suite.Nil(updatedPP.NonClaimsPaymentsOther)
+	suite.Nil(updatedPP.NonClaimsPaymentsNote)
 	suite.Nil(updatedPP.PaymentCalculationOwner)
 	suite.Nil(updatedPP.NumberPaymentsPerPayCycle)
 	suite.Nil(updatedPP.NumberPaymentsPerPayCycleNote)
@@ -93,15 +94,10 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
 	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
 	suite.Nil(pp.ModifiedBy)
 
 	//Asset these fields are nil upon creation
-	suite.NoError(err)
-	suite.EqualValues(plan.ID, pp.ModelPlanID)
-	suite.EqualValues(models.TaskReady, pp.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
-	suite.Nil(pp.ModifiedBy)
 
 	suite.Nil(pp.FundingSource)
 	suite.Nil(pp.FundingSourceTrustFund)
@@ -140,6 +136,7 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.WaiveBeneficiaryCostSharingNote)
 	suite.Nil(pp.NonClaimsPayments)
 	suite.Nil(pp.NonClaimsPaymentsOther)
+	suite.Nil(pp.NonClaimsPaymentsNote)
 	suite.Nil(pp.PaymentCalculationOwner)
 	suite.Nil(pp.NumberPaymentsPerPayCycle)
 	suite.Nil(pp.NumberPaymentsPerPayCycleNote)

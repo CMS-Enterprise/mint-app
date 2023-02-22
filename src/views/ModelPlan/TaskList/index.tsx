@@ -48,7 +48,7 @@ import {
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -282,9 +282,9 @@ const TaskList = () => {
                         heading={t(`numberedList.${key}.heading`)}
                         lastUpdated={
                           taskListSections[key].modifiedDts &&
-                          formatDate(
+                          formatDateLocal(
                             taskListSections[key].modifiedDts!,
-                            'MM/d/yyyy'
+                            'MM/dd/yyyy'
                           )
                         }
                         status={taskListSections[key].status}
@@ -306,7 +306,8 @@ const TaskList = () => {
                           path={t(`numberedList.${key}.path`)}
                           disabled={
                             !!getTaskListLockedStatus(key) &&
-                            getTaskListLockedStatus(key)?.lockedBy !== euaId
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                              .username !== euaId
                           }
                           status={taskListSections[key].status}
                         />
@@ -315,11 +316,13 @@ const TaskList = () => {
                           isAssessment={
                             !!getTaskListLockedStatus(key)?.isAssessment
                           }
-                          collaborator={collaborators.find(
-                            collaborator =>
-                              collaborator.userAccount.username ===
-                              getTaskListLockedStatus(key)?.lockedBy
-                          )}
+                          selfLocked={
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                              .username === euaId
+                          }
+                          lockedByUserAccount={
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                          }
                         />
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (

@@ -10,7 +10,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Button, Fieldset, Grid, IconArrowBack } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 
-import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -22,6 +21,7 @@ import {
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
 import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
 import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
@@ -31,6 +31,7 @@ import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 import Solution from './_components/Solution';
@@ -60,9 +61,10 @@ const SolutionImplementation = ({
   }>();
 
   const {
-    state: { fromSolutionDetails }
+    state: { fromSolutionDetails, isCustomNeed }
   } = useLocation<{
     fromSolutionDetails: boolean;
+    isCustomNeed: boolean;
   }>();
 
   const history = useHistory();
@@ -151,16 +153,27 @@ const SolutionImplementation = ({
         if (response && !errors) {
           // If successfully submitting solution details
           if (!dontAdd && !redirect) {
+            const words = (
+              updateStatus: boolean,
+              customNeed: boolean | undefined
+            ) => {
+              if (updateStatus && !customNeed)
+                return t('successStatusUpdated', {
+                  operationalNeedName: operationalNeed.name
+                });
+              if (!updateStatus && !customNeed)
+                return t('successSolutionAdded', {
+                  operationalNeedName: operationalNeed.name
+                });
+              return t('successMessage.operationalNeedAndSolution', {
+                operationalNeedName: operationalNeed.nameOther
+              });
+            };
+
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {isUpdatingStatus
-                    ? t('successStatusUpdated', {
-                        operationalNeedName: operationalNeed.name
-                      })
-                    : t('successSolutionAdded', {
-                        operationalNeedName: operationalNeed.name
-                      })}
+                  {words(isUpdatingStatus, isCustomNeed)}
                 </span>
               </Alert>
             );
@@ -333,7 +346,7 @@ const SolutionImplementation = ({
                             <Solution
                               key={solution.id}
                               formikProps={formikProps}
-                              solution={solution}
+                              solution={solution as GetOperationalSolutionType}
                               identifier={identifier}
                               index={index}
                               length={formikNeed.solutions.length}
@@ -398,21 +411,10 @@ const SolutionImplementation = ({
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-            <AskAQuestion modelID={modelID} opNeeds />
-          </div>
-          <div className="margin-top-4">
-            <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
-            <Button
-              type="button"
-              onClick={() =>
-                window.open('/help-and-knowledge/model-plan-overview', '_blank')
-              }
-              className="usa-button usa-button--unstyled line-height-body-5"
-            >
-              <p>{t('availableSolutions')}</p>
-            </Button>
-          </div>
+          <ITSolutionsSidebar
+            modelID={modelID}
+            renderTextFor={isUpdatingStatus ? 'status' : 'solution'}
+          />
         </Grid>
       </Grid>
     </>

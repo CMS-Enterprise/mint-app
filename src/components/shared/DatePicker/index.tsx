@@ -23,6 +23,7 @@ interface ITToolsFormComponentType {
   formikValue: string | null;
   error: string;
   warning?: boolean;
+  half?: boolean;
 }
 
 export const MINTDatePicker = ({
@@ -37,7 +38,8 @@ export const MINTDatePicker = ({
   value,
   formikValue,
   error,
-  warning = true
+  warning = true,
+  half
 }: ITToolsFormComponentType) => {
   const { t: h } = useTranslation('draftModelPlan');
 
@@ -46,7 +48,9 @@ export const MINTDatePicker = ({
       <FieldGroup
         scrollElement={fieldName}
         error={!!error}
-        className={classNames(className, 'margin-right-4')}
+        className={classNames(className, 'margin-right-4', {
+          'desktop:grid-col-6': half
+        })}
       >
         <Label
           htmlFor={id}

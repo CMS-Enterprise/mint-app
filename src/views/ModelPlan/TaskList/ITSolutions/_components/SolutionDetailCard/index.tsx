@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { formatDate } from 'utils/date';
+import { formatDateUtc } from 'utils/date';
 
 import NeedQuestionAndAnswer from '../NeedQuestionAndAnswer';
 import OperationalNeedsStatusTag from '../NeedsStatus';
@@ -46,6 +46,7 @@ const SolutionDetailCard = ({
         operationalNeedID={operationalNeedID}
         modelID={modelID}
         expanded={!isUpdatingStatus}
+        isRenderingOnSolutionsDetails
       />
 
       {!isUpdatingStatus && (
@@ -62,7 +63,10 @@ const SolutionDetailCard = ({
           <SolutionCard solution={solution} shadow />
           <div className="margin-y-1">
             <UswdsReactLink
-              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-solutions`}
+              to={{
+                pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-solutions`,
+                state: { isCustomNeed: false }
+              }}
               data-testid="update-solutions-link"
             >
               {t('updateSolutionsLink')}
@@ -77,7 +81,7 @@ const SolutionDetailCard = ({
 
                 <p className="margin-y-1">
                   {solution.mustStartDts
-                    ? formatDate(solution.mustStartDts)
+                    ? formatDateUtc(solution.mustStartDts, 'MMMM d, yyyy')
                     : t('notSpecified')}
                 </p>
               </Grid>
@@ -87,7 +91,7 @@ const SolutionDetailCard = ({
 
                 <p className="margin-y-1">
                   {solution.mustFinishDts
-                    ? formatDate(solution.mustFinishDts)
+                    ? formatDateUtc(solution.mustFinishDts, 'MMMM d, yyyy')
                     : t('notSpecified')}
                 </p>
               </Grid>
@@ -107,7 +111,9 @@ const SolutionDetailCard = ({
                 onClick={() => {
                   history.push({
                     pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
-                    state: { fromSolutionDetails: true }
+                    state: {
+                      fromSolutionDetails: true
+                    }
                   });
                 }}
               >

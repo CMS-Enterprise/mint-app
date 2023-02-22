@@ -22,7 +22,6 @@ import { useQuery } from '@apollo/client';
 import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -37,6 +36,7 @@ import {
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeedsVariables
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
+import { formatDateUtc } from 'utils/date';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -131,9 +131,19 @@ const OperationalNeedsTable = ({
             if (!hasEditAccess) {
               return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
             }
+            const selectSolutionHref =
+              row.original.key !== null
+                ? {
+                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`,
+                    state: { isCustomNeed: false }
+                  }
+                : {
+                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
+                    state: { isCustomNeed: true }
+                  };
             return (
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
+                to={selectSolutionHref}
                 className="display-flex flex-align-center"
               >
                 {value}
@@ -148,9 +158,7 @@ const OperationalNeedsTable = ({
         Header: t<string>('itSolutionsTable.finishBy'),
         accessor: ({ mustFinishDts }: any) => {
           if (mustFinishDts) {
-            return DateTime.fromISO(mustFinishDts).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(mustFinishDts, 'MM/dd/yyyy');
           }
           return null;
         }

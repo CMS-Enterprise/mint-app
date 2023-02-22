@@ -131,7 +131,7 @@ const (
 
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
-	baseTaskListSection
+	baseTaskListSectionUserTable
 
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
@@ -179,6 +179,7 @@ type PlanPayments struct {
 	// Page 5
 	NonClaimsPayments                               pq.StringArray `json:"nonClaimsPayments" db:"non_claims_payments" statusWeight:"1"`
 	NonClaimsPaymentsOther                          *string        `json:"nonClaimsPaymentOther" db:"non_claims_payments_other"`
+	NonClaimsPaymentsNote                           *string        `json:"nonClaimsPaymentsNote" db:"non_claims_payments_note"`
 	PaymentCalculationOwner                         *string        `json:"paymentCalculationOwner" db:"payment_calculation_owner" statusWeight:"1"`
 	NumberPaymentsPerPayCycle                       *string        `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle" statusWeight:"1"`
 	NumberPaymentsPerPayCycleNote                   *string        `json:"numberPaymentsPerPayCycleNote" db:"number_payments_per_pay_cycle_note"`
@@ -208,8 +209,8 @@ type PlanPayments struct {
 }
 
 // NewPlanPayments returns a new PlanPayments object
-func NewPlanPayments(tls baseTaskListSection) *PlanPayments {
+func NewPlanPayments(tls baseTaskListSectionUserTable) *PlanPayments {
 	return &PlanPayments{
-		baseTaskListSection: tls,
+		baseTaskListSectionUserTable: tls,
 	}
 }

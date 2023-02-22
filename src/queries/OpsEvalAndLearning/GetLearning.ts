@@ -8,16 +8,21 @@ export default gql`
       opsEvalAndLearning {
         id
         ccmInvolvment
+        dataNeededForMonitoring
         iddocSupport
         modelLearningSystems
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
         readyForReviewDts
         status
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

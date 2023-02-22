@@ -6,7 +6,7 @@ import (
 
 // PlanBeneficiaries represents the beneficiaries section of the model plan task list
 type PlanBeneficiaries struct {
-	baseTaskListSection
+	baseTaskListSectionUserTable
 
 	//page 1
 	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
@@ -37,8 +37,8 @@ type PlanBeneficiaries struct {
 }
 
 // NewPlanBeneficiaries returns a new plan Beneficiaries
-func NewPlanBeneficiaries(tls baseTaskListSection) *PlanBeneficiaries {
+func NewPlanBeneficiaries(tls baseTaskListSectionUserTable) *PlanBeneficiaries {
 	return &PlanBeneficiaries{
-		baseTaskListSection: tls,
+		baseTaskListSectionUserTable: tls,
 	}
 }

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, DataFullTimeOrIncrementalType } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, DataFullTimeOrIncrementalType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetIDDOCMonitoring
@@ -13,6 +13,7 @@ export interface GetIDDOCMonitoring_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  dataNeededForMonitoring: DataForMonitoringType[];
   iddocSupport: boolean | null;
   dataFullTimeOrIncremental: DataFullTimeOrIncrementalType | null;
   eftSetUp: boolean | null;

@@ -13,6 +13,7 @@ const iddocTestingMockData: GetIDDOCTestingType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  dataNeededForMonitoring: [],
   iddocSupport: true,
   uatNeeds: '',
   stcNeeds: 'Yes needs',

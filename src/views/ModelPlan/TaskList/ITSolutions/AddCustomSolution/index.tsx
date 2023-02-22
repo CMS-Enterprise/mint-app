@@ -15,7 +15,6 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -44,6 +43,7 @@ import { OpSolutionStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
+import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 type CustomOperationalSolutionFormType = Omit<
@@ -61,6 +61,7 @@ const initialValues: CustomOperationalSolutionFormType = {
   nameOther: '',
   pocName: '',
   pocEmail: '',
+  documents: [],
   needed: false
 };
 
@@ -76,6 +77,7 @@ const clearFields = (
       nameOther: customSolution.nameOther,
       pocName: '',
       pocEmail: '',
+      documents: [],
       needed: customSolution.needed
     };
   }
@@ -183,7 +185,8 @@ const AddCustomSolution = () => {
         history.push(
           // If this block of code is hit, property addOrUpdateCustomOperationalSolution will always exist - ts doesn't know this
           // @ts-ignore
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`,
+          { isCustomNeed: false }
         );
       } else {
         showMessageOnNextPage(
@@ -425,21 +428,7 @@ const AddCustomSolution = () => {
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <div className="border-top-05 border-primary-lighter padding-top-2 margin-top-4">
-            <AskAQuestion modelID={modelID} opNeeds />
-          </div>
-          <div className="margin-top-4">
-            <p className="text-bold margin-bottom-0">{t('helpfulLinks')}</p>
-            <Button
-              type="button"
-              onClick={() =>
-                window.open('/help-and-knowledge/model-plan-overview', '_blank')
-              }
-              className="usa-button usa-button--unstyled line-height-body-5"
-            >
-              <p>{t('availableSolutions')}</p>
-            </Button>
-          </div>
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
     </>

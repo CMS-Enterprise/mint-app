@@ -20,7 +20,7 @@ import (
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, store *storage.Store, principal authentication.Principal, getAccountInformation userhelpers.GetAccountInfoFunc) (*models.ModelPlan, error) {
-	plan := models.NewModelPlan(principal.ID(), modelName)
+	plan := models.NewModelPlan(principal.Account().ID, modelName)
 
 	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 	if err != nil {
@@ -55,9 +55,10 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	baseTaskList := models.NewBaseTaskListSection(*userAccount.Username, createdPlan.ID) //make a taskList status, with status Ready
+	baseTaskListUser := models.NewBaseTaskListSectionUserTable(userAccount.ID, createdPlan.ID)
 
 	// Create a default plan basics object
-	basics := models.NewPlanBasics(baseTaskList)
+	basics := models.NewPlanBasics(baseTaskListUser)
 
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
@@ -65,21 +66,21 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	// Create a default plan general characteristics object
-	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskList)
+	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
 	// Create a default Plan Beneficiares object
-	beneficiaries := models.NewPlanBeneficiaries(baseTaskList)
+	beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
 	//Create a default Plan Participants and Providers object
-	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskList)
+	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
@@ -87,7 +88,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskList)
+	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
@@ -95,7 +96,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 	}
 
 	//Create default PlanPayments object
-	planPayments := models.NewPlanPayments(baseTaskList)
+	planPayments := models.NewPlanPayments(baseTaskListUser)
 
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
@@ -110,7 +111,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		return nil, err
 	}
 	//Create default Operational Needs
-	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.ID())
+	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}

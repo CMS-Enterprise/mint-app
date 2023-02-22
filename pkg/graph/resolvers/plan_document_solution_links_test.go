@@ -22,7 +22,10 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 	document, err = suite.createTestPlanDocument(plan, reader)
 	suite.NoError(err)
 	documentIDs = append(documentIDs, document.ID)
-	suite.EqualValues(len(documentIDs), 2)
+	document, err = suite.createTestPlanDocument(plan, reader)
+	suite.NoError(err)
+	documentIDs = append(documentIDs, document.ID)
+	suite.EqualValues(len(documentIDs), 3)
 
 	needType := models.OpNKAcquireALearnCont
 	solType := models.OpSKOutlookMailbox
@@ -60,7 +63,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 
 	suite.NotNil(sol.OperationalNeedID)
 
-	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.ID())
+	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
 	suite.NotNil(sol.CreatedDts)
 	suite.NotNil(sol.Name)
 	suite.EqualValues(*sol.Needed, false)
@@ -74,6 +77,7 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 		suite.Equal(0, eachNumLinks)
 	}
 
+	// Link all 3 documents
 	createdPlanDocumentSolutionLinks, err := PlanDocumentSolutionLinksCreate(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
@@ -82,8 +86,9 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 		suite.testConfigs.Principal,
 	)
 
+	// Assert we have 3 links
 	suite.NotNil(createdPlanDocumentSolutionLinks)
-	suite.EqualValues(2, len(createdPlanDocumentSolutionLinks))
+	suite.EqualValues(3, len(createdPlanDocumentSolutionLinks))
 	suite.NoError(err)
 
 	// Ensure we should see 1 linked solution for each document
@@ -93,9 +98,14 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 		suite.Equal(1, eachNumLinks)
 	}
 
+	// Remove 2 of the documents
 	wasPlanDocumentRemoveSuccess, err := PlanDocumentSolutionLinkRemove(
 		suite.testConfigs.Logger,
-		createdPlanDocumentSolutionLinks[0].ID,
+		sol.ID,
+		[]uuid.UUID{
+			createdPlanDocumentSolutionLinks[0].DocumentID,
+			createdPlanDocumentSolutionLinks[1].DocumentID,
+		},
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
 	)
@@ -103,17 +113,24 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 	suite.True(wasPlanDocumentRemoveSuccess)
 	suite.NoError(err)
 
-	// Should now have 0 links for documentIDs[1], 1 link for documentIDs[1]
+	// Should now have 0 links for documentIDs[1], 0 links for documentIDs[1], and 1 link for documentIDs[2]
 	numLinks, err := PlanDocumentNumLinkedSolutions(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, documentIDs[0])
 	suite.NoError(err)
 	suite.Equal(0, numLinks)
 	numLinks, err = PlanDocumentNumLinkedSolutions(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, documentIDs[1])
 	suite.NoError(err)
+	suite.Equal(0, numLinks)
+	numLinks, err = PlanDocumentNumLinkedSolutions(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, documentIDs[2])
+	suite.NoError(err)
 	suite.Equal(1, numLinks)
 
+	// Remove the final link
 	wasPlanDocumentRemoveSuccess, err = PlanDocumentSolutionLinkRemove(
 		suite.testConfigs.Logger,
-		createdPlanDocumentSolutionLinks[1].ID,
+		sol.ID,
+		[]uuid.UUID{
+			createdPlanDocumentSolutionLinks[2].DocumentID,
+		},
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
 	)

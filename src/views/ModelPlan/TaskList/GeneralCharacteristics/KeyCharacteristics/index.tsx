@@ -325,7 +325,7 @@ const KeyCharacteristics = () => {
                 />
 
                 {values.keyCharacteristics.includes(
-                  'OTHER' as KeyCharacteristic
+                  KeyCharacteristic.OTHER
                 ) && (
                   <FieldGroup
                     scrollElement="keyCharacteristicsOther"
@@ -335,7 +335,7 @@ const KeyCharacteristics = () => {
                     <Label htmlFor="plan-characteristics-key-other">
                       {t('specificQuestions')}
                     </Label>
-                    <p className="text-base margin-y-1 margin-top-3">
+                    <p className="margin-y-1 margin-top-3">
                       {t('pleaseDescribe')}
                     </p>
                     <FieldErrorMsg>

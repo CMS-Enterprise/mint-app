@@ -3,9 +3,6 @@
 // Leave DateTime in tact for proper column sorting
 
 import { IdType, Row } from 'react-table';
-import { DateTime } from 'luxon';
-
-import { formatDate } from 'utils/date';
 
 const globalTableFilter = (
   rows: Row[],
@@ -37,14 +34,6 @@ const globalTableFilter = (
         data.toString().includes(lowerCaseQuery)
       ) {
         foundValue = true;
-      }
-
-      // If type of DateTime - convert to string, convert to lowercase, and search
-      if (data instanceof DateTime) {
-        const stringDate = formatDate(data);
-        if (stringDate.toLowerCase().includes(lowerCaseQuery)) {
-          foundValue = true;
-        }
       }
     });
     return foundValue;

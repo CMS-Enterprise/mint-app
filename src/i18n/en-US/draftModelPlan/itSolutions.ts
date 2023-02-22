@@ -114,6 +114,8 @@ const itSolutions = {
   dontAdd: 'Don’t add solutions and return to tracker',
   dontUpdate: 'Don’t update solutions and return to tracker',
   helpChoosing: 'Need help choosing a solution?',
+  notSureWhatToDoNext: 'Don’t know what to do next?',
+  helpTiming: 'Need help figuring out timing?',
   helpfulLinks: 'Helpful links',
   availableSolutions: 'Available operational solutions (opens in a new tab)',
   addSolution: 'Add a solution',
@@ -179,6 +181,38 @@ const itSolutions = {
   dontUpdateandReturnToTracker: 'Don’t update and return to tracker',
   successStatusUpdated: 'Success! {{-operationalNeedName}} status updated.',
   errorStatusUpdated:
-    'There was an issue updating the status for {{-operationalNeedName}}. Please try again.'
+    'There was an issue updating the status for {{-operationalNeedName}}. Please try again.',
+  addOpertationalNeed: 'Add an operational need',
+  update: 'Update',
+  updateThisOpertationalNeed: 'Update this operational need',
+  addOpertationalNeedInfo:
+    'Describe the operational need you’re solving or additional workstream you’re tracking.',
+  noDuplicates:
+    'Make sure you aren’t duplicating an operational need that’s already a part of the tracker.',
+  customOperationalNeedName: 'What operational need are you solving?',
+  dontAddandReturnToTracker: 'Don’t add and return to tracker',
+  saveWithoutAdding: 'Save without adding a solution',
+  editNeed: 'Edit this operational need',
+  removeNeed: 'Remove this operational need',
+  removeNeedModal: {
+    heading: 'Confirm you want to remove {{-operationalNeedName}}.',
+    warning:
+      'You will not be able to access any associated solution details pages once it has been removed.',
+    confirmButton: 'Remove operational need',
+    cancel: 'Cancel'
+  },
+  successMessage: {
+    onlyOperationalNeed:
+      'Success! Your operational need “{{-operationalNeedName}}” is added.',
+    operationalNeedAndSolution:
+      'Success! Your operational need “{{-operationalNeedName}}” and solution are added.',
+    operationalNeedRemoval:
+      'Success! {{-operationalNeedName}} has been removed.',
+    operationalNeedUpdate: 'Success! Your operational need has been updated.'
+  },
+  errorMessage: {
+    operationalNeedRemoval:
+      'Sorry, we encountered a problem removing {{-operationalNeedName}}. Please try again.'
+  }
 };
 export default itSolutions;

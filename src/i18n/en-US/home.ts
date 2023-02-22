@@ -21,6 +21,8 @@ const home = {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models'
   },
+  yourModels: 'You have been added as a team member to the model plans below.',
+  fetchError: 'There was an error fetching models plans.  Please try again.',
   downloadAllCSV: 'Download all plans as CSV',
   downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
@@ -28,7 +30,7 @@ const home = {
       heading: 'My model plans'
     },
     admin: {
-      heading: 'Model plans'
+      heading: 'All model plans'
     },
     mac: {
       heading: 'Upcoming models',
@@ -39,8 +41,9 @@ const home = {
       }
     },
     empty: {
-      heading: 'There aren’t any model plans yet.',
-      body: 'Once one is added, it will appear here.'
+      heading: 'You haven’t been added to any Model Plans yet.',
+      body:
+        'Once you create one or are added as a team member to an existing plan, it will appear here.'
     },
     caption:
       'Below is a list of governance requests that are in draft or submitted.',

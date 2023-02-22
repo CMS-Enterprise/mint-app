@@ -19,6 +19,7 @@ const mockData: GetNonClaimsBasedPaymentType = {
   payType: [PayType.CLAIMS_BASED_PAYMENTS],
   payClaims: [ClaimsBasedPayType.OTHER],
   nonClaimsPayments: [NonClaimsBasedPayType.OTHER],
+  nonClaimsPaymentsNote: '',
   nonClaimsPaymentOther: 'Lorem Ipsum',
   paymentCalculationOwner: null,
   numberPaymentsPerPayCycle: null,

@@ -46,9 +46,11 @@ type ModelPlan {
   id: UUID!
   modelName: String!
   archived: Boolean!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
   basics: PlanBasics!
   generalCharacteristics: PlanGeneralCharacteristics!
@@ -81,9 +83,11 @@ type OperationalNeed {
     nameOther: String
     section: TaskListSection
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -94,9 +98,11 @@ type PossibleOperationalNeed {
     key: OperationalNeedKey!
     section: TaskListSection
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 type PossibleOperationalSolution {
@@ -104,9 +110,11 @@ type PossibleOperationalSolution {
     name: String!
     key: OperationalSolutionKey!
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -157,9 +165,12 @@ type ExistingModel {
   keywords: String
   url: String
   displayModelSummary: Boolean
-  createdBy: String!
+  
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -172,7 +183,7 @@ type TaskListSectionLockStatusChanged {
 type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
-  lockedBy: String!
+  lockedByUserAccount: UserAccount!
   isAssessment: Boolean!
 }
 
@@ -205,9 +216,12 @@ type PlanDocument {
   downloadUrl: String
   deletedAt: Time
   numLinkedSolutions: Int!
-  createdBy: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -255,14 +269,20 @@ type PlanBasics {
   phasedIn: Boolean
   phasedInNote: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+
   status: TaskStatus!
 }
 
@@ -318,11 +338,12 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
-  createdByUser: UserInfo!
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -354,12 +375,12 @@ type DiscussionReply  {
 	resolution: Boolean
   isAssessment: Boolean!
 
-  createdByUser: UserInfo!
-
-	createdBy: String!
-	createdDts: Time!
-	modifiedBy: String
-	modifiedDts: Time
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -448,14 +469,20 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -561,14 +588,20 @@ type PlanBeneficiaries {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 }
 
@@ -665,14 +698,20 @@ type PlanParticipantsAndProviders {
   providerOverlapNote:            String
 
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status: TaskStatus!
 
 }
@@ -796,6 +835,7 @@ type PlanPayments {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]!
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                   String
@@ -824,14 +864,21 @@ type PlanPayments {
   paymentStartDateNote:                              String
 
   # Meta
-  createdBy:   String!
-  createdDts:  Time!
-  modifiedBy:  String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+  
   status:      TaskStatus!
 }
 
@@ -882,6 +929,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                  String
@@ -1228,16 +1276,20 @@ type PlanOpsEvalAndLearning {
     modelLearningSystemsNote: String
     anticipatedChallenges: String
 
-
-
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
-    readyForReviewBy: String
+
+    readyForReviewBy: UUID
+    readyForReviewByUserAccount: UserAccount
     readyForReviewDts: Time
-    readyForClearanceBy: String
+    readyForClearanceBy: UUID
+    readyForClearanceByUserAccount: UserAccount
     readyForClearanceDts: Time
+
     status: TaskStatus!
 }
 
@@ -1366,10 +1418,13 @@ type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
     userID: UUID!
+    userAccount: UserAccount!
 
     createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
     modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 
 }
@@ -1383,9 +1438,11 @@ type PlanCrTdl {
     title: String!
     note: String
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -1419,7 +1476,7 @@ type AuditChange {
   fields: Map!
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
-  modifiedDts: Time  
+  modifiedDts: Time
 }
 
 
@@ -1439,10 +1496,13 @@ type OperationalSolution {
     mustFinishDts: Time
     status: OpSolutionStatus!
     documents: [PlanDocument!]!
+    operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -1459,10 +1519,42 @@ type PlanDocumentSolutionLink {
 id: UUID!
 solutionID: UUID!
 documentID: UUID!
-createdBy: String!
+
+createdBy: UUID!
+createdByUserAccount: UserAccount!
 createdDts: Time!
-modifiedBy: String
+modifiedBy: UUID
+modifiedByUserAccount: UserAccount
 modifiedDts: Time
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+type OperationalSolutionSubtask {
+  id: UUID!
+  solutionID: UUID!
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -1606,7 +1698,16 @@ updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String change
 createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
 @hasRole(role: MINT_USER)
 
-removePlanDocumentSolutionLink(id: UUID!): Boolean!
+removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
+@hasRole(role: MINT_USER)
+
+createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
+
+updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
+
+deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 }
 
@@ -1662,7 +1763,6 @@ enum TeamRole {
   LEARNING
   EVALUATION
   IT_LEAD
-  ARCHITECT
 }
 
 enum ModelType
@@ -1710,9 +1810,9 @@ enum CMSCenter {
 enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP
   POLICY_AND_PROGRAMS_GROUP
-  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
   SEAMLESS_CARE_MODELS_GROUP
-  STATE_INNOVATIONS_GROUP
+  STATE_AND_POPULATION_HEALTH_GROUP
+  TBD
 }
 
 enum DiscussionStatus {
@@ -2300,6 +2400,13 @@ enum OperationalSolutionKey{
   MAC
   RMADA_CONTRACTOR
 }
+
+enum OperationalSolutionSubtaskStatus {
+  TODO,
+  IN_PROGRESS,
+  DONE
+}
+
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION

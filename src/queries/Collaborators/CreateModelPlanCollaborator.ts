@@ -5,6 +5,7 @@ export default gql`
     createPlanCollaborator(input: $input) {
       teamRole
       userAccount {
+        id
         commonName
         email
       }

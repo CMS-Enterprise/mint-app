@@ -111,7 +111,9 @@ const BeneficiaryIdentification = () => {
     .sort(sortOtherEnum)
     .map(key => ({
       value: key,
-      label: translateBeneficiariesType(key)
+      label: translateBeneficiariesType(key),
+      subLabel:
+        key === BeneficiariesType.DISEASE_SPECIFIC ? t('diseaseSubLabel') : null
     }));
 
   const initialValues: BeneficiaryIdentificationFormType = {

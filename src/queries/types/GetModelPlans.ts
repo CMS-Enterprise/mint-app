@@ -30,6 +30,7 @@ export interface GetModelPlans_modelPlanCollection_payments {
 
 export interface GetModelPlans_modelPlanCollection_collaborators_userAccount {
   __typename: "UserAccount";
+  id: UUID;
   commonName: string;
 }
 
@@ -64,7 +65,7 @@ export interface GetModelPlans_modelPlanCollection {
   modelName: string;
   status: ModelStatus;
   nameHistory: string[];
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   modifiedDts: Time | null;
   basics: GetModelPlans_modelPlanCollection_basics;

@@ -1,16 +1,10 @@
 package models
 
-import (
-	"time"
-)
-
 // PossibleOperationalSolution represents a possible solution to an Operational Need
 type PossibleOperationalSolution struct {
-	ID          int        `json:"id" db:"id"`
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
+	ID int `json:"id" db:"id"`
+	createdByRelation
+	modifiedByRelation
 
 	Name string                 `json:"name" db:"sol_name"`
 	Key  OperationalSolutionKey `json:"key" db:"sol_key"`

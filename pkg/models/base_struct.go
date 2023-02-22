@@ -40,7 +40,7 @@ func (b *baseStruct) SetModifiedBy(principal authentication.Principal) error {
 }
 
 // GetBaseStruct returns the Base Struct
-func (b *baseStruct) GetBaseStruct() *baseStruct {
+func (b *baseStruct) GetBaseStruct() IBaseStruct {
 	return b
 }
 
