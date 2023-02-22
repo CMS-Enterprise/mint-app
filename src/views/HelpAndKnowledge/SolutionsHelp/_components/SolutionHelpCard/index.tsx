@@ -66,7 +66,7 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
               ))}
 
             <p className="solution-card__body">
-              {t(`solutions.${solution.key}.about`)}
+              {t(`solutions.${solution.key}.about.heading`)}
             </p>
 
             <Grid

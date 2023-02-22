@@ -49,15 +49,59 @@ export const operationalSolutionCategoryMap: CategoryType = {
   }
 };
 
-export type HelpSolutionType = {
+type ContactRoles =
+  | 'Technical Lead'
+  | 'Project Lead'
+  | 'Subject Matter Expert'
+  | 'Contracting Officer Representative'
+  | 'Operations and Management Lead '
+  | 'Director, Division of Payment Operations'
+  | 'Administrator'
+  | 'Director, Division of Grants Management'
+  | 'Deputy Director, Division of Grants Management'
+  | 'Director, Division of System Support, Operation and Security (DSSOS)'
+  | 'Co-team Lead'
+  | 'Division Director'
+  | 'Deputy Division Director'
+  | 'Director, Division of Model Learning Systems (DMLS)'
+  | 'Deputy Director, Division of Model Learning Systems (DMLS)'
+  | 'Beneficiary Listening Session Point of Contact'
+  | 'Beneficiary Listening Session Point of Contact'
+  | 'Deputy Director, Division of Enterprise Information Management Services'
+  | 'System Owner'
+  | 'Director, Division of System Support, Operation and Security (DSSOS)'
+  | 'CMMI/BSG Point of Contact'
+  | 'CMMI/BSG Project Support'
+  | 'Overlaps Operations Support'
+  | 'OIT Point of Contact'
+  | 'OIT Government Task Lead'
+  | 'Quality Vertical'
+  | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
+  | 'Quality Subject Matter Expert (QSME)'
+  | 'Director, Division of Portfolio Management & Strategy';
+
+type SolutionContactType = {
+  name: string;
+  email: string;
+  role?: ContactRoles;
+};
+
+type SystemOwnerType = {
+  name: string;
+  system?: string;
+};
+
+export interface HelpSolutionType {
   enum: OperationalSolutionKey | null; // TODO: should not be null, some enums havent been created
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
   acronym: string | null;
   name: string;
-  pocName: string;
-};
+  pointOfContact: SolutionContactType[];
+  systemOwner?: SystemOwnerType;
+  contractors?: SystemOwnerType[];
+}
 
 export const helpSolutions: HelpSolutionType[] = [
   {
@@ -67,16 +111,27 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_REPORTING],
     acronym: '4i',
     name: '4innovation',
-    pocName: '4i/ACO-OS Team'
+    pointOfContact: [
+      {
+        name: '4i/ACO-OS Team',
+        email: 'ACO-OIT@cms.hhs.gov'
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.ACO_OS,
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: '',
-    name: '',
-    pocName: ''
+    acronym: 'Accountable Care Organization - Operational System',
+    name: 'ACO-OS',
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.APPS,
@@ -85,7 +140,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -94,7 +155,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.CCW,
@@ -103,7 +170,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -112,7 +185,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -121,7 +200,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_REPORTING],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.CBOSC,
@@ -130,7 +215,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.HELP_DESKS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -139,7 +230,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -148,7 +245,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -157,7 +260,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_REPORTING],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.GOVDELIVERY,
@@ -166,7 +275,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.GRANT_SOLUTIONS,
@@ -178,7 +293,13 @@ export const helpSolutions: HelpSolutionType[] = [
     ],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.HIGLAS,
@@ -187,7 +308,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
@@ -196,7 +323,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.QUALITY],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.HPMS,
@@ -205,7 +338,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.IPC,
@@ -214,7 +353,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.CC_VEHICLES],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.IDR,
@@ -223,7 +368,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -232,7 +383,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.LEARNING],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -241,7 +398,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.LEGAL],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.MDM,
@@ -250,7 +413,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -259,7 +428,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.CC_VEHICLES],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.MARX,
@@ -268,7 +443,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
@@ -277,7 +458,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -286,7 +473,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.QUALITY],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.RMADA,
@@ -295,7 +488,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.CC_VEHICLES],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.ARS,
@@ -304,7 +503,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.CONNECT,
@@ -313,7 +518,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.LEARNING],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: null,
@@ -322,7 +533,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.SALESFORCE_PORTAL,
@@ -331,7 +548,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.RFA,
@@ -340,7 +563,13 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.SHARED_SYSTEMS,
@@ -349,6 +578,12 @@ export const helpSolutions: HelpSolutionType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_FFS],
     acronym: '',
     name: '',
-    pocName: ''
+    pointOfContact: [
+      {
+        name: '',
+        email: '',
+        role: ''
+      }
+    ]
   }
 ];
