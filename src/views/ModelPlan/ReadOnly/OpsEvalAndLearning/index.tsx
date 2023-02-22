@@ -225,38 +225,46 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           copy={translateBooleanOrNull(iddocSupport)}
           notes={iddocSupportNote}
         />
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              technicalContactsIdentified ? 'desktop:width-card-lg' : ''
-            }
-          >
-            <ReadOnlySection
-              heading={t('technicalContacts')}
-              copy={translateBooleanOrNull(technicalContactsIdentified)}
-            />
-          </div>
-          {/* Only display specification div if "yes" was selected for technical contacts question above */}
-          {technicalContactsIdentified && (
-            <div className="desktop:width-card-lg">
+        {iddocSupport && (
+          <div className="desktop:display-flex flex-justify">
+            <div
+              className={
+                technicalContactsIdentified ? 'desktop:width-card-lg' : ''
+              }
+            >
               <ReadOnlySection
-                heading={h('pleaseSpecify')}
-                copy={technicalContactsIdentifiedDetail}
+                heading={t('technicalContacts')}
+                copy={translateBooleanOrNull(technicalContactsIdentified)}
               />
             </div>
-          )}
-        </div>
-        {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection
-          heading={h('note')}
-          copy={technicalContactsIdentifiedNote}
-        />
+            {/* Only display specification div if "yes" was selected for technical contacts question above */}
+            {technicalContactsIdentified && (
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={h('pleaseSpecify')}
+                  copy={technicalContactsIdentifiedDetail}
+                />
+              </div>
+            )}
+          </div>
+        )}
 
-        <ReadOnlySection
-          heading={t('participantInformation')}
-          copy={translateBooleanOrNull(captureParticipantInfo)}
-          notes={captureParticipantInfoNote}
-        />
+        {/* This is a slight "hack" of this component in order to get around the heading being required */}
+
+        {iddocSupport && (
+          <>
+            <ReadOnlySection
+              heading={h('note')}
+              copy={technicalContactsIdentifiedNote}
+            />
+
+            <ReadOnlySection
+              heading={t('participantInformation')}
+              copy={translateBooleanOrNull(captureParticipantInfo)}
+              notes={captureParticipantInfoNote}
+            />
+          </>
+        )}
       </div>
 
       {/* Interface Control Document - ICD */}

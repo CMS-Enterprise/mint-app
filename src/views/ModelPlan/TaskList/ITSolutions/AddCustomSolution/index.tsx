@@ -61,6 +61,7 @@ const initialValues: CustomOperationalSolutionFormType = {
   nameOther: '',
   pocName: '',
   pocEmail: '',
+  documents: [],
   needed: false
 };
 
@@ -76,6 +77,7 @@ const clearFields = (
       nameOther: customSolution.nameOther,
       pocName: '',
       pocEmail: '',
+      documents: [],
       needed: customSolution.needed
     };
   }
