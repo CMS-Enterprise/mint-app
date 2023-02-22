@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from data_transformer_helper import DataTransformerHelper
 from id_generator import IDGenerator
 
