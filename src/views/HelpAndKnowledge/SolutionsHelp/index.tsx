@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -62,9 +62,23 @@ const seachSolutions = (query: string): HelpSolutionType[] => {
 const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { category } = useParams<{ category: string }>();
 
+  const { pathname } = useLocation();
+
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
   const [solutions, setSolutions] = useState<HelpSolutionType[]>(helpSolutions);
+
+  useEffect(() => {
+    if (category) {
+      setSolutions(findCategoryMapByRoute(category, helpSolutions));
+    } else {
+      setSolutions(helpSolutions);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    setQuery('');
+  }, [pathname]);
 
   useEffect(() => {
     if (category) {
