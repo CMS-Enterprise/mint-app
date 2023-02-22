@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -129,46 +130,34 @@ func (s *Server) routes(
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
 	// Create Okta API Client
+	var oktaClient cedarldap.Client // this is of type cedarldap.Client to facilitate a drop-in replacement for CEDAR LDAP TODO: Change this!
 	// var ctx context.Context
-	// var oktaClient *oktaapi.OktaApiClientWrapper
-	// var oktaClientErr error
-	// if s.environment.Local() {
-	// 	// TODO Replace this with a mock
-	// 	// Ensure Okta API Variables are set
-	// 	s.NewOktaAPIClientCheck()
-	// 	oktaClient, oktaClientErr = oktaapi.NewOktaApiClientWrapper(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
-	// 	if oktaClientErr != nil {
-	// 		s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
-	// 	}
-	// } else {
-	// 	// Ensure Okta API Variables are set
-	// 	s.NewOktaAPIClientCheck()
-	// 	oktaapi.NewOktaApiClientWrapper(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
-	// 	if oktaClientErr != nil {
-	// 		s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
-	// 	}
-	// }
-
-	// filter := query.NewQueryParams(query.WithFilter(`profile.firstName eq "Clay"`))
-
-	// filteredUsers, _, err := oktaClient.User.ListUsers(ctx, filter)
-	// if err != nil {
-	// 	fmt.Printf("Error Getting Users: %v\n", err)
-	// }
-
-	// for index, user := range filteredUsers {
-	// 	marshalledUserProfile, _ := json.MarshalIndent(user.Profile, "", "  ")
-	// 	fmt.Printf("User %d: %+v\n", index, string(marshalledUserProfile))
-	// }
-
-	var cedarLDAPClient cedarldap.Client
-	cedarLDAPClient = cedarldap.NewTranslatedClient(
-		s.Config.GetString(appconfig.CEDARAPIURL),
-		s.Config.GetString(appconfig.CEDARAPIKey),
-	)
-	if s.environment.Local() || s.environment.Testing() {
-		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
+	var oktaClientErr error
+	if s.environment.Local() {
+		// TODO Replace this with a mock
+		// Ensure Okta API Variables are set
+		s.NewOktaAPIClientCheck()
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		if oktaClientErr != nil {
+			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+		}
+	} else {
+		// Ensure Okta API Variables are set
+		s.NewOktaAPIClientCheck()
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		if oktaClientErr != nil {
+			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+		}
 	}
+
+	// var cedarLDAPClient cedarldap.Client
+	// cedarLDAPClient = cedarldap.NewTranslatedClient(
+	// 	s.Config.GetString(appconfig.CEDARAPIURL),
+	// 	s.Config.GetString(appconfig.CEDARAPIKey),
+	// )
+	// if s.environment.Local() || s.environment.Testing() {
+	// 	cedarLDAPClient = local.NewCedarLdapClient(s.logger)
+	// }
 
 	// set up Email Template Service
 	emailTemplateService, err := email.NewTemplateServiceImpl()
@@ -222,8 +211,8 @@ func (s *Server) routes(
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			FetchUserInfo:            cedarLDAPClient.FetchUserInfo,
-			SearchCommonNameContains: cedarLDAPClient.SearchCommonNameContains,
+			FetchUserInfo:            oktaClient.FetchUserInfo,
+			SearchCommonNameContains: oktaClient.SearchCommonNameContains,
 		},
 		&s3Client,
 		emailService,
