@@ -17,7 +17,7 @@ describe('RelatedArticle', () => {
     expect(getByText('Learn more')).toBeInTheDocument();
   });
 
-  it('renders Article Card entirely wrapped as a link', () => {
+  it('matches snapshot', () => {
     const { asFragment } = render(
       <MemoryRouter>
         <CategoryCard category="Data reporting" route={categoryRoute} />

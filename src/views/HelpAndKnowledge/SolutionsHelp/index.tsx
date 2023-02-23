@@ -102,6 +102,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       <SolutionHelpCardGroup
         solutions={solutions}
         setResultsNum={setResultsNum}
+        isQuery={!!query}
       />
 
       <GridContainer className="margin-top-4">

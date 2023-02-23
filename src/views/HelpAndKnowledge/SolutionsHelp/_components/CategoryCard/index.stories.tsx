@@ -4,8 +4,6 @@ import { ComponentMeta } from '@storybook/react';
 
 import CategoryCard from '.';
 
-const categoryRoute = 'data-reporting';
-
 export default {
   title: 'Help and Knowledge Solution Category Card',
   component: CategoryCard,
@@ -19,5 +17,5 @@ export default {
 } as ComponentMeta<typeof CategoryCard>;
 
 export const Default = () => (
-  <CategoryCard category="Data reporting" route={categoryRoute} />
+  <CategoryCard category="Data reporting" route="data-reporting" />
 );

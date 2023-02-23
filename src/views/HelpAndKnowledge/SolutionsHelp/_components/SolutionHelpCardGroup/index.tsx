@@ -16,6 +16,7 @@ type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
   setResultsNum: (offset: number) => void;
+  isQuery: boolean;
 };
 
 function Solutions({
@@ -37,7 +38,8 @@ function Solutions({
 const SolutionHelpCardGroup = ({
   className,
   solutions,
-  setResultsNum
+  setResultsNum,
+  isQuery
 }: SolutionHelpCardGroupProps) => {
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
@@ -60,7 +62,7 @@ const SolutionHelpCardGroup = ({
 
   useEffect(() => {
     setItemOffset(0);
-  }, [pathname]);
+  }, [pathname, isQuery]);
 
   useEffect(() => {
     setResultsNum(currentItems.length);
