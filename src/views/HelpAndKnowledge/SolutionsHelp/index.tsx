@@ -36,7 +36,7 @@ export const findCategoryKey = (
   return categoryKey;
 };
 
-const findCategoryMapByRoute = (
+export const findCategoryMapByRoute = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
@@ -51,8 +51,11 @@ const findCategoryMapByRoute = (
   return filteredSolutions;
 };
 
-const seachSolutions = (query: string): HelpSolutionType[] => {
-  return helpSolutions.filter(
+export const seachSolutions = (
+  query: string,
+  solutions: HelpSolutionType[]
+): HelpSolutionType[] => {
+  return solutions.filter(
     solution =>
       solution.name.toLowerCase().includes(query.toLowerCase()) ||
       solution?.acronym?.toLowerCase().includes(query.toLowerCase())
@@ -77,7 +80,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   useEffect(() => {
     if (query.trim()) {
-      setQuerySolutions(seachSolutions(query));
+      setQuerySolutions(seachSolutions(query, helpSolutions));
     } else {
       setQuerySolutions(helpSolutions);
     }
