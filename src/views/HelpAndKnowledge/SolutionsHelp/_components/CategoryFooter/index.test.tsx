@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import CategoryFooter from './index';
 
-describe('RelatedArticle', () => {
+describe('Operation Solutio Category Footer', () => {
   it('rendered all categories minus current category', () => {
     const { queryByText } = render(
       <MemoryRouter

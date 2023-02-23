@@ -5,7 +5,7 @@ import { ComponentMeta } from '@storybook/react';
 import CategoryCard from '.';
 
 export default {
-  title: 'Help and Knowledge Solution Category Card',
+  title: 'Help and Knowledge Solution CategoryCard',
   component: CategoryCard,
   decorators: [
     Story => (

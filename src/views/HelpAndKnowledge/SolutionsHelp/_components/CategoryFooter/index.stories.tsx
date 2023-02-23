@@ -5,7 +5,7 @@ import { ComponentMeta } from '@storybook/react';
 import CategoryFooter from '.';
 
 export default {
-  title: 'Help and Knowledge Solution Category Footer',
+  title: 'Help and Knowledge Solution CategoryFooter',
   component: CategoryFooter,
   decorators: [
     Story => (
