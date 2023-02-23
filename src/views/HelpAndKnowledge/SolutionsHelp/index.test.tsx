@@ -1,22 +1,22 @@
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
-import { helpSolutions } from './solutionsMap';
+import { helpSolutions, HelpSolutionType } from './solutionsMap';
 import { findCategoryKey, findCategoryMapByRoute, seachSolutions } from '.';
 
 describe('solution help utils', () => {
   it('returns a corresponding category key by route', () => {
-    const route = 'contractors-and-contract-vehicles';
+    const route: string = 'contractors-and-contract-vehicles';
 
-    const expectedCategoryKey = 'contractorsContractVehicles';
-
+    const expectedCategoryKey: OperationalSolutionCategories =
+      OperationalSolutionCategories.CC_VEHICLES;
     expect(findCategoryKey(route)).toEqual(expectedCategoryKey);
   });
 
   it('returns a corresponding category solutions by route', () => {
-    const route = 'learning';
+    const route: string = 'learning';
 
-    const expectedSolutions = [
+    const expectedSolutions: HelpSolutionType[] = [
       {
         enum: null,
         key: 'learningAndDiffusion',
@@ -52,10 +52,10 @@ describe('solution help utils', () => {
     );
   });
 
-  it('returns a corresponding category mapped object by route', () => {
-    const route = '4inn';
+  it('returns a corresponding solutions by query string', () => {
+    const query: string = '4inn';
 
-    const expectedSolutions = [
+    const expectedSolutions: HelpSolutionType[] = [
       {
         enum: OperationalSolutionKey.INNOVATION,
         key: 'innovation',
@@ -72,6 +72,12 @@ describe('solution help utils', () => {
       }
     ];
 
-    expect(seachSolutions(route, helpSolutions)).toEqual(expectedSolutions);
+    expect(seachSolutions(query, helpSolutions)).toEqual(expectedSolutions);
+
+    const query2: string = 'gfwefesd';
+
+    const expectedSolutions2: HelpSolutionType[] = [];
+
+    expect(seachSolutions(query2, helpSolutions)).toEqual(expectedSolutions2);
   });
 });

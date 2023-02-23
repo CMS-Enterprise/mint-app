@@ -1,0 +1,612 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Solution Help Categories matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-y-4 padding-bottom-6 bg-primary-darker text-white margin-bottom-neg-7"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <h2
+        class="margin-0"
+      >
+        Operational solutions
+      </h2>
+      <p
+        class="margin-bottom-4"
+      >
+        Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.
+      </p>
+      <ul
+        class="usa-card-group"
+        data-testid="CardGroup"
+      >
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Applications
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/applications"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Communication tools
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/communication-tools"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Contractors and contract vehicles
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/contractors-and-contract-vehicles"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Databases and data management
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/database-and-data-management"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Data exchange
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Data reporting
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Help desks
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/help-desks"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Learning
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/learning"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Legal
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/legal"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Medicare Advantage and Part D
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/medicare-advantage-and-part-d"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Medicare Fee-for-Service
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/medicare-fee-for-service"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-3"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <header
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
+                Quality
+              </header>
+              <div
+                class="usa-card__body padding-y-0 flex-1"
+                data-testid="CardBody"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions/categories/quality"
+                >
+                  Learn more
+                  <svg
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+      </ul>
+      <a
+        class="usa-button text-white"
+        href="/help-and-knowledge/operational-solutions"
+      >
+        View all operational solutions
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
