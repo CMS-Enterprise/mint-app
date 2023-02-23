@@ -6,6 +6,7 @@ import GetExistingModelPlans from 'queries/GetExistingModelPlans';
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
 import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
+import { KeyCharacteristic } from 'types/graphql-global-types';
 import {
   translateAgreementTypes,
   translateAlternativePaymentTypes,
@@ -177,7 +178,7 @@ const ReadOnlyGeneralCharacteristics = ({
           copy={translateBooleanOrNull(hasComponentsOrTracks)}
         />
 
-        {hasComponentsOrTracks && (
+        {hasComponentsOrTracksNote && (
           <ReadOnlySection
             heading={t('tracksDiffer')}
             copy={hasComponentsOrTracksDiffer}
@@ -204,23 +205,28 @@ const ReadOnlyGeneralCharacteristics = ({
           notes={keyCharacteristicsNote}
         />
 
-        <ReadOnlySection
-          heading={t('reviewPlanBids')}
-          copy={translateBooleanOrNull(collectPlanBids)}
-          notes={collectPlanBidsNote}
-        />
+        {(keyCharacteristics?.includes(KeyCharacteristic.PART_C) ||
+          keyCharacteristics?.includes(KeyCharacteristic.PART_D)) && (
+          <>
+            <ReadOnlySection
+              heading={t('reviewPlanBids')}
+              copy={translateBooleanOrNull(collectPlanBids)}
+              notes={collectPlanBidsNote}
+            />
 
-        <ReadOnlySection
-          heading={t('manageEnrollment')}
-          copy={translateBooleanOrNull(managePartCDEnrollment)}
-          notes={managePartCDEnrollmentNote}
-        />
+            <ReadOnlySection
+              heading={t('manageEnrollment')}
+              copy={translateBooleanOrNull(managePartCDEnrollment)}
+              notes={managePartCDEnrollmentNote}
+            />
 
-        <ReadOnlySection
-          heading={t('updatedContract')}
-          copy={translateBooleanOrNull(planContractUpdated)}
-          notes={planContractUpdatedNote}
-        />
+            <ReadOnlySection
+              heading={t('updatedContract')}
+              copy={translateBooleanOrNull(planContractUpdated)}
+              notes={planContractUpdatedNote}
+            />
+          </>
+        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">

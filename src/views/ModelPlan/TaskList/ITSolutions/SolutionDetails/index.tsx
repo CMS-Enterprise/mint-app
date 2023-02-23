@@ -6,7 +6,7 @@ Links to views for updating solutions, adding subtasks, and documents
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -22,14 +22,16 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
+import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
+import { DeleteDocumentSolutionLinkVariables } from 'queries/ITSolutions/types/DeleteDocumentSolutionLink';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
+import { Table } from 'views/ModelPlan/Documents/table';
 import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
@@ -58,13 +60,14 @@ const SolutionDetails = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
+  const { data, loading, error, refetch } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
     variables: {
       id: operationalSolutionID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const solution =
@@ -90,6 +93,33 @@ const SolutionDetails = () => {
       status: SubtaskStatus.DONE
     }
   ];
+
+  const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
+    DeleteDocumentSolutionLinks
+  );
+
+  const handleDocumentUnlink = (linkToRemove: string) => {
+    deleteSolutionLink({
+      variables: {
+        solutionID: operationalSolutionID,
+        documentIDs: [linkToRemove]
+      }
+    })
+      .then(response => {
+        if (response && !response.errors) {
+          setDocumentMessage(t('documentUnLinkSuccess'));
+          setDocumentStatus('success');
+          refetch();
+        } else if (response.errors) {
+          setDocumentMessage(t('documentUnLinkError'));
+          setDocumentStatus('error');
+        }
+      })
+      .catch(() => {
+        setDocumentMessage(t('documentUnLinkError'));
+        setDocumentStatus('error');
+      });
+  };
 
   if (error) {
     return <NotFound />;
@@ -183,11 +213,13 @@ const SolutionDetails = () => {
             <div className="margin-top-6">
               <h3 className="margin-bottom-0">{t('documents')}</h3>
 
-              <PlanDocumentsTable
-                className="margin-top-neg-2"
-                modelID={modelID}
+              <Table
+                data={solution.documents}
+                refetch={refetch}
                 setDocumentMessage={setDocumentMessage}
                 setDocumentStatus={setDocumentStatus}
+                hasEditAccess
+                handleDocumentUnlink={handleDocumentUnlink}
               />
 
               <div className="display-flex margin-y-4">
@@ -211,7 +243,13 @@ const SolutionDetails = () => {
                   id="upload-document"
                   className="usa-button usa-button--outline"
                   onClick={() => {
-                    history.push(`/models/${modelID}/documents/add-document`);
+                    history.push({
+                      pathname: `/models/${modelID}/documents/add-document`,
+                      state: {
+                        solutionID: operationalSolutionID,
+                        solutionDetailsLink: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                      }
+                    });
                   }}
                 >
                   {t(`links.uploadDocuments`)}

@@ -13,6 +13,20 @@ export default gql`
       status
       mustFinishDts
       mustStartDts
+      documents {
+        id
+        virusScanned
+        virusClean
+        fileName
+        fileType
+        downloadUrl
+        restricted
+        documentType
+        createdDts
+        optionalNotes
+        otherType
+        numLinkedSolutions
+      }
     }
   }
 `;

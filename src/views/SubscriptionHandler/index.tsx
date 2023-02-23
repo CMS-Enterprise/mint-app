@@ -62,7 +62,10 @@ export const findLockedSection = (
   if (!foundLockedSection) {
     return LockStatus.UNLOCKED;
   }
-  if (foundLockedSection && foundLockedSection.lockedBy !== userEUA) {
+  if (
+    foundLockedSection &&
+    foundLockedSection.lockedByUserAccount.username !== userEUA
+  ) {
     // If the locked section is found - render locked screen
     return LockStatus.LOCKED;
   }
@@ -194,7 +197,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     // Located section to be removed
     const lockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
-        section.lockedBy === euaId &&
+        section.lockedByUserAccount.username === euaId &&
         section.section === taskListSectionMap[taskListRouteParser(from)]
     );
 
@@ -215,7 +218,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     // i.e. end of task list section or any react-router redirect from one section directly to another
     const prevLockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
-        section.lockedBy === euaId &&
+        section.lockedByUserAccount.username === euaId &&
         taskListSectionMap[taskListRouteParser(from)] === section.section &&
         taskListSectionMap[taskListRouteParser(to)] !== section.section &&
         from !== to
