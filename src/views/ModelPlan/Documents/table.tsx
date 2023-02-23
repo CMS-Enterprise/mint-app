@@ -374,39 +374,37 @@ export const Table = ({
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
-          // if (value) {
-          //   return row.original.virusClean ? (
-          return (
-            <>
-              <Button
-                type="button"
-                unstyled
-                className="margin-right-1"
-                onClick={() => handleDownload(row.original)}
-              >
-                {t('documentTable.view')}
-              </Button>
-              {hasEditAccess && !linkedDocs && (
+          if (value) {
+            return row.original.virusClean ? (
+              <>
                 <Button
                   type="button"
                   unstyled
-                  className="text-red"
-                  data-testid="remove-document"
-                  onClick={() => {
-                    setModalOpen(true);
-                    setFileToRemove(row.original);
-                  }}
+                  className="margin-right-1"
+                  onClick={() => handleDownload(row.original)}
                 >
-                  {t('documentTable.remove')}
+                  {t('documentTable.view')}
                 </Button>
-              )}
-            </>
-          );
-          // ) : (
-          //   t('documentTable.virusFound')
-          // );
-          // }
-          // return t('documentTable.scanInProgress');
+                {hasEditAccess && !linkedDocs && (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="text-red"
+                    data-testid="remove-document"
+                    onClick={() => {
+                      setModalOpen(true);
+                      setFileToRemove(row.original);
+                    }}
+                  >
+                    {t('documentTable.remove')}
+                  </Button>
+                )}
+              </>
+            ) : (
+              t('documentTable.virusFound')
+            );
+          }
+          return t('documentTable.scanInProgress');
         }
       }
     ];
