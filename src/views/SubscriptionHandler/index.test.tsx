@@ -44,7 +44,7 @@ describe('SubscriptionHandler functions', () => {
   });
 
   it('finds an unlocked section', () => {
-    const route: TaskListSection = TaskListSection.IT_TOOLS;
+    const route: TaskListSection = TaskListSection.BASICS;
 
     const expectedValue: LockStatus = LockStatus.UNLOCKED;
 

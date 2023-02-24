@@ -51,12 +51,6 @@ export enum AuthorityAllowance {
   SSA_PART_B = "SSA_PART_B",
 }
 
-export enum BManageBeneficiaryOverlapType {
-  MDM = "MDM",
-  NA = "NA",
-  OTHER = "OTHER",
-}
-
 export enum BenchmarkForPerformanceType {
   NO = "NO",
   YES_NO_RECONCILE = "YES_NO_RECONCILE",
@@ -224,21 +218,6 @@ export enum FundingSource {
   TRUST_FUND = "TRUST_FUND",
 }
 
-export enum GcCollectBidsType {
-  HPMS = "HPMS",
-  OTHER = "OTHER",
-}
-
-export enum GcPartCDType {
-  MARX = "MARX",
-  OTHER = "OTHER",
-}
-
-export enum GcUpdateContractType {
-  HPMS = "HPMS",
-  OTHER = "OTHER",
-}
-
 export enum GeographyApplication {
   BENEFICIARIES = "BENEFICIARIES",
   OTHER = "OTHER",
@@ -333,87 +312,6 @@ export enum NonClaimsBasedPayType {
   SHARED_SAVINGS = "SHARED_SAVINGS",
 }
 
-export enum OelClaimsBasedMeasuresType {
-  CCW = "CCW",
-  IDR = "IDR",
-  OTHER = "OTHER",
-}
-
-export enum OelCollectDataType {
-  CCW = "CCW",
-  CONTRACTOR = "CONTRACTOR",
-  IDOS = "IDOS",
-  IDR = "IDR",
-  ISP = "ISP",
-  OTHER = "OTHER",
-}
-
-export enum OelEducateBeneficiariesType {
-  OC = "OC",
-  OTHER = "OTHER",
-}
-
-export enum OelEvaluationContractorType {
-  OTHER = "OTHER",
-  RMDA = "RMDA",
-}
-
-export enum OelHelpdeskSupportType {
-  CBOSC = "CBOSC",
-  CONTRACTOR = "CONTRACTOR",
-  OTHER = "OTHER",
-}
-
-export enum OelLearningContractorType {
-  CROSS_MODEL_CONTRACT = "CROSS_MODEL_CONTRACT",
-  OTHER = "OTHER",
-  RMADA = "RMADA",
-}
-
-export enum OelManageAcoType {
-  ACO_OS = "ACO_OS",
-  ACO_UI = "ACO_UI",
-  INNOVATION = "INNOVATION",
-  OTHER = "OTHER",
-}
-
-export enum OelObtainDataType {
-  CCW = "CCW",
-  IDOS = "IDOS",
-  ISP = "ISP",
-  OTHER = "OTHER",
-}
-
-export enum OelParticipantCollaborationType {
-  CONNECT = "CONNECT",
-  OTHER = "OTHER",
-}
-
-export enum OelPerformanceBenchmarkType {
-  CCW = "CCW",
-  IDR = "IDR",
-  OTHER = "OTHER",
-}
-
-export enum OelProcessAppealsType {
-  MEDICARE_APPEAL_SYSTEM = "MEDICARE_APPEAL_SYSTEM",
-  OTHER = "OTHER",
-}
-
-export enum OelQualityScoresType {
-  EXISTING_DATA_AND_PROCESS = "EXISTING_DATA_AND_PROCESS",
-  NEW_DATA_AND_CMMI_PROCESS = "NEW_DATA_AND_CMMI_PROCESS",
-  NONE = "NONE",
-  OTHER = "OTHER",
-}
-
-export enum OelSendReportsType {
-  IDOS = "IDOS",
-  INTERNAL_STAFF = "INTERNAL_STAFF",
-  OTHER = "OTHER",
-  RMADA = "RMADA",
-}
-
 export enum OpSolutionStatus {
   AT_RISK = "AT_RISK",
   BACKLOG = "BACKLOG",
@@ -498,37 +396,6 @@ export enum OverlapType {
   YES_NO_ISSUES = "YES_NO_ISSUES",
 }
 
-export enum PInformFfsType {
-  FFS_COMPETENCY_CENTER = "FFS_COMPETENCY_CENTER",
-  OTHER = "OTHER",
-}
-
-export enum PMakeClaimsPaymentsType {
-  HIGLAS = "HIGLAS",
-  OTHER = "OTHER",
-  SHARED_SYSTEMS = "SHARED_SYSTEMS",
-}
-
-export enum PNonClaimsBasedPaymentsType {
-  APPS = "APPS",
-  HIGLAS = "HIGLAS",
-  IPC = "IPC",
-  MAC = "MAC",
-  OTHER = "OTHER",
-}
-
-export enum PRecoverPaymentsType {
-  APPS = "APPS",
-  IPC = "IPC",
-  MAC = "MAC",
-  OTHER = "OTHER",
-}
-
-export enum PSharedSavingsPlanType {
-  OTHER = "OTHER",
-  RMADA = "RMADA",
-}
-
 export enum ParticipantCommunicationType {
   IT_TOOL = "IT_TOOL",
   MASS_EMAIL = "MASS_EMAIL",
@@ -593,37 +460,6 @@ export enum PayType {
   NON_CLAIMS_BASED_PAYMENTS = "NON_CLAIMS_BASED_PAYMENTS",
 }
 
-export enum PpAppSupportContractorType {
-  OTHER = "OTHER",
-  RMDA = "RMDA",
-}
-
-export enum PpCollectScoreReviewType {
-  ARS = "ARS",
-  GRANT_SOLUTIONS = "GRANT_SOLUTIONS",
-  OTHER = "OTHER",
-  RFA = "RFA",
-}
-
-export enum PpCommunicateWithParticipantType {
-  GOV_DELIVERY = "GOV_DELIVERY",
-  OTHER = "OTHER",
-  OUTLOOK_MAILBOX = "OUTLOOK_MAILBOX",
-  SALESFORCE_PORTAL = "SALESFORCE_PORTAL",
-}
-
-export enum PpManageProviderOverlapType {
-  MDM = "MDM",
-  NA = "NA",
-  OTHER = "OTHER",
-}
-
-export enum PpToAdvertiseType {
-  GRANT_SOLUTIONS = "GRANT_SOLUTIONS",
-  OTHER = "OTHER",
-  SALESFORCE = "SALESFORCE",
-}
-
 export enum PrepareForClearanceStatus {
   CANNOT_START = "CANNOT_START",
   IN_PROGRESS = "IN_PROGRESS",
@@ -682,7 +518,6 @@ export enum TaskListSection {
   BASICS = "BASICS",
   BENEFICIARIES = "BENEFICIARIES",
   GENERAL_CHARACTERISTICS = "GENERAL_CHARACTERISTICS",
-  IT_TOOLS = "IT_TOOLS",
   OPERATIONS_EVALUATION_AND_LEARNING = "OPERATIONS_EVALUATION_AND_LEARNING",
   PARTICIPANTS_AND_PROVIDERS = "PARTICIPANTS_AND_PROVIDERS",
   PAYMENT = "PAYMENT",
@@ -919,91 +754,6 @@ export interface PlanGeneralCharacteristicsChanges {
   waiversRequired?: boolean | null;
   waiversRequiredTypes?: WaiverType[] | null;
   waiversRequiredNote?: string | null;
-  status?: TaskStatusInput | null;
-}
-
-export interface PlanITToolsChanges {
-  gcPartCD?: GcPartCDType[] | null;
-  gcPartCDOther?: string | null;
-  gcPartCDNote?: string | null;
-  gcCollectBids?: GcCollectBidsType[] | null;
-  gcCollectBidsOther?: string | null;
-  gcCollectBidsNote?: string | null;
-  gcUpdateContract?: GcUpdateContractType[] | null;
-  gcUpdateContractOther?: string | null;
-  gcUpdateContractNote?: string | null;
-  ppToAdvertise?: PpToAdvertiseType[] | null;
-  ppToAdvertiseOther?: string | null;
-  ppToAdvertiseNote?: string | null;
-  ppCollectScoreReview?: PpCollectScoreReviewType[] | null;
-  ppCollectScoreReviewOther?: string | null;
-  ppCollectScoreReviewNote?: string | null;
-  ppAppSupportContractor?: PpAppSupportContractorType[] | null;
-  ppAppSupportContractorOther?: string | null;
-  ppAppSupportContractorNote?: string | null;
-  ppCommunicateWithParticipant?: PpCommunicateWithParticipantType[] | null;
-  ppCommunicateWithParticipantOther?: string | null;
-  ppCommunicateWithParticipantNote?: string | null;
-  ppManageProviderOverlap?: PpManageProviderOverlapType[] | null;
-  ppManageProviderOverlapOther?: string | null;
-  ppManageProviderOverlapNote?: string | null;
-  bManageBeneficiaryOverlap?: BManageBeneficiaryOverlapType[] | null;
-  bManageBeneficiaryOverlapOther?: string | null;
-  bManageBeneficiaryOverlapNote?: string | null;
-  oelHelpdeskSupport?: OelHelpdeskSupportType[] | null;
-  oelHelpdeskSupportOther?: string | null;
-  oelHelpdeskSupportNote?: string | null;
-  oelManageAco?: OelManageAcoType[] | null;
-  oelManageAcoOther?: string | null;
-  oelManageAcoNote?: string | null;
-  oelPerformanceBenchmark?: OelPerformanceBenchmarkType[] | null;
-  oelPerformanceBenchmarkOther?: string | null;
-  oelPerformanceBenchmarkNote?: string | null;
-  oelProcessAppeals?: OelProcessAppealsType[] | null;
-  oelProcessAppealsOther?: string | null;
-  oelProcessAppealsNote?: string | null;
-  oelEvaluationContractor?: OelEvaluationContractorType[] | null;
-  oelEvaluationContractorOther?: string | null;
-  oelEvaluationContractorNote?: string | null;
-  oelCollectData?: OelCollectDataType[] | null;
-  oelCollectDataOther?: string | null;
-  oelCollectDataNote?: string | null;
-  oelObtainData?: OelObtainDataType[] | null;
-  oelObtainDataOther?: string | null;
-  oelObtainDataNote?: string | null;
-  oelClaimsBasedMeasures?: OelClaimsBasedMeasuresType[] | null;
-  oelClaimsBasedMeasuresOther?: string | null;
-  oelClaimsBasedMeasuresNote?: string | null;
-  oelQualityScores?: OelQualityScoresType[] | null;
-  oelQualityScoresOther?: string | null;
-  oelQualityScoresNote?: string | null;
-  oelSendReports?: OelSendReportsType[] | null;
-  oelSendReportsOther?: string | null;
-  oelSendReportsNote?: string | null;
-  oelLearningContractor?: OelLearningContractorType[] | null;
-  oelLearningContractorOther?: string | null;
-  oelLearningContractorNote?: string | null;
-  oelParticipantCollaboration?: OelParticipantCollaborationType[] | null;
-  oelParticipantCollaborationOther?: string | null;
-  oelParticipantCollaborationNote?: string | null;
-  oelEducateBeneficiaries?: OelEducateBeneficiariesType[] | null;
-  oelEducateBeneficiariesOther?: string | null;
-  oelEducateBeneficiariesNote?: string | null;
-  pMakeClaimsPayments?: PMakeClaimsPaymentsType[] | null;
-  pMakeClaimsPaymentsOther?: string | null;
-  pMakeClaimsPaymentsNote?: string | null;
-  pInformFfs?: PInformFfsType[] | null;
-  pInformFfsOther?: string | null;
-  pInformFfsNote?: string | null;
-  pNonClaimsBasedPayments?: PNonClaimsBasedPaymentsType[] | null;
-  pNonClaimsBasedPaymentsOther?: string | null;
-  pNonClaimsBasedPaymentsNote?: string | null;
-  pSharedSavingsPlan?: PSharedSavingsPlanType[] | null;
-  pSharedSavingsPlanOther?: string | null;
-  pSharedSavingsPlanNote?: string | null;
-  pRecoverPayments?: PRecoverPaymentsType[] | null;
-  pRecoverPaymentsOther?: string | null;
-  pRecoverPaymentsNote?: string | null;
   status?: TaskStatusInput | null;
 }
 
