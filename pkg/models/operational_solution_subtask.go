@@ -23,7 +23,7 @@ var AllOperationalSolutionSubtaskStatus = []OperationalSolutionSubtaskStatus{
 
 // OperationalSolutionSubtask represents the specific implemented solution to an OperationalSolutionSubtask
 type OperationalSolutionSubtask struct {
-	baseStructUserTable
+	baseStruct
 	solutionRelation
 
 	Name   string                           `json:"name"`
@@ -39,9 +39,9 @@ func NewOperationalSolutionSubtask(
 	status OperationalSolutionSubtaskStatus,
 ) *OperationalSolutionSubtask {
 	return &OperationalSolutionSubtask{
-		baseStructUserTable: NewBaseStructUser(createdBy),
-		solutionRelation:    NewSolutionRelation(solutionID),
-		Name:                name,
-		Status:              status,
+		baseStruct:       NewBaseStruct(createdBy),
+		solutionRelation: NewSolutionRelation(solutionID),
+		Name:             name,
+		Status:           status,
 	}
 }
