@@ -54,6 +54,7 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
   const location: LocationSolutionProps = useLocation();
   const locationState = location?.state;
 
+  // Used to maintain state of view underneath modal when route changes
   const [prev] = useState<string | undefined>(locationState?.prev);
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
@@ -64,6 +65,7 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
     setIsOpen(!!solution);
   }, [solution]);
 
+  // On modal close, returns to previous route state if present
   const closeModal = () =>
     history.push(prev || '/help-and-knowledge/operational-solutions', {
       prev: pathname

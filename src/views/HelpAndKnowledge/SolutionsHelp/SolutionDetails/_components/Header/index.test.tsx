@@ -1,0 +1,21 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import Header from './index';
+
+describe('Operation Solution Detail Header', () => {
+  it('renders solution name and category', () => {
+    const { getByText } = render(<Header solution={helpSolutions[0]} />);
+
+    expect(getByText('4innovation')).toBeInTheDocument();
+    expect(getByText('Data reporting')).toBeInTheDocument();
+  });
+
+  it('matches snapshot', () => {
+    const { asFragment } = render(<Header solution={helpSolutions[0]} />);
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

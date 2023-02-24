@@ -12,6 +12,7 @@ type HeaderProps = {
 const Header = ({ className, solution }: HeaderProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
+  // Maps all related categories into a comma separated string
   const solutionsHeader = solution.categories.map(
     (categoryKey, index) =>
       `${t(`categories.${categoryKey}.header`)}${

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation Solution Detail Header matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-y-4 padding-bottom-4 bg-primary-darker text-white padding-left-4"
+  >
+    <div>
+      <p
+        class="margin-0"
+      >
+        Data reporting
+      </p>
+      <h1
+        class="margin-top-2 line-height-body-2"
+      >
+        4innovation
+      </h1>
+    </div>
+  </div>
+</DocumentFragment>
+`;
