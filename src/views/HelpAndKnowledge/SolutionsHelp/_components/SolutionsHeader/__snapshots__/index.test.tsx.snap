@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation Solution Help Header matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-y-4 padding-bottom-4 bg-primary-darker text-white"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb usa-breadcrumb--wrap help-header__breadcrumbs bg-primary-darker text-white padding-top-0 margin-top-neg-2 margin-bottom-4"
+      >
+        <ol
+          class="usa-breadcrumb__list"
+        >
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              class="usa-link usa-breadcrumb__link"
+              href="/help-and-knowledge"
+            >
+              <span>
+                Help and Knowledge Center
+              </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current"
+          >
+            <span>
+              Operational solutions
+            </span>
+          </li>
+        </ol>
+      </nav>
+      <h2
+        class="margin-0"
+      >
+        Operational solutions
+      </h2>
+      <p
+        class="margin-bottom-4"
+      >
+        Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.
+      </p>
+      <div>
+        <div
+          class="tablet:grid-col-6"
+          data-testid="grid"
+        >
+          <form
+            class="usa-form usa-search width-full maxw-none margin-bottom-3"
+            data-testid="table-client-filter"
+            role="search"
+          >
+            <label
+              class="usa-sr-only"
+              data-testid="label"
+              for="table-id-search"
+            >
+              Search Table
+            </label>
+            <input
+              class="usa-input"
+              data-testid="textInput"
+              id="table-id-search"
+              name="table-name Search"
+              role="searchbox"
+              type="search"
+              value=""
+            />
+            <button
+              class="usa-button grid-row flex-justify-center flex-align-center no-pointer"
+              data-testid="button"
+              type="submit"
+            >
+              <svg
+                class="usa-icon usa-icon--size-3"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+        <div
+          class="display-flex"
+        >
+          <p
+            class="margin-y-0"
+          >
+            Showing 9 of 32 operational solutions
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -7,7 +7,7 @@ import { helpSolutions } from '../../solutionsMap';
 
 import SolutionHelpCardGroup from './index';
 
-describe('Operation Solution Help Card', () => {
+describe('Operation Solution Help Card Group', () => {
   it('rendered all correct information even after pagination', () => {
     const { getByText, getByLabelText, queryByText } = render(
       <MemoryRouter

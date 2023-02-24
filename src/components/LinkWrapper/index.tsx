@@ -20,6 +20,7 @@ type UswdsReactLinkProps = {
   target?: '_blank';
   rel?: 'noopener noreferrer';
   'data-testid'?: string;
+  'aria-label'?: string;
   children: React.ReactNode | string;
 };
 
@@ -30,6 +31,7 @@ const UswdsReactLink = ({
   target,
   rel,
   'data-testid': datatestid,
+  'aria-label': ariaLabel,
   children
 }: UswdsReactLinkProps) => {
   return (
@@ -41,6 +43,7 @@ const UswdsReactLink = ({
       variant={variant}
       asCustom={RouterLink}
       className={classnames(className)}
+      aria-label={ariaLabel}
     >
       {children}
     </UswdsLink>

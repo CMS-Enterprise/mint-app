@@ -7,7 +7,7 @@ import { helpSolutions } from '../../solutionsMap';
 import SolutionHelpCardGroup from '.';
 
 export default {
-  title: 'Help and Knowledge SolutionHelpCard',
+  title: 'Help and Knowledge SolutionHelpCardGroup',
   component: SolutionHelpCardGroup,
   decorators: [
     Story => (
