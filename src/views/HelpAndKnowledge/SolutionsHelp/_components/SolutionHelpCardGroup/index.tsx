@@ -19,11 +19,12 @@ type SolutionHelpCardGroupProps = {
   isQuery: boolean;
 };
 
-function Solutions({
+// Return mapped solution component based on category or query
+const Solutions = ({
   currentSolutions
 }: {
   currentSolutions: HelpSolutionType[];
-}) {
+}) => {
   return (
     <Grid row gap={2} className="margin-bottom-2">
       {currentSolutions.map(solution => (
@@ -33,7 +34,7 @@ function Solutions({
       ))}
     </Grid>
   );
-}
+};
 
 const SolutionHelpCardGroup = ({
   className,
@@ -60,10 +61,12 @@ const SolutionHelpCardGroup = ({
     setResultsNum(newOffset + itemsPerPage);
   };
 
+  // Resets page offset when route or query changes
   useEffect(() => {
     setItemOffset(0);
   }, [pathname, isQuery]);
 
+  // Updates the result nums
   useEffect(() => {
     setResultsNum(currentItems.length);
   }, [setResultsNum, currentItems]);
