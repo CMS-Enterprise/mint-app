@@ -17,6 +17,7 @@ import (
 )
 
 // OktaAccountInfo represents the information you get if you query an account from Okta
+// TODO Replace this with calls to the Okta API so we can use the same information we use in other places in the application
 type OktaAccountInfo struct {
 	Name              string `json:"name"`
 	Locale            string `json:"locale"`
@@ -99,10 +100,10 @@ func GetUserInfoAccountInfoWrapper(ctx context.Context, username string, getUser
 	}
 
 	accountInfo := &AccountInfo{}
-	accountInfo.Name = userinfo.CommonName
+	accountInfo.Name = userinfo.DisplayName
 	accountInfo.Locale = "UNKNOWN"
-	accountInfo.Email = userinfo.Email.String()
-	accountInfo.PreferredUsername = userinfo.EuaUserID
+	accountInfo.Email = userinfo.Email
+	accountInfo.PreferredUsername = userinfo.Username
 	accountInfo.GivenName = userinfo.FirstName
 	accountInfo.FamilyName = userinfo.LastName
 	accountInfo.ZoneInfo = "UNKNOWN"

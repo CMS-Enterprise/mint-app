@@ -63,11 +63,11 @@ func (s *Seeder) updatePlanBasics(mp *models.ModelPlan, changes map[string]inter
 
 func stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
 	return &models.UserInfo{
-		EuaUserID:  username,
-		FirstName:  username,
-		LastName:   "Doe",
-		CommonName: username + " Doe",
-		Email:      models.NewEmailAddress(username + ".doe@local.fake"),
+		Username:    username,
+		FirstName:   username,
+		LastName:    "Doe",
+		DisplayName: username + " Doe",
+		Email:       username + ".doe@local.fake",
 	}, nil
 }
 

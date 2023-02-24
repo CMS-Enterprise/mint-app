@@ -6,7 +6,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // NewSender returns a fake email sender
@@ -19,15 +18,10 @@ type Sender struct {
 }
 
 // Send logs an email
-func (s Sender) Send(ctx context.Context, toAddress models.EmailAddress, ccAddress *models.EmailAddress, subject string, body string) error {
-	ccAddresses := ""
-	if ccAddress != nil {
-		ccAddresses = ccAddress.String()
-	}
-
+func (s Sender) Send(ctx context.Context, toAddress string, ccAddress string, subject string, body string) error {
 	appcontext.ZLogger(ctx).Info("Mock sending email",
-		zap.String("To", toAddress.String()),
-		zap.String("CC", ccAddresses),
+		zap.String("To", toAddress),
+		zap.String("CC", ccAddress),
 		zap.String("Subject", subject),
 		zap.String("Body", body),
 	)

@@ -28,18 +28,18 @@ func (suite *ResolverSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
 
 	//GET USER ACCOUNT EACH TIME!
-	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.EuaUserID)
+	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
 	assert.NoError(suite.T(), err)
 }
 
 func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
 	return &models.UserInfo{
-		EuaUserID:  username,
-		FirstName:  username,
-		LastName:   "Doe",
-		CommonName: username + " Doe",
-		Email:      models.NewEmailAddress(username + ".doe@local.fake"),
+		Username:    username,
+		FirstName:   username,
+		LastName:    "Doe",
+		DisplayName: username + " Doe",
+		Email:       username + ".doe@local.fake",
 	}, nil
 }
 

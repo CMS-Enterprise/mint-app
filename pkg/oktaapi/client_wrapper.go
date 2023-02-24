@@ -33,7 +33,8 @@ func NewClient(logger *zap.Logger, url string, token string) (Client, error) {
 	}, nil
 }
 
-type oktaUserProfile struct {
+// oktaUserResponse is used to marshal the JSON response from Okta into a struct
+type oktaUserResponse struct {
 	FirstName   string `json:"firstName"`
 	LastName    string `json:"lastName"`
 	DisplayName string `json:"displayName"`
@@ -43,7 +44,7 @@ type oktaUserProfile struct {
 
 func parseOktaProfileResponse(profile *okta.UserProfile) (*models.UserInfo, error) {
 	// Create an okaUserProfile to return
-	parsedProfile := &oktaUserProfile{}
+	parsedProfile := &oktaUserResponse{}
 
 	// Marshal the profile into a string so we can later unmarshal it into a struct
 	responseString, err := json.Marshal(profile)
@@ -58,11 +59,11 @@ func parseOktaProfileResponse(profile *okta.UserProfile) (*models.UserInfo, erro
 	}
 
 	returnInfo := &models.UserInfo{
-		CommonName: parsedProfile.DisplayName,
-		Email:      models.EmailAddress(parsedProfile.Email),
-		EuaUserID:  parsedProfile.Login,
-		FirstName:  parsedProfile.FirstName,
-		LastName:   parsedProfile.LastName,
+		DisplayName: parsedProfile.DisplayName,
+		Email:       parsedProfile.Email,
+		Username:    parsedProfile.Login,
+		FirstName:   parsedProfile.FirstName,
+		LastName:    parsedProfile.LastName,
 	}
 
 	return returnInfo, nil
@@ -84,12 +85,12 @@ func (cw *clientWrapper) FetchUserInfo(ctx context.Context, username string) (*m
 	return profile, nil
 }
 
-func (cw *clientWrapper) SearchCommonNameContains(ctx context.Context, searchTerm string) ([]*models.UserInfo, error) {
+func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([]*models.UserInfo, error) {
 	// profile.SourceType can be EUA, EUA-AD, or cmsidm
 	// the first 2 represent EUA users, the latter represents users created directly in IDM
 	// TODO: Searching on MAC users might be something like profile.cmsRolesArray eq "mint-medicare-admin-contractor"
 	// TODO: If we need to search on MAC users, validate that this works even if the user has OTHER IDM roles (not _just_ this one)
-	searchString := fmt.Sprintf(`(profile.SourceType eq "EUA" or profile.SourceType eq "EUA-AD") and (profile.firstName sw "%v" or profile.lastName sw "%v")`, searchTerm, searchTerm)
+	searchString := fmt.Sprintf(`(profile.SourceType eq "EUA" or profile.SourceType eq "EUA-AD") and (profile.firstName sw "%v" or profile.lastName sw "%v" or profile.displayName sw "%v")`, searchTerm, searchTerm, searchTerm)
 	search := query.NewQueryParams(query.WithSearch(searchString))
 
 	searchedUsers, _, err := cw.oktaClient.User.ListUsers(ctx, search)

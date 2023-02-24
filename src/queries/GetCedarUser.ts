@@ -4,8 +4,8 @@ export default gql`
   query GetCedarUser($commonName: String!) {
     cedarPersonsByCommonName(commonName: $commonName) {
       email
-      commonName
-      euaUserId
+      commonName: displayName
+      euaUserId: username
     }
   }
 `;

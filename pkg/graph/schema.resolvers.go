@@ -928,7 +928,7 @@ func (r *queryResolver) ExistingModelCollection(ctx context.Context) ([]*models.
 
 // CedarPersonsByCommonName is the resolver for the cedarPersonsByCommonName field.
 func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error) {
-	response, err := r.service.SearchCommonNameContains(ctx, commonName)
+	response, err := r.service.SearchByName(ctx, commonName)
 	if err != nil {
 		return nil, err
 	}
@@ -1026,11 +1026,6 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
-// Email is the resolver for the email field.
-func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
-	return string(obj.Email), nil
-}
-
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
@@ -1098,9 +1093,6 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 // Subscription returns generated.SubscriptionResolver implementation.
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
-// UserInfo returns generated.UserInfoResolver implementation.
-func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
-
 type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
@@ -1118,4 +1110,3 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
-type userInfoResolver struct{ *Resolver }

@@ -198,8 +198,8 @@ func (s *Server) routes(
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			FetchUserInfo:            oktaClient.FetchUserInfo,
-			SearchCommonNameContains: oktaClient.SearchCommonNameContains,
+			FetchUserInfo: oktaClient.FetchUserInfo,
+			SearchByName:  oktaClient.SearchByName,
 		},
 		&s3Client,
 		emailService,

@@ -319,12 +319,14 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-Represents a person response from CEDAR LDAP
+Represents a person response from the Okta API
 """
 type UserInfo {
-  commonName: String!
+  firstName: String!
+  lastName: String!
+  displayName: String!
   email: String!
-  euaUserId: String!
+  username: String!
 }
 
 """

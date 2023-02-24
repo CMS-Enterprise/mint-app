@@ -101,9 +101,11 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
 	userInfo := &models.UserInfo{
-		CommonName: "Test User",
-		Email:      "testuser@test.com",
-		EuaUserID:  "TEST",
+		DisplayName: "Test User",
+		FirstName:   "Test",
+		LastName:    "User",
+		Email:       "testuser@test.com",
+		Username:    "TEST",
 	}
 	ps := pubsub.NewServicePubSub()
 

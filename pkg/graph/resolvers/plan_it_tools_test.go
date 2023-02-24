@@ -121,7 +121,7 @@ func (suite *ResolverSuite) TestPlanITToolsGetByModelPlanID() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, it.ModelPlanID)
 	suite.EqualValues(models.TaskReady, it.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, it.CreatedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.Username, it.CreatedBy)
 	suite.Nil(it.ModifiedBy)
 
 	//Page 1

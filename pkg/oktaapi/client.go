@@ -9,5 +9,5 @@ import (
 // Client defines methods which any Okta API Client should implement
 type Client interface {
 	FetchUserInfo(context.Context, string) (*models.UserInfo, error)
-	SearchCommonNameContains(context.Context, string) ([]*models.UserInfo, error)
+	SearchByName(context.Context, string) ([]*models.UserInfo, error)
 }

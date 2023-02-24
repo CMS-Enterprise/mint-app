@@ -58,7 +58,6 @@ type ResolverRoot interface {
 	PossibleOperationalNeed() PossibleOperationalNeedResolver
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
-	UserInfo() UserInfoResolver
 }
 
 type DirectiveRoot struct {
@@ -925,9 +924,11 @@ type ComplexityRoot struct {
 	}
 
 	UserInfo struct {
-		CommonName func(childComplexity int) int
-		Email      func(childComplexity int) int
-		EuaUserID  func(childComplexity int) int
+		DisplayName func(childComplexity int) int
+		Email       func(childComplexity int) int
+		FirstName   func(childComplexity int) int
+		LastName    func(childComplexity int) int
+		Username    func(childComplexity int) int
 	}
 }
 
@@ -1171,9 +1172,6 @@ type QueryResolver interface {
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
 	OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
-}
-type UserInfoResolver interface {
-	Email(ctx context.Context, obj *models.UserInfo) (string, error)
 }
 
 type executableSchema struct {
@@ -6798,12 +6796,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserAccount.ZoneInfo(childComplexity), true
 
-	case "UserInfo.commonName":
-		if e.complexity.UserInfo.CommonName == nil {
+	case "UserInfo.displayName":
+		if e.complexity.UserInfo.DisplayName == nil {
 			break
 		}
 
-		return e.complexity.UserInfo.CommonName(childComplexity), true
+		return e.complexity.UserInfo.DisplayName(childComplexity), true
 
 	case "UserInfo.email":
 		if e.complexity.UserInfo.Email == nil {
@@ -6812,12 +6810,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserInfo.Email(childComplexity), true
 
-	case "UserInfo.euaUserId":
-		if e.complexity.UserInfo.EuaUserID == nil {
+	case "UserInfo.firstName":
+		if e.complexity.UserInfo.FirstName == nil {
 			break
 		}
 
-		return e.complexity.UserInfo.EuaUserID(childComplexity), true
+		return e.complexity.UserInfo.FirstName(childComplexity), true
+
+	case "UserInfo.lastName":
+		if e.complexity.UserInfo.LastName == nil {
+			break
+		}
+
+		return e.complexity.UserInfo.LastName(childComplexity), true
+
+	case "UserInfo.username":
+		if e.complexity.UserInfo.Username == nil {
+			break
+		}
+
+		return e.complexity.UserInfo.Username(childComplexity), true
 
 	}
 	return 0, false
@@ -7232,12 +7244,14 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-Represents a person response from CEDAR LDAP
+Represents a person response from the Okta API
 """
 type UserInfo {
-  commonName: String!
+  firstName: String!
+  lastName: String!
+  displayName: String!
   email: String!
-  euaUserId: String!
+  username: String!
 }
 
 """
@@ -47143,12 +47157,16 @@ func (ec *executionContext) fieldContext_Query_cedarPersonsByCommonName(ctx cont
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "commonName":
-				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "firstName":
+				return ec.fieldContext_UserInfo_firstName(ctx, field)
+			case "lastName":
+				return ec.fieldContext_UserInfo_lastName(ctx, field)
+			case "displayName":
+				return ec.fieldContext_UserInfo_displayName(ctx, field)
 			case "email":
 				return ec.fieldContext_UserInfo_email(ctx, field)
-			case "euaUserId":
-				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			case "username":
+				return ec.fieldContext_UserInfo_username(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
 		},
@@ -49317,8 +49335,8 @@ func (ec *executionContext) fieldContext_UserAccount_hasLoggedIn(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _UserInfo_commonName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserInfo_commonName(ctx, field)
+func (ec *executionContext) _UserInfo_firstName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_firstName(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -49331,7 +49349,7 @@ func (ec *executionContext) _UserInfo_commonName(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CommonName, nil
+		return obj.FirstName, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -49348,7 +49366,95 @@ func (ec *executionContext) _UserInfo_commonName(ctx context.Context, field grap
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserInfo_commonName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserInfo_firstName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserInfo",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserInfo_lastName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_lastName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LastName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserInfo_lastName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserInfo",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserInfo_displayName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_displayName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DisplayName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserInfo_displayName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserInfo",
 		Field:      field,
@@ -49375,7 +49481,7 @@ func (ec *executionContext) _UserInfo_email(ctx context.Context, field graphql.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.UserInfo().Email(rctx, obj)
+		return obj.Email, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -49396,8 +49502,8 @@ func (ec *executionContext) fieldContext_UserInfo_email(ctx context.Context, fie
 	fc = &graphql.FieldContext{
 		Object:     "UserInfo",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -49405,8 +49511,8 @@ func (ec *executionContext) fieldContext_UserInfo_email(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _UserInfo_euaUserId(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserInfo_euaUserId(ctx, field)
+func (ec *executionContext) _UserInfo_username(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_username(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -49419,7 +49525,7 @@ func (ec *executionContext) _UserInfo_euaUserId(ctx context.Context, field graph
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.EuaUserID, nil
+		return obj.Username, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -49436,7 +49542,7 @@ func (ec *executionContext) _UserInfo_euaUserId(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserInfo_euaUserId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserInfo_username(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserInfo",
 		Field:      field,
@@ -58464,39 +58570,40 @@ func (ec *executionContext) _UserInfo(ctx context.Context, sel ast.SelectionSet,
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("UserInfo")
-		case "commonName":
+		case "firstName":
 
-			out.Values[i] = ec._UserInfo_commonName(ctx, field, obj)
+			out.Values[i] = ec._UserInfo_firstName(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+				invalids++
+			}
+		case "lastName":
+
+			out.Values[i] = ec._UserInfo_lastName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "displayName":
+
+			out.Values[i] = ec._UserInfo_displayName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
 			}
 		case "email":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._UserInfo_email(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
-		case "euaUserId":
-
-			out.Values[i] = ec._UserInfo_euaUserId(ctx, field, obj)
+			out.Values[i] = ec._UserInfo_email(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+				invalids++
+			}
+		case "username":
+
+			out.Values[i] = ec._UserInfo_username(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
