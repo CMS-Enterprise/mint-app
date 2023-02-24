@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import { RouterContext } from 'views/RouterContext';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup, {
@@ -84,10 +85,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const location: LocationSolutionProps = useLocation();
 
-  const { pathname, state } = location;
+  const { pathname } = location;
+
+  const { to, from } = useContext(RouterContext);
 
   const [prevCategory, setPrevCategory] = useState<string | undefined>(
-    solution ? state?.prev?.split('/')[4] : category
+    solution ? from?.split('/')[4] : category
   );
 
   useEffect(() => {
@@ -104,9 +107,19 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   );
 
   // Resets the query on route or category change
+  // Also preserves the query when the modal is open/closed
   useEffect(() => {
-    setQuery('');
-  }, [pathname, prevCategory]);
+    if (
+      from &&
+      pathname &&
+      to &&
+      !from?.includes('/operational-solutions/solutions') &&
+      !to?.includes('/operational-solutions/solutions') &&
+      !pathname?.includes('/operational-solutions/solutions')
+    ) {
+      setQuery('');
+    }
+  }, [pathname, prevCategory, to, from]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {

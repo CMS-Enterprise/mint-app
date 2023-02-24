@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -57,13 +57,19 @@ const SolutionHelpCardGroup = ({
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { pathname } = useLocation();
-  const location: LocationSolutionProps = useLocation();
+  const { page } = useParams<{
+    page: string;
+  }>();
 
-  const locationState = location?.state;
+  const history = useHistory();
 
-  const [itemOffset, setItemOffset] = useState(0);
+  let pageNumber = page ? Number(page) : 0;
+  pageNumber = Number.isNaN(pageNumber) ? 0 : pageNumber;
+
   const itemsPerPage = 9;
+  const [itemOffset, setItemOffset] = useState(
+    (pageNumber * itemsPerPage) % solutions.length
+  );
   const endOffset = itemOffset + itemsPerPage;
 
   const currentItems = solutions.slice(itemOffset, endOffset);
@@ -71,21 +77,13 @@ const SolutionHelpCardGroup = ({
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % solutions.length;
-    setItemOffset(newOffset);
-    setResultsNum(newOffset + itemsPerPage);
+    history.push(`/help-and-knowledge/operational-solutions/${event.selected}`);
   };
-
-  const solutionRoute = '/help-and-knowledge/operational-solutions/solutions';
 
   // Resets page offset when route or query changes
   useEffect(() => {
-    if (
-      !pathname.includes(solutionRoute) &&
-      (!locationState || !locationState?.prev?.includes(solutionRoute))
-    )
-      setItemOffset(0);
-  }, [pathname, isQuery, locationState]);
+    setItemOffset((pageNumber * itemsPerPage) % solutions.length);
+  }, [pageNumber, setItemOffset, solutions]);
 
   // Updates the result nums
   useEffect(() => {
