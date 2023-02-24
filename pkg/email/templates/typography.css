@@ -1,0 +1,29 @@
+/* Typography styles */
+h1, h2, h3, p, .subtitle, .link {
+  color: #1A1A1A;
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  text-decoration: none;
+  margin: 0;
+}
+
+h1 {
+  font-size: 39pt;
+  font-weight: bold;
+  text-align: left;
+}
+
+h2 {
+  color: #005BA0;
+  font-size: 15pt;
+  font-weight: bold;
+  text-align: left;
+}
+
+h3 {
+  color: #1B1B1B;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 22pt;
+  font-weight: 700;
+  text-align: left;
+}

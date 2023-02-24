@@ -25,6 +25,15 @@ var dailyDigestSubjectTemplate string
 //go:embed templates/daily_digest_body.template
 var dailyDigestBodyTemplate string
 
+// ModelPlanCreatedTemplateName is the template name definition for the corresponding email template
+const ModelPlanCreatedTemplateName string = "model_plan_created"
+
+//go:embed templates/model_plan_created_subject.template
+var modelPlanCreatedSubjectTemplate string
+
+//go:embed templates/model_plan_created_body.template
+var modelPlanCreatedBodyTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -53,6 +62,11 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(DailyDigetsTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(ModelPlanCreatedTemplateName, modelPlanCreatedSubjectTemplate, modelPlanCreatedBodyTemplate)
 	if err != nil {
 		return err
 	}

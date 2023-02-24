@@ -136,6 +136,9 @@ const GRTEmailKey = "GRT_EMAIL"
 // AccessibilityTeamEmailKey is the key for the receiving email for the 508 team
 const AccessibilityTeamEmailKey = "ACCESSIBILITY_TEAM_EMAIL"
 
+// MINTTeamEmailKey is the key for the receiving email for the MINT team
+const MINTTeamEmailKey = "MINT_TEAM_EMAIL"
+
 // EmailHostKey is the key for getting the email service's host
 const EmailHostKey = "EMAIL_HOST"
 

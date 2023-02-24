@@ -23,6 +23,7 @@ type GoSimpleMailServiceConfig struct {
 	SendTimeout    time.Duration
 	KeepAlive      bool
 	TLSConfig      *tls.Config
+	DevTeamEmail   string
 }
 
 // GetHelo returns the Helo configuration
@@ -98,4 +99,9 @@ func (g *GoSimpleMailServiceConfig) GetTLSConfig() *tls.Config {
 // GetEnabled returns the Enabled configuration
 func (g *GoSimpleMailServiceConfig) GetEnabled() bool {
 	return g.Enabled
+}
+
+// GetDevTeamEmail returns the DevTeamEmail configuration
+func (g *GoSimpleMailServiceConfig) GetDevTeamEmail() string {
+	return g.DevTeamEmail
 }

@@ -44,7 +44,16 @@ func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username stri
 }
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	mp, err := ModelPlanCreate(
+		context.Background(),
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		planName,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
 	suite.NoError(err)
 	return mp
 }

@@ -150,6 +150,7 @@ func (s *Server) routes(
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
 	emailServiceConfig.DefaultSender = s.Config.GetString(appconfig.EmailSenderKey)
+	emailServiceConfig.DevTeamEmail = s.Config.GetString(appconfig.MINTTeamEmailKey)
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
