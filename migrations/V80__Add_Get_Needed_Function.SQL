@@ -30,7 +30,7 @@ AS $$
     NeedConditions.trigger_col,
     NeedConditions.trigger_vals,
 	model_plan_idParam AS model_plan_id,
-    (h_changed -> NeedConditions.trigger_col)::TEXT[] AS vals,
+    (h_changed -> NeedConditions.trigger_col)::TEXT[] AS vals, -- TODO: This should be refactored to use the new values, not the changed values ( so it function)
     starts_with(((h_changed -> NeedConditions.trigger_col)::TEXT[])[1], '{') AS nested
     FROM NeedConditions
     ),
