@@ -30,7 +30,6 @@ UPDATE possible_operational_need
 SET
     need_name = 'Review and score applications',
     need_key = 'REV_SCORE_APP',
-    trigger_vals = '{LOI, NOFO,APPLICATION_COLLECTION_TOOL}',
     modified_by = '00000001-0001-0001-0001-000000000001',
     modified_dts = CURRENT_TIMESTAMP
 
