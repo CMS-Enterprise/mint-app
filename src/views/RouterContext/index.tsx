@@ -26,13 +26,16 @@ const RouterProvider = ({ children }: RouterProviderProps) => {
   useEffect(() => {
     // If new location is different that prev, update state
     setRoute(prev => {
-      if (prev.to !== location.pathname) {
-        return { to: location.pathname, from: prev.to };
+      if (prev.to !== location.pathname + location.search) {
+        return { to: location.pathname + location.search, from: prev.to };
       }
       return route;
     });
     return () => {
-      setRoute({ to: location.pathname, from: location.pathname });
+      setRoute({
+        to: location.pathname + location.search,
+        from: location.pathname + location.search
+      });
     };
   }, [location, route]);
 

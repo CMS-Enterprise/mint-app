@@ -21,7 +21,7 @@ export const HelpAndKnowledge = () => {
         <ModelPlanOverview />
       </Route>
 
-      <Route path="/help-and-knowledge/operational-solutions/:page?" exact>
+      <Route path="/help-and-knowledge/operational-solutions" exact>
         <SolutionsHelp />
       </Route>
 

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
+import { RouterContext } from 'views/RouterContext';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
@@ -57,14 +58,20 @@ const SolutionHelpCardGroup = ({
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { page } = useParams<{
-    page: string;
-  }>();
+  const { from } = useContext(RouterContext);
+
+  const fromParam = `?${from?.split('?')[1]}`;
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search || fromParam);
+
+  const page = params.get('page');
 
   const history = useHistory();
 
-  let pageNumber = page ? Number(page) : 0;
-  pageNumber = Number.isNaN(pageNumber) ? 0 : pageNumber;
+  let pageNumber = Number(page);
+  pageNumber =
+    pageNumber === 0 || Number.isNaN(pageNumber) ? 0 : pageNumber - 1;
 
   const itemsPerPage = 9;
   const [itemOffset, setItemOffset] = useState(
@@ -77,7 +84,9 @@ const SolutionHelpCardGroup = ({
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number }) => {
-    history.push(`/help-and-knowledge/operational-solutions/${event.selected}`);
+    history.push(
+      `/help-and-knowledge/operational-solutions?page=${event.selected + 1}`
+    );
   };
 
   // Resets page offset when route or query changes
