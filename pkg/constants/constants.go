@@ -20,7 +20,6 @@ const (
 	DiscussionReply              = "discussion_reply"
 	PlanDocument                 = "plan_document"
 	PlanGeneralCharacteristics   = "plan_general_characteristics"
-	PlanITTools                  = "plan_it_tools"
 	PlanOpsEvalAndLearning       = "plan_ops_eval_and_learning"
 	PlanParticipantsAndProviders = "plan_participants_and_providers"
 	PlanPayments                 = "plan_payments"
@@ -40,7 +39,6 @@ var humanizedTableNames = map[string]string{
 	DiscussionReply:              "Discussion Reply",
 	PlanDocument:                 "Document",
 	PlanGeneralCharacteristics:   "General Characteristics",
-	PlanITTools:                  "IT Tools",
 	PlanOpsEvalAndLearning:       "Operations, Evaluation, and Learning",
 	PlanParticipantsAndProviders: "Participants and Providers",
 	PlanPayments:                 "Payments",

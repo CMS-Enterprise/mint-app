@@ -6,7 +6,7 @@ import (
 
 // PlanParticipantsAndProviders represents the tasks list section that handles information around participants and providers
 type PlanParticipantsAndProviders struct {
-	baseTaskListSectionUserTable
+	baseTaskListSection
 
 	//page 1
 	Participants                      pq.StringArray `json:"participants" db:"participants"`
@@ -89,8 +89,8 @@ const (
 )
 
 // NewPlanParticipantsAndProviders returns a new plan Beneficiaries
-func NewPlanParticipantsAndProviders(tls baseTaskListSectionUserTable) *PlanParticipantsAndProviders {
+func NewPlanParticipantsAndProviders(tls baseTaskListSection) *PlanParticipantsAndProviders {
 	return &PlanParticipantsAndProviders{
-		baseTaskListSectionUserTable: tls,
+		baseTaskListSection: tls,
 	}
 }
