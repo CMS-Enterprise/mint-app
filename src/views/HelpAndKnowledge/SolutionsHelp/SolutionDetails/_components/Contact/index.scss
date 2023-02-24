@@ -1,0 +1,7 @@
+@use 'uswds-core' as *;
+
+.point-of-contact {
+    padding-left: 0;
+    border-top: .25rem solid color($theme-color-primary-lighter);
+    border-left: 0;
+}

@@ -32,7 +32,7 @@ const Header = ({ className, solution }: HeaderProps) => {
       <div>
         <p className="margin-0">{solutionsHeader}</p>
 
-        <h1 className="margin-top-2">{solution.name}</h1>
+        <h1 className="margin-top-2 line-height-body-2">{solution.name}</h1>
       </div>
     </div>
   );

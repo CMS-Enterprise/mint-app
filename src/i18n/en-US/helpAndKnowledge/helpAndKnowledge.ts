@@ -348,6 +348,7 @@ const helpAndKnowledge = {
     timeline: 'Timeline',
     'points-of-contact': 'Points of contact'
   },
+  backToSolutions: 'Back to solutions',
 
   categories: solutionCategoryies,
   solutions

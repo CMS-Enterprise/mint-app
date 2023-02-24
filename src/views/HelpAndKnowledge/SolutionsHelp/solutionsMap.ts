@@ -89,7 +89,7 @@ type ContactRoles =
   | 'Director, Division of Portfolio Management & Strategy'
   | 'Division Director, Division of System Support, Operation and Security (DSSOS)';
 
-type SolutionContactType = {
+export type SolutionContactType = {
   name: string;
   email: string;
   role?: ContactRoles;

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { useHistory, useLocation } from 'react-router-dom';
-import { GridContainer, IconClose } from '@trussworks/react-uswds';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
+import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
 
 import { LocationSolutionProps } from '../../_components/SolutionHelpCardGroup';
 import { HelpSolutionType } from '../../solutionsMap';
+import Contact from '../_components/Contact';
 import Header from '../_components/Header';
 import About from '../About';
 import PointsOfContact from '../PointsOfContact';
@@ -39,6 +42,10 @@ type SolutionDetailsModalProps = {
 };
 
 const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
+  const { page } = useParams<{
+    page: string;
+  }>();
+
   const { t } = useTranslation('helpAndKnowledge');
 
   const history = useHistory();
@@ -50,6 +57,8 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
   const [prev] = useState<string | undefined>(locationState?.prev);
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
+
+  const isMobile = useCheckResponsiveScreen('tablet');
 
   useEffect(() => {
     setIsOpen(!!solution);
@@ -87,12 +96,27 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
 
           <Header solution={solution} />
 
-          <GridContainer className="padding-y-8 margin-left-0">
-            <SideNav
+          {isMobile && (
+            <MobileNav
               subComponents={subComponents(solution)}
+              subinfo={page}
               isHelpArticle
-              solutionNavigation
+              solutionDetail
             />
+          )}
+
+          <GridContainer className="padding-y-6 margin-left-0">
+            <Grid tablet={{ col: 3 }}>
+              {!isMobile && (
+                <SideNav
+                  subComponents={subComponents(solution)}
+                  isHelpArticle
+                  solutionNavigation
+                />
+              )}
+
+              <Contact contact={solution.pointsOfContact[0]} />
+            </Grid>
           </GridContainer>
         </div>
       </ReactModal>
