@@ -106,16 +106,30 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
           )}
 
           <GridContainer className="padding-y-6 margin-left-0">
-            <Grid tablet={{ col: 3 }}>
+            <Grid row gap>
               {!isMobile && (
-                <SideNav
-                  subComponents={subComponents(solution)}
-                  isHelpArticle
-                  solutionNavigation
-                />
+                <Grid desktop={{ col: 3 }}>
+                  <>
+                    <SideNav
+                      subComponents={subComponents(solution)}
+                      isHelpArticle
+                      solutionNavigation
+                    />
+
+                    <Contact contact={solution.pointsOfContact[0]} />
+                  </>
+                </Grid>
               )}
 
-              <Contact contact={solution.pointsOfContact[0]} />
+              <Grid desktop={{ col: 9 }}>
+                {subComponents(solution)[page].component}
+              </Grid>
+
+              {isMobile && (
+                <Grid desktop={{ col: 3 }}>
+                  <Contact contact={solution.pointsOfContact[0]} />
+                </Grid>
+              )}
             </Grid>
           </GridContainer>
         </div>
