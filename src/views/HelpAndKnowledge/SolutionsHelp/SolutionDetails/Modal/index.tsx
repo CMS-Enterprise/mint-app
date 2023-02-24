@@ -51,10 +51,13 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  const { to } = useContext(RouterContext);
+  const { to, from } = useContext(RouterContext);
 
   // Used to maintain state of view underneath modal when route changes
-  const [prev, setPrev] = useState<string | undefined>(to);
+  // Default to solution route if no prev route/refresh/link
+  const [prev, setPrev] = useState<string | undefined>(
+    !from ? '/help-and-knowledge/operational-solutions' : to
+  );
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
@@ -62,10 +65,10 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
 
   // This sets and maintains the existing route before opening the modal
   useEffect(() => {
-    if (!prev) {
+    if (!prev && from) {
       setPrev(to);
     }
-  }, [to, prev]);
+  }, [to, prev, from]);
 
   useEffect(() => {
     setIsOpen(!!solution);
@@ -76,6 +79,8 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
     history.push(prev || '/help-and-knowledge/operational-solutions', {
       prev: pathname
     });
+
+  // console.log(prev);
 
   const renderModal = () => {
     return (
