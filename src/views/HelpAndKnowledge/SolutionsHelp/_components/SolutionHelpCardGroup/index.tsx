@@ -20,6 +20,7 @@ type SolutionHelpCardGroupProps = {
   isQuery: boolean;
 };
 
+// Return mapped solution component based on category or query
 function Solutions({
   currentSolutions,
   category
@@ -77,6 +78,7 @@ const SolutionHelpCardGroup = ({
 
   const solutionRoute = '/help-and-knowledge/operational-solutions/solutions';
 
+  // Resets page offset when route or query changes
   useEffect(() => {
     if (
       !pathname.includes(solutionRoute) &&
@@ -85,6 +87,7 @@ const SolutionHelpCardGroup = ({
       setItemOffset(0);
   }, [pathname, isQuery, locationState]);
 
+  // Updates the result nums
   useEffect(() => {
     setResultsNum(currentItems.length);
   }, [setResultsNum, currentItems]);

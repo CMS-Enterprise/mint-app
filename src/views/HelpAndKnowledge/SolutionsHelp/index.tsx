@@ -22,6 +22,7 @@ type OperationalSolutionsHelpProps = {
   className?: string;
 };
 
+// Extract the mapped category key based on the current route param
 export const findCategoryKey = (
   route: string | undefined
 ): OperationalSolutionCategories => {
@@ -39,6 +40,7 @@ export const findCategoryKey = (
   return categoryKey;
 };
 
+// Return all solutions relevant to the current cateory
 export const findCategoryMapByRoute = (
   route: string,
   solutions: HelpSolutionType[]
@@ -62,6 +64,7 @@ export const findSolutionByRoute = (
   return filteredSolutions.find(solution => solution.route === route);
 };
 
+// Query function to return solutions for matching name and acronym
 export const seachSolutions = (
   query: string,
   solutions: HelpSolutionType[]
@@ -100,10 +103,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     helpSolutions
   );
 
+  // Resets the query on route or category change
   useEffect(() => {
     setQuery('');
   }, [pathname, prevCategory]);
 
+  //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
       setQuerySolutions(seachSolutions(query, helpSolutions));
@@ -112,6 +117,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     }
   }, [query]);
 
+  // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = prevCategory
     ? findCategoryMapByRoute(prevCategory, helpSolutions)
     : querySolutions;
