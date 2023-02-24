@@ -48,6 +48,7 @@ const operationalSolution = {
       createdDts: '2023-02-16T13:51:31.026147Z',
       optionalNotes: null,
       otherType: null,
+      numLinkedSolutions: 0,
       __typename: 'PlanDocument'
     }
   ],

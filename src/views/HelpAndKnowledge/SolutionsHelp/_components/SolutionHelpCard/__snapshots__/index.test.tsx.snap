@@ -31,6 +31,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
               4i
             </p>
             <a
+              aria-label="Category tag link"
               class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
               href="/help-and-knowledge/operational-solutions/categories/data-reporting"
             >

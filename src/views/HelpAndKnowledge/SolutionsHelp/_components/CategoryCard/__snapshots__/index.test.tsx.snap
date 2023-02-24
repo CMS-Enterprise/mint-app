@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RelatedArticle renders Article Card entirely wrapped as a link 1`] = `
+exports[`Operational Solution Category Card matches snapshot 1`] = `
 <DocumentFragment>
   <li
     class="usa-card radius-sm operational-solution-help__category"

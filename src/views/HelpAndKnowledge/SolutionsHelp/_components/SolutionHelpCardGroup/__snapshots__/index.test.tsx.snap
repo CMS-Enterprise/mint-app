@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Operation Solution Help Card matches snapshot 1`] = `
+exports[`Operation Solution Help Card Group matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="grid-container margin-top-4"
@@ -43,6 +43,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     4i
                   </p>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/data-reporting"
                   >
@@ -141,6 +142,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CO-OS
                   </p>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/data-reporting"
                   >
@@ -239,6 +241,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     APPS
                   </p>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/medicare-advantage-and-part-d"
                   >
@@ -338,6 +341,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CDX
                   </p>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/data-exchange"
                   >
@@ -440,6 +444,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CCW
                   </p>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/database-and-data-management"
                   >
@@ -541,6 +546,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CMS Box
                   </h3>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/data-exchange"
                   >
@@ -634,6 +640,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CMS Qualtrics
                   </h3>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/data-reporting"
                   >
@@ -732,6 +739,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CBOSC
                   </p>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/help-desks"
                   >
@@ -825,6 +833,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
                     CPI Vetting
                   </h3>
                   <a
+                    aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
                     href="/help-and-knowledge/operational-solutions/categories/data-exchange"
                   >
