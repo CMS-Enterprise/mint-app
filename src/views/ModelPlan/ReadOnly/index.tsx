@@ -61,7 +61,7 @@ import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
-type subComponentProps = {
+export type subComponentProps = {
   route: string;
   helpRoute: string;
   component: React.ReactNode;

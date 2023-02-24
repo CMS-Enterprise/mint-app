@@ -7,8 +7,11 @@ import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
 import CategoryFooter from './_components/CategoryFooter';
-import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
+import SolutionHelpCardGroup, {
+  LocationSolutionProps
+} from './_components/SolutionHelpCardGroup';
 import SolutionsHeader from './_components/SolutionsHeader';
+import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
   helpSolutions,
   HelpSolutionType,
@@ -20,7 +23,7 @@ type OperationalSolutionsHelpProps = {
 };
 
 export const findCategoryKey = (
-  route: string
+  route: string | undefined
 ): OperationalSolutionCategories => {
   let categoryKey!: OperationalSolutionCategories;
 
@@ -40,7 +43,7 @@ export const findCategoryMapByRoute = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
-  let filteredSolutions = { ...solutions };
+  let filteredSolutions = [...solutions];
   const categoryKey: OperationalSolutionCategories = findCategoryKey(route);
 
   filteredSolutions = solutions.filter(solution => {
@@ -49,6 +52,14 @@ export const findCategoryMapByRoute = (
     );
   });
   return filteredSolutions;
+};
+
+export const findSolutionByRoute = (
+  route: string,
+  solutions: HelpSolutionType[]
+): HelpSolutionType | undefined => {
+  const filteredSolutions = [...solutions];
+  return filteredSolutions.find(solution => solution.route === route);
 };
 
 export const seachSolutions = (
@@ -63,9 +74,24 @@ export const seachSolutions = (
 };
 
 const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
-  const { category } = useParams<{ category: string }>();
+  const { category, solution } = useParams<{
+    category: string;
+    solution: string;
+  }>();
 
-  const { pathname } = useLocation();
+  const location: LocationSolutionProps = useLocation();
+
+  const { pathname, state } = location;
+
+  const [prevCategory, setPrevCategory] = useState<string | undefined>(
+    solution ? state?.prev?.split('/')[4] : category
+  );
+
+  useEffect(() => {
+    if (!solution) {
+      setPrevCategory(category);
+    }
+  }, [pathname, category, solution]);
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
@@ -76,7 +102,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   useEffect(() => {
     setQuery('');
-  }, [pathname, category]);
+  }, [pathname, prevCategory]);
 
   useEffect(() => {
     if (query.trim()) {
@@ -86,13 +112,18 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     }
   }, [query]);
 
-  const solutions = category
-    ? findCategoryMapByRoute(category, helpSolutions)
+  const solutions = prevCategory
+    ? findCategoryMapByRoute(prevCategory, helpSolutions)
     : querySolutions;
+
+  const selectedSolution = findSolutionByRoute(solution, helpSolutions);
 
   return (
     <div className={classNames(className)}>
+      {selectedSolution && <SolutionDetailsModal solution={selectedSolution} />}
+
       <SolutionsHeader
+        category={prevCategory}
         resultsNum={resultsNum}
         resultsMax={solutions.length}
         setQuery={setQuery}
@@ -102,6 +133,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       <SolutionHelpCardGroup
         solutions={solutions}
         setResultsNum={setResultsNum}
+        category={prevCategory}
         isQuery={!!query}
       />
 

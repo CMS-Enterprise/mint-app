@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
-  Button,
   Card,
   CardGroup,
   Grid,
@@ -10,6 +9,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
@@ -23,12 +23,18 @@ import './index.scss';
 
 type SolutionCardProps = {
   className?: string;
+  category?: string;
   solution: HelpSolutionType;
 };
 
-const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
+const SolutionHelpCard = ({
+  className,
+  category,
+  solution
+}: SolutionCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
-  const { category: categoryRoute } = useParams<{ category: string }>();
+
+  const { pathname } = useLocation();
 
   return (
     <CardGroup className="flex-column flex-no-wrap">
@@ -51,15 +57,15 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
               <p className="margin-y-0">{solution.acronym}</p>
             )}
 
-            {!categoryRoute &&
-              solution.categories.map(category => (
+            {!category &&
+              solution.categories.map(categoryTag => (
                 <SolutionsTag
                   className="margin-bottom-1 margin-top-05"
-                  key={category}
-                  category={category}
+                  key={categoryTag}
+                  category={categoryTag}
                   route={
                     operationalSolutionCategoryMap[
-                      category as OperationalSolutionCategories
+                      categoryTag as OperationalSolutionCategories
                     ].route
                   }
                 />
@@ -82,13 +88,16 @@ const SolutionHelpCard = ({ className, solution }: SolutionCardProps) => {
           <div>
             <Divider />
 
-            <Button
-              type="button"
+            <UswdsReactLink
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+              to={{
+                pathname: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/about`,
+                state: { prev: pathname }
+              }}
             >
               {t('aboutSolution')}
               <IconArrowForward className="margin-left-1" />
-            </Button>
+            </UswdsReactLink>
           </div>
         </div>
       </Card>

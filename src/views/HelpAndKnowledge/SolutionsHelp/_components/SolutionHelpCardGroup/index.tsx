@@ -15,29 +15,41 @@ import './index.scss';
 type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
+  category?: string;
   setResultsNum: (offset: number) => void;
   isQuery: boolean;
 };
 
 function Solutions({
-  currentSolutions
+  currentSolutions,
+  category
 }: {
   currentSolutions: HelpSolutionType[];
+  category?: string;
 }) {
   return (
     <Grid row gap={2} className="margin-bottom-2">
       {currentSolutions.map(solution => (
         <Grid tablet={{ col: 4 }} key={solution.key}>
-          <SolutionHelpCard solution={solution} />
+          <SolutionHelpCard solution={solution} category={category} />
         </Grid>
       ))}
     </Grid>
   );
 }
 
+export interface LocationSolutionProps {
+  pathname: string;
+  state: {
+    prev?: string;
+  };
+  prev?: string;
+}
+
 const SolutionHelpCardGroup = ({
   className,
   solutions,
+  category,
   setResultsNum,
   isQuery
 }: SolutionHelpCardGroupProps) => {
@@ -45,6 +57,9 @@ const SolutionHelpCardGroup = ({
   const { t: h } = useTranslation('generalReadOnly');
 
   const { pathname } = useLocation();
+  const location: LocationSolutionProps = useLocation();
+
+  const locationState = location?.state;
 
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 9;
@@ -60,9 +75,15 @@ const SolutionHelpCardGroup = ({
     setResultsNum(newOffset + itemsPerPage);
   };
 
+  const solutionRoute = '/help-and-knowledge/operational-solutions/solutions';
+
   useEffect(() => {
-    setItemOffset(0);
-  }, [pathname, isQuery]);
+    if (
+      !pathname.includes(solutionRoute) &&
+      (!locationState || !locationState?.prev?.includes(solutionRoute))
+    )
+      setItemOffset(0);
+  }, [pathname, isQuery, locationState]);
 
   useEffect(() => {
     setResultsNum(currentItems.length);
@@ -91,7 +112,7 @@ const SolutionHelpCardGroup = ({
         </Alert>
       ) : (
         <>
-          <Solutions currentSolutions={currentItems} />
+          <Solutions currentSolutions={currentItems} category={category} />
           {pageCount > 1 && (
             <ReactPaginate
               breakLabel="..."

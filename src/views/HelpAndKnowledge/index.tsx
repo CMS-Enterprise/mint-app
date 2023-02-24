@@ -26,6 +26,13 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       <Route
+        path="/help-and-knowledge/operational-solutions/solutions/:solution/:page?"
+        exact
+      >
+        <SolutionsHelp />
+      </Route>
+
+      <Route
         path="/help-and-knowledge/operational-solutions/categories/:category"
         exact
       >

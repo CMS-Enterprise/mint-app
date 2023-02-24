@@ -343,6 +343,11 @@ const helpAndKnowledge = {
     content:
       'Please double-check your search and try again. If you’re searching for a solution that you believe should be a part of MINT, please contact the MINT Team at '
   },
+  navigation: {
+    about: 'About this solution',
+    timeline: 'Timeline',
+    'points-of-contact': 'Points of contact'
+  },
 
   categories: solutionCategoryies,
   solutions

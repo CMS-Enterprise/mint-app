@@ -1,0 +1,105 @@
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import ReactModal from 'react-modal';
+import { useHistory, useLocation } from 'react-router-dom';
+import { GridContainer, IconClose } from '@trussworks/react-uswds';
+
+import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
+import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
+
+import { LocationSolutionProps } from '../../_components/SolutionHelpCardGroup';
+import { HelpSolutionType } from '../../solutionsMap';
+import Header from '../_components/Header';
+import About from '../About';
+import PointsOfContact from '../PointsOfContact';
+import Timeline from '../Timeline';
+
+import './index.scss';
+
+const subComponents = (solution: HelpSolutionType): subComponentsProps => ({
+  about: {
+    route: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/about`,
+    helpRoute: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/about`,
+    component: <About />
+  },
+  timeline: {
+    route: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/timeline`,
+    helpRoute: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/timeline`,
+    component: <Timeline />
+  },
+  'points-of-contact': {
+    route: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/points-of-contact`,
+    helpRoute: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/points-of-contact`,
+    component: <PointsOfContact />
+  }
+});
+
+type SolutionDetailsModalProps = {
+  solution: HelpSolutionType;
+};
+
+const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
+  const { t } = useTranslation('helpAndKnowledge');
+
+  const history = useHistory();
+  const { pathname } = useLocation();
+
+  const location: LocationSolutionProps = useLocation();
+  const locationState = location?.state;
+
+  const [prev] = useState<string | undefined>(locationState?.prev);
+
+  const [isOpen, setIsOpen] = useState<boolean>(!!solution);
+
+  useEffect(() => {
+    setIsOpen(!!solution);
+  }, [solution]);
+
+  const closeModal = () =>
+    history.push(prev || '/help-and-knowledge/operational-solutions', {
+      prev: pathname
+    });
+
+  const renderModal = () => {
+    return (
+      <ReactModal
+        isOpen={isOpen}
+        overlayClassName="mint-discussions__overlay overflow-y-scroll"
+        className="mint-discussions__content solution-details-modal"
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick
+        contentLabel={t('ariaLabel')}
+        appElement={document.getElementById('root')! as HTMLElement}
+      >
+        <div data-testid="discussion-modal">
+          <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
+            <button
+              type="button"
+              data-testid="close-discussions"
+              className="mint-discussions__x-button margin-right-2"
+              aria-label="Close Modal"
+              onClick={closeModal}
+            >
+              <IconClose size={4} className="text-base" />
+            </button>
+            <h4 className="margin-0">{t('operationalSolutions')}</h4>
+          </div>
+
+          <Header solution={solution} />
+
+          <GridContainer className="padding-y-8 margin-left-0">
+            <SideNav
+              subComponents={subComponents(solution)}
+              isHelpArticle
+              solutionNavigation
+            />
+          </GridContainer>
+        </div>
+      </ReactModal>
+    );
+  };
+
+  return <>{renderModal()}</>;
+};
+
+export default SolutionDetailsModal;
