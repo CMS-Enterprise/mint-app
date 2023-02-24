@@ -7,7 +7,7 @@ import PageHeading from 'components/PageHeading';
 
 // import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
-import OperationalSolutionsHelp from './SolutionsHelp/SolutionCategories';
+import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -38,7 +38,7 @@ export const HelpAndKnowledgeHome = () => {
         {/* <ArticlePageInfo /> */}
       </GridContainer>
 
-      <OperationalSolutionsHelp />
+      <SolutionCategories />
     </MainContent>
   );
 };

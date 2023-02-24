@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import UswdsReactLink from 'components/LinkWrapper';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
-import CategoryCard from '../_components/CategoryCard';
-import { operationalSolutionCategoryMap } from '../solutionsMap';
+import { operationalSolutionCategoryMap } from '../../solutionsMap';
+import CategoryCard from '../CategoryCard';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
