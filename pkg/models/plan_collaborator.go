@@ -8,7 +8,7 @@ import (
 // FullName and Email are stored as a result from the initial CEDAR query that's made when we create the collaborator
 // This _could_ cause drift if either of these values change in CEDAR, but it's unlikely.
 type PlanCollaborator struct {
-	baseStructUserTable
+	baseStruct
 	modelPlanRelation
 	userIDRelation
 	TeamRole TeamRole `json:"teamRole" db:"team_role"`
@@ -18,10 +18,10 @@ type PlanCollaborator struct {
 func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRole TeamRole) *PlanCollaborator {
 	return &PlanCollaborator{
 		// UserID:              userID,
-		userIDRelation:      NewUserIDRelation(userID),
-		TeamRole:            teamRole,
-		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
-		baseStructUserTable: NewBaseStructUser(createdBy),
+		userIDRelation:    NewUserIDRelation(userID),
+		TeamRole:          teamRole,
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+		baseStruct:        NewBaseStruct(createdBy),
 	}
 }
 

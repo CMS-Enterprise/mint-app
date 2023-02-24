@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, GcPartCDType, GcCollectBidsType, GcUpdateContractType, PpToAdvertiseType, PpCollectScoreReviewType, PpAppSupportContractorType, PpCommunicateWithParticipantType, PpManageProviderOverlapType, BManageBeneficiaryOverlapType, OelHelpdeskSupportType, OelManageAcoType, OelPerformanceBenchmarkType, OelProcessAppealsType, OelEvaluationContractorType, OelCollectDataType, OelObtainDataType, OelClaimsBasedMeasuresType, OelQualityScoresType, OelSendReportsType, OelLearningContractorType, OelParticipantCollaborationType, OelEducateBeneficiariesType, PMakeClaimsPaymentsType, PInformFfsType, PNonClaimsBasedPaymentsType, PSharedSavingsPlanType, PRecoverPaymentsType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllModelData
@@ -165,92 +165,6 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   agreementTypesOther: string | null;
   multiplePatricipationAgreementsNeeded: boolean | null;
   multiplePatricipationAgreementsNeededNote: string | null;
-}
-
-export interface GetAllModelData_modelPlanCollection_itTools {
-  __typename: "PlanITTools";
-  id: UUID;
-  gcPartCD: GcPartCDType[];
-  gcPartCDOther: string | null;
-  gcPartCDNote: string | null;
-  gcCollectBids: GcCollectBidsType[];
-  gcCollectBidsOther: string | null;
-  gcCollectBidsNote: string | null;
-  gcUpdateContract: GcUpdateContractType[];
-  gcUpdateContractOther: string | null;
-  gcUpdateContractNote: string | null;
-  ppToAdvertise: PpToAdvertiseType[];
-  ppToAdvertiseOther: string | null;
-  ppToAdvertiseNote: string | null;
-  ppCollectScoreReview: PpCollectScoreReviewType[];
-  ppCollectScoreReviewOther: string | null;
-  ppCollectScoreReviewNote: string | null;
-  ppAppSupportContractor: PpAppSupportContractorType[];
-  ppAppSupportContractorOther: string | null;
-  ppAppSupportContractorNote: string | null;
-  ppCommunicateWithParticipant: PpCommunicateWithParticipantType[];
-  ppCommunicateWithParticipantOther: string | null;
-  ppCommunicateWithParticipantNote: string | null;
-  ppManageProviderOverlap: PpManageProviderOverlapType[];
-  ppManageProviderOverlapOther: string | null;
-  ppManageProviderOverlapNote: string | null;
-  bManageBeneficiaryOverlap: BManageBeneficiaryOverlapType[];
-  bManageBeneficiaryOverlapOther: string | null;
-  bManageBeneficiaryOverlapNote: string | null;
-  oelHelpdeskSupport: OelHelpdeskSupportType[];
-  oelHelpdeskSupportOther: string | null;
-  oelHelpdeskSupportNote: string | null;
-  oelManageAco: OelManageAcoType[];
-  oelManageAcoOther: string | null;
-  oelManageAcoNote: string | null;
-  oelPerformanceBenchmark: OelPerformanceBenchmarkType[];
-  oelPerformanceBenchmarkOther: string | null;
-  oelPerformanceBenchmarkNote: string | null;
-  oelProcessAppeals: OelProcessAppealsType[];
-  oelProcessAppealsOther: string | null;
-  oelProcessAppealsNote: string | null;
-  oelEvaluationContractor: OelEvaluationContractorType[];
-  oelEvaluationContractorOther: string | null;
-  oelEvaluationContractorNote: string | null;
-  oelCollectData: OelCollectDataType[];
-  oelCollectDataOther: string | null;
-  oelCollectDataNote: string | null;
-  oelObtainData: OelObtainDataType[];
-  oelObtainDataOther: string | null;
-  oelObtainDataNote: string | null;
-  oelClaimsBasedMeasures: OelClaimsBasedMeasuresType[];
-  oelClaimsBasedMeasuresOther: string | null;
-  oelClaimsBasedMeasuresNote: string | null;
-  oelQualityScores: OelQualityScoresType[];
-  oelQualityScoresOther: string | null;
-  oelQualityScoresNote: string | null;
-  oelSendReports: OelSendReportsType[];
-  oelSendReportsOther: string | null;
-  oelSendReportsNote: string | null;
-  oelLearningContractor: OelLearningContractorType[];
-  oelLearningContractorOther: string | null;
-  oelLearningContractorNote: string | null;
-  oelParticipantCollaboration: OelParticipantCollaborationType[];
-  oelParticipantCollaborationOther: string | null;
-  oelParticipantCollaborationNote: string | null;
-  oelEducateBeneficiaries: OelEducateBeneficiariesType[];
-  oelEducateBeneficiariesOther: string | null;
-  oelEducateBeneficiariesNote: string | null;
-  pMakeClaimsPayments: PMakeClaimsPaymentsType[];
-  pMakeClaimsPaymentsOther: string | null;
-  pMakeClaimsPaymentsNote: string | null;
-  pInformFfs: PInformFfsType[];
-  pInformFfsOther: string | null;
-  pInformFfsNote: string | null;
-  pNonClaimsBasedPayments: PNonClaimsBasedPaymentsType[];
-  pNonClaimsBasedPaymentsOther: string | null;
-  pNonClaimsBasedPaymentsNote: string | null;
-  pSharedSavingsPlan: PSharedSavingsPlanType[];
-  pSharedSavingsPlanOther: string | null;
-  pSharedSavingsPlanNote: string | null;
-  pRecoverPayments: PRecoverPaymentsType[];
-  pRecoverPaymentsOther: string | null;
-  pRecoverPaymentsNote: string | null;
 }
 
 export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
@@ -489,7 +403,6 @@ export interface GetAllModelData_modelPlanCollection {
   discussions: GetAllModelData_modelPlanCollection_discussions[];
   collaborators: GetAllModelData_modelPlanCollection_collaborators[];
   generalCharacteristics: GetAllModelData_modelPlanCollection_generalCharacteristics;
-  itTools: GetAllModelData_modelPlanCollection_itTools;
   opsEvalAndLearning: GetAllModelData_modelPlanCollection_opsEvalAndLearning;
   participantsAndProviders: GetAllModelData_modelPlanCollection_participantsAndProviders;
   payments: GetAllModelData_modelPlanCollection_payments;
