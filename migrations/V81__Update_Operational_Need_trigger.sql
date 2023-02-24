@@ -3,6 +3,7 @@ DECLARE
     h_old hstore;
     h_new hstore;
     modified_by_id UUID;
+    model_plan_id UUID;
     h_changed HSTORE;
 BEGIN
 
@@ -16,8 +17,10 @@ BEGIN
     h_old= hstore(OLD.*);
     h_changed = (h_new - h_old);
     modified_by_id = h_new -> 'modified_by';
+    model_plan_id = h_new -> 'model_plan_id';
+    RAISE NOTICE 'SET_OPERATIONAL_NEED_NEEDED called.  Modified_by_id %, model_plan_id = % and  hstore = %', Modified_by_id,model_plan_id, h_changed;
 With NeedUpdates AS (
-    SELECT * FROM get_Need_Needed(TG_TABLE_NAME::text,h_changed)
+    SELECT * FROM GET_Need_Needed(TG_TABLE_NAME::text, model_plan_id, h_changed)
 )
 
 UPDATE operational_need

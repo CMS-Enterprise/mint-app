@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION GET_NEED_NEEDED( table_name TEXT, h_changed HSTORE ) --TODO: we could make this take an array if want
+CREATE OR REPLACE FUNCTION GET_NEED_NEEDED( table_name TEXT, model_plan_idParam UUID, h_changed HSTORE ) --TODO: we could make this take an array if want
 RETURNS TABLE (
     operational_need_id UUID,
     need_key OPERATIONAL_NEED_KEY,
@@ -9,7 +9,9 @@ RETURNS TABLE (
     needed BOOLEAN
 )
 AS $$
-	BEGIN RETURN QUERY
+	BEGIN 
+	RAISE NOTICE 'GET_NEED_NEEDED called.  table_name % and  hstore = %', table_name,h_changed;
+	RETURN QUERY
     WITH NeedConditions AS
     (
         SELECT 
@@ -27,7 +29,7 @@ AS $$
     NeedConditions.need_key,
     NeedConditions.trigger_col,
     NeedConditions.trigger_vals,
-    (h_changed -> 'model_plan_id')::UUID AS model_plan_id,
+	model_plan_idParam AS model_plan_id,
     (h_changed -> NeedConditions.trigger_col)::TEXT[] AS vals,
     starts_with(((h_changed -> NeedConditions.trigger_col)::TEXT[])[1], '{') AS nested
     FROM NeedConditions
