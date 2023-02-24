@@ -1,15 +1,14 @@
--- DROP FUNCTION get_Need_Needed
-CREATE OR REPLACE FUNCTION get_Need_Needed( table_name text, h_changed hstore )
-	RETURNS TABLE (
-		id int, --TODO, do we want to return the UUID of the actual operational need? Or just the ID of the possible need?
-		need_key OPERATIONAL_NEED_KEY,
-		trigger_col text[],
-		trigger_vals text[],
-		retVals text[],
-		model_plan_id UUID,
-		needed BOOLEAN
-	)
-	AS $$
+CREATE OR REPLACE FUNCTION GET_NEED_NEEDED( table_name TEXT, h_changed HSTORE ) --TODO: we could make this take an array if want
+RETURNS TABLE (
+    operational_need_id UUID,
+    need_key OPERATIONAL_NEED_KEY,
+    trigger_col TEXT[],
+    trigger_vals TEXT[],
+    retVals TEXT[],
+    model_plan_id UUID,
+    needed BOOLEAN
+)
+AS $$
 	BEGIN RETURN QUERY
     WITH NeedConditions AS
     (
@@ -29,7 +28,6 @@ CREATE OR REPLACE FUNCTION get_Need_Needed( table_name text, h_changed hstore )
     NeedConditions.trigger_col,
     NeedConditions.trigger_vals,
     (h_changed -> 'model_plan_id')::UUID AS model_plan_id,
---     h_changed -> 'modified_by' AS modified_by,
     (h_changed -> NeedConditions.trigger_col)::TEXT[] AS vals,
     starts_with(((h_changed -> NeedConditions.trigger_col)::TEXT[])[1], '{') AS nested
     FROM NeedConditions
@@ -42,7 +40,6 @@ CREATE OR REPLACE FUNCTION get_Need_Needed( table_name text, h_changed hstore )
         normalNeeds.trigger_col,
         normalNeeds.trigger_vals,
 		normalNeeds.model_plan_id,
--- 		normalNeeds.modified_by,
 		unnest(vals)::TEXT[] AS vals --If it has a nested array, unnest it
 		FROM normalNeeds
 		WHERE nested = true
@@ -54,7 +51,6 @@ CREATE OR REPLACE FUNCTION get_Need_Needed( table_name text, h_changed hstore )
         normalNeeds.trigger_col,
         normalNeeds.trigger_vals,
 		normalNeeds.model_plan_id,
--- 		normalNeeds.modified_by,
 		vals::TEXT[] AS vals
 		FROM
 		normalNeeds WHERE nested = false OR nested IS null --false and null
@@ -76,11 +72,25 @@ CREATE OR REPLACE FUNCTION get_Need_Needed( table_name text, h_changed hstore )
 		FROM Combined
     )
 	
-	SELECT * from NeedUpdates;
+	SELECT 
+	operational_need.ID,
+	NeedUpdates.need_key,
+	NeedUpdates.trigger_col,
+	NeedUpdates.trigger_vals,
+	NeedUpdates.vals,
+	NeedUpdates.model_plan_id,
+	NeedUpdates.needed
+	from NeedUpdates
+	LEFT JOIN operational_need on operational_need.model_plan_id = NeedUpdates.model_plan_id AND operational_need.need_type = NeedUpdates.id;
 
 
 	END; $$
 LANGUAGE 'plpgsql';
+COMMENT ON FUNCTION GET_NEED_NEEDED IS
+'This function analyzes a change set to see if a need is needed or not
+It first casts the rows at h_stores and compares which fields have changed. If any of the changed fields match (?|) a value from trigger_cols it gets inserted in NeedConditions CTE.
+From there, it checks all the current values (NEW) for the trigger col, and checks if any of them satisfy the trigger_vals (&&). 
+If it does, the need is set to needed = true, else needed = false.';
 
-	-- SELECT 	* FROM	get_Need_Needed('plan_participants_and_providers',
-	-- 						(SELECT hstore(PPP) FROM plan_participants_and_providers AS ppp WHERE ppp.model_plan_id = 'f8f4a93a-bf67-41f7-860e-da44ecd38fc9'))
+    -- SELECT 	* FROM	GET_Need_Needed('plan_participants_and_providers',
+    -- 						(SELECT hstore(PPP) FROM plan_participants_and_providers AS ppp WHERE ppp.model_plan_id = 'f8f4a93a-bf67-41f7-860e-da44ecd38fc9'))
