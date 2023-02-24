@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -8,8 +8,8 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
 import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
+import { RouterContext } from 'views/RouterContext';
 
-import { LocationSolutionProps } from '../../_components/SolutionHelpCardGroup';
 import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
 import Header from '../_components/Header';
@@ -51,15 +51,21 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
   const history = useHistory();
   const { pathname } = useLocation();
 
-  const location: LocationSolutionProps = useLocation();
-  const locationState = location?.state;
+  const { to } = useContext(RouterContext);
 
   // Used to maintain state of view underneath modal when route changes
-  const [prev] = useState<string | undefined>(locationState?.prev);
+  const [prev, setPrev] = useState<string | undefined>(to);
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
   const isMobile = useCheckResponsiveScreen('tablet');
+
+  // This sets and maintains the existing route before opening the modal
+  useEffect(() => {
+    if (!prev) {
+      setPrev(to);
+    }
+  }, [to, prev]);
 
   useEffect(() => {
     setIsOpen(!!solution);
