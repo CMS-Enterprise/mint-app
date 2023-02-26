@@ -55,6 +55,8 @@ const SolutionDetailsModal = ({
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
+  const [prevRoute] = useState<string | undefined>(openedFrom);
+
   const isMobile = useCheckResponsiveScreen('tablet');
 
   useEffect(() => {
@@ -63,7 +65,7 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(openedFrom || '/help-and-knowledge/operational-solutions');
+    history.push(prevRoute || '/help-and-knowledge/operational-solutions');
   };
 
   const renderModal = () => {
