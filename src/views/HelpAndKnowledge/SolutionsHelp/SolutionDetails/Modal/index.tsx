@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
 import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
-import { RouterContext } from 'views/RouterContext';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
@@ -39,9 +38,13 @@ const subComponents = (solution: HelpSolutionType): subComponentsProps => ({
 
 type SolutionDetailsModalProps = {
   solution: HelpSolutionType;
+  openedFrom: string | undefined;
 };
 
-const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
+const SolutionDetailsModal = ({
+  solution,
+  openedFrom
+}: SolutionDetailsModalProps) => {
   const { page } = useParams<{
     page: string;
   }>();
@@ -49,26 +52,10 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
   const history = useHistory();
-  const { pathname } = useLocation();
-
-  const { to, from } = useContext(RouterContext);
-
-  // Used to maintain state of view underneath modal when route changes
-  // Default to solution route if no prev route/refresh/link
-  const [prev, setPrev] = useState<string | undefined>(
-    !from ? '/help-and-knowledge/operational-solutions' : to
-  );
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
   const isMobile = useCheckResponsiveScreen('tablet');
-
-  // This sets and maintains the existing route before opening the modal
-  useEffect(() => {
-    if (!prev && from) {
-      setPrev(to);
-    }
-  }, [to, prev, from]);
 
   useEffect(() => {
     setIsOpen(!!solution);
@@ -76,9 +63,7 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(prev || '/help-and-knowledge/operational-solutions', {
-      prev: pathname
-    });
+    history.push(openedFrom || '/help-and-knowledge/operational-solutions');
   };
 
   const renderModal = () => {

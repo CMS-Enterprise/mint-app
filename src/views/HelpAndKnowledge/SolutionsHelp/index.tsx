@@ -141,7 +141,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   return (
     <div className={classNames(className)}>
-      {selectedSolution && <SolutionDetailsModal solution={selectedSolution} />}
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+        />
+      )}
 
       <SolutionsHeader
         category={prevCategory}
