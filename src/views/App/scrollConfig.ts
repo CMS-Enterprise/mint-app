@@ -1,7 +1,6 @@
 const scrollBlackList: string[] = [
   'read-only',
   'sample-model-plan',
-  '?page=',
   '/help-and-knowledge/operational-solutions'
 ];
 

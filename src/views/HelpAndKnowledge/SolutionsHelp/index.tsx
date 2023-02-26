@@ -1,11 +1,12 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
-import usePrevLocation from 'hooks/usePreviousLocation';
+import useModalScroll from 'hooks/useModalSroll';
+import usePrevLocation from 'hooks/usePrevious';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
@@ -83,7 +84,8 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const location = useLocation();
 
-  const { pathname: prevPathname } = usePrevLocation(location);
+  const prevLocation = usePrevLocation(location);
+  const prevPathname = prevLocation?.pathname;
 
   const { pathname } = location;
 
@@ -91,16 +93,9 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     solution ? prevPathname?.split('/')[4] : category
   );
 
-  // Only scroll when not opening or closing the modal
-  useLayoutEffect(() => {
-    if (
-      !pathname.includes('/operational-solutions/solution') &&
-      !prevPathname.includes('/operational-solutions/solution')
-    ) {
-      window.scrollTo(0, 0);
-    }
-    // eslint-disable-next-line
-  }, [pathname]);
+  // Preserve scroll position when opening/closing modal
+  const modalRoute: string = '/operational-solutions/solution';
+  useModalScroll(modalRoute);
 
   useEffect(() => {
     if (!solution) {

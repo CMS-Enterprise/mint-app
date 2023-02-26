@@ -6,7 +6,7 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
-import usePrevLocation from 'hooks/usePreviousLocation';
+import usePrevLocation from 'hooks/usePrevious';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
@@ -49,7 +49,8 @@ const SolutionHelpCardGroup = ({
   const { t: h } = useTranslation('generalReadOnly');
 
   const location = useLocation();
-  const { search: prevParam } = usePrevLocation(location);
+  const prevLocation = usePrevLocation(location);
+  const prevParam = prevLocation?.search;
 
   const params = new URLSearchParams(location.search || prevParam);
 
@@ -135,6 +136,7 @@ const SolutionHelpCardGroup = ({
               onPageChange={handlePageClick}
               pageRangeDisplayed={5}
               pageCount={pageCount}
+              forcePage={pageNumber}
               previousLabel="< Previous"
             />
           )}
