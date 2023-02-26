@@ -26,7 +26,7 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       <Route
-        path="/help-and-knowledge/operational-solutions/solutions/:solution/:page?"
+        path="/help-and-knowledge/operational-solutions/solution/:solution/:page?"
         exact
       >
         <SolutionsHelp />

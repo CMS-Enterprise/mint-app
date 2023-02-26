@@ -81,7 +81,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/4-innovation/about"
+                    href="/help-and-knowledge/operational-solutions/solution/4-innovation/about"
                   >
                     About this solution
                     <svg
@@ -179,7 +179,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/accountable-care-organization/about"
+                    href="/help-and-knowledge/operational-solutions/solution/accountable-care-organization/about"
                   >
                     About this solution
                     <svg
@@ -278,7 +278,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/automated-plan-payment-system/about"
+                    href="/help-and-knowledge/operational-solutions/solution/automated-plan-payment-system/about"
                   >
                     About this solution
                     <svg
@@ -380,7 +380,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/centralized-data-exchange/about"
+                    href="/help-and-knowledge/operational-solutions/solution/centralized-data-exchange/about"
                   >
                     About this solution
                     <svg
@@ -486,7 +486,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/chronic-conditions-warehouse/about"
+                    href="/help-and-knowledge/operational-solutions/solution/chronic-conditions-warehouse/about"
                   >
                     About this solution
                     <svg
@@ -579,7 +579,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/cms-box/about"
+                    href="/help-and-knowledge/operational-solutions/solution/cms-box/about"
                   >
                     About this solution
                     <svg
@@ -672,7 +672,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/cms-qualtrics/about"
+                    href="/help-and-knowledge/operational-solutions/solution/cms-qualtrics/about"
                   >
                     About this solution
                     <svg
@@ -770,7 +770,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/consolidated-business-operations-support-center/about"
+                    href="/help-and-knowledge/operational-solutions/solution/consolidated-business-operations-support-center/about"
                   >
                     About this solution
                     <svg
@@ -867,7 +867,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solutions/cpi-vetting/about"
+                    href="/help-and-knowledge/operational-solutions/solution/cpi-vetting/about"
                   >
                     About this solution
                     <svg

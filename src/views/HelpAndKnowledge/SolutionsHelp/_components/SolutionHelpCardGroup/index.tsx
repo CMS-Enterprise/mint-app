@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
-import { RouterContext } from 'views/RouterContext';
+import usePrevLocation from 'hooks/usePreviousLocation';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
@@ -18,7 +18,6 @@ type SolutionHelpCardGroupProps = {
   solutions: HelpSolutionType[];
   category?: string;
   setResultsNum: (offset: number) => void;
-  isQuery: boolean;
 };
 
 // Return mapped solution component based on category or query
@@ -40,30 +39,19 @@ function Solutions({
   );
 }
 
-export interface LocationSolutionProps {
-  pathname: string;
-  state: {
-    prev?: string;
-  };
-  prev?: string;
-}
-
 const SolutionHelpCardGroup = ({
   className,
   solutions,
   category,
-  setResultsNum,
-  isQuery
+  setResultsNum
 }: SolutionHelpCardGroupProps) => {
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const { from } = useContext(RouterContext);
+  const location = useLocation();
+  const { search: prevParam } = usePrevLocation(location);
 
-  const fromParam = `?${from?.split('?')[1]}`;
-
-  const { search } = useLocation();
-  const params = new URLSearchParams(search || fromParam);
+  const params = new URLSearchParams(location.search || prevParam);
 
   const page = params.get('page');
 

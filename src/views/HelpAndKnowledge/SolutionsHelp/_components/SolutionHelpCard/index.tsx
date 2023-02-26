@@ -91,7 +91,7 @@ const SolutionHelpCard = ({
             <UswdsReactLink
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
               to={{
-                pathname: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/about`,
+                pathname: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
                 state: { prev: pathname }
               }}
             >

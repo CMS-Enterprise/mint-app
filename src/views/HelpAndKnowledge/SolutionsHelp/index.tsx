@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
-import { RouterContext } from 'views/RouterContext';
+import usePrevLocation from 'hooks/usePreviousLocation';
 
 import CategoryFooter from './_components/CategoryFooter';
-import SolutionHelpCardGroup, {
-  LocationSolutionProps
-} from './_components/SolutionHelpCardGroup';
+import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
 import SolutionsHeader from './_components/SolutionsHeader';
 import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
@@ -83,15 +81,26 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     solution: string;
   }>();
 
-  const location: LocationSolutionProps = useLocation();
+  const location = useLocation();
+
+  const { pathname: prevPathname } = usePrevLocation(location);
 
   const { pathname } = location;
 
-  const { to, from } = useContext(RouterContext);
-
   const [prevCategory, setPrevCategory] = useState<string | undefined>(
-    solution ? from?.split('/')[4] : category
+    solution ? prevPathname?.split('/')[4] : category
   );
+
+  // Only scroll when not opening or closing the modal
+  useLayoutEffect(() => {
+    if (
+      !pathname.includes('/operational-solutions/solution') &&
+      !prevPathname.includes('/operational-solutions/solution')
+    ) {
+      window.scrollTo(0, 0);
+    }
+    // eslint-disable-next-line
+  }, [pathname]);
 
   useEffect(() => {
     if (!solution) {
@@ -110,16 +119,14 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   // Also preserves the query when the modal is open/closed
   useEffect(() => {
     if (
-      from &&
+      prevPathname &&
       pathname &&
-      to &&
-      !from?.includes('/operational-solutions/solutions') &&
-      !to?.includes('/operational-solutions/solutions') &&
-      !pathname?.includes('/operational-solutions/solutions')
+      !prevPathname?.includes('/operational-solutions/solution') &&
+      !pathname?.includes('/operational-solutions/solution')
     ) {
       setQuery('');
     }
-  }, [pathname, prevCategory, to, from]);
+  }, [pathname, prevCategory, prevPathname]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
@@ -153,7 +160,6 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
         solutions={solutions}
         setResultsNum={setResultsNum}
         category={prevCategory}
-        isQuery={!!query}
       />
 
       <GridContainer className="margin-top-4">

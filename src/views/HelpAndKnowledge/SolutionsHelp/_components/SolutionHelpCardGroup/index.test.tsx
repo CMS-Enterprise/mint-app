@@ -16,7 +16,6 @@ describe('Operation Solution Help Card Group', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionHelpCardGroup
             solutions={helpSolutions}
-            isQuery={false}
             setResultsNum={() => null}
           />
         </Route>
@@ -48,7 +47,6 @@ describe('Operation Solution Help Card Group', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionHelpCardGroup
             solutions={helpSolutions}
-            isQuery={false}
             setResultsNum={() => null}
           />
         </Route>

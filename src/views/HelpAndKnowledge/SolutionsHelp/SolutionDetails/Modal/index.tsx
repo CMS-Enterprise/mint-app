@@ -21,18 +21,18 @@ import './index.scss';
 
 const subComponents = (solution: HelpSolutionType): subComponentsProps => ({
   about: {
-    route: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/about`,
-    helpRoute: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/about`,
+    route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
+    helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
     component: <About />
   },
   timeline: {
-    route: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/timeline`,
-    helpRoute: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/timeline`,
+    route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/timeline`,
+    helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/timeline`,
     component: <Timeline />
   },
   'points-of-contact': {
-    route: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/points-of-contact`,
-    helpRoute: `/help-and-knowledge/operational-solutions/solutions/${solution.route}/points-of-contact`,
+    route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/points-of-contact`,
+    helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/points-of-contact`,
     component: <PointsOfContact />
   }
 });
@@ -75,12 +75,11 @@ const SolutionDetailsModal = ({ solution }: SolutionDetailsModalProps) => {
   }, [solution]);
 
   // On modal close, returns to previous route state if present
-  const closeModal = () =>
+  const closeModal = () => {
     history.push(prev || '/help-and-knowledge/operational-solutions', {
       prev: pathname
     });
-
-  // console.log(prev);
+  };
 
   const renderModal = () => {
     return (
