@@ -12,7 +12,7 @@ export type OktaUserType = {
 
 type OktaHookProps = {
   contacts: OktaUserType[];
-  queryOktaUsers: (commonName: string) => void;
+  queryOktaUsers: (searchTerm: string) => void;
   loading: boolean;
 };
 
@@ -30,7 +30,7 @@ function useOktaUserLookup(
   const { data, previousData, loading } = useQuery<SearchOktaUsersType>(
     SearchOktaUsers,
     {
-      variables: { commonName: searchTerm },
+      variables: { searchTerm },
       skip: !searchTerm || searchTerm.length < 3 || userSelected
     }
   );
