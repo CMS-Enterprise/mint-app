@@ -60,6 +60,7 @@ const solutions = {
       components: [
         {
           header: 'Product capabilties',
+          level: 'h3',
           itemHeaders: [
             'Agreement management',
             'Participant Management',
@@ -107,6 +108,7 @@ const solutions = {
       components: [
         {
           header: 'Product capabilties',
+          level: 'h3',
           itemHeaders: [
             'Agreement management',
             'Participant Management',
@@ -154,6 +156,7 @@ const solutions = {
       components: [
         {
           header: 'Functions',
+          level: 'h3',
           items: [
             'Computes plan level monthly payments to Medicare Advantage, PACE Plans Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, and Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS receives plan level specific from the Health Plan Management System (HPMS) and Medicare Advantage Prescription Drug System (MARx)',
             'Receives Annual Part D reconciliation and Coverage Gap Discount payments',
@@ -174,6 +177,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       components: [
         {
           header: 'Functions',
+          level: 'h3',
           items: [
             'Onboard participants & vendors',
             'Tap into existing data feeds',
@@ -187,6 +191,7 @@ The business function of CDX is a centralized data exchange to enable interopera
         },
         {
           header: 'Product capabilities',
+          level: 'h3',
           items: [
             'Manage API keys and tokens',
             'Basic API functions (GET, POST, PUT, DELETE)',
@@ -220,6 +225,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
       components: [
         {
           header: 'Functions',
+          level: 'h3',
           description: `CCW provides researchers with Medicare and Medicaid beneficiary, claims, and assessment data linked by beneficiary across the continuum of care. In the past, researchers analyzing data files had to perform extensive analysis related to beneficiary matching, deduplication, and merging of the files in preparation for their study analysis. With the CCW data, this preliminary linkage work is already accomplished and delivered as part of the data files sent to researchers. 
 
 Performing model implementation, design, monitoring, and evaluation activities that include: `,
@@ -234,6 +240,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         },
         {
           header: 'Product capabilities',
+          level: 'h3',
           items: [
             'Follow beneficiaries across multiple care settings',
             'Identify areas for improving quality of care provided to chronically ill Medicare beneficiaries.',
@@ -285,6 +292,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
       components: [
         {
           header: 'Functions',
+          level: 'h3',
           items: [
             'Receive data from CMMI (claims data, feedback reports)',
             'Produce Business Intelligence (BI) reports and dashboards for internal and external uers',
@@ -293,6 +301,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         },
         {
           header: 'Capabilities',
+          level: 'h3',
           items: [
             'Provide up to date (quarterly) dashboards for model participants (practices and physicians)',
             'Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.',
@@ -323,6 +332,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
       components: [
         {
           header: 'Capabilities',
+          level: 'h3',
           items: [
             'Reach subscribers by email',
             'Automate and schedule emails',
@@ -355,6 +365,7 @@ Specific to CMMI, HIGLAS has two integrated points:`,
       components: [
         {
           header: 'Functions',
+          level: 'h3',
           items: [
             'Strengthens Medicare’s management of accounts receivable and allows more timely and effective collection activities on outstanding debts',
             'Enhances CMS oversight of contractor financial operations, including data entry, transaction processing and reporting',
@@ -372,18 +383,109 @@ Specific to CMMI, HIGLAS has two integrated points:`,
     about: {
       description: `Health Data Reporting (HDR) is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. HDR is part of the Innovation Support Platform (ISP) Suite of tools that include Expanded Data Feedback Reporting (eDFR) for business analysis and Centralized Data Exchange (CDX) for data exchange within the Suite and across CMS.
 
-    HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
+HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
     
-    HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`
+HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`,
+      components: [
+        {
+          header: 'Functions',
+          level: 'h3',
+          items: [
+            'A model’s participating entities submit model-specified data at specified times throughout the model’s life. Submitted data is validated, errors are reported back for correction, and submission statuses are reported within the UI for monitoring.'
+          ]
+        },
+        {
+          header: 'Data collection capabilities',
+          level: 'h3',
+          items: []
+        },
+        {
+          header: 'Health data submissions via Microsoft Excel spreadsheets',
+          level: 'h4',
+          items: [
+            'Health data submissions via Microsoft Excel spreadsheets',
+            'Aggregate quality measure (i.e., numerators, denominators, exclusions, exceptions)',
+            'All other types of health-related data (e.g., clinical data, health equity data, etc.)'
+          ]
+        },
+        {
+          header: 'Health data submissions via UI',
+          level: 'h4',
+          items: ['Aggregate quality measures']
+        },
+        {
+          header: 'Model configuration',
+          level: 'h4',
+          items: [
+            'Model configuration',
+            'Basic configuration (field names aligned with AMS)',
+            'Model year, performance periods, and submission periods configuration',
+            'Quality measure with optional results display configuration',
+            'Pre-loaded beneficiary information including minimum thresholds for reporting',
+            'Two-tier data validation and status reporting leverages: 1) Microsoft Excel’s in-cell validations and 2) HDR’s backend services'
+          ]
+        },
+        {
+          header: 'Quality measure results',
+          level: 'h4',
+          items: ['Aggregate quality measure calculation results report']
+        }
+      ]
     }
   },
   healthPlanManagement: {
     about: {
       description: `The Centers for Medicare & Medicaid Services' (CMS) Health Plan Management System (HPMS) is a web-enabled information system that serves a critical role in the ongoing operations of the Medicare Advantage (MA) and Part D programs.
 
-    HPMS is a full-service website where health and drug plans, plan consultants, third-party vendors, and pharmaceutical manufacturers can work with CMS to fulfill the plan enrollment and compliance requirements of the Medicare Advantage (MA) and Prescription Drug (Part D) programs.
+HPMS is a full-service website where health and drug plans, plan consultants, third-party vendors, and pharmaceutical manufacturers can work with CMS to fulfill the plan enrollment and compliance requirements of the Medicare Advantage (MA) and Prescription Drug (Part D) programs.
     
-    Health Plan Management System, all health insurance companies participating in the MAPD program use this interface to communicate with CM for their contracting, actuarial, coverage, marketing, and enrollment in the MA and Part D programs.`
+Health Plan Management System, all health insurance companies participating in the MAPD program use this interface to communicate with CM for their contracting, actuarial, coverage, marketing, and enrollment in the MA and Part D programs.`,
+      components: [
+        {
+          header: 'Functions',
+          description: 'HPMS services the MA and Part D programs in two ways:',
+          ordered: true,
+          level: 'h3',
+          items: [
+            'HPMS functionality facilitates the numerous data collection and reporting activities mandated for these entities by legislation.',
+            'HPMS provides support for the ongoing operations of the plan enrollment and plan compliance business functions and for longer-term strategic planning and program analysis.'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          description:
+            'HPMS supports the following business processes for all private health and drug plans participating in the MA and Part D programs:',
+          level: 'h3',
+          items: [
+            'Contract and plan enumeration and management',
+            'Application submission and review',
+            'Formulary submission and review',
+            'Bid and benefit package submission and review',
+            'Electronic contracting and certifications',
+            'Marketing material submission and review',
+            'Audit and assessment of plan performance',
+            'Plan payment reconciliation data reporting',
+            'Part D drug pricing and pharmacy data submissions',
+            'Fiscal soundness',
+            'Complaint tracking',
+            'Compliance',
+            'Plan data reporting and performance metrics',
+            'Financial, plan bid, and plan data reporting audits',
+            'Coverage gap discount program',
+            'Electronic health record reporting',
+            'Cost reporting and audit',
+            'Plan connectivity',
+            'Operational data exchanges',
+            'Online Enrollment Center (OEC) management',
+            'Data support for the Medicare & You handbook and Medicare Plan Finder',
+            'Quality improvement',
+            'Research and evaluation',
+            'Manage stakeholder contacts and organizations',
+            'Track events (campaigns) and capture feedback (surveys)',
+            'Measure event registration, attendance, and performance'
+          ]
+        }
+      ]
     }
   },
   innovationPayment: {

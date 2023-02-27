@@ -415,38 +415,52 @@ export const helpSolutions: HelpSolutionType[] = [
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
     )
+  },
+  {
+    enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
+    key: 'healthDataReporting',
+    route: 'health-data-reporting',
+    categories: [OperationalSolutionCategories.QUALITY],
+    acronym: 'HDR',
+    name: 'Health Data Reporting',
+    pointsOfContact: [
+      {
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.HPMS,
+    key: 'healthPlanManagement',
+    route: 'health-plan-management-system',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    acronym: 'HPMS',
+    name: 'Health Plan Management System',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
   }
-  // {
-  //   enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
-  //   key: 'healthDataReporting',
-  //   route: 'health-data-reporting',
-  //   categories: [OperationalSolutionCategories.QUALITY],
-  //   acronym: 'HDR',
-  //   name: 'Health Data Reporting',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Hung Van',
-  //       email: 'hung.van@cms.hhs.gov',
-  //       role: 'Technical Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.HPMS,
-  //   key: 'healthPlanManagement',
-  //   route: 'health-plan-management-system',
-  //   categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-  //   acronym: 'HPMS',
-  //   name: 'Health Plan Management System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
   // {
   //   enum: OperationalSolutionKey.IPC,
   //   key: 'innovationPayment',

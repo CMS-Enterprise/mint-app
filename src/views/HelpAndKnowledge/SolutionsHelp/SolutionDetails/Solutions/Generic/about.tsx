@@ -10,7 +10,10 @@ type ListItemType = {
 
 type AboutComponentType = {
   header: string;
-  items: string[] | AboutComponentType;
+  description?: string;
+  level?: 'h3' | 'h4';
+  items: string[] | ListItemType;
+  ordered?: boolean;
 };
 
 type AboutConfigType = {
@@ -19,6 +22,11 @@ type AboutConfigType = {
   ordered?: boolean;
   components: AboutComponentType[];
 };
+
+const returnListType = (
+  ordered: boolean | undefined
+): keyof JSX.IntrinsicElements =>
+  `${ordered ? 'o' : 'u'}l` as keyof JSX.IntrinsicElements;
 
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -37,12 +45,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const hasComponents = Array.isArray(components);
 
   // Render ordered list or unordered dynaically
-  const ListType = `${
-    isDescriptionItemsOrdered ? 'o' : 'u'
-  }l` as keyof JSX.IntrinsicElements;
+  const ListType = returnListType(isDescriptionItemsOrdered);
 
   return (
-    <div>
+    <div className="line-height-body-5 font-body-md">
       <p className="margin-top-0 text-pre-wrap margin-bottom-0">
         {t(`solutions.${solution.key}.about.description`)}
       </p>
@@ -56,43 +62,51 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
       )}
 
       {hasComponents &&
-        components.map(component => (
-          <div key={component.header} className="margin-top-4">
-            <h3 className="margin-bottom-2">{component.header}</h3>
+        components.map(component => {
+          const ComponentListType = returnListType(component.ordered);
 
-            {component.description && (
-              <span className="text-pre-wrap ">{component.description}</span>
-            )}
+          return (
+            <div key={component.header} className="margin-top-4">
+              <component.level className="margin-bottom-2">
+                {component.header}
+              </component.level>
 
-            <ul className="padding-left-4 margin-top-0">
-              {component.items.map(
-                (item: string | ListItemType, index: number) => (
-                  <li key={typeof item === 'object' ? item.header : item}>
-                    {component.itemHeaders && (
-                      <span className="text-bold">
-                        {component.itemHeaders[index]} -{' '}
-                      </span>
-                    )}
-
-                    {typeof item === 'object' ? (
-                      <>
-                        <span>{item.header}</span>
-
-                        <ul className="padding-left-4 margin-top-0">
-                          {item.items.map(subItem => (
-                            <li key={subItem}>{subItem}</li>
-                          ))}
-                        </ul>
-                      </>
-                    ) : (
-                      item
-                    )}
-                  </li>
-                )
+              {component.description && (
+                <span className="text-pre-wrap ">{component.description}</span>
               )}
-            </ul>
-          </div>
-        ))}
+
+              <ComponentListType className="padding-left-4 margin-top-0">
+                {component.items.map(
+                  (item: string | AboutComponentType, index: number) => (
+                    <li key={typeof item === 'object' ? item.header : item}>
+                      {component.itemHeaders && (
+                        <span className="text-bold">
+                          {component.itemHeaders[index]} -{' '}
+                        </span>
+                      )}
+
+                      {typeof item === 'object' ? (
+                        <>
+                          <span>{item.header}</span>
+
+                          <ul className="padding-left-4 margin-top-0">
+                            {(item as ListItemType).items.map(
+                              (subItem: string) => (
+                                <li key={subItem}>{subItem}</li>
+                              )
+                            )}
+                          </ul>
+                        </>
+                      ) : (
+                        item
+                      )}
+                    </li>
+                  )
+                )}
+              </ComponentListType>
+            </div>
+          );
+        })}
     </div>
   );
 };
