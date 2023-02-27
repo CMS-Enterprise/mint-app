@@ -10,7 +10,7 @@ export const About = ({ solution }: { solution: HelpSolutionType }) => {
   const SolutionAbout = solution.generic.about ? (
     <GenericAbout solution={solution} />
   ) : (
-    solution.component({
+    solution?.component({
       type: 'about'
     })
   );

@@ -343,58 +343,79 @@ export const helpSolutions: HelpSolutionType[] = [
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
     )
+  },
+  {
+    enum: OperationalSolutionKey.GOVDELIVERY,
+    key: 'govDelivery',
+    route: 'gov-delivery',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    name: 'GovDelivery',
+    pointsOfContact: [
+      {
+        name: 'Andrew Rushton',
+        email: 'andrew.rushton@cms.hhs.gov',
+        role: 'Administrator'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.GRANT_SOLUTIONS,
+    key: 'grantSolutions',
+    route: 'grant-solutions',
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS,
+      OperationalSolutionCategories.COMMUNICATION_TOOLS
+    ],
+    acronym: 'GS',
+    name: 'GrantSolutions',
+    pointsOfContact: [
+      {
+        name: 'Mary Greene',
+        email: 'mary.greene@cms.hhs.gov',
+        role: 'Director, Division of Grants Management'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.HIGLAS,
+    key: 'higlas',
+    route: 'healthcare-integrated-general-kedger-accounting-system',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    acronym: 'HIGLAS',
+    name: 'Healthcare Integrated General Ledger Accounting System',
+    pointsOfContact: [
+      {
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Director, Division of System Support, Operation and Security (DSSOS)'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
   }
-  // {
-  //   enum: OperationalSolutionKey.GOVDELIVERY,
-  //   key: 'govDelivery',
-  //   route: 'gov-delivery',
-  //   categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-  //   name: 'GovDelivery',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Andrew Rushton',
-  //       email: 'andrew.rushton@cms.hhs.gov',
-  //       role: 'Administrator'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.GRANT_SOLUTIONS,
-  //   key: 'grantSolutions',
-  //   route: 'grant-solutions',
-  //   categories: [
-  //     OperationalSolutionCategories.APPLICATIONS,
-  //     OperationalSolutionCategories.COMMUNICATION_TOOLS
-  //   ],
-  //   acronym: 'GS',
-  //   name: 'GrantSolutions',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Mary Greene',
-  //       email: 'mary.greene@cms.hhs.gov',
-  //       role: 'Director, Division of Grants Management'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.HIGLAS,
-  //   key: 'higlas',
-  //   route: 'healthcare-integrated-general-kedger-accounting-system',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   acronym: 'HIGLAS',
-  //   name: 'Healthcare Integrated General Ledger Accounting System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Donna Schmidt',
-  //       email: 'donna.schmidt@cms.hhs.gov',
-  //       role:
-  //         'Director, Division of System Support, Operation and Security (DSSOS)'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
   // {
   //   enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
   //   key: 'healthDataReporting',

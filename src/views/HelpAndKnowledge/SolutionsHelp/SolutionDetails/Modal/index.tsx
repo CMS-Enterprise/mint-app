@@ -8,6 +8,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
 import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
+import { NotFoundPartial } from 'views/NotFound';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
@@ -56,7 +57,9 @@ const SolutionDetailsModal = ({
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
   // Used to maintain previous route when opening and navigating through modal
-  const [prevRoute] = useState<string | undefined>(openedFrom);
+  const [prevRoute] = useState<string | undefined>(
+    openedFrom === 'undefined' ? undefined : openedFrom
+  );
 
   const isMobile = useCheckResponsiveScreen('tablet');
 
@@ -64,15 +67,21 @@ const SolutionDetailsModal = ({
     setIsOpen(!!solution);
   }, [solution]);
 
-  // Disabled background component scrolling when modal open
+  // Disabled background component scrolling when modal open and stubs scroll width
   const handleModal = (state: 'unset' | 'hidden') => {
     document.body.style.overflow = state;
+    (document.getElementById('root')! as HTMLElement).style.marginRight =
+      state === 'unset' ? '0px' : '23px';
   };
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
     history.push(prevRoute || '/help-and-knowledge/operational-solutions');
   };
+
+  if (!solution) {
+    return <NotFoundPartial />;
+  }
 
   const renderModal = () => {
     return (
@@ -132,7 +141,7 @@ const SolutionDetailsModal = ({
               )}
 
               <Grid desktop={{ col: 8 }}>
-                {subComponents(solution)[page].component}
+                {subComponents(solution)[page]?.component}
               </Grid>
 
               <Grid desktop={{ col: 1 }} />

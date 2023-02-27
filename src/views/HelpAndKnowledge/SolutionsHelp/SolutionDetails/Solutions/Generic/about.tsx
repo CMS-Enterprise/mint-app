@@ -8,18 +8,38 @@ type ListItemType = {
   items: string[];
 };
 
+type AboutComponentType = {
+  header: string;
+  items: string[] | AboutComponentType;
+};
+
+type AboutConfigType = {
+  description: string;
+  items?: string[];
+  ordered?: boolean;
+  components: AboutComponentType[];
+};
+
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const descriptionItems = t(`solutions.${solution.key}.about.items`, {
+  const aboutConfig: AboutConfigType = t(`solutions.${solution.key}.about`, {
     returnObjects: true
   });
+
+  const descriptionItems = aboutConfig?.items;
   const hasDescriptionItems = Array.isArray(descriptionItems);
+  const isDescriptionItemsOrdered = aboutConfig?.ordered;
 
   const components = t(`solutions.${solution.key}.about.components`, {
     returnObjects: true
   });
   const hasComponents = Array.isArray(components);
+
+  // Render ordered list or unordered dynaically
+  const ListType = `${
+    isDescriptionItemsOrdered ? 'o' : 'u'
+  }l` as keyof JSX.IntrinsicElements;
 
   return (
     <div>
@@ -28,11 +48,11 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
       </p>
 
       {hasDescriptionItems && (
-        <ul className="padding-left-4 margin-top-0">
-          {descriptionItems.map((item: string) => (
+        <ListType className="padding-left-4 margin-top-0">
+          {descriptionItems?.map((item: string) => (
             <li key={item}>{item}</li>
           ))}
-        </ul>
+        </ListType>
       )}
 
       {hasComponents &&
@@ -53,9 +73,11 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                         {component.itemHeaders[index]} -{' '}
                       </span>
                     )}
+
                     {typeof item === 'object' ? (
                       <>
                         <span>{item.header}</span>
+
                         <ul className="padding-left-4 margin-top-0">
                           {item.items.map(subItem => (
                             <li key={subItem}>{subItem}</li>

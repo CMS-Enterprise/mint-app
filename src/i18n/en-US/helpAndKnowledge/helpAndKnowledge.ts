@@ -319,25 +319,53 @@ Performing model implementation, design, monitoring, and evaluation activities t
   govDelivery: {
     about: {
       description:
-        'GovDelivery is a listserv used to communicate with model participants and other interested stakeholders.'
+        'GovDelivery is a listserv used to communicate with model participants and other interested stakeholders.',
+      components: [
+        {
+          header: 'Capabilities',
+          items: [
+            'Reach subscribers by email',
+            'Automate and schedule emails',
+            'Utilize branded templates',
+            'Access detailed reporting'
+          ]
+        }
+      ]
     }
   },
   grantSolutions: {
     about: {
       description: `GrantSolutions (GS) is a tool used to manage grants from funding opportunity planning, through the issuance of awards, to grant closeout.
 
-    CMS currently utilizes GrantSolutions primarily for awarding, managing, and closing out grants. For some grant programs, CMS utilizes the GS Application Review Module (ARM) for the required merit review of applications.
+CMS currently utilizes GrantSolutions primarily for awarding, managing, and closing out grants. For some grant programs, CMS utilizes the GS Application Review Module (ARM) for the required merit review of applications.
     
-    CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies artificial intelligence, machine learning, and other emerging technologies to collect information from 750,000 organizations contained in seven different public databases. RI analyzes trends and identifies warning signs in the data. This data is presented through key data in actionable dashboards highlighting critical information for conducting risk assessment of applicants and recipients and identify reduce fraud, waste, and abuse.`
+CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies artificial intelligence, machine learning, and other emerging technologies to collect information from 750,000 organizations contained in seven different public databases. RI analyzes trends and identifies warning signs in the data. This data is presented through key data in actionable dashboards highlighting critical information for conducting risk assessment of applicants and recipients and identify reduce fraud, waste, and abuse.`
     }
   },
   higlas: {
     about: {
       description: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.
 
-    Specific to CMMI, HIGLAS has two integrated points:
-    CMMI uses an Innovation Payment Contractor (IPC) vendor – National Government Services (NGS) to make payments on many models such as QPP, CJR, MDPCP, CPC, etc. – all of the financial reporting and payment functions are in HIGLAS since Nov 2021.
-    Other Models, such as BPCI (Bundled Payment), use the FFS claims system to forward the payment details to HIGLAS, and these payments are accounted for and made to awardees from HIGLAS.`
+Specific to CMMI, HIGLAS has two integrated points:`,
+      ordered: true,
+      items: [
+        'CMMI uses an Innovation Payment Contractor (IPC) vendor – National Government Services (NGS) to make payments on many models such as QPP, CJR, MDPCP, CPC, etc. – all of the financial reporting and payment functions are in HIGLAS since Nov 2021.',
+        'Other Models, such as BPCI (Bundled Payment), use the FFS claims system to forward the payment details to HIGLAS, and these payments are accounted for and made to awardees from HIGLAS.'
+      ],
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Strengthens Medicare’s management of accounts receivable and allows more timely and effective collection activities on outstanding debts',
+            'Enhances CMS oversight of contractor financial operations, including data entry, transaction processing and reporting',
+            'Produces automated agency financial statements and other required reports, leading to fewer errors in financial reporting and a reduction in manual labor',
+            'Allows for the elimination of redundant accounting processes and provides standardized accounting business practices',
+            'Enables Medicare contractors to cut back on the number of cuff systems currently used to track financial data',
+            'Provides a standard General Ledger accounting system, standardized accounting and financial management process for CMS central office and administrative program accounting activities',
+            'Incorporates Medicaid and CHIP government data'
+          ]
+        }
+      ]
     }
   },
   healthDataReporting: {
