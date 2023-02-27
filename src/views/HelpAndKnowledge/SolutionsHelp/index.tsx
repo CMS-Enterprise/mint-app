@@ -72,7 +72,8 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const location = useLocation();
 
   const prevLocation = usePrevLocation(location);
-  const prevPathname = prevLocation?.pathname;
+  const prevParam = prevLocation?.search || '';
+  const prevPathname = prevLocation?.pathname + prevParam;
 
   const { pathname } = location;
 
