@@ -1,35 +1,34 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import GetCedarUser from 'queries/SearchOktaUsers';
-import { GetCedarUser as GetCedarUserType } from 'queries/types/GetCedarUser';
+import SearchOktaUsers from 'queries/SearchOktaUsers';
+import { SearchOktaUsers as SearchOktaUsersType } from 'queries/types/SearchOktaUsers';
 
 /** Cedar contact properties */
-export type CedarContactProps = {
-  euaUserId: string;
-  commonName: string;
-  email?: string;
+export type OktaUserType = {
+  username: string;
+  displayName: string;
 };
 
-type CedarHookProps = {
-  contacts: CedarContactProps[];
-  queryCedarContacts: (commonName: string) => void;
+type OktaHookProps = {
+  contacts: OktaUserType[];
+  queryOktaUsers: (commonName: string) => void;
   loading: boolean;
 };
 
 /**
  * Custom hook for retrieving contacts from Cedar by common name
  * */
-function useCedarContactLookup(
+function useOktaUserLookup(
   query?: string | null,
   userSelected?: boolean
-): CedarHookProps {
+): OktaHookProps {
   const [searchTerm, setSearchTerm] = useState<string | null | undefined>(
     query
   );
 
-  const { data, previousData, loading } = useQuery<GetCedarUserType>(
-    GetCedarUser,
+  const { data, previousData, loading } = useQuery<SearchOktaUsersType>(
+    SearchOktaUsers,
     {
       variables: { commonName: searchTerm },
       skip: !searchTerm || searchTerm.length < 3 || userSelected
@@ -46,34 +45,31 @@ function useCedarContactLookup(
   /**
    * Sorted list of contacts from CEDAR
    * */
-  const contacts = useMemo<CedarContactProps[]>(() => {
+  const contacts = useMemo<OktaUserType[]>(() => {
     // Prevent 'no results' message when loading
-    if (loading) return previousData?.cedarPersonsByCommonName || [];
+    if (loading) return previousData?.searchOktaUsers || [];
     // Sort and return contacts from query results
-    return sortCedarContacts(
-      data?.cedarPersonsByCommonName || [],
-      searchTerm || ''
-    );
-  }, [searchTerm, previousData, data?.cedarPersonsByCommonName, loading]);
+    return sortCedarContacts(data?.searchOktaUsers || [], searchTerm || '');
+  }, [searchTerm, previousData, data?.searchOktaUsers, loading]);
 
-  return { contacts, queryCedarContacts: updateQuery, loading };
+  return { contacts, queryOktaUsers: updateQuery, loading };
 }
 
 /**
  * Sort contacts based on query
  * */
 const sortCedarContacts = (
-  contacts: CedarContactProps[],
+  contacts: OktaUserType[],
   query: string
-): CedarContactProps[] => {
+): OktaUserType[] => {
   return [...contacts].sort((a, b) => {
     const result =
-      a.commonName.toLowerCase().search(query) -
-      b.commonName.toLowerCase().search(query);
+      a.displayName.toLowerCase().search(query) -
+      b.displayName.toLowerCase().search(query);
     if (result > 0) return 1;
     if (result < 0) return -1;
     return 0;
   });
 };
 
-export default useCedarContactLookup;
+export default useOktaUserLookup;
