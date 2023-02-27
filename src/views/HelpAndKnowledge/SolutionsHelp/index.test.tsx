@@ -3,6 +3,7 @@ import React from 'react';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
+import Innovation4 from './SolutionDetails/Solutions/4Innovation';
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
 import { findCategoryMapByRoute, searchSolutions } from '.';
 
@@ -25,7 +26,12 @@ describe('solution help utils', () => {
             role: 'Director, Division of Model Learning Systems (DMLS)'
           }
         ],
-        component: props => <div {...props} />
+        generic: {
+          about: false,
+          timeline: false,
+          'points-of-contact': false
+        },
+        component: props => <Innovation4 {...props} />
       },
       {
         enum: OperationalSolutionKey.CONNECT,
@@ -40,7 +46,12 @@ describe('solution help utils', () => {
             role: 'Platform Lead'
           }
         ],
-        component: props => <div {...props} />
+        generic: {
+          about: false,
+          timeline: false,
+          'points-of-contact': false
+        },
+        component: props => <Innovation4 {...props} />
       }
     ];
     expect(findCategoryMapByRoute(route, helpSolutions)).toEqual(
@@ -65,7 +76,12 @@ describe('solution help utils', () => {
             email: 'ACO-OIT@cms.hhs.gov'
           }
         ],
-        component: props => <div {...props} />
+        generic: {
+          about: false,
+          timeline: false,
+          'points-of-contact': false
+        },
+        component: props => <Innovation4 {...props} />
       }
     ];
 

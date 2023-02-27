@@ -61,7 +61,7 @@ const SolutionHelpCard = ({
               ))}
 
             <p className="solution-card__body">
-              {t(`solutions.${solution.key}.about.heading`)}
+              {t(`solutions.${solution.key}.about.description`)}
             </p>
 
             <Grid
