@@ -1,7 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const PointsOfContact = () => {
+import { HelpSolutionType } from '../../solutionsMap';
+
+export const PointsOfContact = ({
+  solution
+}: {
+  solution: HelpSolutionType;
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
   return (
     <div>

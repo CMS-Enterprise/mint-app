@@ -1,5 +1,10 @@
+import React from 'react';
+
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
+
+import { SolutionDetailProps } from './SolutionDetails/Solutions';
+import Innovation4 from './SolutionDetails/Solutions/4Innovation';
 
 type CategoryType = {
   [key: string]: OperationalSolutionCategories;
@@ -85,6 +90,7 @@ export interface HelpSolutionType {
   pointsOfContact: SolutionContactType[];
   systemOwner?: SystemOwnerType;
   contractors?: SystemOwnerType[];
+  component: (props: SolutionDetailProps) => JSX.Element;
 }
 
 export const helpSolutions: HelpSolutionType[] = [
@@ -100,7 +106,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: '4i/ACO-OS Team',
         email: 'ACO-OIT@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <Innovation4 {...props} />
   },
   {
     enum: OperationalSolutionKey.ACO_OS,
@@ -114,7 +121,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: '4i/ACO-OS Team',
         email: 'ACO-OIT@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.APPS,
@@ -129,7 +137,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'aliza.kim@cms.hhs.gov',
         role: 'Project Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -144,7 +153,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'yolanda.villanova@cms.hhs.gov',
         role: 'Product Owner'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.CCW,
@@ -159,7 +169,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'cheryl.brown@cms.hhs.gov',
         role: 'CMMI Government Task Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -172,7 +183,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -185,7 +197,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.CBOSC,
@@ -200,7 +213,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'richard.speights@cms.hhs.gov',
         role: 'Contracting Officer Representative'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -213,7 +227,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -227,7 +242,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -242,7 +258,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'r.nall@cms.hhs.gov',
         role: 'Product Owner'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.GOVDELIVERY,
@@ -256,7 +273,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'andrew.rushton@cms.hhs.gov',
         role: 'Administrator'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.GRANT_SOLUTIONS,
@@ -274,7 +292,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'mary.greene@cms.hhs.gov',
         role: 'Director, Division of Grants Management'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.HIGLAS,
@@ -290,7 +309,8 @@ export const helpSolutions: HelpSolutionType[] = [
         role:
           'Director, Division of System Support, Operation and Security (DSSOS)'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
@@ -305,7 +325,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'hung.van@cms.hhs.gov',
         role: 'Technical Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.HPMS,
@@ -319,7 +340,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.IPC,
@@ -335,7 +357,8 @@ export const helpSolutions: HelpSolutionType[] = [
         role:
           'Director, Division of System Support, Operation and Security (DSSOS)'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.IDR,
@@ -351,7 +374,8 @@ export const helpSolutions: HelpSolutionType[] = [
         role:
           'Deputy Director, Division of Enterprise Information Management Services'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -366,7 +390,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'andrew.philip@cms.hhs.gov',
         role: 'Director, Division of Model Learning Systems (DMLS)'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -381,7 +406,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'megan.hyde@cms.hhs.gov',
         role: 'Co-team Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.MDM,
@@ -396,7 +422,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'cheryl.brown@cms.hhs.gov',
         role: 'CMMI/BSG Point of Contact'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -411,7 +438,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'dustin.allison@cms.hhs.gov',
         role: 'Quality Vertical'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.MARX,
@@ -425,7 +453,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
@@ -438,7 +467,8 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'MINT Team',
         email: 'MINTTeam@cms.hhs.gov'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -453,7 +483,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'alesia.hovatter@cms.hhs.gov',
         role: 'Senior Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.RMADA,
@@ -468,7 +499,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'joseph.pusateri@cms.hhs.gov',
         role: 'Contracting Officer Representative'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.ARS,
@@ -483,7 +515,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.CONNECT,
@@ -497,7 +530,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: null,
@@ -512,7 +546,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.SALESFORCE_PORTAL,
@@ -527,7 +562,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.RFA,
@@ -542,7 +578,8 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   },
   {
     enum: OperationalSolutionKey.SHARED_SYSTEMS,
@@ -557,6 +594,7 @@ export const helpSolutions: HelpSolutionType[] = [
         role:
           'Division Director, Division of System Support, Operation and Security (DSSOS)'
       }
-    ]
+    ],
+    component: (props: SolutionDetailProps) => <div {...props} />
   }
 ];

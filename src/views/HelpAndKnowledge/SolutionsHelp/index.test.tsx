@@ -1,3 +1,5 @@
+import React from 'react';
+
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
@@ -22,7 +24,8 @@ describe('solution help utils', () => {
             email: 'andrew.philip@cms.hhs.gov',
             role: 'Director, Division of Model Learning Systems (DMLS)'
           }
-        ]
+        ],
+        component: props => <div {...props} />
       },
       {
         enum: OperationalSolutionKey.CONNECT,
@@ -36,7 +39,8 @@ describe('solution help utils', () => {
             email: 'elia.cossis@cms.hhs.gov',
             role: 'Platform Lead'
           }
-        ]
+        ],
+        component: props => <div {...props} />
       }
     ];
     expect(findCategoryMapByRoute(route, helpSolutions)).toEqual(
@@ -60,7 +64,8 @@ describe('solution help utils', () => {
             name: '4i/ACO-OS Team',
             email: 'ACO-OIT@cms.hhs.gov'
           }
-        ]
+        ],
+        component: props => <div {...props} />
       }
     ];
 

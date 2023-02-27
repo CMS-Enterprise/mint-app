@@ -1,7 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Timeline = () => {
+import { HelpSolutionType } from '../../solutionsMap';
+
+export const Timeline = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
   return (
     <div>

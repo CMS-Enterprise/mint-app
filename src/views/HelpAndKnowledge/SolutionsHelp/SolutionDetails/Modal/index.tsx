@@ -22,17 +22,17 @@ const subComponents = (solution: HelpSolutionType): subComponentsProps => ({
   about: {
     route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
     helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
-    component: <About />
+    component: <About solution={solution} />
   },
   timeline: {
     route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/timeline`,
     helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/timeline`,
-    component: <Timeline />
+    component: <Timeline solution={solution} />
   },
   'points-of-contact': {
     route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/points-of-contact`,
     helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/points-of-contact`,
-    component: <PointsOfContact />
+    component: <PointsOfContact solution={solution} />
   }
 });
 
