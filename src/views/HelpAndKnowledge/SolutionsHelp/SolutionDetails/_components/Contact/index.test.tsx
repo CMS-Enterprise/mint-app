@@ -21,7 +21,10 @@ describe('Operation Solution Contact', () => {
         ]}
       >
         <Route path="/help-and-knowledge/operational-solutions/solution/:solution/:page?">
-          <Contact contact={contact} />
+          <Contact
+            contact={contact}
+            solutionRoute="chronic-conditions-warehouse"
+          />
         </Route>
       </MemoryRouter>
     );
@@ -36,7 +39,10 @@ describe('Operation Solution Contact', () => {
         ]}
       >
         <Route path="/help-and-knowledge/operational-solutions/solution/:solution/:page?">
-          <Contact contact={contact} />
+          <Contact
+            contact={contact}
+            solutionRoute="chronic-conditions-warehouse"
+          />
         </Route>
       </MemoryRouter>
     );
