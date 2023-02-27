@@ -159,7 +159,7 @@ export const helpSolutions: HelpSolutionType[] = [
       }
     ],
     generic: {
-      about: false,
+      about: true,
       timeline: false,
       'points-of-contact': false
     },

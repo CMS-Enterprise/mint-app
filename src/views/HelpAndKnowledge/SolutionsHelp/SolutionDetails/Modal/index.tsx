@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { useHistory, useParams } from 'react-router-dom';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
+import noScroll from 'no-scroll';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
@@ -64,6 +65,13 @@ const SolutionDetailsModal = ({
     setIsOpen(!!solution);
   }, [solution]);
 
+  const handleOpenModal = () => {
+    noScroll.on();
+    if (isOpen) {
+      setIsOpen(true);
+    }
+  };
+
   // On modal close, returns to previous route state if present
   const closeModal = () => {
     history.push(prevRoute || '/help-and-knowledge/operational-solutions');
@@ -75,6 +83,8 @@ const SolutionDetailsModal = ({
         isOpen={isOpen}
         overlayClassName="mint-discussions__overlay overflow-y-scroll"
         className="mint-discussions__content solution-details-modal"
+        onAfterOpen={handleOpenModal}
+        onAfterClose={noScroll.off}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick
         contentLabel={t('ariaLabel')}

@@ -56,7 +56,48 @@ const solutions = {
   innovation: {
     about: {
       description:
-        'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.'
+        'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.',
+      components: [
+        {
+          header: 'Product capabilties',
+          itemHeaders: [
+            'Agreement management',
+            'Participant Management',
+            'Benefits Enhancements',
+            'Contact/User Management',
+            'Reports & Analytics',
+            'Data Hub & Data Exchange',
+            'Knowledge Library',
+            'Provider Overlap Check',
+            'Beneficiary Overlap Check',
+            'Beneficiary Lookup Feature',
+            'Data Exchange with downstream systems',
+            'Claim and Claim Line Feeds (CCLF)',
+            'Identity & Access Management',
+            'Application Programming Interface (API) Key Mgt',
+            '4i Command Line Interface (CLI) Tool',
+            'Tasks and Notifications'
+          ],
+          items: [
+            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            'Add and manage Benefit Enhancements and Payment mechanisms.',
+            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            'Provide secure access to sensitive data such as claims and beneficiary reports,',
+            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            'Beneficiary overlap check across the models',
+            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            'Request and manage API keys and monitor API usage statistics',
+            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+          ]
+        }
+      ]
     }
   },
   accountableCare: {
@@ -68,7 +109,18 @@ const solutions = {
   automatedPlanPayment: {
     about: {
       description: `The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the
-      Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`
+      Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`,
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Computes plan level monthly payments to Medicare Advantage, PACE Plans Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, and Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS receives plan level specific from the Health Plan Management System (HPMS) and Medicare Advantage Prescription Drug System (MARx)',
+            'Receives Annual Part D reconciliation and Coverage Gap Discount payments',
+            'Produces a monthly file containing plan level payments for HIGLAS',
+            'Computes and stores plan level sequestration payment adjustments amounts'
+          ]
+        }
+      ]
     }
   },
   centralizedDataExhange: {
