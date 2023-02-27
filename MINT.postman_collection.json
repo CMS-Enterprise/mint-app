@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b4cf58aa-c5b3-4b99-8f4a-709d670f397c",
+		"_postman_id": "1052260d-e5bc-490e-8598-fec66275d4e5",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "12341016"
 	},
 	"item": [
 		{
@@ -999,15 +999,15 @@
 					"response": []
 				},
 				{
-					"name": "Get CEDAR Persons By CommonName",
+					"name": "Search Okta Users",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query cedarPersonsByCommonName ($commonName: String!) {\n    cedarPersonsByCommonName (commonName: $commonName) {\n        commonName\n        email\n        euaUserId\n    }\n}",
-								"variables": "{\n  \"commonName\": \"\"\n}"
+								"query": "query searchOktaUsers ($searchTerm: String!) {\n    searchOktaUsers (searchTerm: $searchTerm) {\n        firstName\n        lastName\n        displayName\n        email\n        username\n    }\n}",
+								"variables": "{\n  \"searchTerm\": \"\"\n}"
 							}
 						},
 						"url": {
