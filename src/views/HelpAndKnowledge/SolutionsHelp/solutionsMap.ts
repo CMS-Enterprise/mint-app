@@ -1,52 +1,27 @@
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
-type CategoryPropertiesType = {
-  route: string; // route to display relevant categories
-};
-
 type CategoryType = {
-  [key in OperationalSolutionCategories]: CategoryPropertiesType;
+  [key: string]: OperationalSolutionCategories;
 };
 
 // Operational Solution categories
 export const operationalSolutionCategoryMap: CategoryType = {
-  applications: {
-    route: 'applications'
-  },
-  communicationTools: {
-    route: 'communication-tools'
-  },
-  contractorsContractVehicles: {
-    route: 'contractors-and-contract-vehicles'
-  },
-  databaseDataManagement: {
-    route: 'database-and-data-management'
-  },
-  dataExchange: {
-    route: 'data-exchange'
-  },
-  dataReporting: {
-    route: 'data-reporting'
-  },
-  helpDesks: {
-    route: 'help-desks'
-  },
-  learning: {
-    route: 'learning'
-  },
-  legal: {
-    route: 'legal'
-  },
-  medicareAdvantagePartD: {
-    route: 'medicare-advantage-and-part-d'
-  },
-  medicareFeeForService: {
-    route: 'medicare-fee-for-service'
-  },
-  quality: {
-    route: 'quality'
-  }
+  applications: OperationalSolutionCategories.APPLICATIONS,
+  'communication-tools': OperationalSolutionCategories.COMMUNICATION_TOOLS,
+  'contractors-and-contract-vehicles':
+    OperationalSolutionCategories.CC_VEHICLES,
+  'database-and-data-management':
+    OperationalSolutionCategories.DATABASE_MANAGEMENT,
+  'data-exchange': OperationalSolutionCategories.DATA_EXCHANGE,
+  'data-reporting': OperationalSolutionCategories.DATA_REPORTING,
+  'help-desks': OperationalSolutionCategories.HELP_DESKS,
+  learning: OperationalSolutionCategories.LEARNING,
+  legal: OperationalSolutionCategories.LEGAL,
+  'medicare-advantage-and-part-d':
+    OperationalSolutionCategories.MEDICARE_ADVANTAGE_D,
+  'medicare-fee-for-service': OperationalSolutionCategories.MEDICARE_FFS,
+  quality: OperationalSolutionCategories.QUALITY
 };
 
 type ContactRoles =

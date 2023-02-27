@@ -2,17 +2,9 @@ import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
-import { findCategoryKey, findCategoryMapByRoute, searchSolutions } from '.';
+import { findCategoryMapByRoute, searchSolutions } from '.';
 
 describe('solution help utils', () => {
-  it('returns a corresponding category key by route', () => {
-    const route: string = 'contractors-and-contract-vehicles';
-
-    const expectedCategoryKey: OperationalSolutionCategories =
-      OperationalSolutionCategories.CC_VEHICLES;
-    expect(findCategoryKey(route)).toEqual(expectedCategoryKey);
-  });
-
   it('returns a corresponding category solutions by route', () => {
     const route: string = 'learning';
 

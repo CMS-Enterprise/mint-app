@@ -18,7 +18,7 @@ export default {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap.dataReporting.route}
+            route={operationalSolutionCategoryMap.dataReporting}
             category={OperationalSolutionCategories.DATA_REPORTING}
           />
         </Route>
@@ -31,7 +31,7 @@ export const Default = () => (
   <MemoryRouter initialEntries={['/help-and-knowledge/operational-solutions']}>
     <Route path="/help-and-knowledge/operational-solutions">
       <SolutionsTag
-        route={operationalSolutionCategoryMap.dataReporting.route}
+        route={operationalSolutionCategoryMap.dataReporting}
         category={OperationalSolutionCategories.DATA_REPORTING}
       />
     </Route>

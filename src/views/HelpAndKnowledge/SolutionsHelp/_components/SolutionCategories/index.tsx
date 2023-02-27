@@ -4,7 +4,6 @@ import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 import CategoryCard from '../CategoryCard';
@@ -32,16 +31,12 @@ const OperationalSolutionsHelp = ({
 
         <CardGroup className={className}>
           {Object.keys(operationalSolutionCategoryMap).map(key => {
-            const category =
-              operationalSolutionCategoryMap[
-                key as OperationalSolutionCategories
-              ];
             return (
               <Grid tablet={{ col: 3 }} key={key}>
                 <CategoryCard
                   key={key}
                   category={t(`categories.${key}.header`)}
-                  route={category.route}
+                  route={key}
                 />
               </Grid>
             );

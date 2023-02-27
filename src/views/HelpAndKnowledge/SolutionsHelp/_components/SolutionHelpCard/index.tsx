@@ -10,12 +10,8 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 
-import {
-  HelpSolutionType,
-  operationalSolutionCategoryMap
-} from '../../solutionsMap';
+import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
 
 import './index.scss';
@@ -60,11 +56,7 @@ const SolutionHelpCard = ({
                   className="margin-bottom-1 margin-top-05"
                   key={categoryTag}
                   category={categoryTag}
-                  route={
-                    operationalSolutionCategoryMap[
-                      categoryTag as OperationalSolutionCategories
-                    ].route
-                  }
+                  route={categoryTag}
                 />
               ))}
 

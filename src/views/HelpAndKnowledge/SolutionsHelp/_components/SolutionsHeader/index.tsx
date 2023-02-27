@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Breadcrumbs from 'components/Breadcrumbs';
 import GlobalClientFilter from 'components/TableFilter';
 
-import { findCategoryKey } from '../..';
+import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
 import './index.scss';
 
@@ -29,7 +29,7 @@ const SolutionsHeader = ({
 }: OperationalSolutionsHelpProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const categoryKey = findCategoryKey(category);
+  const categoryKey = operationalSolutionCategoryMap[category || ''];
 
   const breadcrumbs = [
     { text: t('heading'), url: '/help-and-knowledge' },

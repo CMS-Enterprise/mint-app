@@ -27,32 +27,13 @@ type OperationalSolutionsHelpProps = {
   className?: string;
 };
 
-// Extract the mapped category key based on the current route param
-export const findCategoryKey = (
-  route: string | undefined
-): OperationalSolutionCategories | undefined => {
-  let categoryKey!: OperationalSolutionCategories;
-
-  Object.keys(operationalSolutionCategoryMap).forEach(key => {
-    if (
-      operationalSolutionCategoryMap[key as OperationalSolutionCategories]
-        .route === route
-    ) {
-      categoryKey = key as OperationalSolutionCategories;
-    }
-  });
-
-  return categoryKey;
-};
-
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRoute = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
-  const categoryKey:
-    | OperationalSolutionCategories
-    | undefined = findCategoryKey(route);
+  const categoryKey: OperationalSolutionCategories | undefined =
+    operationalSolutionCategoryMap[route];
 
   if (!categoryKey) return [];
 
