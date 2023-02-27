@@ -136,7 +136,7 @@ export const helpSolutions: HelpSolutionType[] = [
       }
     ],
     generic: {
-      about: false,
+      about: true,
       timeline: false,
       'points-of-contact': false
     },
@@ -182,7 +182,161 @@ export const helpSolutions: HelpSolutionType[] = [
       }
     ],
     generic: {
-      about: false,
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.CCW,
+    key: 'ccWarehouse',
+    route: 'chronic-conditions-warehouse',
+    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    acronym: 'CCW',
+    name: 'Chronic Conditions Warehouse',
+    pointsOfContact: [
+      {
+        name: 'Cheryl Brown',
+        email: 'cheryl.brown@cms.hhs.gov',
+        role: 'CMMI Government Task Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'cmsBox',
+    route: 'cms-box',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    name: 'CMS Box',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'cmsQualtrics',
+    route: 'cms-qualtrics',
+    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    name: 'CMS Qualtrics',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.CBOSC,
+    key: 'cbosc',
+    route: 'consolidated-business-operations-support-center',
+    categories: [OperationalSolutionCategories.HELP_DESKS],
+    acronym: 'CBOSC',
+    name: 'Consolidated Business Operations Support Center',
+    pointsOfContact: [
+      {
+        name: 'Richard Speights',
+        email: 'richard.speights@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'cpiVetting',
+    route: 'cpi-vetting',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    name: 'CPI Vetting',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'electronicFileTransfer',
+    route: 'electronic-file-transfer',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    acronym: 'EFT',
+    name: 'Electronic File Transfer',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'expandedDataFeedback',
+    route: 'expanded-data-feedback-reporting',
+    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    acronym: 'eDFR',
+    name: 'Expanded Data Feedback Reporting',
+    pointsOfContact: [
+      {
+        name: 'Zach Nall',
+        email: 'r.nall@cms.hhs.gov',
+        role: 'Product Owner'
+      }
+    ],
+    generic: {
+      about: true,
       timeline: false,
       'points-of-contact': false
     },
@@ -190,111 +344,6 @@ export const helpSolutions: HelpSolutionType[] = [
       <CentralizedDataExhange {...props} />
     )
   }
-  // {
-  //   enum: OperationalSolutionKey.CCW,
-  //   key: 'ccWarehouse',
-  //   route: 'chronic-conditions-warehouse',
-  //   categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-  //   acronym: 'CCW',
-  //   name: 'Chronic Conditions Warehouse',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Cheryl Brown',
-  //       email: 'cheryl.brown@cms.hhs.gov',
-  //       role: 'CMMI Government Task Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'cmsBox',
-  //   route: 'cms-box',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   name: 'CMS Box',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'cmsQualtrics',
-  //   route: 'cms-qualtrics',
-  //   categories: [OperationalSolutionCategories.DATA_REPORTING],
-  //   name: 'CMS Qualtrics',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.CBOSC,
-  //   key: 'cbosc',
-  //   route: 'consolidated-business-operations-support-center',
-  //   categories: [OperationalSolutionCategories.HELP_DESKS],
-  //   acronym: 'CBOSC',
-  //   name: 'Consolidated Business Operations Support Center',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Richard Speights',
-  //       email: 'richard.speights@cms.hhs.gov',
-  //       role: 'Contracting Officer Representative'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'cpiVetting',
-  //   route: 'cpi-vetting',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   name: 'CPI Vetting',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'electronicFileTransfer',
-  //   route: 'electronic-file-transfer',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   acronym: 'EFT',
-  //   name: 'Electronic File Transfer',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'expandedDataFeedback',
-  //   route: 'expanded-data-feedback-reporting',
-  //   categories: [OperationalSolutionCategories.DATA_REPORTING],
-  //   acronym: 'eDFR',
-  //   name: 'Expanded Data Feedback Reporting',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Zach Nall',
-  //       email: 'r.nall@cms.hhs.gov',
-  //       role: 'Product Owner'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
   // {
   //   enum: OperationalSolutionKey.GOVDELIVERY,
   //   key: 'govDelivery',

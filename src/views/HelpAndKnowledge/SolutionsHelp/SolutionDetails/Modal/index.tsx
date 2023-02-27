@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { useHistory, useParams } from 'react-router-dom';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
-import noScroll from 'no-scroll';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
@@ -65,11 +64,9 @@ const SolutionDetailsModal = ({
     setIsOpen(!!solution);
   }, [solution]);
 
-  const handleOpenModal = () => {
-    noScroll.on();
-    if (isOpen) {
-      setIsOpen(true);
-    }
+  // Disabled background component scrolling when modal open
+  const handleModal = (state: 'unset' | 'hidden') => {
+    document.body.style.overflow = state;
   };
 
   // On modal close, returns to previous route state if present
@@ -83,8 +80,8 @@ const SolutionDetailsModal = ({
         isOpen={isOpen}
         overlayClassName="mint-discussions__overlay overflow-y-scroll"
         className="mint-discussions__content solution-details-modal"
-        onAfterOpen={handleOpenModal}
-        onAfterClose={noScroll.off}
+        onAfterOpen={() => handleModal('hidden')}
+        onAfterClose={() => handleModal('unset')}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick
         contentLabel={t('ariaLabel')}
@@ -134,9 +131,11 @@ const SolutionDetailsModal = ({
                 </Grid>
               )}
 
-              <Grid desktop={{ col: 9 }}>
+              <Grid desktop={{ col: 8 }}>
                 {subComponents(solution)[page].component}
               </Grid>
+
+              <Grid desktop={{ col: 1 }} />
 
               {isMobile && (
                 <Grid desktop={{ col: 3 }}>
