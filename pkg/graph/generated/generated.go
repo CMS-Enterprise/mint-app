@@ -777,7 +777,6 @@ type ComplexityRoot struct {
 
 	Query struct {
 		AuditChanges                 func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CedarPersonsByCommonName     func(childComplexity int, commonName string) int
 		CrTdl                        func(childComplexity int, id uuid.UUID) int
 		CurrentUser                  func(childComplexity int) int
 		ExistingModelCollection      func(childComplexity int) int
@@ -792,6 +791,7 @@ type ComplexityRoot struct {
 		PlanPayments                 func(childComplexity int, id uuid.UUID) int
 		PossibleOperationalNeeds     func(childComplexity int) int
 		PossibleOperationalSolutions func(childComplexity int) int
+		SearchOktaUsers              func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks         func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                  func(childComplexity int, username string) int
 	}
@@ -1002,7 +1002,7 @@ type QueryResolver interface {
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
 	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
-	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
+	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
@@ -5672,18 +5672,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.AuditChanges(childComplexity, args["tableName"].(string), args["primaryKey"].(uuid.UUID)), true
 
-	case "Query.cedarPersonsByCommonName":
-		if e.complexity.Query.CedarPersonsByCommonName == nil {
-			break
-		}
-
-		args, err := ec.field_Query_cedarPersonsByCommonName_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.CedarPersonsByCommonName(childComplexity, args["commonName"].(string)), true
-
 	case "Query.crTdl":
 		if e.complexity.Query.CrTdl == nil {
 			break
@@ -5826,6 +5814,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PossibleOperationalSolutions(childComplexity), true
+
+	case "Query.searchOktaUsers":
+		if e.complexity.Query.SearchOktaUsers == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchOktaUsers_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchOktaUsers(childComplexity, args["searchTerm"].(string)), true
 
 	case "Query.taskListSectionLocks":
 		if e.complexity.Query.TaskListSectionLocks == nil {
@@ -7484,7 +7484,7 @@ type Query {
   planDocument(id: UUID!): PlanDocument!
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
-  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
@@ -9145,21 +9145,6 @@ func (ec *executionContext) field_Query_auditChanges_args(ctx context.Context, r
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_cedarPersonsByCommonName_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["commonName"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("commonName"))
-		arg0, err = ec.unmarshalNString2string(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["commonName"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9301,6 +9286,21 @@ func (ec *executionContext) field_Query_planPayments_args(ctx context.Context, r
 		}
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchOktaUsers_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["searchTerm"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("searchTerm"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["searchTerm"] = arg0
 	return args, nil
 }
 
@@ -41658,8 +41658,8 @@ func (ec *executionContext) fieldContext_Query_existingModelCollection(ctx conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_cedarPersonsByCommonName(ctx, field)
+func (ec *executionContext) _Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchOktaUsers(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -41672,7 +41672,7 @@ func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().CedarPersonsByCommonName(rctx, fc.Args["commonName"].(string))
+		return ec.resolvers.Query().SearchOktaUsers(rctx, fc.Args["searchTerm"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -41689,7 +41689,7 @@ func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context,
 	return ec.marshalNUserInfo2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfoᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_cedarPersonsByCommonName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -41718,7 +41718,7 @@ func (ec *executionContext) fieldContext_Query_cedarPersonsByCommonName(ctx cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_cedarPersonsByCommonName_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_searchOktaUsers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -51723,7 +51723,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
-		case "cedarPersonsByCommonName":
+		case "searchOktaUsers":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -51732,7 +51732,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_cedarPersonsByCommonName(ctx, field)
+				res = ec._Query_searchOktaUsers(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}

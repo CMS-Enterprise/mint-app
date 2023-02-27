@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 // import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
-import GetCedarUser from 'queries/GetCedarUser';
+import GetCedarUser from 'queries/SearchOktaUsers';
 
 import CedarContactSelect from './index';
 

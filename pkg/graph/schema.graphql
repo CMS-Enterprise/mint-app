@@ -1361,7 +1361,7 @@ type Query {
   planDocument(id: UUID!): PlanDocument!
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
-  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!

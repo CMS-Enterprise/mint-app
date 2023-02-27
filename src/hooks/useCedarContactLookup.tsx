@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import GetCedarUser from 'queries/GetCedarUser';
+import GetCedarUser from 'queries/SearchOktaUsers';
 import { GetCedarUser as GetCedarUserType } from 'queries/types/GetCedarUser';
 
 /** Cedar contact properties */
