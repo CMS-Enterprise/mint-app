@@ -349,6 +349,7 @@ const helpAndKnowledge = {
     'points-of-contact': 'Points of contact'
   },
   backToSolutions: 'Back to solutions',
+  moreContacts: 'More points of contact',
 
   categories: solutionCategoryies,
   solutions
