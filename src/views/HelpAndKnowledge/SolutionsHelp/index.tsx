@@ -1,3 +1,8 @@
+/*
+Operational Solution portion of the MINT Help and Knowledge Center
+Contains components for search, categories, and solutions cards
+*/
+
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
@@ -25,7 +30,7 @@ type OperationalSolutionsHelpProps = {
 // Extract the mapped category key based on the current route param
 export const findCategoryKey = (
   route: string | undefined
-): OperationalSolutionCategories => {
+): OperationalSolutionCategories | undefined => {
   let categoryKey!: OperationalSolutionCategories;
 
   Object.keys(operationalSolutionCategoryMap).forEach(key => {
@@ -45,27 +50,28 @@ export const findCategoryMapByRoute = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
-  let filteredSolutions = [...solutions];
-  const categoryKey: OperationalSolutionCategories = findCategoryKey(route);
+  const categoryKey:
+    | OperationalSolutionCategories
+    | undefined = findCategoryKey(route);
 
-  filteredSolutions = solutions.filter(solution => {
+  if (!categoryKey) return [];
+
+  return [...solutions].filter(solution => {
     return solution.categories.includes(
       categoryKey as OperationalSolutionCategories
     );
   });
-  return filteredSolutions;
 };
 
 export const findSolutionByRoute = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
-  const filteredSolutions = [...solutions];
-  return filteredSolutions.find(solution => solution.route === route);
+  return [...solutions].find(solution => solution.route === route);
 };
 
 // Query function to return solutions for matching name and acronym
-export const seachSolutions = (
+export const searchSolutions = (
   query: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
@@ -97,6 +103,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const modalRoute: string = '/operational-solutions/solution';
   useModalScroll(modalRoute);
 
+  // Preserves category view when rendering modal overlay
   useEffect(() => {
     if (!solution) {
       setPrevCategory(category);
@@ -116,8 +123,8 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     if (
       prevPathname &&
       pathname &&
-      !prevPathname?.includes('/operational-solutions/solution') &&
-      !pathname?.includes('/operational-solutions/solution')
+      !prevPathname?.includes(modalRoute) &&
+      !pathname?.includes(modalRoute)
     ) {
       setQuery('');
     }
@@ -126,7 +133,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
-      setQuerySolutions(seachSolutions(query, helpSolutions));
+      setQuerySolutions(searchSolutions(query, helpSolutions));
     } else {
       setQuerySolutions(helpSolutions);
     }
@@ -137,6 +144,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     ? findCategoryMapByRoute(prevCategory, helpSolutions)
     : querySolutions;
 
+  // Solution to render in modal
   const selectedSolution = findSolutionByRoute(solution, helpSolutions);
 
   return (

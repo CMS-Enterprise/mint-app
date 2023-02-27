@@ -55,6 +55,7 @@ const SolutionDetailsModal = ({
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
+  // Used to maintain previous route when opening and navigating through modal
   const [prevRoute] = useState<string | undefined>(openedFrom);
 
   const isMobile = useCheckResponsiveScreen('tablet');

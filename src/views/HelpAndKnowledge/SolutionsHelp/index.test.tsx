@@ -2,7 +2,7 @@ import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
-import { findCategoryKey, findCategoryMapByRoute, seachSolutions } from '.';
+import { findCategoryKey, findCategoryMapByRoute, searchSolutions } from '.';
 
 describe('solution help utils', () => {
   it('returns a corresponding category key by route', () => {
@@ -72,12 +72,12 @@ describe('solution help utils', () => {
       }
     ];
 
-    expect(seachSolutions(query, helpSolutions)).toEqual(expectedSolutions);
+    expect(searchSolutions(query, helpSolutions)).toEqual(expectedSolutions);
 
     const query2: string = 'gfwefesd';
 
     const expectedSolutions2: HelpSolutionType[] = [];
 
-    expect(seachSolutions(query2, helpSolutions)).toEqual(expectedSolutions2);
+    expect(searchSolutions(query2, helpSolutions)).toEqual(expectedSolutions2);
   });
 });
