@@ -98,47 +98,51 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
 
               <ComponentListType className="padding-left-4 margin-top-0">
                 {component.items.map(
-                  (item: string | AboutComponentType, index: number) => (
-                    <li
-                      key={
-                        typeof item === 'object' ? item.header : item + index
-                      }
-                    >
-                      {component.itemHeaders && (
-                        <span className="text-bold">
-                          {component.itemHeaders[index]} -{' '}
-                        </span>
-                      )}
+                  (item: string | AboutComponentType, index: number) => {
+                    const listItem = component.links ? (
+                      <Link
+                        aria-label="Open in a new tab"
+                        href={component.links[index]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="external"
+                      >
+                        {item}
+                      </Link>
+                    ) : (
+                      item
+                    );
 
-                      {typeof item === 'object' && (
-                        <>
-                          <span>{item.header}</span>
+                    return (
+                      <li
+                        key={
+                          typeof item === 'object' ? item.header : item + index
+                        }
+                      >
+                        {component.itemHeaders && (
+                          <span className="text-bold">
+                            {component.itemHeaders[index]} -{' '}
+                          </span>
+                        )}
 
-                          <ul className="padding-left-4 margin-top-0">
-                            {(item as ListItemType).items.map(
-                              (subItem: string) => (
-                                <li key={subItem}>{subItem}</li>
-                              )
-                            )}
-                          </ul>
-                        </>
-                      )}
+                        {typeof item === 'object' ? (
+                          <>
+                            <span>{item.header}</span>
 
-                      {typeof item !== 'object' && !component.links ? (
-                        item
-                      ) : (
-                        <Link
-                          aria-label="Open in a new tab"
-                          href={component.links[index]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          variant="external"
-                        >
-                          {item}
-                        </Link>
-                      )}
-                    </li>
-                  )
+                            <ul className="padding-left-4 margin-top-0">
+                              {(item as ListItemType).items.map(
+                                (subItem: string) => (
+                                  <li key={subItem}>{subItem}</li>
+                                )
+                              )}
+                            </ul>
+                          </>
+                        ) : (
+                          listItem
+                        )}
+                      </li>
+                    );
+                  }
                 )}
               </ComponentListType>
             </div>

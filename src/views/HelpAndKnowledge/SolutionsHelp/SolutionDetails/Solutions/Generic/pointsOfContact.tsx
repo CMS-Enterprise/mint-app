@@ -23,7 +23,6 @@ const PointOfContactCard = ({
 }) => {
   return (
     <Card
-      key={pointOfContact.name}
       className="margin-bottom-0"
       containerProps={{
         className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
@@ -62,7 +61,6 @@ const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
       <CardHeader className="padding-0">{contact.system}</CardHeader>
       {contact.name && (
         <CardFooter className="padding-0">
-          {' '}
           <h3 className="margin-0">{contact.name}</h3>
         </CardFooter>
       )}
@@ -80,7 +78,7 @@ export const GenericPointsOfContact = ({
   return (
     <div>
       {solution.pointsOfContact.map(contact => (
-        <PointOfContactCard pointOfContact={contact} />
+        <PointOfContactCard pointOfContact={contact} key={contact.name} />
       ))}
 
       {solution.systemOwner && (
@@ -100,7 +98,7 @@ export const GenericPointsOfContact = ({
           <h2>{t('contractors')}</h2>
 
           {solution.contractors.map(contact => (
-            <GenericCard contact={contact} />
+            <GenericCard contact={contact} key={contact.name} />
           ))}
         </>
       )}
