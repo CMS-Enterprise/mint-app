@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>Content</title>
-      <link rel="stylesheet" type="text/css" href="typography.css">
-   </head>
-   <body>
-      <header class="header">
-         <h1>MINT</h1>
-         <p class="subtitle">The Model Innovation Tool</p>
-      </header>
-      <main>
-         <section class="model">
-            <h3>{{.ModelName}}</h3>
-         </section>
-         <section class="created-by">
-            <p>Created by {{.UserName}}</p>
-         </section>
-         <section class="view-model">
-            <p><a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list" class="link">View this Model Plan in MINT</a></p>
-         </section>
-      </main>
-   </body>
-</html>
+  <head>
+    <meta charset="utf-8">
+    <title>Content</title>
+    <link rel="stylesheet" type="text/css" href="typography.css">
+  </head>
+  <body>
+    <header class="header">
+      <h1>MINT</h1>
+      <p class="subtitle">The Model Innovation Tool</p>
+      <br/>
+    </header>
 
+    <h3>{{.ModelName}}</h3>
+    <p>Created by {{.UserName}}</p>
+    <br/>
+    <p><a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list" class="link">View this Model Plan in MINT</a></p>
+  </body>
+</html>
