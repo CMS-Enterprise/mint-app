@@ -105,8 +105,8 @@ const FavoriteCard = ({
           <Grid desktop={{ col: 4 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.startDate`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
-              {basics.applicationsStart ? (
-                formatDateUtc(basics.applicationsStart, 'MMMM d, yyyy')
+              {basics.performancePeriodStarts ? (
+                formatDateUtc(basics.performancePeriodStarts, 'MMMM d, yyyy')
               ) : (
                 <i>{t('favorite.toBeDetermined')}</i>
               )}

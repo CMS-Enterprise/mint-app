@@ -11,7 +11,7 @@ import { ModelPlanFilter, ModelStatus, ModelCategory, TeamRole } from "./../../.
 
 export interface GetAllModelPlans_modelPlanCollection_basics {
   __typename: "PlanBasics";
-  applicationsStart: Time | null;
+  performancePeriodStarts: Time | null;
   modelCategory: ModelCategory | null;
   goal: string | null;
 }
