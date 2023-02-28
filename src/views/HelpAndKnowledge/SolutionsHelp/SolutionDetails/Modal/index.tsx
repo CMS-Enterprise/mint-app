@@ -76,7 +76,9 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(prevRoute || '/help-and-knowledge/operational-solutions');
+    history.push(prevRoute || '/help-and-knowledge/operational-solutions', {
+      fromModal: true
+    });
   };
 
   if (!solution) {

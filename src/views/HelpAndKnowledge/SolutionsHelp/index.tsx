@@ -10,7 +10,6 @@ import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
-import useModalScroll from 'hooks/useModalSroll';
 import usePrevLocation from 'hooks/usePrevious';
 
 import CategoryFooter from './_components/CategoryFooter';
@@ -20,12 +19,17 @@ import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
   helpSolutions,
   HelpSolutionType,
+  modalRoute,
   operationalSolutionCategoryMap
 } from './solutionsMap';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
 };
+
+interface LocationProps {
+  fromModal: string;
+}
 
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRoute = (
@@ -69,28 +73,16 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     solution: string;
   }>();
 
-  const location = useLocation();
+  const location = useLocation<LocationProps>();
+  const { pathname } = location;
 
   const prevLocation = usePrevLocation(location);
   const prevParam = prevLocation?.search || '';
   const prevPathname = prevLocation?.pathname + prevParam;
 
-  const { pathname } = location;
-
   const [prevCategory, setPrevCategory] = useState<string | undefined>(
     solution ? prevPathname?.split('/')[4] : category
   );
-
-  // Preserve scroll position when opening/closing modal
-  const modalRoute: string = '/operational-solutions/solution';
-  useModalScroll(modalRoute);
-
-  // Preserves category view when rendering modal overlay
-  useEffect(() => {
-    if (!solution) {
-      setPrevCategory(category);
-    }
-  }, [pathname, category, solution]);
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
@@ -99,18 +91,21 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     helpSolutions
   );
 
-  // Resets the query on route or category change
-  // Also preserves the query when the modal is open/closed
+  // Preserves category view and when rendering modal overlay
   useEffect(() => {
-    if (
-      prevPathname &&
-      pathname &&
-      !prevPathname?.includes(modalRoute) &&
-      !pathname?.includes(modalRoute)
-    ) {
-      setQuery('');
+    if (!solution) {
+      setPrevCategory(category);
     }
-  }, [pathname, prevCategory, prevPathname]);
+  }, [pathname, category, solution]);
+
+  // Resets the query on route or category change
+  // Also preserves the query/scroll when the modal is open/closed
+  useEffect(() => {
+    if (!location.state?.fromModal && !pathname?.includes(modalRoute)) {
+      setQuery('');
+      window.scrollTo(0, 0);
+    }
+  }, [location.state?.fromModal, pathname]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
@@ -119,7 +114,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query]);
+  }, [query, solution]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = prevCategory
