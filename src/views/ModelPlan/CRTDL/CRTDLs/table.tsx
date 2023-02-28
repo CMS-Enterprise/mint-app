@@ -20,7 +20,7 @@ import {
   GetCRTDLs_modelPlan_crTdls as CDTRLType
 } from 'queries/CRTDL/types/GetCRTDLs';
 import { formatDateUtc } from 'utils/date';
-import globalTableFilter from 'utils/globalTableFilter';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -282,7 +282,7 @@ const Table = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {

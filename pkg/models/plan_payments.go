@@ -131,7 +131,7 @@ const (
 
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
-	baseTaskListSectionUserTable
+	baseTaskListSection
 
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
@@ -209,8 +209,8 @@ type PlanPayments struct {
 }
 
 // NewPlanPayments returns a new PlanPayments object
-func NewPlanPayments(tls baseTaskListSectionUserTable) *PlanPayments {
+func NewPlanPayments(tls baseTaskListSection) *PlanPayments {
 	return &PlanPayments{
-		baseTaskListSectionUserTable: tls,
+		baseTaskListSection: tls,
 	}
 }
