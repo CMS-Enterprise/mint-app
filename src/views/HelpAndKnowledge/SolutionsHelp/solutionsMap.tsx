@@ -76,7 +76,7 @@ export type SolutionContactType = {
   role?: ContactRoles;
 };
 
-type SystemOwnerType = {
+export type SystemOwnerType = {
   name: string;
   system?: string;
 };
@@ -113,12 +113,39 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: '4i/ACO-OS Team',
         email: 'ACO-OIT@cms.hhs.gov'
+      },
+      {
+        name: 'Aparna Vyas',
+        email: 'aparna.vyas@cms.hhs.gov',
+        role: 'Project Lead'
+      },
+      {
+        name: 'Ashley Corbin',
+        email: 'ashley.corbin@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      },
+      {
+        name: 'Nora Fleming',
+        email: 'nora.fleming@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      system: 'Office of Information Technology'
+    },
+    contractors: [
+      {
+        name: 'Softrams',
+        system:
+          'Innovative Design, Development, and Operations Contract (IDDOC)'
       }
     ],
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => <Innovation4 {...props} />
   },
@@ -138,7 +165,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -161,7 +188,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -184,7 +211,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -207,7 +234,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -228,7 +255,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -249,7 +276,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -272,7 +299,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -293,7 +320,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -315,7 +342,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -338,7 +365,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -360,7 +387,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -386,7 +413,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -410,7 +437,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -433,7 +460,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -455,7 +482,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -479,7 +506,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -503,7 +530,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -526,7 +553,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -549,7 +576,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -572,7 +599,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -595,7 +622,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -617,7 +644,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -638,7 +665,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -661,7 +688,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -684,7 +711,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -707,7 +734,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -729,7 +756,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -752,7 +779,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -775,7 +802,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -798,7 +825,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
@@ -821,7 +848,7 @@ export const helpSolutions: HelpSolutionType[] = [
     generic: {
       about: true,
       timeline: false,
-      'points-of-contact': false
+      'points-of-contact': true
     },
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />

@@ -1002,6 +1002,8 @@ const helpAndKnowledge = {
   },
   backToSolutions: 'Back to solutions',
   moreContacts: 'More points of contact',
+  systemOwner: 'System owner',
+  contractors: 'Contractors',
 
   categories: solutionCategoryies,
   solutions
