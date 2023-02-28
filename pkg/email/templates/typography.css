@@ -1,29 +1,127 @@
 /* Typography styles */
-h1, h2, h3, p, .subtitle, .link {
-  color: #1A1A1A;
-  font-family: Arial, sans-serif;
-  font-style: normal;
-  text-decoration: none;
-  margin: 0;
-}
-
 h1 {
-  font-size: 39pt;
-  font-weight: bold;
-  text-align: left;
+  width: 105px;
+  height: 50px;
+
+  /* easi/h1 */
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+
+  /* default theme/base/darkest */
+  color: #1B1B1B;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
 h2 {
-  color: #005BA0;
-  font-size: 15pt;
-  font-weight: bold;
-  text-align: left;
+  width: 335px;
+  height: 38px;
+
+  /* easi/h2 */
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  /* identical to box height, or 119% */
+
+  display: flex;
+  align-items: center;
+
+  /* default theme/base/darkest */
+  color: #1B1B1B;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
 }
 
 h3 {
-  color: #1B1B1B;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 22pt;
+  width: 335px;
+  height: 26px;
+
+  /* easi/h3 */
+  font-family: 'Public Sans';
+  font-style: normal;
   font-weight: 700;
-  text-align: left;
+  font-size: 22px;
+  line-height: 26px;
+  /* identical to box height, or 118% */
+
+  display: flex;
+  align-items: center;
+
+  /* default theme/base/darkest */
+  color: #1B1B1B;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+subtitle {
+  width: 181px;
+  height: 18px;
+
+  /* default scale/xs */
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: flex-end;
+
+  /* default theme/base/base */
+  color: #71767A;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+body {
+  width: 335px;
+  height: 75px;
+
+  /* easi/body */
+
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+  /* or 156% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.01em;
+
+  /* default theme/base/darkest */
+  color: #1B1B1B;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
 }

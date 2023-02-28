@@ -3,9 +3,7 @@
    <head>
       <meta charset="utf-8">
       <title>Content</title>
-      <link rel="stylesheet" type="text/css" href="reset.css">
       <link rel="stylesheet" type="text/css" href="typography.css">
-      <link rel="stylesheet" type="text/css" href="elements.css">
    </head>
    <body>
       <header class="header">
