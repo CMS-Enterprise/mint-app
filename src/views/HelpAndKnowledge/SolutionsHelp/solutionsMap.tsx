@@ -460,259 +460,371 @@ export const helpSolutions: HelpSolutionType[] = [
     component: (props: SolutionDetailProps) => (
       <CentralizedDataExhange {...props} />
     )
+  },
+  {
+    enum: OperationalSolutionKey.IPC,
+    key: 'innovationPayment',
+    route: 'innovation-payment-contract',
+    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    acronym: 'IPC',
+    name: 'Innovation Payment Contractor',
+    pointsOfContact: [
+      {
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Director, Division of System Support, Operation and Security (DSSOS)'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.IDR,
+    key: 'integratedDataRepository',
+    route: 'integrated-data-repository',
+    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    acronym: 'IDR',
+    name: 'Integrated Data Repository',
+    pointsOfContact: [
+      {
+        name: 'Jim Brogan',
+        email: 'jim.brogan@cms.hhs.gov',
+        role:
+          'Deputy Director, Division of Enterprise Information Management Services'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'learningAndDiffusion',
+    route: 'learning-and-diffusion-group',
+    categories: [OperationalSolutionCategories.LEARNING],
+    acronym: 'LDG',
+    name: 'Learning and Diffusion Group',
+    pointsOfContact: [
+      {
+        name: 'Andrew Philip',
+        email: 'andrew.philip@cms.hhs.gov',
+        role: 'Director, Division of Model Learning Systems (DMLS)'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'legalVertical',
+    route: 'legal-vertical',
+    categories: [OperationalSolutionCategories.LEGAL],
+    acronym: 'LV',
+    name: 'Legal Vertical',
+    pointsOfContact: [
+      {
+        name: 'Andrew Philip',
+        email: 'megan.hyde@cms.hhs.gov',
+        role: 'Co-team Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.MDM,
+    key: 'masterDataManagement',
+    route: 'master-data-management',
+    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    acronym: 'MDM',
+    name: 'Master Data Management',
+    pointsOfContact: [
+      {
+        name: 'Cheryl Brown',
+        email: 'cheryl.brown@cms.hhs.gov',
+        role: 'CMMI/BSG Point of Contact'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'measureInstrumentDS',
+    route: 'measure-and-instrument-development-and-support',
+    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    acronym: 'MIDS',
+    name: 'Measure and Instrument Development and Support',
+    pointsOfContact: [
+      {
+        name: 'Dustin Allison',
+        email: 'dustin.allison@cms.hhs.gov',
+        role: 'Quality Vertical'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.MARX,
+    key: 'marx',
+    route: 'medicare-advantage-prescription-drug-system',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    acronym: 'MARx',
+    name: 'Medicare Advantage Prescription Drug System',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
+    key: 'outlookMailbox',
+    route: 'outlook-mailbox',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    name: 'Outlook Mailbox',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'qualityVertical',
+    route: 'quality-vertical',
+    categories: [OperationalSolutionCategories.QUALITY],
+    acronym: 'QV',
+    name: 'Quality Vertical',
+    pointsOfContact: [
+      {
+        name: 'Alesia Hovatter',
+        email: 'alesia.hovatter@cms.hhs.gov',
+        role: 'Senior Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.RMADA,
+    key: 'rmada',
+    route: 'research-measurement-assessment-design-and-analysis',
+    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    acronym: 'RMADA',
+    name: 'Research, Measurement, Assessment, Design, and Analysis',
+    pointsOfContact: [
+      {
+        name: 'Joe Pusateri',
+        email: 'joseph.pusateri@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.ARS,
+    key: 'ars',
+    route: 'salesforce-application-review-and-scoring',
+    categories: [OperationalSolutionCategories.APPLICATIONS],
+    acronym: 'ARS',
+    name: 'Salesforce Application Review and Scoring',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.CONNECT,
+    key: 'salesforceConnect',
+    route: 'salesforce-connect',
+    categories: [OperationalSolutionCategories.LEARNING],
+    name: 'Salesforce Connect',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: null,
+    key: 'salesforceLOI',
+    route: 'salesforce-letter-of-intent',
+    categories: [OperationalSolutionCategories.APPLICATIONS],
+    acronym: 'LOI',
+    name: 'Salesforce Letter of Intent',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.SALESFORCE_PORTAL,
+    key: 'salesforcePortal',
+    route: 'salesforce-project-officer-support-tool-portal',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    acronym: 'POST / PORTAL',
+    name: 'Salesforce Project Officer Support Tool / Portal',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.RFA,
+    key: 'salesforceRequestApplication',
+    route: 'salesforce-request-for-application',
+    categories: [OperationalSolutionCategories.APPLICATIONS],
+    acronym: 'RFA',
+    name: 'Salesforce Request for Application',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
+  },
+  {
+    enum: OperationalSolutionKey.SHARED_SYSTEMS,
+    key: 'sharedSystems',
+    route: 'shared-systems',
+    categories: [OperationalSolutionCategories.MEDICARE_FFS],
+    name: 'Shared Systems',
+    pointsOfContact: [
+      {
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Division Director, Division of System Support, Operation and Security (DSSOS)'
+      }
+    ],
+    generic: {
+      about: true,
+      timeline: false,
+      'points-of-contact': false
+    },
+    component: (props: SolutionDetailProps) => (
+      <CentralizedDataExhange {...props} />
+    )
   }
-  // {
-  //   enum: OperationalSolutionKey.IPC,
-  //   key: 'innovationPayment',
-  //   route: 'innovation-payment-contract',
-  //   categories: [OperationalSolutionCategories.CC_VEHICLES],
-  //   acronym: 'IPC',
-  //   name: 'Innovation Payment Contractor',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Donna Schmidt',
-  //       email: 'donna.schmidt@cms.hhs.gov',
-  //       role:
-  //         'Director, Division of System Support, Operation and Security (DSSOS)'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.IDR,
-  //   key: 'integratedDataRepository',
-  //   route: 'integrated-data-repository',
-  //   categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-  //   acronym: 'IDR',
-  //   name: 'Integrated Data Repository',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Jim Brogan',
-  //       email: 'jim.brogan@cms.hhs.gov',
-  //       role:
-  //         'Deputy Director, Division of Enterprise Information Management Services'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'learningAndDiffusion',
-  //   route: 'learning-and-diffusion-group',
-  //   categories: [OperationalSolutionCategories.LEARNING],
-  //   acronym: 'LDG',
-  //   name: 'Learning and Diffusion Group',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Andrew Philip',
-  //       email: 'andrew.philip@cms.hhs.gov',
-  //       role: 'Director, Division of Model Learning Systems (DMLS)'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'legalVertical',
-  //   route: 'legal-vertical',
-  //   categories: [OperationalSolutionCategories.LEGAL],
-  //   acronym: 'LV',
-  //   name: 'Legal Vertical',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Andrew Philip',
-  //       email: 'megan.hyde@cms.hhs.gov',
-  //       role: 'Co-team Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.MDM,
-  //   key: 'masterDataManagement',
-  //   route: 'master-data-management',
-  //   categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-  //   acronym: 'MDM',
-  //   name: 'Master Data Management',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Cheryl Brown',
-  //       email: 'cheryl.brown@cms.hhs.gov',
-  //       role: 'CMMI/BSG Point of Contact'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'measureInstrumentDS',
-  //   route: 'measure-and-instrument-development-and-support',
-  //   categories: [OperationalSolutionCategories.CC_VEHICLES],
-  //   acronym: 'MIDS',
-  //   name: 'Measure and Instrument Development and Support',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Dustin Allison',
-  //       email: 'dustin.allison@cms.hhs.gov',
-  //       role: 'Quality Vertical'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.MARX,
-  //   key: 'marx',
-  //   route: 'medicare-advantage-prescription-drug-system',
-  //   categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-  //   acronym: 'MARx',
-  //   name: 'Medicare Advantage Prescription Drug System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
-  //   key: 'outlookMailbox',
-  //   route: 'outlook-mailbox',
-  //   categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-  //   name: 'Outlook Mailbox',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'qualityVertical',
-  //   route: 'quality-vertical',
-  //   categories: [OperationalSolutionCategories.QUALITY],
-  //   acronym: 'QV',
-  //   name: 'Quality Vertical',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Alesia Hovatter',
-  //       email: 'alesia.hovatter@cms.hhs.gov',
-  //       role: 'Senior Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.RMADA,
-  //   key: 'rmada',
-  //   route: 'research-measurement-assessment-design-and-analysis',
-  //   categories: [OperationalSolutionCategories.CC_VEHICLES],
-  //   acronym: 'RMADA',
-  //   name: 'Research, Measurement, Assessment, Design, and Analysis',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Joe Pusateri',
-  //       email: 'joseph.pusateri@cms.hhs.gov',
-  //       role: 'Contracting Officer Representative'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.ARS,
-  //   key: 'ars',
-  //   route: 'salesforce-application-review-and-scoring',
-  //   categories: [OperationalSolutionCategories.APPLICATIONS],
-  //   acronym: 'ARS',
-  //   name: 'Salesforce Application Review and Scoring',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.CONNECT,
-  //   key: 'salesforceConnect',
-  //   route: 'salesforce-connect',
-  //   categories: [OperationalSolutionCategories.LEARNING],
-  //   name: 'Salesforce Connect',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: null,
-  //   key: 'salesforceLOI',
-  //   route: 'salesforce-letter-of-intent',
-  //   categories: [OperationalSolutionCategories.APPLICATIONS],
-  //   acronym: 'LOI',
-  //   name: 'Salesforce Letter of Intent',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.SALESFORCE_PORTAL,
-  //   key: 'salesforcePortal',
-  //   route: 'salesforce-project-officer-support-tool-portal',
-  //   categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-  //   acronym: 'POST / PORTAL',
-  //   name: 'Salesforce Project Officer Support Tool / Portal',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.RFA,
-  //   key: 'salesforceRequestApplication',
-  //   route: 'salesforce-request-for-application',
-  //   categories: [OperationalSolutionCategories.APPLICATIONS],
-  //   acronym: 'RFA',
-  //   name: 'Salesforce Request for Application',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // },
-  // {
-  //   enum: OperationalSolutionKey.SHARED_SYSTEMS,
-  //   key: 'sharedSystems',
-  //   route: 'shared-systems',
-  //   categories: [OperationalSolutionCategories.MEDICARE_FFS],
-  //   name: 'Shared Systems',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Donna Schmidt',
-  //       email: 'donna.schmidt@cms.hhs.gov',
-  //       role:
-  //         'Division Director, Division of System Support, Operation and Security (DSSOS)'
-  //     }
-  //   ],
-  //   component: (props: SolutionDetailProps) => <CentralizedDataExhange {...props} />
-  // }
 ];

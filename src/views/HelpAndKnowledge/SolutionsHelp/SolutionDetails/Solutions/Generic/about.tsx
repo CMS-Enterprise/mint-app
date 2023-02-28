@@ -1,7 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import '../index.scss';
 
 type ListItemType = {
   header: string;
@@ -14,10 +18,13 @@ type AboutComponentType = {
   level?: 'h3' | 'h4';
   items: string[] | ListItemType;
   ordered?: boolean;
+  itemHeaders: string[]; // Must be the same number of items as items[]
+  links?: string[]; // Must be the same number of items as items[]
 };
 
 type AboutConfigType = {
   description: string;
+  subDescription?: string;
   items?: string[];
   ordered?: boolean;
   components: AboutComponentType[];
@@ -27,6 +34,11 @@ const returnListType = (
   ordered: boolean | undefined
 ): keyof JSX.IntrinsicElements =>
   `${ordered ? 'o' : 'u'}l` as keyof JSX.IntrinsicElements;
+
+const returnHeadingLevel = (
+  level: 'h4' | undefined
+): keyof JSX.IntrinsicElements =>
+  (level || 'h3') as keyof JSX.IntrinsicElements;
 
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -48,7 +60,7 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const ListType = returnListType(isDescriptionItemsOrdered);
 
   return (
-    <div className="line-height-body-5 font-body-md">
+    <div className="operational-solution-details line-height-body-5 font-body-md">
       <p className="margin-top-0 text-pre-wrap margin-bottom-0">
         {t(`solutions.${solution.key}.about.description`)}
       </p>
@@ -62,14 +74,23 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
       )}
 
       {hasComponents &&
-        components.map(component => {
+        components.map((component, componentIndex) => {
           const ComponentListType = returnListType(component.ordered);
 
+          const HeadingLevel = returnHeadingLevel(component.level);
+
           return (
-            <div key={component.header} className="margin-top-4">
-              <component.level className="margin-bottom-2">
+            <div
+              key={component.header + componentIndex} // eslint-disable-line react/no-array-index-key
+              className="margin-top-4"
+            >
+              <HeadingLevel
+                className={classNames('margin-bottom-2', {
+                  'margin-bottom-0': component.level === 'h4'
+                })}
+              >
                 {component.header}
-              </component.level>
+              </HeadingLevel>
 
               {component.description && (
                 <span className="text-pre-wrap ">{component.description}</span>
@@ -78,14 +99,18 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               <ComponentListType className="padding-left-4 margin-top-0">
                 {component.items.map(
                   (item: string | AboutComponentType, index: number) => (
-                    <li key={typeof item === 'object' ? item.header : item}>
+                    <li
+                      key={
+                        typeof item === 'object' ? item.header : item + index
+                      }
+                    >
                       {component.itemHeaders && (
                         <span className="text-bold">
                           {component.itemHeaders[index]} -{' '}
                         </span>
                       )}
 
-                      {typeof item === 'object' ? (
+                      {typeof item === 'object' && (
                         <>
                           <span>{item.header}</span>
 
@@ -97,8 +122,20 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                             )}
                           </ul>
                         </>
-                      ) : (
+                      )}
+
+                      {typeof item !== 'object' && !component.links ? (
                         item
+                      ) : (
+                        <Link
+                          aria-label="Open in a new tab"
+                          href={component.links[index]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          variant="external"
+                        >
+                          {item}
+                        </Link>
                       )}
                     </li>
                   )
@@ -107,6 +144,8 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
             </div>
           );
         })}
+
+      {aboutConfig.subDescription && <span>{aboutConfig.subDescription}</span>}
     </div>
   );
 };
