@@ -41,7 +41,6 @@ export const taskListSectionMap: TaskListSectionMapType = {
   basics: TaskListSection.BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
   characteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  'it-tools': TaskListSection.IT_TOOLS,
   'ops-eval-and-learning': TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
   'participants-and-providers': TaskListSection.PARTICIPANTS_AND_PROVIDERS,
   payment: TaskListSection.PAYMENT

@@ -66,8 +66,7 @@ func ModelPlanCreate(
 		return nil, err
 	}
 
-	baseTaskList := models.NewBaseTaskListSection(*userAccount.Username, createdPlan.ID) //make a taskList status, with status Ready
-	baseTaskListUser := models.NewBaseTaskListSectionUserTable(userAccount.ID, createdPlan.ID)
+	baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 	// Create a default plan basics object
 	basics := models.NewPlanBasics(baseTaskListUser)
@@ -115,13 +114,6 @@ func ModelPlanCreate(
 		return nil, err
 	}
 
-	//Create default PlanITTools object
-	itTools := models.NewPlanITTools(baseTaskList)
-
-	_, err = store.PlanITToolsCreate(logger, itTools)
-	if err != nil {
-		return nil, err
-	}
 	//Create default Operational Needs
 	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.Account().ID)
 	if err != nil {
