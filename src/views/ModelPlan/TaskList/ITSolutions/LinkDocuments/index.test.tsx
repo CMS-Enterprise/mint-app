@@ -49,6 +49,7 @@ const operationalSolution = {
       numLinkedSolutions: 0,
       optionalNotes: null,
       otherType: null,
+      numLinkedSolutions: 0,
       __typename: 'PlanDocument'
     }
   ],

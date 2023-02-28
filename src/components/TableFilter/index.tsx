@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { FilterValue, useAsyncDebounce } from 'react-table';
 import {
   Button,
@@ -30,11 +31,21 @@ const GlobalClientFilter = ({
   className
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
+
+  const { pathname } = useLocation();
+
+  const [query, setQuery] = useState<string>('');
+
   // Set a debounce to capture set input before re-rendering on each character.  Preparation for BE fetching/filtering.
   // May not be necessary until then
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value);
   }, 200);
+
+  // Resets the query on route change
+  useEffect(() => {
+    setQuery('');
+  }, [pathname]);
 
   return (
     <Form
@@ -56,7 +67,9 @@ const GlobalClientFilter = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           // Currently only client-side filtering - updates search filter onChange
           onChange(e.target.value);
+          setQuery(e.target.value);
         }}
+        value={query}
         name={`${tableName} Search`}
       />
       {/* Right not search button doesn't need to do anything, it searches onChange -

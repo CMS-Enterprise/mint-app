@@ -1,0 +1,356 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation Solutio Category Footer matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="margin-top-4"
+  >
+    <h2
+      class="margin-bottom-1"
+    >
+      Browse solutions by category
+    </h2>
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/applications"
+        >
+          Applications
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/communication-tools"
+        >
+          Communication tools
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/contractors-and-contract-vehicles"
+        >
+          Contractors and contract vehicles
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/database-and-data-management"
+        >
+          Databases and data management
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+        >
+          Data exchange
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+        >
+          Data reporting
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/help-desks"
+        >
+          Help desks
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/learning"
+        >
+          Learning
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/legal"
+        >
+          Legal
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/medicare-advantage-and-part-d"
+        >
+          Medicare Advantage and Part D
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/medicare-fee-for-service"
+        >
+          Medicare Fee-for-Service
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions/categories/quality"
+        >
+          Quality
+          <svg
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
