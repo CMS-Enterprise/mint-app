@@ -6,7 +6,7 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
-import usePrevLocation from 'hooks/usePrevious';
+import usePreviousModalRoute from 'hooks/usePreviousModalRoute';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
@@ -49,11 +49,16 @@ const SolutionHelpCardGroup = ({
   const { t: h } = useTranslation('generalReadOnly');
 
   const location = useLocation();
-  const prevLocation = usePrevLocation(location);
+
+  // Hook used to preserve the underlying component route while navigating modal routes
+  const prevLocation = usePreviousModalRoute(
+    location,
+    '/operational-solutions/solution'
+  );
+
+  // Gets the page param while directly viewing component as well as when viewing modal overlay
   const prevParam = prevLocation?.search;
-
   const params = new URLSearchParams(location.search || prevParam);
-
   const page = params.get('page');
 
   const history = useHistory();

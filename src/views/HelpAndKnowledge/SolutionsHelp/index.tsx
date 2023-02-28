@@ -81,6 +81,13 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     solution ? prevPathname?.split('/')[4] : category
   );
 
+  const [query, setQuery] = useState<string>('');
+  const [resultsNum, setResultsNum] = useState<number>(0);
+
+  const [querySolutions, setQuerySolutions] = useState<HelpSolutionType[]>(
+    helpSolutions
+  );
+
   // Preserve scroll position when opening/closing modal
   const modalRoute: string = '/operational-solutions/solution';
   useModalScroll(modalRoute);
@@ -91,13 +98,6 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       setPrevCategory(category);
     }
   }, [pathname, category, solution]);
-
-  const [query, setQuery] = useState<string>('');
-  const [resultsNum, setResultsNum] = useState<number>(0);
-
-  const [querySolutions, setQuerySolutions] = useState<HelpSolutionType[]>(
-    helpSolutions
-  );
 
   // Resets the query on route or category change
   // Also preserves the query when the modal is open/closed
@@ -119,7 +119,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query]);
+  }, [query, solution]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = prevCategory
