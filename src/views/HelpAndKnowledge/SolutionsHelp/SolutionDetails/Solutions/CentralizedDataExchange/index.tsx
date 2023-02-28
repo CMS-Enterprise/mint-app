@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { SolutionDetailProps } from '..';
+import { SolutionDetailProps } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 export const CentralizedDataExhange = ({ type }: SolutionDetailProps) => {
   const { t } = useTranslation('helpAndKnowledge');

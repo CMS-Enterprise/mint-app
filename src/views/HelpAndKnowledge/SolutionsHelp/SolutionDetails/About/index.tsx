@@ -11,7 +11,8 @@ export const About = ({ solution }: { solution: HelpSolutionType }) => {
     <GenericAbout solution={solution} />
   ) : (
     solution?.component({
-      type: 'about'
+      type: 'about',
+      solution
     })
   );
 

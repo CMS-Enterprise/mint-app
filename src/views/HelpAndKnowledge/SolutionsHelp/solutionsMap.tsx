@@ -3,12 +3,16 @@ import React from 'react';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
-import { SolutionDetailProps } from './SolutionDetails/Solutions';
 import Innovation4 from './SolutionDetails/Solutions/4Innovation';
 import CentralizedDataExhange from './SolutionDetails/Solutions/CentralizedDataExchange';
 
 type CategoryType = {
   [key: string]: OperationalSolutionCategories;
+};
+
+export type SolutionDetailProps = {
+  type: 'about' | 'timeline' | 'points-of-contact';
+  solution: HelpSolutionType;
 };
 
 export const modalRoute: string = '/operational-solutions/solution';

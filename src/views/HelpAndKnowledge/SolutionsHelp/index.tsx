@@ -77,8 +77,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { pathname } = location;
 
   const prevLocation = usePrevLocation(location);
-  const prevParam = prevLocation?.search || '';
-  const prevPathname = prevLocation?.pathname + prevParam;
+  const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
 
   const [prevCategory, setPrevCategory] = useState<string | undefined>(
     solution ? prevPathname?.split('/')[4] : category

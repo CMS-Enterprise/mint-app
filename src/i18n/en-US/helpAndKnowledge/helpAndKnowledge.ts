@@ -98,6 +98,27 @@ const solutions = {
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'Timelines can vary depending on model team’s use of 4i and ACO-OS features. Onboarding to the 4i platform can take 10-12 weeks depending on the features and prioritization by the model teams, provided there are no major changes or customizations. Additionally, any policy or legislation changes can potentially result in a delay to the application go-live dates.',
+      items: [
+        {
+          header: 'Inquire about using 4i/ACO-OS',
+          description:
+            'Send an email to <1>{{email}}</1> if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin and Nora Fleming on the email.'
+        },
+        {
+          header: 'Meet with 4i/ACO-OS technical lead',
+          description:
+            'Schedule an initial meeting to share the feature catalog with the model. The 4i/ACO-OS technical lead gives a high-level overview of 4i/ACO-OS and its capabilities and features (listed on the previous tab).'
+        },
+        {
+          header: 'Review features',
+          description:
+            'Review the features with the model team to understand the level of customization needed by the model for each feature. The model team confirms the features to be used in the 4i platform and ACO-OS.'
+        }
+      ]
     }
   },
   accountableCare: {

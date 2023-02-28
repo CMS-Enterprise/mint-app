@@ -11,7 +11,8 @@ export const Timeline = ({ solution }: { solution: HelpSolutionType }) => {
     <GenericTimeline solution={solution} />
   ) : (
     solution.component({
-      type: 'timeline'
+      type: 'timeline',
+      solution
     })
   );
 

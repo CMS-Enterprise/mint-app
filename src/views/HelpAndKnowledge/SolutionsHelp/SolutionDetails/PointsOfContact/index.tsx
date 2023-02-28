@@ -15,7 +15,8 @@ export const PointsOfContact = ({
     <GenericPointsOfContact solution={solution} />
   ) : (
     solution.component({
-      type: 'points-of-contact'
+      type: 'points-of-contact',
+      solution
     })
   );
 
