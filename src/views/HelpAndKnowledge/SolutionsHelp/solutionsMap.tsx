@@ -160,6 +160,33 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: '4i/ACO-OS Team',
         email: 'ACO-OIT@cms.hhs.gov'
+      },
+      {
+        name: 'Aparna Vyas',
+        email: 'aparna.vyas@cms.hhs.gov',
+        role: 'Project Lead'
+      },
+      {
+        name: 'Ashley Corbin',
+        email: 'ashley.corbin@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      },
+      {
+        name: 'Nora Fleming',
+        email: 'nora.fleming@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      system: 'Office of Information Technology'
+    },
+    contractors: [
+      {
+        name: 'Softrams',
+        system:
+          'Innovative Design, Development, and Operations Contract (IDDOC)'
       }
     ],
     generic: {
@@ -183,8 +210,17 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Aliza Kim',
         email: 'aliza.kim@cms.hhs.gov',
         role: 'Project Lead'
+      },
+      {
+        name: 'Edgar Howard',
+        email: 'edgar.howard@cms.hhs.gov',
+        role: 'Director, Division of Payment Operations'
       }
     ],
+    systemOwner: {
+      name: 'Medicare Plan Payment Group, Division of Payment Operations',
+      system: 'Center for Medicare'
+    },
     generic: {
       about: true,
       timeline: false,
@@ -206,6 +242,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Yolanda Villanova',
         email: 'yolanda.villanova@cms.hhs.gov',
         role: 'Product Owner'
+      },
+      {
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
       }
     ],
     generic: {
@@ -229,6 +280,16 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Cheryl Brown',
         email: 'cheryl.brown@cms.hhs.gov',
         role: 'CMMI Government Task Lead'
+      }
+    ],
+    systemOwner: {
+      name: 'Research Data Development Group',
+      system: 'Office of Enterprise Data and Analytics'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -294,6 +355,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Richard Speights',
         email: 'richard.speights@cms.hhs.gov',
         role: 'Contracting Officer Representative'
+      },
+      {
+        name: 'Don Rocker',
+        email: 'don.rocker1@cms.hhs.gov',
+        role: 'Operations and Management Lead '
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group, Division of IT Operations and Security',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -362,6 +438,16 @@ export const helpSolutions: HelpSolutionType[] = [
         role: 'Product Owner'
       }
     ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
+      }
+    ],
     generic: {
       about: true,
       timeline: false,
@@ -381,6 +467,11 @@ export const helpSolutions: HelpSolutionType[] = [
       {
         name: 'Andrew Rushton',
         email: 'andrew.rushton@cms.hhs.gov',
+        role: 'Administrator'
+      },
+      {
+        name: 'Alison Rigby',
+        email: 'alison.rigby@cms.hhs.gov',
         role: 'Administrator'
       }
     ],
@@ -408,6 +499,11 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Mary Greene',
         email: 'mary.greene@cms.hhs.gov',
         role: 'Director, Division of Grants Management'
+      },
+      {
+        name: 'Michelle Brown',
+        email: 'michelle.brown@cms.hhs.gov',
+        role: 'Deputy Director, Division of Grants Management'
       }
     ],
     generic: {
@@ -434,6 +530,10 @@ export const helpSolutions: HelpSolutionType[] = [
           'Director, Division of System Support, Operation and Security (DSSOS)'
       }
     ],
+    systemOwner: {
+      name: 'Accounting Management Group',
+      system: 'Office of Financial Management'
+    },
     generic: {
       about: true,
       timeline: false,
@@ -455,6 +555,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Hung Van',
         email: 'hung.van@cms.hhs.gov',
         role: 'Technical Lead'
+      },
+      {
+        name: 'Curtis Naumann',
+        email: 'curtis.naumann@cms.hhs.gov',
+        role: 'Product Owner'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
       }
     ],
     generic: {
@@ -479,6 +594,10 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'MINTTeam@cms.hhs.gov'
       }
     ],
+    systemOwner: {
+      name: 'Division of Plan Data',
+      system: 'Center for Medicare'
+    },
     generic: {
       about: true,
       timeline: false,
@@ -501,6 +620,31 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'donna.schmidt@cms.hhs.gov',
         role:
           'Director, Division of System Support, Operation and Security (DSSOS)'
+      },
+      {
+        name: 'Sue Nonemaker',
+        email: 'sue.nonemaker@cms.hhs.gov',
+        role: 'Project Lead'
+      },
+      {
+        name: 'Alyssa Larson',
+        email: 'alyssa.larson@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      },
+      {
+        name: 'Philip Tennant',
+        email: 'philip.tennant@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Business Services Group, Division of System Support, Operation and Security',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'National Government Services (NGS)'
       }
     ],
     generic: {
@@ -525,8 +669,18 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'jim.brogan@cms.hhs.gov',
         role:
           'Deputy Director, Division of Enterprise Information Management Services'
+      },
+      {
+        name: 'Murari Selvakesavan',
+        email: 'murari.selvakesavan@cms.hhs.gov',
+        role: 'System Owner'
       }
     ],
+    systemOwner: {
+      name:
+        'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
+      system: 'Office of Information Technology'
+    },
     generic: {
       about: true,
       timeline: false,
@@ -548,6 +702,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Andrew Philip',
         email: 'andrew.philip@cms.hhs.gov',
         role: 'Director, Division of Model Learning Systems (DMLS)'
+      },
+      {
+        name: 'Taiwanna Messam Lucienne',
+        email: 'taiwanna.lucienne@cms.hhs.gov',
+        role: 'Deputy Director, Division of Model Learning Systems (DMLS)'
+      },
+      {
+        name: 'Alexis Malfesi',
+        email: 'alexis.malfesi@cms.hhs.gov',
+        role: 'Beneficiary Listening Session Point of Contact'
+      },
+      {
+        name: 'Erin Carrillo',
+        email: 'erin.carrillo1@cms.hhs.gov',
+        role: 'Beneficiary Listening Session Point of Contact'
       }
     ],
     generic: {
@@ -568,9 +737,24 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Legal Vertical',
     pointsOfContact: [
       {
-        name: 'Andrew Philip',
+        name: 'Megan Hyde',
         email: 'megan.hyde@cms.hhs.gov',
         role: 'Co-team Lead'
+      },
+      {
+        name: 'Erin Hagenbrok',
+        email: 'erin.hagenbrok1@cms.hhs.gov',
+        role: 'Co-team Lead'
+      },
+      {
+        name: 'Ann Vrabel',
+        email: 'ann.vrabel1@cms.hhs.gov',
+        role: 'Division Director'
+      },
+      {
+        name: 'Melanie Dang',
+        email: 'melanie.dang1@cms.hhs.gov',
+        role: 'Deputy Division Director'
       }
     ],
     generic: {
@@ -594,8 +778,32 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Cheryl Brown',
         email: 'cheryl.brown@cms.hhs.gov',
         role: 'CMMI/BSG Point of Contact'
+      },
+      {
+        name: 'Felicia Addai',
+        email: 'felicia.addai2@cms.hhs.gov',
+        role: 'CMMI/BSG Project Support'
+      },
+      {
+        name: 'Miyani Treva',
+        email: 'miyani.treva@cms.hhs.gov',
+        role: 'Overlaps Operations Support'
+      },
+      {
+        name: 'Sameera Gudipati',
+        email: 'sameera.gudipati1@cms.hhs.gov',
+        role: 'OIT Point of Contact'
+      },
+      {
+        name: 'Glenn Eyler',
+        email: 'cglenn.eyler@cms.hhs.gov',
+        role: 'OIT Government Task Lead'
       }
     ],
+    systemOwner: {
+      name: 'Enterprise Architecture and Data Group',
+      system: 'Office of Information Technology'
+    },
     generic: {
       about: true,
       timeline: false,
@@ -617,6 +825,22 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Dustin Allison',
         email: 'dustin.allison@cms.hhs.gov',
         role: 'Quality Vertical'
+      },
+      {
+        name: 'Teresa Winder-Wells',
+        email: 'teresa.winder-wells@cms.hhs.gov',
+        role:
+          'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
+      },
+      {
+        name: 'Tim Day',
+        email: 'timothy.day@cms.hhs.gov',
+        role: 'Quality Subject Matter Expert (QSME)'
+      },
+      {
+        name: 'Jim Gerber',
+        email: 'james.gerber@cms.hhs.gov',
+        role: 'Director, Division of Portfolio Management & Strategy'
       }
     ],
     generic: {
@@ -641,6 +865,10 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'MINTTeam@cms.hhs.gov'
       }
     ],
+    systemOwner: {
+      name: 'Medicare Plan Payment Group, Division of Payment Operations',
+      system: 'Center for Medicare'
+    },
     generic: {
       about: true,
       timeline: false,
@@ -683,6 +911,26 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Alesia Hovatter',
         email: 'alesia.hovatter@cms.hhs.gov',
         role: 'Senior Lead'
+      },
+      {
+        name: 'Susannah Bernheim',
+        email: 'susannah.bernheim@cms.hhs.gov',
+        role: 'Chief Quality Officer and Lead'
+      },
+      {
+        name: 'Dustin Allison',
+        email: 'dustin.allison1@cms.hhs.gov',
+        role: 'Interim Lead'
+      },
+      {
+        name: 'Sasha Gibbel',
+        email: 'sasha.gibbel@cms.hhs.gov',
+        role: 'Quality Analyst'
+      },
+      {
+        name: 'Whitney Saint-Fleur',
+        email: 'whitney.saintfleur@cms.hhs.gov',
+        role: 'Quality Analyst'
       }
     ],
     generic: {
@@ -729,6 +977,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Elia Cossis',
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -751,6 +1014,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Elia Cossis',
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -774,6 +1052,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Elia Cossis',
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -797,6 +1090,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Elia Cossis',
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -820,6 +1128,21 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Elia Cossis',
         email: 'elia.cossis@cms.hhs.gov',
         role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
       }
     ],
     generic: {
@@ -843,8 +1166,18 @@ export const helpSolutions: HelpSolutionType[] = [
         email: 'donna.schmidt@cms.hhs.gov',
         role:
           'Division Director, Division of System Support, Operation and Security (DSSOS)'
+      },
+      {
+        name: 'Madhu Annadata',
+        email: 'madhu.annadata@cms.hhs.gov',
+        role: 'Subject Matter Expert'
       }
     ],
+    systemOwner: {
+      name:
+        'Applications Management Group, Division of Shared Systems Management',
+      system: 'Office of Information Technology'
+    },
     generic: {
       about: true,
       timeline: false,
