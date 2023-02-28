@@ -5,6 +5,8 @@ type CategoryType = {
   [key: string]: OperationalSolutionCategories;
 };
 
+export const modalRoute: string = '/operational-solutions/solution';
+
 // Operational Solution categories
 export const operationalSolutionCategoryMap: CategoryType = {
   applications: OperationalSolutionCategories.APPLICATIONS,

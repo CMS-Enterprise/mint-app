@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import Alert from 'components/shared/Alert';
 import usePreviousModalRoute from 'hooks/usePreviousModalRoute';
 
-import { HelpSolutionType } from '../../solutionsMap';
+import { HelpSolutionType, modalRoute } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
 
 import './index.scss';
@@ -51,10 +51,7 @@ const SolutionHelpCardGroup = ({
   const location = useLocation();
 
   // Hook used to preserve the underlying component route while navigating modal routes
-  const prevLocation = usePreviousModalRoute(
-    location,
-    '/operational-solutions/solution'
-  );
+  const prevLocation = usePreviousModalRoute(location, modalRoute);
 
   // Gets the page param while directly viewing component as well as when viewing modal overlay
   const prevParam = prevLocation?.search;

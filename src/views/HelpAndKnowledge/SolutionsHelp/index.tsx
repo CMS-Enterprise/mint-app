@@ -10,7 +10,6 @@ import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
-import useModalScroll from 'hooks/useModalSroll';
 import usePrevLocation from 'hooks/usePrevious';
 
 import CategoryFooter from './_components/CategoryFooter';
@@ -20,12 +19,17 @@ import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
   helpSolutions,
   HelpSolutionType,
+  modalRoute,
   operationalSolutionCategoryMap
 } from './solutionsMap';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
 };
+
+interface LocationProps {
+  fromModal: string;
+}
 
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRoute = (
@@ -69,13 +73,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     solution: string;
   }>();
 
-  const location = useLocation();
+  const location = useLocation<LocationProps>();
+  const { pathname } = location;
 
   const prevLocation = usePrevLocation(location);
   const prevParam = prevLocation?.search || '';
   const prevPathname = prevLocation?.pathname + prevParam;
-
-  const { pathname } = location;
 
   const [prevCategory, setPrevCategory] = useState<string | undefined>(
     solution ? prevPathname?.split('/')[4] : category
@@ -88,11 +91,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     helpSolutions
   );
 
-  // Preserve scroll position when opening/closing modal
-  const modalRoute: string = '/operational-solutions/solution';
-  useModalScroll(modalRoute);
-
-  // Preserves category view when rendering modal overlay
+  // Preserves category view and when rendering modal overlay
   useEffect(() => {
     if (!solution) {
       setPrevCategory(category);
@@ -100,17 +99,13 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   }, [pathname, category, solution]);
 
   // Resets the query on route or category change
-  // Also preserves the query when the modal is open/closed
+  // Also preserves the query/scroll when the modal is open/closed
   useEffect(() => {
-    if (
-      prevPathname &&
-      pathname &&
-      !prevPathname?.includes(modalRoute) &&
-      !pathname?.includes(modalRoute)
-    ) {
+    if (!location.state?.fromModal && !pathname?.includes(modalRoute)) {
       setQuery('');
+      window.scrollTo(0, 0);
     }
-  }, [pathname, prevCategory, prevPathname]);
+  }, [location.state?.fromModal, pathname]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
