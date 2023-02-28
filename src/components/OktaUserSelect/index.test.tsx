@@ -5,15 +5,15 @@ import userEvent from '@testing-library/user-event';
 
 import SearchOktaUsers from 'queries/SearchOktaUsers';
 
-import CedarContactSelect from './index';
+import OktaUserSelect from './index';
 
-describe('CedarContactSelect', () => {
+describe('OktaUserSelect', () => {
   // Cedar contacts query mock
   const oktaUsersQuery = {
     request: {
       query: SearchOktaUsers,
       variables: {
-        commonName: 'Adeline'
+        searchTerm: 'Adeline'
       }
     },
     result: {
@@ -31,7 +31,7 @@ describe('CedarContactSelect', () => {
   it('selects contact from dropdown', async () => {
     const { asFragment, getByTestId, findByText } = render(
       <MockedProvider mocks={[oktaUsersQuery]} addTypename={false}>
-        <CedarContactSelect
+        <OktaUserSelect
           id="cedarContactSelect"
           name="cedarContactSelect"
           onChange={() => null}
@@ -43,7 +43,7 @@ describe('CedarContactSelect', () => {
     const input = getByTestId('cedar-contact-select');
     userEvent.type(input, 'Adeline');
 
-    // Get mocked CEDAR result
+    // Get mocked Okta result
     const userOption = await findByText('Adeline Aarons, ABCD');
     expect(userOption).toBeInTheDocument();
 
