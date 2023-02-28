@@ -10,7 +10,7 @@ export default gql`
       isFavorite
       basics {
         goal
-        applicationsStart
+        performancePeriodStarts
       }
       generalCharacteristics {
         keyCharacteristics
