@@ -64,20 +64,22 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             if interested in using 4i and ACO-OS for your model. Please also
             include Ashley Corbin and Nora Fleming on the email.
           </Trans>
-          <p>{timelineConfig.items[0].description}</p>
         </ProcessListItem>
 
-        {timelineConfig.items.map(item => (
-          <ProcessListItem
-            key={item.header}
-            className="operational-solution-details__timeline-item"
-          >
-            <ProcessListHeading type="h3" className="margin-top-neg-05">
-              {item.header}
-            </ProcessListHeading>
-            <p>{item.description}</p>
-          </ProcessListItem>
-        ))}
+        {timelineConfig.items.map((item, index) => {
+          if (index === 0) return <div key="empty" />;
+          return (
+            <ProcessListItem
+              key={item.header}
+              className="operational-solution-details__timeline-item"
+            >
+              <ProcessListHeading type="h3" className="margin-top-neg-05">
+                {item.header}
+              </ProcessListHeading>
+              <p>{item.description}</p>
+            </ProcessListItem>
+          );
+        })}
       </ProcessList>
     </div>
   );
