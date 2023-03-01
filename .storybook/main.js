@@ -28,8 +28,7 @@ module.exports = {
           options: {
             resources: [
               path.resolve(__dirname, '../src/stylesheets/_colors.scss'),
-              path.resolve(__dirname, '../src/stylesheets/_viewports.scss'),
-              path.resolve(__dirname, '../src/stylesheets/_uswdsUtilities.scss')
+              path.resolve(__dirname, '../src/stylesheets/_viewports.scss')
             ]
           }
         }
