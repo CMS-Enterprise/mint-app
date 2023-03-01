@@ -11,11 +11,10 @@ export const PointsOfContact = ({
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const SolutionPointsOfContact = solution.generic['points-of-contact'] ? (
+  const SolutionPointsOfContact = !solution.components['points-of-contact'] ? (
     <GenericPointsOfContact solution={solution} />
   ) : (
-    solution.component({
-      type: 'points-of-contact',
+    solution.components['points-of-contact']({
       solution
     })
   );

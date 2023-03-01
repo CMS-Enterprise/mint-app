@@ -7,11 +7,10 @@ import GenericAbout from '../Solutions/Generic/about';
 export const About = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const SolutionAbout = solution.generic.about ? (
+  const SolutionAbout = !solution.components.about ? (
     <GenericAbout solution={solution} />
   ) : (
-    solution?.component({
-      type: 'about',
+    solution.components.about({
       solution
     })
   );

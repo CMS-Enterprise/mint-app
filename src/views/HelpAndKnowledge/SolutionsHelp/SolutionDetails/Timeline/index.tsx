@@ -7,11 +7,10 @@ import GenericTimeline from '../Solutions/Generic/timeline';
 export const Timeline = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const SolutionTimeline = solution.generic.timeline ? (
+  const SolutionTimeline = !solution.components.timeline ? (
     <GenericTimeline solution={solution} />
   ) : (
-    solution.component({
-      type: 'timeline',
+    solution.components.timeline({
       solution
     })
   );

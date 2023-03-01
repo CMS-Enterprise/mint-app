@@ -3,7 +3,7 @@ import React from 'react';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
-import Innovation4 from './SolutionDetails/Solutions/4Innovation';
+import Innovation4Timeline from './SolutionDetails/Solutions/4Innovation';
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
 import { findCategoryMapByRoute, searchSolutions } from '.';
 
@@ -26,12 +26,9 @@ describe('solution help utils', () => {
             role: 'Director, Division of Model Learning Systems (DMLS)'
           }
         ],
-        generic: {
-          about: false,
-          timeline: false,
-          'points-of-contact': false
-        },
-        component: props => <Innovation4 {...props} />
+        components: {
+          timeline: props => <Innovation4Timeline {...props} />
+        }
       },
       {
         enum: OperationalSolutionKey.CONNECT,
@@ -46,12 +43,9 @@ describe('solution help utils', () => {
             role: 'Platform Lead'
           }
         ],
-        generic: {
-          about: false,
-          timeline: false,
-          'points-of-contact': false
-        },
-        component: props => <Innovation4 {...props} />
+        components: {
+          timeline: props => <Innovation4Timeline {...props} />
+        }
       }
     ];
     expect(findCategoryMapByRoute(route, helpSolutions)).toEqual(
@@ -76,12 +70,9 @@ describe('solution help utils', () => {
             email: 'ACO-OIT@cms.hhs.gov'
           }
         ],
-        generic: {
-          about: false,
-          timeline: false,
-          'points-of-contact': false
-        },
-        component: props => <Innovation4 {...props} />
+        components: {
+          timeline: props => <Innovation4Timeline {...props} />
+        }
       }
     ];
 

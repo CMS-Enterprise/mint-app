@@ -8,23 +8,11 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 
-import {
-  HelpSolutionType,
-  SolutionDetailProps
-} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
 
 import '../index.scss';
-
-export const Innovation4 = ({ type, solution }: SolutionDetailProps) => {
-  if (type === 'timeline') {
-    return <Innovation4TimeLine solution={solution} />;
-  }
-  return <></>;
-};
-
-export default Innovation4;
 
 const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -84,3 +72,5 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
     </div>
   );
 };
+
+export default Innovation4TimeLine;
