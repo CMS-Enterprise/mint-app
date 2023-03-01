@@ -1,0 +1,11 @@
+.help-header {
+    &__breadcrumbs {
+        .usa-link:visited {
+            color: white !important;
+        }
+
+        .usa-breadcrumb__list-item:not(:last-child)::after {
+            background-color: white !important;
+        }
+    }
+}

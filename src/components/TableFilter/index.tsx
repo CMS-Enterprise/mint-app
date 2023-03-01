@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FilterValue, useAsyncDebounce } from 'react-table';
 import {
@@ -30,6 +30,9 @@ const GlobalClientFilter = ({
   className
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
+
+  const [query, setQuery] = useState<string>('');
+
   // Set a debounce to capture set input before re-rendering on each character.  Preparation for BE fetching/filtering.
   // May not be necessary until then
   const onChange = useAsyncDebounce(value => {
@@ -56,7 +59,9 @@ const GlobalClientFilter = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           // Currently only client-side filtering - updates search filter onChange
           onChange(e.target.value);
+          setQuery(e.target.value);
         }}
+        value={query}
         name={`${tableName} Search`}
       />
       {/* Right not search button doesn't need to do anything, it searches onChange -

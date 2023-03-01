@@ -68,10 +68,10 @@ const AppRoutes = () => {
 
   // Scroll to top
   useLayoutEffect(() => {
-    if (shouldScroll(location.pathname)) {
+    if (shouldScroll(location.pathname + location.search)) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   return (
     <Switch>
