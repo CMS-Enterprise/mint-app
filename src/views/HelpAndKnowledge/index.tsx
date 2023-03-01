@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import NotFound from 'views/NotFound';
 
@@ -11,6 +12,7 @@ import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
 export const HelpAndKnowledge = () => {
+  const flags = useFlags();
   return (
     <Switch>
       <Route path="/help-and-knowledge" exact>
@@ -21,23 +23,27 @@ export const HelpAndKnowledge = () => {
         <ModelPlanOverview />
       </Route>
 
-      <Route path="/help-and-knowledge/operational-solutions" exact>
-        <SolutionsHelp />
-      </Route>
+      {flags.operationalSolutionHelp && (
+        <>
+          <Route path="/help-and-knowledge/operational-solutions" exact>
+            <SolutionsHelp />
+          </Route>
 
-      <Route
-        path="/help-and-knowledge/operational-solutions/solution/:solution/:page?"
-        exact
-      >
-        <SolutionsHelp />
-      </Route>
+          <Route
+            path="/help-and-knowledge/operational-solutions/solution/:solution/:page?"
+            exact
+          >
+            <SolutionsHelp />
+          </Route>
 
-      <Route
-        path="/help-and-knowledge/operational-solutions/categories/:category"
-        exact
-      >
-        <SolutionsHelp />
-      </Route>
+          <Route
+            path="/help-and-knowledge/operational-solutions/categories/:category"
+            exact
+          >
+            <SolutionsHelp />
+          </Route>
+        </>
+      )}
 
       <Redirect
         exact
