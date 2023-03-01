@@ -13,6 +13,7 @@ import '../index.scss';
 export type TimelineItemType = {
   header: string;
   description?: string;
+  description2?: string;
   ordered?: boolean;
   items?: string[];
 };
@@ -44,7 +45,7 @@ export const GenericTimeline = ({
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
       {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
-      <ProcessList>
+      <ProcessList className="padding-top-1">
         {timelineConfig.items?.map(item => (
           <ProcessListItem
             key={item.header}
@@ -64,6 +65,10 @@ export const GenericTimeline = ({
                   <li className="list-item">{subItem}</li>
                 ))}
               </ul>
+            )}
+
+            {item.description2 && (
+              <p className="margin-bottom-0">{item.description2}</p>
             )}
           </ProcessListItem>
         ))}

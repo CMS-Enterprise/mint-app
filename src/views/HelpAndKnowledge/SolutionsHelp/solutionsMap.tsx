@@ -538,154 +538,138 @@ export const helpSolutions: HelpSolutionType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
+  },
+  {
+    enum: OperationalSolutionKey.HPMS,
+    key: 'healthPlanManagement',
+    route: 'health-plan-management-system',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    acronym: 'HPMS',
+    name: 'Health Plan Management System',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    systemOwner: {
+      name: 'Division of Plan Data',
+      system: 'Center for Medicare'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.IPC,
+    key: 'innovationPayment',
+    route: 'innovation-payment-contract',
+    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    acronym: 'IPC',
+    name: 'Innovation Payment Contractor',
+    pointsOfContact: [
+      {
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Director, Division of System Support, Operation and Security (DSSOS)'
+      },
+      {
+        name: 'Sue Nonemaker',
+        email: 'sue.nonemaker@cms.hhs.gov',
+        role: 'Project Lead'
+      },
+      {
+        name: 'Alyssa Larson',
+        email: 'alyssa.larson@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      },
+      {
+        name: 'Philip Tennant',
+        email: 'philip.tennant@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Business Services Group, Division of System Support, Operation and Security',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'National Government Services (NGS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.IDR,
+    key: 'integratedDataRepository',
+    route: 'integrated-data-repository',
+    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    acronym: 'IDR',
+    name: 'Integrated Data Repository',
+    pointsOfContact: [
+      {
+        name: 'Jim Brogan',
+        email: 'jim.brogan@cms.hhs.gov',
+        role:
+          'Deputy Director, Division of Enterprise Information Management Services'
+      },
+      {
+        name: 'Murari Selvakesavan',
+        email: 'murari.selvakesavan@cms.hhs.gov',
+        role: 'System Owner'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
+      system: 'Office of Information Technology'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: null,
+    key: 'learningAndDiffusion',
+    route: 'learning-and-diffusion-group',
+    categories: [OperationalSolutionCategories.LEARNING],
+    acronym: 'LDG',
+    name: 'Learning and Diffusion Group',
+    pointsOfContact: [
+      {
+        name: 'Andrew Philip',
+        email: 'andrew.philip@cms.hhs.gov',
+        role: 'Director, Division of Model Learning Systems (DMLS)'
+      },
+      {
+        name: 'Taiwanna Messam Lucienne',
+        email: 'taiwanna.lucienne@cms.hhs.gov',
+        role: 'Deputy Director, Division of Model Learning Systems (DMLS)'
+      },
+      {
+        name: 'Alexis Malfesi',
+        email: 'alexis.malfesi@cms.hhs.gov',
+        role: 'Beneficiary Listening Session Point of Contact'
+      },
+      {
+        name: 'Erin Carrillo',
+        email: 'erin.carrillo1@cms.hhs.gov',
+        role: 'Beneficiary Listening Session Point of Contact'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
   }
-  // {
-  //   enum: OperationalSolutionKey.HPMS,
-  //   key: 'healthPlanManagement',
-  //   route: 'health-plan-management-system',
-  //   categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-  //   acronym: 'HPMS',
-  //   name: 'Health Plan Management System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Division of Plan Data',
-  //     system: 'Center for Medicare'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.IPC,
-  //   key: 'innovationPayment',
-  //   route: 'innovation-payment-contract',
-  //   categories: [OperationalSolutionCategories.CC_VEHICLES],
-  //   acronym: 'IPC',
-  //   name: 'Innovation Payment Contractor',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Donna Schmidt',
-  //       email: 'donna.schmidt@cms.hhs.gov',
-  //       role:
-  //         'Director, Division of System Support, Operation and Security (DSSOS)'
-  //     },
-  //     {
-  //       name: 'Sue Nonemaker',
-  //       email: 'sue.nonemaker@cms.hhs.gov',
-  //       role: 'Project Lead'
-  //     },
-  //     {
-  //       name: 'Alyssa Larson',
-  //       email: 'alyssa.larson@cms.hhs.gov',
-  //       role: 'Subject Matter Expert'
-  //     },
-  //     {
-  //       name: 'Philip Tennant',
-  //       email: 'philip.tennant@cms.hhs.gov',
-  //       role: 'Subject Matter Expert'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name:
-  //       'Business Services Group, Division of System Support, Operation and Security',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'National Government Services (NGS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.IDR,
-  //   key: 'integratedDataRepository',
-  //   route: 'integrated-data-repository',
-  //   categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-  //   acronym: 'IDR',
-  //   name: 'Integrated Data Repository',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Jim Brogan',
-  //       email: 'jim.brogan@cms.hhs.gov',
-  //       role:
-  //         'Deputy Director, Division of Enterprise Information Management Services'
-  //     },
-  //     {
-  //       name: 'Murari Selvakesavan',
-  //       email: 'murari.selvakesavan@cms.hhs.gov',
-  //       role: 'System Owner'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name:
-  //       'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
-  //     system: 'Office of Information Technology'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'learningAndDiffusion',
-  //   route: 'learning-and-diffusion-group',
-  //   categories: [OperationalSolutionCategories.LEARNING],
-  //   acronym: 'LDG',
-  //   name: 'Learning and Diffusion Group',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Andrew Philip',
-  //       email: 'andrew.philip@cms.hhs.gov',
-  //       role: 'Director, Division of Model Learning Systems (DMLS)'
-  //     },
-  //     {
-  //       name: 'Taiwanna Messam Lucienne',
-  //       email: 'taiwanna.lucienne@cms.hhs.gov',
-  //       role: 'Deputy Director, Division of Model Learning Systems (DMLS)'
-  //     },
-  //     {
-  //       name: 'Alexis Malfesi',
-  //       email: 'alexis.malfesi@cms.hhs.gov',
-  //       role: 'Beneficiary Listening Session Point of Contact'
-  //     },
-  //     {
-  //       name: 'Erin Carrillo',
-  //       email: 'erin.carrillo1@cms.hhs.gov',
-  //       role: 'Beneficiary Listening Session Point of Contact'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
   // {
   //   enum: null,
   //   key: 'legalVertical',

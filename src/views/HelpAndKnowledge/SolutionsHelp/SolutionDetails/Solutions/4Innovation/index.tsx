@@ -47,7 +47,7 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
     <div className=" line-height-body-5 font-body-md">
       <p>{timelineConfig.description}</p>
 
-      <ProcessList>
+      <ProcessList className="padding-top-1">
         <ProcessListItem
           key="4i/ACO-OS"
           className="operational-solution-details__timeline-item"

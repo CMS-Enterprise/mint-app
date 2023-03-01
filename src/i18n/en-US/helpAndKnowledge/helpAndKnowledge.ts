@@ -829,6 +829,48 @@ Health Plan Management System, all health insurance companies participating in t
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'It takes about 5 months for a new model to start using IPC.',
+      items: [
+        {
+          header: 'Work with the IPC internal team',
+          description: `After learning about an upcoming model, the IPC internal team will reach out to the Model team to kick off discussions. Alternatively, Model teams can reach out to the IPC internal team if they have questions or would like to start discussions sooner.
+
+The Model team will receive an implementation milestone schedule that identifies necessary tasks and completion dates to meet their scheduled first payment requirements.`
+        },
+        {
+          header: 'Determine ROM and contract modification',
+          description:
+            'The IPC internal team will establish a ROM based on several factors:',
+          items: [
+            'Number of Participants in the Model',
+            'Frequency of payments',
+            'Number of recoupments (demands)',
+            'Frequency of recoupments (demands)'
+          ],
+          description2:
+            'The IPC and OFM bank contracts will be modified to support the Model.'
+        },
+        {
+          header: 'Implementation to the IPC',
+          description: `The Model team is provided a Welcome Packet which serves as an introduction to the IPC, an overview of the implementation process and a guide to the IPC payment and recoupment (demand) process. Additionally, workgroup meetings are established with the IPC, Model team, and, if necessary, their IT support contractor(s) to ensure a successful implementation. Some key implementation activities include:`,
+          items: [
+            'Validate Model participant information',
+            'Onboard Model participants to the IPC Portal and collect Model participant banking information.',
+            'Establish connectivity with the IPC to exchange files',
+            'Prepare the payment and demand files',
+            'Onboard to the Healthcare Integrated General Ledger Accounting System (HIGLAS)',
+            'Conduct HIGLAS UAT testing'
+          ]
+        },
+        {
+          header: 'Ready for payments',
+          description:
+            'After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.'
+        }
+      ]
     }
   },
   integratedDataRepository: {
@@ -885,6 +927,20 @@ The data in the IDR is leveraged by various components across the agency to faci
             'Model-specific learning cost estimate',
             'Have an LDG member as part of the team'
           ]
+        }
+      ]
+    },
+    timeline: {
+      items: [
+        {
+          header: 'CMMI contacts LDG',
+          description:
+            'Someone from CMMI will reach out to the LDG team about the model’s needs.'
+        },
+        {
+          header: 'LDG will be in contact',
+          description:
+            'Depending on the needs of the model, a team member from LDG may be assigned to your model.'
         }
       ]
     }

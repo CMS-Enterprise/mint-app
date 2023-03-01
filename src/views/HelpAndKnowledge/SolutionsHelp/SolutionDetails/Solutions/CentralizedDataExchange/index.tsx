@@ -31,7 +31,7 @@ const CentralizedDataExhangeTimeline = ({
     <div className=" line-height-body-5 font-body-md">
       <p>{timelineConfig.description}</p>
 
-      <ProcessList>
+      <ProcessList className="padding-top-1">
         <ProcessListItem
           key="inquire-cdx"
           className="operational-solution-details__timeline-item"
