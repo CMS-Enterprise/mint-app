@@ -1,18 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import GlobalClientFilter from 'components/TableFilter';
 
-import { findCategoryKey } from '../..';
+import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
 import './index.scss';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
+  category?: string;
   resultsNum: number;
   resultsMax: number;
   setQuery: (query: string) => void;
@@ -21,15 +21,15 @@ type OperationalSolutionsHelpProps = {
 
 const SolutionsHeader = ({
   className,
+  category,
   resultsNum,
   resultsMax,
   setQuery,
   query
 }: OperationalSolutionsHelpProps) => {
-  const { category } = useParams<{ category: string }>();
   const { t } = useTranslation('helpAndKnowledge');
 
-  const categoryKey = findCategoryKey(category);
+  const categoryKey = operationalSolutionCategoryMap[category || ''];
 
   const breadcrumbs = [
     { text: t('heading'), url: '/help-and-knowledge' },

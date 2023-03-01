@@ -1,15 +1,15 @@
 enum OperationalSolutionCategories {
   APPLICATIONS = 'applications',
-  COMMUNICATION_TOOLS = 'communicationTools',
-  CC_VEHICLES = 'contractorsContractVehicles',
-  DATABASE_MANAGEMENT = 'databaseDataManagement',
-  DATA_EXCHANGE = 'dataExchange',
-  DATA_REPORTING = 'dataReporting',
-  HELP_DESKS = 'helpDesks',
+  COMMUNICATION_TOOLS = 'communication-tools',
+  CC_VEHICLES = 'contractors-and-contract-vehicles',
+  DATABASE_MANAGEMENT = 'database-and-data-management',
+  DATA_EXCHANGE = 'data-exchange',
+  DATA_REPORTING = 'data-reporting',
+  HELP_DESKS = 'help-desks',
   LEARNING = 'learning',
   LEGAL = 'legal',
-  MEDICARE_ADVANTAGE_D = 'medicareAdvantagePartD',
-  MEDICARE_FFS = 'medicareFeeForService',
+  MEDICARE_ADVANTAGE_D = 'medicare-advantage-and-part-d',
+  MEDICARE_FFS = 'medicare-fee-for-service',
   QUALITY = 'quality'
 }
 

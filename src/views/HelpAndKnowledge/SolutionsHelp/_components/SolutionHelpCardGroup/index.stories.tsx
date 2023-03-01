@@ -17,7 +17,6 @@ export default {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionHelpCardGroup
             solutions={helpSolutions}
-            isQuery={false}
             setResultsNum={() => null}
           />
         </Route>
@@ -27,9 +26,5 @@ export default {
 } as ComponentMeta<typeof SolutionHelpCardGroup>;
 
 export const Default = () => (
-  <SolutionHelpCardGroup
-    solutions={helpSolutions}
-    isQuery={false}
-    setResultsNum={() => null}
-  />
+  <SolutionHelpCardGroup solutions={helpSolutions} setResultsNum={() => null} />
 );

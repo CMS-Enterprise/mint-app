@@ -79,10 +79,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/4-innovation/about"
                   >
                     About this solution
                     <svg
@@ -102,7 +101,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -178,10 +177,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/accountable-care-organization/about"
                   >
                     About this solution
                     <svg
@@ -201,7 +199,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -278,10 +276,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/automated-plan-payment-system/about"
                   >
                     About this solution
                     <svg
@@ -301,7 +298,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -381,10 +378,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/centralized-data-exchange/about"
                   >
                     About this solution
                     <svg
@@ -404,7 +400,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -488,10 +484,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/chronic-conditions-warehouse/about"
                   >
                     About this solution
                     <svg
@@ -511,7 +506,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -582,10 +577,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/cms-box/about"
                   >
                     About this solution
                     <svg
@@ -605,7 +599,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -676,10 +670,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/cms-qualtrics/about"
                   >
                     About this solution
                     <svg
@@ -699,7 +692,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -775,10 +768,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/consolidated-business-operations-support-center/about"
                   >
                     About this solution
                     <svg
@@ -798,7 +790,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -873,10 +865,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <div
                     class="mint-divider"
                   />
-                  <button
-                    class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions/solution/cpi-vetting/about"
                   >
                     About this solution
                     <svg
@@ -896,7 +887,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

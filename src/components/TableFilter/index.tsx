@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import { FilterValue, useAsyncDebounce } from 'react-table';
 import {
   Button,
@@ -32,8 +31,6 @@ const GlobalClientFilter = ({
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
 
-  const { pathname } = useLocation();
-
   const [query, setQuery] = useState<string>('');
 
   // Set a debounce to capture set input before re-rendering on each character.  Preparation for BE fetching/filtering.
@@ -41,11 +38,6 @@ const GlobalClientFilter = ({
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value);
   }, 200);
-
-  // Resets the query on route change
-  useEffect(() => {
-    setQuery('');
-  }, [pathname]);
 
   return (
     <Form

@@ -16,7 +16,7 @@ describe('Operation Solution Help Tag', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap.dataReporting.route}
+            route={operationalSolutionCategoryMap['data-reporting']}
             category={OperationalSolutionCategories.DATA_REPORTING}
           />
         </Route>
@@ -40,7 +40,7 @@ describe('Operation Solution Help Tag', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap.dataReporting.route}
+            route={operationalSolutionCategoryMap['data-reporting']}
             category={OperationalSolutionCategories.DATA_REPORTING}
           />
         </Route>

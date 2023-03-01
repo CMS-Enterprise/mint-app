@@ -3,29 +3,29 @@ const solutionCategoryies = {
     header: 'Applications',
     description: 'Learn about the solutions available for applications.'
   },
-  communicationTools: {
+  'communication-tools': {
     header: 'Communication tools',
     description: 'Learn about the solutions available for communication tools.'
   },
-  contractorsContractVehicles: {
+  'contractors-and-contract-vehicles': {
     header: 'Contractors and contract vehicles',
     description:
       'Learn about the solutions available for contractors and contract vehicles.'
   },
-  databaseDataManagement: {
+  'database-and-data-management': {
     header: 'Databases and data management',
     description:
       'Learn about the solutions available for databases and data management.'
   },
-  dataExchange: {
+  'data-exchange': {
     header: 'Data exchange',
     description: 'Learn about the solutions available for data exchange.'
   },
-  dataReporting: {
+  'data-reporting': {
     header: 'Data reporting',
     description: 'Learn about the solutions available for data reporting.'
   },
-  helpDesks: {
+  'help-desks': {
     header: 'Help desks',
     description: 'Learn about the solutions available for help desks.'
   },
@@ -37,11 +37,11 @@ const solutionCategoryies = {
     header: 'Legal',
     description: 'Learn about the solutions available for legal.'
   },
-  medicareAdvantagePartD: {
+  'medicare-advantage-and-part-d': {
     header: 'Medicare Advantage and Part D',
     description: 'Learn about the solutions available for legal.'
   },
-  medicareFeeForService: {
+  'medicare-fee-for-service': {
     header: 'Medicare Fee-for-Service',
     description:
       'Learn about the solutions available for Medicare Fee-for-Service.'
@@ -343,6 +343,13 @@ const helpAndKnowledge = {
     content:
       'Please double-check your search and try again. If you’re searching for a solution that you believe should be a part of MINT, please contact the MINT Team at '
   },
+  navigation: {
+    about: 'About this solution',
+    timeline: 'Timeline',
+    'points-of-contact': 'Points of contact'
+  },
+  backToSolutions: 'Back to solutions',
+  moreContacts: 'More points of contact',
 
   categories: solutionCategoryies,
   solutions
