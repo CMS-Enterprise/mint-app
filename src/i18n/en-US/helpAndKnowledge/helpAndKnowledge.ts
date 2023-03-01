@@ -1150,7 +1150,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Submit request',
           description:
-            'From the CMS Connect app on your desktop, search for “{{bold1}}” or “{{bold2}}” You’ll need to provide the following information:',
+            'From the CMS Connect app on your desktop, search for “Create or manage a resource mailbox” or “Mailbox request.” You’ll need to provide the following information:',
           items: [
             'Request type (Create a new resource mailbox)',
             // @ts-ignore
@@ -1250,6 +1250,12 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'Provide grant proposal reviews and summarization reports',
         'In addition to the aforementioned list of required tasks, the Contractor may be asked to work with CMS on matters pertaining to developing and implementing learning systems to support accelerated learning, improvement, and dissemination of promising practices.'
       ]
+    },
+    timeline: {
+      description:
+        'Model teams should follow the {{link}} standards to determine when to being working with RMADA.',
+      items: [],
+      links: ['Procurement Administrative Lead Time (PALT)']
     }
   },
   ars: {
@@ -1292,6 +1298,42 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'It can take 3-5 months for a model to use Salesforce, but you should submit an onboarding request as soon as you know your model will utilize the tool. Below are the steps involved in the process.',
+      items: [
+        {
+          header: 'Submit an onboarding request',
+          description:
+            'Submit an onboarding request via the Salesforce Change Management Tool (CMT). You will need to provide the following information:',
+          items: [
+            'Request type, title, component',
+            'Priority',
+            'Requester contact information',
+            'Program/model name and point of contact information',
+            'Project type (for example: Letter of Intent)',
+            'Description of onboarding request',
+            'Desired implementation/go-live date and impact if that date deadline is missed'
+          ]
+        },
+        {
+          header: 'Discovery'
+        },
+        {
+          header: 'Requirements gathering'
+        },
+        {
+          header: 'Development (sprints)'
+        },
+        {
+          header: 'Testing'
+        },
+        {
+          header: 'Deployment'
+        }
+      ],
+      links: ['Go to Salesforce cCMT']
     }
   },
   salesforceConnect: {
@@ -1503,6 +1545,36 @@ The following systems are a part of Shared Systems:`,
             'GDIT maintains the VMS software that processes DME claims through adjudication and payment and for Medical Review.',
             'The VMS claims processing system is the shared system that processes claims for physician and other practitioner services, prior authorization, diagnostic tests, ambulance services, DMEPOS, and other services/supplies not covered by Part A. It interfaces directly with the CWF for verification, validation, and payment authorization.'
           ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'The timing for using Shared Systems varies by model. It’s best to reach out during model design, so they know of upcoming work.',
+      items: [
+        {
+          header: 'Reach out to Donna Schmidt',
+          description:
+            'Early in the process, contact Donna Schmidt to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.'
+        },
+        {
+          header: 'Draft a Change Request (CR)',
+          description: `Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented.
+
+There are two types of CRs:`,
+          items: [
+            'Analysis CR - This type of CR is recommended for model teams still figuring out what to do for the model. Essentially, this is a request to talk and collaborate with the Medicare Administrative Contractor (MAC) and Shared System Maintainers (SSM) on what will work for the model. It’s best to do an anaylsis CR a year before changes need made.',
+            'Implementation CR - This type of CR is for implementing the necessary changes to support the model. It’s best to submit these at least six months prior to needing the changes made.'
+          ]
+        },
+        {
+          header: 'Development starts',
+          description:
+            'MACs and SSMs implement the changes specified in the CR to support the model.'
+        },
+        {
+          header: 'Change is released',
+          description: 'Releases happen quarterly.'
         }
       ]
     }

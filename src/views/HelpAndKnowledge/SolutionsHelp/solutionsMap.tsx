@@ -12,6 +12,9 @@ import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
 import GenericTimeline from './SolutionDetails/Solutions/Generic/timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
 import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
+import RMADATimeline from './SolutionDetails/Solutions/RMADA';
+import SalesforceApplicationReviewTimeline from './SolutionDetails/Solutions/SalesforceApplicationReview';
+import SharedSystemsTimeLine from './SolutionDetails/Solutions/SharedSystems';
 
 type CategoryType = {
   [key: string]: OperationalSolutionCategories;
@@ -858,250 +861,239 @@ export const helpSolutions: HelpSolutionType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
+  },
+  {
+    enum: OperationalSolutionKey.RMADA,
+    key: 'rmada',
+    route: 'research-measurement-assessment-design-and-analysis',
+    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    acronym: 'RMADA',
+    name: 'Research, Measurement, Assessment, Design, and Analysis',
+    pointsOfContact: [
+      {
+        name: 'Joe Pusateri',
+        email: 'joseph.pusateri@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <RMADATimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.ARS,
+    key: 'ars',
+    route: 'salesforce-application-review-and-scoring',
+    categories: [OperationalSolutionCategories.APPLICATIONS],
+    acronym: 'ARS',
+    name: 'Salesforce Application Review and Scoring',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <SalesforceApplicationReviewTimeline {...props} />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.CONNECT,
+    key: 'salesforceConnect',
+    route: 'salesforce-connect',
+    categories: [OperationalSolutionCategories.LEARNING],
+    name: 'Salesforce Connect',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        // Timeline is the same as 4Innovation
+        <SalesforceApplicationReviewTimeline
+          solution={{ key: 'ars' } as HelpSolutionType}
+        />
+      )
+    }
+  },
+  {
+    enum: null,
+    key: 'salesforceLOI',
+    route: 'salesforce-letter-of-intent',
+    categories: [OperationalSolutionCategories.APPLICATIONS],
+    acronym: 'LOI',
+    name: 'Salesforce Letter of Intent',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        // Timeline is the same as 4Innovation
+        <SalesforceApplicationReviewTimeline
+          solution={{ key: 'ars' } as HelpSolutionType}
+        />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.SALESFORCE_PORTAL,
+    key: 'salesforcePortal',
+    route: 'salesforce-project-officer-support-tool-portal',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    acronym: 'POST / PORTAL',
+    name: 'Salesforce Project Officer Support Tool / Portal',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        // Timeline is the same as 4Innovation
+        <SalesforceApplicationReviewTimeline
+          solution={{ key: 'ars' } as HelpSolutionType}
+        />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.RFA,
+    key: 'salesforceRequestApplication',
+    route: 'salesforce-request-for-application',
+    categories: [OperationalSolutionCategories.APPLICATIONS],
+    acronym: 'RFA',
+    name: 'Salesforce Request for Application',
+    pointsOfContact: [
+      {
+        name: 'Elia Cossis',
+        email: 'elia.cossis@cms.hhs.gov',
+        role: 'Platform Lead'
+      },
+      {
+        name: 'Chinelo Johnson',
+        email: 'echinelo.johnson@cms.hhs.gov',
+        role: 'Point of Contact'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        // Timeline is the same as 4Innovation
+        <SalesforceApplicationReviewTimeline
+          solution={{ key: 'ars' } as HelpSolutionType}
+        />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.SHARED_SYSTEMS,
+    key: 'sharedSystems',
+    route: 'shared-systems',
+    categories: [OperationalSolutionCategories.MEDICARE_FFS],
+    name: 'Shared Systems',
+    pointsOfContact: [
+      {
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Division Director, Division of System Support, Operation and Security (DSSOS)'
+      },
+      {
+        name: 'Madhu Annadata',
+        email: 'madhu.annadata@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Applications Management Group, Division of Shared Systems Management',
+      system: 'Office of Information Technology'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <SharedSystemsTimeLine {...props} />
+      )
+    }
   }
-  // {
-  //   enum: OperationalSolutionKey.RMADA,
-  //   key: 'rmada',
-  //   route: 'research-measurement-assessment-design-and-analysis',
-  //   categories: [OperationalSolutionCategories.CC_VEHICLES],
-  //   acronym: 'RMADA',
-  //   name: 'Research, Measurement, Assessment, Design, and Analysis',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Joe Pusateri',
-  //       email: 'joseph.pusateri@cms.hhs.gov',
-  //       role: 'Contracting Officer Representative'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.ARS,
-  //   key: 'ars',
-  //   route: 'salesforce-application-review-and-scoring',
-  //   categories: [OperationalSolutionCategories.APPLICATIONS],
-  //   acronym: 'ARS',
-  //   name: 'Salesforce Application Review and Scoring',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     },
-  //     {
-  //       name: 'Chinelo Johnson',
-  //       email: 'echinelo.johnson@cms.hhs.gov',
-  //       role: 'Point of Contact'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.CONNECT,
-  //   key: 'salesforceConnect',
-  //   route: 'salesforce-connect',
-  //   categories: [OperationalSolutionCategories.LEARNING],
-  //   name: 'Salesforce Connect',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     },
-  //     {
-  //       name: 'Chinelo Johnson',
-  //       email: 'echinelo.johnson@cms.hhs.gov',
-  //       role: 'Point of Contact'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'salesforceLOI',
-  //   route: 'salesforce-letter-of-intent',
-  //   categories: [OperationalSolutionCategories.APPLICATIONS],
-  //   acronym: 'LOI',
-  //   name: 'Salesforce Letter of Intent',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     },
-  //     {
-  //       name: 'Chinelo Johnson',
-  //       email: 'echinelo.johnson@cms.hhs.gov',
-  //       role: 'Point of Contact'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.SALESFORCE_PORTAL,
-  //   key: 'salesforcePortal',
-  //   route: 'salesforce-project-officer-support-tool-portal',
-  //   categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-  //   acronym: 'POST / PORTAL',
-  //   name: 'Salesforce Project Officer Support Tool / Portal',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     },
-  //     {
-  //       name: 'Chinelo Johnson',
-  //       email: 'echinelo.johnson@cms.hhs.gov',
-  //       role: 'Point of Contact'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.RFA,
-  //   key: 'salesforceRequestApplication',
-  //   route: 'salesforce-request-for-application',
-  //   categories: [OperationalSolutionCategories.APPLICATIONS],
-  //   acronym: 'RFA',
-  //   name: 'Salesforce Request for Application',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Elia Cossis',
-  //       email: 'elia.cossis@cms.hhs.gov',
-  //       role: 'Platform Lead'
-  //     },
-  //     {
-  //       name: 'Chinelo Johnson',
-  //       email: 'echinelo.johnson@cms.hhs.gov',
-  //       role: 'Point of Contact'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.SHARED_SYSTEMS,
-  //   key: 'sharedSystems',
-  //   route: 'shared-systems',
-  //   categories: [OperationalSolutionCategories.MEDICARE_FFS],
-  //   name: 'Shared Systems',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Donna Schmidt',
-  //       email: 'donna.schmidt@cms.hhs.gov',
-  //       role:
-  //         'Division Director, Division of System Support, Operation and Security (DSSOS)'
-  //     },
-  //     {
-  //       name: 'Madhu Annadata',
-  //       email: 'madhu.annadata@cms.hhs.gov',
-  //       role: 'Subject Matter Expert'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name:
-  //       'Applications Management Group, Division of Shared Systems Management',
-  //     system: 'Office of Information Technology'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // }
 ];
