@@ -3,9 +3,14 @@ import React from 'react';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
+import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
 import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
+import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
+import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
+import GenericTimeline from './SolutionDetails/Solutions/Generic/timeline';
+import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
 
 type CategoryType = {
   [key: string]: OperationalSolutionCategories;
@@ -299,287 +304,241 @@ export const helpSolutions: HelpSolutionType[] = [
         <ChronicConditionsTimeline {...props} />
       )
     }
+  },
+  {
+    enum: null,
+    key: 'cmsBox',
+    route: 'cms-box',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    name: 'CMS Box',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <CMSBoxTimeline {...props} />
+    }
+  },
+  {
+    enum: null,
+    key: 'cmsQualtrics',
+    route: 'cms-qualtrics',
+    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    name: 'CMS Qualtrics',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <CMSQualtricsTimeline {...props} />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.CBOSC,
+    key: 'cbosc',
+    route: 'consolidated-business-operations-support-center',
+    categories: [OperationalSolutionCategories.HELP_DESKS],
+    acronym: 'CBOSC',
+    name: 'Consolidated Business Operations Support Center',
+    pointsOfContact: [
+      {
+        name: 'Richard Speights',
+        email: 'richard.speights@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
+      },
+      {
+        name: 'Don Rocker',
+        email: 'don.rocker1@cms.hhs.gov',
+        role: 'Operations and Management Lead '
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group, Division of IT Operations and Security',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {}
+  },
+  {
+    enum: null,
+    key: 'cpiVetting',
+    route: 'cpi-vetting',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    name: 'CPI Vetting',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: null,
+    key: 'electronicFileTransfer',
+    route: 'electronic-file-transfer',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    acronym: 'EFT',
+    name: 'Electronic File Transfer',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: null,
+    key: 'expandedDataFeedback',
+    route: 'expanded-data-feedback-reporting',
+    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    acronym: 'eDFR',
+    name: 'Expanded Data Feedback Reporting',
+    pointsOfContact: [
+      {
+        name: 'Zach Nall',
+        email: 'r.nall@cms.hhs.gov',
+        role: 'Product Owner'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.GOVDELIVERY,
+    key: 'govDelivery',
+    route: 'gov-delivery',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    name: 'GovDelivery',
+    pointsOfContact: [
+      {
+        name: 'Andrew Rushton',
+        email: 'andrew.rushton@cms.hhs.gov',
+        role: 'Administrator'
+      },
+      {
+        name: 'Alison Rigby',
+        email: 'alison.rigby@cms.hhs.gov',
+        role: 'Administrator'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.GRANT_SOLUTIONS,
+    key: 'grantSolutions',
+    route: 'grant-solutions',
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS,
+      OperationalSolutionCategories.COMMUNICATION_TOOLS
+    ],
+    acronym: 'GS',
+    name: 'GrantSolutions',
+    pointsOfContact: [
+      {
+        name: 'Mary Greene',
+        email: 'mary.greene@cms.hhs.gov',
+        role: 'Director, Division of Grants Management'
+      },
+      {
+        name: 'Michelle Brown',
+        email: 'michelle.brown@cms.hhs.gov',
+        role: 'Deputy Director, Division of Grants Management'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.HIGLAS,
+    key: 'higlas',
+    route: 'healthcare-integrated-general-kedger-accounting-system',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    acronym: 'HIGLAS',
+    name: 'Healthcare Integrated General Ledger Accounting System',
+    pointsOfContact: [
+      {
+        name: 'Donna Schmidt',
+        email: 'donna.schmidt@cms.hhs.gov',
+        role:
+          'Director, Division of System Support, Operation and Security (DSSOS)'
+      }
+    ],
+    systemOwner: {
+      name: 'Accounting Management Group',
+      system: 'Office of Financial Management'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => <HIGLASTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
+    key: 'healthDataReporting',
+    route: 'health-data-reporting',
+    categories: [OperationalSolutionCategories.QUALITY],
+    acronym: 'HDR',
+    name: 'Health Data Reporting',
+    pointsOfContact: [
+      {
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
+      },
+      {
+        name: 'Curtis Naumann',
+        email: 'curtis.naumann@cms.hhs.gov',
+        role: 'Product Owner'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
   }
-  // {
-  //   enum: null,
-  //   key: 'cmsBox',
-  //   route: 'cms-box',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   name: 'CMS Box',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'cmsQualtrics',
-  //   route: 'cms-qualtrics',
-  //   categories: [OperationalSolutionCategories.DATA_REPORTING],
-  //   name: 'CMS Qualtrics',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.CBOSC,
-  //   key: 'cbosc',
-  //   route: 'consolidated-business-operations-support-center',
-  //   categories: [OperationalSolutionCategories.HELP_DESKS],
-  //   acronym: 'CBOSC',
-  //   name: 'Consolidated Business Operations Support Center',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Richard Speights',
-  //       email: 'richard.speights@cms.hhs.gov',
-  //       role: 'Contracting Officer Representative'
-  //     },
-  //     {
-  //       name: 'Don Rocker',
-  //       email: 'don.rocker1@cms.hhs.gov',
-  //       role: 'Operations and Management Lead '
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group, Division of IT Operations and Security',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'cpiVetting',
-  //   route: 'cpi-vetting',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   name: 'CPI Vetting',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'electronicFileTransfer',
-  //   route: 'electronic-file-transfer',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   acronym: 'EFT',
-  //   name: 'Electronic File Transfer',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'expandedDataFeedback',
-  //   route: 'expanded-data-feedback-reporting',
-  //   categories: [OperationalSolutionCategories.DATA_REPORTING],
-  //   acronym: 'eDFR',
-  //   name: 'Expanded Data Feedback Reporting',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Zach Nall',
-  //       email: 'r.nall@cms.hhs.gov',
-  //       role: 'Product Owner'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'Global Alliant',
-  //       system: 'Innovation Support Platform (ISP)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.GOVDELIVERY,
-  //   key: 'govDelivery',
-  //   route: 'gov-delivery',
-  //   categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-  //   name: 'GovDelivery',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Andrew Rushton',
-  //       email: 'andrew.rushton@cms.hhs.gov',
-  //       role: 'Administrator'
-  //     },
-  //     {
-  //       name: 'Alison Rigby',
-  //       email: 'alison.rigby@cms.hhs.gov',
-  //       role: 'Administrator'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.GRANT_SOLUTIONS,
-  //   key: 'grantSolutions',
-  //   route: 'grant-solutions',
-  //   categories: [
-  //     OperationalSolutionCategories.APPLICATIONS,
-  //     OperationalSolutionCategories.COMMUNICATION_TOOLS
-  //   ],
-  //   acronym: 'GS',
-  //   name: 'GrantSolutions',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Mary Greene',
-  //       email: 'mary.greene@cms.hhs.gov',
-  //       role: 'Director, Division of Grants Management'
-  //     },
-  //     {
-  //       name: 'Michelle Brown',
-  //       email: 'michelle.brown@cms.hhs.gov',
-  //       role: 'Deputy Director, Division of Grants Management'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.HIGLAS,
-  //   key: 'higlas',
-  //   route: 'healthcare-integrated-general-kedger-accounting-system',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   acronym: 'HIGLAS',
-  //   name: 'Healthcare Integrated General Ledger Accounting System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Donna Schmidt',
-  //       email: 'donna.schmidt@cms.hhs.gov',
-  //       role:
-  //         'Director, Division of System Support, Operation and Security (DSSOS)'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Accounting Management Group',
-  //     system: 'Office of Financial Management'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
-  //   key: 'healthDataReporting',
-  //   route: 'health-data-reporting',
-  //   categories: [OperationalSolutionCategories.QUALITY],
-  //   acronym: 'HDR',
-  //   name: 'Health Data Reporting',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Hung Van',
-  //       email: 'hung.van@cms.hhs.gov',
-  //       role: 'Technical Lead'
-  //     },
-  //     {
-  //       name: 'Curtis Naumann',
-  //       email: 'curtis.naumann@cms.hhs.gov',
-  //       role: 'Product Owner'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'Global Alliant',
-  //       system: 'Innovation Support Platform (ISP)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
   // {
   //   enum: OperationalSolutionKey.HPMS,
   //   key: 'healthPlanManagement',

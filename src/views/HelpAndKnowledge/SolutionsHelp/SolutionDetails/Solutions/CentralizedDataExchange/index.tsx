@@ -47,7 +47,7 @@ const CentralizedDataExhangeTimeline = ({
             i18nKey={`solutions.${solution.key}.timeline.items[0].description`}
           >
             If you’re interested in using CDX for your model or would like to
-            learn more about the system, please contact
+            learn more about the system, please contact{' '}
             <Link
               aria-label="Open in a new tab"
               href="mailto:ModelIntake@cms.hhs.gov"
@@ -84,7 +84,7 @@ const CentralizedDataExhangeTimeline = ({
                     rel="noopener noreferrer"
                     variant="external"
                   >
-                    CMS Enterprise Portal
+                    {timelineConfig.links && timelineConfig.links[0]}
                   </Link>
                 </Trans>
               </li>

@@ -68,7 +68,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
       {hasDescriptionItems && (
         <ListType className="padding-left-4 margin-top-0">
           {descriptionItems?.map((item: string) => (
-            <li key={item}>{item}</li>
+            <li key={item} className="list-item">
+              {item}
+            </li>
           ))}
         </ListType>
       )}
@@ -118,6 +120,7 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                         key={
                           typeof item === 'object' ? item.header : item + index
                         }
+                        className="list-item"
                       >
                         {component.itemHeaders && (
                           <span className="text-bold">
@@ -132,7 +135,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                             <ul className="padding-left-4 margin-top-0">
                               {(item as ListItemType).items.map(
                                 (subItem: string) => (
-                                  <li key={subItem}>{subItem}</li>
+                                  <li key={subItem} className="list-item">
+                                    {subItem}
+                                  </li>
                                 )
                               )}
                             </ul>

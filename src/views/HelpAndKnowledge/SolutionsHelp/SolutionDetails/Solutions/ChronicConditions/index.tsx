@@ -57,7 +57,7 @@ const ChronicConditionsTimeline = ({
               rel="noopener noreferrer"
               variant="external"
             >
-              Data Disclosures and Data Use Agreements
+              {timelineConfig.links && timelineConfig.links[0]}
             </Link>
           </p>
         </ProcessListItem>

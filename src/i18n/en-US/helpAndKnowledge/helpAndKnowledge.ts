@@ -302,7 +302,7 @@ The business function of CDX is a centralized data exchange to enable interopera
             'To submit an onboarding request, you’ll need to do the following steps:',
           ordered: true,
           items: [
-            'Register as New User in the <1>{{email}}</1>',
+            'Register as New User in the <1>{{link}}</1>',
             'Submit Privileged User Role Request for IC',
             'Submit Role Request for CDX'
           ]
@@ -312,7 +312,8 @@ The business function of CDX is a centralized data exchange to enable interopera
           description:
             'Write a CDX backlog request and describe the problem you are trying to solve with the desired result.'
         }
-      ]
+      ],
+      links: ['CMS Enterprise Portal']
     }
   },
   ccWarehouse: {
@@ -406,18 +407,98 @@ Performing model implementation, design, monitoring, and evaluation activities t
     about: {
       description:
         'CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. '
+    },
+    timeline: {
+      description:
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at <1>{{email}}</1>.',
+      items: [
+        {
+          header: 'Access CMS Box',
+          description:
+            'G​o to CMS Box and click Continue to confirm you are a part of the Centers for Medicare & M​edicaid services. You will be automatically signed in.'
+        },
+        {
+          header: 'Configure CMS Box for your model',
+          description:
+            'If using CMS Box to share files with participants, additional permissions will need to be set up.'
+        }
+      ],
+      links: ['Go to CMS Box', 'View resources on CMS Intranet']
     }
   },
   cmsQualtrics: {
     about: {
       description:
         'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.'
+    },
+    timeline: {
+      description:
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <1>{{email}}</1>.',
+      items: [
+        {
+          header: 'Access CMS Qualtrics',
+          description:
+            'Log in to CMS Qualtrics using your CMS user name and password.'
+        },
+        {
+          header: 'Create a survey',
+          description:
+            'Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.'
+        },
+        {
+          header: 'Distribute your survey',
+          description:
+            'Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.'
+        }
+      ],
+      links: ['Go to CMS Qualtrics']
     }
   },
   cbosc: {
     about: {
       description:
         'The Consolidated Business Operations Support Center (CBOSC) contract provides IT and programmatic help desk inquiry support, help desk operations and Business Operations support for the Innovation Center Models, the Alternative Payment Model (APM) track of the Quality Payment Program (QPP) and CM. CBOSC manages intake, resolution and escalation of all inquiries related to Innovations and Shared Savings Program Business Operations centrally. Support is provided through Pre-Implementation, Post-Implementation, Operation, Reporting, and Information Support phases as models test innovative payment and service delivery models to reduce program expenditures while preserving or enhancing the quality of care furnished to individuals.'
+    },
+    timeline: {
+      description:
+        'Generally, it takes 1-2 months for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.',
+      items: [
+        {
+          header: 'Begin onboarding activities',
+          description:
+            'Provide CBOSC with as much information about your model as you know by filling out their onboarding questionnaire. They’ll set up a discovery meeting with your team to identify any missing information and let you know what services CBOSC can provide to your model. During this time, CBOSC will form an internal onboarding team. They develop an onboarding timeline that assures readiness.'
+        },
+        {
+          header: 'Resource mailbox creation',
+          description:
+            'If the model needs a mailbox, they should infrom CBOSC and provide a list of names and email addresses that should have access the mailbox. Any folders, auto reply messages, and templates are also set up.'
+        },
+        {
+          header: 'Confirm final helpdesk requirements',
+          description:
+            'CBOS will review and confirm the needs of the model. If the model intends to use phone, the call center must also evaluate interactive voice response (IVR) option tree at this phase. '
+        },
+        {
+          header: 'Build out IVR and test',
+          description:
+            'During this stage, they will create routing, record model specific messages, update reports and test. CBOSC will then provide the call center phone number and IVR option. Model teams must communicate and update all appropriate stakeholders of the new numbers.'
+        },
+        {
+          header: 'Conduct support center / helpdesk training',
+          description:
+            'The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training. '
+        },
+        {
+          header: 'ServiceNow (SNow) set up and training',
+          description:
+            'During this phase, the model team receives the appropriate job codes and training for SNow. Knowledge base content is developed and published, and agents are trained on the content.'
+        },
+        {
+          header: 'CBOSC is ready to support the model',
+          description:
+            'After standard outreach procedures are defined and final testing is complete, CBOSC is ready to support the model. '
+        }
+      ]
     }
   },
   cpiVetting: {
@@ -473,6 +554,28 @@ Performing model implementation, design, monitoring, and evaluation activities t
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'Timelines vary by model but it generally takes 6-12 months.',
+      items: [
+        {
+          header: 'Reach out to eDFR ',
+          description:
+            'Once a model team knows they would like to use eDFR, they should reach out to Zach Nall.'
+        },
+        {
+          header: 'Meet to understand requirements'
+        },
+        {
+          header: 'Development starts'
+        },
+        {
+          header: 'Change is released',
+          description:
+            'Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. '
+        }
+      ]
     }
   },
   govDelivery: {
@@ -490,6 +593,31 @@ Performing model implementation, design, monitoring, and evaluation activities t
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'The setup for GovDelivery is very quick and can take as little as an hour.',
+      items: [
+        {
+          header: 'Reach out to GovDelivery Admin',
+          description:
+            'If you’re interested in using GovDelivery for your model, reach out to one of the Admins with the following information:',
+          items: [
+            'Names, emails, phone numbers, and roles of any topic admins (These will be the people that have edit access in GovDelivery)',
+            'The name of the new listserv topic (For example: "Our New Model Newsletter" or similar as appropriate)'
+          ]
+        },
+        {
+          header: 'Configure GovDelivery and discuss guidelines',
+          description:
+            'One of the GovDelivery Admins will set up your topic based on the information you provided. Then, they’ll talk you through some of the basic guidelines set by the Office of Communications for template designs and things like that.'
+        },
+        {
+          header: 'Access granted',
+          description:
+            'Once you’re comfortable with GovDelivery, you’re able to start using it. '
+        }
+      ]
     }
   },
   grantSolutions: {
@@ -499,6 +627,20 @@ Performing model implementation, design, monitoring, and evaluation activities t
 CMS currently utilizes GrantSolutions primarily for awarding, managing, and closing out grants. For some grant programs, CMS utilizes the GS Application Review Module (ARM) for the required merit review of applications.
     
 CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies artificial intelligence, machine learning, and other emerging technologies to collect information from 750,000 organizations contained in seven different public databases. RI analyzes trends and identifies warning signs in the data. This data is presented through key data in actionable dashboards highlighting critical information for conducting risk assessment of applicants and recipients and identify reduce fraud, waste, and abuse.`
+    },
+    timeline: {
+      items: [
+        {
+          header: 'Contact Mary Greene or Michelle Brown',
+          description:
+            'Reach out to Mary or Michelle during the development of a grant project.'
+        },
+        {
+          header: 'Point of contact assigned',
+          description:
+            'A point of contact from the Division of Grants Management will be assigned to the model team. They will guide the model team through the whole process and can provide more in-depth training and resources about the grants management process.'
+        }
+      ]
     }
   },
   higlas: {
@@ -525,6 +667,11 @@ Specific to CMMI, HIGLAS has two integrated points:`,
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at {{email}} if you have questions.',
+      items: []
     }
   },
   healthDataReporting: {
@@ -575,6 +722,35 @@ HDR’s Configuration Management allows model teams to define and modify perform
           header: 'Quality measure results',
           level: 'h4',
           items: ['Aggregate quality measure calculation results report']
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Generally, it takes about four to six weeks for models to start using HDR.',
+      items: [
+        {
+          header: 'Reach out to Technical Lead',
+          description:
+            'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Hung Van. '
+        },
+        {
+          header: 'Meet to understand requirements',
+          description:
+            'Tell HDR the type of data you’d like to collect for your model.'
+        },
+        {
+          header: 'Development and validation',
+          description: `All models will need submission and validation templates to be built and tested prior to the first data submission. Any model requirements not met by HDR’s current functionality will also need built. This will take extra time, so please plan accordingly.
+            
+If the model will use HDR’s pre-fill option, the model team’s implementation contractor will need to provide the following:`,
+          items: [
+            'Participating entity information',
+            'Beneficiary alignment lists'
+          ]
+        },
+        {
+          header: 'Start submitting data'
         }
       ]
     }
@@ -1163,6 +1339,11 @@ const helpAndKnowledge = {
   moreContacts: 'More points of contact',
   systemOwner: 'System owner',
   contractors: 'Contractors',
+  gatheringInfoAlert: {
+    header: 'We’re still gathering information about ',
+    description:
+      'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov if you have any questions. '
+  },
 
   categories: solutionCategoryies,
   solutions

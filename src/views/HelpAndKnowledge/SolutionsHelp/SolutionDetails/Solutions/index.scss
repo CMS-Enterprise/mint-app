@@ -1,18 +1,4 @@
 .operational-solution-details {
-
-    li {
-        list-style-type: none;
-        position: relative;
-    }
-
-    li::before {
-        content: ".";
-        position: absolute;
-        left: -0.8em;
-        font-size: 1.3em;
-        top: -0.63rem;
-    }
-
     &__timeline-item {
         border-left-width: 0.3rem !important;
         margin-left: 1px;
@@ -26,4 +12,19 @@
           margin-top: 0 !important;
         }
       }
+
+      
+}
+
+.list-item {
+  list-style-type: none;
+  position: relative;
+}
+
+.list-item::before {
+  content: ".";
+  position: absolute;
+  left: -0.8em;
+  font-size: 1.3em;
+  top: -0.63rem;
 }

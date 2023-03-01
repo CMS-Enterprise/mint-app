@@ -8,9 +8,11 @@ import {
 
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import '../index.scss';
+
 export type TimelineItemType = {
   header: string;
-  description: string;
+  description?: string;
   ordered?: boolean;
   items?: string[];
 };
@@ -39,11 +41,11 @@ export const GenericTimeline = ({
   );
 
   return (
-    <div className=" line-height-body-5 font-body-md">
+    <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
       {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
       <ProcessList>
-        {timelineConfig.items.map(item => (
+        {timelineConfig.items?.map(item => (
           <ProcessListItem
             key={item.header}
             className="operational-solution-details__timeline-item"
@@ -51,7 +53,18 @@ export const GenericTimeline = ({
             <ProcessListHeading type="h3" className="margin-top-neg-05">
               {item.header}
             </ProcessListHeading>
-            <p>{item.description}</p>
+
+            {item.description && (
+              <p className="margin-bottom-0">{item.description}</p>
+            )}
+
+            {item.items && (
+              <ul className="padding-left-4 margin-top-0">
+                {item.items.map(subItem => (
+                  <li className="list-item">{subItem}</li>
+                ))}
+              </ul>
+            )}
           </ProcessListItem>
         ))}
       </ProcessList>
