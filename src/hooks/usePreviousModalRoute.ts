@@ -9,6 +9,10 @@ interface LocationType {
   search?: string;
 }
 
+/* location param is reference from useLocation() hook to store it's as prev state
+   route param is a string route where it's location state is NOT to be stored (modal parent route)
+   This allows components to return to previous states while navigating through modal routes
+*/
 const usePreviousModalRoute = (location: LocationType, route: string) => {
   const ref = useRef<LocationType>();
 
