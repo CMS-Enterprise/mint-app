@@ -7,7 +7,6 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -466,26 +465,13 @@ func getMockUserData() []*models.UserInfo {
 
 // FetchUserInfo fetches a user's personal details
 func (c *client) FetchUserInfo(_ context.Context, username string) (*models.UserInfo, error) {
-	if username == "" {
-		return nil, &apperrors.ValidationError{
-			Err:     errors.New("invalid EUA ID"),
-			Model:   username,
-			ModelID: username,
-		}
-	}
 	c.logger.Info("Mock FetchUserInfo from Okta API", zap.String("username", username))
 	for _, mockUser := range getMockUserData() {
 		if mockUser.Username == username {
 			return mockUser, nil
 		}
 	}
-	return nil, &apperrors.ExternalAPIError{
-		Err:       errors.New("failed to return person from Okta API"),
-		ModelID:   username,
-		Model:     models.UserInfo{},
-		Operation: apperrors.Fetch,
-		Source:    "Okta API",
-	}
+	return nil, errors.New("failed to fetch user from Okta API")
 }
 
 // SearchByName fetches a user's personal details by their common name

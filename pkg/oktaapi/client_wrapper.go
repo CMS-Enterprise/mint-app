@@ -42,19 +42,21 @@ type oktaUserResponse struct {
 	Login       string `json:"login"`
 }
 
-func parseOktaProfileResponse(profile *okta.UserProfile) (*models.UserInfo, error) {
+func (cw *clientWrapper) parseOktaProfileResponse(profile *okta.UserProfile) (*models.UserInfo, error) {
 	// Create an okaUserProfile to return
 	parsedProfile := &oktaUserResponse{}
 
 	// Marshal the profile into a string so we can later unmarshal it into a struct
 	responseString, err := json.Marshal(profile)
 	if err != nil {
+		cw.logger.Error("error marshalling okta response", zap.Error(err))
 		return nil, err
 	}
 
 	// Unmarshal the string into the oktaUserProfile type
 	err = json.Unmarshal(responseString, parsedProfile)
 	if err != nil {
+		cw.logger.Error("error unmarshalling okta response", zap.Error(err))
 		return nil, err
 	}
 
@@ -76,9 +78,8 @@ func (cw *clientWrapper) FetchUserInfo(ctx context.Context, username string) (*m
 		return nil, err
 	}
 
-	profile, err := parseOktaProfileResponse(user.Profile)
+	profile, err := cw.parseOktaProfileResponse(user.Profile)
 	if err != nil {
-		cw.logger.Error("Error parsing Okta profile", zap.Error(err))
 		return nil, err
 	}
 
@@ -101,9 +102,8 @@ func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([
 
 	users := make([]*models.UserInfo, len(searchedUsers))
 	for idx, user := range searchedUsers {
-		profile, err := parseOktaProfileResponse(user.Profile)
+		profile, err := cw.parseOktaProfileResponse(user.Profile)
 		if err != nil {
-			cw.logger.Error("Error parsing Okta profile", zap.Error(err))
 			return nil, err
 		}
 		users[idx] = profile
