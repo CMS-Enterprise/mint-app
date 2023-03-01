@@ -5,8 +5,17 @@ import { Link } from '@trussworks/react-uswds';
 import Alert from 'components/shared/Alert';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import { TimelineConfigType } from '../../Solutions/Generic/timeline';
+
 const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
+
+  const timelineConfig: TimelineConfigType = t(
+    `solutions.${solution.key}.timeline`,
+    {
+      returnObjects: true
+    }
+  );
 
   return (
     <Alert
@@ -26,7 +35,9 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
         >
           MINTTeam@cms.hhs.gov
         </Link>{' '}
-        if you have any questions.
+        {timelineConfig?.description
+          ? timelineConfig.description
+          : t('gatheringInfoAlert.description2')}
       </Trans>
     </Alert>
   );

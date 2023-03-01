@@ -15,7 +15,7 @@ export type TimelineItemType = {
   description?: string;
   description2?: string;
   ordered?: boolean;
-  items?: string[];
+  items?: any[];
 };
 
 export type TimelineConfigType = {
@@ -62,7 +62,9 @@ export const GenericTimeline = ({
             {item.items && (
               <ul className="padding-left-4 margin-top-0">
                 {item.items.map(subItem => (
-                  <li className="list-item">{subItem}</li>
+                  <li key={subItem} className="list-item">
+                    {subItem}
+                  </li>
                 ))}
               </ul>
             )}

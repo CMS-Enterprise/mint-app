@@ -11,6 +11,7 @@ import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
 import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
 import GenericTimeline from './SolutionDetails/Solutions/Generic/timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
+import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
 
 type CategoryType = {
   [key: string]: OperationalSolutionCategories;
@@ -669,221 +670,195 @@ export const helpSolutions: HelpSolutionType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
+  },
+  {
+    enum: null,
+    key: 'legalVertical',
+    route: 'legal-vertical',
+    categories: [OperationalSolutionCategories.LEGAL],
+    acronym: 'LV',
+    name: 'Legal Vertical',
+    pointsOfContact: [
+      {
+        name: 'Megan Hyde',
+        email: 'megan.hyde@cms.hhs.gov',
+        role: 'Co-team Lead'
+      },
+      {
+        name: 'Erin Hagenbrok',
+        email: 'erin.hagenbrok1@cms.hhs.gov',
+        role: 'Co-team Lead'
+      },
+      {
+        name: 'Ann Vrabel',
+        email: 'ann.vrabel1@cms.hhs.gov',
+        role: 'Division Director'
+      },
+      {
+        name: 'Melanie Dang',
+        email: 'melanie.dang1@cms.hhs.gov',
+        role: 'Deputy Division Director'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.MDM,
+    key: 'masterDataManagement',
+    route: 'master-data-management',
+    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    acronym: 'MDM',
+    name: 'Master Data Management',
+    pointsOfContact: [
+      {
+        name: 'Cheryl Brown',
+        email: 'cheryl.brown@cms.hhs.gov',
+        role: 'CMMI/BSG Point of Contact'
+      },
+      {
+        name: 'Felicia Addai',
+        email: 'felicia.addai2@cms.hhs.gov',
+        role: 'CMMI/BSG Project Support'
+      },
+      {
+        name: 'Miyani Treva',
+        email: 'miyani.treva@cms.hhs.gov',
+        role: 'Overlaps Operations Support'
+      },
+      {
+        name: 'Sameera Gudipati',
+        email: 'sameera.gudipati1@cms.hhs.gov',
+        role: 'OIT Point of Contact'
+      },
+      {
+        name: 'Glenn Eyler',
+        email: 'cglenn.eyler@cms.hhs.gov',
+        role: 'OIT Government Task Lead'
+      }
+    ],
+    systemOwner: {
+      name: 'Enterprise Architecture and Data Group',
+      system: 'Office of Information Technology'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: null,
+    key: 'measureInstrumentDS',
+    route: 'measure-and-instrument-development-and-support',
+    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    acronym: 'MIDS',
+    name: 'Measure and Instrument Development and Support',
+    pointsOfContact: [
+      {
+        name: 'Dustin Allison',
+        email: 'dustin.allison@cms.hhs.gov',
+        role: 'Quality Vertical'
+      },
+      {
+        name: 'Teresa Winder-Wells',
+        email: 'teresa.winder-wells@cms.hhs.gov',
+        role:
+          'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
+      },
+      {
+        name: 'Tim Day',
+        email: 'timothy.day@cms.hhs.gov',
+        role: 'Quality Subject Matter Expert (QSME)'
+      },
+      {
+        name: 'Jim Gerber',
+        email: 'james.gerber@cms.hhs.gov',
+        role: 'Director, Division of Portfolio Management & Strategy'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.MARX,
+    key: 'marx',
+    route: 'medicare-advantage-prescription-drug-system',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    acronym: 'MARx',
+    name: 'Medicare Advantage Prescription Drug System',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    systemOwner: {
+      name: 'Medicare Plan Payment Group, Division of Payment Operations',
+      system: 'Center for Medicare'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
+    key: 'outlookMailbox',
+    route: 'outlook-mailbox',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    name: 'Outlook Mailbox',
+    pointsOfContact: [
+      {
+        name: 'MINT Team',
+        email: 'MINTTeam@cms.hhs.gov'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <OutlookMailboxTimeLine {...props} />
+      )
+    }
+  },
+  {
+    enum: null,
+    key: 'qualityVertical',
+    route: 'quality-vertical',
+    categories: [OperationalSolutionCategories.QUALITY],
+    acronym: 'QV',
+    name: 'Quality Vertical',
+    pointsOfContact: [
+      {
+        name: 'Alesia Hovatter',
+        email: 'alesia.hovatter@cms.hhs.gov',
+        role: 'Senior Lead'
+      },
+      {
+        name: 'Susannah Bernheim',
+        email: 'susannah.bernheim@cms.hhs.gov',
+        role: 'Chief Quality Officer and Lead'
+      },
+      {
+        name: 'Dustin Allison',
+        email: 'dustin.allison1@cms.hhs.gov',
+        role: 'Interim Lead'
+      },
+      {
+        name: 'Sasha Gibbel',
+        email: 'sasha.gibbel@cms.hhs.gov',
+        role: 'Quality Analyst'
+      },
+      {
+        name: 'Whitney Saint-Fleur',
+        email: 'whitney.saintfleur@cms.hhs.gov',
+        role: 'Quality Analyst'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
   }
-  // {
-  //   enum: null,
-  //   key: 'legalVertical',
-  //   route: 'legal-vertical',
-  //   categories: [OperationalSolutionCategories.LEGAL],
-  //   acronym: 'LV',
-  //   name: 'Legal Vertical',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Megan Hyde',
-  //       email: 'megan.hyde@cms.hhs.gov',
-  //       role: 'Co-team Lead'
-  //     },
-  //     {
-  //       name: 'Erin Hagenbrok',
-  //       email: 'erin.hagenbrok1@cms.hhs.gov',
-  //       role: 'Co-team Lead'
-  //     },
-  //     {
-  //       name: 'Ann Vrabel',
-  //       email: 'ann.vrabel1@cms.hhs.gov',
-  //       role: 'Division Director'
-  //     },
-  //     {
-  //       name: 'Melanie Dang',
-  //       email: 'melanie.dang1@cms.hhs.gov',
-  //       role: 'Deputy Division Director'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.MDM,
-  //   key: 'masterDataManagement',
-  //   route: 'master-data-management',
-  //   categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-  //   acronym: 'MDM',
-  //   name: 'Master Data Management',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Cheryl Brown',
-  //       email: 'cheryl.brown@cms.hhs.gov',
-  //       role: 'CMMI/BSG Point of Contact'
-  //     },
-  //     {
-  //       name: 'Felicia Addai',
-  //       email: 'felicia.addai2@cms.hhs.gov',
-  //       role: 'CMMI/BSG Project Support'
-  //     },
-  //     {
-  //       name: 'Miyani Treva',
-  //       email: 'miyani.treva@cms.hhs.gov',
-  //       role: 'Overlaps Operations Support'
-  //     },
-  //     {
-  //       name: 'Sameera Gudipati',
-  //       email: 'sameera.gudipati1@cms.hhs.gov',
-  //       role: 'OIT Point of Contact'
-  //     },
-  //     {
-  //       name: 'Glenn Eyler',
-  //       email: 'cglenn.eyler@cms.hhs.gov',
-  //       role: 'OIT Government Task Lead'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Enterprise Architecture and Data Group',
-  //     system: 'Office of Information Technology'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'measureInstrumentDS',
-  //   route: 'measure-and-instrument-development-and-support',
-  //   categories: [OperationalSolutionCategories.CC_VEHICLES],
-  //   acronym: 'MIDS',
-  //   name: 'Measure and Instrument Development and Support',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Dustin Allison',
-  //       email: 'dustin.allison@cms.hhs.gov',
-  //       role: 'Quality Vertical'
-  //     },
-  //     {
-  //       name: 'Teresa Winder-Wells',
-  //       email: 'teresa.winder-wells@cms.hhs.gov',
-  //       role:
-  //         'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
-  //     },
-  //     {
-  //       name: 'Tim Day',
-  //       email: 'timothy.day@cms.hhs.gov',
-  //       role: 'Quality Subject Matter Expert (QSME)'
-  //     },
-  //     {
-  //       name: 'Jim Gerber',
-  //       email: 'james.gerber@cms.hhs.gov',
-  //       role: 'Director, Division of Portfolio Management & Strategy'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.MARX,
-  //   key: 'marx',
-  //   route: 'medicare-advantage-prescription-drug-system',
-  //   categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-  //   acronym: 'MARx',
-  //   name: 'Medicare Advantage Prescription Drug System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Medicare Plan Payment Group, Division of Payment Operations',
-  //     system: 'Center for Medicare'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
-  //   key: 'outlookMailbox',
-  //   route: 'outlook-mailbox',
-  //   categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-  //   name: 'Outlook Mailbox',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'MINT Team',
-  //       email: 'MINTTeam@cms.hhs.gov'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'qualityVertical',
-  //   route: 'quality-vertical',
-  //   categories: [OperationalSolutionCategories.QUALITY],
-  //   acronym: 'QV',
-  //   name: 'Quality Vertical',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Alesia Hovatter',
-  //       email: 'alesia.hovatter@cms.hhs.gov',
-  //       role: 'Senior Lead'
-  //     },
-  //     {
-  //       name: 'Susannah Bernheim',
-  //       email: 'susannah.bernheim@cms.hhs.gov',
-  //       role: 'Chief Quality Officer and Lead'
-  //     },
-  //     {
-  //       name: 'Dustin Allison',
-  //       email: 'dustin.allison1@cms.hhs.gov',
-  //       role: 'Interim Lead'
-  //     },
-  //     {
-  //       name: 'Sasha Gibbel',
-  //       email: 'sasha.gibbel@cms.hhs.gov',
-  //       role: 'Quality Analyst'
-  //     },
-  //     {
-  //       name: 'Whitney Saint-Fleur',
-  //       email: 'whitney.saintfleur@cms.hhs.gov',
-  //       role: 'Quality Analyst'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
   // {
   //   enum: OperationalSolutionKey.RMADA,
   //   key: 'rmada',

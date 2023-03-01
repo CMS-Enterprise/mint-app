@@ -44,7 +44,7 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   });
 
   return (
-    <div className=" line-height-body-5 font-body-md">
+    <div className="operational-solution-details line-height-body-5 font-body-md">
       <p>{timelineConfig.description}</p>
 
       <ProcessList className="padding-top-1">

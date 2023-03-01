@@ -806,6 +806,11 @@ Health Plan Management System, all health insurance companies participating in t
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        ' and they will help you connect with Center for Medicare (CM).',
+      items: []
     }
   },
   innovationPayment: {
@@ -961,6 +966,32 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'Timing varies based on the type of service or assistance needed. For example, Participation Agreements (PA) can take 9-12 months from start to finish.',
+      items: [
+        {
+          header: 'Reach out to Legal Vertical',
+          description:
+            'When model teams have questions or when they start developing their ICIP, they should contact Megan Hyde or Erin Hagenbrok.'
+        },
+        {
+          header: 'Legal Vertical member assigned',
+          description:
+            'Model team management should reach out to Ann Vrabel and Melanie Dang to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.'
+        },
+        {
+          header: 'Draft governing documents',
+          description:
+            'The assigned LV team member will draft the necessary documents with the assistance of the model SMEs. The governing document is an operational document. Thus, all policy decisions and operational decisions should be made before drafting begins. If model teams need to make policy or operational changes during the drafting and clearance process, their timelines may be delayed.'
+        },
+        {
+          header: 'Clearance and approval',
+          description:
+            'All governing documents must go through OGC clearance, and, if applicable, be approved by the waiver team. Clearance has several rounds, so this is a pretty lengthy process.'
+        }
+      ]
     }
   },
   masterDataManagement: {
@@ -988,6 +1019,37 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'Coordination with MDM can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard. ',
+      items: [
+        {
+          header: 'CMMI/BSG will reach out',
+          description:
+            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Cheryl Brown.'
+        },
+        {
+          header: 'Discussion with the model team',
+          description:
+            'After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.'
+        },
+        {
+          header: 'Complete onboarding questionnaire',
+          description:
+            'CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.'
+        },
+        {
+          header: 'Meet with MDM operations team',
+          description:
+            'CMMI/BSG meets with the MDM operations team to share the business requirements.'
+        },
+        {
+          header: 'Share ICD',
+          description:
+            'CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.'
+        }
+      ]
     }
   },
   measureInstrumentDS: {
@@ -1006,6 +1068,42 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
       ],
       subDescription:
         'MIDS also includes work to reevaluate measures, support measure implementation through collaboration with implementation contractors, pursue National Quality Forum (NQF) endorsement, and, as needed, provide rulemaking language for proposed measure uses.'
+    },
+    timeline: {
+      description:
+        'The CMMI MIDS contract is currently in option year 3 of a base plus 4-year contract. Most of the quality measure work has already been identified and approved for the current year, however, you can still consider the CMMI MIDS contract for ad hoc analyses or reports to support the design of the quality strategy for model work. The CMMI MIDS contract has one more year remaining, option year 4, then the contract will be recompeted. The timeline for developing and supporting a new quality measure varies based on the complexity of the measure. The CMMI MIDS contractor will work with the model teams to develop and maintain their quality measures during the models’ lifecycle.',
+      items: [
+        {
+          header: 'Reach out to Quality Vertical',
+          description:
+            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical (QV) Team’s Quality Officer, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
+        },
+        {
+          header: 'COR meets with the model team',
+          description:
+            'Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). '
+        },
+        {
+          header: 'Present justification to Front Office',
+          description:
+            'The model teams will present their justification to the FO. The FO will determine if they want to move forward with the model team’s request and if additional funding is needed. If approval is given, the model teams will reach out to the CMMI MIDS COR to move forward with their quality measure work.'
+        },
+        {
+          header: 'COR presents to the MIDS contractor',
+          description:
+            'The CMMI MIDS COR will forward the model team’s request to the CMMI MIDS contractor who will assess whether they can do the work and how much it will cost based on the request. If the work can be completed utilizing the existing CMMI MIDS contract, then the CMMI MIDS COR will modify the contract and add the new work to the MIDS contract.'
+        },
+        {
+          header: 'COR and model team takes information back to FO',
+          description:
+            'If the measure work cannot be completed under the existing CMMI MIDS contract, then the model teams would have to go back to the FO to request approval of funding to complete the work. If the FO approves the funding, then CMMI MIDS COR will complete a modification to the contract and once complete, instruct the CMMI MIDS contractor to begin working with the model team.'
+        },
+        {
+          header: 'Contractor can begin working with model team',
+          description:
+            'The CMMI MIDS COR, MIDS QSME, and MIDS Contractor will begin working with the model teams to develop and/or respecify their quality measures.'
+        }
+      ]
     }
   },
   marx: {
@@ -1033,12 +1131,54 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        ' if your model will use MARx or if you have any questions. ',
+      items: []
     }
   },
   outlookMailbox: {
     about: {
       description:
         'Set up an email address through Outlook Mailbox, so all your model communications will funnel into a single place.'
+    },
+    timeline: {
+      description:
+        'It takes a minimum of 1-2 weeks for a mailbox to be set up.',
+      items: [
+        {
+          header: 'Submit request',
+          description:
+            'From the CMS Connect app on your desktop, search for “{{bold1}}” or “{{bold2}}” You’ll need to provide the following information:',
+          items: [
+            'Request type (Create a new resource mailbox)',
+            // @ts-ignore
+            {
+              items: [
+                'Mailbox name (Please be specific. For example: CMS OP Feedback).',
+                'Mailbox email address (For example: OPFeedback@cms.hhs.gov).',
+                'Include the CMS Owner(s) name(s) of the primary mailbox owner/backup owner .',
+                'List of all who will need full access to the mailbox (CMS email addresses only).',
+                'Will this mailbox be primarily used as a calendar?.',
+                'If yes, will there be dedicated people that will be entering or approving appointments in the calendar, or will the calendar automatically accept appointments?.',
+                'Any other special requirements for the mailbox'
+              ]
+            },
+            'Requested by date',
+            'Description',
+            'Business justification',
+            'Add attachments associated with the request (optional)'
+          ],
+          description2:
+            'If you’d rather submit a request by email, please send the above information to {{email}}'
+        },
+        {
+          header: 'Mailbox created',
+          description:
+            'You will be notified by email when your mailbox is created. The email will contain instructions on how to add the mailbox.'
+        }
+      ]
     }
   },
   qualityVertical: {
@@ -1066,6 +1206,27 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'Measure Management System (MMS) Tools',
             'Quality Payment Program'
           ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Timing for working with the Quality Vertical varies based on the model’s needs though it is best to reach out as early as possible. ',
+      items: [
+        {
+          header: 'Reach out to Quality Vertical',
+          description:
+            'Early in model development, model teams should reach out to one of the Quality Vertical leads, Alesia Hovatter, Susannah Bernheim, or Dustin Allison. The QV team meets Wednesdays to discuss, so new models should be prepared to join and share information about their model concept. '
+        },
+        {
+          header: 'QV assists the model team',
+          description:
+            'The level of QV involvement varies by model. QV will provide a template to model teams to help decide which quality measures to use. A member of QV may also be assigned to attend weekly meetings with the model team to assist with their quality efforts throughout the development process.'
+        },
+        {
+          header: 'QV reviews quality measures before clearance',
+          description:
+            'Before entering clearance, the model’s quality measures must be reviewed by QV.'
         }
       ]
     }
@@ -1398,7 +1559,8 @@ const helpAndKnowledge = {
   gatheringInfoAlert: {
     header: 'We’re still gathering information about ',
     description:
-      'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov if you have any questions. '
+      'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov',
+    description2: 'if you have any questions.'
   },
 
   categories: solutionCategoryies,
