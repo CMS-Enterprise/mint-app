@@ -1,3 +1,15 @@
+import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
+import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+
+interface SolutionModelType {
+  about: AboutConfigType;
+  timeline?: TimelineConfigType; // optional as some timelines are identical and are reused between solutions
+}
+
+type SolutionTType = {
+  [key: string]: SolutionModelType;
+};
+
 const solutionCategoryies = {
   applications: {
     header: 'Applications',
@@ -52,7 +64,7 @@ const solutionCategoryies = {
   }
 };
 
-const solutions = {
+const solutions: SolutionTType = {
   innovation: {
     about: {
       description:
@@ -117,6 +129,46 @@ const solutions = {
           header: 'Review features',
           description:
             'Review the features with the model team to understand the level of customization needed by the model for each feature. The model team confirms the features to be used in the 4i platform and ACO-OS.'
+        },
+        {
+          header: 'Requirements meetings',
+          description:
+            'Schedule recurring requirements meetings with the new model team to discuss current and future feature requirements needs, identify Minimal Viable Product (MVP) for the initial go-live.'
+        },
+        {
+          header: 'User research sessions',
+          description:
+            'Conduct series of user research sessions with end users to gain more insight into the user behavior, adjust the feature designs, and improve the overall user experience and quality of users’ interaction with the 4i platform.'
+        },
+        {
+          header: 'Coordinate with model team throughout onboarding',
+          description:
+            'Model teams are included in Sprint demos and User Acceptance Testing (UAT) sessions to provide early feedback.'
+        },
+        {
+          header: 'Train helpdesk team',
+          description:
+            'The helpdesk team is trained on model specific features so that Tier 1 and 2 support is equipped to handle any onboarding-specific questions that may arise from new users.'
+        },
+        {
+          header: 'Develop tip sheets',
+          description:
+            'Develop Tip sheets outlining step-by-step process to navigate features within the UI and conduct webinars to familiarize the end users with the 4i features.'
+        },
+        {
+          header: 'Perform go-live activities',
+          description:
+            'This includes a rigorous testing process to ensure quality. The Continuous Integration/Continuous Deployment (CI/CD) framework allows the team to deploy the code in production with minimal to no disruption. Release notes are shared with the model team prior to the release.'
+        },
+        {
+          header: 'Send out 4i registration invitations to end users',
+          description:
+            '4i platform includes capabilities like bulk invites and Gate windows to make the model onboarding and operations efficient and faster.'
+        },
+        {
+          header: 'Monitor systems ',
+          description:
+            'Monitor the 4i and ACO-OS systems in Production and provide end user support. Post model Go-Live, model team leads continue to attend status meetings and sprint ceremonies in order to receive ongoing support and provide input into future features to be developed in the UI.'
         }
       ]
     }
@@ -183,6 +235,22 @@ const solutions = {
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'Timing varies based on what the model needs, but it’s best to involve APPS early in the design process. System development for any new project lasts for 6 months to 1 year, depending on the complexity of the project.',
+      items: [
+        {
+          header: 'Reach out to Project Lead',
+          description:
+            'Contact Aliza Kim and Ed Howard to start a discussion about your model concept.'
+        },
+        {
+          header: 'Collaborate with APPS',
+          description:
+            'Early understanding of requirements and development strategy for any new project will assist in determining if the use of APPS is feasible.'
+        }
+      ]
     }
   },
   centralizedDataExhange: {
@@ -222,7 +290,29 @@ The business function of CDX is a centralized data exchange to enable interopera
       ]
     },
     timeline: {
-      description: 'Timeline desc'
+      items: [
+        {
+          header: 'Inquire about CDX',
+          description:
+            'If you’re interested in using CDX for your model or would like to learn more about the system, please contact <1>{{email}}</1> to learn more.'
+        },
+        {
+          header: 'Submit an onboarding request',
+          description:
+            'To submit an onboarding request, you’ll need to do the following steps:',
+          ordered: true,
+          items: [
+            'Register as New User in the <1>{{email}}</1>',
+            'Submit Privileged User Role Request for IC',
+            'Submit Role Request for CDX'
+          ]
+        },
+        {
+          header: 'Write a change request',
+          description:
+            'Write a CDX backlog request and describe the problem you are trying to solve with the desired result.'
+        }
+      ]
     }
   },
   ccWarehouse: {
@@ -264,6 +354,52 @@ Performing model implementation, design, monitoring, and evaluation activities t
           ]
         }
       ]
+    },
+    timeline: {
+      description:
+        'It takes a few weeks to get access to CCW. The steps below outline the process for contractors and CMS employees.',
+      header: 'Contractors',
+      items: [
+        {
+          header: 'Obtain CMS DUA',
+          description:
+            'Anyone wanting to access CCW data will need a valid CMS DUA (Data User Agreement).'
+        },
+        {
+          header: 'Complete CCW VRDC Access Request worksheet',
+          description:
+            'Contact Cheryl Brown, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Cheryl.'
+        },
+        {
+          header: 'Complete CCW CARS application',
+          description:
+            'Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access. '
+        },
+        {
+          header: 'Complete training',
+          description:
+            'The new user has 14 days to complete remote identity proofing (RIDP) and security awareness training. Once complete, OEDA approves and CCW Help completes the setup and sends a new user ID. CCW Help will also send CCW VRDC training information.'
+        }
+      ],
+      header2: 'CMS Employees',
+      items2: [
+        {
+          header: 'Complete Employee CCW Access Request form',
+          description:
+            'Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Cheryl.'
+        },
+        {
+          header: 'Complete CCW CARS application',
+          description:
+            'Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access. '
+        },
+        {
+          header: 'Complete training',
+          description:
+            'The new user has 14 days to complete remote identity proofing (RIDP) and security awareness training. Once complete, OEDA approves and CCW Help completes the setup and sends a new user ID. CMS IT Service Desk push VMWare software to the user’s desktop.'
+        }
+      ],
+      links: ['Data Disclosures and Data Use Agreements']
     }
   },
   cmsBox: {
@@ -319,6 +455,8 @@ Performing model implementation, design, monitoring, and evaluation activities t
             'Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.',
             'Dashboards are targeted at the Practice/Physician level, not at higher levels like hospital administrators or group administrators.',
             'Dashboards are not intended to be used by CMS or CMMI internally – they are for the participating practices.',
+            // Not sure why typescript isn't respecting the union type here - string[] | ListItemType
+            // @ts-ignore
             {
               header:
                 'Each dashboard will contain information that is sensitive to each practice, including:',

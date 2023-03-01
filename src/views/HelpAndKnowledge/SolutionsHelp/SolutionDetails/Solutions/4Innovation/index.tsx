@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -14,6 +13,11 @@ import { TimelineConfigType } from '../Generic/timeline';
 
 import '../index.scss';
 
+export interface ProcessListItemProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
 const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -24,16 +28,34 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
     }
   );
 
+  const StandardTimelineItems = timelineConfig.items.map((item, index) => {
+    if (index === 0) return <div key="empty" />;
+    return (
+      <ProcessListItem
+        key={item.header}
+        className="operational-solution-details__timeline-item"
+      >
+        <ProcessListHeading type="h3" className="margin-top-neg-05">
+          {item.header}
+        </ProcessListHeading>
+        <p>{item.description}</p>
+      </ProcessListItem>
+    );
+  });
+
   return (
     <div className=" line-height-body-5 font-body-md">
-      <p>{t('description')}</p>
+      <p>{timelineConfig.description}</p>
 
       <ProcessList>
         <ProcessListItem
           key="4i/ACO-OS"
           className="operational-solution-details__timeline-item"
         >
-          <ProcessListHeading type="h3" className="margin-top-neg-05">
+          <ProcessListHeading
+            type="h3"
+            className="margin-top-neg-05 margin-bottom-1"
+          >
             {timelineConfig.items[0].header}
           </ProcessListHeading>
 
@@ -53,21 +75,8 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             include Ashley Corbin and Nora Fleming on the email.
           </Trans>
         </ProcessListItem>
-
-        {timelineConfig.items.map((item, index) => {
-          if (index === 0) return <div key="empty" />;
-          return (
-            <ProcessListItem
-              key={item.header}
-              className="operational-solution-details__timeline-item"
-            >
-              <ProcessListHeading type="h3" className="margin-top-neg-05">
-                {item.header}
-              </ProcessListHeading>
-              <p>{item.description}</p>
-            </ProcessListItem>
-          );
-        })}
+        {/* Typescript not satified with mapping through ProcessListItems */}
+        {StandardTimelineItems as any}
       </ProcessList>
     </div>
   );

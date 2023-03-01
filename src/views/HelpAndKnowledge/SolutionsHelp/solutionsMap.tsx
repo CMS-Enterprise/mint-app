@@ -4,6 +4,8 @@ import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
+import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
+import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
 
 type CategoryType = {
   [key: string]: OperationalSolutionCategories;
@@ -158,165 +160,146 @@ export const helpSolutions: HelpSolutionType[] = [
         <Innovation4TimeLine {...props} />
       )
     }
-    // generic: {
-    //   about: true,
-    //   timeline: false,
-    //   'points-of-contact': true
-    // },
-    // component: (props: SolutionDetailProps) => <Innovation4 {...props} />
+  },
+  {
+    enum: OperationalSolutionKey.ACO_OS,
+    key: 'accountableCare',
+    route: 'accountable-care-organization',
+    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    acronym: 'CO-OS',
+    name: 'Accountable Care Organization - Operational System',
+    pointsOfContact: [
+      {
+        name: '4i/ACO-OS Team',
+        email: 'ACO-OIT@cms.hhs.gov'
+      },
+      {
+        name: 'Aparna Vyas',
+        email: 'aparna.vyas@cms.hhs.gov',
+        role: 'Project Lead'
+      },
+      {
+        name: 'Ashley Corbin',
+        email: 'ashley.corbin@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      },
+      {
+        name: 'Nora Fleming',
+        email: 'nora.fleming@cms.hhs.gov',
+        role: 'Subject Matter Expert'
+      }
+    ],
+    systemOwner: {
+      name:
+        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      system: 'Office of Information Technology'
+    },
+    contractors: [
+      {
+        name: 'Softrams',
+        system:
+          'Innovative Design, Development, and Operations Contract (IDDOC)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        // Timeline is the same as 4Innovation
+        <Innovation4TimeLine
+          solution={{ key: 'innovation' } as HelpSolutionType}
+        />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.APPS,
+    key: 'automatedPlanPayment',
+    route: 'automated-plan-payment-system',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    acronym: 'APPS',
+    name: 'Automated Plan Payment System',
+    pointsOfContact: [
+      {
+        name: 'Aliza Kim',
+        email: 'aliza.kim@cms.hhs.gov',
+        role: 'Project Lead'
+      },
+      {
+        name: 'Edgar Howard',
+        email: 'edgar.howard@cms.hhs.gov',
+        role: 'Director, Division of Payment Operations'
+      }
+    ],
+    systemOwner: {
+      name: 'Medicare Plan Payment Group, Division of Payment Operations',
+      system: 'Center for Medicare'
+    },
+    components: {}
+  },
+  {
+    enum: null,
+    key: 'centralizedDataExhange',
+    route: 'centralized-data-exchange',
+    categories: [OperationalSolutionCategories.DATA_EXCHANGE],
+    acronym: 'CDX',
+    name: 'Centralized Data Exchange',
+    pointsOfContact: [
+      {
+        name: 'Yolanda Villanova',
+        email: 'yolanda.villanova@cms.hhs.gov',
+        role: 'Product Owner'
+      },
+      {
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
+      }
+    ],
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <CentralizedDataExhangeTimeline {...props} />
+      )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.CCW,
+    key: 'ccWarehouse',
+    route: 'chronic-conditions-warehouse',
+    categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
+    acronym: 'CCW',
+    name: 'Chronic Conditions Warehouse',
+    pointsOfContact: [
+      {
+        name: 'Cheryl Brown',
+        email: 'cheryl.brown@cms.hhs.gov',
+        role: 'CMMI Government Task Lead'
+      }
+    ],
+    systemOwner: {
+      name: 'Research Data Development Group',
+      system: 'Office of Enterprise Data and Analytics'
+    },
+    contractors: [
+      {
+        name: 'NewWave',
+        system: 'Innovation Development and Operation Services (IDOS)'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <ChronicConditionsTimeline {...props} />
+      )
+    }
   }
-  // {
-  //   enum: OperationalSolutionKey.ACO_OS,
-  //   key: 'accountableCare',
-  //   route: 'accountable-care-organization',
-  //   categories: [OperationalSolutionCategories.DATA_REPORTING],
-  //   acronym: 'CO-OS',
-  //   name: 'Accountable Care Organization - Operational System',
-  //   pointsOfContact: [
-  //     {
-  //       name: '4i/ACO-OS Team',
-  //       email: 'ACO-OIT@cms.hhs.gov'
-  //     },
-  //     {
-  //       name: 'Aparna Vyas',
-  //       email: 'aparna.vyas@cms.hhs.gov',
-  //       role: 'Project Lead'
-  //     },
-  //     {
-  //       name: 'Ashley Corbin',
-  //       email: 'ashley.corbin@cms.hhs.gov',
-  //       role: 'Subject Matter Expert'
-  //     },
-  //     {
-  //       name: 'Nora Fleming',
-  //       email: 'nora.fleming@cms.hhs.gov',
-  //       role: 'Subject Matter Expert'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name:
-  //       'Enterprise Systems Solutions Group, Division of Applications Development and Support',
-  //     system: 'Office of Information Technology'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'Softrams',
-  //       system:
-  //         'Innovative Design, Development, and Operations Contract (IDDOC)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.APPS,
-  //   key: 'automatedPlanPayment',
-  //   route: 'automated-plan-payment-system',
-  //   categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
-  //   acronym: 'APPS',
-  //   name: 'Automated Plan Payment System',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Aliza Kim',
-  //       email: 'aliza.kim@cms.hhs.gov',
-  //       role: 'Project Lead'
-  //     },
-  //     {
-  //       name: 'Edgar Howard',
-  //       email: 'edgar.howard@cms.hhs.gov',
-  //       role: 'Director, Division of Payment Operations'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Medicare Plan Payment Group, Division of Payment Operations',
-  //     system: 'Center for Medicare'
-  //   },
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: null,
-  //   key: 'centralizedDataExhange',
-  //   route: 'centralized-data-exchange',
-  //   categories: [OperationalSolutionCategories.DATA_EXCHANGE],
-  //   acronym: 'CDX',
-  //   name: 'Centralized Data Exchange',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Yolanda Villanova',
-  //       email: 'yolanda.villanova@cms.hhs.gov',
-  //       role: 'Product Owner'
-  //     },
-  //     {
-  //       name: 'Hung Van',
-  //       email: 'hung.van@cms.hhs.gov',
-  //       role: 'Technical Lead'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Business Services Group',
-  //     system: 'Center for Medicare and Medicaid Innovation'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'Global Alliant',
-  //       system: 'Innovation Support Platform (ISP)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
-  // {
-  //   enum: OperationalSolutionKey.CCW,
-  //   key: 'ccWarehouse',
-  //   route: 'chronic-conditions-warehouse',
-  //   categories: [OperationalSolutionCategories.DATABASE_MANAGEMENT],
-  //   acronym: 'CCW',
-  //   name: 'Chronic Conditions Warehouse',
-  //   pointsOfContact: [
-  //     {
-  //       name: 'Cheryl Brown',
-  //       email: 'cheryl.brown@cms.hhs.gov',
-  //       role: 'CMMI Government Task Lead'
-  //     }
-  //   ],
-  //   systemOwner: {
-  //     name: 'Research Data Development Group',
-  //     system: 'Office of Enterprise Data and Analytics'
-  //   },
-  //   contractors: [
-  //     {
-  //       name: 'NewWave',
-  //       system: 'Innovation Development and Operation Services (IDOS)'
-  //     }
-  //   ],
-  //   generic: {
-  //     about: true,
-  //     timeline: false,
-  //     'points-of-contact': true
-  //   },
-  //   component: (props: SolutionDetailProps) => (
-  //     <CentralizedDataExhange {...props} />
-  //   )
-  // },
   // {
   //   enum: null,
   //   key: 'cmsBox',

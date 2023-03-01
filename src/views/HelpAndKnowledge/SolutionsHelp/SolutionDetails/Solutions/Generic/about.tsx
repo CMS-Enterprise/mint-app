@@ -12,23 +12,23 @@ type ListItemType = {
   items: string[];
 };
 
-type AboutComponentType = {
+interface AboutComponentType {
   header: string;
   description?: string;
   level?: 'h3' | 'h4';
   items: string[] | ListItemType;
   ordered?: boolean;
-  itemHeaders: string[]; // Must be the same number of items as items[]
+  itemHeaders?: string[]; // Must be the same number of items as items[]
   links?: string[]; // Must be the same number of items as items[]
-};
+}
 
-type AboutConfigType = {
+export interface AboutConfigType {
   description: string;
   subDescription?: string;
   items?: string[];
   ordered?: boolean;
-  components: AboutComponentType[];
-};
+  components?: AboutComponentType[];
+}
 
 const returnListType = (
   ordered: boolean | undefined

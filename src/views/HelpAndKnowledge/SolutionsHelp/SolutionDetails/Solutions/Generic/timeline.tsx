@@ -11,11 +11,17 @@ import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutions
 export type TimelineItemType = {
   header: string;
   description: string;
+  ordered?: boolean;
+  items?: string[];
 };
 
 export type TimelineConfigType = {
-  description: string;
+  description?: string;
+  header?: string;
   items: TimelineItemType[];
+  header2?: string;
+  items2?: TimelineItemType[];
+  links?: string[];
 };
 
 export const GenericTimeline = ({
@@ -34,7 +40,7 @@ export const GenericTimeline = ({
 
   return (
     <div className=" line-height-body-5 font-body-md">
-      <p>{t('description')}</p>
+      {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
       <ProcessList>
         {timelineConfig.items.map(item => (
