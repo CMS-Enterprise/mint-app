@@ -4,14 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
+	"go.uber.org/zap"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
-
-	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
@@ -136,9 +136,7 @@ func ModelPlanCreate(
 			emailService.GetConfig().GetDevTeamEmail(),
 			createdPlan,
 		)
-		if err != nil {
-			return nil, err
-		}
+		logger.Error("failed to send model plan created email to dev team", zap.Error(err))
 	}
 
 	return createdPlan, err
