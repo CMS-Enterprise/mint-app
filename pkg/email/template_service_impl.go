@@ -19,10 +19,10 @@ var addedAsCollaboratorBodyTemplate string
 // DailyDigetsTemplateName is the template name definition for the corresponding email template
 const DailyDigetsTemplateName string = "daily_digest"
 
-//go:embed templates/daily_digest_subject.template
+//go:embed templates/daily_digest_subject.html
 var dailyDigestSubjectTemplate string
 
-//go:embed templates/daily_digest_body.template
+//go:embed templates/daily_digest_body.html
 var dailyDigestBodyTemplate string
 
 // ModelPlanCreatedTemplateName is the template name definition for the corresponding email template
