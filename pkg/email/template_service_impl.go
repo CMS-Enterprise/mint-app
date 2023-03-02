@@ -10,10 +10,10 @@ import (
 // AddedAsCollaboratorTemplateName is the template name definition for the corresponding email template
 const AddedAsCollaboratorTemplateName string = "added_as_collaborator"
 
-//go:embed templates/added_as_collaborator_subject.template
+//go:embed templates/added_as_collaborator_subject.html
 var addedAsCollaboratorSubjectTemplate string
 
-//go:embed templates/added_as_collaborator_body.template
+//go:embed templates/added_as_collaborator_body.html
 var addedAsCollaboratorBodyTemplate string
 
 // DailyDigetsTemplateName is the template name definition for the corresponding email template
