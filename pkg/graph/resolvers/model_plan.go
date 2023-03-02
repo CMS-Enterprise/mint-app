@@ -136,7 +136,10 @@ func ModelPlanCreate(
 			emailService.GetConfig().GetDevTeamEmail(),
 			createdPlan,
 		)
-		logger.Error("failed to send model plan created email to dev team", zap.Error(err))
+		if err != nil {
+			logger.Error("failed to send model plan created email to dev team", zap.Error(err))
+			err = nil
+		}
 	}
 
 	return createdPlan, err
