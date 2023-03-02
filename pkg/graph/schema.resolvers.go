@@ -89,13 +89,6 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 	return resolvers.PlanPaymentsReadByModelPlan(logger, r.store, obj.ID)
 }
 
-// ItTools is the resolver for the itTools field.
-func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
-}
-
 // IsFavorite is the resolver for the isFavorite field.
 func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
 	principal := appcontext.Principal(ctx)
@@ -224,13 +217,6 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
-}
-
-// UpdatePlanItTools is the resolver for the updatePlanItTools field.
-func (r *mutationResolver) UpdatePlanItTools(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanITTools, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.PlanITToolsUpdate(logger, id, changes, principal, r.store)
 }
 
 // UpdatePlanOpsEvalAndLearning is the resolver for the updatePlanOpsEvalAndLearning field.
@@ -578,168 +564,6 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
-// GcPartCd is the resolver for the gcPartCD field.
-func (r *planITToolsResolver) GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error) {
-	GcPartCDs := models.ConvertEnums[model.GcPartCDType](obj.GcPartCD)
-	return GcPartCDs, nil
-}
-
-// GcCollectBids is the resolver for the gcCollectBids field.
-func (r *planITToolsResolver) GcCollectBids(ctx context.Context, obj *models.PlanITTools) ([]model.GcCollectBidsType, error) {
-	GcCollectBidss := models.ConvertEnums[model.GcCollectBidsType](obj.GcCollectBids)
-	return GcCollectBidss, nil
-}
-
-// GcUpdateContract is the resolver for the gcUpdateContract field.
-func (r *planITToolsResolver) GcUpdateContract(ctx context.Context, obj *models.PlanITTools) ([]model.GcUpdateContractType, error) {
-	GcUpdateContracts := models.ConvertEnums[model.GcUpdateContractType](obj.GcUpdateContract)
-	return GcUpdateContracts, nil
-}
-
-// PpToAdvertise is the resolver for the ppToAdvertise field.
-func (r *planITToolsResolver) PpToAdvertise(ctx context.Context, obj *models.PlanITTools) ([]model.PpToAdvertiseType, error) {
-	PpToAdvertises := models.ConvertEnums[model.PpToAdvertiseType](obj.PpToAdvertise)
-	return PpToAdvertises, nil
-}
-
-// PpCollectScoreReview is the resolver for the ppCollectScoreReview field.
-func (r *planITToolsResolver) PpCollectScoreReview(ctx context.Context, obj *models.PlanITTools) ([]model.PpCollectScoreReviewType, error) {
-	PpCollectScoreReviews := models.ConvertEnums[model.PpCollectScoreReviewType](obj.PpCollectScoreReview)
-	return PpCollectScoreReviews, nil
-}
-
-// PpAppSupportContractor is the resolver for the ppAppSupportContractor field.
-func (r *planITToolsResolver) PpAppSupportContractor(ctx context.Context, obj *models.PlanITTools) ([]model.PpAppSupportContractorType, error) {
-	PpAppSupportContractors := models.ConvertEnums[model.PpAppSupportContractorType](obj.PpAppSupportContractor)
-	return PpAppSupportContractors, nil
-}
-
-// PpCommunicateWithParticipant is the resolver for the ppCommunicateWithParticipant field.
-func (r *planITToolsResolver) PpCommunicateWithParticipant(ctx context.Context, obj *models.PlanITTools) ([]model.PpCommunicateWithParticipantType, error) {
-	PpCommunicateWithParticipants := models.ConvertEnums[model.PpCommunicateWithParticipantType](obj.PpCommunicateWithParticipant)
-	return PpCommunicateWithParticipants, nil
-}
-
-// PpManageProviderOverlap is the resolver for the ppManageProviderOverlap field.
-func (r *planITToolsResolver) PpManageProviderOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.PpManageProviderOverlapType, error) {
-	PpManageProviderOverlaps := models.ConvertEnums[model.PpManageProviderOverlapType](obj.PpManageProviderOverlap)
-	return PpManageProviderOverlaps, nil
-}
-
-// BManageBeneficiaryOverlap is the resolver for the bManageBeneficiaryOverlap field.
-func (r *planITToolsResolver) BManageBeneficiaryOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.BManageBeneficiaryOverlapType, error) {
-	BManageBeneficiaryOverlaps := models.ConvertEnums[model.BManageBeneficiaryOverlapType](obj.BManageBeneficiaryOverlap)
-	return BManageBeneficiaryOverlaps, nil
-}
-
-// OelHelpdeskSupport is the resolver for the oelHelpdeskSupport field.
-func (r *planITToolsResolver) OelHelpdeskSupport(ctx context.Context, obj *models.PlanITTools) ([]model.OelHelpdeskSupportType, error) {
-	OelHelpdeskSupports := models.ConvertEnums[model.OelHelpdeskSupportType](obj.OelHelpdeskSupport)
-	return OelHelpdeskSupports, nil
-}
-
-// OelManageAco is the resolver for the oelManageAco field.
-func (r *planITToolsResolver) OelManageAco(ctx context.Context, obj *models.PlanITTools) ([]model.OelManageAcoType, error) {
-	OelManageAcos := models.ConvertEnums[model.OelManageAcoType](obj.OelManageAco)
-	return OelManageAcos, nil
-}
-
-// OelPerformanceBenchmark is the resolver for the oelPerformanceBenchmark field.
-func (r *planITToolsResolver) OelPerformanceBenchmark(ctx context.Context, obj *models.PlanITTools) ([]model.OelPerformanceBenchmarkType, error) {
-	OelPerformanceBenchmarks := models.ConvertEnums[model.OelPerformanceBenchmarkType](obj.OelPerformanceBenchmark)
-	return OelPerformanceBenchmarks, nil
-}
-
-// OelProcessAppeals is the resolver for the oelProcessAppeals field.
-func (r *planITToolsResolver) OelProcessAppeals(ctx context.Context, obj *models.PlanITTools) ([]model.OelProcessAppealsType, error) {
-	OelProcessAppealss := models.ConvertEnums[model.OelProcessAppealsType](obj.OelProcessAppeals)
-	return OelProcessAppealss, nil
-}
-
-// OelEvaluationContractor is the resolver for the oelEvaluationContractor field.
-func (r *planITToolsResolver) OelEvaluationContractor(ctx context.Context, obj *models.PlanITTools) ([]model.OelEvaluationContractorType, error) {
-	OelEvaluationContractors := models.ConvertEnums[model.OelEvaluationContractorType](obj.OelEvaluationContractor)
-	return OelEvaluationContractors, nil
-}
-
-// OelCollectData is the resolver for the oelCollectData field.
-func (r *planITToolsResolver) OelCollectData(ctx context.Context, obj *models.PlanITTools) ([]model.OelCollectDataType, error) {
-	OelCollectDatas := models.ConvertEnums[model.OelCollectDataType](obj.OelCollectData)
-	return OelCollectDatas, nil
-}
-
-// OelObtainData is the resolver for the oelObtainData field.
-func (r *planITToolsResolver) OelObtainData(ctx context.Context, obj *models.PlanITTools) ([]model.OelObtainDataType, error) {
-	OelObtainDatas := models.ConvertEnums[model.OelObtainDataType](obj.OelObtainData)
-	return OelObtainDatas, nil
-}
-
-// OelClaimsBasedMeasures is the resolver for the oelClaimsBasedMeasures field.
-func (r *planITToolsResolver) OelClaimsBasedMeasures(ctx context.Context, obj *models.PlanITTools) ([]model.OelClaimsBasedMeasuresType, error) {
-	OelClaimsBasedMeasuress := models.ConvertEnums[model.OelClaimsBasedMeasuresType](obj.OelClaimsBasedMeasures)
-	return OelClaimsBasedMeasuress, nil
-}
-
-// OelQualityScores is the resolver for the oelQualityScores field.
-func (r *planITToolsResolver) OelQualityScores(ctx context.Context, obj *models.PlanITTools) ([]model.OelQualityScoresType, error) {
-	OelQualityScoress := models.ConvertEnums[model.OelQualityScoresType](obj.OelQualityScores)
-	return OelQualityScoress, nil
-}
-
-// OelSendReports is the resolver for the oelSendReports field.
-func (r *planITToolsResolver) OelSendReports(ctx context.Context, obj *models.PlanITTools) ([]model.OelSendReportsType, error) {
-	OelSendReportss := models.ConvertEnums[model.OelSendReportsType](obj.OelSendReports)
-	return OelSendReportss, nil
-}
-
-// OelLearningContractor is the resolver for the oelLearningContractor field.
-func (r *planITToolsResolver) OelLearningContractor(ctx context.Context, obj *models.PlanITTools) ([]model.OelLearningContractorType, error) {
-	OelLearningContractors := models.ConvertEnums[model.OelLearningContractorType](obj.OelLearningContractor)
-	return OelLearningContractors, nil
-}
-
-// OelParticipantCollaboration is the resolver for the oelParticipantCollaboration field.
-func (r *planITToolsResolver) OelParticipantCollaboration(ctx context.Context, obj *models.PlanITTools) ([]model.OelParticipantCollaborationType, error) {
-	OelParticipantCollaborations := models.ConvertEnums[model.OelParticipantCollaborationType](obj.OelParticipantCollaboration)
-	return OelParticipantCollaborations, nil
-}
-
-// OelEducateBeneficiaries is the resolver for the oelEducateBeneficiaries field.
-func (r *planITToolsResolver) OelEducateBeneficiaries(ctx context.Context, obj *models.PlanITTools) ([]model.OelEducateBeneficiariesType, error) {
-	OelEducateBeneficiariess := models.ConvertEnums[model.OelEducateBeneficiariesType](obj.OelEducateBeneficiaries)
-	return OelEducateBeneficiariess, nil
-}
-
-// PMakeClaimsPayments is the resolver for the pMakeClaimsPayments field.
-func (r *planITToolsResolver) PMakeClaimsPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PMakeClaimsPaymentsType, error) {
-	PMakeClaimsPaymentss := models.ConvertEnums[model.PMakeClaimsPaymentsType](obj.PMakeClaimsPayments)
-	return PMakeClaimsPaymentss, nil
-}
-
-// PInformFfs is the resolver for the pInformFfs field.
-func (r *planITToolsResolver) PInformFfs(ctx context.Context, obj *models.PlanITTools) ([]model.PInformFfsType, error) {
-	PInformFfss := models.ConvertEnums[model.PInformFfsType](obj.PInformFfs)
-	return PInformFfss, nil
-}
-
-// PNonClaimsBasedPayments is the resolver for the pNonClaimsBasedPayments field.
-func (r *planITToolsResolver) PNonClaimsBasedPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PNonClaimsBasedPaymentsType, error) {
-	PNonClaimsBasedPaymentss := models.ConvertEnums[model.PNonClaimsBasedPaymentsType](obj.PNonClaimsBasedPayments)
-	return PNonClaimsBasedPaymentss, nil
-}
-
-// PSharedSavingsPlan is the resolver for the pSharedSavingsPlan field.
-func (r *planITToolsResolver) PSharedSavingsPlan(ctx context.Context, obj *models.PlanITTools) ([]model.PSharedSavingsPlanType, error) {
-	PSharedSavingsPlans := models.ConvertEnums[model.PSharedSavingsPlanType](obj.PSharedSavingsPlan)
-	return PSharedSavingsPlans, nil
-}
-
-// PRecoverPayments is the resolver for the pRecoverPayments field.
-func (r *planITToolsResolver) PRecoverPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PRecoverPaymentsType, error) {
-	PRecoverPaymentss := models.ConvertEnums[model.PRecoverPaymentsType](obj.PRecoverPayments)
-	return PRecoverPaymentss, nil
-}
-
 // AgencyOrStateHelp is the resolver for the agencyOrStateHelp field.
 func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
 	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
@@ -1080,9 +904,6 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
-// PlanITTools returns generated.PlanITToolsResolver implementation.
-func (r *Resolver) PlanITTools() generated.PlanITToolsResolver { return &planITToolsResolver{r} }
-
 // PlanOpsEvalAndLearning returns generated.PlanOpsEvalAndLearningResolver implementation.
 func (r *Resolver) PlanOpsEvalAndLearning() generated.PlanOpsEvalAndLearningResolver {
 	return &planOpsEvalAndLearningResolver{r}
@@ -1120,7 +941,6 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
-type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }

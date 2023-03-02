@@ -26,7 +26,7 @@ import {
   GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
 import { formatDateUtc } from 'utils/date';
-import globalTableFilter from 'utils/globalTableFilter';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   translateModelCategory,
   translateModelPlanStatus
@@ -131,9 +131,9 @@ const Table = ({
       },
       {
         Header: t('allModels.tableHeading.startDate'),
-        accessor: ({ basics: { applicationsStart } }: any) => {
-          if (applicationsStart) {
-            return formatDateUtc(applicationsStart, 'MM/dd/yyyy');
+        accessor: ({ basics: { performancePeriodStarts } }: any) => {
+          if (performancePeriodStarts) {
+            return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -188,7 +188,7 @@ const Table = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {

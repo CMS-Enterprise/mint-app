@@ -37,7 +37,6 @@ import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'views/ModelPlan/TaskList/GeneralCharacteristics';
 import ITSolutions from 'views/ModelPlan/TaskList/ITSolutions';
-import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
@@ -69,10 +68,10 @@ const AppRoutes = () => {
 
   // Scroll to top
   useLayoutEffect(() => {
-    if (shouldScroll(location.pathname)) {
+    if (shouldScroll(location.pathname + location.search)) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   return (
     <Switch>
@@ -146,10 +145,6 @@ const AppRoutes = () => {
       <SecureRoute
         path="/models/:modelID/task-list/payment"
         component={Payment}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/it-tools"
-        component={ITTools}
       />
       {!flags.hideITLeadExperience && (
         <SecureRoute

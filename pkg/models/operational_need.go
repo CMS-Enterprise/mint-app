@@ -4,7 +4,7 @@ import "github.com/google/uuid"
 
 // OperationalNeed represents the need of a model plan
 type OperationalNeed struct {
-	baseStructUserTable
+	baseStruct
 	modelPlanRelation
 	NeedType *int                `json:"needType" db:"need_type"`
 	Name     *string             `json:"name" db:"need_name"`  // From Possible Operational Need Table
@@ -19,7 +19,7 @@ type OperationalNeed struct {
 func NewOperationalNeed(createdBy uuid.UUID, modelPlanID uuid.UUID) *OperationalNeed {
 
 	return &OperationalNeed{
-		baseStructUserTable: NewBaseStructUser(createdBy),
-		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }

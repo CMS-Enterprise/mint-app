@@ -1,6 +1,10 @@
-const scrollBlackList: string[] = ['read-only', 'sample-model-plan'];
+const scrollBlackList: string[] = [
+  'read-only',
+  'sample-model-plan',
+  '/help-and-knowledge/operational-solutions'
+];
 
 const shouldScroll = (path: string) =>
-  !scrollBlackList.some(r => path.split('/').includes(r));
+  !scrollBlackList.some(r => path.includes(r));
 
 export default shouldScroll;

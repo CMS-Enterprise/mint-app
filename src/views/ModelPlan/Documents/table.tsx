@@ -27,7 +27,7 @@ import {
 import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
-import globalTableFilter from 'utils/globalTableFilter';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import { translateDocumentType } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
@@ -430,7 +430,7 @@ export const Table = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {

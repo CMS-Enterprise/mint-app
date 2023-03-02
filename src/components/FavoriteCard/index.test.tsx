@@ -19,7 +19,7 @@ const mockModel: ModelPlanType = {
   isFavorite: true,
   isCollaborator: false,
   basics: {
-    applicationsStart: '2022-06-03T17:41:40.962971Z',
+    performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
     modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
     goal: 'The goal',
     __typename: 'PlanBasics'
