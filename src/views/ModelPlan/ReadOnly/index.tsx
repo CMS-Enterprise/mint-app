@@ -181,9 +181,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     !isMAC(groups) &&
     (isCollaborator || isAssessment(groups, flags));
 
-  const formattedApplicationStartDate =
-    basics?.applicationsStart &&
-    formatDateLocal(basics?.applicationsStart, 'MMMM d, yyyy');
+  const formattedPerformanceStartDate =
+    basics?.performancePeriodStarts &&
+    formatDateLocal(basics?.performancePeriodStarts, 'MMMM d, yyyy');
 
   const formattedKeyCharacteristics = generalCharacteristics?.keyCharacteristics.map(
     (item, index) => {
@@ -422,7 +422,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedApplicationStartDate ?? t('noAnswer.tBD')}
+                  term={formattedPerformanceStartDate ?? t('noAnswer.tBD')}
                 />
               </Grid>
               <Grid

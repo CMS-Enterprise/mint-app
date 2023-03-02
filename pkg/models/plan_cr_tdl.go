@@ -8,7 +8,7 @@ import (
 
 // PlanCrTdl represents CRs and TDLs related to a model plan
 type PlanCrTdl struct {
-	baseStructUserTable
+	baseStruct
 	modelPlanRelation
 	IDNumber      string     `json:"idNumber" db:"id_number"`
 	DateInitiated *time.Time `json:"dateInitiated" db:"date_initiated"`
@@ -19,7 +19,7 @@ type PlanCrTdl struct {
 // NewPlanCrTdl returns a New PlanCrTdl
 func NewPlanCrTdl(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanCrTdl {
 	return &PlanCrTdl{
-		baseStructUserTable: NewBaseStructUser(createdBy),
-		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }

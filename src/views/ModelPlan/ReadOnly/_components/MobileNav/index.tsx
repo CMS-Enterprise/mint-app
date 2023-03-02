@@ -70,12 +70,7 @@ const MobileNav = ({
         >
           <ul className="read-only-model-plan__subNav__list subNav">
             {Object.keys(subComponents).map((key: string) => (
-              <li
-                key={key}
-                className={
-                  key === 'it-tools' ? 'subNav__item--group-border' : ''
-                }
-              >
+              <li key={key} className="">
                 <NavLink
                   to={
                     !isHelpArticle
