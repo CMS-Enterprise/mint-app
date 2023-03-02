@@ -28,10 +28,10 @@ var dailyDigestBodyTemplate string
 // ModelPlanCreatedTemplateName is the template name definition for the corresponding email template
 const ModelPlanCreatedTemplateName string = "model_plan_created"
 
-//go:embed templates/model_plan_created_subject.template
+//go:embed templates/model_plan_created_subject.html
 var modelPlanCreatedSubjectTemplate string
 
-//go:embed templates/model_plan_created_body.template
+//go:embed templates/model_plan_created_body.html
 var modelPlanCreatedBodyTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
