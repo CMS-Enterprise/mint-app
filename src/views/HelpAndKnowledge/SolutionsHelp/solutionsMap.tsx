@@ -24,7 +24,8 @@ export type SolutionDetailProps = {
   solution: HelpSolutionType;
 };
 
-export const modalRoute: string = '/operational-solutions/solution';
+export const solutionHelpRoute: string =
+  '/help-and-knowledge/operational-solutions';
 
 // Operational Solution categories
 export const operationalSolutionCategoryMap: CategoryType = {

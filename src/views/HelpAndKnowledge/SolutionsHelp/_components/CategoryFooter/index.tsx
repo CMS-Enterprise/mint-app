@@ -33,7 +33,7 @@ const CategoryFooter = ({ className }: CategoryFooterProps) => {
                 <UswdsReactLink
                   className="fit-content display-flex flex-align-center margin-y-1"
                   key={key}
-                  to={`/help-and-knowledge/operational-solutions/categories/${key}`}
+                  to={`/help-and-knowledge/operational-solutions?category=${key}`}
                 >
                   {t(`categories.${key}.header`)}
                   <IconArrowForward className="margin-left-1" />

@@ -11,12 +11,14 @@ interface SideNavProps {
   subComponents: subComponentsProps;
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
+  paramActive?: boolean;
 }
 
 const SideNav = ({
   subComponents,
   isHelpArticle,
-  solutionNavigation
+  solutionNavigation,
+  paramActive
 }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('helpAndKnowledge');
@@ -33,6 +35,13 @@ const SideNav = ({
             : subComponents[key].helpRoute
         }
         key={key}
+        isActive={(_, location) => {
+          const params = new URLSearchParams(location.search);
+          const section = params.get('section');
+          return paramActive
+            ? section === key
+            : location.pathname.split('/')[4] === key;
+        }}
         activeClassName="usa-current"
         className={key === 'it-solutions' ? 'nav-group-border' : ''}
       >

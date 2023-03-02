@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -10,7 +10,7 @@ import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { HelpSolutionType } from '../../solutionsMap';
+import { HelpSolutionType, solutionHelpRoute } from '../../solutionsMap';
 import Contact from '../_components/Contact';
 import Header from '../_components/Header';
 import About from '../About';
@@ -19,23 +19,39 @@ import Timeline from '../Timeline';
 
 import './index.scss';
 
-const subComponents = (solution: HelpSolutionType): subComponentsProps => ({
-  about: {
-    route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
-    helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/about`,
-    component: <About solution={solution} />
-  },
-  timeline: {
-    route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/timeline`,
-    helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/timeline`,
-    component: <Timeline solution={solution} />
-  },
-  'points-of-contact': {
-    route: `/help-and-knowledge/operational-solutions/solution/${solution.route}/points-of-contact`,
-    helpRoute: `/help-and-knowledge/operational-solutions/solution/${solution.route}/points-of-contact`,
-    component: <PointsOfContact solution={solution} />
-  }
-});
+// Formats the query params on modal route change
+const formatQueryParam = (
+  paramValues: string[],
+  section: 'about' | 'timeline' | 'points-of-contact'
+) =>
+  `${solutionHelpRoute}?${paramValues
+    .filter(param => !param.includes('section'))
+    .join('&')}&section=${section}`;
+
+const subComponents = (
+  solution: HelpSolutionType,
+  location: any
+): subComponentsProps => {
+  const paramValues = location.search.substring(1).split('&');
+
+  return {
+    about: {
+      route: formatQueryParam(paramValues, 'about'),
+      helpRoute: formatQueryParam(paramValues, 'about'),
+      component: <About solution={solution} />
+    },
+    timeline: {
+      route: formatQueryParam(paramValues, 'timeline'),
+      helpRoute: formatQueryParam(paramValues, 'timeline'),
+      component: <Timeline solution={solution} />
+    },
+    'points-of-contact': {
+      route: formatQueryParam(paramValues, 'points-of-contact'),
+      helpRoute: formatQueryParam(paramValues, 'points-of-contact'),
+      component: <PointsOfContact solution={solution} />
+    }
+  };
+};
 
 type SolutionDetailsModalProps = {
   solution: HelpSolutionType;
@@ -46,9 +62,10 @@ const SolutionDetailsModal = ({
   solution,
   openedFrom
 }: SolutionDetailsModalProps) => {
-  const { page } = useParams<{
-    page: string;
-  }>();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const section = params.get('section') || 'about';
 
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -116,8 +133,8 @@ const SolutionDetailsModal = ({
 
           {isMobile && (
             <MobileNav
-              subComponents={subComponents(solution)}
-              subinfo={page}
+              subComponents={subComponents(solution, location)}
+              subinfo={section}
               isHelpArticle
               solutionDetail
             />
@@ -129,9 +146,10 @@ const SolutionDetailsModal = ({
                 <Grid desktop={{ col: 3 }}>
                   <>
                     <SideNav
-                      subComponents={subComponents(solution)}
+                      subComponents={subComponents(solution, location)}
                       isHelpArticle
                       solutionNavigation
+                      paramActive
                     />
 
                     <Contact
@@ -143,7 +161,7 @@ const SolutionDetailsModal = ({
               )}
 
               <Grid desktop={{ col: 8 }}>
-                {subComponents(solution)[page]?.component}
+                {subComponents(solution, location)[section]?.component}
               </Grid>
 
               <Grid desktop={{ col: 1 }} />

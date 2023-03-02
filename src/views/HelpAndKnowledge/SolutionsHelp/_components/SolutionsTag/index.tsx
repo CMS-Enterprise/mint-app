@@ -20,7 +20,7 @@ export default function SolutionsTag({
   const { t } = useTranslation('helpAndKnowledge');
   return (
     <UswdsReactLink
-      to={`/help-and-knowledge/operational-solutions/categories/${route}`}
+      to={`/help-and-knowledge/operational-solutions?category=${route}`}
       aria-label="Category tag link"
       className={classNames(className, 'width-fit-content display-block')}
     >

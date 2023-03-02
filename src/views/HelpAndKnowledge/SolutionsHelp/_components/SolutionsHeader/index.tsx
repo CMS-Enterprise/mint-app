@@ -12,7 +12,7 @@ import './index.scss';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
-  category?: string;
+  category?: string | null;
   resultsNum: number;
   resultsMax: number;
   setQuery: (query: string) => void;

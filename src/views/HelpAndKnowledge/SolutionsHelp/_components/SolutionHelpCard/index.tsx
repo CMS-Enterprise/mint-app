@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
   Card,
   CardGroup,
@@ -18,7 +19,7 @@ import './index.scss';
 
 type SolutionCardProps = {
   className?: string;
-  category?: string;
+  category?: string | null;
   solution: HelpSolutionType;
 };
 
@@ -28,6 +29,8 @@ const SolutionHelpCard = ({
   solution
 }: SolutionCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
+
+  const location = useLocation();
 
   return (
     <CardGroup className="flex-column flex-no-wrap">
@@ -79,7 +82,9 @@ const SolutionHelpCard = ({
 
             <UswdsReactLink
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-              to={`/help-and-knowledge/operational-solutions/solution/${solution.route}/about`}
+              to={`/help-and-knowledge/operational-solutions${location.search}${
+                location.search ? '&' : '?'
+              }solution=${solution.route}&section=about`}
             >
               {t('aboutSolution')}
               <IconArrowForward className="margin-left-1" />
