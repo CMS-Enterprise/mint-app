@@ -89,7 +89,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       setQuery('');
       window.scrollTo(0, 0);
     }
-  }, [page, location.pathname]);
+  }, [page, location.pathname, category]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
