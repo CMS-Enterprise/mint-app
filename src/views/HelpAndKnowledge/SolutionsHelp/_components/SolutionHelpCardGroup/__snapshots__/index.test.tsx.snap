@@ -44,11 +44,11 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   </p>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=data-reporting"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Data reporting
@@ -142,11 +142,11 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   </p>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=data-reporting"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Data reporting
@@ -240,11 +240,11 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   </p>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Medicare Advantage and Part D
@@ -339,11 +339,11 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   </p>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=data-exchange"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Data exchange
@@ -441,11 +441,11 @@ The business function of CDX is a centralized data exchange to enable interopera
                   </p>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Databases and data management
@@ -538,11 +538,11 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   </h3>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=data-exchange"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Data exchange
@@ -631,11 +631,11 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   </h3>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=data-reporting"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Data reporting
@@ -729,11 +729,11 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   </p>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=help-desks"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Help desks
@@ -822,11 +822,11 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   </h3>
                   <a
                     aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
                     href="/help-and-knowledge/operational-solutions?category=data-exchange"
                   >
                     <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                       data-testid="tag"
                     >
                       Data exchange

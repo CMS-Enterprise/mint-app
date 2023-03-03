@@ -32,11 +32,11 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
             </p>
             <a
               aria-label="Category tag link"
-              class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+              class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
               href="/help-and-knowledge/operational-solutions?category=data-reporting"
             >
               <span
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
                 data-testid="tag"
               >
                 Data reporting
