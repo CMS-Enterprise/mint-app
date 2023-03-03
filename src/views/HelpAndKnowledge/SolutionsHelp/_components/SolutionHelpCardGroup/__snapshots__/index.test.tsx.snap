@@ -45,7 +45,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+                    href="/help-and-knowledge/operational-solutions?category=data-reporting"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -81,7 +81,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/4-innovation/about"
+                    href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
                   >
                     About this solution
                     <svg
@@ -143,7 +143,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+                    href="/help-and-knowledge/operational-solutions?category=data-reporting"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -179,7 +179,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/accountable-care-organization/about"
+                    href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=about"
                   >
                     About this solution
                     <svg
@@ -241,7 +241,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/medicare-advantage-and-part-d"
+                    href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -278,7 +278,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/automated-plan-payment-system/about"
+                    href="/help-and-knowledge/operational-solutions?solution=automated-plan-payment-system&section=about"
                   >
                     About this solution
                     <svg
@@ -340,7 +340,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+                    href="/help-and-knowledge/operational-solutions?category=data-exchange"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -353,10 +353,10 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="solution-card__body"
                   >
                     Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
-
-    CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
+      
+CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
     
-    The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.
+The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.
                   </p>
                   <div
                     class="tablet:grid-col-6 margin-bottom-2"
@@ -380,7 +380,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/centralized-data-exchange/about"
+                    href="/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
                   >
                     About this solution
                     <svg
@@ -442,7 +442,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/database-and-data-management"
+                    href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -456,13 +456,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   >
                     The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
 
-    This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
+This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
     
-    CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.
-    CMMI models and demonstrations use the CCW and the VRDC for data analysis, analytics, data mining, and data storage in a SAS environment
-    Federal staff and CMMI contractors are allowed access to the CCW.
-    Model participants have limited access to the VRDC to upload and download files.
-    AHC, BPCI Advanced, CMS FFRDC Contract, Opioid (ViT) Demonstration, CPC+, PCF, DC, KCF, CKCC, IAH, CJR, CEC, ETC, NFI, MCCM, MDPP, IVIG Demonstration, NG ACO, HHVBP, FCHIP, InCK, IDOS Contractor, MOM, State Innovations (MD, PA, VT), ORES OTS Contractor, OCM, Quality Measures Contractor, RO, ET3
+CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.
                   </p>
                   <div
                     class="tablet:grid-col-6 margin-bottom-2"
@@ -486,7 +482,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/chronic-conditions-warehouse/about"
+                    href="/help-and-knowledge/operational-solutions?solution=chronic-conditions-warehouse&section=about"
                   >
                     About this solution
                     <svg
@@ -543,7 +539,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+                    href="/help-and-knowledge/operational-solutions?category=data-exchange"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -579,7 +575,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/cms-box/about"
+                    href="/help-and-knowledge/operational-solutions?solution=cms-box&section=about"
                   >
                     About this solution
                     <svg
@@ -636,7 +632,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+                    href="/help-and-knowledge/operational-solutions?category=data-reporting"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -672,7 +668,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/cms-qualtrics/about"
+                    href="/help-and-knowledge/operational-solutions?solution=cms-qualtrics&section=about"
                   >
                     About this solution
                     <svg
@@ -734,7 +730,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/help-desks"
+                    href="/help-and-knowledge/operational-solutions?category=help-desks"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -770,7 +766,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/consolidated-business-operations-support-center/about"
+                    href="/help-and-knowledge/operational-solutions?solution=consolidated-business-operations-support-center&section=about"
                   >
                     About this solution
                     <svg
@@ -827,7 +823,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <a
                     aria-label="Category tag link"
                     class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-                    href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+                    href="/help-and-knowledge/operational-solutions?category=data-exchange"
                   >
                     <span
                       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -867,7 +863,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions/solution/cpi-vetting/about"
+                    href="/help-and-knowledge/operational-solutions?solution=cpi-vetting&section=about"
                   >
                     About this solution
                     <svg

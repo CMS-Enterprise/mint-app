@@ -27,7 +27,7 @@ type OperationalSolutionsHelpProps = {
 };
 
 // Return all solutions relevant to the current cateory
-export const findCategoryMapByRoute = (
+export const findCategoryMapByRouteParam = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
@@ -43,7 +43,7 @@ export const findCategoryMapByRoute = (
   });
 };
 
-export const findSolutionByRoute = (
+export const findSolutionByRouteParam = (
   route: string | null,
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
@@ -103,10 +103,10 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category
     ? querySolutions
-    : findCategoryMapByRoute(category, helpSolutions);
+    : findCategoryMapByRouteParam(category, helpSolutions);
 
   // Solution to render in modal
-  const selectedSolution = findSolutionByRoute(solution, helpSolutions);
+  const selectedSolution = findSolutionByRouteParam(solution, helpSolutions);
 
   return (
     <div className={classNames(className)}>

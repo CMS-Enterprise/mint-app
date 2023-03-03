@@ -33,7 +33,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
             <a
               aria-label="Category tag link"
               class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
-              href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+              href="/help-and-knowledge/operational-solutions?category=data-reporting"
             >
               <span
                 class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
@@ -69,7 +69,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
             />
             <a
               class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-              href="/help-and-knowledge/operational-solutions/solution/4-innovation/about"
+              href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
             >
               About this solution
               <svg

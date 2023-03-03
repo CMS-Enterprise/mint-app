@@ -5,7 +5,7 @@ exports[`Operation Solution Help Tag matches snapshot 1`] = `
   <a
     aria-label="Category tag link"
     class="usa-link width-fit-content display-block"
-    href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+    href="/help-and-knowledge/operational-solutions?category=data-reporting"
   >
     <span
       class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
