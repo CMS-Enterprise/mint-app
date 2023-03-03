@@ -134,7 +134,16 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return resolvers.ModelPlanCreate(ctx, logger, modelName, r.store, principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
+	return resolvers.ModelPlanCreate(
+		ctx,
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		modelName,
+		r.store,
+		principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
+	)
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.

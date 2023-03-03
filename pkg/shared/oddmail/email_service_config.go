@@ -9,4 +9,5 @@ type EmailServiceConfig interface {
 	GetDefaultSender() string
 	GetUsername() string
 	GetPassword() string
+	GetDevTeamEmail() string
 }
