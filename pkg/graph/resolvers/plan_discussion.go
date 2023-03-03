@@ -1,7 +1,12 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
 
@@ -12,7 +17,15 @@ import (
 )
 
 // CreatePlanDiscussion implements resolver logic to create a plan Discussion object
-func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
+func CreatePlanDiscussion(
+	ctx context.Context,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	input *model.PlanDiscussionCreateInput,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.PlanDiscussion, error) {
 	planDiscussion := models.NewPlanDiscussion(principal.Account().ID, principal.AllowASSESSMENT(), input.ModelPlanID, input.Content)
 
 	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
@@ -21,7 +34,72 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 	}
 
 	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
+	if err != nil {
+		return nil, err
+	}
+
+	// Send email to MINT Dev Team
+	err = sendPlanDiscussionCreatedEmail(
+		ctx,
+		store,
+		logger,
+		emailService,
+		emailTemplateService,
+		"", // TODO: after merging other feat to main use this - emailService.GetConfig().GetDevTeamEmail(),
+		result,
+		input.ModelPlanID,
+	)
+
 	return result, err
+}
+
+func sendPlanDiscussionCreatedEmail(
+	ctx context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	receiverEmail string,
+	planDiscussion *models.PlanDiscussion,
+	modelPlanID uuid.UUID,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionCreatedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
+		DiscussionContent: planDiscussion.Content,
+	})
+	if err != nil {
+		return err
+	}
+
+	modelPlan, err := store.ModelPlanGetByID(logger, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
+		DiscussionID:      planDiscussion.ID.String(),
+		CreatorUserName:   planDiscussion.CreatedByUserAccount(ctx).CommonName,
+		DiscussionContent: planDiscussion.Content,
+		ModelID:           modelPlan.ID.String(),
+		ModelName:         modelPlan.ModelName,
+	})
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // UpdatePlanDiscussion implements resolver logic to update a plan Discussion object

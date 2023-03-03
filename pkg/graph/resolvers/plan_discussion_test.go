@@ -16,7 +16,15 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 		Content:     "This is a test comment",
 	}
 
-	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
@@ -38,7 +46,15 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	regularUserPrincipal := suite.testConfigs.Principal
 	regularUserPrincipal.JobCodeASSESSMENT = false
 	regularUserPrincipal.JobCodeUSER = true
-	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, regularUserPrincipal, suite.testConfigs.Store)
+	result, err := CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		input,
+		regularUserPrincipal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)

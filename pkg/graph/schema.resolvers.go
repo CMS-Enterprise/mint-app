@@ -239,7 +239,7 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanDiscussion(logger, &input, principal, r.store)
+	return resolvers.CreatePlanDiscussion(ctx, logger, r.emailService, r.emailTemplateService, &input, principal, r.store)
 }
 
 // UpdatePlanDiscussion is the resolver for the updatePlanDiscussion field.

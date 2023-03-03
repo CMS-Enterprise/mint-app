@@ -61,7 +61,15 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		ModelPlanID: mp.ID,
 		Content:     content,
 	}
-	pd, err := resolvers.CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	pd, err := resolvers.CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return pd
 }
