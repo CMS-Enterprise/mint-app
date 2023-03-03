@@ -136,7 +136,7 @@ const SolutionDetailsModal = ({
               subComponents={subComponents(solution, location)}
               subinfo={section}
               isHelpArticle
-              solutionDetail
+              solutionDetailRoute={prevRoute}
             />
           )}
 
