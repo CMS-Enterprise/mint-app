@@ -152,10 +152,7 @@ const SolutionDetailsModal = ({
                       paramActive
                     />
 
-                    <Contact
-                      contact={solution.pointsOfContact[0]}
-                      solutionRoute={solution.route}
-                    />
+                    <Contact contact={solution.pointsOfContact[0]} />
                   </>
                 </Grid>
               )}
@@ -168,10 +165,7 @@ const SolutionDetailsModal = ({
 
               {isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  <Contact
-                    contact={solution.pointsOfContact[0]}
-                    solutionRoute={solution.route}
-                  />
+                  <Contact contact={solution.pointsOfContact[0]} />
                 </Grid>
               )}
             </Grid>

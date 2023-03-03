@@ -24,7 +24,7 @@ const MobileNav = ({
   subComponents,
   subinfo,
   isHelpArticle,
-  solutionDetailRoute = '/help-and-knowledge/operational-solutions'
+  solutionDetailRoute
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');

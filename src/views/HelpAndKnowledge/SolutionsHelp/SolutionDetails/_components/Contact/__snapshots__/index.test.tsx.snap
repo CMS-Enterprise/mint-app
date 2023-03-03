@@ -47,7 +47,7 @@ exports[`Operation Solution Contact matches snapshot 1`] = `
     </a>
     <a
       class="usa-link display-flex flex-align-center"
-      href="/help-and-knowledge/operational-solutions/solution/chronic-conditions-warehouse/points-of-contact"
+      href="/help-and-knowledge/operational-solutions?&section=points-of-contact"
     >
       More points of contact
       <svg
