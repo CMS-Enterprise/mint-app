@@ -20,7 +20,7 @@ import Timeline from '../Timeline';
 import './index.scss';
 
 // Formats the query params on modal route change
-const formatQueryParam = (
+export const formatQueryParam = (
   paramValues: string[],
   section: 'about' | 'timeline' | 'points-of-contact'
 ) =>
