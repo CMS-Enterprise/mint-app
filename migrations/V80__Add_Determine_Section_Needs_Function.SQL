@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION DETERMINE_SECTION_NEEDS( table_name TEXT, model_plan_idParam UUID, h_new HSTORE, changedKeys TEXT[] DEFAULT '{*}'::TEXT[] ) --TODO: we could make this take an array if want
+CREATE OR REPLACE FUNCTION DETERMINE_SECTION_NEEDS( table_name TEXT, model_plan_idParam UUID, h_new HSTORE, changedKeys TEXT[] DEFAULT '{*}'::TEXT[] )
 RETURNS TABLE (
     operational_need_id UUID,
     need_type INT,
@@ -11,7 +11,7 @@ RETURNS TABLE (
 )
 AS $$
 	BEGIN 
-	RAISE NOTICE 'DETERMINE_SECTION_NEEDS called.  table_name % and  hstore = %', table_name,h_new;
+	-- RAISE NOTICE 'DETERMINE_SECTION_NEEDS called.  table_name % and  hstore = %', table_name,h_new;
 	RETURN QUERY
     WITH NeedConditions AS
     (

@@ -21,7 +21,7 @@ BEGIN
 
     modified_by_id = h_new -> 'modified_by';
     model_plan_id = h_new -> 'model_plan_id';
-    RAISE NOTICE 'SET_OPERATIONAL_NEED_NEEDED called.  Modified_by_id %, model_plan_id = % and  hstore = %', Modified_by_id,model_plan_id, h_new;
+    -- RAISE NOTICE 'SET_OPERATIONAL_NEED_NEEDED called.  Modified_by_id %, model_plan_id = % and  hstore = %', Modified_by_id,model_plan_id, h_new;
 With NeedUpdates AS (
     SELECT * FROM DETERMINE_SECTION_NEEDS(TG_TABLE_NAME::text, model_plan_id, h_new, changedKeys) --need to pass the hstore of the entire row to handle composite column trigger conditions
 )
