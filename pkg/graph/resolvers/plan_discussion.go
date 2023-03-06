@@ -85,6 +85,7 @@ func sendPlanDiscussionCreatedEmail(
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
+		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
 		CreatorUserName:   planDiscussion.CreatedByUserAccount(ctx).CommonName,
 		DiscussionContent: planDiscussion.Content,

@@ -7,6 +7,7 @@ type PlanDiscussionCreatedSubjectContent struct {
 
 // PlanDiscussionCreatedBodyContent defines the parameters necessary for the corresponding email body
 type PlanDiscussionCreatedBodyContent struct {
+	ClientAddress     string
 	DiscussionID      string
 	CreatorUserName   string
 	DiscussionContent string

@@ -1,0 +1,98 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Content</title>
+  <style type="text/css">
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* General */
+    body {
+      padding-left: 5px;
+      text-align: left;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 30pt;
+      font-weight: bold;
+      font-style: normal;
+      color: #1B1B1B;
+      font-family: 'Public Sans', sans-serif;
+      text-decoration: none;
+    }
+
+    h2 {
+      font-size: 24pt;
+      font-weight: bold;
+      font-style: normal;
+      color: #1B1B1B;
+      font-family: 'Public Sans', sans-serif;
+      text-decoration: none;
+    }
+
+    h3 {
+      font-size: 16.5pt;
+      font-weight: bold;
+      font-style: normal;
+      color: #1B1B1B;
+      font-family: 'Public Sans', sans-serif;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    /* Subtitle */
+    .subtitle {
+      font-size: 15.5pt;
+      font-weight: normal;
+      font-style: normal;
+      color: #71767A;
+      font-family: 'Public Sans', sans-serif;
+      text-decoration: none;
+    }
+
+    /* Paragraph */
+    p {
+      font-size: 12pt;
+      font-weight: normal;
+      font-style: normal;
+      color: #1B1B1B;
+      font-family: 'Public Sans', sans-serif;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    /* Links */
+    a {
+      font-size: 12pt;
+      font-weight: normal;
+      font-style: normal;
+      color: #005EA2;
+      font-family: 'Public Sans', sans-serif;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<h1 style="padding-top: 3pt;">MINT</h1>
+<p class="subtitle" style="padding-top: 11pt;">The Model Innovation Tool</p>
+<br/>
+<h2 style="padding-top: 14pt;">New question</h2>
+<p style="padding-top: 14pt;">{{.UserName}} asked</p>
+<br/>
+<h3 style="padding-top: 14pt;">{{.DiscussionContent}}</h3>
+<p style="padding-top: 14pt;">in {{.ModelName}}</p>
+<br/>
+<p style="padding-top: 14pt;">
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?discussionID={{.DiscussionID}}" class="link">
+    Respond to this question in MINT
+  </a>
+</p>
+</body>
+</html>
