@@ -5,8 +5,7 @@ DECLARE
     modified_by_id UUID;
     model_plan_id UUID;
     h_changed HSTORE;
-    h_changedKeys text[];
-    h_changedCurrent HSTORE; --To hold the current value of the columns that have changed
+    changedKeys text[];
 BEGIN
 
     IF TG_WHEN <> 'AFTER' OR TG_OP <> 'UPDATE'THEN
@@ -18,15 +17,13 @@ BEGIN
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
     h_changed = (h_new - h_old);
-    h_changedKeys = akeys(h_changed); --Get the keys that have changed
-    h_changedCurrent = slice(h_new,h_changedKeys);
-
+    changedKeys = akeys(h_changed); --Get the keys that have changed
 
     modified_by_id = h_new -> 'modified_by';
     model_plan_id = h_new -> 'model_plan_id';
-    RAISE NOTICE 'SET_OPERATIONAL_NEED_NEEDED called.  Modified_by_id %, model_plan_id = % and  hstore = %', Modified_by_id,model_plan_id, h_changedCurrent;
+    RAISE NOTICE 'SET_OPERATIONAL_NEED_NEEDED called.  Modified_by_id %, model_plan_id = % and  hstore = %', Modified_by_id,model_plan_id, h_new;
 With NeedUpdates AS (
-    SELECT * FROM DETERMINE_SECTION_NEEDS(TG_TABLE_NAME::text, model_plan_id, h_changedCurrent)
+    SELECT * FROM DETERMINE_SECTION_NEEDS(TG_TABLE_NAME::text, model_plan_id, h_new, changedKeys) --need to pass the hstore of the entire row to handle composite column trigger conditions
 )
 
 UPDATE operational_need

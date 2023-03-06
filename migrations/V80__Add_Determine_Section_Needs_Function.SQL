@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION DETERMINE_SECTION_NEEDS( table_name TEXT, model_plan_idParam UUID, h_changed HSTORE ) --TODO: we could make this take an array if want
+CREATE OR REPLACE FUNCTION DETERMINE_SECTION_NEEDS( table_name TEXT, model_plan_idParam UUID, h_new HSTORE, changedKeys TEXT[] DEFAULT '{*}'::TEXT[] ) --TODO: we could make this take an array if want
 RETURNS TABLE (
     operational_need_id UUID,
     need_type INT,
@@ -11,7 +11,7 @@ RETURNS TABLE (
 )
 AS $$
 	BEGIN 
-	RAISE NOTICE 'DETERMINE_SECTION_NEEDS called.  table_name % and  hstore = %', table_name,h_changed;
+	RAISE NOTICE 'DETERMINE_SECTION_NEEDS called.  table_name % and  hstore = %', table_name,h_new;
 	RETURN QUERY
     WITH NeedConditions AS
     (
@@ -21,7 +21,7 @@ AS $$
         possible_operational_need.trigger_col,
         possible_operational_need.trigger_vals
     FROM public.possible_operational_need
-    WHERE possible_operational_need.trigger_table = table_name AND h_changed ?| possible_operational_need.trigger_col -- Only get needs where the column has changes
+    WHERE possible_operational_need.trigger_table = table_name AND ((changedKeys && possible_operational_need.trigger_col) OR changedKeys = '{*}'::TEXT[])-- Only get needs where the column has changes (eg there is overlap in these values)
     ),
 	normalNeeds AS
     (
@@ -31,8 +31,8 @@ AS $$
     NeedConditions.trigger_col,
     NeedConditions.trigger_vals,
 	model_plan_idParam AS model_plan_id,
-    (h_changed -> NeedConditions.trigger_col)::TEXT[] AS vals, -- TODO: This should be refactored to use the new values, not the changed values ( so it function)
-    starts_with(((h_changed -> NeedConditions.trigger_col)::TEXT[])[1], '{') AS nested
+    (h_new -> NeedConditions.trigger_col)::TEXT[] AS vals, 
+    starts_with(((h_new -> NeedConditions.trigger_col)::TEXT[])[1], '{') AS nested
     FROM NeedConditions
     ),
     Combined AS
