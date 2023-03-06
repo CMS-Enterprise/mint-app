@@ -61,6 +61,8 @@ const basics = {
   performanceStartDate: 'Performance start date',
   performanceEndDate: 'Performance end date',
   demonstrationPerformance: 'Performance period',
+  demonstrationPerformanceInfo:
+    'When the model will be active beginning with the go-live date',
   modelWrapUp: 'Model wrap-up end date',
   notes: 'Notes',
   tightTimeline:
@@ -70,7 +72,7 @@ const basics = {
   na: 'No answer entered',
   otherNotSpecificed: 'Other not specified',
   milestonesInfo:
-    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions. '
+    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
 };
 
 export default basics;

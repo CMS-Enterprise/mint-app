@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -11,6 +11,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
+  Link as TrussLink,
   ProcessList,
   ProcessListHeading,
   ProcessListItem,
@@ -245,11 +246,24 @@ const Milestones = () => {
                   </PageHeading>
 
                   <MINTAlert type="info" slim>
-                    {t('MINTTeam@cms.hhs.gov')}
+                    <Trans i18nKey="milestonesInfo">
+                      Please be sure that the dates listed here are updated in
+                      the clearance calendar, if applicable. Contact the MINT
+                      Team at{' '}
+                      <TrussLink
+                        aria-label="Open in a new tab"
+                        href="mailto:MINTTeam@cms.hhs.gov"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        MINTTeam@cms.hhs.gov
+                      </TrussLink>{' '}
+                      if you have any questions.
+                    </Trans>
                   </MINTAlert>
 
-                  <ProcessList className="read-only-model-plan__timeline">
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                  <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105  ">
+                    <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
                       <ProcessListHeading
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
@@ -271,16 +285,21 @@ const Milestones = () => {
                       </ProcessListHeading>
                     </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
+                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
                       <ProcessListHeading
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
-                        <legend className="usa-label">{t('clearance')}</legend>
+                        <legend className="usa-label margin-bottom-05">
+                          {t('clearance')}
+                        </legend>
 
-                        <p className="text-base margin-bottom-neg-2 margin-top-1  text-normal">
+                        <label
+                          htmlFor="Milestone-clearanceStarts"
+                          className="text-base"
+                        >
                           {t('clearanceInfo')}
-                        </p>
+                        </label>
                         <div className="datepicker__wrapper text-normal">
                           <MINTDatePicker
                             fieldName="clearanceStarts"
@@ -293,6 +312,7 @@ const Milestones = () => {
                             value={clearanceStarts}
                             error={flatErrors.clearanceStarts}
                             warning={false}
+                            className="margin-top-1"
                           />
 
                           <MINTDatePicker
@@ -306,6 +326,7 @@ const Milestones = () => {
                             value={clearanceEnds}
                             error={flatErrors.clearanceEnds}
                             warning={false}
+                            className="margin-top-1"
                           />
                         </div>
 
@@ -318,7 +339,7 @@ const Milestones = () => {
                       </ProcessListHeading>
                     </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
                       <ProcessListHeading
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
@@ -339,7 +360,7 @@ const Milestones = () => {
                       </div>
                     </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
+                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
                       <ProcessListHeading
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
@@ -385,15 +406,21 @@ const Milestones = () => {
                       )}
                     </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4">
+                    <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
                       <ProcessListHeading
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
-                        {' '}
-                        <legend className="usa-label margin-bottom-neg-2">
+                        <legend className="usa-label">
                           {t('demonstrationPerformance')}
                         </legend>
+
+                        <label
+                          htmlFor="Milestone-performancePeriodStarts"
+                          className="text-base"
+                        >
+                          {t('demonstrationPerformanceInfo')}
+                        </label>
                       </ProcessListHeading>
 
                       <div className="datepicker__wrapper">
@@ -408,6 +435,7 @@ const Milestones = () => {
                           value={performancePeriodStarts}
                           error={flatErrors.performancePeriodStarts}
                           warning={false}
+                          className="margin-top-0"
                         />
 
                         <MINTDatePicker
@@ -421,6 +449,7 @@ const Milestones = () => {
                           value={performancePeriodEnds}
                           error={flatErrors.performancePeriodEnds}
                           warning={false}
+                          className="margin-top-0"
                         />
                       </div>
 
@@ -432,7 +461,7 @@ const Milestones = () => {
                       )}
                     </ProcessListItem>
 
-                    <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
                       <ProcessListHeading
                         type="h5"
                         className="font-body-sm line-height-sans-4 text-normal"
