@@ -29,7 +29,7 @@ describe('Operation Solution Help Tag', () => {
     expect(tag).toHaveTextContent('Data reporting');
     expect(tag).toHaveAttribute(
       'href',
-      '/help-and-knowledge/operational-solutions/categories/data-reporting'
+      '/help-and-knowledge/operational-solutions?category=data-reporting'
     );
   });
 

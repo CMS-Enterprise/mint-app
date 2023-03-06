@@ -51,6 +51,7 @@ import RouterProvider from 'views/RouterContext';
 import Sandbox from 'views/Sandbox';
 import SubscriptionHandler from 'views/SubscriptionHandler';
 import SubscriptionWrapper from 'views/SubscriptionWrapper';
+import TaskListBannerAlert from 'views/TaskListBannerAlert';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
 import Unfollow from 'views/Unfollow';
@@ -234,6 +235,7 @@ const App = () => {
                               <NavContextProvider>
                                 <PageWrapper>
                                   <Header />
+                                  <TaskListBannerAlert />
                                   <AppRoutes />
                                   <Footer />
                                 </PageWrapper>

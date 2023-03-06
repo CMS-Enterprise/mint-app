@@ -31,7 +31,6 @@ export const HelpAndKnowledgeHome = () => {
           </div>
         </GridContainer>
       </SummaryBox>
-
       <GridContainer className="padding-bottom-4">
         <h2 className="margin-bottom-0">{t('gettingStarted')}</h2>
 

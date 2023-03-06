@@ -25,11 +25,17 @@ const TaskListLock = ({
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const lockMessage = isAssessment ? t('assessmentLocked') : t('locked');
+  const lockMessage = isAssessment
+    ? t('assessmentLocked', {
+        assessmentUser: lockedByUserAccount?.commonName
+      })
+    : t('locked', {
+        teamMember: lockedByUserAccount?.commonName
+      });
 
   return (
     <>
-      {(lockedByUserAccount || isAssessment) && (
+      {lockedByUserAccount && (
         <div className="display-inline-flex">
           {isAssessment ? (
             <AssessmentIcon size={3} />
@@ -39,11 +45,11 @@ const TaskListLock = ({
                 arrayOfColors[randomColorIndex(0, 3)]
               }`}
             >
-              {getUserInitials(lockedByUserAccount!.commonName)}
+              {getUserInitials(lockedByUserAccount.commonName)}
             </div>
           )}
 
-          <div className="display-flex flex-align-center line-height-body-4">
+          <div className="display-flex flex-align-center line-height-body-4 text-base">
             {selfLocked ? t('selfLocked') : lockMessage}
           </div>
         </div>

@@ -41,7 +41,7 @@ type ResolverService struct {
 	CreateActionExtendLifecycleID func(context.Context, uuid.UUID, *time.Time, *string, string, *string) error
 	IssueLifecycleID              func(context.Context) error
 	FetchUserInfo                 func(context.Context, string) (*models.UserInfo, error)
-	SearchCommonNameContains      func(context.Context, string) ([]*models.UserInfo, error)
+	SearchByName                  func(context.Context, string) ([]*models.UserInfo, error)
 }
 
 // NewResolver constructs a resolver

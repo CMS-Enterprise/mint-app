@@ -13,7 +13,9 @@ const general = {
   edit: 'Edit',
   remove: 'Remove',
   pageLoading: 'Loading the page',
-  oktaWidget: 'Sign in with your EUA or IDM credentials.'
+  oktaWidget: 'Sign in with your EUA or IDM credentials.',
+  taskListLockBanner:
+    'Model Plan sections can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.'
 };
 
 export default general;
