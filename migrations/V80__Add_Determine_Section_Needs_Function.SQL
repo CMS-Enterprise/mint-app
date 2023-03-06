@@ -1,6 +1,7 @@
-CREATE OR REPLACE FUNCTION GET_NEED_NEEDED( table_name TEXT, model_plan_idParam UUID, h_changed HSTORE ) --TODO: we could make this take an array if want
+CREATE OR REPLACE FUNCTION DETERMINE_SECTION_NEEDS( table_name TEXT, model_plan_idParam UUID, h_changed HSTORE ) --TODO: we could make this take an array if want
 RETURNS TABLE (
     operational_need_id UUID,
+    need_type INT,
     need_key OPERATIONAL_NEED_KEY,
     trigger_col TEXT[],
     trigger_vals TEXT[],
@@ -10,7 +11,7 @@ RETURNS TABLE (
 )
 AS $$
 	BEGIN 
-	RAISE NOTICE 'GET_NEED_NEEDED called.  table_name % and  hstore = %', table_name,h_changed;
+	RAISE NOTICE 'DETERMINE_SECTION_NEEDS called.  table_name % and  hstore = %', table_name,h_changed;
 	RETURN QUERY
     WITH NeedConditions AS
     (
@@ -76,6 +77,7 @@ AS $$
 	
 	SELECT 
 	operational_need.ID,
+	operational_need.need_type,
 	NeedUpdates.need_key,
 	NeedUpdates.trigger_col,
 	NeedUpdates.trigger_vals,
@@ -83,16 +85,17 @@ AS $$
 	NeedUpdates.model_plan_id,
 	NeedUpdates.needed
 	from NeedUpdates
-	LEFT JOIN operational_need on operational_need.model_plan_id = NeedUpdates.model_plan_id AND operational_need.need_type = NeedUpdates.id;
+	LEFT JOIN operational_need on operational_need.model_plan_id = NeedUpdates.model_plan_id AND operational_need.need_type = NeedUpdates.id
+	ORDER BY operational_need.need_type;
 
 
 	END; $$
 LANGUAGE 'plpgsql';
-COMMENT ON FUNCTION GET_NEED_NEEDED IS
+COMMENT ON FUNCTION DETERMINE_SECTION_NEEDS IS
 'This function analyzes a change set to see if a need is needed or not
 It first casts the rows at h_stores and compares which fields have changed. If any of the changed fields match (?|) a value from trigger_cols it gets inserted in NeedConditions CTE.
 From there, it checks all the current values (NEW) for the trigger col, and checks if any of them satisfy the trigger_vals (&&). 
 If it does, the need is set to needed = true, else needed = false.';
 
-    -- SELECT 	* FROM	GET_Need_Needed('plan_participants_and_providers',
+    -- SELECT 	* FROM	DETERMINE_SECTION_NEEDS('plan_participants_and_providers',
     -- 						(SELECT hstore(PPP) FROM plan_participants_and_providers AS ppp WHERE ppp.model_plan_id = 'f8f4a93a-bf67-41f7-860e-da44ecd38fc9'))

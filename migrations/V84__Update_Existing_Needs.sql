@@ -2,7 +2,7 @@
 
 WITH NeedUpdates AS (
 
-    SELECT OpNeeds.* FROM model_plan mp, GET_NEED_NEEDED_MODEL_PLAN(mp.id) AS OpNeeds --noqa
+    SELECT OpNeeds.* FROM model_plan mp, DETERMINE_MODEL_PLAN_NEEDS(mp.id) AS OpNeeds --noqa
 )
 
 
