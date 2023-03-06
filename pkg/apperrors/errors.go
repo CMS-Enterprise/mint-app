@@ -67,15 +67,6 @@ func (e *InvalidParametersError) Error() string {
 	return fmt.Sprint("Unable to run ", e.FunctionName, " due to invalid parameters")
 }
 
-// InvalidEUAIDError indicates that the CEDAR LDAP API didn't find a matching user for the given EUAID
-type InvalidEUAIDError struct {
-	EUAID string
-}
-
-func (e *InvalidEUAIDError) Error() string {
-	return fmt.Sprint("EUAID ", e.EUAID, " does not correspond to a valid EUA user")
-}
-
 // Error provides the error as a string
 func (e *QueryError) Error() string {
 	return fmt.Sprintf("Could not query model %T with operation %s, received error: %s", e.Model, e.Operation, e.Err)

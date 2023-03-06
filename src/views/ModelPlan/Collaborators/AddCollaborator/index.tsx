@@ -5,9 +5,9 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Button, Dropdown, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import CedarContactSelect from 'components/CedarContactSelect';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -236,28 +236,17 @@ const Collaborators = () => {
                             {t('startTyping')}
                           </Label>
 
-                          <CedarContactSelect
+                          <OktaUserSelect
                             id="model-team-cedar-contact"
                             name="model-team-cedar-contact"
-                            value={
-                              collaborator?.userAccount?.username
-                                ? {
-                                    euaUserId:
-                                      collaborator?.userAccount.username,
-                                    commonName:
-                                      collaborator?.userAccount.commonName,
-                                    email: collaborator?.userAccount.email
-                                  }
-                                : undefined
-                            }
-                            onChange={cedarContact => {
+                            onChange={oktaUser => {
                               setFieldValue(
                                 'userAccount.commonName',
-                                cedarContact?.commonName
+                                oktaUser?.displayName
                               );
                               setFieldValue(
                                 'userAccount.username',
-                                cedarContact?.euaUserId
+                                oktaUser?.username
                               );
                             }}
                           />

@@ -3,27 +3,25 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-// import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
-import GetCedarUser from 'queries/GetCedarUser';
+import SearchOktaUsers from 'queries/SearchOktaUsers';
 
-import CedarContactSelect from './index';
+import OktaUserSelect from './index';
 
-describe('CedarContactSelect', () => {
+describe('OktaUserSelect', () => {
   // Cedar contacts query mock
-  const cedarContactsQuery = {
+  const oktaUsersQuery = {
     request: {
-      query: GetCedarUser,
+      query: SearchOktaUsers,
       variables: {
-        commonName: 'Adeline'
+        searchTerm: 'Adeline'
       }
     },
     result: {
       data: {
-        cedarPersonsByCommonName: [
+        searchOktaUsers: [
           {
-            commonName: 'Adeline Aarons',
-            email: 'adeline.aarons@local.fake',
-            euaUserId: 'ABCD'
+            displayName: 'Adeline Aarons',
+            username: 'ABCD'
           }
         ]
       }
@@ -32,8 +30,8 @@ describe('CedarContactSelect', () => {
 
   it('selects contact from dropdown', async () => {
     const { asFragment, getByTestId, findByText } = render(
-      <MockedProvider mocks={[cedarContactsQuery]} addTypename={false}>
-        <CedarContactSelect
+      <MockedProvider mocks={[oktaUsersQuery]} addTypename={false}>
+        <OktaUserSelect
           id="cedarContactSelect"
           name="cedarContactSelect"
           onChange={() => null}
@@ -45,7 +43,7 @@ describe('CedarContactSelect', () => {
     const input = getByTestId('cedar-contact-select');
     userEvent.type(input, 'Adeline');
 
-    // Get mocked CEDAR result
+    // Get mocked Okta result
     const userOption = await findByText('Adeline Aarons, ABCD');
     expect(userOption).toBeInTheDocument();
 

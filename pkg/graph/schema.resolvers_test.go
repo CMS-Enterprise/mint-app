@@ -144,14 +144,15 @@ func TestGraphQLTestSuite(t *testing.T) {
 	emailTemplateService, err := email.NewTemplateServiceImpl()
 	assert.NoError(t, err)
 
-	cedarLdapClient := local.NewCedarLdapClient(logger)
+	oktaClient, err := local.NewOktaAPIClient(logger)
+	assert.NoError(t, err)
 
 	directives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 		return next(ctx)
 	}}
 
 	var resolverService ResolverService
-	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
+	resolverService.FetchUserInfo = oktaClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
 	resolver := NewResolver(store, resolverService, &s3Client, *emailService, emailTemplateService, ldClient, ps)

@@ -7,10 +7,7 @@ require (
 	github.com/aws/aws-sdk-go v1.44.131
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.20.3
-	github.com/go-openapi/runtime v0.25.0
-	github.com/go-openapi/strfmt v0.21.3
 	github.com/go-openapi/swag v0.22.3
-	github.com/go-openapi/validate v0.22.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
@@ -37,32 +34,30 @@ require github.com/xhit/go-simple-mail/v2 v2.12.0
 
 require github.com/contribsys/faktory v1.6.2
 
+require github.com/google/go-cmp v0.5.9 // indirect
+
 require (
-	github.com/go-logr/logr v1.2.3 // indirect
-	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
+	github.com/kelseyhightower/envconfig v1.4.0 // indirect
+	github.com/okta/okta-sdk-golang/v2 v2.16.0
+	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
+)
+
+require (
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
-	go.opentelemetry.io/otel v1.11.1 // indirect
-	go.opentelemetry.io/otel/trace v1.11.1 // indirect
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 	gopkg.in/ghodss/yaml.v1 v1.0.0 // indirect
 )
 
 require (
-	github.com/PuerkitoBio/purell v1.1.1 // indirect
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
-	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
 	github.com/contribsys/faktory_worker_go v1.6.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.0-20210816181553-5444fa50b93d // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
-	github.com/go-openapi/analysis v0.21.2 // indirect
-	github.com/go-openapi/jsonpointer v0.19.5 // indirect
-	github.com/go-openapi/jsonreference v0.19.6 // indirect
-	github.com/go-openapi/loads v0.21.1 // indirect
-	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-test/deep v1.0.8 // indirect
 	github.com/goccy/go-json v0.9.4 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
@@ -81,7 +76,6 @@ require (
 	github.com/lestrrat-go/option v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
@@ -98,7 +92,6 @@ require (
 	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	go.mongodb.org/mongo-driver v1.10.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d // indirect
