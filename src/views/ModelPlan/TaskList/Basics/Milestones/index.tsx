@@ -23,6 +23,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import MINTAlert from 'components/shared/Alert';
 import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -242,6 +243,10 @@ const Milestones = () => {
                   <PageHeading headingLevel="h3" className="margin-bottom-2">
                     {t('highLevelTimeline')}
                   </PageHeading>
+
+                  <MINTAlert type="info" slim>
+                    {t('MINTTeam@cms.hhs.gov')}
+                  </MINTAlert>
 
                   <ProcessList className="read-only-model-plan__timeline">
                     <ProcessListItem className="read-only-model-plan__timeline__list-item">
