@@ -74,7 +74,7 @@ func (cw *clientWrapper) parseOktaProfileResponse(profile *okta.UserProfile) (*m
 func (cw *clientWrapper) FetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
 	user, _, err := cw.oktaClient.User.GetUser(ctx, username)
 	if err != nil {
-		cw.logger.Error("Error fetching Okta user", zap.Error(err))
+		cw.logger.Error("Error fetching Okta user", zap.Error(err), zap.String("username", username))
 		return nil, err
 	}
 
@@ -96,7 +96,7 @@ func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([
 
 	searchedUsers, _, err := cw.oktaClient.User.ListUsers(ctx, search)
 	if err != nil {
-		cw.logger.Error("Error searching Okta users", zap.Error(err))
+		cw.logger.Error("Error searching Okta users", zap.Error(err), zap.String("searchTerm", searchTerm))
 		return nil, err
 	}
 
