@@ -24,25 +24,9 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       {flags.operationalSolutionHelp && (
-        <>
-          <Route path="/help-and-knowledge/operational-solutions" exact>
-            <SolutionsHelp />
-          </Route>
-
-          <Route
-            path="/help-and-knowledge/operational-solutions/solution/:solution/:page?"
-            exact
-          >
-            <SolutionsHelp />
-          </Route>
-
-          <Route
-            path="/help-and-knowledge/operational-solutions/categories/:category"
-            exact
-          >
-            <SolutionsHelp />
-          </Route>
-        </>
+        <Route path="/help-and-knowledge/operational-solutions" exact>
+          <SolutionsHelp />
+        </Route>
       )}
 
       <Redirect

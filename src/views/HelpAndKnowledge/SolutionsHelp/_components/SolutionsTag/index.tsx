@@ -20,11 +20,14 @@ export default function SolutionsTag({
   const { t } = useTranslation('helpAndKnowledge');
   return (
     <UswdsReactLink
-      to={`/help-and-knowledge/operational-solutions/categories/${route}`}
+      to={`/help-and-knowledge/operational-solutions?category=${route}`}
       aria-label="Category tag link"
-      className={classNames(className, 'width-fit-content display-block')}
+      className={classNames(
+        className,
+        'width-fit-content display-block margin-right-05'
+      )}
     >
-      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">
+      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0">
         {t(`categories.${category}.header`)}
       </Tag>
     </UswdsReactLink>

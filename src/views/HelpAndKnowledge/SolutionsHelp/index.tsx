@@ -4,7 +4,7 @@ Contains components for search, categories, and solutions cards
 */
 
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -19,7 +19,6 @@ import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
   helpSolutions,
   HelpSolutionType,
-  modalRoute,
   operationalSolutionCategoryMap
 } from './solutionsMap';
 
@@ -27,12 +26,8 @@ type OperationalSolutionsHelpProps = {
   className?: string;
 };
 
-interface LocationProps {
-  fromModal: string;
-}
-
 // Return all solutions relevant to the current cateory
-export const findCategoryMapByRoute = (
+export const findCategoryMapByRouteParam = (
   route: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
@@ -48,10 +43,11 @@ export const findCategoryMapByRoute = (
   });
 };
 
-export const findSolutionByRoute = (
-  route: string,
+export const findSolutionByRouteParam = (
+  route: string | null,
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
+  if (!route) return undefined;
   return [...solutions].find(solution => solution.route === route);
 };
 
@@ -68,20 +64,16 @@ export const searchSolutions = (
 };
 
 const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
-  const { category, solution } = useParams<{
-    category: string;
-    solution: string;
-  }>();
+  const location = useLocation();
 
-  const location = useLocation<LocationProps>();
-  const { pathname } = location;
+  const params = new URLSearchParams(location.search);
+
+  const category = params.get('category');
+  const solution = params.get('solution');
+  const page = params.get('page');
 
   const prevLocation = usePrevLocation(location);
   const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
-
-  const [prevCategory, setPrevCategory] = useState<string | undefined>(
-    solution ? prevPathname?.split('/')[4] : category
-  );
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
@@ -90,21 +82,14 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     helpSolutions
   );
 
-  // Preserves category view and when rendering modal overlay
-  useEffect(() => {
-    if (!solution) {
-      setPrevCategory(category);
-    }
-  }, [pathname, category, solution]);
-
   // Resets the query on route or category change
   // Also preserves the query/scroll when the modal is open/closed
   useEffect(() => {
-    if (!location.state?.fromModal && !pathname?.includes(modalRoute)) {
+    if (!page && location.pathname) {
       setQuery('');
       window.scrollTo(0, 0);
     }
-  }, [location.state?.fromModal, pathname]);
+  }, [page, location.pathname, category]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
@@ -116,12 +101,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   }, [query, solution]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
-  const solutions = prevCategory
-    ? findCategoryMapByRoute(prevCategory, helpSolutions)
-    : querySolutions;
+  const solutions = !category
+    ? querySolutions
+    : findCategoryMapByRouteParam(category, helpSolutions);
 
   // Solution to render in modal
-  const selectedSolution = findSolutionByRoute(solution, helpSolutions);
+  const selectedSolution = findSolutionByRouteParam(solution, helpSolutions);
 
   return (
     <div className={classNames(className)}>
@@ -133,7 +118,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       )}
 
       <SolutionsHeader
-        category={prevCategory}
+        category={category}
         resultsNum={resultsNum}
         resultsMax={solutions.length}
         setQuery={setQuery}
@@ -143,7 +128,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       <SolutionHelpCardGroup
         solutions={solutions}
         setResultsNum={setResultsNum}
-        category={prevCategory}
+        category={category}
       />
 
       <GridContainer className="margin-top-4">

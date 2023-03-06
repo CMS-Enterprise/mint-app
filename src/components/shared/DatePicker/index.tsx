@@ -49,7 +49,7 @@ export const MINTDatePicker = ({
         scrollElement={fieldName}
         error={!!error}
         className={classNames(className, 'margin-right-4', {
-          'desktop:grid-col-6': half
+          'desktop:grid-col-6 padding-right-4': half
         })}
       >
         <Label
