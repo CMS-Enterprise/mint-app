@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation Solution Help Card matches snapshot 1`] = `
+<DocumentFragment>
+  <ul
+    class="usa-card-group flex-column flex-no-wrap"
+    data-testid="CardGroup"
+  >
+    <li
+      class="usa-card solution-card margin-bottom-2 shadow"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container"
+      >
+        <div
+          class="padding-3 solution-card__container"
+        >
+          <div
+            class="solution-card__header"
+          >
+            <h3
+              class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+              style="word-break: break-word;"
+            >
+              4innovation
+            </h3>
+            <p
+              class="margin-y-0"
+            >
+              4i
+            </p>
+            <a
+              aria-label="Category tag link"
+              class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block"
+              href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+            >
+              <span
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                Data reporting
+              </span>
+            </a>
+            <p
+              class="solution-card__body"
+            >
+              The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.
+            </p>
+            <div
+              class="tablet:grid-col-6 margin-bottom-2"
+              data-testid="grid"
+            >
+              <p
+                class="text-bold margin-bottom-0"
+              >
+                Point of contact
+              </p>
+              <p
+                class="margin-y-0"
+              >
+                4i/ACO-OS Team
+              </p>
+            </div>
+          </div>
+          <div>
+            <div
+              class="mint-divider"
+            />
+            <a
+              class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+              href="/help-and-knowledge/operational-solutions/solution/4-innovation/about"
+            >
+              About this solution
+              <svg
+                class="usa-icon margin-left-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

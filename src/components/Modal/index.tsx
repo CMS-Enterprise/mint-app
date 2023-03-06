@@ -11,6 +11,7 @@ type ModalProps = {
   isOpen: boolean;
   className?: string;
   scroll?: boolean;
+  shouldCloseOnOverlayClick?: boolean;
   openModal?: () => void;
   closeModal: () => void;
 };
@@ -20,6 +21,7 @@ const Modal = ({
   isOpen,
   className,
   scroll,
+  shouldCloseOnOverlayClick = false,
   openModal,
   closeModal
 }: ModalProps) => {
@@ -39,7 +41,7 @@ const Modal = ({
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
-      shouldCloseOnOverlayClick={false}
+      shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}
     >
       <button

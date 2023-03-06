@@ -12,7 +12,7 @@ import { ModelStatus, KeyCharacteristic, TeamRole } from "./../../../types/graph
 export interface GetModelSummary_modelPlan_basics {
   __typename: "PlanBasics";
   goal: string | null;
-  applicationsStart: Time | null;
+  performancePeriodStarts: Time | null;
 }
 
 export interface GetModelSummary_modelPlan_generalCharacteristics {

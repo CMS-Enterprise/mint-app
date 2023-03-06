@@ -1,4 +1,5 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
+import ReactGA from 'react-ga4';
 import {
   BrowserRouter,
   Redirect,
@@ -66,12 +67,19 @@ const AppRoutes = () => {
   const location = useLocation();
   const flags = useFlags();
 
-  // Scroll to top
-  useLayoutEffect(() => {
-    if (shouldScroll(location.pathname)) {
-      window.scrollTo(0, 0);
+  // Track GA Pages
+  useEffect(() => {
+    if (location.pathname) {
+      ReactGA.send({ hitType: 'pageview', page: location.pathname });
     }
   }, [location.pathname]);
+
+  // Scroll to top
+  useLayoutEffect(() => {
+    if (shouldScroll(location.pathname + location.search)) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, location.search]);
 
   return (
     <Switch>
