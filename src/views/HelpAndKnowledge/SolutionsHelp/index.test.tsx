@@ -2,67 +2,57 @@ import OperationalSolutionCategories from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
-import { findCategoryMapByRoute, searchSolutions } from '.';
+import { findCategoryMapByRouteParam, searchSolutions } from '.';
 
 describe('solution help utils', () => {
   it('returns a corresponding category solutions by route', () => {
-    const route: string = 'learning';
+    const route: OperationalSolutionCategories =
+      OperationalSolutionCategories.HELP_DESKS;
 
-    const expectedSolutions: HelpSolutionType[] = [
+    const foundSolutions = findCategoryMapByRouteParam(route, helpSolutions);
+
+    const expectedSolutions = [
       {
-        enum: null,
-        key: 'learningAndDiffusion',
-        route: 'learning-and-diffusion-group',
-        categories: [OperationalSolutionCategories.LEARNING],
-        acronym: 'LDG',
-        name: 'Learning and Diffusion Group',
+        enum: OperationalSolutionKey.CBOSC,
+        key: 'cbosc',
+        route: 'consolidated-business-operations-support-center',
+        categories: [OperationalSolutionCategories.HELP_DESKS],
+        acronym: 'CBOSC',
+        name: 'Consolidated Business Operations Support Center',
         pointsOfContact: [
           {
-            name: 'Andrew Philip',
-            email: 'andrew.philip@cms.hhs.gov',
-            role: 'Director, Division of Model Learning Systems (DMLS)'
-          }
-        ]
-      },
-      {
-        enum: OperationalSolutionKey.CONNECT,
-        key: 'salesforceConnect',
-        route: 'salesforce-connect',
-        categories: [OperationalSolutionCategories.LEARNING],
-        name: 'Salesforce Connect',
-        pointsOfContact: [
+            name: 'Richard Speights',
+            email: 'richard.speights@cms.hhs.gov',
+            role: 'Contracting Officer Representative'
+          },
           {
-            name: 'Elia Cossis',
-            email: 'elia.cossis@cms.hhs.gov',
-            role: 'Platform Lead'
+            name: 'Don Rocker',
+            email: 'don.rocker1@cms.hhs.gov',
+            role: 'Operations and Management Lead '
           }
-        ]
+        ],
+        systemOwner: {
+          name:
+            'Business Services Group, Division of IT Operations and Security',
+          system: 'Center for Medicare and Medicaid Innovation'
+        },
+        contractors: [
+          {
+            name: 'NewWave',
+            system: 'Innovation Development and Operation Services (IDOS)'
+          }
+        ],
+        components: {}
       }
     ];
-    expect(findCategoryMapByRoute(route, helpSolutions)).toEqual(
-      expectedSolutions
-    );
+
+    expect(foundSolutions).toEqual(expectedSolutions);
   });
 
   it('returns a corresponding solutions by query string', () => {
     const query: string = '4inn';
 
-    const expectedSolutions: HelpSolutionType[] = [
-      {
-        enum: OperationalSolutionKey.INNOVATION,
-        key: 'innovation',
-        route: '4-innovation',
-        categories: [OperationalSolutionCategories.DATA_REPORTING],
-        acronym: '4i',
-        name: '4innovation',
-        pointsOfContact: [
-          {
-            name: '4i/ACO-OS Team',
-            email: 'ACO-OIT@cms.hhs.gov'
-          }
-        ]
-      }
-    ];
+    const expectedSolutions: HelpSolutionType[] = [helpSolutions[0]];
 
     expect(searchSolutions(query, helpSolutions)).toEqual(expectedSolutions);
 

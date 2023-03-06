@@ -20,7 +20,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/applications"
+          href="/help-and-knowledge/operational-solutions?category=applications"
         >
           Applications
           <svg
@@ -48,7 +48,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/communication-tools"
+          href="/help-and-knowledge/operational-solutions?category=communication-tools"
         >
           Communication tools
           <svg
@@ -76,7 +76,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/contractors-and-contract-vehicles"
+          href="/help-and-knowledge/operational-solutions?category=contractors-and-contract-vehicles"
         >
           Contractors and contract vehicles
           <svg
@@ -104,7 +104,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/database-and-data-management"
+          href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
         >
           Databases and data management
           <svg
@@ -132,7 +132,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+          href="/help-and-knowledge/operational-solutions?category=data-exchange"
         >
           Data exchange
           <svg
@@ -160,7 +160,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+          href="/help-and-knowledge/operational-solutions?category=data-reporting"
         >
           Data reporting
           <svg
@@ -188,7 +188,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/help-desks"
+          href="/help-and-knowledge/operational-solutions?category=help-desks"
         >
           Help desks
           <svg
@@ -216,7 +216,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/learning"
+          href="/help-and-knowledge/operational-solutions?category=learning"
         >
           Learning
           <svg
@@ -244,7 +244,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/legal"
+          href="/help-and-knowledge/operational-solutions?category=legal"
         >
           Legal
           <svg
@@ -272,7 +272,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/medicare-advantage-and-part-d"
+          href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
         >
           Medicare Advantage and Part D
           <svg
@@ -300,7 +300,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/medicare-fee-for-service"
+          href="/help-and-knowledge/operational-solutions?category=medicare-fee-for-service"
         >
           Medicare Fee-for-Service
           <svg
@@ -328,7 +328,7 @@ exports[`Operation Solutio Category Footer matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          href="/help-and-knowledge/operational-solutions/categories/quality"
+          href="/help-and-knowledge/operational-solutions?category=quality"
         >
           Quality
           <svg

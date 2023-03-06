@@ -6,9 +6,8 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
-import usePreviousModalRoute from 'hooks/usePreviousModalRoute';
 
-import { HelpSolutionType, modalRoute } from '../../solutionsMap';
+import { HelpSolutionType } from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
 
 import './index.scss';
@@ -16,7 +15,7 @@ import './index.scss';
 type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
-  category?: string;
+  category?: string | null;
   setResultsNum: (offset: number) => void;
 };
 
@@ -26,7 +25,7 @@ function Solutions({
   category
 }: {
   currentSolutions: HelpSolutionType[];
-  category?: string;
+  category?: string | null;
 }) {
   return (
     <Grid row gap={2} className="margin-bottom-2">
@@ -49,13 +48,7 @@ const SolutionHelpCardGroup = ({
   const { t: h } = useTranslation('generalReadOnly');
 
   const location = useLocation();
-
-  // Hook used to preserve the underlying component route while navigating modal routes
-  const prevLocation = usePreviousModalRoute(location, modalRoute);
-
-  // Gets the page param while directly viewing component as well as when viewing modal overlay
-  const prevParam = prevLocation?.search;
-  const params = new URLSearchParams(location.search || prevParam);
+  const params = new URLSearchParams(location.search);
   const page = params.get('page');
 
   const history = useHistory();

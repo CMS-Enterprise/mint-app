@@ -21,7 +21,7 @@ exports[`Operational Solution Category Card matches snapshot 1`] = `
       >
         <a
           class="usa-link display-flex flex-align-center"
-          href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+          href="/help-and-knowledge/operational-solutions?category=data-reporting"
         >
           Learn more
           <svg
