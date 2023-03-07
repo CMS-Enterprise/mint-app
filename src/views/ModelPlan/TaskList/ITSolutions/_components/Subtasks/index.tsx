@@ -1,5 +1,5 @@
 /*
-Subtask component and links component 
+Subtask component and links component
 Columns split between 'Todo', 'In progress', and 'Done'
 If no subtasks, renders text for no subtasks
 */
@@ -92,9 +92,10 @@ export const SubtaskLinks = ({
   subtasks: SubtaskType[];
 }) => {
   const { t } = useTranslation('itSolutions');
-  const { modelID, operationalNeedID } = useParams<{
+  const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
+    operationalSolutionID: string;
   }>();
 
   const history = useHistory();
@@ -118,7 +119,7 @@ export const SubtaskLinks = ({
             className="usa-button usa-button--outline"
             onClick={() => {
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${subtaskLinks[link]}`
+                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/${subtaskLinks[link]}`
               );
             }}
           >
