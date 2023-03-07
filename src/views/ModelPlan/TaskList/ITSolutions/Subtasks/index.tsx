@@ -1,11 +1,19 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { Grid } from '@trussworks/react-uswds';
+import {
+  Alert,
+  Button,
+  Fieldset,
+  Grid,
+  IconArrowBack
+} from '@trussworks/react-uswds';
+import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 // import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
@@ -13,11 +21,13 @@ import {
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
+import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+import Solution from '../SolutionImplementation/_components/Solution';
 
 const Subtasks = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -32,6 +42,9 @@ const Subtasks = () => {
   const { t: h } = useTranslation('draftModelPlan');
 
   // const { showMessageOnNextPage, message } = useMessage();
+  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
+    null
+  );
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -92,6 +105,87 @@ const Subtasks = () => {
               solution={solution}
               renderSolutionCardLinks={false}
             />
+
+            <Formik
+              initialValues={formikNeed}
+              onSubmit={values => {
+                handleFormSubmit(values);
+              }}
+              enableReinitialize
+              innerRef={formikRef}
+            >
+              {(
+                formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
+              ) => {
+                const { errors, setErrors, handleSubmit, values } = formikProps;
+
+                const flatErrors = flattenErrors(errors);
+
+                return (
+                  <>
+                    {Object.keys(errors).length > 0 && (
+                      <ErrorAlert
+                        testId="formik-validation-errors"
+                        classNames="margin-top-3"
+                        heading={h('checkAndFix')}
+                      >
+                        {Object.keys(flatErrors).map(key => {
+                          return (
+                            <ErrorAlertMessage
+                              key={`Error.${key}`}
+                              errorKey={key}
+                              message={flatErrors[key]}
+                            />
+                          );
+                        })}
+                      </ErrorAlert>
+                    )}
+
+                    <Form
+                      className="margin-top-6"
+                      data-testid="it-tools-page-seven-form"
+                      onSubmit={e => {
+                        handleSubmit(e);
+                      }}
+                    >
+                      <Fieldset disabled={loading}>
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              handleFormSubmit(values, 'back');
+                            }}
+                          >
+                            {h('back')}
+                          </Button>
+
+                          <Button
+                            type="submit"
+                            id="submit-solutions"
+                            onClick={() => setErrors({})}
+                          >
+                            {t('saveSolutions')}
+                          </Button>
+                        </div>
+
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
+                          onClick={() => handleCancelClick(values)}
+                        >
+                          <IconArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                          />
+                          {renderCancelCopy()}
+                        </Button>
+                      </Fieldset>
+                    </Form>
+                  </>
+                );
+              }}
+            </Formik>
           </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
