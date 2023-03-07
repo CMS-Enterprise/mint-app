@@ -2,13 +2,7 @@ import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import {
-  Alert,
-  Button,
-  Fieldset,
-  Grid,
-  IconArrowBack
-} from '@trussworks/react-uswds';
+import { Button, Fieldset, Grid, IconArrowBack } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -19,15 +13,16 @@ import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
+  GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as SubtaskType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
+import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
-import Solution from '../SolutionImplementation/_components/Solution';
 
 const Subtasks = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -42,9 +37,6 @@ const Subtasks = () => {
   const { t: h } = useTranslation('draftModelPlan');
 
   // const { showMessageOnNextPage, message } = useMessage();
-  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
-    null
-  );
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -74,6 +66,19 @@ const Subtasks = () => {
     },
     { text: t('subtasks.addSubtask') }
   ];
+
+  type InitialValueType = Omit<
+    SubtaskType,
+    'createdBy' | 'createdDts' | 'modifiedBy' | 'modifiedDts'
+  >;
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
+  const initialValues: InitialValueType = {
+    __typename: 'OperationalSolutionSubtask',
+    id: '',
+    solutionID: operationalSolutionID,
+    name: '',
+    status: OperationalSolutionSubtaskStatus.TODO
+  };
 
   if (error || !solution) {
     return <NotFound />;
@@ -107,16 +112,15 @@ const Subtasks = () => {
             />
 
             <Formik
-              initialValues={formikNeed}
+              initialValues={initialValues}
               onSubmit={values => {
-                handleFormSubmit(values);
+                // handleFormSubmit(values);
+                console.log(values);
               }}
               enableReinitialize
               innerRef={formikRef}
             >
-              {(
-                formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
-              ) => {
+              {(formikProps: FormikProps<InitialValueType>) => {
                 const { errors, setErrors, handleSubmit, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
@@ -148,13 +152,14 @@ const Subtasks = () => {
                         handleSubmit(e);
                       }}
                     >
-                      <Fieldset disabled={loading}>
+                      <Fieldset>
                         <div className="margin-top-6 margin-bottom-3">
                           <Button
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              handleFormSubmit(values, 'back');
+                              // handleFormSubmit(values, 'back');
+                              console.log(values);
                             }}
                           >
                             {h('back')}
@@ -172,13 +177,13 @@ const Subtasks = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
-                          onClick={() => handleCancelClick(values)}
+                          onClick={() => {}}
                         >
                           <IconArrowBack
                             className="margin-right-1"
                             aria-hidden
                           />
-                          {renderCancelCopy()}
+                          {h('saveAndReturn')}
                         </Button>
                       </Fieldset>
                     </Form>

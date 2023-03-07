@@ -390,6 +390,12 @@ export enum OperationalSolutionKey {
   THROUGH_A_CONTRACTOR = "THROUGH_A_CONTRACTOR",
 }
 
+export enum OperationalSolutionSubtaskStatus {
+  DONE = "DONE",
+  IN_PROGRESS = "IN_PROGRESS",
+  TODO = "TODO",
+}
+
 export enum OverlapType {
   NO = "NO",
   YES_NEED_POLICIES = "YES_NEED_POLICIES",
