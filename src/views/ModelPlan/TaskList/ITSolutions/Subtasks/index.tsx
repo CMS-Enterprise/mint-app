@@ -68,7 +68,10 @@ const Subtasks = () => {
   const breadcrumbs = [
     { text: h('home'), url: '/' },
     { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    {
+      text: t('itSolutionsTrackerBreadcrumb'),
+      url: `/models/${modelID}/task-list/it-solutions`
+    },
     {
       text: t('solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
@@ -120,7 +123,7 @@ const Subtasks = () => {
               initialValues={initialValues}
               onSubmit={values => {
                 // handleFormSubmit(values);
-                console.log(values);
+                console.log(values); // eslint-disable-line
               }}
               enableReinitialize
               innerRef={formikRef}
@@ -163,7 +166,7 @@ const Subtasks = () => {
                         className="margin-top-4"
                       >
                         <Label htmlFor="subtask-name">
-                          {t('modelName')}
+                          {t('subtaskName')}
                           <RequiredAsterisk />
                         </Label>
                         <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
@@ -175,13 +178,14 @@ const Subtasks = () => {
                           name="name"
                         />
                       </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
                             // handleFormSubmit(values, 'back');
-                            console.log(values);
+                            console.log(values); // eslint-disable-line
                           }}
                         >
                           {h('back')}
