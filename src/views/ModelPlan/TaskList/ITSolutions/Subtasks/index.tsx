@@ -1,12 +1,12 @@
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Grid } from '@trussworks/react-uswds';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
-import useMessage from 'hooks/useMessage';
+// import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
@@ -14,6 +14,7 @@ import {
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
+import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -60,6 +61,10 @@ const Subtasks = () => {
     },
     { text: t('subtasks.addSubtask') }
   ];
+
+  if (error || !solution) {
+    return <NotFound />;
+  }
 
   return (
     <>
