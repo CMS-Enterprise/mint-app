@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SolutionDetailsCard matches snapshot 1`] = `
+exports[`Subtasks Table Component matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class=""
