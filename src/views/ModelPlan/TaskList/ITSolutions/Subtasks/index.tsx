@@ -55,6 +55,15 @@ const Subtasks = () => {
           </p>
 
           <p className="line-height-body-4">{t('subtasks.addSubtaskInfo')}</p>
+
+          <Grid tablet={{ col: 8 }}>
+            <NeedQuestionAndAnswer
+              operationalNeedID={operationalNeedID}
+              modelID={modelID}
+              solution={solution}
+              renderSolutionCardLinks={false}
+            />
+          </Grid>
         </Grid>
         <Grid tablet={{ col: 3 }} className="padding-x-1">
           <ITSolutionsSidebar
