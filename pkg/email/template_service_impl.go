@@ -10,28 +10,28 @@ import (
 // AddedAsCollaboratorTemplateName is the template name definition for the corresponding email template
 const AddedAsCollaboratorTemplateName string = "added_as_collaborator"
 
-//go:embed templates/added_as_collaborator_subject.template
+//go:embed templates/added_as_collaborator_subject.html
 var addedAsCollaboratorSubjectTemplate string
 
-//go:embed templates/added_as_collaborator_body.template
+//go:embed templates/added_as_collaborator_body.html
 var addedAsCollaboratorBodyTemplate string
 
 // DailyDigetsTemplateName is the template name definition for the corresponding email template
 const DailyDigetsTemplateName string = "daily_digest"
 
-//go:embed templates/daily_digest_subject.template
+//go:embed templates/daily_digest_subject.html
 var dailyDigestSubjectTemplate string
 
-//go:embed templates/daily_digest_body.template
+//go:embed templates/daily_digest_body.html
 var dailyDigestBodyTemplate string
 
 // ModelPlanCreatedTemplateName is the template name definition for the corresponding email template
 const ModelPlanCreatedTemplateName string = "model_plan_created"
 
-//go:embed templates/model_plan_created_subject.template
+//go:embed templates/model_plan_created_subject.html
 var modelPlanCreatedSubjectTemplate string
 
-//go:embed templates/model_plan_created_body.template
+//go:embed templates/model_plan_created_body.html
 var modelPlanCreatedBodyTemplate string
 
 // PlanDiscussionCreatedTemplateName is the template name definition for the corresponding email template

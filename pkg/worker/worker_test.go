@@ -6,6 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/99designs/gqlgen/graphql"
 	faktory "github.com/contribsys/faktory/client"
 
@@ -56,6 +58,7 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		planName,
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
@@ -95,6 +98,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName 
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

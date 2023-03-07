@@ -27,6 +27,7 @@ func ModelPlanCreate(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelName string,
 	store *storage.Store,
 	principal authentication.Principal,
@@ -52,6 +53,7 @@ func ModelPlanCreate(
 		logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
 			UserName:    *userAccount.Username,
@@ -121,17 +123,22 @@ func ModelPlanCreate(
 	}
 
 	if emailService != nil && emailTemplateService != nil {
-		err = sendModelPlanCreatedEmail(
-			ctx,
-			emailService,
-			emailTemplateService,
-			emailService.GetConfig().GetDevTeamEmail(),
-			createdPlan,
-		)
-		if err != nil {
-			logger.Error("failed to send model plan created email to dev team", zap.Error(err))
-			err = nil
-		}
+		go func() {
+			sendEmailErr := sendModelPlanCreatedEmail(
+				ctx,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				addressBook.MINTTeamEmail,
+				createdPlan,
+			)
+			if sendEmailErr != nil {
+				logger.Error("failed to send model plan created email to dev team", zap.String(
+					"createdPlanID",
+					createdPlan.ID.String(),
+				), zap.Error(sendEmailErr))
+			}
+		}()
 	}
 
 	return createdPlan, err
@@ -141,13 +148,10 @@ func sendModelPlanCreatedEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
-		return nil
-	}
-
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
 	if err != nil {
 		return err
@@ -170,7 +174,7 @@ func sendModelPlanCreatedEmail(
 		return err
 	}
 
-	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}

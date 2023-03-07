@@ -15,7 +15,6 @@ type GoSimpleMailServiceConfig struct {
 	ClientAddress  string
 	Port           int
 	Authentication mail.AuthType
-	DefaultSender  string
 	Username       string
 	Password       string
 	Encryption     mail.Encryption
@@ -23,7 +22,6 @@ type GoSimpleMailServiceConfig struct {
 	SendTimeout    time.Duration
 	KeepAlive      bool
 	TLSConfig      *tls.Config
-	DevTeamEmail   string
 }
 
 // GetHelo returns the Helo configuration
@@ -54,11 +52,6 @@ func (g *GoSimpleMailServiceConfig) GetPort() int {
 // GetAuthentication returns the Authentication configuration
 func (g *GoSimpleMailServiceConfig) GetAuthentication() mail.AuthType {
 	return g.Authentication
-}
-
-// GetDefaultSender returns the DefaultSender configuration
-func (g *GoSimpleMailServiceConfig) GetDefaultSender() string {
-	return g.DefaultSender
 }
 
 // GetUsername returns the Username configuration
@@ -99,9 +92,4 @@ func (g *GoSimpleMailServiceConfig) GetTLSConfig() *tls.Config {
 // GetEnabled returns the Enabled configuration
 func (g *GoSimpleMailServiceConfig) GetEnabled() bool {
 	return g.Enabled
-}
-
-// GetDevTeamEmail returns the DevTeamEmail configuration
-func (g *GoSimpleMailServiceConfig) GetDevTeamEmail() string {
-	return g.DevTeamEmail
 }
