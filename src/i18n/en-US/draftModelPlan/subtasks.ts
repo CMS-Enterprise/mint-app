@@ -13,7 +13,8 @@ const subtasks = {
   manageSubtaskInfo:
     'Track the status of your subtasks throughout the implementation process to stay organized.',
   subtaskName: 'Subtask name',
-  statusQuestion: 'What is the status of this subtask?'
+  statusQuestion: 'What is the status of this subtask?',
+  returnToDetails: 'Don’t add subtask and return to solution details'
 };
 
 export default subtasks;
