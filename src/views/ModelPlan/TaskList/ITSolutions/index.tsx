@@ -13,6 +13,7 @@ import LinkDocuments from './LinkDocuments';
 import SelectSolutions from './SelectSolutions';
 import SolutionDetails from './SolutionDetails';
 import SolutionImplementation from './SolutionImplementation';
+import Subtasks from './Subtasks';
 
 const ITSolutions = () => {
   return (
@@ -85,6 +86,13 @@ const ITSolutions = () => {
               exact
             >
               <SolutionDetails />
+            </Route>
+
+            <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks"
+              exact
+            >
+              <Subtasks />
             </Route>
 
             <Route
