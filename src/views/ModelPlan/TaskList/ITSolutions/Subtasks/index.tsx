@@ -7,6 +7,7 @@ import {
   Grid,
   IconArrowBack,
   Label,
+  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -27,6 +28,7 @@ import {
 import { GetOperationalSolutionSubtasks_operationalSolution_operationalSolutionSubtasks as SubtasksType } from 'queries/ITSolutions/types/GetOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { translateSubtasks } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -129,7 +131,14 @@ const Subtasks = () => {
               innerRef={formikRef}
             >
               {(formikProps: FormikProps<SubtasksType>) => {
-                const { errors, setErrors, handleSubmit, values } = formikProps;
+                const {
+                  dirty,
+                  errors,
+                  setErrors,
+                  handleSubmit,
+                  values,
+                  setFieldValue
+                } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
 
@@ -179,24 +188,44 @@ const Subtasks = () => {
                         />
                       </FieldGroup>
 
-                      <div className="margin-top-6 margin-bottom-3">
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
-                            // handleFormSubmit(values, 'back');
-                            console.log(values); // eslint-disable-line
-                          }}
-                        >
-                          {h('back')}
-                        </Button>
+                      <FieldGroup
+                        scrollElement="status"
+                        error={!!flatErrors.status}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="subtask-status">
+                          {t('statusQuestion')}
+                        </Label>
+                        <FieldErrorMsg>{flatErrors.status}</FieldErrorMsg>
+                        {Object.keys(OperationalSolutionSubtaskStatus)
+                          .reverse()
+                          .map(key => (
+                            <Field
+                              key={key}
+                              as={Radio}
+                              id={`subtask-status-${key}`}
+                              name="status"
+                              label={translateSubtasks(key)}
+                              value={key}
+                              checked={values.status === key}
+                              onChange={() => {
+                                setFieldValue(
+                                  'beneficiarySelectionFrequency',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
+                      </FieldGroup>
 
+                      <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="submit"
                           id="submit-solutions"
+                          disabled={!dirty}
                           onClick={() => setErrors({})}
                         >
-                          {t('saveSolutions')}
+                          {t('addSubtask')}
                         </Button>
                       </div>
 
@@ -206,7 +235,7 @@ const Subtasks = () => {
                         onClick={() => {}}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
+                        {t('returnToDetails')}
                       </Button>
                     </Form>
                   </>
