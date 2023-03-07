@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -16,6 +18,7 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		planName,
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,

@@ -27,6 +27,7 @@ func ModelPlanCreate(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelName string,
 	store *storage.Store,
 	principal authentication.Principal,
@@ -52,6 +53,7 @@ func ModelPlanCreate(
 		logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
 			UserName:    *userAccount.Username,
@@ -126,7 +128,8 @@ func ModelPlanCreate(
 				ctx,
 				emailService,
 				emailTemplateService,
-				emailService.GetConfig().GetDevTeamEmail(),
+				addressBook,
+				addressBook.MINTTeamEmail,
 				createdPlan,
 			)
 			if sendEmailErr != nil {
@@ -145,6 +148,7 @@ func sendModelPlanCreatedEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 ) error {
@@ -170,7 +174,7 @@ func sendModelPlanCreatedEmail(
 		return err
 	}
 
-	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
