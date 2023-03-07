@@ -1,5 +1,5 @@
 /*
-Subtask component and links component
+Subtask Table component and links component
 Columns split between 'Todo', 'In progress', and 'Done'
 If no subtasks, renders text for no subtasks
 */
@@ -136,7 +136,7 @@ type SubtasksProps = {
   className?: string;
 };
 
-const Subtasks = ({ subtasks, className }: SubtasksProps) => {
+const SubtasksTable = ({ subtasks, className }: SubtasksProps) => {
   const { t } = useTranslation('itSolutions');
 
   return (
@@ -159,4 +159,4 @@ const Subtasks = ({ subtasks, className }: SubtasksProps) => {
   );
 };
 
-export default Subtasks;
+export default SubtasksTable;

@@ -37,7 +37,10 @@ import NotFound from 'views/NotFound';
 
 import SolutionDetailCard from '../_components/SolutionDetailCard';
 // TODO: remove manual SubtaskStatus enum once generated from BE
-import Subtasks, { SubtaskLinks, SubtaskStatus } from '../_components/Subtasks';
+import SubtasksTable, {
+  SubtaskLinks,
+  SubtaskStatus
+} from '../_components/SubtasksTable';
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -204,7 +207,7 @@ const SolutionDetails = () => {
             />
 
             {/* TODO: remove temp subtask data */}
-            <Subtasks subtasks={tempSubtasks} className="margin-top-6" />
+            <SubtasksTable subtasks={tempSubtasks} className="margin-top-6" />
 
             {/* TODO: remove temp subtask data */}
             <SubtaskLinks className="margin-top-3" subtasks={tempSubtasks} />

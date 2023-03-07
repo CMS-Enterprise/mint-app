@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
-import Subtasks, { SubtaskStatus } from '.';
+import SubtasksTable, { SubtaskStatus } from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -26,7 +26,7 @@ const subtasks = [
   }
 ];
 
-describe('SolutionDetailsCard', () => {
+describe('Subtasks Table Component', () => {
   it('renders subtasks correctly', async () => {
     const { getByTestId } = render(
       <MemoryRouter
@@ -35,7 +35,7 @@ describe('SolutionDetailsCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
-          <Subtasks subtasks={subtasks} />
+          <SubtasksTable subtasks={subtasks} />
         </Route>
       </MemoryRouter>
     );
@@ -59,7 +59,7 @@ describe('SolutionDetailsCard', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
-          <Subtasks subtasks={[]} />
+          <SubtasksTable subtasks={[]} />
         </Route>
       </MemoryRouter>
     );
