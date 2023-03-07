@@ -1,14 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { Grid } from '@trussworks/react-uswds';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
+import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
+import {
+  GetOperationalSolution as GetOperationalSolutionType,
+  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
+  GetOperationalSolutionVariables
+} from 'queries/ITSolutions/types/GetOperationalSolution';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
+import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
 const Subtasks = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -25,6 +33,22 @@ const Subtasks = () => {
   // const { showMessageOnNextPage, message } = useMessage();
 
   const { modelName } = useContext(ModelInfoContext);
+
+  const { data, error } = useQuery<
+    GetOperationalSolutionType,
+    GetOperationalSolutionVariables
+  >(GetOperationalSolution, {
+    variables: {
+      id: operationalSolutionID
+    }
+  });
+
+  const solution = useMemo(() => {
+    return (
+      data?.operationalSolution ||
+      ({} as GetOperationalSolutionOperationalSolutionType)
+    );
+  }, [data?.operationalSolution]);
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
