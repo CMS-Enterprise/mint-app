@@ -1,3 +1,15 @@
+import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
+import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+
+interface SolutionModelType {
+  about: AboutConfigType;
+  timeline?: TimelineConfigType; // optional as some timelines are identical and are reused between solutions
+}
+
+type SolutionTType = {
+  [key: string]: SolutionModelType;
+};
+
 const solutionCategoryies = {
   applications: {
     header: 'Applications',
@@ -51,68 +63,447 @@ const solutionCategoryies = {
     description: 'Learn about the solutions available for quality.'
   }
 };
-const solutions = {
+
+const solutions: SolutionTType = {
   innovation: {
     about: {
-      heading:
-        'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.'
+      description:
+        'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.',
+      components: [
+        {
+          header: 'Product capabilties',
+          itemHeaders: [
+            'Agreement management',
+            'Participant Management',
+            'Benefits Enhancements',
+            'Contact/User Management',
+            'Reports & Analytics',
+            'Data Hub & Data Exchange',
+            'Knowledge Library',
+            'Provider Overlap Check',
+            'Beneficiary Overlap Check',
+            'Beneficiary Lookup Feature',
+            'Data Exchange with downstream systems',
+            'Claim and Claim Line Feeds (CCLF)',
+            'Identity & Access Management',
+            'Application Programming Interface (API) Key Mgt',
+            '4i Command Line Interface (CLI) Tool',
+            'Tasks and Notifications'
+          ],
+          items: [
+            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            'Add and manage Benefit Enhancements and Payment mechanisms.',
+            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            'Provide secure access to sensitive data such as claims and beneficiary reports,',
+            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            'Beneficiary overlap check across the models',
+            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            'Request and manage API keys and monitor API usage statistics',
+            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Timelines can vary depending on model team’s use of 4i and ACO-OS features. Onboarding to the 4i platform can take 10-12 weeks depending on the features and prioritization by the model teams, provided there are no major changes or customizations. Additionally, any policy or legislation changes can potentially result in a delay to the application go-live dates.',
+      items: [
+        {
+          header: 'Inquire about using 4i/ACO-OS',
+          description:
+            'Send an email to <1>{{email}}</1> if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin and Nora Fleming on the email.'
+        },
+        {
+          header: 'Meet with 4i/ACO-OS technical lead',
+          description:
+            'Schedule an initial meeting to share the feature catalog with the model. The 4i/ACO-OS technical lead gives a high-level overview of 4i/ACO-OS and its capabilities and features (listed on the previous tab).'
+        },
+        {
+          header: 'Review features',
+          description:
+            'Review the features with the model team to understand the level of customization needed by the model for each feature. The model team confirms the features to be used in the 4i platform and ACO-OS.'
+        },
+        {
+          header: 'Requirements meetings',
+          description:
+            'Schedule recurring requirements meetings with the new model team to discuss current and future feature requirements needs, identify Minimal Viable Product (MVP) for the initial go-live.'
+        },
+        {
+          header: 'User research sessions',
+          description:
+            'Conduct series of user research sessions with end users to gain more insight into the user behavior, adjust the feature designs, and improve the overall user experience and quality of users’ interaction with the 4i platform.'
+        },
+        {
+          header: 'Coordinate with model team throughout onboarding',
+          description:
+            'Model teams are included in Sprint demos and User Acceptance Testing (UAT) sessions to provide early feedback.'
+        },
+        {
+          header: 'Train helpdesk team',
+          description:
+            'The helpdesk team is trained on model specific features so that Tier 1 and 2 support is equipped to handle any onboarding-specific questions that may arise from new users.'
+        },
+        {
+          header: 'Develop tip sheets',
+          description:
+            'Develop Tip sheets outlining step-by-step process to navigate features within the UI and conduct webinars to familiarize the end users with the 4i features.'
+        },
+        {
+          header: 'Perform go-live activities',
+          description:
+            'This includes a rigorous testing process to ensure quality. The Continuous Integration/Continuous Deployment (CI/CD) framework allows the team to deploy the code in production with minimal to no disruption. Release notes are shared with the model team prior to the release.'
+        },
+        {
+          header: 'Send out 4i registration invitations to end users',
+          description:
+            '4i platform includes capabilities like bulk invites and Gate windows to make the model onboarding and operations efficient and faster.'
+        },
+        {
+          header: 'Monitor systems ',
+          description:
+            'Monitor the 4i and ACO-OS systems in Production and provide end user support. Post model Go-Live, model team leads continue to attend status meetings and sprint ceremonies in order to receive ongoing support and provide input into future features to be developed in the UI.'
+        }
+      ]
     }
   },
   accountableCare: {
     about: {
-      heading:
-        'The Accountable Care Organization – Operational System (ACO-OS) is the system of record for 4 CMMI models (VT APM, ACO REACH, KCC, PCF) and the Medicare Shared Savings Program in CM. The system stores and exchanges ACO/entity demographic, provider, claim, and beneficiary data with ACOs/entities and CMS systems such as Master Data Management (MDM), Enterprise Data Lake (EDL), and Fee-for-Service (FFS) Shared System Maintainers (SSMs). The ACO-OS generates and shares the claims data each month for over 14,000,000 Medicare beneficiaries. The claims data and reports generated by ACO-OS are shared through the Data Hub feature in the 4i platform for CMMI models and ACO-Management System (ACO-MS) for Medicare Shared Savings Program.'
+      description:
+        'The Accountable Care Organization – Operational System (ACO-OS) is the system of record for 4 CMMI models (VT APM, ACO REACH, KCC, PCF) and the Medicare Shared Savings Program in CM. The system stores and exchanges ACO/entity demographic, provider, claim, and beneficiary data with ACOs/entities and CMS systems such as Master Data Management (MDM), Enterprise Data Lake (EDL), and Fee-for-Service (FFS) Shared System Maintainers (SSMs). The ACO-OS generates and shares the claims data each month for over 14,000,000 Medicare beneficiaries. The claims data and reports generated by ACO-OS are shared through the Data Hub feature in the 4i platform for CMMI models and ACO-Management System (ACO-MS) for Medicare Shared Savings Program.',
+      components: [
+        {
+          header: 'Product capabilties',
+          itemHeaders: [
+            'Agreement management',
+            'Participant Management',
+            'Benefits Enhancements',
+            'Contact/User Management',
+            'Reports & Analytics',
+            'Data Hub & Data Exchange',
+            'Knowledge Library',
+            'Provider Overlap Check',
+            'Beneficiary Overlap Check',
+            'Beneficiary Lookup Feature',
+            'Data Exchange with downstream systems',
+            'Claim and Claim Line Feeds (CCLF)',
+            'Identity & Access Management',
+            'Application Programming Interface (API) Key Mgt',
+            '4i Command Line Interface (CLI) Tool',
+            'Tasks and Notifications'
+          ],
+          items: [
+            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            'Add and manage Benefit Enhancements and Payment mechanisms.',
+            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            'Provide secure access to sensitive data such as claims and beneficiary reports,',
+            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            'Beneficiary overlap check across the models',
+            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            'Request and manage API keys and monitor API usage statistics',
+            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+          ]
+        }
+      ]
     }
   },
   automatedPlanPayment: {
     about: {
-      heading: `The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the
-      Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`
+      description: `The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the
+      Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`,
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Computes plan level monthly payments to Medicare Advantage, PACE Plans Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, and Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS receives plan level specific from the Health Plan Management System (HPMS) and Medicare Advantage Prescription Drug System (MARx)',
+            'Receives Annual Part D reconciliation and Coverage Gap Discount payments',
+            'Produces a monthly file containing plan level payments for HIGLAS',
+            'Computes and stores plan level sequestration payment adjustments amounts'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Timing varies based on what the model needs, but it’s best to involve APPS early in the design process. System development for any new project lasts for 6 months to 1 year, depending on the complexity of the project.',
+      items: [
+        {
+          header: 'Reach out to Project Lead',
+          description:
+            'Contact Aliza Kim and Ed Howard to start a discussion about your model concept.'
+        },
+        {
+          header: 'Collaborate with APPS',
+          description:
+            'Early understanding of requirements and development strategy for any new project will assist in determining if the use of APPS is feasible.'
+        }
+      ]
     }
   },
   centralizedDataExhange: {
     about: {
-      heading: `Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
-
-    CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
+      description: `Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
+      
+CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
     
-    The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.`
+The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.`,
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Onboard participants & vendors',
+            'Tap into existing data feeds',
+            'Provide center-wide data collect and use the data',
+            'Enable interoperability',
+            'Exchange data with Application Program Interfaces (APIs)',
+            'Shared Drives for secure data exchange with PII/PHI',
+            'Outside vendor API testing',
+            'Collects data from HDR/ virus scans/ transforms templated into FHIR format'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Manage API keys and tokens',
+            'Basic API functions (GET, POST, PUT, DELETE)',
+            'For the ET3 model: A Simple Object Access Protocol (SOAP) API with EMS Vendors',
+            'For other purposes: A REST API (representational state transfer)',
+            'Transform data',
+            'Exchange data with Fast Healthcare Interoperable Resource (FHIR) Azure Managed Service',
+            'Exchange data with EMRs, Health Exchange Networks, etc.',
+            'File handling (create folder, upload file, download file)'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      items: [
+        {
+          header: 'Inquire about CDX',
+          description:
+            'If you’re interested in using CDX for your model or would like to learn more about the system, please contact <1>{{email}}</1> to learn more.'
+        },
+        {
+          header: 'Submit an onboarding request',
+          description:
+            'To submit an onboarding request, you’ll need to do the following steps:',
+          ordered: true,
+          items: [
+            'Register as New User in the <1>{{link}}</1>',
+            'Submit Privileged User Role Request for IC',
+            'Submit Role Request for CDX'
+          ]
+        },
+        {
+          header: 'Write a change request',
+          description:
+            'Write a CDX backlog request and describe the problem you are trying to solve with the desired result.'
+        }
+      ],
+      links: ['CMS Enterprise Portal']
     }
   },
   ccWarehouse: {
     about: {
-      heading: `The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
+      description: `The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
 
-    This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
+This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
     
-    CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.
-    CMMI models and demonstrations use the CCW and the VRDC for data analysis, analytics, data mining, and data storage in a SAS environment
-    Federal staff and CMMI contractors are allowed access to the CCW.
-    Model participants have limited access to the VRDC to upload and download files.
-    AHC, BPCI Advanced, CMS FFRDC Contract, Opioid (ViT) Demonstration, CPC+, PCF, DC, KCF, CKCC, IAH, CJR, CEC, ETC, NFI, MCCM, MDPP, IVIG Demonstration, NG ACO, HHVBP, FCHIP, InCK, IDOS Contractor, MOM, State Innovations (MD, PA, VT), ORES OTS Contractor, OCM, Quality Measures Contractor, RO, ET3`
+CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.`,
+      items: [
+        'CMMI models and demonstrations use the CCW and the VRDC for data analysis, analytics, data mining, and data storage in a SAS environment',
+        'Federal staff and CMMI contractors are allowed access to the CCW.',
+        'Model participants have limited access to the VRDC to upload and download files.',
+        'AHC, BPCI Advanced, CMS FFRDC Contract, Opioid (ViT) Demonstration, CPC+, PCF, DC, KCF, CKCC, IAH, CJR, CEC, ETC, NFI, MCCM, MDPP, IVIG Demonstration, NG ACO, HHVBP, FCHIP, InCK, IDOS Contractor, MOM, State Innovations (MD, PA, VT), ORES OTS Contractor, OCM, Quality Measures Contractor, RO, ET3'
+      ],
+      components: [
+        {
+          header: 'Functions',
+          description: `CCW provides researchers with Medicare and Medicaid beneficiary, claims, and assessment data linked by beneficiary across the continuum of care. In the past, researchers analyzing data files had to perform extensive analysis related to beneficiary matching, deduplication, and merging of the files in preparation for their study analysis. With the CCW data, this preliminary linkage work is already accomplished and delivered as part of the data files sent to researchers. 
+
+Performing model implementation, design, monitoring, and evaluation activities that include: `,
+          items: [
+            'accessing CMS data',
+            'exchanging files/data with model participants',
+            'transferring data from the CCW to model operational systems within the CMS boundaries',
+            'uploading model awardee-specific data collections into the VRDC',
+            'sharing common files/data between projects',
+            'sharing CMS and CMMI model data with external researchers'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Follow beneficiaries across multiple care settings',
+            'Identify areas for improving quality of care provided to chronically ill Medicare beneficiaries.',
+            'Identify ways to reduce program spending.',
+            'Make current Medicare, Medicaid, Assessment and Part D data more readily available to researchers for all studies, populations, and rare events.',
+            'Provide thorough documentation so researchers understand the common keys, relationships between claims types, and how to use data accurately.'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'It takes a few weeks to get access to CCW. The steps below outline the process for contractors and CMS employees.',
+      header: 'Contractors',
+      items: [
+        {
+          header: 'Obtain CMS DUA',
+          description:
+            'Anyone wanting to access CCW data will need a valid CMS DUA (Data User Agreement).'
+        },
+        {
+          header: 'Complete CCW VRDC Access Request worksheet',
+          description:
+            'Contact Cheryl Brown, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Cheryl.'
+        },
+        {
+          header: 'Complete CCW CARS application',
+          description:
+            'Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access. '
+        },
+        {
+          header: 'Complete training',
+          description:
+            'The new user has 14 days to complete remote identity proofing (RIDP) and security awareness training. Once complete, OEDA approves and CCW Help completes the setup and sends a new user ID. CCW Help will also send CCW VRDC training information.'
+        }
+      ],
+      header2: 'CMS Employees',
+      items2: [
+        {
+          header: 'Complete Employee CCW Access Request form',
+          description:
+            'Contact Cheryl Brown, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Cheryl.'
+        },
+        {
+          header: 'Complete CCW CARS application',
+          description:
+            'Upon approval, OEDA will initiate a request in CCW Access Request System (CARS) application. The new user will receive an email invitation to submit and complete the CARS request for access. '
+        },
+        {
+          header: 'Complete training',
+          description:
+            'The new user has 14 days to complete remote identity proofing (RIDP) and security awareness training. Once complete, OEDA approves and CCW Help completes the setup and sends a new user ID. CMS IT Service Desk push VMWare software to the user’s desktop.'
+        }
+      ],
+      links: ['Data Disclosures and Data Use Agreements']
     }
   },
   cmsBox: {
     about: {
-      heading:
+      description:
         'CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. '
+    },
+    timeline: {
+      description:
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at <1>{{email}}</1>.',
+      items: [
+        {
+          header: 'Access CMS Box',
+          description:
+            'G​o to CMS Box and click Continue to confirm you are a part of the Centers for Medicare & M​edicaid services. You will be automatically signed in.'
+        },
+        {
+          header: 'Configure CMS Box for your model',
+          description:
+            'If using CMS Box to share files with participants, additional permissions will need to be set up.'
+        }
+      ],
+      links: ['Go to CMS Box', 'View resources on CMS Intranet']
     }
   },
   cmsQualtrics: {
     about: {
-      heading:
+      description:
         'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.'
+    },
+    timeline: {
+      description:
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <1>{{email}}</1>.',
+      items: [
+        {
+          header: 'Access CMS Qualtrics',
+          description:
+            'Log in to CMS Qualtrics using your CMS user name and password.'
+        },
+        {
+          header: 'Create a survey',
+          description:
+            'Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.'
+        },
+        {
+          header: 'Distribute your survey',
+          description:
+            'Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.'
+        }
+      ],
+      links: ['Go to CMS Qualtrics']
     }
   },
   cbosc: {
     about: {
-      heading:
+      description:
         'The Consolidated Business Operations Support Center (CBOSC) contract provides IT and programmatic help desk inquiry support, help desk operations and Business Operations support for the Innovation Center Models, the Alternative Payment Model (APM) track of the Quality Payment Program (QPP) and CM. CBOSC manages intake, resolution and escalation of all inquiries related to Innovations and Shared Savings Program Business Operations centrally. Support is provided through Pre-Implementation, Post-Implementation, Operation, Reporting, and Information Support phases as models test innovative payment and service delivery models to reduce program expenditures while preserving or enhancing the quality of care furnished to individuals.'
+    },
+    timeline: {
+      description:
+        'Generally, it takes 1-2 months for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.',
+      items: [
+        {
+          header: 'Begin onboarding activities',
+          description:
+            'Provide CBOSC with as much information about your model as you know by filling out their onboarding questionnaire. They’ll set up a discovery meeting with your team to identify any missing information and let you know what services CBOSC can provide to your model. During this time, CBOSC will form an internal onboarding team. They develop an onboarding timeline that assures readiness.'
+        },
+        {
+          header: 'Resource mailbox creation',
+          description:
+            'If the model needs a mailbox, they should infrom CBOSC and provide a list of names and email addresses that should have access the mailbox. Any folders, auto reply messages, and templates are also set up.'
+        },
+        {
+          header: 'Confirm final helpdesk requirements',
+          description:
+            'CBOS will review and confirm the needs of the model. If the model intends to use phone, the call center must also evaluate interactive voice response (IVR) option tree at this phase. '
+        },
+        {
+          header: 'Build out IVR and test',
+          description:
+            'During this stage, they will create routing, record model specific messages, update reports and test. CBOSC will then provide the call center phone number and IVR option. Model teams must communicate and update all appropriate stakeholders of the new numbers.'
+        },
+        {
+          header: 'Conduct support center / helpdesk training',
+          description:
+            'The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training. '
+        },
+        {
+          header: 'ServiceNow (SNow) set up and training',
+          description:
+            'During this phase, the model team receives the appropriate job codes and training for SNow. Knowledge base content is developed and published, and agents are trained on the content.'
+        },
+        {
+          header: 'CBOSC is ready to support the model',
+          description:
+            'After standard outreach procedures are defined and final testing is complete, CBOSC is ready to support the model. '
+        }
+      ]
     }
   },
   cpiVetting: {
     about: {
-      heading: `CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
+      description: `CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
 
     They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
     
@@ -121,186 +512,1071 @@ const solutions = {
   },
   electronicFileTransfer: {
     about: {
-      heading:
+      description:
         'Electronic File Transfer (EFT) is a secure file transfer protocol used to move files from one destination to another internally or externally.'
     }
   },
   expandedDataFeedback: {
     about: {
-      heading:
-        'Center For Medicare and Medicaid Innovation (CMMI) Expanded Data Feedback Reporting (eDFR) system will provide transparency to stakeholders including the primary care physicians participating in CMMI Alternative Payment Models (APM) in the form of feedback for healthcare being delivered from a utilization, cost, and quality perspective. The metrics will be calculated based on Medicare provider and claims data. The system will render the information visually on dashboards, and reports.'
+      description:
+        'Center For Medicare and Medicaid Innovation (CMMI) Expanded Data Feedback Reporting (eDFR) system will provide transparency to stakeholders including the primary care physicians participating in CMMI Alternative Payment Models (APM) in the form of feedback for healthcare being delivered from a utilization, cost, and quality perspective. The metrics will be calculated based on Medicare provider and claims data. The system will render the information visually on dashboards, and reports.',
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Receive data from CMMI (claims data, feedback reports)',
+            'Produce Business Intelligence (BI) reports and dashboards for internal and external uers',
+            'Complete data analytics to supply visibility into peformance against model’s objectives'
+          ]
+        },
+        {
+          header: 'Capabilities',
+          items: [
+            'Provide up to date (quarterly) dashboards for model participants (practices and physicians)',
+            'Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.',
+            'Dashboards are targeted at the Practice/Physician level, not at higher levels like hospital administrators or group administrators.',
+            'Dashboards are not intended to be used by CMS or CMMI internally – they are for the participating practices.',
+            // Not sure why typescript isn't respecting the union type here - string[] | ListItemType
+            // @ts-ignore
+            {
+              header:
+                'Each dashboard will contain information that is sensitive to each practice, including:',
+              items: [
+                'Payment metrics',
+                'Patient quality metrics',
+                'Locality metrics',
+                'Model specific metrics'
+              ]
+            },
+            'Each dashboard can contain information to help practices increase their rankings within a model as well as (potentially) patients well being – but... practices are not required to act on the data included in a dashboard. Dashboards are for informational purposes only.',
+            'Provide CMMI internal model teams with intelligence on model participants',
+            'Provide ET3 model with a tool for linking data attributes to patients through Probabilistic Matching'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Timelines vary by model but it generally takes 6-12 months.',
+      items: [
+        {
+          header: 'Reach out to eDFR ',
+          description:
+            'Once a model team knows they would like to use eDFR, they should reach out to Zach Nall.'
+        },
+        {
+          header: 'Meet to understand requirements'
+        },
+        {
+          header: 'Development starts'
+        },
+        {
+          header: 'Change is released',
+          description:
+            'Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. '
+        }
+      ]
     }
   },
   govDelivery: {
     about: {
-      heading:
-        'GovDelivery is a listserv used to communicate with model participants and other interested stakeholders.'
+      description:
+        'GovDelivery is a listserv used to communicate with model participants and other interested stakeholders.',
+      components: [
+        {
+          header: 'Capabilities',
+          items: [
+            'Reach subscribers by email',
+            'Automate and schedule emails',
+            'Utilize branded templates',
+            'Access detailed reporting'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'The setup for GovDelivery is very quick and can take as little as an hour.',
+      items: [
+        {
+          header: 'Reach out to GovDelivery Admin',
+          description:
+            'If you’re interested in using GovDelivery for your model, reach out to one of the Admins with the following information:',
+          items: [
+            'Names, emails, phone numbers, and roles of any topic admins (These will be the people that have edit access in GovDelivery)',
+            'The name of the new listserv topic (For example: "Our New Model Newsletter" or similar as appropriate)'
+          ]
+        },
+        {
+          header: 'Configure GovDelivery and discuss guidelines',
+          description:
+            'One of the GovDelivery Admins will set up your topic based on the information you provided. Then, they’ll talk you through some of the basic guidelines set by the Office of Communications for template designs and things like that.'
+        },
+        {
+          header: 'Access granted',
+          description:
+            'Once you’re comfortable with GovDelivery, you’re able to start using it. '
+        }
+      ]
     }
   },
   grantSolutions: {
     about: {
-      heading: `GrantSolutions (GS) is a tool used to manage grants from funding opportunity planning, through the issuance of awards, to grant closeout.
+      description: `GrantSolutions (GS) is a tool used to manage grants from funding opportunity planning, through the issuance of awards, to grant closeout.
 
-    CMS currently utilizes GrantSolutions primarily for awarding, managing, and closing out grants. For some grant programs, CMS utilizes the GS Application Review Module (ARM) for the required merit review of applications.
+CMS currently utilizes GrantSolutions primarily for awarding, managing, and closing out grants. For some grant programs, CMS utilizes the GS Application Review Module (ARM) for the required merit review of applications.
     
-    CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies artificial intelligence, machine learning, and other emerging technologies to collect information from 750,000 organizations contained in seven different public databases. RI analyzes trends and identifies warning signs in the data. This data is presented through key data in actionable dashboards highlighting critical information for conducting risk assessment of applicants and recipients and identify reduce fraud, waste, and abuse.`
+CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies artificial intelligence, machine learning, and other emerging technologies to collect information from 750,000 organizations contained in seven different public databases. RI analyzes trends and identifies warning signs in the data. This data is presented through key data in actionable dashboards highlighting critical information for conducting risk assessment of applicants and recipients and identify reduce fraud, waste, and abuse.`
+    },
+    timeline: {
+      items: [
+        {
+          header: 'Contact Mary Greene or Michelle Brown',
+          description:
+            'Reach out to Mary or Michelle during the development of a grant project.'
+        },
+        {
+          header: 'Point of contact assigned',
+          description:
+            'A point of contact from the Division of Grants Management will be assigned to the model team. They will guide the model team through the whole process and can provide more in-depth training and resources about the grants management process.'
+        }
+      ]
     }
   },
   higlas: {
     about: {
-      heading: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.
+      description: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.
 
-    Specific to CMMI, HIGLAS has two integrated points:
-    CMMI uses an Innovation Payment Contractor (IPC) vendor – National Government Services (NGS) to make payments on many models such as QPP, CJR, MDPCP, CPC, etc. – all of the financial reporting and payment functions are in HIGLAS since Nov 2021.
-    Other Models, such as BPCI (Bundled Payment), use the FFS claims system to forward the payment details to HIGLAS, and these payments are accounted for and made to awardees from HIGLAS.`
+Specific to CMMI, HIGLAS has two integrated points:`,
+      ordered: true,
+      items: [
+        'CMMI uses an Innovation Payment Contractor (IPC) vendor – National Government Services (NGS) to make payments on many models such as QPP, CJR, MDPCP, CPC, etc. – all of the financial reporting and payment functions are in HIGLAS since Nov 2021.',
+        'Other Models, such as BPCI (Bundled Payment), use the FFS claims system to forward the payment details to HIGLAS, and these payments are accounted for and made to awardees from HIGLAS.'
+      ],
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Strengthens Medicare’s management of accounts receivable and allows more timely and effective collection activities on outstanding debts',
+            'Enhances CMS oversight of contractor financial operations, including data entry, transaction processing and reporting',
+            'Produces automated agency financial statements and other required reports, leading to fewer errors in financial reporting and a reduction in manual labor',
+            'Allows for the elimination of redundant accounting processes and provides standardized accounting business practices',
+            'Enables Medicare contractors to cut back on the number of cuff systems currently used to track financial data',
+            'Provides a standard General Ledger accounting system, standardized accounting and financial management process for CMS central office and administrative program accounting activities',
+            'Incorporates Medicaid and CHIP government data'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at {{email}} if you have questions.',
+      items: []
     }
   },
   healthDataReporting: {
     about: {
-      heading: `Health Data Reporting (HDR) is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. HDR is part of the Innovation Support Platform (ISP) Suite of tools that include Expanded Data Feedback Reporting (eDFR) for business analysis and Centralized Data Exchange (CDX) for data exchange within the Suite and across CMS.
+      description: `Health Data Reporting (HDR) is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. HDR is part of the Innovation Support Platform (ISP) Suite of tools that include Expanded Data Feedback Reporting (eDFR) for business analysis and Centralized Data Exchange (CDX) for data exchange within the Suite and across CMS.
 
-    HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
+HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
     
-    HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`
+HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`,
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'A model’s participating entities submit model-specified data at specified times throughout the model’s life. Submitted data is validated, errors are reported back for correction, and submission statuses are reported within the UI for monitoring.'
+          ]
+        },
+        {
+          header: 'Data collection capabilities',
+          items: []
+        },
+        {
+          header: 'Health data submissions via Microsoft Excel spreadsheets',
+          level: 'h4',
+          items: [
+            'Health data submissions via Microsoft Excel spreadsheets',
+            'Aggregate quality measure (i.e., numerators, denominators, exclusions, exceptions)',
+            'All other types of health-related data (e.g., clinical data, health equity data, etc.)'
+          ]
+        },
+        {
+          header: 'Health data submissions via UI',
+          level: 'h4',
+          items: ['Aggregate quality measures']
+        },
+        {
+          header: 'Model configuration',
+          level: 'h4',
+          items: [
+            'Model configuration',
+            'Basic configuration (field names aligned with AMS)',
+            'Model year, performance periods, and submission periods configuration',
+            'Quality measure with optional results display configuration',
+            'Pre-loaded beneficiary information including minimum thresholds for reporting',
+            'Two-tier data validation and status reporting leverages: 1) Microsoft Excel’s in-cell validations and 2) HDR’s backend services'
+          ]
+        },
+        {
+          header: 'Quality measure results',
+          level: 'h4',
+          items: ['Aggregate quality measure calculation results report']
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Generally, it takes about four to six weeks for models to start using HDR.',
+      items: [
+        {
+          header: 'Reach out to Technical Lead',
+          description:
+            'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Hung Van. '
+        },
+        {
+          header: 'Meet to understand requirements',
+          description:
+            'Tell HDR the type of data you’d like to collect for your model.'
+        },
+        {
+          header: 'Development and validation',
+          description: `All models will need submission and validation templates to be built and tested prior to the first data submission. Any model requirements not met by HDR’s current functionality will also need built. This will take extra time, so please plan accordingly.
+            
+If the model will use HDR’s pre-fill option, the model team’s implementation contractor will need to provide the following:`,
+          items: [
+            'Participating entity information',
+            'Beneficiary alignment lists'
+          ]
+        },
+        {
+          header: 'Start submitting data'
+        }
+      ]
     }
   },
   healthPlanManagement: {
     about: {
-      heading: `The Centers for Medicare & Medicaid Services' (CMS) Health Plan Management System (HPMS) is a web-enabled information system that serves a critical role in the ongoing operations of the Medicare Advantage (MA) and Part D programs.
+      description: `The Centers for Medicare & Medicaid Services' (CMS) Health Plan Management System (HPMS) is a web-enabled information system that serves a critical role in the ongoing operations of the Medicare Advantage (MA) and Part D programs.
 
-    HPMS is a full-service website where health and drug plans, plan consultants, third-party vendors, and pharmaceutical manufacturers can work with CMS to fulfill the plan enrollment and compliance requirements of the Medicare Advantage (MA) and Prescription Drug (Part D) programs.
+HPMS is a full-service website where health and drug plans, plan consultants, third-party vendors, and pharmaceutical manufacturers can work with CMS to fulfill the plan enrollment and compliance requirements of the Medicare Advantage (MA) and Prescription Drug (Part D) programs.
     
-    Health Plan Management System, all health insurance companies participating in the MAPD program use this interface to communicate with CM for their contracting, actuarial, coverage, marketing, and enrollment in the MA and Part D programs.`
+Health Plan Management System, all health insurance companies participating in the MAPD program use this interface to communicate with CM for their contracting, actuarial, coverage, marketing, and enrollment in the MA and Part D programs.`,
+      components: [
+        {
+          header: 'Functions',
+          description: 'HPMS services the MA and Part D programs in two ways:',
+          ordered: true,
+          items: [
+            'HPMS functionality facilitates the numerous data collection and reporting activities mandated for these entities by legislation.',
+            'HPMS provides support for the ongoing operations of the plan enrollment and plan compliance business functions and for longer-term strategic planning and program analysis.'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          description:
+            'HPMS supports the following business processes for all private health and drug plans participating in the MA and Part D programs:',
+          items: [
+            'Contract and plan enumeration and management',
+            'Application submission and review',
+            'Formulary submission and review',
+            'Bid and benefit package submission and review',
+            'Electronic contracting and certifications',
+            'Marketing material submission and review',
+            'Audit and assessment of plan performance',
+            'Plan payment reconciliation data reporting',
+            'Part D drug pricing and pharmacy data submissions',
+            'Fiscal soundness',
+            'Complaint tracking',
+            'Compliance',
+            'Plan data reporting and performance metrics',
+            'Financial, plan bid, and plan data reporting audits',
+            'Coverage gap discount program',
+            'Electronic health record reporting',
+            'Cost reporting and audit',
+            'Plan connectivity',
+            'Operational data exchanges',
+            'Online Enrollment Center (OEC) management',
+            'Data support for the Medicare & You handbook and Medicare Plan Finder',
+            'Quality improvement',
+            'Research and evaluation',
+            'Manage stakeholder contacts and organizations',
+            'Track events (campaigns) and capture feedback (surveys)',
+            'Measure event registration, attendance, and performance'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        ' and they will help you connect with Center for Medicare (CM).',
+      items: []
     }
   },
   innovationPayment: {
     about: {
-      heading:
-        'The Innovation Payment Contractor (IPC) assists CMMI in making payments to eligible participants in multiple tests of Models of care and program innovations to improve quality and value-based care.'
+      description:
+        'The Innovation Payment Contractor (IPC) assists CMMI in making payments to eligible participants in multiple tests of Models of care and program innovations to improve quality and value-based care.',
+      components: [
+        {
+          header: 'Financial services conducted for CMMI Models',
+          items: [
+            'Process payments for Models and disburse Electronic Funds Transfer (EFT) or paper check payments, as required, to eligible Medicare, Non-Medicare, and Medicaid providers, Model participants, and beneficiaries.',
+            'Apply Federal Payment Levy Program (FPLP) withholding for each payee in accordance with U.S. Department of Treasury requirements.',
+            'Issue demand letters, conduct collection activities, and report on receivables.',
+            'Process and apply receipts to Model overpayments and make adjustments as needed to refund excess collections received.',
+            'Process referrals of delinquent Model debts to the U.S. Department of Treasury for collection in accordance with CMS debt management policy.',
+            'Manage/monitor Extended Repayment Schedule (ERS) arrangements to provide hardship relief to eligible Model participants in accordance with CMS debt management policy.',
+            'Manage a single bank account for all new and existing Models that make EFT payments, in accordance with the CMS demonstration payment schedule provided by CMMI and OFM.',
+            'Send IRS Forms 1099-MISC annually for payments made to payees in accordance with the IRS threshold requirements.',
+            'Send IRS Forms 1099-C annually to Model participants for the cancellation of CMMI model overpayments that were deemed uncollectible and approved for write-off and termination of collection by CMS management.',
+            'Provide proper funds control, oversight, and compliance with all applicable laws, regulations, Federal Accounting Standards, Generally Accepted Accounting Principles, CMS Office of Financial Management (OFM) guidelines and reporting requirements, and CMS Internet Only Manual (IOM)/Medicare Financial Management Manual, Chapters 3-7.'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'It takes about 5 months for a new model to start using IPC.',
+      items: [
+        {
+          header: 'Work with the IPC internal team',
+          description: `After learning about an upcoming model, the IPC internal team will reach out to the Model team to kick off discussions. Alternatively, Model teams can reach out to the IPC internal team if they have questions or would like to start discussions sooner.
+
+The Model team will receive an implementation milestone schedule that identifies necessary tasks and completion dates to meet their scheduled first payment requirements.`
+        },
+        {
+          header: 'Determine ROM and contract modification',
+          description:
+            'The IPC internal team will establish a ROM based on several factors:',
+          items: [
+            'Number of Participants in the Model',
+            'Frequency of payments',
+            'Number of recoupments (demands)',
+            'Frequency of recoupments (demands)'
+          ],
+          description2:
+            'The IPC and OFM bank contracts will be modified to support the Model.'
+        },
+        {
+          header: 'Implementation to the IPC',
+          description: `The Model team is provided a Welcome Packet which serves as an introduction to the IPC, an overview of the implementation process and a guide to the IPC payment and recoupment (demand) process. Additionally, workgroup meetings are established with the IPC, Model team, and, if necessary, their IT support contractor(s) to ensure a successful implementation. Some key implementation activities include:`,
+          items: [
+            'Validate Model participant information',
+            'Onboard Model participants to the IPC Portal and collect Model participant banking information.',
+            'Establish connectivity with the IPC to exchange files',
+            'Prepare the payment and demand files',
+            'Onboard to the Healthcare Integrated General Ledger Accounting System (HIGLAS)',
+            'Conduct HIGLAS UAT testing'
+          ]
+        },
+        {
+          header: 'Ready for payments',
+          description:
+            'After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.'
+        }
+      ]
     }
   },
   integratedDataRepository: {
     about: {
-      heading: `The Integrated Data Repository (IDR) is a multi-platform and high-volume data warehouse comprising integrated views of data across Medicare Parts A, B, C, and D, Beneficiary Entitlement, Enrollment and Utilization data. Provider reference information, Drug data, Contracts for Plans, and Medicaid and Children’s Health Insurance Program (CHIP).
+      description: `The Integrated Data Repository (IDR) is a multi-platform and high-volume data warehouse comprising integrated views of data across Medicare Parts A, B, C, and D, Beneficiary Entitlement, Enrollment and Utilization data. Provider reference information, Drug data, Contracts for Plans, and Medicaid and Children’s Health Insurance Program (CHIP).
 
-    The data in the IDR is leveraged by various components across the agency to facilitate investigative and litigious efforts focused on fighting Medicare and Medicaid fraud, waste and abuse. Users of the IDR leverage the robust suite of Enterprise BI tools made available to them to conduct in-depth analysis of risk adjustment policies, Medicare-Medicaid program comparisons, payment models, and prescription drug cost trends, among many other areas of importance.`
+The data in the IDR is leveraged by various components across the agency to facilitate investigative and litigious efforts focused on fighting Medicare and Medicaid fraud, waste and abuse. Users of the IDR leverage the robust suite of Enterprise BI tools made available to them to conduct in-depth analysis of risk adjustment policies, Medicare-Medicaid program comparisons, payment models, and prescription drug cost trends, among many other areas of importance.`,
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Medical Trend & Utilization Analysis',
+            'Healthcare Cost & Assessment',
+            'Policy Analysis and Development',
+            'Provider Profiling & Management',
+            'Quality and Effectiveness: Pay for Performance',
+            'Program Integrity and Fraud, Waste & Abuse',
+            'Rapid response to legislative inquiries',
+            'Data available for claims-based program operational needs'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'State of the art business intelligence, reporting, and additional data access capabilities',
+            'Automated Finder File and Data Extract Process',
+            'Data dictionary, data limitations information, source to target mappings, etc.',
+            'Customer support and assistance'
+          ]
+        }
+      ]
     }
   },
   learningAndDiffusion: {
     about: {
-      heading:
-        'The Learning and Diffusion Group (LDG) is a team within CMMI that facilitates learning within models and disseminates the lessons learned across models so that participants can benefit from the experiences of other models. LDG has two divisions: the Division of Model Learning Systems (DMLS) and the Division of Analysis and Networks (DAN). '
+      description:
+        'The Learning and Diffusion Group (LDG) is a team within CMMI that facilitates learning within models and disseminates the lessons learned across models so that participants can benefit from the experiences of other models. LDG has two divisions: the Division of Model Learning Systems (DMLS) and the Division of Analysis and Networks (DAN).',
+      components: [
+        {
+          header: 'Services provided',
+          items: [
+            'Learning systems',
+            'Driver diagram development',
+            'Educating beneficiaries',
+            'Recruiting participants (advertising the model to stakeholders)',
+            'Cross-participant sharing (using Connect, 4i, or other)',
+            'Learning contractor (a cross-model contract or something else)',
+            'Technical assistance',
+            'Model-specific learning (for example, a focus on quality)',
+            'Model-specific data collection efforts',
+            'Model-specific care redesign/care reporting',
+            'Dashboard development (piloting)',
+            'Complete health equity analyses',
+            'Model-specific learning cost estimate',
+            'Have an LDG member as part of the team'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      items: [
+        {
+          header: 'CMMI contacts LDG',
+          description:
+            'Someone from CMMI will reach out to the LDG team about the model’s needs.'
+        },
+        {
+          header: 'LDG will be in contact',
+          description:
+            'Depending on the needs of the model, a team member from LDG may be assigned to your model.'
+        }
+      ]
     }
   },
   legalVertical: {
     about: {
-      heading: `The mission of the Legal Vertical is to facilitate an effective and coordinated working relationship between CMMI and Office of General Council (OGC), the legal counsel to CMMI, and to provide an internal resource on legal issues.
+      description: `The mission of the Legal Vertical is to facilitate an effective and coordinated working relationship between CMMI and Office of General Council (OGC), the legal counsel to CMMI, and to provide an internal resource on legal issues.
 
-    To achieve this mission, the Legal Vertical provides technical assistance and support to CMMI; drafts governing documents and cross-cutting regulations; promotes consistency in addressing cross-cutting legal issues; and helps to identify and mitigate potential legal risks to CMMI.`
+To achieve this mission, the Legal Vertical provides technical assistance and support to CMMI; drafts governing documents and cross-cutting regulations; promotes consistency in addressing cross-cutting legal issues; and helps to identify and mitigate potential legal risks to CMMI.`,
+      components: [
+        {
+          header: 'Services provided',
+          items: [
+            'Manage CMMI’s overall relationship with OGC',
+            'Draft Participation Agreements, Cooperative Agreements, State Agreements, addendums to Medicare Agreements, certain aspects of rulemaking, and upon request and subject to availability, other legal-related documents ​',
+            'Provide technical assistance to model teams and groups for cross-cutting initiatives',
+            'Develop recommendations to address cross-cutting legal issues'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Timing varies based on the type of service or assistance needed. For example, Participation Agreements (PA) can take 9-12 months from start to finish.',
+      items: [
+        {
+          header: 'Reach out to Legal Vertical',
+          description:
+            'When model teams have questions or when they start developing their ICIP, they should contact Megan Hyde or Erin Hagenbrok.'
+        },
+        {
+          header: 'Legal Vertical member assigned',
+          description:
+            'Model team management should reach out to Ann Vrabel and Melanie Dang to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.'
+        },
+        {
+          header: 'Draft governing documents',
+          description:
+            'The assigned LV team member will draft the necessary documents with the assistance of the model SMEs. The governing document is an operational document. Thus, all policy decisions and operational decisions should be made before drafting begins. If model teams need to make policy or operational changes during the drafting and clearance process, their timelines may be delayed.'
+        },
+        {
+          header: 'Clearance and approval',
+          description:
+            'All governing documents must go through OGC clearance, and, if applicable, be approved by the waiver team. Clearance has several rounds, so this is a pretty lengthy process.'
+        }
+      ]
     }
   },
   masterDataManagement: {
     about: {
-      heading: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities (e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, web services, and APIs.
+      description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities (e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, web services, and APIs.
 
-    MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
+MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
     
-    CMMI, in particular, uses MDM as a repository to store data to inform and resolve model overlaps (when necessary) for both aligned beneficiaries and participating providers among CMS payment models/demonstrations that are primarily shared savings-based models. This use of MDM for CMMI is a limited but critical role so that CMMI, CM, and Duals Office models have a single point of operational data ‘hub’ to resolve overlaps.
+CMMI, in particular, uses MDM as a repository to store data to inform and resolve model overlaps (when necessary) for both aligned beneficiaries and participating providers among CMS payment models/demonstrations that are primarily shared savings-based models. This use of MDM for CMMI is a limited but critical role so that CMMI, CM, and Duals Office models have a single point of operational data ‘hub’ to resolve overlaps.
     
-    MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM provides:
-    Trusted identity resolution capability for CMS’ expanding catalog of Master Data sources
-    Integration and consolidation of Master Data from numerous disparate data sources to create a consolidated, authoritative view of each entity
-    Flexible and easy access to Master Data (e.g., near real-time web services, extracts for batch processing, APIs, and analytic capabilities).
-    A platform for improved data quality and understanding
-    A record of non-claims-based payments`
+MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM provides:`,
+      items: [
+        'Trusted identity resolution capability for CMS’ expanding catalog of Master Data sources',
+        'Integration and consolidation of Master Data from numerous disparate data sources to create a consolidated, authoritative view of each entity',
+        'Flexible and easy access to Master Data (e.g., near real-time web services, extracts for batch processing, APIs, and analytic capabilities).',
+        'A platform for improved data quality and understanding',
+        'A record of non-claims-based payments'
+      ],
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Identity resolution of CMS enterprise data entities (providers, beneficiaries, enrollees, ACO model participation)',
+            'Federation of identity resolved CMS enterprise data'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Coordination with MDM can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard. ',
+      items: [
+        {
+          header: 'CMMI/BSG will reach out',
+          description:
+            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Cheryl Brown.'
+        },
+        {
+          header: 'Discussion with the model team',
+          description:
+            'After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.'
+        },
+        {
+          header: 'Complete onboarding questionnaire',
+          description:
+            'CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.'
+        },
+        {
+          header: 'Meet with MDM operations team',
+          description:
+            'CMMI/BSG meets with the MDM operations team to share the business requirements.'
+        },
+        {
+          header: 'Share ICD',
+          description:
+            'CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.'
+        }
+      ]
     }
   },
   measureInstrumentDS: {
     about: {
-      heading:
-        'CMMI awarded a task order off of CCSQ’s Quality Measure Development and Analytic Support (QMDAS) contract and titled the task order the Measure Instrument Development and Support contract, or MIDS for short. MIDS is a quality measure contract that supports model teams’ development of de novo measures and re-specification of existing measures for use in CMMI’s Alternative Payment Models (APMs). The MIDS contract is used to support measuring and incentivizing quality in the Center’s healthcare delivery models, assisting models in their quality strategy and design of measures.'
+      description:
+        'CMMI awarded a task order off of CCSQ’s Quality Measure Development and Analytic Support (QMDAS) contract and titled the task order the Measure Instrument Development and Support contract, or MIDS for short. MIDS is a quality measure contract that supports model teams’ development of de novo measures and re-specification of existing measures for use in CMMI’s Alternative Payment Models (APMs). The MIDS contract is used to support measuring and incentivizing quality in the Center’s healthcare delivery models, assisting models in their quality strategy and design of measures.',
+      components: [
+        {
+          header: 'The objectives of the MIDS contract are to:',
+          items: [
+            'Develop de novo quality measures and re-specify existing quality measures to support measuring and incentivizing quality in the Center’s portfolio of APMs,',
+            'Support measures through the full Measure Lifecycle including endorsement, rulemaking as needed, reevaluation, and implementation, and',
+            'Provide ad hoc analysis support or reports to assist the Center and its models in the design of their quality strategy during new model development or when the model desires to revise a measure used in its current quality portfolio.'
+          ]
+        }
+      ],
+      subDescription:
+        'MIDS also includes work to reevaluate measures, support measure implementation through collaboration with implementation contractors, pursue National Quality Forum (NQF) endorsement, and, as needed, provide rulemaking language for proposed measure uses.'
+    },
+    timeline: {
+      description:
+        'The CMMI MIDS contract is currently in option year 3 of a base plus 4-year contract. Most of the quality measure work has already been identified and approved for the current year, however, you can still consider the CMMI MIDS contract for ad hoc analyses or reports to support the design of the quality strategy for model work. The CMMI MIDS contract has one more year remaining, option year 4, then the contract will be recompeted. The timeline for developing and supporting a new quality measure varies based on the complexity of the measure. The CMMI MIDS contractor will work with the model teams to develop and maintain their quality measures during the models’ lifecycle.',
+      items: [
+        {
+          header: 'Reach out to Quality Vertical',
+          description:
+            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical (QV) Team’s Quality Officer, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
+        },
+        {
+          header: 'COR meets with the model team',
+          description:
+            'Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). '
+        },
+        {
+          header: 'Present justification to Front Office',
+          description:
+            'The model teams will present their justification to the FO. The FO will determine if they want to move forward with the model team’s request and if additional funding is needed. If approval is given, the model teams will reach out to the CMMI MIDS COR to move forward with their quality measure work.'
+        },
+        {
+          header: 'COR presents to the MIDS contractor',
+          description:
+            'The CMMI MIDS COR will forward the model team’s request to the CMMI MIDS contractor who will assess whether they can do the work and how much it will cost based on the request. If the work can be completed utilizing the existing CMMI MIDS contract, then the CMMI MIDS COR will modify the contract and add the new work to the MIDS contract.'
+        },
+        {
+          header: 'COR and model team takes information back to FO',
+          description:
+            'If the measure work cannot be completed under the existing CMMI MIDS contract, then the model teams would have to go back to the FO to request approval of funding to complete the work. If the FO approves the funding, then CMMI MIDS COR will complete a modification to the contract and once complete, instruct the CMMI MIDS contractor to begin working with the model team.'
+        },
+        {
+          header: 'Contractor can begin working with model team',
+          description:
+            'The CMMI MIDS COR, MIDS QSME, and MIDS Contractor will begin working with the model teams to develop and/or respecify their quality measures.'
+        }
+      ]
     }
   },
   marx: {
     about: {
-      heading: `The Medicare Advantage (MA) & Prescription Drug (Part D) system maintains enrollment, payment, and premium data for Medicare beneficiary enrollments in Medicare Part C and D Plans. The Medicare Advantage (MA) & Prescription Drug (Part D) systems provide services to beneficiaries, Plans, and CMS. 
+      description: `The Medicare Advantage (MA) & Prescription Drug (Part D) system maintains enrollment, payment, and premium data for Medicare beneficiary enrollments in Medicare Part C and D Plans. The Medicare Advantage (MA) & Prescription Drug (Part D) systems provide services to beneficiaries, Plans, and CMS. 
 
-    Transaction Processing Plans submit batch files that contain enrollment, disenrollment, and various status update transactions to MARx. Using CMS business rules, MARx validates the transactions and accepts or rejects the submitted enrollments, disenrollment, or changes. Daily response files report the results of all transactions back to the plans. Other Medicare Modernization Act (MMA) systems also interact with MARx. Notifications from other systems, such as the Medicare Beneficiary Database (MBD), which report changes in beneficiary demographics, entitlement, health status, low-income subsidy status, etc. may affect beneficiary enrollment and payment to the Plans. 
+Transaction Processing Plans submit batch files that contain enrollment, disenrollment, and various status update transactions to MARx. Using CMS business rules, MARx validates the transactions and accepts or rejects the submitted enrollments, disenrollment, or changes. Daily response files report the results of all transactions back to the plans. Other Medicare Modernization Act (MMA) systems also interact with MARx. Notifications from other systems, such as the Medicare Beneficiary Database (MBD), which report changes in beneficiary demographics, entitlement, health status, low-income subsidy status, etc. may affect beneficiary enrollment and payment to the Plans. 
     
-    Payment Processing MARx calculates monthly Medicare payments for each Plan and generates payment adjustments when changes in membership and/or beneficiary health status occur. Monthly reports detail enrollment and payment information for the plans and CMS. Premium Processing MARx receives and processes transactions impacting Part C and Part D premiums, Medicare Part B Reduction, and Medicare Part C/D Plan enrollment status. Beneficiaries may elect to have their premiums withheld from their Social Security Administration (SSA) or Railroad Retirement Board (RRB) checks. MARx is responsible for interfacing with SSA or RRB to establish or terminate withholding and tracks expected withholding amounts. Once the withholding agency completes processing each transaction, a response is sent back to MARx informing CMS of the withholding agency's acceptance or rejection of each of the individual premium withholding requests, cancellations, statuses, and amounts. The withholding agency's acceptance or rejection of the transactions is communicated to the Plans. The Premium Withhold Accounting functionality was implemented to reconcile the withheld premium amounts. Based on reconciliation of the expected and actual premium amounts, the premium dollars to be included in a plan's payment are determined. 
-    
-    User Interface 
-    The MARx application includes online processing capabilities. The MARx User Interface (UI) provides Plans and CMS the ability to view and update beneficiary, enrollment, payment, and premium information. `
+Payment Processing MARx calculates monthly Medicare payments for each Plan and generates payment adjustments when changes in membership and/or beneficiary health status occur. Monthly reports detail enrollment and payment information for the plans and CMS. Premium Processing MARx receives and processes transactions impacting Part C and Part D premiums, Medicare Part B Reduction, and Medicare Part C/D Plan enrollment status. Beneficiaries may elect to have their premiums withheld from their Social Security Administration (SSA) or Railroad Retirement Board (RRB) checks. MARx is responsible for interfacing with SSA or RRB to establish or terminate withholding and tracks expected withholding amounts. Once the withholding agency completes processing each transaction, a response is sent back to MARx informing CMS of the withholding agency's acceptance or rejection of each of the individual premium withholding requests, cancellations, statuses, and amounts. The withholding agency's acceptance or rejection of the transactions is communicated to the Plans. The Premium Withhold Accounting functionality was implemented to reconcile the withheld premium amounts. Based on reconciliation of the expected and actual premium amounts, the premium dollars to be included in a plan's payment are determined. `,
+      components: [
+        {
+          header: 'User Interface',
+          level: 'h4',
+          description:
+            'The MARx application includes online processing capabilities. The MARx User Interface (UI) provides Plans and CMS the ability to view and update beneficiary, enrollment, payment, and premium information.',
+          items: []
+        },
+        {
+          header: 'Functions',
+          items: [
+            'Responsible for the enrollment of beneficiaries into Medicare Advantage and Part D plans',
+            'Calculates monthly premiums for Part D plans, Medicare Advantage plan providers and Part D plan providers',
+            'Generates the payment file used to pay plan providers',
+            'Provides withholding information to SSA so that monthly premiums are deducted from a beneficiaries SSA check'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        ' if your model will use MARx or if you have any questions. ',
+      items: []
     }
   },
   outlookMailbox: {
     about: {
-      heading:
+      description:
         'Set up an email address through Outlook Mailbox, so all your model communications will funnel into a single place.'
+    },
+    timeline: {
+      description:
+        'It takes a minimum of 1-2 weeks for a mailbox to be set up.',
+      items: [
+        {
+          header: 'Submit request',
+          description:
+            'From the CMS Connect app on your desktop, search for “Create or manage a resource mailbox” or “Mailbox request.” You’ll need to provide the following information:',
+          items: [
+            'Request type (Create a new resource mailbox)',
+            // @ts-ignore
+            {
+              items: [
+                'Mailbox name (Please be specific. For example: CMS OP Feedback).',
+                'Mailbox email address (For example: OPFeedback@cms.hhs.gov).',
+                'Include the CMS Owner(s) name(s) of the primary mailbox owner/backup owner .',
+                'List of all who will need full access to the mailbox (CMS email addresses only).',
+                'Will this mailbox be primarily used as a calendar?.',
+                'If yes, will there be dedicated people that will be entering or approving appointments in the calendar, or will the calendar automatically accept appointments?.',
+                'Any other special requirements for the mailbox'
+              ]
+            },
+            'Requested by date',
+            'Description',
+            'Business justification',
+            'Add attachments associated with the request (optional)'
+          ],
+          description2:
+            'If you’d rather submit a request by email, please send the above information to {{email}}'
+        },
+        {
+          header: 'Mailbox created',
+          description:
+            'You will be notified by email when your mailbox is created. The email will contain instructions on how to add the mailbox.'
+        }
+      ]
     }
   },
   qualityVertical: {
     about: {
-      heading:
-        'The Quality Vertical is responsible for developing and implementing the Center’s overall quality strategy and disseminating that information vertically. They do this by working with model teams as they develop and implement their model quality strategies. '
+      description:
+        'The Quality Vertical is responsible for developing and implementing the Center’s overall quality strategy and disseminating that information vertically. They do this by working with model teams as they develop and implement their model quality strategies.',
+      components: [
+        {
+          header: 'Services provided',
+          items: [
+            'Guidance in quality measure selection and recommendations for usage',
+            'Assistance in developing a new quality measure',
+            'Technical assistance to model teams'
+          ]
+        },
+        {
+          header: 'Additional resources',
+          links: [
+            'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+            'https://mmshub.cms.gov/mms-tools',
+            'https://qpp.cms.gov/'
+          ],
+          items: [
+            'Quality Vertical Model Resources on SharePoint',
+            'Measure Management System (MMS) Tools',
+            'Quality Payment Program'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Timing for working with the Quality Vertical varies based on the model’s needs though it is best to reach out as early as possible. ',
+      items: [
+        {
+          header: 'Reach out to Quality Vertical',
+          description:
+            'Early in model development, model teams should reach out to one of the Quality Vertical leads, Alesia Hovatter, Susannah Bernheim, or Dustin Allison. The QV team meets Wednesdays to discuss, so new models should be prepared to join and share information about their model concept. '
+        },
+        {
+          header: 'QV assists the model team',
+          description:
+            'The level of QV involvement varies by model. QV will provide a template to model teams to help decide which quality measures to use. A member of QV may also be assigned to attend weekly meetings with the model team to assist with their quality efforts throughout the development process.'
+        },
+        {
+          header: 'QV reviews quality measures before clearance',
+          description:
+            'Before entering clearance, the model’s quality measures must be reviewed by QV.'
+        }
+      ]
     }
   },
   rmada: {
     about: {
-      heading: `Research, Measurement, Assessment, Design, and Analysis (RMADA) Indefinite Delivery Indefinite Quantity 2 (IDIQ) umbrella contract, the Centers for Medicare & Medicaid Services (CMS) shall award task orders (TOs) for a wide range of analytic support and technical assistance activities that support models and demonstration programs created or derived under the auspices of the Patient Protection & Affordable Care Act (ACA), the Medicare Access and CHIP Reauthorization Act (MACRA), other non-ACA statutes, and future health reform legislation. Supporting all aspects of model design and operations (with the exception of information technology);
-    Conducting program, data and environmental analyses
-    Assisting with application development and review
-    Monitoring model site implementations
-    Designing and carrying out surveys and other primary data collection activities
-    Obtaining and analyzing secondary data sources including data regarding Medicare, Medicaid, and the Children’s Health Insurance Program (CHIP) and data from private payer sources needed to support model design, operations and evaluations
-    Reporting on formative and summative analyses
-    Providing rapid cycle evaluation feedback to CMS and/or model participants
-    Creating summative reports of annual and final program findings
-    Assist in the development of program templates, tools, toolkits, and driver diagrams
-    Support stakeholder engagement and training
-    Provide data analysis/ integration support
-    Assist in the development of program specific technical/policy resource guides and informational/ educational/ briefing materials
-    Provide grant proposal reviews and summarization reports
-    In addition to the aforementioned list of required tasks, the Contractor may be asked to work with CMS on matters pertaining to developing and implementing learning systems to support accelerated learning, improvement, and dissemination of promising practices.`
+      description: `Research, Measurement, Assessment, Design, and Analysis (RMADA) Indefinite Delivery Indefinite Quantity 2 (IDIQ) umbrella contract, the Centers for Medicare & Medicaid Services (CMS) shall award task orders (TOs) for a wide range of analytic support and technical assistance activities that support models and demonstration programs created or derived under the auspices of the Patient Protection & Affordable Care Act (ACA), the Medicare Access and CHIP Reauthorization Act (MACRA), other non-ACA statutes, and future health reform legislation. Supporting all aspects of model design and operations (with the exception of information technology);`,
+      items: [
+        'Conducting program, data and environmental analyses',
+        'Assisting with application development and review',
+        'Monitoring model site implementations',
+        'Designing and carrying out surveys and other primary data collection activities',
+        'Obtaining and analyzing secondary data sources including data regarding Medicare, Medicaid, and the Children’s Health Insurance Program (CHIP) and data from private payer sources needed to support model design, operations and evaluations',
+        'Reporting on formative and summative analyses',
+        'Providing rapid cycle evaluation feedback to CMS and/or model participants',
+        'Creating summative reports of annual and final program findings',
+        'Assist in the development of program templates, tools, toolkits, and driver diagrams',
+        'Support stakeholder engagement and training',
+        'Provide data analysis/ integration support',
+        'Assist in the development of program specific technical/policy resource guides and informational/ educational/ briefing materials',
+        'Provide grant proposal reviews and summarization reports',
+        'In addition to the aforementioned list of required tasks, the Contractor may be asked to work with CMS on matters pertaining to developing and implementing learning systems to support accelerated learning, improvement, and dissemination of promising practices.'
+      ]
+    },
+    timeline: {
+      description:
+        'Model teams should follow the {{link}} standards to determine when to being working with RMADA.',
+      items: [],
+      links: ['Procurement Administrative Lead Time (PALT)']
     }
   },
   ars: {
     about: {
-      heading:
-        'The Salesforce Application Review and Scoring (ARS) allows model teams to track a panel’s review and scoring of the submitted applications to a participation agreement model.'
+      description:
+        'The Salesforce Application Review and Scoring (ARS) allows model teams to track a panel’s review and scoring of the submitted applications to a participation agreement model.',
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Portal registration',
+            'User access management',
+            'Model application management',
+            'Organization management',
+            'Contact management',
+            'Practitioner submission & tracking',
+            'Submission Period management',
+            'Case management',
+            'File submission / approval',
+            'Mass file download',
+            'File tracker / dashboard',
+            'Annual / quarterly deliverable management',
+            'Attestation management',
+            'Corrective action planning',
+            'Events, tasks, email / templates',
+            'Reports',
+            'Dashboards',
+            'Single Sign On (OKTA) w/ MFA',
+            'RIDP (Remote Identity Proofing)',
+            'Anti-virus file scanning'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
+            'Enable the collection of information and the exchange of documents',
+            'Track/monitor model participant deliverable submission and compliance',
+            'Enter/escalate questions/issues to support contractors'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'It can take 3-5 months for a model to use Salesforce, but you should submit an onboarding request as soon as you know your model will utilize the tool. Below are the steps involved in the process.',
+      items: [
+        {
+          header: 'Submit an onboarding request',
+          description:
+            'Submit an onboarding request via the Salesforce Change Management Tool (CMT). You will need to provide the following information:',
+          items: [
+            'Request type, title, component',
+            'Priority',
+            'Requester contact information',
+            'Program/model name and point of contact information',
+            'Project type (for example: Letter of Intent)',
+            'Description of onboarding request',
+            'Desired implementation/go-live date and impact if that date deadline is missed'
+          ]
+        },
+        {
+          header: 'Discovery'
+        },
+        {
+          header: 'Requirements gathering'
+        },
+        {
+          header: 'Development (sprints)'
+        },
+        {
+          header: 'Testing'
+        },
+        {
+          header: 'Deployment'
+        }
+      ],
+      links: ['Go to Salesforce cCMT']
     }
   },
   salesforceConnect: {
     about: {
-      heading:
-        'The Salesforce.com Connect Communities are configured applications that enable the exchange of information between model participants, model teams, and support contractors in a secure manner.'
+      description:
+        'The Salesforce.com Connect Communities are configured applications that enable the exchange of information between model participants, model teams, and support contractors in a secure manner.',
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Define groups',
+            'Communicate events',
+            'Live chat feed',
+            'Share Q&A',
+            'Share documents & links',
+            'Follow topics',
+            'Global search'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Provide a secure community where model participants, practicioners (doctors and nurses), model teams, vendors, and experts can collaborate on model goals',
+            'Store, share and organize learning materials',
+            'Ask and answer questions, FAQs',
+            'Host and facilitate events'
+          ]
+        }
+      ]
     }
   },
   salesforceLOI: {
     about: {
-      heading:
-        'The Salesforce Letter of Intent (LOI) is a website that allows model teams to collect information to gauge the level of industry interest in a participation agreement model.'
+      description:
+        'The Salesforce Letter of Intent (LOI) is a website that allows model teams to collect information to gauge the level of industry interest in a participation agreement model.',
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Portal registration',
+            'User access management',
+            'Model application management',
+            'Organization management',
+            'Contact management',
+            'Practitioner submission & tracking',
+            'Submission Period management',
+            'Case management',
+            'File submission / approval',
+            'Mass file download',
+            'File tracker / dashboard',
+            'Annual / quarterly deliverable management',
+            'Attestation management',
+            'Corrective action planning',
+            'Events, tasks, email / templates',
+            'Reports',
+            'Dashboards',
+            'Single Sign On (OKTA) w/ MFA',
+            'RIDP (Remote Identity Proofing)',
+            'Anti-virus file scanning'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
+            'Enable the collection of information and the exchange of documents',
+            'Track/monitor model participant deliverable submission and compliance',
+            'Enter/escalate questions/issues to support contractors'
+          ]
+        }
+      ]
     }
   },
   salesforcePortal: {
     about: {
-      heading:
-        'The Salesforce Project Officer Support Tool/Portal (POST/PORTAL) enables the collection of data to monitor the model and support model evaluation. It also enables interaction with awardees and participants and the sending of reports/data to those participants.'
+      description:
+        'The Salesforce Project Officer Support Tool/Portal (POST/PORTAL) enables the collection of data to monitor the model and support model evaluation. It also enables interaction with awardees and participants and the sending of reports/data to those participants.',
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Portal registration',
+            'User access management',
+            'Model application management',
+            'Organization management',
+            'Contact management',
+            'Practitioner submission & tracking',
+            'Submission Period management',
+            'Case management',
+            'File submission / approval',
+            'Mass file download',
+            'File tracker / dashboard',
+            'Annual / quarterly deliverable management',
+            'Attestation management',
+            'Corrective action planning',
+            'Events, tasks, email / templates',
+            'Reports',
+            'Dashboards',
+            'Single Sign On (OKTA) w/ MFA',
+            'RIDP (Remote Identity Proofing)',
+            'Anti-virus file scanning'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
+            'Enable the collection of information and the exchange of documents',
+            'Track/monitor model participant deliverable submission and compliance',
+            'Enter/escalate questions/issues to support contractors'
+          ]
+        }
+      ]
     }
   },
   salesforceRequestApplication: {
     about: {
-      heading:
-        'The Salesforce Request for Application (RFA) allows model teams to collect applications from organizations that want to participate in a participation agreement model.'
+      description:
+        'The Salesforce Request for Application (RFA) allows model teams to collect applications from organizations that want to participate in a participation agreement model.',
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'Portal registration',
+            'User access management',
+            'Model application management',
+            'Organization management',
+            'Contact management',
+            'Practitioner submission & tracking',
+            'Submission Period management',
+            'Case management',
+            'File submission / approval',
+            'Mass file download',
+            'File tracker / dashboard',
+            'Annual / quarterly deliverable management',
+            'Attestation management',
+            'Corrective action planning',
+            'Events, tasks, email / templates',
+            'Reports',
+            'Dashboards',
+            'Single Sign On (OKTA) w/ MFA',
+            'RIDP (Remote Identity Proofing)',
+            'Anti-virus file scanning'
+          ]
+        },
+        {
+          header: 'Product capabilities',
+          items: [
+            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
+            'Enable the collection of information and the exchange of documents',
+            'Track/monitor model participant deliverable submission and compliance',
+            'Enter/escalate questions/issues to support contractors'
+          ]
+        }
+      ]
     }
   },
   sharedSystems: {
     about: {
-      heading: `The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME). 
+      description: `The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME). 
 
-    Beneficiaries visit a provider of Medicare services, and that provider files a claim with their Medicare Administrative Contractor (MAC). The MAC processes and pays the claim, and sends a remittance to advise the provider and a Medicare Summary Notice (MSN) to the beneficiary. There are many Centers and Offices that receive the Medicare legislation that determines policies; those become change requests implemented through quarterly releases by the Shared System Maintainers (SSM) and the MACs.
+Beneficiaries visit a provider of Medicare services, and that provider files a claim with their Medicare Administrative Contractor (MAC). The MAC processes and pays the claim, and sends a remittance to advise the provider and a Medicare Summary Notice (MSN) to the beneficiary. There are many Centers and Offices that receive the Medicare legislation that determines policies; those become change requests implemented through quarterly releases by the Shared System Maintainers (SSM) and the MACs.
     
-    The following systems are a part of Shared Systems:`
+The following systems are a part of Shared Systems:`,
+      components: [
+        {
+          header: 'Fiscal Intermediary Shared System (FISS)',
+          description:
+            'The FISS is the shared system that processes Medicare Part A claims, including outpatient claims submitted under Part B. It interfaces directly with the Common Working File (CWF) system for verification, validation, and payment authorization. Claims are entered, corrected, adjusted, or canceled. Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.',
+          items: []
+        },
+        {
+          header: 'Functions',
+          level: 'h4',
+          items: [
+            'Functions',
+            'Adjudication of Part A and Part B institutional claims',
+            'FISS is a mainframe system Medicare Part A contractors use to process Medicare Part A and Part B institutional claims nationwide.',
+            'Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.'
+          ]
+        },
+        {
+          header: 'Multi-Carrier System (MCS)',
+          description:
+            'MCS is a mainframe system that Medicare Part B carriers use to process Medicare Part B Claims nationwide. It processes claims for physician care, DME, and other outpatient services. Like its Part A counterpart, claims are entered, corrected, adjusted, or canceled. Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.',
+          items: []
+        },
+        {
+          header: 'Functions',
+          level: 'h4',
+          items: [
+            'Functions',
+            'The MCS is the shared system that processes Medicare Part B claims for physician care and other outpatient services nationwide.',
+            'It interfaces directly with the CWF.',
+            'It meets CMS core requirements for processing Medicare Part B claims, including data collection and validation, claims control, pricing, adjudication, correspondence, online inquiry, file maintenance, reimbursement, and financial processing.'
+          ]
+        },
+        {
+          header: 'ViPS Medicare Shared System (VMS)',
+          description:
+            'VMS is the standard FFS system that processes Durable Medical Equipment Prosthetics, Orthotics, and Supplies (DMEPOS) claims for claim adjudication and payment. Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.',
+          items: []
+        },
+        {
+          header: 'Functions',
+          level: 'h4',
+          items: [
+            'Functions',
+            'GDIT maintains the VMS software that processes DME claims through adjudication and payment and for Medical Review.',
+            'The VMS claims processing system is the shared system that processes claims for physician and other practitioner services, prior authorization, diagnostic tests, ambulance services, DMEPOS, and other services/supplies not covered by Part A. It interfaces directly with the CWF for verification, validation, and payment authorization.'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'The timing for using Shared Systems varies by model. It’s best to reach out during model design, so they know of upcoming work.',
+      items: [
+        {
+          header: 'Reach out to Donna Schmidt',
+          description:
+            'Early in the process, contact Donna Schmidt to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.'
+        },
+        {
+          header: 'Draft a Change Request (CR)',
+          description: `Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented.
+
+There are two types of CRs:`,
+          items: [
+            'Analysis CR - This type of CR is recommended for model teams still figuring out what to do for the model. Essentially, this is a request to talk and collaborate with the Medicare Administrative Contractor (MAC) and Shared System Maintainers (SSM) on what will work for the model. It’s best to do an anaylsis CR a year before changes need made.',
+            'Implementation CR - This type of CR is for implementing the necessary changes to support the model. It’s best to submit these at least six months prior to needing the changes made.'
+          ]
+        },
+        {
+          header: 'Development starts',
+          description:
+            'MACs and SSMs implement the changes specified in the CR to support the model.'
+        },
+        {
+          header: 'Change is released',
+          description: 'Releases happen quarterly.'
+        }
+      ]
     }
   }
 };
@@ -350,6 +1626,14 @@ const helpAndKnowledge = {
   },
   backToSolutions: 'Back to solutions',
   moreContacts: 'More points of contact',
+  systemOwner: 'System owner',
+  contractors: 'Contractors',
+  gatheringInfoAlert: {
+    header: 'We’re still gathering information about ',
+    description:
+      'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov',
+    description2: 'if you have any questions.'
+  },
 
   categories: solutionCategoryies,
   solutions

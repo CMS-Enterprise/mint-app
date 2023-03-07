@@ -17,14 +17,11 @@ describe('Operation Solution Contact', () => {
     const { getByText } = render(
       <MemoryRouter
         initialEntries={[
-          '/help-and-knowledge/operational-solutions/solution/accountable-care-organization/about'
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
         ]}
       >
-        <Route path="/help-and-knowledge/operational-solutions/solution/:solution/:page?">
-          <Contact
-            contact={contact}
-            solutionRoute="chronic-conditions-warehouse"
-          />
+        <Route path="/help-and-knowledge/operational-solutions">
+          <Contact contact={contact} />
         </Route>
       </MemoryRouter>
     );
@@ -35,14 +32,11 @@ describe('Operation Solution Contact', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/help-and-knowledge/operational-solutions/solution/accountable-care-organization/about'
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
         ]}
       >
-        <Route path="/help-and-knowledge/operational-solutions/solution/:solution/:page?">
-          <Contact
-            contact={contact}
-            solutionRoute="chronic-conditions-warehouse"
-          />
+        <Route path="/help-and-knowledge/operational-solutions">
+          <Contact contact={contact} />
         </Route>
       </MemoryRouter>
     );

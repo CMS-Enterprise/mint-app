@@ -1,21 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { SolutionContactType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import { formatQueryParam } from '../../Modal';
+
 import './index.scss';
 
-export const Contact = ({
-  contact,
-  solutionRoute
-}: {
-  contact: SolutionContactType;
-  solutionRoute: string;
-}) => {
+export const Contact = ({ contact }: { contact: SolutionContactType }) => {
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
+
+  const location = useLocation();
+
+  const paramValues = location.search.substring(1).split('&');
 
   return (
     <div className="point-of-contact margin-top-6">
@@ -41,7 +42,7 @@ export const Contact = ({
       </Link>
 
       <UswdsReactLink
-        to={`/help-and-knowledge/operational-solutions/solution/${solutionRoute}/points-of-contact`}
+        to={formatQueryParam(paramValues, 'points-of-contact')}
         className="display-flex flex-align-center"
       >
         {t('moreContacts')}

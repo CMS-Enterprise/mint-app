@@ -1,0 +1,5 @@
+@use 'uswds-core' as *;
+
+.task-list-alert {
+    background-color: color($theme-color-info-lighter);
+}
