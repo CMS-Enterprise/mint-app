@@ -118,8 +118,8 @@ const Subtasks = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          console.log(`it worked`);
-          console.log(response);
+          console.log(`it worked`); // eslint-disable-line
+          console.log(response);// eslint-disable-line
         }
       })
       .catch(errors => {
@@ -171,10 +171,10 @@ const Subtasks = () => {
                 const {
                   dirty,
                   errors,
-                  setErrors,
                   handleSubmit,
-                  values,
-                  setFieldValue
+                  setErrors,
+                  setFieldValue,
+                  values
                 } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
@@ -246,10 +246,7 @@ const Subtasks = () => {
                               value={key}
                               checked={values.status === key}
                               onChange={() => {
-                                setFieldValue(
-                                  'beneficiarySelectionFrequency',
-                                  key
-                                );
+                                setFieldValue('status', key);
                               }}
                             />
                           ))}
