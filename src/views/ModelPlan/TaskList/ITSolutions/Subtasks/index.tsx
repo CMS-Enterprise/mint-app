@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   Grid,
@@ -18,14 +18,19 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperationalSolutionSubtasks';
 // import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
+import {
+  CreateOperationalSolutionSubtasks as CreateSubTasksType,
+  CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateSubtasksFormType,
+  CreateOperationalSolutionSubtasksVariables
+} from 'queries/ITSolutions/types/CreateOperationalSolutionSubtasks';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { GetOperationalSolutionSubtasks_operationalSolution_operationalSolutionSubtasks as SubtasksType } from 'queries/ITSolutions/types/GetOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateSubtasks } from 'utils/modelPlan';
@@ -81,13 +86,45 @@ const Subtasks = () => {
     { text: t('addSubtask') }
   ];
 
-  const formikRef = useRef<FormikProps<SubtasksType>>(null);
-  const initialValues: SubtasksType = {
+  const formikRef = useRef<FormikProps<CreateSubtasksFormType>>(null);
+
+  const initialValues: CreateSubtasksFormType = {
     __typename: 'OperationalSolutionSubtask',
-    id: '',
-    solutionID: operationalSolutionID,
     name: '',
     status: OperationalSolutionSubtaskStatus.TODO
+  };
+
+  const [create] = useMutation<
+    CreateSubTasksType,
+    CreateOperationalSolutionSubtasksVariables
+  >(CreateOperationalSolutionSubtasks);
+
+  const handleFormSubmit = (formikValues: CreateSubtasksFormType) => {
+    if (!formikValues.name) {
+      formikRef?.current?.setFieldError('name', 'Enter the Subtask name');
+      return;
+    }
+    const { name, status } = formikValues;
+    create({
+      variables: {
+        solutionID: operationalSolutionID,
+        inputs: [
+          {
+            name,
+            status
+          }
+        ]
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          console.log(`it worked`);
+          console.log(response);
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
   };
 
   if (error || !solution) {
@@ -124,13 +161,13 @@ const Subtasks = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={values => {
-                // handleFormSubmit(values);
-                console.log(values); // eslint-disable-line
+                handleFormSubmit(values);
+                // console.log(values); // eslint-disable-line
               }}
               enableReinitialize
               innerRef={formikRef}
             >
-              {(formikProps: FormikProps<SubtasksType>) => {
+              {(formikProps: FormikProps<CreateSubtasksFormType>) => {
                 const {
                   dirty,
                   errors,
