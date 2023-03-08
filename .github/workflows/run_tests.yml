@@ -125,7 +125,6 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   e2e_tests:
-    if: ${{ false }} # Disabled until we can pull images to test from ECR
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
