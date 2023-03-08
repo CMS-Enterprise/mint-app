@@ -41,7 +41,11 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-const Subtasks = () => {
+const Subtasks = ({
+  addAnotherSubtask = false
+}: {
+  addAnotherSubtask?: boolean;
+}) => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -150,7 +154,8 @@ const Subtasks = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addSubtask')}
+            {/* {t('addSubtask')} */}
+            {addAnotherSubtask ? t('addAnotherSubtask') : t('addSubtask')}
           </PageHeading>
 
           <p
@@ -267,7 +272,11 @@ const Subtasks = () => {
                         <Button
                           type="button"
                           id="add-another-subtask"
-                          onClick={() => console.log(`adding another subtask`)} // eslint-disable-line
+                          onClick={() =>
+                            history.push(
+                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-another-subtasks`
+                            )
+                          }
                           outline
                         >
                           {t('addAnotherSubtask')}

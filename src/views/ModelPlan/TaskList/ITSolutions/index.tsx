@@ -96,6 +96,13 @@ const ITSolutions = () => {
             </Route>
 
             <Route
+              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-another-subtasks"
+              exact
+            >
+              <Subtasks addAnotherSubtask />
+            </Route>
+
+            <Route
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents"
               exact
             >
