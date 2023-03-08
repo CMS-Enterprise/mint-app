@@ -46,9 +46,12 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		).
 		AnyTimes()
 
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
-		DefaultSender: "unit-test-execution@mint.cms.gov",
 	}
 
 	mockEmailService.
@@ -62,6 +65,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		s.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
+		addressBook,
 		collaboratorInput,
 		s.testConfigs.Principal,
 		s.testConfigs.Store,

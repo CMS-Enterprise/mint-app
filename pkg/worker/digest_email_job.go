@@ -99,7 +99,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	}
 
 	// Send generated email
-	err = sendDigestEmail(recipientEmail, emailSubject, emailBody, w.EmailService)
+	err = sendDigestEmail(recipientEmail, emailSubject, emailBody, w.EmailService, w.AddressBook)
 	if err != nil {
 		return err
 	}
@@ -163,8 +163,21 @@ func generateDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateSe
 }
 
 // sendDigestEmail will send the daily digest email to given recipient
-func sendDigestEmail(recipient string, subject string, body string, emailService oddmail.EmailService) error {
-	err := emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{recipient}, nil, subject, "text/html", body)
+func sendDigestEmail(
+	recipient string,
+	subject string,
+	body string,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	err := emailService.Send(
+		addressBook.DefaultSender,
+		[]string{recipient},
+		nil,
+		subject,
+		"text/html",
+		body,
+	)
 	if err != nil {
 		return err
 	}

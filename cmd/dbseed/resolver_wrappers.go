@@ -21,10 +21,23 @@ import (
 
 // createModelPlan is a wrapper for resolvers.ModelPlanCreate
 // It will panic if an error occurs, rather than bubbling the error up
-func (s *Seeder) createModelPlan(modelName string, euaID string) *models.ModelPlan {
+func (s *Seeder) createModelPlan(
+	modelName string,
+	euaID string,
+) *models.ModelPlan {
 
 	princ := s.getTestPrincipalByUsername(euaID)
-	plan, err := resolvers.ModelPlanCreate(context.Background(), s.Config.Logger, modelName, s.Config.Store, princ, userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo))
+	plan, err := resolvers.ModelPlanCreate(
+		context.Background(),
+		s.Config.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		modelName,
+		s.Config.Store,
+		princ,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
+	)
 	if err != nil {
 		panic(err)
 	}
@@ -87,6 +100,7 @@ func (s *Seeder) addPlanCollaborator(
 		s.Config.Logger,
 		emailService,
 		emailTemplateService,
+		email.AddressBook{},
 		input,
 		princ,
 		s.Config.Store,

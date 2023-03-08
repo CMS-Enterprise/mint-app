@@ -5,6 +5,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/golang/mock/gomock"
@@ -19,9 +21,13 @@ func (suite *WorkerSuite) TestDigestEmail() {
 	// Setup email
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
+
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
-		DefaultSender: "unit-test-execution@mint.cms.gov",
 	}
 
 	mockEmailService.
@@ -35,6 +41,7 @@ func (suite *WorkerSuite) TestDigestEmail() {
 		Logger:               suite.testConfigs.Logger,
 		EmailService:         mockEmailService,
 		EmailTemplateService: suite.testConfigs.EmailTemplateService,
+		AddressBook:          addressBook,
 	}
 
 	mp := suite.createModelPlan("Test Plan")
@@ -190,9 +197,13 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 	// Setup email
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
+
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
-		DefaultSender: "unit-test-execution@mint.cms.gov",
 	}
 
 	mockEmailService.
@@ -206,6 +217,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		Logger:               suite.testConfigs.Logger,
 		EmailService:         mockEmailService,
 		EmailTemplateService: suite.testConfigs.EmailTemplateService,
+		AddressBook:          addressBook,
 	}
 
 	date := time.Now().UTC().Format("2006-01-02")
