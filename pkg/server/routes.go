@@ -158,7 +158,11 @@ func (s *Server) routes(
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
-	emailServiceConfig.DefaultSender = s.Config.GetString(appconfig.EmailSenderKey)
+
+	addressBook := email.AddressBook{
+		DefaultSender: s.Config.GetString(appconfig.EmailSenderKey),
+		MINTTeamEmail: s.Config.GetString(appconfig.MINTTeamEmailKey),
+	}
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
@@ -204,6 +208,7 @@ func (s *Server) routes(
 		&s3Client,
 		emailService,
 		emailTemplateService,
+		addressBook,
 		ldClient,
 		s.pubsub,
 	)
@@ -281,6 +286,7 @@ func (s *Server) routes(
 		Logger:               s.logger,
 		EmailService:         emailService,
 		EmailTemplateService: *emailTemplateService,
+		AddressBook:          addressBook,
 		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
 		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
 	}

@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -11,7 +13,17 @@ import (
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	result, err := ModelPlanCreate(
+		context.Background(),
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planName,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)

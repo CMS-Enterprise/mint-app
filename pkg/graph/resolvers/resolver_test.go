@@ -44,7 +44,17 @@ func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username stri
 }
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	mp, err := ModelPlanCreate(
+		context.Background(),
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planName,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
 	suite.NoError(err)
 	return mp
 }
@@ -81,9 +91,12 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
-		DefaultSender: "unit-test-execution@mint.cms.gov",
 	}
 
 	mockEmailService.
@@ -116,6 +129,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
+		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

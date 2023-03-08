@@ -155,7 +155,16 @@ func TestGraphQLTestSuite(t *testing.T) {
 	resolverService.FetchUserInfo = oktaClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
-	resolver := NewResolver(store, resolverService, &s3Client, *emailService, emailTemplateService, ldClient, ps)
+	resolver := NewResolver(
+		store,
+		resolverService,
+		&s3Client,
+		*emailService,
+		emailTemplateService,
+		email.AddressBook{},
+		ldClient,
+		ps,
+	)
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 
