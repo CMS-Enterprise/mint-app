@@ -135,7 +135,7 @@ def up(frontend_included, *args, debug:false, wait:false)
 
   contribsys_docker_login
 
-  command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
+  command = "docker compose #{"--profile frontend" if frontend_included } up --build"
 
   if args.any?
     command = "#{command} #{args.join(' ')}"
@@ -205,7 +205,7 @@ end
 
 desc "Stops all services in the project"
 task :down do
-  sh "docker-compose --profile frontend down"
+  sh "docker compose --profile frontend down"
 end
 
 desc "Restart the specified container"
