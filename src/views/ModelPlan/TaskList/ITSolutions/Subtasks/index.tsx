@@ -51,7 +51,7 @@ const Subtasks = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, error } = useQuery<
+  const { data: solutionData, error } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -62,10 +62,10 @@ const Subtasks = () => {
 
   const solution = useMemo(() => {
     return (
-      data?.operationalSolution ||
+      solutionData?.operationalSolution ||
       ({} as GetOperationalSolutionOperationalSolutionType)
     );
-  }, [data?.operationalSolution]);
+  }, [solutionData?.operationalSolution]);
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
