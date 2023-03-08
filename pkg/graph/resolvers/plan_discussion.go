@@ -22,6 +22,7 @@ func CreatePlanDiscussion(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	input *model.PlanDiscussionCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
@@ -45,7 +46,8 @@ func CreatePlanDiscussion(
 		logger,
 		emailService,
 		emailTemplateService,
-		"", // TODO: after merging other feat to main use this - emailService.GetConfig().GetDevTeamEmail(),
+		addressBook,
+		addressBook.MINTTeamEmail,
 		result,
 		input.ModelPlanID,
 	)
@@ -59,6 +61,7 @@ func sendPlanDiscussionCreatedEmail(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	receiverEmail string,
 	planDiscussion *models.PlanDiscussion,
 	modelPlanID uuid.UUID,
@@ -96,7 +99,7 @@ func sendPlanDiscussionCreatedEmail(
 		return err
 	}
 
-	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}

@@ -78,6 +78,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

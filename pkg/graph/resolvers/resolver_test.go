@@ -69,6 +69,7 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

@@ -4,6 +4,8 @@ import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -21,6 +23,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -51,6 +54,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		input,
 		regularUserPrincipal,
 		suite.testConfigs.Store,
