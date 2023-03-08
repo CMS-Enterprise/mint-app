@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OperationalSolutionKey, OpSolutionStatus, DocumentType } from "./../../../types/graphql-global-types";
+import { OperationalSolutionKey, OpSolutionStatus, DocumentType, OperationalSolutionSubtaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOperationalSolution
@@ -25,6 +25,12 @@ export interface GetOperationalSolution_operationalSolution_documents {
   numLinkedSolutions: number;
 }
 
+export interface GetOperationalSolution_operationalSolution_operationalSolutionSubtasks {
+  __typename: "OperationalSolutionSubtask";
+  name: string;
+  status: OperationalSolutionSubtaskStatus;
+}
+
 export interface GetOperationalSolution_operationalSolution {
   __typename: "OperationalSolution";
   id: UUID;
@@ -38,6 +44,7 @@ export interface GetOperationalSolution_operationalSolution {
   mustFinishDts: Time | null;
   mustStartDts: Time | null;
   documents: GetOperationalSolution_operationalSolution_documents[];
+  operationalSolutionSubtasks: GetOperationalSolution_operationalSolution_operationalSolutionSubtasks[];
 }
 
 export interface GetOperationalSolution {

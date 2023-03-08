@@ -27,6 +27,10 @@ export default gql`
         otherType
         numLinkedSolutions
       }
+      operationalSolutionSubtasks {
+        name
+        status
+      }
     }
   }
 `;
