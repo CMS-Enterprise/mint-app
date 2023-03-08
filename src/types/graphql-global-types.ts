@@ -564,6 +564,11 @@ export enum WaiverType {
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
+export interface CreateOperationalSolutionSubtaskInput {
+  name: string;
+  status: OperationalSolutionSubtaskStatus;
+}
+
 /**
  * DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
  */
@@ -984,6 +989,16 @@ export interface PlanPaymentsChanges {
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface UpdateOperationalSolutionSubtaskChangesInput {
+  name: string;
+  status: OperationalSolutionSubtaskStatus;
+}
+
+export interface UpdateOperationalSolutionSubtaskInput {
+  id: UUID;
+  changes: UpdateOperationalSolutionSubtaskChangesInput;
 }
 
 //==============================================================
