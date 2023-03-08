@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactGA from 'react-ga4';
 import { Provider } from 'react-redux';
 import {
   ApolloClient,
@@ -28,6 +29,14 @@ import store from './store';
 import './index.scss';
 
 const apiHost = new URL(process.env.REACT_APP_API_ADDRESS || '').host;
+
+ReactGA.initialize([
+  {
+    trackingId: 'G-45PX7VBWQK',
+    gaOptions: {}, // optional
+    gtagOptions: {} // optional
+  }
+]);
 
 /**
  * Extract auth token from local storage and return a header

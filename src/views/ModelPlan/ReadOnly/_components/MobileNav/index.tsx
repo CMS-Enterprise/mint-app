@@ -17,14 +17,14 @@ interface MobileNavProps {
   subComponents: subComponentsProps;
   subinfo: SubpageKey;
   isHelpArticle: boolean | undefined;
-  solutionDetail?: boolean;
+  solutionDetailRoute?: string;
 }
 
 const MobileNav = ({
   subComponents,
   subinfo,
   isHelpArticle,
-  solutionDetail = false
+  solutionDetailRoute
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
@@ -41,7 +41,7 @@ const MobileNav = ({
     }
   }, [isMobile]);
 
-  const translationKey = solutionDetail ? hk : t;
+  const translationKey = solutionDetailRoute ? hk : t;
 
   return (
     <div className="read-only-model-plan__subNav-accordion">
@@ -87,15 +87,11 @@ const MobileNav = ({
             ))}
             <li className="subNav__item--back-to-all-models">
               <NavLink
-                to={
-                  solutionDetail
-                    ? '/help-and-knowledge/operational-solutions'
-                    : '/models'
-                }
+                to={solutionDetailRoute || '/models'}
                 className="display-flex flex-align-center"
               >
                 <IconArrowBack className="margin-right-1" />
-                {solutionDetail ? hk('backToSolutions') : h('back')}
+                {solutionDetailRoute ? hk('backToSolutions') : h('back')}
               </NavLink>
             </li>
           </ul>

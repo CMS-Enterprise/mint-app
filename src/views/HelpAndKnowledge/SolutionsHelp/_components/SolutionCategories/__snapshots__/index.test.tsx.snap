@@ -46,7 +46,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/applications"
+                  href="/help-and-knowledge/operational-solutions?category=applications"
                 >
                   Learn more
                   <svg
@@ -94,7 +94,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/communication-tools"
+                  href="/help-and-knowledge/operational-solutions?category=communication-tools"
                 >
                   Learn more
                   <svg
@@ -142,7 +142,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/contractors-and-contract-vehicles"
+                  href="/help-and-knowledge/operational-solutions?category=contractors-and-contract-vehicles"
                 >
                   Learn more
                   <svg
@@ -190,7 +190,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/database-and-data-management"
+                  href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                 >
                   Learn more
                   <svg
@@ -238,7 +238,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/data-exchange"
+                  href="/help-and-knowledge/operational-solutions?category=data-exchange"
                 >
                   Learn more
                   <svg
@@ -286,7 +286,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/data-reporting"
+                  href="/help-and-knowledge/operational-solutions?category=data-reporting"
                 >
                   Learn more
                   <svg
@@ -334,7 +334,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/help-desks"
+                  href="/help-and-knowledge/operational-solutions?category=help-desks"
                 >
                   Learn more
                   <svg
@@ -382,7 +382,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/learning"
+                  href="/help-and-knowledge/operational-solutions?category=learning"
                 >
                   Learn more
                   <svg
@@ -430,7 +430,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/legal"
+                  href="/help-and-knowledge/operational-solutions?category=legal"
                 >
                   Learn more
                   <svg
@@ -478,7 +478,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/medicare-advantage-and-part-d"
+                  href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                 >
                   Learn more
                   <svg
@@ -526,7 +526,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/medicare-fee-for-service"
+                  href="/help-and-knowledge/operational-solutions?category=medicare-fee-for-service"
                 >
                   Learn more
                   <svg
@@ -574,7 +574,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions/categories/quality"
+                  href="/help-and-knowledge/operational-solutions?category=quality"
                 >
                   Learn more
                   <svg

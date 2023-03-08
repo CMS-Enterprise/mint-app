@@ -318,12 +318,14 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-Represents a person response from CEDAR LDAP
+Represents a person response from the Okta API
 """
 type UserInfo {
-  commonName: String!
+  firstName: String!
+  lastName: String!
+  displayName: String!
   email: String!
-  euaUserId: String!
+  username: String!
 }
 
 """
@@ -1359,7 +1361,7 @@ type Query {
   planDocument(id: UUID!): PlanDocument!
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
-  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!

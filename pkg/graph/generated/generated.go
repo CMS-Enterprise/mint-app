@@ -57,7 +57,6 @@ type ResolverRoot interface {
 	PossibleOperationalNeed() PossibleOperationalNeedResolver
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
-	UserInfo() UserInfoResolver
 }
 
 type DirectiveRoot struct {
@@ -778,7 +777,6 @@ type ComplexityRoot struct {
 
 	Query struct {
 		AuditChanges                 func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CedarPersonsByCommonName     func(childComplexity int, commonName string) int
 		CrTdl                        func(childComplexity int, id uuid.UUID) int
 		CurrentUser                  func(childComplexity int) int
 		ExistingModelCollection      func(childComplexity int) int
@@ -793,6 +791,7 @@ type ComplexityRoot struct {
 		PlanPayments                 func(childComplexity int, id uuid.UUID) int
 		PossibleOperationalNeeds     func(childComplexity int) int
 		PossibleOperationalSolutions func(childComplexity int) int
+		SearchOktaUsers              func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks         func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                  func(childComplexity int, username string) int
 	}
@@ -829,9 +828,11 @@ type ComplexityRoot struct {
 	}
 
 	UserInfo struct {
-		CommonName func(childComplexity int) int
-		Email      func(childComplexity int) int
-		EuaUserID  func(childComplexity int) int
+		DisplayName func(childComplexity int) int
+		Email       func(childComplexity int) int
+		FirstName   func(childComplexity int) int
+		LastName    func(childComplexity int) int
+		Username    func(childComplexity int) int
 	}
 }
 
@@ -1001,7 +1002,7 @@ type QueryResolver interface {
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
 	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
-	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
+	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
@@ -1018,9 +1019,6 @@ type QueryResolver interface {
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
 	OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
-}
-type UserInfoResolver interface {
-	Email(ctx context.Context, obj *models.UserInfo) (string, error)
 }
 
 type executableSchema struct {
@@ -5674,18 +5672,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.AuditChanges(childComplexity, args["tableName"].(string), args["primaryKey"].(uuid.UUID)), true
 
-	case "Query.cedarPersonsByCommonName":
-		if e.complexity.Query.CedarPersonsByCommonName == nil {
-			break
-		}
-
-		args, err := ec.field_Query_cedarPersonsByCommonName_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.CedarPersonsByCommonName(childComplexity, args["commonName"].(string)), true
-
 	case "Query.crTdl":
 		if e.complexity.Query.CrTdl == nil {
 			break
@@ -5828,6 +5814,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PossibleOperationalSolutions(childComplexity), true
+
+	case "Query.searchOktaUsers":
+		if e.complexity.Query.SearchOktaUsers == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchOktaUsers_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchOktaUsers(childComplexity, args["searchTerm"].(string)), true
 
 	case "Query.taskListSectionLocks":
 		if e.complexity.Query.TaskListSectionLocks == nil {
@@ -5996,12 +5994,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserAccount.ZoneInfo(childComplexity), true
 
-	case "UserInfo.commonName":
-		if e.complexity.UserInfo.CommonName == nil {
+	case "UserInfo.displayName":
+		if e.complexity.UserInfo.DisplayName == nil {
 			break
 		}
 
-		return e.complexity.UserInfo.CommonName(childComplexity), true
+		return e.complexity.UserInfo.DisplayName(childComplexity), true
 
 	case "UserInfo.email":
 		if e.complexity.UserInfo.Email == nil {
@@ -6010,12 +6008,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserInfo.Email(childComplexity), true
 
-	case "UserInfo.euaUserId":
-		if e.complexity.UserInfo.EuaUserID == nil {
+	case "UserInfo.firstName":
+		if e.complexity.UserInfo.FirstName == nil {
 			break
 		}
 
-		return e.complexity.UserInfo.EuaUserID(childComplexity), true
+		return e.complexity.UserInfo.FirstName(childComplexity), true
+
+	case "UserInfo.lastName":
+		if e.complexity.UserInfo.LastName == nil {
+			break
+		}
+
+		return e.complexity.UserInfo.LastName(childComplexity), true
+
+	case "UserInfo.username":
+		if e.complexity.UserInfo.Username == nil {
+			break
+		}
+
+		return e.complexity.UserInfo.Username(childComplexity), true
 
 	}
 	return 0, false
@@ -6429,12 +6441,14 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-Represents a person response from CEDAR LDAP
+Represents a person response from the Okta API
 """
 type UserInfo {
-  commonName: String!
+  firstName: String!
+  lastName: String!
+  displayName: String!
   email: String!
-  euaUserId: String!
+  username: String!
 }
 
 """
@@ -7470,7 +7484,7 @@ type Query {
   planDocument(id: UUID!): PlanDocument!
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
-  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
@@ -9131,21 +9145,6 @@ func (ec *executionContext) field_Query_auditChanges_args(ctx context.Context, r
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_cedarPersonsByCommonName_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 string
-	if tmp, ok := rawArgs["commonName"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("commonName"))
-		arg0, err = ec.unmarshalNString2string(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["commonName"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9287,6 +9286,21 @@ func (ec *executionContext) field_Query_planPayments_args(ctx context.Context, r
 		}
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchOktaUsers_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["searchTerm"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("searchTerm"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["searchTerm"] = arg0
 	return args, nil
 }
 
@@ -41644,8 +41658,8 @@ func (ec *executionContext) fieldContext_Query_existingModelCollection(ctx conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_cedarPersonsByCommonName(ctx, field)
+func (ec *executionContext) _Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchOktaUsers(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -41658,7 +41672,7 @@ func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().CedarPersonsByCommonName(rctx, fc.Args["commonName"].(string))
+		return ec.resolvers.Query().SearchOktaUsers(rctx, fc.Args["searchTerm"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -41675,7 +41689,7 @@ func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context,
 	return ec.marshalNUserInfo2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserInfoᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_cedarPersonsByCommonName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_searchOktaUsers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -41683,12 +41697,16 @@ func (ec *executionContext) fieldContext_Query_cedarPersonsByCommonName(ctx cont
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "commonName":
-				return ec.fieldContext_UserInfo_commonName(ctx, field)
+			case "firstName":
+				return ec.fieldContext_UserInfo_firstName(ctx, field)
+			case "lastName":
+				return ec.fieldContext_UserInfo_lastName(ctx, field)
+			case "displayName":
+				return ec.fieldContext_UserInfo_displayName(ctx, field)
 			case "email":
 				return ec.fieldContext_UserInfo_email(ctx, field)
-			case "euaUserId":
-				return ec.fieldContext_UserInfo_euaUserId(ctx, field)
+			case "username":
+				return ec.fieldContext_UserInfo_username(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserInfo", field.Name)
 		},
@@ -41700,7 +41718,7 @@ func (ec *executionContext) fieldContext_Query_cedarPersonsByCommonName(ctx cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_cedarPersonsByCommonName_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_searchOktaUsers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -43857,8 +43875,8 @@ func (ec *executionContext) fieldContext_UserAccount_hasLoggedIn(ctx context.Con
 	return fc, nil
 }
 
-func (ec *executionContext) _UserInfo_commonName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserInfo_commonName(ctx, field)
+func (ec *executionContext) _UserInfo_firstName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_firstName(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -43871,7 +43889,7 @@ func (ec *executionContext) _UserInfo_commonName(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CommonName, nil
+		return obj.FirstName, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -43888,7 +43906,95 @@ func (ec *executionContext) _UserInfo_commonName(ctx context.Context, field grap
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserInfo_commonName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserInfo_firstName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserInfo",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserInfo_lastName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_lastName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LastName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserInfo_lastName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserInfo",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserInfo_displayName(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_displayName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DisplayName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserInfo_displayName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserInfo",
 		Field:      field,
@@ -43915,7 +44021,7 @@ func (ec *executionContext) _UserInfo_email(ctx context.Context, field graphql.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.UserInfo().Email(rctx, obj)
+		return obj.Email, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -43936,8 +44042,8 @@ func (ec *executionContext) fieldContext_UserInfo_email(ctx context.Context, fie
 	fc = &graphql.FieldContext{
 		Object:     "UserInfo",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -43945,8 +44051,8 @@ func (ec *executionContext) fieldContext_UserInfo_email(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _UserInfo_euaUserId(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserInfo_euaUserId(ctx, field)
+func (ec *executionContext) _UserInfo_username(ctx context.Context, field graphql.CollectedField, obj *models.UserInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserInfo_username(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -43959,7 +44065,7 @@ func (ec *executionContext) _UserInfo_euaUserId(ctx context.Context, field graph
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.EuaUserID, nil
+		return obj.Username, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -43976,7 +44082,7 @@ func (ec *executionContext) _UserInfo_euaUserId(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserInfo_euaUserId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserInfo_username(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserInfo",
 		Field:      field,
@@ -51617,7 +51723,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
-		case "cedarPersonsByCommonName":
+		case "searchOktaUsers":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -51626,7 +51732,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_cedarPersonsByCommonName(ctx, field)
+				res = ec._Query_searchOktaUsers(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -52147,39 +52253,40 @@ func (ec *executionContext) _UserInfo(ctx context.Context, sel ast.SelectionSet,
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("UserInfo")
-		case "commonName":
+		case "firstName":
 
-			out.Values[i] = ec._UserInfo_commonName(ctx, field, obj)
+			out.Values[i] = ec._UserInfo_firstName(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+				invalids++
+			}
+		case "lastName":
+
+			out.Values[i] = ec._UserInfo_lastName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "displayName":
+
+			out.Values[i] = ec._UserInfo_displayName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
 			}
 		case "email":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._UserInfo_email(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
-		case "euaUserId":
-
-			out.Values[i] = ec._UserInfo_euaUserId(ctx, field, obj)
+			out.Values[i] = ec._UserInfo_email(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+				invalids++
+			}
+		case "username":
+
+			out.Values[i] = ec._UserInfo_username(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

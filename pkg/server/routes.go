@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -31,7 +32,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authorization"
-	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
@@ -128,13 +128,22 @@ func (s *Server) routes(
 	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
-	var cedarLDAPClient cedarldap.Client
-	cedarLDAPClient = cedarldap.NewTranslatedClient(
-		s.Config.GetString(appconfig.CEDARAPIURL),
-		s.Config.GetString(appconfig.CEDARAPIKey),
-	)
-	if s.environment.Local() || s.environment.Testing() {
-		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
+	// Create Okta API Client
+	var oktaClient oktaapi.Client
+	var oktaClientErr error
+	if s.environment.Local() {
+		// Ensure Okta API Variables are set
+		oktaClient, oktaClientErr = local.NewOktaAPIClient(s.logger)
+		if oktaClientErr != nil {
+			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+		}
+	} else {
+		// Ensure Okta API Variables are set
+		s.NewOktaAPIClientCheck()
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.logger, s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		if oktaClientErr != nil {
+			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+		}
 	}
 
 	// set up Email Template Service
@@ -193,8 +202,8 @@ func (s *Server) routes(
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			FetchUserInfo:            cedarLDAPClient.FetchUserInfo,
-			SearchCommonNameContains: cedarLDAPClient.SearchCommonNameContains,
+			FetchUserInfo: oktaClient.FetchUserInfo,
+			SearchByName:  oktaClient.SearchByName,
 		},
 		&s3Client,
 		emailService,

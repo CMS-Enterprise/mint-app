@@ -28,11 +28,11 @@ type WorkerSuite struct {
 
 func (suite *WorkerSuite) stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
 	return &models.UserInfo{
-		EuaUserID:  username,
-		FirstName:  username,
-		LastName:   "Doe",
-		CommonName: username + " Doe",
-		Email:      models.NewEmailAddress(username + ".doe@local.fake"),
+		Username:    username,
+		FirstName:   username,
+		LastName:    "Doe",
+		DisplayName: username + " Doe",
+		Email:       username + ".doe@local.fake",
 	}, nil
 }
 
@@ -42,7 +42,7 @@ func (suite *WorkerSuite) SetupTest() {
 	assert.NoError(suite.T(), err)
 
 	//GET USER ACCOUNT EACH TIME!
-	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.EuaUserID)
+	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
 
 	// Flush faktory after each test
