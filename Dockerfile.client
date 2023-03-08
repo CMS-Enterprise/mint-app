@@ -9,6 +9,10 @@ FROM base AS modules
 COPY package.json ./
 COPY yarn.lock ./
 
+RUN mkdir /yarn_cache
+RUN yarn config set cache-folder /yarn_cache
+COPY /Users/clay/Library/Caches/Yarn/v6 /yarn_cache
+
 RUN yarn install --frozen-lockfile
 
 FROM modules AS src
@@ -31,10 +35,6 @@ ARG REACT_APP_OKTA_REDIRECT_URI
 ARG REACT_APP_OKTA_SERVER_ID
 ARG REACT_APP_LOCAL_AUTH_ENABLED
 
-RUN yarn run build
-
 FROM node:16.14.0 as srv
 
-RUN yarn global add serve
 WORKDIR /app
-COPY --from=build /app/build .
