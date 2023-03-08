@@ -160,6 +160,32 @@ jobs:
         uses: HatsuneMiku3939/direnv-action@v1
       - name: Add "minio" to /etc/hosts
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          file: Dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          file: Dockerfile.client
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          file: Dockerfile.db_migrations
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Run e2e tests
         run: |
           export FLAG_SOURCE=FILE
