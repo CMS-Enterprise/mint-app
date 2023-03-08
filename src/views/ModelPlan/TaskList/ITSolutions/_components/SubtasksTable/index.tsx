@@ -25,7 +25,7 @@ const columnTypes = {
 };
 
 type SubtaskColumnsProps = {
-  subtasks?: SubtaskType[];
+  subtasks: SubtaskType[];
   status: keyof typeof columnTypes;
 };
 
@@ -48,7 +48,8 @@ const SubtaskColumns = ({
       </div>
 
       <div className="border-top" data-testid={status}>
-        {subtasks === undefined ? (
+        {subtasks.length === 0 &&
+        columnTypes[status] === OperationalSolutionSubtaskStatus.TODO ? (
           <div className="padding-x-1 margin-y-105">
             {t('subtasks.noSubtasks')}
           </div>
@@ -82,7 +83,7 @@ export const SubtaskLinks = ({
   subtasks
 }: {
   className?: string;
-  subtasks?: SubtaskType[];
+  subtasks: SubtaskType[];
 }) => {
   const { t } = useTranslation('itSolutions');
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -101,7 +102,7 @@ export const SubtaskLinks = ({
   return (
     <div className={classNames(className, 'display-flex')}>
       {Object.keys(subtaskLinks).map(link => {
-        if (subtasks === undefined && link === 'manageSubtasks')
+        if (subtasks.length === 0 && link === 'manageSubtasks')
           return <React.Fragment key="none" />;
 
         return (
@@ -125,7 +126,7 @@ export const SubtaskLinks = ({
 };
 
 type SubtasksProps = {
-  subtasks?: SubtaskType[];
+  subtasks: SubtaskType[];
   className?: string;
 };
 

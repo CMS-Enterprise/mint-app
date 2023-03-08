@@ -73,27 +73,7 @@ const SolutionDetails = () => {
     data?.operationalSolution ||
     ({} as GetOperationalSolutionOperationalSolutionType);
 
-  const subtasks = data?.operationalSolution.operationalSolutionSubtasks;
-
-  // // TODO: remove temp subtasks
-  // const tempSubtasks = [
-  //   {
-  //     name: 'Review requirements document',
-  //     status: SubtaskStatus.TO_DO
-  //   },
-  //   {
-  //     name: 'Review onboarding materials',
-  //     status: SubtaskStatus.TO_DO
-  //   },
-  //   {
-  //     name: 'Write onboarding request',
-  //     status: SubtaskStatus.IN_PROGRESS
-  //   },
-  //   {
-  //     name: 'Gather recipient data',
-  //     status: SubtaskStatus.DONE
-  //   }
-  // ];
+  const subtasks = data?.operationalSolution.operationalSolutionSubtasks || [];
 
   const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
     DeleteDocumentSolutionLinks
