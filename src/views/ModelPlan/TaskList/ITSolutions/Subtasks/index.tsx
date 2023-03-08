@@ -263,10 +263,21 @@ const Subtasks = () => {
                           ))}
                       </FieldGroup>
 
+                      <div className="margin-top-3">
+                        <Button
+                          type="button"
+                          id="add-another-subtask"
+                          onClick={() => console.log(`adding another subtask`)} // eslint-disable-line
+                          outline
+                        >
+                          {t('addAnotherSubtask')}
+                        </Button>
+                      </div>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="submit"
-                          id="submit-solutions"
+                          id="submit-subtasks"
                           disabled={!values.name}
                           onClick={() => setErrors({})}
                         >
