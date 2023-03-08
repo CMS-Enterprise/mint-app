@@ -181,7 +181,6 @@ const Subtasks = () => {
             >
               {(formikProps: FormikProps<CreateSubtasksFormType>) => {
                 const {
-                  dirty,
                   errors,
                   handleSubmit,
                   setErrors,
@@ -268,7 +267,7 @@ const Subtasks = () => {
                         <Button
                           type="submit"
                           id="submit-solutions"
-                          disabled={!dirty}
+                          disabled={!values.name}
                           onClick={() => setErrors({})}
                         >
                           {t('addSubtask')}
@@ -278,7 +277,11 @@ const Subtasks = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
-                        onClick={() => {}}
+                        onClick={() => {
+                          history.push(
+                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                          );
+                        }}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {t('returnToDetails')}
