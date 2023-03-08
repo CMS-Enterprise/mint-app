@@ -30,7 +30,8 @@ const solution: GetOperationalSolutionType = {
   status: OpSolutionStatus.IN_PROGRESS,
   documents: [],
   mustFinishDts: '2022-12-30T15:01:39.190679Z',
-  mustStartDts: null
+  mustStartDts: null,
+  operationalSolutionSubtasks: []
 };
 
 describe('SolutionDetailsCard', () => {

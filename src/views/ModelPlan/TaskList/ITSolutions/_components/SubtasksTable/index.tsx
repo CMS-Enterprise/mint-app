@@ -10,28 +10,22 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-// TODO: Once subtasks are added to BE, replace this any enum with gql generated enum
-export enum SubtaskStatus {
-  TO_DO = 'TO_DO',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE'
-}
+import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 
-// TODO: Once subtasks are added to BE, replace this any type with gql generated type
 type SubtaskType = {
   name: string;
-  status: SubtaskStatus;
+  status: OperationalSolutionSubtaskStatus;
 };
 
 // Used for label translations
 const columnTypes = {
-  todo: SubtaskStatus.TO_DO,
-  inProgress: SubtaskStatus.IN_PROGRESS,
-  done: SubtaskStatus.DONE
+  todo: OperationalSolutionSubtaskStatus.TODO,
+  inProgress: OperationalSolutionSubtaskStatus.IN_PROGRESS,
+  done: OperationalSolutionSubtaskStatus.DONE
 };
 
 type SubtaskColumnsProps = {
-  subtasks: SubtaskType[];
+  subtasks?: SubtaskType[];
   status: keyof typeof columnTypes;
 };
 
@@ -54,8 +48,7 @@ const SubtaskColumns = ({
       </div>
 
       <div className="border-top" data-testid={status}>
-        {subtasks.length === 0 &&
-        columnTypes[status] === SubtaskStatus.TO_DO ? (
+        {subtasks === undefined ? (
           <div className="padding-x-1 margin-y-105">
             {t('subtasks.noSubtasks')}
           </div>
@@ -89,7 +82,7 @@ export const SubtaskLinks = ({
   subtasks
 }: {
   className?: string;
-  subtasks: SubtaskType[];
+  subtasks?: SubtaskType[];
 }) => {
   const { t } = useTranslation('itSolutions');
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -108,7 +101,7 @@ export const SubtaskLinks = ({
   return (
     <div className={classNames(className, 'display-flex')}>
       {Object.keys(subtaskLinks).map(link => {
-        if (subtasks.length === 0 && link === 'manageSubtasks')
+        if (subtasks === undefined && link === 'manageSubtasks')
           return <React.Fragment key="none" />;
 
         return (
@@ -132,7 +125,7 @@ export const SubtaskLinks = ({
 };
 
 type SubtasksProps = {
-  subtasks: SubtaskType[];
+  subtasks?: SubtaskType[];
   className?: string;
 };
 

@@ -2,7 +2,9 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
-import SubtasksTable, { SubtaskStatus } from '.';
+import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
+
+import SubtasksTable from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -10,19 +12,19 @@ const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 const subtasks = [
   {
     name: 'Review requirements document',
-    status: SubtaskStatus.TO_DO
+    status: OperationalSolutionSubtaskStatus.TODO
   },
   {
     name: 'Review onboarding materials',
-    status: SubtaskStatus.TO_DO
+    status: OperationalSolutionSubtaskStatus.TODO
   },
   {
     name: 'Write onboarding request',
-    status: SubtaskStatus.IN_PROGRESS
+    status: OperationalSolutionSubtaskStatus.IN_PROGRESS
   },
   {
     name: 'Gather recipient data',
-    status: SubtaskStatus.DONE
+    status: OperationalSolutionSubtaskStatus.DONE
   }
 ];
 
