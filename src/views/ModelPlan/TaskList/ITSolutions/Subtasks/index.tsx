@@ -120,16 +120,14 @@ const Subtasks = () => {
       .then(response => {
         if (!response?.errors) {
           showMessageOnNextPage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="success-subtask-alert"
-                className="margin-y-4"
-              >
-                {t('successMessage')}
-              </Alert>
-            </>
+            <Alert
+              type="success"
+              slim
+              data-testid="success-subtask-alert"
+              className="margin-y-4"
+            >
+              {t('successMessage')}
+            </Alert>
           );
           history.push(
             `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
