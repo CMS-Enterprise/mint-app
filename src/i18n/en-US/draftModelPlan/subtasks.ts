@@ -6,6 +6,7 @@ const subtasks = {
   inProgress: 'In progress',
   done: 'Done',
   addSubtask: 'Add subtask',
+  addAnotherSubtask: 'Add another subtask',
   addSubtasks: 'Add subtasks',
   manageSubtasks: 'Manage subtasks',
   noSubtasks: 'No subtasks added yet',
