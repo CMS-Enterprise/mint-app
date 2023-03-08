@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
@@ -14,12 +14,13 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import useMessage from 'hooks/useMessage';
 import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperationalSolutionSubtasks';
-// import useMessage from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   CreateOperationalSolutionSubtasks as CreateSubTasksType,
@@ -47,12 +48,12 @@ const Subtasks = () => {
     operationalSolutionID: string;
   }>();
 
-  // const history = useHistory();
+  const history = useHistory();
 
   const { t } = useTranslation('subtasks');
   const { t: h } = useTranslation('draftModelPlan');
 
-  // const { showMessageOnNextPage, message } = useMessage();
+  const { showMessageOnNextPage } = useMessage();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -118,8 +119,21 @@ const Subtasks = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          console.log(`it worked`); // eslint-disable-line
-          console.log(response);// eslint-disable-line
+          showMessageOnNextPage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="success-subtask-alert"
+                className="margin-y-4"
+              >
+                {t('successMessage')}
+              </Alert>
+            </>
+          );
+          history.push(
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+          );
         }
       })
       .catch(errors => {
