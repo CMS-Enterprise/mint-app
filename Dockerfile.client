@@ -9,10 +9,6 @@ FROM base AS modules
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN mkdir /yarn_cache
-RUN yarn config set cache-folder /yarn_cache
-COPY /Users/clay/Library/Caches/Yarn/v6 /yarn_cache
-
 RUN yarn install --frozen-lockfile
 
 FROM modules AS src
