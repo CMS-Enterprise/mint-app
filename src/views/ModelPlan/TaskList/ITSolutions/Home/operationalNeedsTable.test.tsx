@@ -34,8 +34,8 @@ const returnNeeds = (needed: boolean | null) => {
                 __typename: 'OperationalNeed',
                 id: '123',
                 modelPlanID: modelID,
-                name: 'Advertise the model',
-                key: OperationalNeedKey.ADVERTISE_MODEL,
+                name: 'Recruit participants',
+                key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
                 nameOther: null,
                 needed,
                 modifiedDts: '2022-05-12T15:01:39.190679Z',
@@ -87,7 +87,7 @@ describe('IT Solutions Home', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Advertise the model')).toBeInTheDocument();
+      expect(getByText('Recruit participants')).toBeInTheDocument();
     });
   });
 
@@ -109,7 +109,7 @@ describe('IT Solutions Home', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Advertise the model')).toBeInTheDocument();
+      expect(getByText('Recruit participants')).toBeInTheDocument();
       expect(getByText('Salesforce')).toBeInTheDocument();
     });
   });
@@ -132,7 +132,7 @@ describe('IT Solutions Home', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Advertise the model')).toBeInTheDocument();
+      expect(getByText('Recruit participants')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
