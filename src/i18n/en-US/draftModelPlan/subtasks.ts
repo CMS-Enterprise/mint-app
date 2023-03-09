@@ -17,7 +17,8 @@ const subtasks = {
   subtaskName: 'Subtask name',
   statusQuestion: 'What is the status of this subtask?',
   returnToDetails: 'Don’t add subtask and return to solution details',
-  successMessage: 'Success! Your subtasks have been added.'
+  successMessage: 'Success! Your subtasks have been added.',
+  removeSubtask: 'Remove this subtask'
 };
 
 export default subtasks;
