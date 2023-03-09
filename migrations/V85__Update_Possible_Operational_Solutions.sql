@@ -14,11 +14,9 @@ ALTER TABLE possible_operational_solution
 ADD COLUMN treat_as_other BOOLEAN NOT NULL DEFAULT FALSE;
 
 
-/* TODO: update the solution keys to the new values. TODO! function CREATE_POSSIBLE_NEED_SOLULTION_LINK uses this, might need to change */
 ALTER TABLE possible_operational_solution
 ALTER COLUMN sol_key TYPE TEXT;
 
-DROP FUNCTION create_possible_need_solultion_link;
 
 DROP TYPE OPERATIONAL_SOLUTION_KEY;
 CREATE TYPE OPERATIONAL_SOLUTION_KEY AS ENUM (
