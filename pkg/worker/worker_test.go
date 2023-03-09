@@ -6,6 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/99designs/gqlgen/graphql"
 	faktory "github.com/contribsys/faktory/client"
 
@@ -51,7 +53,17 @@ func (suite *WorkerSuite) SetupTest() {
 }
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := resolvers.ModelPlanCreate(context.Background(), suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.Principal, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	mp, err := resolvers.ModelPlanCreate(
+		context.Background(),
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planName,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
 	suite.NoError(err)
 	return mp
 }
@@ -78,6 +90,7 @@ func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName 
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

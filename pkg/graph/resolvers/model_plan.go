@@ -4,11 +4,14 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
@@ -19,7 +22,17 @@ import (
 // ModelPlanCreate implements resolver logic to create a model plan
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
-func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, store *storage.Store, principal authentication.Principal, getAccountInformation userhelpers.GetAccountInfoFunc) (*models.ModelPlan, error) {
+func ModelPlanCreate(
+	ctx context.Context,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	modelName string,
+	store *storage.Store,
+	principal authentication.Principal,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
+) (*models.ModelPlan, error) {
 	plan := models.NewModelPlan(principal.Account().ID, modelName)
 
 	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
@@ -40,6 +53,7 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
 			UserName:    *userAccount.Username,
@@ -108,7 +122,63 @@ func ModelPlanCreate(ctx context.Context, logger *zap.Logger, modelName string, 
 		return nil, err
 	}
 
+	if emailService != nil && emailTemplateService != nil {
+		go func() {
+			sendEmailErr := sendModelPlanCreatedEmail(
+				ctx,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				addressBook.MINTTeamEmail,
+				createdPlan,
+			)
+			if sendEmailErr != nil {
+				logger.Error("failed to send model plan created email to dev team", zap.String(
+					"createdPlanID",
+					createdPlan.ID.String(),
+				), zap.Error(sendEmailErr))
+			}
+		}()
+	}
+
 	return createdPlan, err
+}
+
+func sendModelPlanCreatedEmail(
+	ctx context.Context,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	receiverEmail string,
+	modelPlan *models.ModelPlan,
+) error {
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelName:     modelPlan.ModelName,
+		ModelID:       modelPlan.GetModelPlanID().String(),
+		UserName:      modelPlan.CreatedByUserAccount(ctx).CommonName,
+	})
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
