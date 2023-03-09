@@ -1,9 +1,13 @@
-/* Rename old key name */
-ALTER TYPE OPERATIONAL_NEED_KEY RENAME TO OPERATIONAL_NEED_KEY_OLD;
-
 /* Convert column type to TEXT */
 ALTER TABLE possible_operational_need
 ALTER COLUMN need_key TYPE TEXT;
+
+
+/* this function relies on the key, will be updated in a future PR */
+DROP FUNCTION create_possible_need_solultion_link;
+
+/* Drop Operational Need Key */
+DROP TYPE OPERATIONAL_NEED_KEY;
 
 /* Add new needs */
 
@@ -21,7 +25,7 @@ SET
     need_key = 'RECRUIT_PARTICIPANTS',
     trigger_vals = '{LOI, NOFO,APPLICATION_COLLECTION_TOOL}',
     modified_by = '00000001-0001-0001-0001-000000000001',
-    modified_dts = CURRENT_TIMESTAMP
+    modified_dts = current_timestamp
 
 WHERE need_key = 'ADVERTISE_MODEL';
 
@@ -31,7 +35,7 @@ SET
     need_name = 'Review and score applications',
     need_key = 'REV_SCORE_APP',
     modified_by = '00000001-0001-0001-0001-000000000001',
-    modified_dts = CURRENT_TIMESTAMP
+    modified_dts = current_timestamp
 
 WHERE need_key = 'COL_REV_SCORE_APP';
 
