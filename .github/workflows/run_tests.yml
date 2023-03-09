@@ -162,7 +162,7 @@ jobs:
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Build and push
+      - name: Build backend container
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -170,7 +170,7 @@ jobs:
           file: Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Build and push
+      - name: Build frontend container
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -178,7 +178,7 @@ jobs:
           file: Dockerfile.client
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Build and push
+      - name: Build DB migrations container
         uses: docker/build-push-action@v4
         with:
           context: .
