@@ -9,7 +9,7 @@ type PlanDiscussionCreatedSubjectContent struct {
 type PlanDiscussionCreatedBodyContent struct {
 	ClientAddress     string
 	DiscussionID      string
-	CreatorUserName   string
+	UserName          string
 	DiscussionContent string
 	ModelID           string
 	ModelName         string

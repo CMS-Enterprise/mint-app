@@ -40,17 +40,25 @@ func CreatePlanDiscussion(
 	}
 
 	// Send email to MINT Dev Team
-	err = sendPlanDiscussionCreatedEmail(
-		ctx,
-		store,
-		logger,
-		emailService,
-		emailTemplateService,
-		addressBook,
-		addressBook.MINTTeamEmail,
-		result,
-		input.ModelPlanID,
-	)
+	go func() {
+		sendEmailErr := sendPlanDiscussionCreatedEmail(
+			ctx,
+			store,
+			logger,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			addressBook.MINTTeamEmail,
+			result,
+			input.ModelPlanID,
+		)
+
+		if sendEmailErr != nil {
+			logger.Error("error sending plan discussion created email to MINT Team",
+				zap.String("discussionID", result.ID.String()),
+				zap.Error(sendEmailErr))
+		}
+	}()
 
 	return result, err
 }
@@ -90,7 +98,7 @@ func sendPlanDiscussionCreatedEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      planDiscussion.ID.String(),
-		CreatorUserName:   planDiscussion.CreatedByUserAccount(ctx).CommonName,
+		UserName:          planDiscussion.CreatedByUserAccount(ctx).CommonName,
 		DiscussionContent: planDiscussion.Content,
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
