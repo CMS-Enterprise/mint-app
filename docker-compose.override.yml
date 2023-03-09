@@ -46,7 +46,6 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - ESLINT_NO_DEV_ERRORS=true
       - PORT=3005
-    entrypoint: ['yarn', 'start']
     volumes:
       - .:/app
       - /app/node_modules
