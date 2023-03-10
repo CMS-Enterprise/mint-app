@@ -28,6 +28,7 @@ export default gql`
         numLinkedSolutions
       }
       operationalSolutionSubtasks {
+        id
         name
         status
       }

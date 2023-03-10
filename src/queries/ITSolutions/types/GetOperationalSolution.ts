@@ -27,6 +27,7 @@ export interface GetOperationalSolution_operationalSolution_documents {
 
 export interface GetOperationalSolution_operationalSolution_operationalSolutionSubtasks {
   __typename: "OperationalSolutionSubtask";
+  id: UUID;
   name: string;
   status: OperationalSolutionSubtaskStatus;
 }

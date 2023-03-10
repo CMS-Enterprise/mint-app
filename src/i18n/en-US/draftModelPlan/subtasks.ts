@@ -18,7 +18,13 @@ const subtasks = {
   statusQuestion: 'What is the status of this subtask?',
   returnToDetails: 'Don’t add subtask and return to solution details',
   successMessage: 'Success! Your subtasks have been added.',
-  removeSubtask: 'Remove this subtask'
+  removeSubtask: 'Remove this subtask',
+  removeModal: {
+    header: 'Confirm you want to remove {{-subTaskName}}.',
+    warning: 'You will not be able to undo this action.',
+    removeSubtask: 'Remove subtask',
+    keepSubtask: 'Keep subtask'
+  }
 };
 
 export default subtasks;
