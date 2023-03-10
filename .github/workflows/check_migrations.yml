@@ -23,17 +23,33 @@ jobs:
       - name: Find migration files
         run: |
           echo "Comparing head branch '${HEAD_BRANCH}' with base branch '${BASE_BRANCH}'"
+          echo "Fetching the latest version of the BASE branch '${BASE_BRANCH}'"
           git fetch --no-tags origin "${BASE_BRANCH}:${BASE_BRANCH}" # Fetch the latest version of the base branch
+
+          echo "Gathering ./migrations/ file changes from head branch '${HEAD_BRANCH}'"
           HEAD_FILES=$(git diff --name-only "${BASE_BRANCH}" "${HEAD_BRANCH}" -- ./migrations/)
-          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH}" -- ./migrations/)
-          echo "HEAD files:"
+          echo "HEAD changed files:"
           echo "${HEAD_FILES}"
+
+          echo "Gathering ./migrations/ files from ${BASE_BRANCH}'"
+          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH}" -- ./migrations/)
           echo "BASE files:"
           echo "${BASE_FILES}"
+
+          echo "Extracting prefixes from head branch '${HEAD_BRANCH}'"
           HEAD_PREFIXES=$(echo "${HEAD_FILES}" | awk -F'__' '{print $1}')
+          echo "HEAD prefixes: '${HEAD_PREFIXES}'"
+
+          echo "Extracting prefixes from base branch '${BASE_BRANCH}'"
           BASE_PREFIXES=$(echo "${BASE_FILES}" | awk -F'__' '{print $1}')
+          echo "BASE prefixes: '${BASE_PREFIXES}'"
+
+          echo "Checking for duplicate prefixes"
           DUPLICATES=$(echo "${HEAD_PREFIXES} ${BASE_PREFIXES}" | tr ' ' '\n' | sort | uniq -d)
+
           if [ -n "${DUPLICATES}" ]; then
             echo "Duplicate migration prefixes found: ${DUPLICATES}"
             exit 1
           fi
+
+          echo "No duplicate migration prefixes found, you're good to go!"
