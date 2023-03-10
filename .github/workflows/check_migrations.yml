@@ -30,9 +30,6 @@ jobs:
           echo "${HEAD_FILES}"
           echo "BASE files:"
           echo "${BASE_FILES}"
-
-      - name: Check for duplicate migration prefixes
-        run: |
           HEAD_PREFIXES=$(echo "${HEAD_FILES}" | awk -F'__' '{print $1}')
           BASE_PREFIXES=$(echo "${BASE_FILES}" | awk -F'__' '{print $1}')
           DUPLICATES=$(echo "${HEAD_PREFIXES} ${BASE_PREFIXES}" | tr ' ' '\n' | sort | uniq -d)
