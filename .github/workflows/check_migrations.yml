@@ -31,7 +31,6 @@ jobs:
 
           echo "Gathering ./migrations/ file changes from head branch '${HEAD_BRANCH}'"
           echo "HEAD branch: $(git rev-parse "${HEAD_BRANCH}")"
-          echo "HEAD_FILES: $(git diff --name-only `${BASE_BRANCH}` `${HEAD_BRANCH}` -- ./migrations/)"
           HEAD_FILES=$(git diff --name-only "${BASE_BRANCH}" "${HEAD_BRANCH}" -- ./migrations/)
           echo "HEAD changed files:"
           echo "${HEAD_FILES}"
