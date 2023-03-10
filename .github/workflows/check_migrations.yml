@@ -46,19 +46,3 @@ jobs:
             echo "Duplicate migration prefixes found: ${DUPLICATES}"
             exit 1
           fi
-
-      - name: Set status
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const status = {
-              state: '${{ job.status }}',
-              target_url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}',
-              description: 'Migration check',
-              context: 'migration-check'
-            };
-            github.repos.createCommitStatus({
-              ...github.context.repo,
-              sha: '${{ github.event.pull_request.head.sha }}',
-              ...status
-            });
