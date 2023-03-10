@@ -1,5 +1,5 @@
 # This GitHub action checks for duplicate migration prefixes in the ./migrations folder,
-# comparing the pull request branch with the main branch.
+# comparing the head branch with the base branch.
 
 name: Check Migrations
 
@@ -10,32 +10,43 @@ on:
 jobs:
   check_migrations:
     runs-on: ubuntu-latest
+    env:
+      HEAD_BRANCH_SHA: ${{ github.event.pull_request.head.sha }}
+      BASE_BRANCH_SHA: ${{ github.event.pull_request.base.sha }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout Head Branch
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history so that the git diff and ls-tree commands have access to the main branch
+          ref: ${{ env.HEAD_BRANCH_SHA }}
+
+
+      - name: Checkout Base Branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BASE_BRANCH_SHA }}
+
       - name: Find migration files
         run: |
-          PR_BRANCH="${{ github.event.pull_request.head.ref }}"
-          MAIN_BRANCH="${{ github.event.pull_request.base.ref }}"
-          echo "Comparing PR branch '${PR_BRANCH}' with main branch '${MAIN_BRANCH}'"
-          git fetch --no-tags origin "${MAIN_BRANCH}:${MAIN_BRANCH}" # Fetch the latest version of the main branch
-          PR_FILES=$(git diff --name-only "${MAIN_BRANCH}" "${PR_BRANCH}" -- ./migrations)
-          MAIN_FILES=$(git ls-tree --name-only "${MAIN_BRANCH}" -- ./migrations)
-          echo "PR files:"
-          echo "${PR_FILES}"
-          echo "Main files:"
-          echo "${MAIN_FILES}"
+          echo "Comparing head branch '${HEAD_BRANCH_SHA}' with base branch '${BASE_BRANCH_SHA}'"
+          git fetch --no-tags origin "${BASE_BRANCH_SHA}:${BASE_BRANCH_SHA}" # Fetch the latest version of the base branch
+          HEAD_FILES=$(git diff --name-only "${BASE_BRANCH_SHA}" "${HEAD_BRANCH_SHA}" -- ./migrations)
+          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH_SHA}" -- ./migrations)
+          echo "HEAD files:"
+          echo "${HEAD_FILES}"
+          echo "BASE files:"
+          echo "${BASE_FILES}"
+
       - name: Check for duplicate migration prefixes
         run: |
-          PR_PREFIXES=$(echo "${PR_FILES}" | awk -F'__' '{print $1}')
-          MAIN_PREFIXES=$(echo "${MAIN_FILES}" | awk -F'__' '{print $1}')
-          DUPLICATES=$(echo "${PR_PREFIXES} ${MAIN_PREFIXES}" | tr ' ' '\n' | sort | uniq -d)
+          HEAD_PREFIXES=$(echo "${HEAD_FILES}" | awk -F'__' '{print $1}')
+          BASE_PREFIXES=$(echo "${BASE_FILES}" | awk -F'__' '{print $1}')
+          DUPLICATES=$(echo "${HEAD_PREFIXES} ${BASE_PREFIXES}" | tr ' ' '\n' | sort | uniq -d)
           if [ -n "${DUPLICATES}" ]; then
             echo "Duplicate migration prefixes found: ${DUPLICATES}"
             exit 1
           fi
+
       - name: Set status
         uses: actions/github-script@v4
         with:
