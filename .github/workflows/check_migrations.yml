@@ -11,8 +11,8 @@ jobs:
   check_migrations:
     runs-on: ubuntu-latest
     env:
-      HEAD_BRANCH_SHA: ${{ github.event.pull_request.head.ref }}
-      BASE_BRANCH_SHA: ${{ github.event.pull_request.base.ref }}
+      HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+      BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
 
     steps:
       - name: Checkout all
