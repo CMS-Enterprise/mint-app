@@ -74,7 +74,9 @@ jobs:
 
           if [ -n "${DUPLICATES}" ]; then
             echo "Duplicate migration prefixes found: ${DUPLICATES}"
-            echo "::set-output name=conflicting_files::$(echo "${HEAD_MIGRATION_FILES}" "${BASE_FILES}" | tr ' ' '\n' | grep -F "${DUPLICATES}" | sort -u)"
+            echo "conflicting_migrations<<EOF" >> $GITHUB_OUTPUT
+            echo "${DUPLICATES}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
             exit 1
           fi
 
