@@ -50,13 +50,17 @@ jobs:
         run: |
           HEAD_PREFIXES=$(echo "${{ env.MIGRATION_HEAD_FILES }}" | awk -F'__' '{print $1}')
           echo "HEAD prefixes: '${HEAD_PREFIXES}'"
-          echo "MIGRATION_HEAD_PREFIXES=${HEAD_PREFIXES}" >> $GITHUB_ENV
+          echo "MIGRATION_HEAD_PREFIXES<<EOF" >> ${GITHUB_ENV}
+          echo "${HEAD_PREFIXES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
 
       - name: Extracting prefixes from base branch
         run: |
           BASE_PREFIXES=$(echo "${{ env.MIGRATION_BASE_FILES }}" | awk -F'__' '{print $1}')
           echo "BASE prefixes: '${BASE_PREFIXES}'"
-          echo "MIGRATION_BASE_PREFIXES=${BASE_PREFIXES}" >> $GITHUB_ENV
+          echo "MIGRATION_BASE_PREFIXES<<EOF" >> $GITHUB_ENV
+          echo "${BASE_PREFIXES}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Check for duplicate prefixes
         run: |
