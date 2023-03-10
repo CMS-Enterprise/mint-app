@@ -1,6 +1,8 @@
 # This GitHub action checks for duplicate migration prefixes in the ./migrations folder,
 # comparing the pull request branch with the main branch.
 
+name: Check Migrations
+
 on:
   pull_request:
     types: [opened, synchronize]
