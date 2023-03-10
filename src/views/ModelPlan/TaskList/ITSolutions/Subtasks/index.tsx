@@ -24,7 +24,6 @@ import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperati
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   CreateOperationalSolutionSubtasks as CreateSubTasksType,
-  CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateSubtasksFormType,
   CreateOperationalSolutionSubtasksVariables
 } from 'queries/ITSolutions/types/CreateOperationalSolutionSubtasks';
 import {
@@ -41,11 +40,7 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-const Subtasks = ({
-  addAnotherSubtask = false
-}: {
-  addAnotherSubtask?: boolean;
-}) => {
+const Subtasks = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -91,25 +86,12 @@ const Subtasks = ({
     { text: t('addSubtask') }
   ];
 
-  // const formikRef = useRef<FormikProps<CreateSubtasksFormType[]>>(null);
+  const formikRef = useRef<FormikProps<CreateSubTasksType>>(null);
 
-  // const initialValues: CreateSubtasksFormType = {
-  //   __typename: 'OperationalSolutionSubtask',
-  //   name: '',
-  // status: OperationalSolutionSubtaskStatus.TODO
-  // };
-
-  const initialValues2: CreateSubtasksFormType[] = [
-    {
-      __typename: 'OperationalSolutionSubtask',
-      name: '',
-      status: OperationalSolutionSubtaskStatus.TODO
-    }
-  ];
-
-  const initialValues = {
-    inputs: [
+  const initialValues: CreateSubTasksType = {
+    createOperationalSolutionSubtasks: [
       {
+        __typename: 'OperationalSolutionSubtask',
         name: '',
         status: OperationalSolutionSubtaskStatus.TODO
       }
@@ -121,21 +103,13 @@ const Subtasks = ({
     CreateOperationalSolutionSubtasksVariables
   >(CreateOperationalSolutionSubtasks);
 
-  const handleFormSubmit = (formikValues: any) => {
-    // if (!formikValues.name) {
-    //   formikRef?.current?.setFieldError('name', 'Enter the Subtask name');
-    //   return;
-    // }
-    const { name, status } = formikValues;
+  const handleFormSubmit = (formikValues: CreateSubTasksType) => {
+    const { createOperationalSolutionSubtasks } = formikValues;
+    // const { name, status } = formikValues;
     create({
       variables: {
         solutionID: operationalSolutionID,
-        inputs: [
-          {
-            name,
-            status
-          }
-        ]
+        inputs: createOperationalSolutionSubtasks!
       }
     })
       .then(response => {
@@ -156,7 +130,7 @@ const Subtasks = ({
         }
       })
       .catch(errors => {
-        // formikRef?.current?.setErrors(errors);
+        formikRef?.current?.setErrors(errors);
       });
   };
 
@@ -171,8 +145,7 @@ const Subtasks = ({
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {/* {t('addSubtask')} */}
-            {addAnotherSubtask ? t('addAnotherSubtask') : t('addSubtask')}
+            {t('addSubtask')}
           </PageHeading>
 
           <p
@@ -195,19 +168,13 @@ const Subtasks = ({
             <Formik
               initialValues={initialValues}
               onSubmit={values => {
-                // handleFormSubmit(values);
-                console.log(values); // eslint-disable-line
+                handleFormSubmit(values);
               }}
               enableReinitialize
+              innerRef={formikRef}
             >
               {formikProps => {
-                const {
-                  errors,
-                  handleSubmit,
-                  setErrors,
-                  setFieldValue,
-                  values
-                } = formikProps;
+                const { errors, handleSubmit, setErrors, values } = formikProps;
 
                 const flatErrors = flattenErrors(errors);
 
@@ -238,86 +205,103 @@ const Subtasks = ({
                         handleSubmit(e);
                       }}
                     >
-                      <FieldArray name="inputs">
+                      <FieldArray name="createOperationalSolutionSubtasks">
                         {fieldArrayProps => {
                           const { push, remove } = fieldArrayProps;
-                          const { inputs } = values;
+                          const { createOperationalSolutionSubtasks } = values;
 
                           return (
                             <>
-                              {inputs.map((input, index) => (
-                                <div
-                                  // eslint-disable-next-line react/no-array-index-key
-                                  key={index}
-                                  className={
-                                    inputs.length > 1
-                                      ? 'border-bottom border-base-light'
-                                      : ''
-                                  }
-                                >
-                                  <FieldGroup
-                                    scrollElement="name"
-                                    error={!!flatErrors.name}
-                                    className="margin-top-4"
-                                  >
-                                    <Label htmlFor={`inputs[${index}].name`}>
-                                      {t('subtaskName')}
-                                      <RequiredAsterisk />
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.name}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      error={!!flatErrors.name}
-                                      maxLength={50}
-                                      name={`inputs[${index}].name`}
-                                    />
-                                  </FieldGroup>
-                                  <FieldGroup className="margin-top-4">
-                                    <Label htmlFor={`inputs[${index}].status`}>
-                                      {t('statusQuestion')}
-                                    </Label>
-                                    {Object.keys(
-                                      OperationalSolutionSubtaskStatus
-                                    )
-                                      .reverse()
-                                      .map(status => {
-                                        return (
-                                          <Field
-                                            key={`subtask-status--${status}`}
-                                            as={Radio}
-                                            id={`subtask-status--${index}--${status}`}
-                                            name={`inputs[${index}].status`}
-                                            label={translateSubtasks(status)}
-                                            value={status}
-                                            checked={
-                                              values.inputs[index].status ===
-                                              status
-                                            }
-                                          />
-                                        );
-                                      })}
-                                    {inputs.length > 1 && (
-                                      <Button
-                                        type="button"
-                                        onClick={() => remove(index)}
-                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                              {createOperationalSolutionSubtasks &&
+                                createOperationalSolutionSubtasks.map(
+                                  (input, index) => (
+                                    <div
+                                      // eslint-disable-next-line react/no-array-index-key
+                                      key={index}
+                                      className={
+                                        createOperationalSolutionSubtasks.length >
+                                        1
+                                          ? 'border-bottom border-base-light'
+                                          : ''
+                                      }
+                                    >
+                                      <FieldGroup
+                                        scrollElement="name"
+                                        error={!!flatErrors.name}
+                                        className="margin-top-4"
                                       >
-                                        {t('removeSubtask')}
-                                      </Button>
-                                    )}
-                                  </FieldGroup>
-                                </div>
-                              ))}
+                                        <Label
+                                          htmlFor={`createOperationalSolutionSubtasks[${index}].name`}
+                                        >
+                                          {t('subtaskName')}
+                                          <RequiredAsterisk />
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.name}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextInput}
+                                          error={!!flatErrors.name}
+                                          id={`subtask-name--${index}`}
+                                          maxLength={50}
+                                          name={`createOperationalSolutionSubtasks[${index}].name`}
+                                        />
+                                      </FieldGroup>
+                                      <FieldGroup className="margin-top-4">
+                                        <Label
+                                          htmlFor={`createOperationalSolutionSubtasks[${index}].status`}
+                                        >
+                                          {t('statusQuestion')}
+                                        </Label>
+                                        {Object.keys(
+                                          OperationalSolutionSubtaskStatus
+                                        )
+                                          .reverse()
+                                          .map(status => {
+                                            return (
+                                              <Field
+                                                key={`subtask-status--${status}`}
+                                                as={Radio}
+                                                id={`subtask-status--${index}--${status}`}
+                                                name={`createOperationalSolutionSubtasks[${index}].status`}
+                                                label={translateSubtasks(
+                                                  status
+                                                )}
+                                                value={status}
+                                                checked={
+                                                  values.createOperationalSolutionSubtasks &&
+                                                  values
+                                                    .createOperationalSolutionSubtasks[
+                                                    index
+                                                  ].status === status
+                                                }
+                                              />
+                                            );
+                                          })}
+                                        {createOperationalSolutionSubtasks.length >
+                                          1 && (
+                                          <Button
+                                            type="button"
+                                            onClick={() => remove(index)}
+                                            className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                          >
+                                            {t('removeSubtask')}
+                                          </Button>
+                                        )}
+                                      </FieldGroup>
+                                    </div>
+                                  )
+                                )}
                               <div className="margin-top-3">
                                 <Button
                                   type="button"
                                   id="add-another-subtask"
                                   onClick={() =>
                                     push({
+                                      __typename: 'OperationalSolutionSubtask',
                                       name: '',
-                                      status: ''
+                                      status:
+                                        OperationalSolutionSubtaskStatus.TODO
                                     })
                                   }
                                   outline
@@ -332,13 +316,17 @@ const Subtasks = ({
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
-                          type="button"
+                          type="submit"
                           id="submit-subtasks"
                           disabled={
-                            !!values.inputs.find(input => input.name === '')
+                            !!(
+                              values.createOperationalSolutionSubtasks &&
+                              values.createOperationalSolutionSubtasks.find(
+                                input => input.name === ''
+                              )
+                            )
                           }
-                          // onClick={() => setErrors({})}
-                          onClick={() => console.log(values.inputs)}
+                          onClick={() => setErrors({})}
                         >
                           {t('addSubtask')}
                         </Button>
