@@ -74,6 +74,7 @@ jobs:
 
           if [ -n "${DUPLICATES}" ]; then
             echo "Duplicate migration prefixes found: ${DUPLICATES}"
+            echo "::set-output name=conflicting_files::$(echo "${HEAD_MIGRATION_FILES}" "${BASE_FILES}" | tr ' ' '\n' | grep -F "${DUPLICATES}" | sort -u)"
             exit 1
           fi
 
