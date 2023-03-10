@@ -11,8 +11,8 @@ jobs:
   check_migrations:
     runs-on: ubuntu-latest
     env:
-      HEAD_BRANCH_SHA: ${{ github.event.pull_request.head.sha }}
-      BASE_BRANCH_SHA: ${{ github.event.pull_request.base.sha }}
+      HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+      BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
 
     steps:
       - name: Checkout all
@@ -22,10 +22,10 @@ jobs:
 
       - name: Find migration files
         run: |
-          echo "Comparing head branch '${HEAD_BRANCH_SHA}' with base branch '${BASE_BRANCH_SHA}'"
-          git fetch --no-tags origin "${BASE_BRANCH_SHA}:${BASE_BRANCH_SHA}" # Fetch the latest version of the base branch
-          HEAD_FILES=$(git diff --name-only "${BASE_BRANCH_SHA}" "${HEAD_BRANCH_SHA}" -- ./migrations/)
-          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH_SHA}" -- ./migrations/)
+          echo "Comparing head branch '${HEAD_BRANCH}' with base branch '${BASE_BRANCH}'"
+          git fetch --no-tags origin "${BASE_BRANCH}:${BASE_BRANCH}" # Fetch the latest version of the base branch
+          HEAD_FILES=$(git diff --name-only "${BASE_BRANCH}" "${HEAD_BRANCH}" -- ./migrations/)
+          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH}" -- ./migrations/)
           echo "HEAD files:"
           echo "${HEAD_FILES}"
           echo "BASE files:"
