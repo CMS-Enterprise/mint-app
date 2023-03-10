@@ -10,46 +10,49 @@ on:
 jobs:
   check_migrations:
     runs-on: ubuntu-latest
-    env:
-      HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
-      BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
 
     steps:
       - name: Checkout all
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
       - name: Find migration files
         run: |
-          echo "Comparing head branch '${HEAD_BRANCH}' with base branch '${BASE_BRANCH}'"
-          echo "Fetching the latest version of the BASE branch '${BASE_BRANCH}'"
-          git fetch --no-tags origin "${BASE_BRANCH}:${BASE_BRANCH}" # Fetch the latest version of the base branch
+          echo "Comparing head branch '${{ github.event.pull_request.head.ref }}' with base branch '${{ github.event.pull_request.base.ref }}'"
+          echo "Fetching the latest version of the BASE branch '${{ github.event.pull_request.base.ref }}'"
+          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}" # Fetch the latest version of the base branch
 
-          echo "Fetching the latest version of the HEAD branch '${HEAD_BRANCH}'"
-          git fetch --no-tags origin "${HEAD_BRANCH}:${HEAD_BRANCH}"
+          echo "Fetching the latest version of the HEAD branch '${{ github.event.pull_request.head.ref }}'"
+          git fetch --no-tags origin "${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}"
 
-          echo "Gathering ./migrations/ file changes from head branch '${HEAD_BRANCH}'"
-          echo "HEAD branch: $(git rev-parse "${HEAD_BRANCH}")"
-          HEAD_FILES=$(git diff --name-only "${BASE_BRANCH}" "${HEAD_BRANCH}" -- ./migrations/)
+          echo "Gathering ./migrations/ file changes from head branch '${{ github.event.pull_request.head.ref }}'"
+          HEAD_MIGRATION_FILES=$(git diff --name-only "${{ github.event.pull_request.base.ref }}" "${{ github.event.pull_request.head.ref }}" -- ./migrations/)
           echo "HEAD changed files:"
-          echo "${HEAD_FILES}"
+          echo "${HEAD_MIGRATION_FILES}"
+          echo "MIGRATION_HEAD_FILES=${HEAD_MIGRATION_FILES}" >> $GITHUB_ENV
 
-          echo "Gathering ./migrations/ files from ${BASE_BRANCH}'"
-          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH}" -- ./migrations/)
+          echo "Gathering ./migrations/ files from base branch '${{ github.event.pull_request.base.ref }}'"
+          BASE_FILES=$(git ls-tree --name-only "${{ github.event.pull_request.base.ref }}" -- ./migrations/)
           echo "BASE files:"
           echo "${BASE_FILES}"
+          echo "MIGRATION_BASE_FILES=${BASE_FILES}" >> $GITHUB_ENV
 
-          echo "Extracting prefixes from head branch '${HEAD_BRANCH}'"
-          HEAD_PREFIXES=$(echo "${HEAD_FILES}" | awk -F'__' '{print $1}')
+      - name: Extracting prefixes from head branch
+        run: |
+          HEAD_PREFIXES=$(echo "${{ env.MIGRATION_HEAD_FILES }}" | awk -F'__' '{print $1}')
           echo "HEAD prefixes: '${HEAD_PREFIXES}'"
+          echo "MIGRATION_HEAD_PREFIXES=${HEAD_PREFIXES}" >> $GITHUB_ENV
 
-          echo "Extracting prefixes from base branch '${BASE_BRANCH}'"
-          BASE_PREFIXES=$(echo "${BASE_FILES}" | awk -F'__' '{print $1}')
+      - name: Extracting prefixes from base branch
+        run: |
+          BASE_PREFIXES=$(echo "${{ env.MIGRATION_BASE_FILES }}" | awk -F'__' '{print $1}')
           echo "BASE prefixes: '${BASE_PREFIXES}'"
+          echo "MIGRATION_BASE_PREFIXES=${BASE_PREFIXES}" >> $GITHUB_ENV
 
-          echo "Checking for duplicate prefixes"
-          DUPLICATES=$(echo "${HEAD_PREFIXES} ${BASE_PREFIXES}" | tr ' ' '\n' | sort | uniq -d)
+      - name: Check for duplicate prefixes
+        run: |
+          DUPLICATES=$(echo "${{ env.MIGRATION_HEAD_PREFIXES }} ${{ env.MIGRATION_BASE_PREFIXES }}" | tr ' ' '\n' | sort | uniq -d)
 
           if [ -n "${DUPLICATES}" ]; then
             echo "Duplicate migration prefixes found: ${DUPLICATES}"
