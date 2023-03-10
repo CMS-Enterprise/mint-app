@@ -34,6 +34,15 @@ var modelPlanCreatedSubjectTemplate string
 //go:embed templates/model_plan_created_body.html
 var modelPlanCreatedBodyTemplate string
 
+// PlanDiscussionCreatedTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionCreatedTemplateName string = "plan_discussion_created"
+
+//go:embed templates/plan_discussion_created_subject.html
+var planDiscussionCreatedSubjectTemplate string
+
+//go:embed templates/plan_discussion_created_body.html
+var planDiscussionCreatedBodyTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -67,6 +76,11 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(ModelPlanCreatedTemplateName, modelPlanCreatedSubjectTemplate, modelPlanCreatedBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(PlanDiscussionCreatedTemplateName, planDiscussionCreatedSubjectTemplate, planDiscussionCreatedBodyTemplate)
 	if err != nil {
 		return err
 	}
