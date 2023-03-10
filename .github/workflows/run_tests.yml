@@ -164,28 +164,22 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build backend container
         uses: docker/build-push-action@v4
-        env:
-          BUILDKIT_PROGRESS: plain
         with:
-          push: false
+          load: true
           file: Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Build frontend container
         uses: docker/build-push-action@v4
-        env:
-          BUILDKIT_PROGRESS: plain
         with:
-          push: false
+          load: true
           file: Dockerfile.client
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Build DB migrations container
         uses: docker/build-push-action@v4
-        env:
-          BUILDKIT_PROGRESS: plain
         with:
-          push: false
+          load: true
           file: Dockerfile.db_migrations
           cache-from: type=gha
           cache-to: type=gha,mode=max
