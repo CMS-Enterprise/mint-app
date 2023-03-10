@@ -72,21 +72,14 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
     );
   }, [solutionData?.operationalSolution]);
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    {
-      text: t('itSolutionsTrackerBreadcrumb'),
-      url: `/models/${modelID}/task-list/it-solutions`
-    },
-    {
-      text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
-    },
-    { text: manageSubtasks ? t('manageSubtasks') : t('addSubtask') }
-  ];
-
   const formikRef = useRef<FormikProps<CreateSubTasksType>>(null);
+  const [create] = useMutation<
+    CreateSubTasksType,
+    CreateOperationalSolutionSubtasksVariables
+  >(CreateOperationalSolutionSubtasks);
+
+  const subtasks =
+    solutionData?.operationalSolution.operationalSolutionSubtasks;
 
   const initialValues: CreateSubTasksType = {
     createOperationalSolutionSubtasks: [
@@ -97,11 +90,6 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
       }
     ]
   };
-
-  const [create] = useMutation<
-    CreateSubTasksType,
-    CreateOperationalSolutionSubtasksVariables
-  >(CreateOperationalSolutionSubtasks);
 
   const handleFormSubmit = (formikValues: CreateSubTasksType) => {
     const { createOperationalSolutionSubtasks } = formikValues;
@@ -133,6 +121,20 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  const breadcrumbs = [
+    { text: h('home'), url: '/' },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
+    {
+      text: t('itSolutionsTrackerBreadcrumb'),
+      url: `/models/${modelID}/task-list/it-solutions`
+    },
+    {
+      text: t('solutionDetails'),
+      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+    },
+    { text: manageSubtasks ? t('manageSubtasks') : t('addSubtask') }
+  ];
 
   if (error || !solution) {
     return <NotFound />;
