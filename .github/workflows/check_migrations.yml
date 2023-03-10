@@ -15,16 +15,10 @@ jobs:
       BASE_BRANCH_SHA: ${{ github.event.pull_request.base.sha }}
 
     steps:
-      - name: Checkout Head Branch
+      - name: Checkout all
         uses: actions/checkout@v3
         with:
-          ref: ${{ env.HEAD_BRANCH_SHA }}
-
-
-      - name: Checkout Base Branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ env.BASE_BRANCH_SHA }}
+          fetch-depth: 0
 
       - name: Find migration files
         run: |
