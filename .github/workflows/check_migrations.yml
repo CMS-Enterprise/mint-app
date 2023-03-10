@@ -32,7 +32,9 @@ jobs:
           echo "${HEAD_MIGRATION_FILES}"
 
           # We need to format $MIGRATION_HEAD_FILES as a heredoc so that we can use it in the next step
-          echo "MIGRATION_HEAD_FILES<<EOF=${HEAD_MIGRATION_FILES}<<EOF" >> $GITHUB_ENV
+          echo "MIGRATION_HEAD_FILES<<EOF" >> ${GITHUB_ENV}
+          echo "${HEAD_MIGRATION_FILES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
 
           echo "Gathering ./migrations/ files from base branch '${{ github.event.pull_request.base.ref }}'"
           BASE_FILES=$(git ls-tree --name-only "${{ github.event.pull_request.base.ref }}" -- ./migrations/)
@@ -40,7 +42,9 @@ jobs:
           echo "${BASE_FILES}"
 
           # We need to format $MIGRATION_BASE_FILES as a heredoc so that we can use it in the next step
-          echo "MIGRATION_BASE_FILES<<EOF=${BASE_FILES}<<EOF" >> $GITHUB_ENV
+          echo "MIGRATION_BASE_FILES<<EOF" >> ${GITHUB_ENV}
+          echo "${BASE_FILES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
 
       - name: Extracting prefixes from head branch
         run: |
