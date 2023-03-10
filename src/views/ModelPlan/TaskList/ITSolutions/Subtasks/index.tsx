@@ -81,7 +81,9 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
     CreateOperationalSolutionSubtasksVariables
   >(CreateOperationalSolutionSubtasks);
 
-  const [archive] = useMutation<DeleteOperationalSolutionSubtaskVariables>(
+  const [
+    removeSubtask
+  ] = useMutation<DeleteOperationalSolutionSubtaskVariables>(
     DeleteOperationalSolutionSubtasks
   );
 
@@ -99,7 +101,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
   };
 
   const handleDelete = (name: string, id: string) => {
-    archive({
+    removeSubtask({
       variables: {
         id
       }
