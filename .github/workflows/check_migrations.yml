@@ -26,6 +26,9 @@ jobs:
           echo "Fetching the latest version of the BASE branch '${BASE_BRANCH}'"
           git fetch --no-tags origin "${BASE_BRANCH}:${BASE_BRANCH}" # Fetch the latest version of the base branch
 
+          echo "Fetching the latest version of the HEAD branch '${HEAD_BRANCH}'"
+          git fetch --no-tags origin "${HEAD_BRANCH}:${HEAD_BRANCH}"
+
           echo "Gathering ./migrations/ file changes from head branch '${HEAD_BRANCH}'"
           HEAD_FILES=$(git diff --name-only "${BASE_BRANCH}" "${HEAD_BRANCH}" -- ./migrations/)
           echo "HEAD changed files:"
