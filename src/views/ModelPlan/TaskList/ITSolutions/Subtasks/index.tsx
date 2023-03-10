@@ -40,7 +40,7 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-const Subtasks = () => {
+const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -83,7 +83,7 @@ const Subtasks = () => {
       text: t('solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
     },
-    { text: t('addSubtask') }
+    { text: manageSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
 
   const formikRef = useRef<FormikProps<CreateSubTasksType>>(null);
@@ -145,7 +145,7 @@ const Subtasks = () => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('addSubtask')}
+            {manageSubtasks ? t('manageSubtasks') : t('addSubtask')}
           </PageHeading>
 
           <p
@@ -155,7 +155,9 @@ const Subtasks = () => {
             {h('for')} {modelName}
           </p>
 
-          <p className="line-height-body-4">{t('addSubtaskInfo')}</p>
+          <p className="line-height-body-4">
+            {manageSubtasks ? t('manageSubtaskInfo') : t('addSubtaskInfo')}
+          </p>
 
           <Grid tablet={{ col: 8 }}>
             <NeedQuestionAndAnswer
