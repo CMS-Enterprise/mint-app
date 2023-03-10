@@ -19,7 +19,8 @@ jobs:
         run: |
           PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           MAIN_BRANCH="${{ github.event.pull_request.base.ref }}"
-          git fetch origin "${MAIN_BRANCH}:${MAIN_BRANCH}" # Fetch the latest version of the main branch
+          echo "Comparing PR branch '${PR_BRANCH}' with main branch '${MAIN_BRANCH}'"
+          git fetch --no-tags origin "${MAIN_BRANCH}:${MAIN_BRANCH}" # Fetch the latest version of the main branch
           PR_FILES=$(git diff --name-only "${MAIN_BRANCH}" "${PR_BRANCH}" -- ./migrations)
           MAIN_FILES=$(git ls-tree --name-only "${MAIN_BRANCH}" -- ./migrations)
           echo "PR files:"
