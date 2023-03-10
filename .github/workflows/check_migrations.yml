@@ -13,10 +13,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Fetch all history so that the git diff and ls-tree commands have access to the main branch
       - name: Find migration files
         run: |
           PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           MAIN_BRANCH="${{ github.event.pull_request.base.ref }}"
+          git fetch origin "${MAIN_BRANCH}:${MAIN_BRANCH}" # Fetch the latest version of the main branch
           PR_FILES=$(git diff --name-only "${MAIN_BRANCH}" "${PR_BRANCH}" -- ./migrations)
           MAIN_FILES=$(git ls-tree --name-only "${MAIN_BRANCH}" -- ./migrations)
           echo "PR files:"
