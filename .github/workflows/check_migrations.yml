@@ -27,7 +27,19 @@ jobs:
           echo "Fetching the latest version of the HEAD branch '${{ github.event.pull_request.head.ref }}'"
           git fetch --no-tags origin "${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}"
 
-      - name: Find migration files
+      - name: Gather migration files from base branch
+        run: |
+          echo "Gathering ./migrations/ files from base branch '${{ github.event.pull_request.base.ref }}'"
+          BASE_FILES=$(git ls-tree --name-only "${{ github.event.pull_request.base.ref }}" -- ./migrations/)
+          echo "BASE files:"
+          echo "${BASE_FILES}"
+
+          # We need to format $MIGRATION_BASE_FILES as a heredoc so that we can use it in the next step
+          echo "MIGRATION_BASE_FILES<<EOF" >> ${GITHUB_ENV}
+          echo "${BASE_FILES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
+
+      - name: Gather changed migration files from head branch
         run: |
           echo "Comparing head branch '${{ github.event.pull_request.head.ref }}' with base branch '${{ github.event.pull_request.base.ref }}'"
           echo "Gathering ./migrations/ file changes from head branch '${{ github.event.pull_request.head.ref }}'"
@@ -38,16 +50,6 @@ jobs:
           # We need to format $MIGRATION_HEAD_FILES as a heredoc so that we can use it in the next step
           echo "MIGRATION_HEAD_FILES<<EOF" >> ${GITHUB_ENV}
           echo "${HEAD_MIGRATION_FILES}" >> ${GITHUB_ENV}
-          echo "EOF" >> ${GITHUB_ENV}
-
-          echo "Gathering ./migrations/ files from base branch '${{ github.event.pull_request.base.ref }}'"
-          BASE_FILES=$(git ls-tree --name-only "${{ github.event.pull_request.base.ref }}" -- ./migrations/)
-          echo "BASE files:"
-          echo "${BASE_FILES}"
-
-          # We need to format $MIGRATION_BASE_FILES as a heredoc so that we can use it in the next step
-          echo "MIGRATION_BASE_FILES<<EOF" >> ${GITHUB_ENV}
-          echo "${BASE_FILES}" >> ${GITHUB_ENV}
           echo "EOF" >> ${GITHUB_ENV}
 
       - name: Extracting prefixes from head branch
