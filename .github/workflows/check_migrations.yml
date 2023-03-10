@@ -24,8 +24,8 @@ jobs:
         run: |
           echo "Comparing head branch '${HEAD_BRANCH_SHA}' with base branch '${BASE_BRANCH_SHA}'"
           git fetch --no-tags origin "${BASE_BRANCH_SHA}:${BASE_BRANCH_SHA}" # Fetch the latest version of the base branch
-          HEAD_FILES=$(git diff --name-only "${BASE_BRANCH_SHA}" "${HEAD_BRANCH_SHA}" -- ./migrations)
-          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH_SHA}" -- ./migrations)
+          HEAD_FILES=$(git diff --name-only "${BASE_BRANCH_SHA}" "${HEAD_BRANCH_SHA}" -- ./migrations/)
+          BASE_FILES=$(git ls-tree --name-only "${BASE_BRANCH_SHA}" -- ./migrations/)
           echo "HEAD files:"
           echo "${HEAD_FILES}"
           echo "BASE files:"
