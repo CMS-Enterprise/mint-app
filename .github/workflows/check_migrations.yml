@@ -1,0 +1,47 @@
+# This GitHub action checks for duplicate migration prefixes in the ./migrations folder,
+# comparing the pull request branch with the main branch.
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check_migrations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Find migration files
+        run: |
+          PR_BRANCH="${{ github.event.pull_request.head.ref }}"
+          MAIN_BRANCH="${{ github.event.pull_request.base.ref }}"
+          PR_FILES=$(git diff --name-only "${MAIN_BRANCH}" "${PR_BRANCH}" -- ./migrations)
+          MAIN_FILES=$(git ls-tree --name-only "${MAIN_BRANCH}" -- ./migrations)
+          echo "PR files:"
+          echo "${PR_FILES}"
+          echo "Main files:"
+          echo "${MAIN_FILES}"
+      - name: Check for duplicate migration prefixes
+        run: |
+          PR_PREFIXES=$(echo "${PR_FILES}" | awk -F'__' '{print $1}')
+          MAIN_PREFIXES=$(echo "${MAIN_FILES}" | awk -F'__' '{print $1}')
+          DUPLICATES=$(echo "${PR_PREFIXES} ${MAIN_PREFIXES}" | tr ' ' '\n' | sort | uniq -d)
+          if [ -n "${DUPLICATES}" ]; then
+            echo "Duplicate migration prefixes found: ${DUPLICATES}"
+            exit 1
+          fi
+      - name: Set status
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const status = {
+              state: '${{ job.status }}',
+              target_url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+              description: 'Migration check',
+              context: 'migration-check'
+            };
+            github.repos.createCommitStatus({
+              ...github.context.repo,
+              sha: '${{ github.event.pull_request.head.sha }}',
+              ...status
+            });
