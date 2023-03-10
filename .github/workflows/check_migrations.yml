@@ -17,15 +17,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Find migration files
+      - name: Fetch base branch
         run: |
-          echo "Comparing head branch '${{ github.event.pull_request.head.ref }}' with base branch '${{ github.event.pull_request.base.ref }}'"
           echo "Fetching the latest version of the BASE branch '${{ github.event.pull_request.base.ref }}'"
-          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}" # Fetch the latest version of the base branch
+          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}"
 
+      - name: Fetch head branch
+        run: |
           echo "Fetching the latest version of the HEAD branch '${{ github.event.pull_request.head.ref }}'"
           git fetch --no-tags origin "${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}"
 
+      - name: Find migration files
+        run: |
+          echo "Comparing head branch '${{ github.event.pull_request.head.ref }}' with base branch '${{ github.event.pull_request.base.ref }}'"
           echo "Gathering ./migrations/ file changes from head branch '${{ github.event.pull_request.head.ref }}'"
           HEAD_MIGRATION_FILES=$(git diff --name-only "${{ github.event.pull_request.base.ref }}" "${{ github.event.pull_request.head.ref }}" -- ./migrations/)
           echo "HEAD changed files:"
