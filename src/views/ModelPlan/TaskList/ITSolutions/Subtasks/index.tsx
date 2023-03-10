@@ -108,21 +108,38 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
     })
       .then(response => {
         if (!response?.errors) {
-          showMessage(
-            <Alert
-              type="success"
-              slim
-              data-testid="success-subtask-alert"
-              className="margin-y-4"
-            >
-              {t('removeSubtaskSuccess', { subTaskName: name })}
-            </Alert>
+          if (subtasks && subtasks.length > 1) {
+            showMessage(
+              <Alert
+                type="success"
+                slim
+                data-testid="success-subtask-alert"
+                className="margin-y-4"
+              >
+                {t('removeSubtaskSuccess', { subTaskName: name })}
+              </Alert>
+            );
+            refetch();
+          } else {
+            showMessageOnNextPage(
+              <Alert
+                type="success"
+                slim
+                data-testid="success-subtask-alert"
+                className="margin-y-4"
+              >
+                {t('removeSubtaskSuccess', { subTaskName: name })}
+              </Alert>
+            );
+          }
+          history.push(
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
           );
-          refetch();
         }
       })
       .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+        // formikRef?.current?.setErrors(errors);
+        // TODO: better way to show error
       });
   };
 
