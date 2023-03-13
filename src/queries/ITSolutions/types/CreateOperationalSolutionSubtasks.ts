@@ -11,6 +11,7 @@ import { CreateOperationalSolutionSubtaskInput, OperationalSolutionSubtaskStatus
 
 export interface CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks {
   __typename: "OperationalSolutionSubtask";
+  id: UUID;
   name: string;
   status: OperationalSolutionSubtaskStatus;
 }

@@ -10,6 +10,7 @@ import AddOrUpdateOperationalNeed from './AddOrUpdateOperationalNeed';
 import AddSolution from './AddSolution';
 import ITSolutionsHome from './Home';
 import LinkDocuments from './LinkDocuments';
+import ManageSubtasks from './ManageSubtasks';
 import SelectSolutions from './SelectSolutions';
 import SolutionDetails from './SolutionDetails';
 import SolutionImplementation from './SolutionImplementation';
@@ -99,7 +100,8 @@ const ITSolutions = () => {
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
               exact
             >
-              <Subtasks manageSubtasks />
+              {/* <Subtasks manageSubtasks /> */}
+              <ManageSubtasks />
             </Route>
 
             <Route

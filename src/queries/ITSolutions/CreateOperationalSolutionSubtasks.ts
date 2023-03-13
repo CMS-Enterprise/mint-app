@@ -9,6 +9,7 @@ export default gql`
       solutionID: $solutionID
       inputs: $inputs
     ) {
+      id
       name
       status
     }
