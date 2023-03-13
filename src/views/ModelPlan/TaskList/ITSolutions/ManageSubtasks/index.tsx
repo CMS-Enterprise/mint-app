@@ -96,7 +96,6 @@ const ManageSubtasks = () => {
 
   const handleUpdate = (formikValues: InitialValueType) => {
     const { operationalSolutionSubtasks } = formikValues;
-    // const { id, name, status } = createOperationalSolutionSubtasks!;
     operationalSolutionSubtasks.map(subtask =>
       update({
         variables: {
