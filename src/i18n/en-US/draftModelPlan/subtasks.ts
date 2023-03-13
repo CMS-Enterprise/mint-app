@@ -10,6 +10,7 @@ const subtasks = {
   addSubtasks: 'Add subtasks',
   manageSubtasks: 'Manage subtasks',
   noSubtasks: 'No subtasks added yet',
+  updateSubtasks: 'Update subtasks',
   addSubtaskInfo:
     'Add important subtasks to stay organized throughout the implementation process.',
   manageSubtaskInfo:
