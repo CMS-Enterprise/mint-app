@@ -813,8 +813,7 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 
 // OperationalSolutions is the resolver for the operationalSolutions field.
 func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedID(logger, operationalNeedID, includeNotNeeded, r.store)
+	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, includeNotNeeded)
 }
 
 // OperationalSolution is the resolver for the operationalSolution field.

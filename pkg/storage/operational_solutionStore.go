@@ -11,9 +11,6 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/operational_solution/and_possible_get_by_operational_need_id.sql
-var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
-
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADER.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL string
 
@@ -34,29 +31,6 @@ var operationalSolutionInsertOrUpdateSQL string
 
 //go:embed SQL/operational_solution/insert_or_update_other.sql
 var operationalSolutionInsertOrUpdateOtherSQL string
-
-// OperationalSolutionAndPossibleCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
-func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	solutions := []*models.OperationalSolution{}
-
-	stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-
-		"operational_need_id": operationalNeedID,
-		"includeNotNeeded":    includeNotNeeded,
-	}
-
-	err = stmt.Select(&solutions, arg) //this returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-	return solutions, nil
-}
 
 // OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER returns Operational Solutions that match the paramtableJSON
 func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolution, error) {

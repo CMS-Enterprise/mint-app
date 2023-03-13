@@ -12,14 +12,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
-// OperationaSolutionsAndPossibleGetByOPNeedID returns operational Solutions and possible Operational Solutions based on a specific operational Need
-func OperationaSolutionsAndPossibleGetByOPNeedID(logger *zap.Logger, operationalNeedID uuid.UUID, includeNotNeeded bool, store *storage.Store) ([]*models.OperationalSolution, error) {
-
-	sols, err := store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedID(logger, operationalNeedID, includeNotNeeded)
-
-	return sols, err
-}
-
 // OperationaSolutionsAndPossibleGetByOPNeedIDLOADER returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
 func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	allLoaders := loaders.Loaders(ctx)
