@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -7,8 +7,7 @@ import {
   Grid,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -17,24 +16,16 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
-import CreateOperationalSolutionSubtasks from 'queries/ITSolutions/CreateOperationalSolutionSubtasks';
 import DeleteOperationalSolutionSubtasks from 'queries/ITSolutions/DeleteOperationalSolutionSubtasks';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import {
-  CreateOperationalSolutionSubtasks as CreateSubTasksType,
-  CreateOperationalSolutionSubtasksVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolutionSubtasks';
 import { DeleteOperationalSolutionSubtaskVariables } from 'queries/ITSolutions/types/DeleteOperationalSolutionSubtask';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { GetOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/GetOperationalSolutionSubtasks';
 import { UpdateOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/UpdateOperationalSolutionSubtasks';
 import UpdateOperationalSolutionSubtasks from 'queries/ITSolutions/UpdateOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
@@ -71,22 +62,17 @@ const ManageSubtasks = () => {
     }
   });
 
-  // Used to show the solution card
-  const solution = useMemo(() => {
-    return (
-      solutionData?.operationalSolution ||
-      ({} as GetOperationalSolutionOperationalSolutionType)
-    );
-  }, [solutionData?.operationalSolution]);
-
-  const formikRef = useRef<FormikProps<InitialValueType>>(null);
+  const solution = solutionData?.operationalSolution;
+  const subtasks = solution?.operationalSolutionSubtasks!;
 
   const [update] = useMutation<UpdateOperationalSolutionSubtasksVariables>(
     UpdateOperationalSolutionSubtasks
   );
-
-  const subtasks =
-    solutionData?.operationalSolution.operationalSolutionSubtasks;
+  const [
+    removeSubtask
+  ] = useMutation<DeleteOperationalSolutionSubtaskVariables>(
+    DeleteOperationalSolutionSubtasks
+  );
 
   type InitialValueType = Omit<
     GetOperationalSolutionOperationalSolutionType,
@@ -103,8 +89,9 @@ const ManageSubtasks = () => {
     | 'mustStartDts'
     | 'documents'
   >;
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const initialValue: InitialValueType = {
-    operationalSolutionSubtasks: [...subtasks!]
+    operationalSolutionSubtasks: [...subtasks]
   };
 
   const handleUpdate = (formikValues: InitialValueType) => {
@@ -147,6 +134,83 @@ const ManageSubtasks = () => {
     );
   };
 
+  const handleDelete = (name: string, id: string) => {
+    removeSubtask({
+      variables: {
+        id
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (subtasks && subtasks.length > 1) {
+            showMessage(
+              <Alert
+                type="success"
+                slim
+                data-testid="success-subtask-alert"
+                className="margin-y-4"
+              >
+                {t('removeSubtaskSuccess', { subTaskName: name })}
+              </Alert>
+            );
+            refetch();
+          } else {
+            showMessageOnNextPage(
+              <Alert
+                type="success"
+                slim
+                data-testid="success-subtask-alert"
+                className="margin-y-4"
+              >
+                {t('removeSubtaskSuccess', { subTaskName: name })}
+              </Alert>
+            );
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+            );
+          }
+        }
+      })
+      .catch(errors => {
+        showMessage(
+          <Alert type="error" slim className="margin-y-4">
+            <span className="mandatory-fields-alert__text">
+              {t('removeSubtaskError', { subTaskName: name })}
+            </span>
+          </Alert>
+        );
+        setModalOpen(false);
+      });
+  };
+
+  const renderModal = (name: string, id: string) => {
+    return (
+      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
+        <PageHeading headingLevel="h2" className="margin-y-0">
+          {t('removeModal.header', {
+            subTaskName: name
+          })}
+        </PageHeading>
+        <p className="margin-top-2 margin-bottom-3">
+          {t('removeModal.warning')}
+        </p>
+        <Button
+          type="button"
+          className="margin-right-4"
+          onClick={() => {
+            handleDelete(name, id);
+            setModalOpen(false);
+          }}
+        >
+          {t('removeModal.removeSubtask')}
+        </Button>
+        <Button type="button" unstyled onClick={() => setModalOpen(false)}>
+          {t('removeModal.keepSubtask')}
+        </Button>
+      </Modal>
+    );
+  };
+
   const breadcrumbs = [
     { text: h('home'), url: '/' },
     { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
@@ -168,6 +232,8 @@ const ManageSubtasks = () => {
   return (
     <>
       <Breadcrumbs items={breadcrumbs} />
+
+      {message}
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
@@ -193,7 +259,6 @@ const ManageSubtasks = () => {
             />
 
             <Formik
-              // initialValues={iv2}
               initialValues={initialValue}
               onSubmit={values => {
                 // handleFormSubmit(values);
@@ -233,7 +298,7 @@ const ManageSubtasks = () => {
                     >
                       <FieldArray name="operationalSolutionSubtasks">
                         {fieldArrayProps => {
-                          const { push, remove } = fieldArrayProps;
+                          const { push } = fieldArrayProps;
                           const { operationalSolutionSubtasks } = values;
 
                           return (
@@ -242,8 +307,7 @@ const ManageSubtasks = () => {
                                 operationalSolutionSubtasks.map(
                                   (input, index) => (
                                     <div
-                                      // eslint-disable-next-line react/no-array-index-key
-                                      key={index}
+                                      key={input.id}
                                       className={
                                         operationalSolutionSubtasks.length > 1
                                           ? 'border-bottom border-base-light'
@@ -256,9 +320,8 @@ const ManageSubtasks = () => {
                                         </p>
                                         <p className="margin-0">
                                           {
-                                            operationalSolutionSubtasks[
-                                              `${index}`
-                                            ].name
+                                            operationalSolutionSubtasks[index]
+                                              .name
                                           }
                                         </p>
                                       </div>
@@ -294,16 +357,15 @@ const ManageSubtasks = () => {
                                               />
                                             );
                                           })}
-                                        {operationalSolutionSubtasks.length >
-                                          1 && (
-                                          <Button
-                                            type="button"
-                                            onClick={() => remove(index)}
-                                            className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                          >
-                                            {t('removeSubtask')}
-                                          </Button>
-                                        )}
+
+                                        <Button
+                                          type="button"
+                                          onClick={() => setModalOpen(true)}
+                                          className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                        >
+                                          {t('removeSubtask')}
+                                        </Button>
+                                        {renderModal(input.name, input.id)}
                                       </FieldGroup>
                                     </div>
                                   )
