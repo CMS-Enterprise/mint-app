@@ -1,3 +1,6 @@
+# This GitHub action checks for duplicate migration prefixes in the ./migrations folder,
+# comparing the head branch with the base branch.
+
 name: Check Migrations
 
 on:
@@ -14,17 +17,56 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch base and head branch
-        uses: ./fetch_branch.yml
-        with:
-          base_ref: ${{ github.event.pull_request.base.ref }}
-          head_ref: ${{ github.event.pull_request.head.ref }}
+      - name: Fetch base branch
+        run: |
+          echo "Fetching the latest version of the BASE branch '${{ github.event.pull_request.base.ref }}'"
+          git fetch --no-tags origin "${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}"
+
+      - name: Fetch head branch
+        run: |
+          echo "Fetching the latest version of the HEAD branch '${{ github.event.pull_request.head.ref }}'"
+          git fetch --no-tags origin "${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}"
 
       - name: Gather migration files from base branch
-        uses: ./gather_migrations.yml
-        with:
-          base_branch: ${{ github.event.pull_request.base.ref }}
-          head_branch: ${{ github.event.pull_request.head.ref }}
+        run: |
+          echo "Gathering ./migrations/ files from base branch '${{ github.event.pull_request.base.ref }}'"
+          BASE_FILES=$(git ls-tree --name-only "${{ github.event.pull_request.base.ref }}" -- ./migrations/)
+          echo "BASE files:"
+          echo "${BASE_FILES}"
+
+          # We need to format $MIGRATION_BASE_FILES as a heredoc so that we can use it in the next step
+          echo "MIGRATION_BASE_FILES<<EOF" >> ${GITHUB_ENV}
+          echo "${BASE_FILES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
+
+      - name: Gather changed migration files from head branch
+        run: |
+          echo "Comparing head branch '${{ github.event.pull_request.head.ref }}' with base branch '${{ github.event.pull_request.base.ref }}'"
+          echo "Gathering ./migrations/ file changes from head branch '${{ github.event.pull_request.head.ref }}'"
+          HEAD_MIGRATION_FILES=$(git diff --name-only "${{ github.event.pull_request.base.ref }}" "${{ github.event.pull_request.head.ref }}" -- ./migrations/)
+          echo "HEAD changed files:"
+          echo "${HEAD_MIGRATION_FILES}"
+
+          # We need to format $MIGRATION_HEAD_FILES as a heredoc so that we can use it in the next step
+          echo "MIGRATION_HEAD_FILES<<EOF" >> ${GITHUB_ENV}
+          echo "${HEAD_MIGRATION_FILES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
+
+      - name: Extracting prefixes from head branch
+        run: |
+          HEAD_PREFIXES=$(echo "${{ env.MIGRATION_HEAD_FILES }}" | awk -F'__' '{print $1}')
+          echo "HEAD prefixes: '${HEAD_PREFIXES}'"
+          echo "MIGRATION_HEAD_PREFIXES<<EOF" >> ${GITHUB_ENV}
+          echo "${HEAD_PREFIXES}" >> ${GITHUB_ENV}
+          echo "EOF" >> ${GITHUB_ENV}
+
+      - name: Extracting prefixes from base branch
+        run: |
+          BASE_PREFIXES=$(echo "${{ env.MIGRATION_BASE_FILES }}" | awk -F'__' '{print $1}')
+          echo "BASE prefixes: '${BASE_PREFIXES}'"
+          echo "MIGRATION_BASE_PREFIXES<<EOF" >> $GITHUB_ENV
+          echo "${BASE_PREFIXES}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Check for duplicate prefixes
         run: |
