@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "Comparing head branch '${{ github.event.pull_request.head.ref }}' with base branch '${{ github.event.pull_request.base.ref }}'"
           echo "Gathering ./migrations/ file changes from head branch '${{ github.event.pull_request.head.ref }}'"
-          HEAD_MIGRATION_FILES=$(git diff --name-only "${{ github.event.pull_request.base.ref }}" "${{ github.event.pull_request.head.ref }}" -- ./migrations/)
+          HEAD_MIGRATION_FILES=$(git diff --name-only --diff-filter=A "${{ github.event.pull_request.base.ref }}" "${{ github.event.pull_request.head.ref }}" -- ./migrations/)
           echo "HEAD changed files:"
           echo "${HEAD_MIGRATION_FILES}"
 
