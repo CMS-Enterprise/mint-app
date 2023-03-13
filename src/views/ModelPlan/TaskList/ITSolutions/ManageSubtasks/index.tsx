@@ -87,12 +87,6 @@ const ManageSubtasks = () => {
 
   const subtasks =
     solutionData?.operationalSolution.operationalSolutionSubtasks;
-  console.log(subtasks);
-
-  // FIXME: this is what i added
-  const iv2: CreateSubTasksType = {
-    createOperationalSolutionSubtasks: subtasks! && [...subtasks]
-  };
 
   type InitialValueType = Omit<
     GetOperationalSolutionOperationalSolutionType,
@@ -113,15 +107,11 @@ const ManageSubtasks = () => {
     operationalSolutionSubtasks: [...subtasks!]
   };
 
-  console.log(`this is the intitialvalue:`);
-  console.log(initialValue);
-
-  // TODO: work on updating the form
   const handleUpdate = (formikValues: InitialValueType) => {
     const { operationalSolutionSubtasks } = formikValues;
     // const { id, name, status } = createOperationalSolutionSubtasks!;
-    operationalSolutionSubtasks.map(subtask => {
-      return update({
+    operationalSolutionSubtasks.map(subtask =>
+      update({
         variables: {
           inputs: [
             {
@@ -133,10 +123,28 @@ const ManageSubtasks = () => {
             }
           ]
         }
-      }).then(response => {
-        console.log(`works`);
-      });
-    });
+      })
+        .then(response => {
+          if (!response?.errors) {
+            showMessageOnNextPage(
+              <Alert
+                type="success"
+                slim
+                data-testid="success-subtask-alert"
+                className="margin-y-4"
+              >
+                {t('successfulUpdateMessage')}
+              </Alert>
+            );
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+            );
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        })
+    );
   };
 
   const breadcrumbs = [
@@ -160,8 +168,6 @@ const ManageSubtasks = () => {
   return (
     <>
       <Breadcrumbs items={breadcrumbs} />
-
-      {message}
 
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
