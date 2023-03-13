@@ -15,13 +15,13 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch base and head branch
-        uses: ./fetch_branch
+        uses: ./fetch_branch.yml
         with:
           base_ref: ${{ github.event.pull_request.base.ref }}
           head_ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Gather migration files from base branch
-        uses: ./gather_migrations
+        uses: ./gather_migrations.yml
         with:
           base_branch: ${{ github.event.pull_request.base.ref }}
           head_branch: ${{ github.event.pull_request.head.ref }}
