@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"fmt"
 
 	"go.uber.org/zap"
 
@@ -28,16 +27,9 @@ func HasAnyRole(ctx context.Context, roles []model.Role) (bool, error) {
 
 // HasRole authorizes a user as having a given role
 func HasRole(ctx context.Context, role model.Role) (bool, error) {
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
-	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
+	logger.Info("Checking if user has appropriate roles", zap.Any("Principal", principal))
 	switch role {
 	case model.RoleMintUser:
 		if !principal.AllowUSER() {
