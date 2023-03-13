@@ -1,1 +1,0 @@
-/* ENABLE need trigger on needed tables */
