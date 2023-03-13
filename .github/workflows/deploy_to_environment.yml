@@ -119,8 +119,6 @@ jobs:
         run: |
           ./scripts/release_static
       - name: Invalidate CloudFront cache 
-        env:
-          DISTRIBUTION_ID: ${{ inputs.env }}
         run: |
           ./scripts/invalidate_cloudfront_cache.sh
       - name: Announce failure
