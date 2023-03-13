@@ -84,7 +84,7 @@ type ApplicationPrincipal struct {
 
 // String satisfies the fmt.Stringer interface
 func (p *ApplicationPrincipal) String() string {
-	return fmt.Sprintf("EUAPrincipal: %s", p.Username)
+	return fmt.Sprintf("Application Principal: %s. Name: %s", p.Username, p.UserAccount.CommonName)
 }
 
 // ID returns the EUA ID
