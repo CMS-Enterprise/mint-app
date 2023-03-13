@@ -131,15 +131,21 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
                 {t('removeSubtaskSuccess', { subTaskName: name })}
               </Alert>
             );
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+            );
           }
-          history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
-          );
         }
       })
       .catch(errors => {
-        // formikRef?.current?.setErrors(errors);
-        // TODO: better way to show error
+        showMessage(
+          <Alert type="error" slim className="margin-y-4">
+            <span className="mandatory-fields-alert__text">
+              {t('removeSubtaskError', { subTaskName: name })}
+            </span>
+          </Alert>
+        );
+        setModalOpen(false);
       });
   };
 

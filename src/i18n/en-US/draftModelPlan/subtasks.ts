@@ -20,6 +20,8 @@ const subtasks = {
   successMessage: 'Success! Your subtasks have been added.',
   removeSubtask: 'Remove this subtask',
   removeSubtaskSuccess: 'Success! {{-subTaskName}} has been removed.',
+  removeSubtaskError:
+    'Sorry, we encountered a problem removing {{-subTaskName}}. Please try again.',
   removeModal: {
     header: 'Confirm you want to remove {{-subTaskName}}.',
     warning: 'You will not be able to undo this action.',
