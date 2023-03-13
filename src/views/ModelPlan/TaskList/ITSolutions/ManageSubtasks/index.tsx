@@ -406,7 +406,7 @@ const ManageSubtasks = () => {
                           // onClick={() => setErrors({})}
                           onClick={() => handleUpdate(values)}
                         >
-                          {t('addSubtask')}
+                          {t('updateSubtasks')}
                         </Button>
                       </div>
 
