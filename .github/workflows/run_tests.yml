@@ -161,7 +161,7 @@ jobs:
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
         with:
-          key: docker-layer-cache-${{ github.sha }}
+          key: docker-layer-cache-{hash}
           restore-keys: |
             docker-layer-cache-
             layer-docker-layer-cache-
