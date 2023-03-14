@@ -168,7 +168,7 @@ jobs:
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
-          scripts/dev up:ci
+          scripts/dev up
           echo "yarn cypress run"
       - name: Docker Compose Down
         if: always() # Always spin down the container
