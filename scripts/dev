@@ -120,7 +120,7 @@ end
 
 ### Tasks
 
-def up(frontend_included, *args, debug:false, wait:false)
+def up(frontend_included, *args, debug:false, wait:false, ci:false)
   conf=" "
   if debug
     conf =ENV["AIR_CONFIG_DEBUG"]
@@ -135,7 +135,7 @@ def up(frontend_included, *args, debug:false, wait:false)
 
   contribsys_docker_login
 
-  command = "docker compose #{"--profile frontend" if frontend_included } up --build"
+  command = "docker compose #{"--profile frontend" if frontend_included } up #{"--build" if !ci}"
 
   if args.any?
     command = "#{command} #{args.join(' ')}"
@@ -162,6 +162,11 @@ end
 
 namespace :up do
   desc "Starts all services in the project in the foreground"
+
+  task :ci do
+    up(true, "-d", ci:true)
+  end
+
   task :watch do
     up(true)
   end
