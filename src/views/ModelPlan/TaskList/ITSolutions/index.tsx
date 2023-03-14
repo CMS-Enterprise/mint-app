@@ -100,7 +100,6 @@ const ITSolutions = () => {
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
               exact
             >
-              {/* <Subtasks manageSubtasks /> */}
               <ManageSubtasks />
             </Route>
 
