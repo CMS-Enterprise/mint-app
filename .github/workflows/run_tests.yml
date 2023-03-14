@@ -156,27 +156,34 @@ jobs:
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
       - name: Build backend container
         uses: docker/build-push-action@v4
         with:
           load: true
           file: Dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       - name: Build frontend container
         uses: docker/build-push-action@v4
         with:
           load: true
           file: Dockerfile.client
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       - name: Build DB migrations container
         uses: docker/build-push-action@v4
         with:
           load: true
           file: Dockerfile.db_migrations
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       - name: Run e2e tests
         if: ${{ false }}
         run: |
@@ -188,6 +195,15 @@ jobs:
         if: always() # Always spin down the container
         run: |
           scripts/dev down
+
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
       - name: Upload cypress videos
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
