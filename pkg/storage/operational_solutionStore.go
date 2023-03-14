@@ -26,6 +26,9 @@ var operationalSolutionGetByIDSQL string
 //go:embed SQL/operational_solution/update_by_id.sql
 var operationalSolutionUpdateByIDSQL string
 
+//go:embed SQL/operational_solution/insert.sql
+var operationalSolutionInsertSQL string
+
 //go:embed SQL/operational_solution/insert_or_update.sql
 var operationalSolutionInsertOrUpdateSQL string
 
@@ -123,6 +126,21 @@ func (s *Store) OperationalSolutionGetByID(logger *zap.Logger, id uuid.UUID) (*m
 	}
 	return &solution, err
 
+}
+
+// OperationalSolutionInsert inserts an operational solution if it already exists
+func (s *Store) OperationalSolutionInsert(logger *zap.Logger, solution *models.OperationalSolution, solutionTypeKey *models.OperationalSolutionKey) (*models.OperationalSolution, error) {
+	statement, err := s.db.PrepareNamed(operationalSolutionInsertSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
+	}
+	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
+	solution.Key = solutionTypeKey
+	err = statement.Get(solution, solution)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, solution) //this could be either update or insert..
+	}
+	return solution, err
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational solution if it already exists

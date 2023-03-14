@@ -12,6 +12,35 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
+// OperationalSolutionCreate calls a DB method to create an operational solution
+func OperationalSolutionCreate(logger *zap.Logger, operationNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
+	opSol := models.NewOperationalSolution(principal.Account().ID, operationNeedID)
+
+	err := BaseStructPreUpdate(logger, opSol, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return store.OperationalSolutionInsert(logger, opSol, solutionType)
+
+}
+
+// OperationalSolutionUpdate updates an operational Solution by it's ID
+func OperationalSolutionUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
+
+	existing, err := store.OperationalSolutionGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+	return store.OperationalSolutionUpdateByID(logger, existing)
+
+}
+
 // OperationaSolutionsAndPossibleGetByOPNeedIDLOADER returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
 func OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	allLoaders := loaders.Loaders(ctx)

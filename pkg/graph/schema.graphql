@@ -1306,6 +1306,9 @@ type OperationalSolution {
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     needed: Boolean
+    name: String
+    nameOther: String # Only valid for when solution type is null
+
     pocName: String
     pocEmail: String
     mustStartDts: Time
@@ -1480,6 +1483,12 @@ addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! nee
 @hasRole(role: MINT_USER)
 
 updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
+@hasRole(role: MINT_USER)
+
+createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
+@hasRole(role: MINT_USER)
+
+updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
 addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution!
