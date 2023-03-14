@@ -165,7 +165,6 @@ jobs:
             layer-docker-layer-cache-
 
       - name: Run e2e tests
-        if: ${{ false }}
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
