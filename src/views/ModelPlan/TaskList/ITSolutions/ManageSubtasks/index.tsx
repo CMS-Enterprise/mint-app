@@ -294,8 +294,7 @@ const ManageSubtasks = () => {
                       }}
                     >
                       <FieldArray name="operationalSolutionSubtasks">
-                        {fieldArrayProps => {
-                          const { push } = fieldArrayProps;
+                        {() => {
                           const { operationalSolutionSubtasks } = values;
 
                           return (
@@ -371,14 +370,11 @@ const ManageSubtasks = () => {
                                 <Button
                                   type="button"
                                   id="add-another-subtask"
-                                  onClick={() =>
-                                    push({
-                                      __typename: 'OperationalSolutionSubtask',
-                                      name: '',
-                                      status:
-                                        OperationalSolutionSubtaskStatus.TODO
-                                    })
-                                  }
+                                  onClick={() => {
+                                    history.push(
+                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
+                                    );
+                                  }}
                                   outline
                                 >
                                   {t('addAnotherSubtask')}

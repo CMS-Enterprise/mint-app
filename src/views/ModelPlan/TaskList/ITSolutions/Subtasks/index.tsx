@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
@@ -51,6 +51,8 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
   }>();
 
   const history = useHistory();
+  const location = useLocation();
+  const fromManageSubtasks = location.search.includes('manage-subtasks');
 
   const { t } = useTranslation('subtasks');
   const { t: h } = useTranslation('draftModelPlan');
@@ -490,14 +492,20 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled display-flex flex-align-center margin-bottom-6"
-                        onClick={() => {
-                          history.push(
-                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
-                          );
-                        }}
+                        onClick={() =>
+                          fromManageSubtasks
+                            ? history.push(
+                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
+                              )
+                            : history.push(
+                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                              )
+                        }
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
-                        {t('returnToDetails')}
+                        {fromManageSubtasks
+                          ? t('returnToPreviousPage')
+                          : t('returnToDetails')}
                       </Button>
                     </Form>
                   </>

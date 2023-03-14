@@ -18,6 +18,7 @@ const subtasks = {
   subtaskName: 'Subtask name',
   statusQuestion: 'What is the status of this subtask?',
   returnToDetails: 'Don’t add subtask and return to solution details',
+  returnToPreviousPage: 'Don’t add subtask and return to previous page',
   successMessage: 'Success! Your subtasks have been added.',
   successfulUpdateMessage: 'Success! Your subtasks have been updated.',
   removeSubtask: 'Remove this subtask',
