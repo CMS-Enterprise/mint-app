@@ -7,6 +7,8 @@ INSERT INTO operational_solution(
     poc_email,
     must_start_dts,
     must_finish_dts,
+    is_other,
+    other_header,
     status,
     created_by
 )
@@ -19,9 +21,11 @@ SELECT
     :poc_email AS poc_email,
     :must_start_dts AS must_start_dts,
     :must_finish_dts AS must_finish_dts,
+    TRUE AS is_other,
+    :other_header AS other_header,
     :status AS status,
     :created_by AS created_by
-ON CONFLICT(operational_need_id, name_other) DO -- If there is already a record for this, update
+ON CONFLICT(operational_need_id, name_other, other_header) DO -- If there is already a record for this, update
 UPDATE
 SET
     needed = :needed,
@@ -44,6 +48,8 @@ poc_name,
 poc_email,
 must_start_dts,
 must_finish_dts,
+is_other,
+other_header,
 status,
 created_by,
 created_dts,

@@ -10,6 +10,8 @@ SELECT
     poc_email,
     must_start_dts,
     must_finish_dts,
+    is_other,
+    other_header,
     status,
     created_by,
     created_dts,

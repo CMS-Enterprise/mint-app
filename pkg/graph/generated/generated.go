@@ -221,6 +221,7 @@ type ComplexityRoot struct {
 		CreatedDts                  func(childComplexity int) int
 		Documents                   func(childComplexity int) int
 		ID                          func(childComplexity int) int
+		IsOther                     func(childComplexity int) int
 		Key                         func(childComplexity int) int
 		ModifiedBy                  func(childComplexity int) int
 		ModifiedByUserAccount       func(childComplexity int) int
@@ -232,6 +233,7 @@ type ComplexityRoot struct {
 		Needed                      func(childComplexity int) int
 		OperationalNeedID           func(childComplexity int) int
 		OperationalSolutionSubtasks func(childComplexity int) int
+		OtherHeader                 func(childComplexity int) int
 		PocEmail                    func(childComplexity int) int
 		PocName                     func(childComplexity int) int
 		SolutionType                func(childComplexity int) int
@@ -2132,6 +2134,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.OperationalSolution.ID(childComplexity), true
 
+	case "OperationalSolution.isOther":
+		if e.complexity.OperationalSolution.IsOther == nil {
+			break
+		}
+
+		return e.complexity.OperationalSolution.IsOther(childComplexity), true
+
 	case "OperationalSolution.key":
 		if e.complexity.OperationalSolution.Key == nil {
 			break
@@ -2208,6 +2217,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalSolution.OperationalSolutionSubtasks(childComplexity), true
+
+	case "OperationalSolution.otherHeader":
+		if e.complexity.OperationalSolution.OtherHeader == nil {
+			break
+		}
+
+		return e.complexity.OperationalSolution.OtherHeader(childComplexity), true
 
 	case "OperationalSolution.pocEmail":
 		if e.complexity.OperationalSolution.PocEmail == nil {
@@ -7412,7 +7428,10 @@ type OperationalSolution {
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    isOther: Boolean
+    otherHeader: String
     status: OpSolutionStatus!
+
     documents: [PlanDocument!]!
     operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
 
@@ -7430,6 +7449,7 @@ input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    otherHeader: String
     status: OpSolutionStatus
 }
 
@@ -17257,6 +17277,10 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateOperationalSolution
 				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
 			case "mustFinishDts":
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
 			case "documents":
@@ -17378,6 +17402,10 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateCustomOperationalSo
 				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
 			case "mustFinishDts":
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
 			case "documents":
@@ -17499,6 +17527,10 @@ func (ec *executionContext) fieldContext_Mutation_updateCustomOperationalSolutio
 				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
 			case "mustFinishDts":
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
 			case "documents":
@@ -18260,6 +18292,10 @@ func (ec *executionContext) fieldContext_OperationalNeed_solutions(ctx context.C
 				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
 			case "mustFinishDts":
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
 			case "documents":
@@ -19211,6 +19247,88 @@ func (ec *executionContext) fieldContext_OperationalSolution_mustFinishDts(ctx c
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _OperationalSolution_isOther(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalSolution_isOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_OperationalSolution_isOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "OperationalSolution",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _OperationalSolution_otherHeader(ctx context.Context, field graphql.CollectedField, obj *models.OperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OtherHeader, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_OperationalSolution_otherHeader(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "OperationalSolution",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -42272,6 +42390,10 @@ func (ec *executionContext) fieldContext_Query_operationalSolutions(ctx context.
 				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
 			case "mustFinishDts":
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
 			case "documents":
@@ -42369,6 +42491,10 @@ func (ec *executionContext) fieldContext_Query_operationalSolution(ctx context.C
 				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
 			case "mustFinishDts":
 				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
 			case "status":
 				return ec.fieldContext_OperationalSolution_status(ctx, field)
 			case "documents":
@@ -47617,6 +47743,14 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 		case "mustFinishDts":
 
 			out.Values[i] = ec._OperationalSolution_mustFinishDts(ctx, field, obj)
+
+		case "isOther":
+
+			out.Values[i] = ec._OperationalSolution_isOther(ctx, field, obj)
+
+		case "otherHeader":
+
+			out.Values[i] = ec._OperationalSolution_otherHeader(ctx, field, obj)
 
 		case "status":
 

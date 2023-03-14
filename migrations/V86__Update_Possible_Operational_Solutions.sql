@@ -102,3 +102,21 @@ INSERT INTO "public"."possible_operational_solution"("id", "sol_name", "sol_key"
 (34, 'Salesforce Project Officer Support Tool / Portal (POST/PORTAL)', 'POST_PORTAL', 'FALSE', '00000001-0001-0001-0001-000000000001'),
 (35, 'Salesforce Request for Application (RFA)', 'RFA', 'FALSE', '00000001-0001-0001-0001-000000000001'),
 (36, 'Shared Systems', 'SHARED_SYSTEMS', 'FALSE', '00000001-0001-0001-0001-000000000001');
+
+
+/* Update Operational Solution table to have new columns */
+
+ALTER TABLE operational_solution
+ADD COLUMN is_other BOOLEAN NOT NULL DEFAULT FALSE,
+ADD COLUMN other_header ZERO_STRING,
+DROP CONSTRAINT unique_solution_per_need,
+DROP CONSTRAINT unique_solution_name_other_per_plan;
+
+/* Redo the constraints to allow multiple other headers for is other, and per type */
+
+
+ALTER TABLE operational_solution
+ADD CONSTRAINT unique_solution_name_other_per_plan UNIQUE (operational_need_id, name_other, other_header); -- 1 specifc custom solution per model
+
+ALTER TABLE operational_solution
+ADD CONSTRAINT unique_solution_per_need UNIQUE (operational_need_id, solution_type, other_header); -- 1 solution type per need, this allows treat as other types to exist

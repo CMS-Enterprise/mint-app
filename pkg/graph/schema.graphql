@@ -1289,7 +1289,10 @@ type OperationalSolution {
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    isOther: Boolean
+    otherHeader: String
     status: OpSolutionStatus!
+
     documents: [PlanDocument!]!
     operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
 
@@ -1307,6 +1310,7 @@ input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    otherHeader: String
     status: OpSolutionStatus
 }
 

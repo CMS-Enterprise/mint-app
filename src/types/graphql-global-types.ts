@@ -589,6 +589,7 @@ export interface OperationalSolutionChanges {
   pocEmail?: string | null;
   mustStartDts?: Time | null;
   mustFinishDts?: Time | null;
+  otherHeader?: string | null;
   status?: OpSolutionStatus | null;
 }
 
