@@ -155,8 +155,6 @@ jobs:
       - name: Add "minio" to /etc/hosts
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
 
-      - name: Pull images
-        run: docker compose pull
       - name: Cache Docker layers
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
