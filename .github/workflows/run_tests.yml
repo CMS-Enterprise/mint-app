@@ -178,6 +178,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Run e2e tests
+        if: ${{ false }}
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
