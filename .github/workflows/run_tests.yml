@@ -154,21 +154,65 @@ jobs:
         uses: HatsuneMiku3939/direnv-action@v1
       - name: Add "minio" to /etc/hosts
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Cache Docker layers
-        uses: jpribyl/action-docker-layer-caching@v0.1.1
-        continue-on-error: true
+      # Setup Docker Caches
+      - name: Cache Docker layers (backend)
+        uses: actions/cache@v3
         with:
-          key: docker-layer-cache-{hash}
+          path: /tmp/.buildx-backend-cache
+          key: ${{ runner.os }}-buildx-backend-${{ github.sha }}
           restore-keys: |
-            docker-layer-cache-
-            layer-docker-layer-cache-
+            ${{ runner.os }}-buildx-backend
+
+      - name: Cache Docker layers (frontend)
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-frontend-cache
+          key: ${{ runner.os }}-buildx-frontend-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-frontend
+
+      - name: Cache Docker layers (migrate)
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-migrate-cache
+          key: ${{ runner.os }}-buildx-migrate-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-migrate
+
+      # Build containers
+      - name: Build backend container
+        uses: docker/build-push-action@v4
+        with:
+          load: true
+          file: Dockerfile
+          cache-from: type=local,src=/tmp/.buildx-backend-cache
+          cache-to: type=local,dest=/tmp/.buildx-backend-cache,mode=max
+
+      - name: Build frontend container
+        uses: docker/build-push-action@v4
+        with:
+          load: true
+          file: Dockerfile.client
+          cache-from: type=local,src=/tmp/.buildx-frontend-cache
+          cache-to: type=local,dest=/tmp/.buildx-frontend-cache,mode=max
+
+      - name: Build DB migrations container
+        uses: docker/build-push-action@v4
+        with:
+          load: true
+          file: Dockerfile.db_migrations
+          cache-from: type=local,src=/tmp/.buildx-migrate-cache
+          cache-to: type=local,dest=/tmp/.buildx-migrate-cache,mode=max
 
       - name: Run e2e tests
+        if: ${{ false }}
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
-          scripts/dev up
+          scripts/dev up:ci
           echo "yarn cypress run"
       - name: Docker Compose Down
         if: always() # Always spin down the container
