@@ -208,7 +208,6 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-migrate-cache,mode=max
 
       - name: Run e2e tests
-        if: ${{ false }}
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
