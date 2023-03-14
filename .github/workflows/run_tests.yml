@@ -16,6 +16,7 @@ on:
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+  GIT_REF_NAME: ${{ github.event.pull_request.head.ref || github.ref }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   POSTGRES_PASSWORD: mysecretpassword
   POSTGRES_USER: postgres
@@ -157,30 +158,55 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Setup Docker Caches
-      - name: Cache Docker layers (backend)
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-backend-cache
-          key: ${{ runner.os }}-buildx-backend-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-backend
+      # # Setup Docker Caches
+      # - name: Cache Docker layers (backend)
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: /tmp/.buildx-backend-cache
+      #     key: ${{ runner.os }}-buildx-backend-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-backend
 
-      - name: Cache Docker layers (frontend)
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-frontend-cache
-          key: ${{ runner.os }}-buildx-frontend-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-frontend
+      # - name: Cache Docker layers (frontend)
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: /tmp/.buildx-frontend-cache
+      #     key: ${{ runner.os }}-buildx-frontend-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-frontend
 
-      - name: Cache Docker layers (migrate)
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-migrate-cache
-          key: ${{ runner.os }}-buildx-migrate-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-migrate
+      # - name: Cache Docker layers (migrate)
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: /tmp/.buildx-migrate-cache
+      #     key: ${{ runner.os }}-buildx-migrate-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-migrate
+
+      # # Build containers
+      # - name: Build backend container
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     load: true
+      #     file: Dockerfile
+      #     cache-from: type=local,src=/tmp/.buildx-backend-cache
+      #     cache-to: type=local,dest=/tmp/.buildx-backend-cache,mode=max
+
+      # - name: Build frontend container
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     load: true
+      #     file: Dockerfile.client
+      #     cache-from: type=local,src=/tmp/.buildx-frontend-cache
+      #     cache-to: type=local,dest=/tmp/.buildx-frontend-cache,mode=max
+
+      # - name: Build DB migrations container
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     load: true
+      #     file: Dockerfile.db_migrations
+      #     cache-from: type=local,src=/tmp/.buildx-migrate-cache
+      #     cache-to: type=local,dest=/tmp/.buildx-migrate-cache,mode=max
 
       # Build containers
       - name: Build backend container
@@ -188,24 +214,25 @@ jobs:
         with:
           load: true
           file: Dockerfile
-          cache-from: type=local,src=/tmp/.buildx-backend-cache
-          cache-to: type=local,dest=/tmp/.buildx-backend-cache,mode=max
+          target: dev
+          cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-backend"
+          cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-backend"
 
       - name: Build frontend container
         uses: docker/build-push-action@v4
         with:
           load: true
           file: Dockerfile.client
-          cache-from: type=local,src=/tmp/.buildx-frontend-cache
-          cache-to: type=local,dest=/tmp/.buildx-frontend-cache,mode=max
+          cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-frontend"
+          cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-frontend"
 
       - name: Build DB migrations container
         uses: docker/build-push-action@v4
         with:
           load: true
           file: Dockerfile.db_migrations
-          cache-from: type=local,src=/tmp/.buildx-migrate-cache
-          cache-to: type=local,dest=/tmp/.buildx-migrate-cache,mode=max
+          cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-migrate"
+          cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-migrate"
 
       - name: Run e2e tests
         run: |
