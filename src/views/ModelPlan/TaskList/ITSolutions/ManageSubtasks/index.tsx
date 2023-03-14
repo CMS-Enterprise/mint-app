@@ -259,9 +259,7 @@ const ManageSubtasks = () => {
 
             <Formik
               initialValues={initialValue}
-              onSubmit={values => {
-                // handleFormSubmit(values);
-              }}
+              onSubmit={handleUpdate}
               enableReinitialize
               innerRef={formikRef}
             >
@@ -393,7 +391,7 @@ const ManageSubtasks = () => {
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
-                          type="button"
+                          type="submit"
                           id="submit-subtasks"
                           disabled={
                             !!(
@@ -403,8 +401,7 @@ const ManageSubtasks = () => {
                               )
                             )
                           }
-                          // onClick={() => setErrors({})}
-                          onClick={() => handleUpdate(values)}
+                          onClick={() => setErrors({})}
                         >
                           {t('updateSubtasks')}
                         </Button>
