@@ -154,39 +154,18 @@ jobs:
         uses: HatsuneMiku3939/direnv-action@v1
       - name: Add "minio" to /etc/hosts
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+
+      - name: Pull images
+        run: docker compose pull
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: jpribyl/action-docker-layer-caching@v0.1.1
+        continue-on-error: true
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: docker-layer-cache-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: Build backend container
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          load: true
-          file: Dockerfile
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-      - name: Build frontend container
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          load: true
-          file: Dockerfile.client
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-      - name: Build DB migrations container
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          load: true
-          file: Dockerfile.db_migrations
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+            docker-layer-cache-
+            layer-docker-layer-cache-
+
       - name: Run e2e tests
         if: ${{ false }}
         run: |
