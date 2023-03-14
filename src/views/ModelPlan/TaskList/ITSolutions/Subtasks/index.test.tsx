@@ -2,9 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
+import { OpSolutionStatus } from 'types/graphql-global-types';
 
 import Subtasks from '.';
 
@@ -32,6 +34,9 @@ const returnMockedData = [
           pocEmail: 'j.doe@oddball.io',
           nameOther: 'My custom solution',
           documents: [],
+          status: OpSolutionStatus.COMPLETED,
+          mustFinishDts: '2022-05-12T15:01:39.190679Z',
+          mustStartDts: '2022-05-12T15:01:39.190679Z',
           operationalSolutionSubtasks: [
             // {
             //   __typename: 'OperationalSolutionSubtask',
@@ -67,6 +72,32 @@ describe('IT Solutions Link Documents', () => {
     await waitFor(() => {
       expect(getByTestId('add-subtask-form')).toBeInTheDocument();
       expect(getByRole('radio', { name: 'To do' })).toBeChecked();
+    });
+  });
+
+  it('add a subtask button works', async () => {
+    const { getByTestId, getByRole, queryAllByRole } = render(
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+        ]}
+      >
+        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+          <MessageProvider>
+            <MockedProvider mocks={returnMockedData} addTypename={false}>
+              <Subtasks />
+            </MockedProvider>
+          </MessageProvider>
+        </Route>
+      </MemoryRouter>
+    );
+
+    const button = getByRole('button', { name: 'Add another subtask' });
+    userEvent.click(button);
+
+    await waitFor(() => {
+      expect(getByTestId('add-subtask-form')).toBeInTheDocument();
+      expect(queryAllByRole('radio', { name: 'To do' }).length).toBe(2);
     });
   });
 
