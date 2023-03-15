@@ -155,7 +155,9 @@ jobs:
         uses: HatsuneMiku3939/direnv-action@v1
       - name: Add "minio" to /etc/hosts
         run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
+
       - name: Set up Docker Buildx
+        id: buildx
         uses: docker/setup-buildx-action@v2
 
       # # Setup Docker Caches
@@ -212,27 +214,30 @@ jobs:
       - name: Build backend container
         uses: docker/build-push-action@v4
         with:
+          builder: ${{ steps.buildx.outputs.name }}
           load: true
           file: Dockerfile
           target: dev
-          cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-backend"
-          cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-backend"
+          cache-from: "type=gha,scope=${{ github.workflow }}-backend"
+          cache-to: "type=gha,mode=max,scope=${{ github.workflow }}-backend"
 
       - name: Build frontend container
         uses: docker/build-push-action@v4
         with:
+          builder: ${{ steps.buildx.outputs.name }}
           load: true
           file: Dockerfile.client
-          cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-frontend"
-          cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-frontend"
+          cache-from: "type=gha,scope=${{ github.workflow }}-frontend"
+          cache-to: "type=gha,mode=max,scope=${{ github.workflow }}-frontend"
 
       - name: Build DB migrations container
         uses: docker/build-push-action@v4
         with:
+          builder: ${{ steps.buildx.outputs.name }}
           load: true
           file: Dockerfile.db_migrations
-          cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-migrate"
-          cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-migrate"
+          cache-from: type=gha,scope=${{ github.workflow }}-migrate
+          cache-to: type=gha,mode=max,scope=${{ github.workflow }}-migrate
 
       - name: Run e2e tests
         run: |
