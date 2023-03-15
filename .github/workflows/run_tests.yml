@@ -59,6 +59,7 @@ jobs:
       - name: Run buildx bake
         uses: docker/bake-action@v2.3.0
         with:
+          files: "docker-compose.yml,docker-compose-override.yml"
           load: true
           set: |
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
