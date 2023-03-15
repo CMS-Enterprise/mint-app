@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fail on any error
+set -Eexuo pipefail
+
 # Set DISTRIBUTION_ID to the ID of your CloudFront distribution
 DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[].Id" --output text)
 
