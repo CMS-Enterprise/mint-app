@@ -91,7 +91,7 @@ const ManageSubtasks = () => {
   >;
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const initialValue: InitialValueType = {
-    operationalSolutionSubtasks: [...subtasks]
+    operationalSolutionSubtasks: subtasks
   };
 
   const handleUpdate = (formikValues: InitialValueType) => {
@@ -288,7 +288,7 @@ const ManageSubtasks = () => {
 
                     <Form
                       className="margin-top-6"
-                      data-testid="add-subtask-form"
+                      data-testid="manage-subtask-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
 
 import { MessageProvider } from 'hooks/useMessage';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
@@ -61,7 +61,7 @@ const returnMockedData = [
 
 describe('IT Solutions Link Documents', () => {
   it('renders correctly', async () => {
-    const { getByTestId, getByRole } = render(
+    const { getByTestId, queryByText } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
@@ -78,13 +78,32 @@ describe('IT Solutions Link Documents', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('add-subtask-form')).toBeInTheDocument();
-      expect(getByRole('radio', { name: 'To do' })).toBeChecked();
+      expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
+      expect(queryByText('First Subtask')).toBeInTheDocument();
+      expect(queryByText('Second Subtask')).toBeInTheDocument();
+      expect(queryByText('Third Subtask')).toBeNull();
+      const firstSubtaskStatusRadio = document.querySelectorAll(
+        '.usa-form-group.margin-top-4'
+      )[0];
+      const secondSubtaskStatusRadio = document.querySelectorAll(
+        '.usa-form-group.margin-top-4'
+      )[1];
+
+      expect(
+        within(firstSubtaskStatusRadio as HTMLElement).getByRole('radio', {
+          name: 'In progress'
+        })
+      ).toBeChecked();
+      expect(
+        within(secondSubtaskStatusRadio as HTMLElement).getByRole('radio', {
+          name: 'Done'
+        })
+      ).toBeChecked();
     });
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { getByTestId, asFragment } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
@@ -100,6 +119,10 @@ describe('IT Solutions Link Documents', () => {
       </MemoryRouter>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(getByTestId('manage-subtask-form')).toBeInTheDocument();
+
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });
