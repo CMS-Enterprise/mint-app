@@ -16,6 +16,7 @@ type Worker struct {
 	Logger               *zap.Logger
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl
+	AddressBook          email.AddressBook
 	Connections          int
 	ProcessJobs          bool
 }
