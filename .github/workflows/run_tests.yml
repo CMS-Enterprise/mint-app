@@ -63,12 +63,11 @@ jobs:
         uses: docker/bake-action@v2.3.0
         with:
           files: "docker-compose.yml,docker-compose.override.yml"
-          targets: "${{ matrix.service_name }}"
+          # targets: "${{ matrix.service_name }}"
           load: true
           set: |
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
             ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
-
 
   server_test:
     if: ${{ false }}
