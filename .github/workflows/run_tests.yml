@@ -291,17 +291,17 @@ jobs:
       #     file: Dockerfile.db_migrations
       #     cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-migrate"
       #     cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-migrate"
-      # - name: Install yarn dependencies
-      #   run: yarn install --immutable
+      - name: Install yarn dependencies
+        run: yarn install --immutable
       - name: Start all services
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
           scripts/dev up:ci
       - name: Run Cypress Tests
-        uses: cypress-io/github-action@v5.3.0
-        with:
-          browser: chrome
+        run: |
+          export FLAG_SOURCE=FILE
+          yarn cypress run
       - name: Docker Compose Down
         if: always() # Always spin down the container
         run: |
