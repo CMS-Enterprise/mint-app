@@ -41,7 +41,6 @@ jobs:
           - minio_mc
           - email
           - faktory
-          - prince
     steps:
       - name: Check out code
         uses: actions/checkout@v3
