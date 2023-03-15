@@ -145,7 +145,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.get('#submit-solutions').click();
 
-    cy.get('[data-testid="it-solutions"]').click();
+    cy.get('[data-testid="it-solutions"]').click({ force: true });
 
     // Add new custom need
     cy.get('[data-testid="add-new-operational-need"]').click();
@@ -165,13 +165,16 @@ describe('The Model Plan IT solutions tracker', () => {
     // Submit need
     cy.get('#submit-custom-solution').click();
 
-    cy.get('#it-solutions-key').select('A cross-model contract');
+    cy.get('#it-solutions-key')
+      .should('not.be.disabled')
+      .select('A cross-model contract')
+      .should('have.value', 'A cross-model contract');
 
     cy.get('[data-testid="add-solution-details-button"]').click();
 
     cy.get('button').contains('Continue').click();
 
-    cy.get('#submit-solutions').click().click();
+    cy.get('#submit-solutions').should('not.be.disabled').click();
 
     cy.get('span').contains(
       'Success! Your operational need “My custom need” and solution are added.'

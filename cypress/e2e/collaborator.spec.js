@@ -28,7 +28,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('#react-select-model-team-cedar-contact-input')
       .click()
-      .type('Jerry{downArrow}{enter}')
+      .type('Jerry{enter}', { delay: 500 })
       .should('have.value', 'Jerry Seinfeld, SF13');
 
     cy.contains('button', 'Add team member').should('be.disabled');
@@ -39,7 +39,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'sf13 Doe');
+        cy.contains('th', 'Jerry Seinfeld');
         cy.contains('td', 'Evaluation');
       });
     });
