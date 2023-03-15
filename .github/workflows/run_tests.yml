@@ -29,18 +29,18 @@ jobs:
 
   build_docker_images:
     runs-on: ubuntu-latest
-    # strategy:
-    #   fail-fast: true
-    #   matrix:
-    #     service_name:
-    #       - db
-    #       - db_migrate
-    #       - mint
-    #       - mint_client
-    #       - minio
-    #       - minio_mc
-    #       - email
-    #       - faktory
+    strategy:
+      fail-fast: true
+      matrix:
+        service_name:
+          # - db
+          - db_migrate
+          - mint
+          - mint_client
+          # - minio
+          # - minio_mc
+          # - email
+          # - faktory
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -63,14 +63,14 @@ jobs:
         uses: docker/bake-action@v2.3.0
         with:
           files: "docker-compose.yml,docker-compose.override.yml"
-          # targets: "${{ matrix.service_name }}"
+          targets: "${{ matrix.service_name }}"
           # load: true
-          set: |
-            *.cache-from=type=gha
-            *.cache-to=type=gha,mode=max
           # set: |
-          #   ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
-          #   ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+          #   *.cache-from=type=gha
+          #   *.cache-to=type=gha,mode=max
+          set: |
+            ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+            ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
 
   server_test:
     if: ${{ false }}
@@ -209,7 +209,9 @@ jobs:
           # targets: "${{ matrix.service_name }}"
           load: true
           set: |
-            *.cache-from=type=gha
+            mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
+            mint_client.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint_client
+            db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
           # set: |
           #   ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
           #   ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
