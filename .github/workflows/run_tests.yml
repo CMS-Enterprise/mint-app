@@ -29,18 +29,18 @@ jobs:
 
   build_docker_images:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        service_name:
-          - db
-          - db_migrate
-          - mint
-          - mint_client
-          - minio
-          - minio_mc
-          - email
-          - faktory
+    # strategy:
+    #   fail-fast: true
+    #   matrix:
+    #     service_name:
+    #       - db
+    #       - db_migrate
+    #       - mint
+    #       - mint_client
+    #       - minio
+    #       - minio_mc
+    #       - email
+    #       - faktory
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -66,8 +66,11 @@ jobs:
           # targets: "${{ matrix.service_name }}"
           load: true
           set: |
-            ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
-            ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+            *.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}
+            *.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}
+          # set: |
+          #   ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+          #   ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
 
   server_test:
     if: ${{ false }}
