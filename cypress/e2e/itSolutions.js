@@ -130,6 +130,8 @@ describe('The Model Plan IT solutions tracker', () => {
       'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.'
     );
 
+    cy.wait(500);
+
     // Removing a solution
     cy.get('#it-solutions-through_a_contractor')
       .uncheck({ force: true })
@@ -144,8 +146,6 @@ describe('The Model Plan IT solutions tracker', () => {
     );
 
     cy.get('#submit-solutions').click();
-
-    cy.get('[data-testid="it-solutions"]').click();
 
     // Add new custom need
     cy.get('[data-testid="add-new-operational-need"]').click();
@@ -165,6 +165,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Submit need
     cy.get('#submit-custom-solution').click();
 
+    cy.wait(500);
     cy.get('#it-solutions-key').select('A cross-model contract');
 
     cy.get('[data-testid="add-solution-details-button"]').click();
