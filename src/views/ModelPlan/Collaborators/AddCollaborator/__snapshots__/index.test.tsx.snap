@@ -184,6 +184,11 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
               >
                 Model Team
               </option>
+              <option
+                value="QUALITY"
+              >
+                quality
+              </option>              
             </select>
           </div>
           <div
