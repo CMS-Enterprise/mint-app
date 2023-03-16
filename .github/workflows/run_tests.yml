@@ -205,10 +205,10 @@ jobs:
       - name: Write local env vars for testing
         run: |
           touch .envrc.local
-          echo "export FLAG_SOURCE=FILE >> .envrc.local
-          echo "export OKTA_TEST_USERNAME=\"${{ secrets.OKTA_TEST_USERNAME }}\"" >> .envrc.local
-          echo "export OKTA_TEST_PASSWORD=\"${{ secrets.OKTA_TEST_PASSWORD }}\"" >> .envrc.local
-          echo "export OKTA_TEST_SECRET=\"${{ secrets.OKTA_TEST_SECRET }}\"" >> .envrc.local
+          echo "export FLAG_SOURCE=FILE" >> .envrc.local
+          echo "export OKTA_TEST_USERNAME='${{ secrets.OKTA_TEST_USERNAME }}'" >> .envrc.local
+          echo "export OKTA_TEST_PASSWORD='${{ secrets.OKTA_TEST_PASSWORD }}'" >> .envrc.local
+          echo "export OKTA_TEST_SECRET='${{ secrets.OKTA_TEST_SECRET }}'" >> .envrc.local
       - name: Set env vars with direnv
         uses: HatsuneMiku3939/direnv-action@v1
       - name: Add "minio" to /etc/hosts
