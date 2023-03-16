@@ -43,8 +43,6 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 
 	mp := suite.createModelPlan("Test Plan")
 	collaborator := suite.createPlanCollaborator(mp, "MINT", "Test User", "MODEL_LEAD", "testuser@email.com")
-	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
-	suite.NoError(err)
 
 	var analyzedAudits []*models.AnalyzedAudit
 	modelNameChange := "Old Name"
@@ -63,7 +61,7 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
 	// Test getAggregatedDailyDigestAnalyzedAudits
-	analyzedAudits, err = getUserAgnosticDigestAnalyzedAudits(time.Now().UTC(), worker.Store, worker.Logger)
+	analyzedAudits, err := getUserAgnosticDigestAnalyzedAudits(time.Now().UTC(), worker.Store, worker.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 
@@ -77,7 +75,7 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
-	suite.EqualValues("Updates on the models you're following", emailSubject)
+	suite.EqualValues("Daily updates on Model Plans", emailSubject)
 
 	// Check if email contains model name
 	suite.True(strings.Contains(emailBody, mp.ModelName))
@@ -92,7 +90,7 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorAccount.Email}),
+			gomock.Eq([]string{addressBook.MINTTeamEmail}),
 			gomock.Any(),
 			gomock.Eq(emailSubject),
 			gomock.Any(),
