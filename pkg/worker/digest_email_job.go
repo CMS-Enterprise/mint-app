@@ -4,16 +4,18 @@ import (
 	"context"
 	"time"
 
+	"github.com/samber/lo"
+	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/storage"
+
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
-	"github.com/samber/lo"
-	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 /*
@@ -49,7 +51,10 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 					return err
 				}
 			}
-			return nil
+
+			job := faktory.NewJob("AggregatedDigestEmailJob", dateAnalyzed)
+			job.Queue = emailQueue
+			return batch.Push(job)
 		})
 	})
 }
@@ -99,7 +104,36 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	}
 
 	// Send generated email
-	err = sendDigestEmail(recipientEmail, emailSubject, emailBody, w.EmailService, w.AddressBook)
+	err = w.EmailService.Send(
+		w.AddressBook.DefaultSender,
+		[]string{recipientEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// AggregatedDigestEmailJob will generate and send an email based on all models changed in the audit period
+func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface{}) error {
+	dateAnalyzed, err := time.Parse("2006-01-02", args[0].(string))
+	if err != nil {
+		return err
+	}
+
+	err = AggregatedDigestEmailJob(
+		dateAnalyzed,
+		w.Store,
+		w.Logger,
+		w.EmailTemplateService,
+		w.EmailService,
+		w.AddressBook,
+	)
 	if err != nil {
 		return err
 	}
@@ -114,7 +148,12 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 */
 
 // getDigestAnalyzedAudits gets AnalyzedAudits based on a users favorited plans and date
-func getDigestAnalyzedAudits(userID uuid.UUID, date time.Time, store *storage.Store, logger *zap.Logger) ([]*models.AnalyzedAudit, error) {
+func getDigestAnalyzedAudits(
+	userID uuid.UUID,
+	date time.Time,
+	store *storage.Store,
+	logger *zap.Logger,
+) ([]*models.AnalyzedAudit, error) {
 
 	planFavorites, err := store.PlanFavoriteGetCollectionByUserID(logger, userID)
 	if err != nil {
@@ -139,7 +178,7 @@ func getDigestAnalyzedAudits(userID uuid.UUID, date time.Time, store *storage.St
 	return analyzedAudits, nil
 }
 
-// generateDigestEmail will geneate the daily digest email from template
+// generateDigestEmail will generate the daily digest email from template
 func generateDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateService email.TemplateServiceImpl, emailService oddmail.EmailService) (string, string, error) {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigetsTemplateName)
 	if err != nil {
@@ -160,27 +199,4 @@ func generateDigestEmail(analyzedAudits []*models.AnalyzedAudit, emailTemplateSe
 	}
 
 	return emailSubject, emailBody, nil
-}
-
-// sendDigestEmail will send the daily digest email to given recipient
-func sendDigestEmail(
-	recipient string,
-	subject string,
-	body string,
-	emailService oddmail.EmailService,
-	addressBook email.AddressBook,
-) error {
-	err := emailService.Send(
-		addressBook.DefaultSender,
-		[]string{recipient},
-		nil,
-		subject,
-		"text/html",
-		body,
-	)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
