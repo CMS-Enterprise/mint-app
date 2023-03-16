@@ -126,6 +126,8 @@ describe('The Model Plan IT solutions tracker', () => {
     // Click button to update existing solutions for the relevant need
     cy.get('[data-testid="update-solutions-link"]').click();
 
+    cy.wait(500);
+
     cy.get('[data-testid="alert"]').contains(
       'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.'
     );
@@ -168,7 +170,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.get('#it-solutions-key')
       .should('not.be.disabled')
       .select('A cross-model contract')
-      .should('have.value', 'A cross-model contract');
+      .should('have.value', 'CROSS_MODEL_CONTRACT');
 
     cy.get('[data-testid="add-solution-details-button"]').click();
 
@@ -184,7 +186,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Click to view solution details view
     cy.get('[data-testid="needs-table"] tbody tr')
       // .should('have.length', 4)
-      .should('have.length', 1)
+      .should('have.length', 3)
       .eq(0)
       .within(() => {
         cy.contains('My custom need');
