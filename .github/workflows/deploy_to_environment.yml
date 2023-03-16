@@ -118,6 +118,9 @@ jobs:
           STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
         run: |
           ./scripts/release_static
+      - name: Invalidate CloudFront cache 
+        run: |
+          ./scripts/invalidate_cloudfront_cache.sh
       - name: Announce failure
         if: ${{ failure() }}
         run: |
