@@ -51,6 +51,9 @@ const ManageSubtasks = () => {
 
   const { showMessage, showMessageOnNextPage, message } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [inputName, setInputName] = useState('');
+  const [inputId, setInputId] = useState('');
+
   const { modelName } = useContext(ModelInfoContext);
 
   const { data: solutionData, error, refetch } = useQuery<
@@ -182,12 +185,12 @@ const ManageSubtasks = () => {
       });
   };
 
-  const renderModal = (name: string, id: string) => {
+  const renderModal = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-y-0">
           {t('removeModal.header', {
-            subTaskName: name
+            subTaskName: inputName
           })}
         </PageHeading>
         <p className="margin-top-2 margin-bottom-3">
@@ -197,7 +200,7 @@ const ManageSubtasks = () => {
           type="button"
           className="margin-right-4"
           onClick={() => {
-            handleDelete(name, id);
+            handleDelete(inputName, inputId);
             setModalOpen(false);
           }}
         >
@@ -230,8 +233,8 @@ const ManageSubtasks = () => {
 
   return (
     <>
+      {renderModal()}
       <Breadcrumbs items={breadcrumbs} />
-
       {message}
 
       <Grid row gap>
@@ -356,12 +359,15 @@ const ManageSubtasks = () => {
 
                                         <Button
                                           type="button"
-                                          onClick={() => setModalOpen(true)}
+                                          onClick={() => {
+                                            setModalOpen(true);
+                                            setInputName(input.name);
+                                            setInputId(input.id);
+                                          }}
                                           className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
                                         >
                                           {t('removeSubtask')}
                                         </Button>
-                                        {renderModal(input.name, input.id)}
                                       </FieldGroup>
                                     </div>
                                   )
