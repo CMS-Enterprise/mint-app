@@ -185,7 +185,6 @@ describe('The Model Plan IT solutions tracker', () => {
     // Link document
     // Click to view solution details view
     cy.get('[data-testid="needs-table"] tbody tr')
-      // .should('have.length', 4)
       .should('have.length', 3)
       .eq(0)
       .within(() => {
