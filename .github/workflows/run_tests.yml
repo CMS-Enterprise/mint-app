@@ -181,10 +181,6 @@ jobs:
   e2e_tests:
     runs-on: ubuntu-latest
     needs: build_docker_images
-    env:
-      OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
-      OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
-      OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -304,6 +300,10 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Start all services
+        env:
+          OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
+          OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
+          OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
         run: |
           export FLAG_SOURCE=FILE
           scripts/dev down
