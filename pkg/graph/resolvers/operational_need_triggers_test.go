@@ -8,7 +8,7 @@ import (
 )
 
 func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
-	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
+	// suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for need")
 
 	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -20,7 +20,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 	}
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedGeneralCharacteristics.ModifiedBy)
 
 	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NotNil(opNeeds)
@@ -45,7 +45,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 	updatedGeneralCharacteristics, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedGeneralCharacteristics.ModifiedBy)
 
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -60,7 +60,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 }
 func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
-	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
+	// suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for complex need")
 
 	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -96,7 +96,7 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
-	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
+	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals) // true for any {appeal_performance,appeal_feedback,appeal_payments,appeal_other}
 	suite.NotNil(processPart)
 	suite.True(*processPart.Needed)
 
@@ -137,7 +137,7 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 }
 
 func (suite *ResolverSuite) TestSelectionTypeTrigger() {
-	suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
+	// suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for selection need")
 
 	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -204,12 +204,12 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
-	colRevScoreApp := findOpNeed(opNeeds, models.OpNKColRevScoreApp)
-	suite.NotNil(colRevScoreApp)
-	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon)
+	revScoreApp := findOpNeed(opNeeds, models.OpNKRevScoreApp) // TRUE for {LOI,NOFO,APPLICATION_COLLECTION_TOOL} on column selection method
+	suite.NotNil(revScoreApp)
+	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
 	suite.NotNil(appSuppCont)
 
-	suite.True(*colRevScoreApp.Needed)
+	suite.True(*revScoreApp.Needed)
 	suite.True(*appSuppCont.Needed)
 
 }

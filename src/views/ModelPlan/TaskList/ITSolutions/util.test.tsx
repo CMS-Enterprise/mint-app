@@ -29,7 +29,7 @@ describe('IT Solutions Util', () => {
     expect(
       filterNeedsFormatSolutions([
         {
-          name: 'Advertise the model',
+          name: 'Recruit participants',
           needed: true,
           solutions: [
             {
@@ -43,16 +43,16 @@ describe('IT Solutions Util', () => {
       {
         name: 'Salesforce',
         needed: true,
-        needName: 'Advertise the model'
+        needName: 'Recruit participants'
       }
     ]);
   });
 
   it('returns formatted possible', async () => {
     const possibleNeed = {
-      name: 'Advertise the model',
+      name: 'Recruit participants',
       __typename: 'OperationalNeed',
-      key: OperationalNeedKey.ADVERTISE_MODEL,
+      key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
       needed: false,
       solutions: [
         {
