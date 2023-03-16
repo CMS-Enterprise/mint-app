@@ -182,7 +182,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Click to view solution details view
     cy.get('[data-testid="needs-table"] tbody tr')
       // .should('have.length', 4)
-      .should('have.length', 1)
+      .should('have.length', 3)
       .eq(0)
       .within(() => {
         cy.contains('My custom need');
