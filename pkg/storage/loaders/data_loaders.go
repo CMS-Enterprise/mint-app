@@ -4,7 +4,15 @@ import "github.com/cmsgov/mint-app/pkg/storage"
 
 // DataLoaders wrap your data loaders to inject via middleware
 type DataLoaders struct {
-	BasicsLoader            *WrappedDataLoader
+	BasicsLoader *WrappedDataLoader
+
+	GeneralCharacteristicsLoader          *WrappedDataLoader
+	ParticipantsAndProvidersLoader        *WrappedDataLoader
+	BeneficiariesLoader                   *WrappedDataLoader
+	OperationsEvaluationAndLearningLoader *WrappedDataLoader
+	PaymentLoader                         *WrappedDataLoader
+	PrepareForClearanceLoader             *WrappedDataLoader
+
 	OperationalNeedLoader   *WrappedDataLoader
 	OperationSolutionLoader *WrappedDataLoader
 	UserAccountLoader       *WrappedDataLoader
@@ -19,6 +27,13 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 		},
 	}
 	loaders.BasicsLoader = newWrappedDataLoader(loaders.GetPlanBasicsByModelPlanID)
+	loaders.GeneralCharacteristicsLoader = newWrappedDataLoader(loaders.GetPlanGeneralCharacteristicsByModelPlanID) //TODO: Unit Tests
+	// loaders.ParticipantsAndProvidersLoader = newWrappedDataLoader(loaders.)
+	// loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.)
+	// loaders.OperationsEvaluationAndLearningLoader = newWrappedDataLoader(loaders.)
+	// loaders.PaymentLoader = newWrappedDataLoader(loaders.)
+	// loaders.PrepareForClearanceLoader = newWrappedDataLoader(loaders.)
+
 	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
 	loaders.OperationSolutionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)

@@ -24,6 +24,9 @@ var planGeneralCharacteristicsGetByIDSQL string
 //go:embed SQL/plan_general_characteristics/get_by_model_plan_id.sql
 var planGeneralCharacteristicsGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_general_characteristics/get_by_model_plan_id_LOADER.sql
+var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
+
 // PlanGeneralCharacteristicsCreate creates a new plan basics
 func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.PlanGeneralCharacteristics) (*models.PlanGeneralCharacteristics, error) {
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
@@ -96,4 +99,25 @@ func (s *Store) PlanGeneralCharacteristicsGetByModelPlanID(logger *zap.Logger, m
 	}
 
 	return &gc, nil
+}
+
+// PlanGeneralCharacteristicsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanGeneralCharacteristics, error) {
+	genCharSlice := []*models.PlanGeneralCharacteristics{}
+
+	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&genCharSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return genCharSlice, nil
 }

@@ -31,9 +31,7 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 
 // GeneralCharacteristics is the resolver for the generalCharacteristics field.
 func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // ParticipantsAndProviders is the resolver for the participantsAndProviders field.
