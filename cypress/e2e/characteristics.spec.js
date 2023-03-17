@@ -61,6 +61,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('#plan-characteristics-alternative-payment-MIPS')
       .check({ force: true })
+      .check({ force: true })
       .should('be.checked');
 
     cy.get('[data-testid="mandatory-fields-alert"]').contains(
