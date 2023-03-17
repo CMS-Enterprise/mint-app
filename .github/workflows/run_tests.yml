@@ -39,14 +39,9 @@ jobs:
       fail-fast: true
       matrix:
         service_name:
-          # - db
-          - db_migrate
           - mint
           - mint_client
-          # - minio
-          # - minio_mc
-          # - email
-          # - faktory
+          - db_migrate
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -70,10 +65,6 @@ jobs:
         with:
           files: "docker-compose.yml,docker-compose.override.yml"
           targets: "${{ matrix.service_name }}"
-          # load: true
-          # set: |
-          #   *.cache-from=type=gha
-          #   *.cache-to=type=gha,mode=max
           set: |
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
             ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
@@ -219,91 +210,11 @@ jobs:
         uses: docker/bake-action@v2.3.0
         with:
           files: "docker-compose.yml,docker-compose.override.yml"
-          # targets: "${{ matrix.service_name }}"
           load: true
           set: |
             mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
             mint_client.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint_client
             db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
-          # set: |
-          #   ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
-          #   ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
-
-      # # Setup Docker Caches
-      # - name: Cache Docker layers (backend)
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: /tmp/.buildx-backend-cache
-      #     key: ${{ runner.os }}-buildx-backend-${{ github.sha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-buildx-backend
-
-      # - name: Cache Docker layers (frontend)
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: /tmp/.buildx-frontend-cache
-      #     key: ${{ runner.os }}-buildx-frontend-${{ github.sha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-buildx-frontend
-
-      # - name: Cache Docker layers (migrate)
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: /tmp/.buildx-migrate-cache
-      #     key: ${{ runner.os }}-buildx-migrate-${{ github.sha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-buildx-migrate
-
-      # # Build containers
-      # - name: Build backend container
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     load: true
-      #     file: Dockerfile
-      #     cache-from: type=local,src=/tmp/.buildx-backend-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-backend-cache,mode=max
-
-      # - name: Build frontend container
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     load: true
-      #     file: Dockerfile.client
-      #     cache-from: type=local,src=/tmp/.buildx-frontend-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-frontend-cache,mode=max
-
-      # - name: Build DB migrations container
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     load: true
-      #     file: Dockerfile.db_migrations
-      #     cache-from: type=local,src=/tmp/.buildx-migrate-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-migrate-cache,mode=max
-
-      # Build containers
-      # - name: Build backend container
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     load: true
-      #     file: Dockerfile
-      #     target: dev
-      #     cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-backend"
-      #     cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-backend"
-
-      # - name: Build frontend container
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     load: true
-      #     file: Dockerfile.client
-      #     cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-frontend"
-      #     cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-frontend"
-
-      # - name: Build DB migrations container
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     load: true
-      #     file: Dockerfile.db_migrations
-      #     cache-from: "type=gha,scope=${{ env.GIT_REF_NAME }}-migrate"
-      #     cache-to: "type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-migrate"
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Start all services
@@ -318,7 +229,6 @@ jobs:
         if: always() # Always spin down the container
         run: |
           scripts/dev down
-
       - name: Upload cypress videos
         if: ${{ always() }}
         uses: actions/upload-artifact@v3

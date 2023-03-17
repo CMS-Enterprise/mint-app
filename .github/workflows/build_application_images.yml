@@ -19,6 +19,7 @@ on:
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  GIT_REF_NAME: ${{ github.event.pull_request.head.ref || github.ref }}
 
 permissions:
   id-token: write
@@ -76,6 +77,7 @@ jobs:
           file: "Dockerfile.db_migrations"
           platforms: "linux/amd64"
           context: .
+          cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -111,6 +113,8 @@ jobs:
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest # Always tag with latest, since this image doesn't contain any build-specific contents
           file: "Dockerfile.db_clean"
           platforms: "linux/amd64"
+          cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_clean
+          cache-to: type=gha,scope=${{ env.GIT_REF_NAME }}-db_clean
           context: .
       - name: Announce failure
         if: ${{ failure() }}
@@ -155,6 +159,7 @@ jobs:
           file: "Dockerfile"
           platforms: "linux/amd64"
           context: .
+          cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-mint
           build-args: |
             ARG_APPLICATION_DATETIME=${{ steps.calculate-build-args.outputs.APPLICATION_DATETIME }}
             ARG_APPLICATION_TS=${{ steps.calculate-build-args.outputs.APPLICATION_TS }}
@@ -196,6 +201,7 @@ jobs:
           file: "Dockerfile.faktory"
           platforms: "linux/amd64"
           context: .
+          cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-faktory
       - name: Announce failure
         if: ${{ failure() }}
         run: |
