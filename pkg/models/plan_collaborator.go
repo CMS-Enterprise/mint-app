@@ -36,4 +36,5 @@ const (
 	TeamRoleLearning   TeamRole = "LEARNING"
 	TeamRoleEvaluation TeamRole = "EVALUATION"
 	TeamRoleITLead     TeamRole = "IT_LEAD"
+	TeamRoleQuality    TeamRole = "QUALITY"
 )
