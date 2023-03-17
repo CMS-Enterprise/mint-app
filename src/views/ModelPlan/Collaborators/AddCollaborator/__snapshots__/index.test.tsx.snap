@@ -187,8 +187,8 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
               <option
                 value="QUALITY"
               >
-                quality
-              </option>              
+                Quality
+              </option>
             </select>
           </div>
           <div
