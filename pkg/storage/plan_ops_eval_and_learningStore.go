@@ -24,6 +24,30 @@ var planOpsEvalAndLearningGetByIDSQL string
 //go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id.sql
 var planOpsEvalAndLearningGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id_LOADER.sql
+var planOpsEvalAndLearningGetByModelPlanIDLoaderSQL string
+
+// PlanOpsEvalAndLearningGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanOpsEvalAndLearning, error) {
+	oelSlice := []*models.PlanOpsEvalAndLearning{}
+
+	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&oelSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return oelSlice, nil
+}
+
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
 func (s *Store) PlanOpsEvalAndLearningCreate(logger *zap.Logger, oel *models.PlanOpsEvalAndLearning) (*models.PlanOpsEvalAndLearning, error) {
 	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)

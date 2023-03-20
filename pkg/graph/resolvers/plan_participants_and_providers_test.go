@@ -10,6 +10,34 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+func (suite *ResolverSuite) TestPlanOpsEvalAndLearningDataLoader() {
+	plan1 := suite.createModelPlan("Plan For OEL 1")
+	plan2 := suite.createModelPlan("Plan For OEL 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyPlanOpsEvalAndLearningLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyPlanOpsEvalAndLearningLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyPlanOpsEvalAndLearningLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	oel, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != oel.ModelPlanID {
+		return fmt.Errorf("plan Operations Evaluation And Learning returned model plan ID %s, expected %s", oel.ModelPlanID, modelPlanID)
+	}
+	return nil
+}
+
 func (suite *ResolverSuite) TestPlanParticipantsAndProvidersDataLoader() {
 	plan1 := suite.createModelPlan("Plan For PandP 1")
 	plan2 := suite.createModelPlan("Plan For PandP 2")

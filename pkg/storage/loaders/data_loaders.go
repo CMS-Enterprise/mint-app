@@ -27,10 +27,10 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 		},
 	}
 	loaders.BasicsLoader = newWrappedDataLoader(loaders.GetPlanBasicsByModelPlanID)
-	loaders.GeneralCharacteristicsLoader = newWrappedDataLoader(loaders.GetPlanGeneralCharacteristicsByModelPlanID) //TODO: Unit Tests
+	loaders.GeneralCharacteristicsLoader = newWrappedDataLoader(loaders.GetPlanGeneralCharacteristicsByModelPlanID)
 	loaders.ParticipantsAndProvidersLoader = newWrappedDataLoader(loaders.GetPlanParticipantsAndProvidersByModelPlanID)
 	loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.GetPlanBeneficiariesByModelPlanID)
-	// loaders.OperationsEvaluationAndLearningLoader = newWrappedDataLoader(loaders.)
+	loaders.OperationsEvaluationAndLearningLoader = newWrappedDataLoader(loaders.GetPlanOpsEvalAndLearningByModelPlanID)
 	// loaders.PaymentLoader = newWrappedDataLoader(loaders.)
 	// loaders.PrepareForClearanceLoader = newWrappedDataLoader(loaders.)
 
