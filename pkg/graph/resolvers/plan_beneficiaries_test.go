@@ -11,9 +11,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// "github.com/cmsgov/mint-app/pkg/graph/model"
-// "github.com/cmsgov/mint-app/pkg/models"
-
 func (suite *ResolverSuite) TestPlanBeneficiariesDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Benes 1")
 	plan2 := suite.createModelPlan("Plan For Benes 2")
@@ -44,7 +41,7 @@ func verifyPlanBeneficiariesLoader(ctx context.Context, modelPlanID uuid.UUID) e
 func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
-	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	b, err := PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -87,7 +84,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 func (suite *ResolverSuite) TestPlanBeneficiariesGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
-	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	b, err := PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, b.ModelPlanID)

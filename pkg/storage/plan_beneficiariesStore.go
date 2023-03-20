@@ -21,9 +21,6 @@ var planBeneficiariesUpdateSQL string
 //go:embed SQL/plan_beneficiaries/get_by_id.sql
 var planBeneficiariesGetByIDSQL string
 
-//go:embed SQL/plan_beneficiaries/get_by_model_plan_id.sql
-var planBeneficiariesGetByModelPlanIDSQL string
-
 //go:embed SQL/plan_beneficiaries/get_by_model_plan_id_LOADER.sql
 var planBeneficiariesGetByModelPlanIDLoaderSQL string
 
@@ -92,24 +89,6 @@ func (s *Store) PlanBeneficiariesGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 	}
 
 	err = statement.Get(&b, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &b, nil
-}
-
-// PlanBeneficiariesGetByModelPlanID returns the plan general characteristics for a given model plan id
-func (s *Store) PlanBeneficiariesGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBeneficiaries, error) {
-	b := models.PlanBeneficiaries{}
-
-	statement, err := s.db.PrepareNamed(planBeneficiariesGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	err = statement.Get(&b, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 
 	if err != nil {
 		return nil, err

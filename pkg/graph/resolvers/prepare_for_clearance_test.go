@@ -111,7 +111,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	previousLatestClearanceDts = *planClearance.LatestClearanceDts
 
 	// Update the participants and providers to be marked ready for clearance
-	benes, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	benes, err := PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = PlanBeneficiariesUpdate(suite.testConfigs.Logger, benes.ID, map[string]interface{}{
 		"status": model.TaskStatusInputReadyForClearance,
