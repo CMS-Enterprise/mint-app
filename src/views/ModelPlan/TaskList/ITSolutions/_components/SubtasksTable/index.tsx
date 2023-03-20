@@ -54,17 +54,24 @@ const SubtaskColumns = ({
             {t('subtasks.noSubtasks')}
           </div>
         ) : (
-          <ul>
-            {subtasks
-              .filter(
-                (subtask: SubtaskType) => subtask.status === columnTypes[status]
-              )
-              .map((subtask: SubtaskType) => (
-                <li key={subtask.name} className="margin-y-1">
-                  {subtask.name}
-                </li>
-              ))}
-          </ul>
+          <>
+            {subtasks.filter(
+              (subtask: SubtaskType) => subtask.status === columnTypes[status]
+            ).length !== 0 && (
+              <ul>
+                {subtasks
+                  .filter(
+                    (subtask: SubtaskType) =>
+                      subtask.status === columnTypes[status]
+                  )
+                  .map((subtask: SubtaskType) => (
+                    <li key={subtask.name} className="margin-y-1">
+                      {subtask.name}
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </>
         )}
       </div>
     </Grid>
