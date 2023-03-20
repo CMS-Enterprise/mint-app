@@ -151,8 +151,6 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
       });
   };
 
-  // TODO: work on updating the form
-
   const handleFormSubmit = (formikValues: CreateSubTasksType) => {
     const { createOperationalSolutionSubtasks } = formikValues;
     // const { name, status } = formikValues;
@@ -379,6 +377,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
                                             ? 'border-bottom border-base-light'
                                             : ''
                                         }
+                                        data-testid={`add-subtask--${index}`}
                                       >
                                         <FieldGroup
                                           scrollElement="name"
