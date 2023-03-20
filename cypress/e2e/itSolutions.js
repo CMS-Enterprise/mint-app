@@ -263,12 +263,32 @@ describe('The Model Plan IT solutions tracker', () => {
 
     // Manage Subtasks
     cy.contains('button', 'Manage subtasks').click();
-    cy.get('[data-testid="manage-subtask--0"]').within(() => {
+    cy.get('[data-testid="manage-subtasks--0"]').within(() => {
       cy.contains('button', 'Remove this subtask').click();
     });
     cy.contains('button', 'Remove subtask').click();
     cy.get('.usa-alert__text').contains(
       'Success! First Subtasks has been removed.'
     );
+    cy.contains('button', 'Add another subtask').click();
+    cy.get('[data-testid="add-subtask--0"]').within(() => {
+      cy.get('#subtask-name--0')
+        .type('This should be in To Do column')
+        .should('have.value', 'This should be in To Do column');
+    });
+    cy.get('#submit-subtasks').click();
+
+    cy.get('.usa-alert__text').contains(
+      'Success! Your subtasks have been added.'
+    );
+    cy.get('[data-testid="todo"] ul').should('have.length', 1);
+    cy.get('[data-testid="todo"] ul')
+      .find('li')
+      .first()
+      .should('include.text', 'This should be in To Do column');
+
+    cy.get('[data-testid="inProgress"] ul').should('have.length', 0);
+
+    cy.get('[data-testid="done"] ul').should('have.length', 1);
   });
 });
