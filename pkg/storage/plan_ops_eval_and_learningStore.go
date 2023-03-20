@@ -21,9 +21,6 @@ var planOpsEvalAndLearningUpdateSQL string
 //go:embed SQL/plan_ops_eval_and_learning/get_by_id.sql
 var planOpsEvalAndLearningGetByIDSQL string
 
-//go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id.sql
-var planOpsEvalAndLearningGetByModelPlanIDSQL string
-
 //go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id_LOADER.sql
 var planOpsEvalAndLearningGetByModelPlanIDLoaderSQL string
 
@@ -92,28 +89,6 @@ func (s *Store) PlanOpsEvalAndLearningGetByID(logger *zap.Logger, id uuid.UUID) 
 	}
 
 	err = statement.Get(&oel, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &oel, nil
-}
-
-// PlanOpsEvalAndLearningGetByModelPlanID returns the providers_and_participants for a given model plan id
-func (s *Store) PlanOpsEvalAndLearningGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanOpsEvalAndLearning, error) {
-	oel := models.PlanOpsEvalAndLearning{}
-
-	statement, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	err = statement.Get(&oel, arg)
 
 	if err != nil {
 		return nil, err

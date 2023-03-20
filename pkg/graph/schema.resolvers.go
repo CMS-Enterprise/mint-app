@@ -46,9 +46,7 @@ func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.Model
 
 // OpsEvalAndLearning is the resolver for the opsEvalAndLearning field.
 func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.ModelPlan) (*models.PlanOpsEvalAndLearning, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanOpsEvalAndLearningGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // Collaborators is the resolver for the collaborators field.

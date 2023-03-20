@@ -126,7 +126,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	previousLatestClearanceDts = *planClearance.LatestClearanceDts
 
 	// Update the ops, eval, & learning to be marked ready for clearance
-	opsEvalLearning, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	opsEvalLearning, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, opsEvalLearning.ID, map[string]interface{}{
 		"status": model.TaskStatusInputReadyForClearance,

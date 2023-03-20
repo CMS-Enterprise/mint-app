@@ -46,13 +46,3 @@ func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[
 	return retOpsEvalAndLearning, err
 
 }
-
-// PlanOpsEvalAndLearningGetByModelPlanID returns a plan OpsEvalAndLearning buisness object associated with a model plan
-func PlanOpsEvalAndLearningGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
-	oel, err := store.PlanOpsEvalAndLearningGetByModelPlanID(logger, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-	return oel, err
-
-}

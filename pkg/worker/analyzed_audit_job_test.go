@@ -59,7 +59,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// plan_beneficiaries
 	beneficiary, _ := resolvers.PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_ops_eval_and_learning
-	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_payments
 	payment, _ := resolvers.PlanPaymentsReadByModelPlan(worker.Logger, worker.Store, plan.ID)
 
