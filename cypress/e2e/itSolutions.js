@@ -214,6 +214,7 @@ describe('The Model Plan IT solutions tracker', () => {
         cy.contains('test.pdf');
       });
 
+    cy.wait(500);
     cy.get('#link-documents').click();
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr')
@@ -224,12 +225,50 @@ describe('The Model Plan IT solutions tracker', () => {
         cy.get('[type="checkbox"]').should('be.checked');
         cy.get('[type="checkbox"]').uncheck({ force: true });
       });
+    cy.wait(500);
 
     cy.get('[data-testid="link-documents-button"]').click();
+    cy.wait(500);
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr').should(
       'have.length',
       0
+    );
+
+    // Adding Subtasks
+    cy.contains('button', 'Add subtasks').click();
+    cy.get('[data-testid="add-subtask--0"]').within(() => {
+      cy.get('#subtask-name--0')
+        .type('First Subtasks')
+        .should('have.value', 'First Subtasks');
+      cy.contains('label', 'In progress').click();
+    });
+    cy.contains('button', 'Add another subtask').click();
+    cy.get('[data-testid="add-subtask--1"]').within(() => {
+      cy.get('#subtask-name--1')
+        .type('Second Subtasks')
+        .should('have.value', 'Second Subtasks');
+      cy.contains('label', 'Done').click();
+    });
+
+    cy.get('#submit-subtasks').click();
+
+    cy.get('.usa-alert__text').contains(
+      'Success! Your subtasks have been added.'
+    );
+
+    cy.get('[data-testid="todo"] ul').should('have.length', 0);
+    cy.get('[data-testid="inProgress"] ul').should('have.length', 1);
+    cy.get('[data-testid="done"] ul').should('have.length', 1);
+
+    // Manage Subtasks
+    cy.contains('button', 'Manage subtasks').click();
+    cy.get('[data-testid="manage-subtask--0"]').within(() => {
+      cy.contains('button', 'Remove this subtask').click();
+    });
+    cy.contains('button', 'Remove subtask').click();
+    cy.get('.usa-alert__text').contains(
+      'Success! First Subtasks has been removed.'
     );
   });
 });
