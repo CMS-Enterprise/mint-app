@@ -91,7 +91,7 @@ jobs:
           s3 mb s3://${{ env.S3_BUCKET }}
 
       - name: Set up go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
           cache: true
@@ -209,7 +209,7 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Set up go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
           cache: true
