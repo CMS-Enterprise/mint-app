@@ -307,6 +307,7 @@ const ManageSubtasks = () => {
                                   (input, index) => (
                                     <div
                                       key={input.id}
+                                      data-testid={`manage-subtasks--${index}`}
                                       className={
                                         operationalSolutionSubtasks.length > 1
                                           ? 'border-bottom border-base-light'
