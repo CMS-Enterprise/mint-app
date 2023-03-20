@@ -1,13 +1,33 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
+
+// PlanBeneficiariesGetByModelPlanIDLOADER implements resolver logic to get Plan Beneficiaries by a model plan ID using a data loader
+func PlanBeneficiariesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBeneficiaries, error) {
+	allLoaders := loaders.Loaders(ctx)
+	benesLoader := allLoaders.BeneficiariesLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+
+	thunk := benesLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*models.PlanBeneficiaries), nil
+}
 
 // PlanBeneficiariesUpdate updates a plan Beneficiary buisness object
 func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanBeneficiaries, error) {

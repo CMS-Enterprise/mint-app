@@ -24,6 +24,30 @@ var planBeneficiariesGetByIDSQL string
 //go:embed SQL/plan_beneficiaries/get_by_model_plan_id.sql
 var planBeneficiariesGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_beneficiaries/get_by_model_plan_id_LOADER.sql
+var planBeneficiariesGetByModelPlanIDLoaderSQL string
+
+// PlanBeneficiariesGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBeneficiaries, error) {
+	benesSlice := []*models.PlanBeneficiaries{}
+
+	stmt, err := s.db.PrepareNamed(planBeneficiariesGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&benesSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return benesSlice, nil
+}
+
 // PlanBeneficiariesCreate creates a new plan benficiaries object
 func (s *Store) PlanBeneficiariesCreate(logger *zap.Logger, b *models.PlanBeneficiaries) (*models.PlanBeneficiaries, error) {
 	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
