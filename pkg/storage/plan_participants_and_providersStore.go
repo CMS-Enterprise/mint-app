@@ -24,6 +24,30 @@ var planParticipantsAndProvidersGetByIDSQL string
 //go:embed SQL/plan_participants_and_providers/get_by_model_plan_id.sql
 var planParticipantsAndProvidersGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_participants_and_providers/get_by_model_plan_id_LOADER.sql
+var planParticipantsAndProvidersGetByModelPlanIDLoaderSQL string
+
+// PlanParticipantsAndProvidersGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanParticipantsAndProviders, error) {
+	pAndPSlice := []*models.PlanParticipantsAndProviders{}
+
+	stmt, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&pAndPSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return pAndPSlice, nil
+}
+
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
 func (s *Store) PlanParticipantsAndProvidersCreate(logger *zap.Logger, gc *models.PlanParticipantsAndProviders) (*models.PlanParticipantsAndProviders, error) {
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)

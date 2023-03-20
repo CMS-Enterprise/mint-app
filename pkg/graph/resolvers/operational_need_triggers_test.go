@@ -140,7 +140,7 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 	// suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for selection need")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{

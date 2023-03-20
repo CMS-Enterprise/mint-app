@@ -36,9 +36,7 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 
 // ParticipantsAndProviders is the resolver for the participantsAndProviders field.
 func (r *modelPlanResolver) ParticipantsAndProviders(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanParticipantsAndProvidersGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // Beneficiaries is the resolver for the beneficiaries field.
