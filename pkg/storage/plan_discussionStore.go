@@ -43,6 +43,30 @@ var discussionReplyGetByID string
 //go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
 var planDiscussionGetByModelPlanIDLoaderSQL string
 
+//go:embed SQL/discussion_reply/get_by_discussion_id_LOADER.sql
+var discussionReplyGetByDiscussionIDLoaderSQL string
+
+// DiscussionReplyGetByDiscussionIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.DiscussionReply, error) {
+	discRSlice := []*models.DiscussionReply{}
+
+	stmt, err := s.db.PrepareNamed(discussionReplyGetByDiscussionIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&discRSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return discRSlice, nil
+}
+
 // PlanDiscussionGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanDiscussion, error) {
 	discSlice := []*models.PlanDiscussion{}

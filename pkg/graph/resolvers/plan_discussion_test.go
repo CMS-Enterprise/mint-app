@@ -271,3 +271,37 @@ func verifyPlanDiscussionLoader(ctx context.Context, modelPlanID uuid.UUID) erro
 	}
 	return nil
 }
+
+func (suite *ResolverSuite) TestDiscussionReplyDataLoader() {
+	plan1 := suite.createModelPlan("Plan For DiscR 1")
+	discussion1 := suite.createPlanDiscussion(plan1, "This is a test comment")
+	_ = suite.createDiscussionReply(discussion1, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussion1, "This is another test reply", true)
+	plan2 := suite.createModelPlan("Plan For DiscR 2")
+	discussion2 := suite.createPlanDiscussion(plan2, "This is a test comment")
+	_ = suite.createDiscussionReply(discussion2, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussion2, "This is another test reply", true)
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyDiscussionReplyLoader(ctx, discussion1.ID)
+	})
+	g.Go(func() error {
+		return verifyDiscussionReplyLoader(ctx, discussion2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyDiscussionReplyLoader(ctx context.Context, discussionID uuid.UUID) error {
+
+	discR, err := DiscussionReplyCollectionByDiscusionIDLOADER(ctx, discussionID)
+	if err != nil {
+		return err
+	}
+
+	if discussionID != discR.DiscussionID {
+		return fmt.Errorf("discussion Reply returned model plan ID %s, expected %s", discR.DiscussionID, discussionID)
+	}
+	return nil
+}

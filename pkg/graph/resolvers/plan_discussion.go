@@ -199,6 +199,23 @@ func DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uui
 
 }
 
+// DiscussionReplyCollectionByDiscusionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader
+func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussionID uuid.UUID) (*models.DiscussionReply, error) {
+	allLoaders := loaders.Loaders(ctx)
+	discRLoader := allLoaders.DiscussionReplyLoader
+	key := loaders.NewKeyArgs()
+	key.Args["discussion_id"] = discussionID
+
+	thunk := discRLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*models.DiscussionReply), nil
+}
+
 // PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
 func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
 	allLoaders := loaders.Loaders(ctx)
