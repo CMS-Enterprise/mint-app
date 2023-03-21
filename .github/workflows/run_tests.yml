@@ -70,7 +70,6 @@ jobs:
             ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
 
   server_test:
-    if: ${{ false }}
     runs-on: ubuntu-latest
 
     services:
@@ -250,7 +249,6 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   lint:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -288,7 +286,6 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   client_test:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -312,7 +309,6 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   client_typecheck:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
