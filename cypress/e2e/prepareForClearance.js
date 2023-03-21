@@ -91,6 +91,8 @@ describe('The Model Plan Prepare for Clearance Form', () => {
 
     cy.get('#prepare-for-clearance-payments').should('be.checked');
 
+    cy.get('[data-testid="update-clearance"]').click();
+
     // Task List Check
     cy.get('[data-testid="dont-update-clearance"]').click();
 
