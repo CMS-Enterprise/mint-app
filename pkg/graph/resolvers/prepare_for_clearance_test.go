@@ -38,7 +38,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	suite.Nil(planClearance.LatestClearanceDts)
 
 	// Update the basics to have a clearance date set that's too far out (more than 20 days)
-	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, map[string]interface{}{
 		"clearanceStarts": time.Now().Add(time.Hour * 24 * 21).Format(time.RFC3339), // 21 days from now
@@ -51,7 +51,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	suite.Nil(planClearance.LatestClearanceDts)
 
 	// Update the basics to have a clearance date set that's within the date range (15 days)
-	basics, err = PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, map[string]interface{}{
 		"clearanceStarts": time.Now().Add(time.Hour * 24 * 15).Format(time.RFC3339), // 15 days from now
@@ -64,7 +64,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	suite.Nil(planClearance.LatestClearanceDts)
 
 	// Update the basics to be marked ready for clearance
-	basics, err = PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, map[string]interface{}{
 		"status": model.TaskStatusInputReadyForClearance,

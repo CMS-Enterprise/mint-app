@@ -51,7 +51,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 
 	// Add sections
 	// plan_basic
-	basics, _ := resolvers.PlanBasicsGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	basics, _ := resolvers.PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_general_characteristic
 	genChar, _ := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(worker.Logger, plan.ID, worker.Store)
 	// plan_participants_and_provider

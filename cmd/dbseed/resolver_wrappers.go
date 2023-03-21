@@ -62,7 +62,7 @@ func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interf
 func (s *Seeder) updatePlanBasics(mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	basics, err := resolvers.PlanBasicsGetByModelPlanID(s.Config.Logger, mp.ID, s.Config.Store)
+	basics, err := resolvers.PlanBasicsGetByModelPlanIDLOADER(s.Config.Context, mp.ID)
 	if err != nil {
 		panic(err)
 	}
