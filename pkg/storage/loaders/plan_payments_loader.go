@@ -26,8 +26,8 @@ func (loaders *DataLoaders) GetPlanPaymentsByModelPlanID(ctx context.Context, ke
 		logger.Error("issue converting keys to JSON for data loader in Plan Payments", zap.Error(*err))
 	}
 
-	pay, _ := dr.Store.PlanPaymentsGetByModelPlanIDLOADER(logger, marshaledParams)
-	payID := lo.Associate(pay, func(gc *models.PlanPayments) (string, *models.PlanPayments) {
+	pays, _ := dr.Store.PlanPaymentsGetByModelPlanIDLOADER(logger, marshaledParams)
+	payByID := lo.Associate(pays, func(gc *models.PlanPayments) (string, *models.PlanPayments) {
 		return gc.ModelPlanID.String(), gc
 	})
 
@@ -37,9 +37,9 @@ func (loaders *DataLoaders) GetPlanPaymentsByModelPlanID(ctx context.Context, ke
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := payID[resKey]
+			pay, ok := payByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloader.Result{Data: pay, Error: nil}
 			} else {
 				err := fmt.Errorf("plan Payments not found for model plan %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}

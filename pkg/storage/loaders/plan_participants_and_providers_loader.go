@@ -26,8 +26,8 @@ func (loaders *DataLoaders) GetPlanParticipantsAndProvidersByModelPlanID(ctx con
 		logger.Error("issue converting keys to JSON for data loader in Plan Participants and Providers", zap.Error(*err))
 	}
 
-	pAndP, _ := dr.Store.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger, marshaledParams)
-	pAndPID := lo.Associate(pAndP, func(gc *models.PlanParticipantsAndProviders) (string, *models.PlanParticipantsAndProviders) {
+	pAndPs, _ := dr.Store.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger, marshaledParams)
+	pAndPByID := lo.Associate(pAndPs, func(gc *models.PlanParticipantsAndProviders) (string, *models.PlanParticipantsAndProviders) {
 		return gc.ModelPlanID.String(), gc
 	})
 
@@ -37,9 +37,9 @@ func (loaders *DataLoaders) GetPlanParticipantsAndProvidersByModelPlanID(ctx con
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := pAndPID[resKey]
+			pAndP, ok := pAndPByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloader.Result{Data: pAndP, Error: nil}
 			} else {
 				err := fmt.Errorf("plan Participants and Providers not found for model plan %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}

@@ -27,7 +27,7 @@ func (loaders *DataLoaders) GetPlanBeneficiariesByModelPlanID(ctx context.Contex
 	}
 
 	benes, _ := dr.Store.PlanBeneficiariesGetByModelPlanIDLOADER(logger, marshaledParams)
-	benesID := lo.Associate(benes, func(gc *models.PlanBeneficiaries) (string, *models.PlanBeneficiaries) {
+	benesByID := lo.Associate(benes, func(gc *models.PlanBeneficiaries) (string, *models.PlanBeneficiaries) {
 		return gc.ModelPlanID.String(), gc
 	})
 
@@ -37,9 +37,9 @@ func (loaders *DataLoaders) GetPlanBeneficiariesByModelPlanID(ctx context.Contex
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := benesID[resKey]
+			bene, ok := benesByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloader.Result{Data: bene, Error: nil}
 			} else {
 				err := fmt.Errorf("plan Beneficiaries not found for model plan %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}

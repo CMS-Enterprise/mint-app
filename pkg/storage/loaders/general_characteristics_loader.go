@@ -37,9 +37,9 @@ func (loaders *DataLoaders) GetPlanGeneralCharacteristicsByModelPlanID(ctx conte
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := gcByID[resKey]
+			genChar, ok := gcByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloader.Result{Data: genChar, Error: nil}
 			} else {
 				err := fmt.Errorf("general characterstics not found for model plan %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}

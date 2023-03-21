@@ -26,8 +26,8 @@ func (loaders *DataLoaders) GetPlanOpsEvalAndLearningByModelPlanID(ctx context.C
 		logger.Error("issue converting keys to JSON for data loader in Plan Operations Evaluation And Learning", zap.Error(*err))
 	}
 
-	oel, _ := dr.Store.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger, marshaledParams)
-	oelID := lo.Associate(oel, func(gc *models.PlanOpsEvalAndLearning) (string, *models.PlanOpsEvalAndLearning) {
+	oels, _ := dr.Store.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger, marshaledParams)
+	oelByID := lo.Associate(oels, func(gc *models.PlanOpsEvalAndLearning) (string, *models.PlanOpsEvalAndLearning) {
 		return gc.ModelPlanID.String(), gc
 	})
 
@@ -37,9 +37,9 @@ func (loaders *DataLoaders) GetPlanOpsEvalAndLearningByModelPlanID(ctx context.C
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := oelID[resKey]
+			oel, ok := oelByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloader.Result{Data: oel, Error: nil}
 			} else {
 				err := fmt.Errorf("plan Operations Evaluation And Learning not found for model plan %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}
