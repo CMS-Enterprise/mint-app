@@ -25,6 +25,30 @@ var planPaymentsGetByIDSQL string
 //go:embed SQL/plan_payments/get_by_model_plan_id.sql
 var planPaymentsGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_payments/get_by_model_plan_id_LOADER.sql
+var planPaymentsGetByModelPlanIDLoaderSQL string
+
+// PlanPaymentsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanPayments, error) {
+	paySlice := []*models.PlanPayments{}
+
+	stmt, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&paySlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return paySlice, nil
+}
+
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
 func (s *Store) PlanPaymentsCreate(
 	logger *zap.Logger,
