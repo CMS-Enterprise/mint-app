@@ -7,6 +7,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/google/uuid"
 
@@ -203,4 +204,21 @@ func PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 
 	result, err := store.PlanDiscussionCollectionByModelPlanID(logger, modelPlanID)
 	return result, err
+}
+
+// PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
+func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
+	allLoaders := loaders.Loaders(ctx)
+	discLoader := allLoaders.DiscussionLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+
+	thunk := discLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.PlanDiscussion), nil
 }

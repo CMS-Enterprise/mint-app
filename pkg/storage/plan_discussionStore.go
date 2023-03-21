@@ -43,6 +43,30 @@ var discussionReplyDeleteSQL string
 //go:embed SQL/discussion_reply/get_by_id.sql
 var discussionReplyGetByID string
 
+//go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
+var planDiscussionGetByModelPlanIDLoaderSQL string
+
+// PlanDiscussionGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanDiscussion, error) {
+	discSlice := []*models.PlanDiscussion{}
+
+	stmt, err := s.db.PrepareNamed(planDiscussionGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&discSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return discSlice, nil
+}
+
 // PlanDiscussionCreate creates a plan discussion
 func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
 	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)

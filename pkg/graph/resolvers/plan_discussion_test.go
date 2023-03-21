@@ -1,8 +1,13 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/google/uuid"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 
@@ -230,4 +235,39 @@ func (suite *ResolverSuite) TestDeleteDiscussionReply() {
 	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.Len(result, 1)
+}
+
+func (suite *ResolverSuite) TestPlanDiscussionDataLoader() { //TODO update for discussion
+	plan1 := suite.createModelPlan("Plan For Disc 1")
+	_ = suite.createPlanDiscussion(plan1, "This is a test comment")
+	plan2 := suite.createModelPlan("Plan For Disc 2")
+	_ = suite.createPlanDiscussion(plan2, "This is a test comment")
+	_ = suite.createPlanDiscussion(plan2, "This is a test comment")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyPlanDiscussionLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyPlanDiscussionLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyPlanDiscussionLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	discussions, err := PlanDiscussionGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+	if len(discussions) < 1 {
+
+		return fmt.Errorf("plan Discussion check didn't return any dicussions")
+	}
+
+	if modelPlanID != discussions[0].ModelPlanID {
+		return fmt.Errorf("plan Discussion returned model plan ID %s, expected %s", discussions[0].ModelPlanID, modelPlanID)
+	}
+	return nil
 }
