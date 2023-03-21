@@ -29,7 +29,7 @@ var modelPlanGetByIDSQL string
 var modelPlanGetByNameSQL string
 
 //go:embed SQL/model_plan/collection_where_archived.sql
-var modelPlanCollectionSQL string
+var modelPlanCollectionWhereArchivedSQL string
 
 //go:embed SQL/model_plan/collection_by_collaborator.sql
 var modelPlanCollectionByCollaboratorSQL string
@@ -163,7 +163,7 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionSQL)
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereArchivedSQL)
 	if err != nil {
 		return nil, err
 	}
