@@ -45,13 +45,8 @@ func (loaders *DataLoaders) GetPlanDiscussionByModelPlanID(ctx context.Context, 
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			discs, ok := discsByID[resKey]
-			if ok {
-				output[index] = &dataloader.Result{Data: discs, Error: nil}
-			} else {
-				err := fmt.Errorf("plan Discussions not found for model plan %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
-			}
+			discs := discsByID[resKey] // if discussion not found, empty array
+			output[index] = &dataloader.Result{Data: discs, Error: nil}
 		} else {
 			err := fmt.Errorf("could not retrive key from %s", key.String())
 			output[index] = &dataloader.Result{Data: nil, Error: err}

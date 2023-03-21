@@ -16,9 +16,6 @@ import (
 //go:embed SQL/plan_discussion/create.sql
 var planDiscussionCreateSQL string
 
-//go:embed SQL/plan_discussion/collection_by_model_plan_id.sql
-var planDiscussionCollectionByModelPlanIDSQL string
-
 //go:embed SQL/plan_discussion/update.sql
 var planDiscussionUpdateSQL string
 
@@ -130,29 +127,6 @@ func (s *Store) DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discu
 	}
 
 	return replies, nil
-}
-
-// PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan
-func (s *Store) PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
-	discusions := []*models.PlanDiscussion{}
-
-	stmt, err := s.db.PrepareNamed(planDiscussionCollectionByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-
-		"model_plan_id": modelPlanID,
-	}
-
-	err = stmt.Select(&discusions, arg) //this returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-	return discusions, nil
-
 }
 
 // PlanDiscussionUpdate updates a plan discussion object

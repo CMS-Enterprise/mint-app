@@ -69,9 +69,7 @@ func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan
 
 // Discussions is the resolver for the discussions field.
 func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.PlanDiscussionGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // Payments is the resolver for the payments field.
@@ -81,6 +79,7 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 
 // IsFavorite is the resolver for the isFavorite field.
 func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	// TODO: should this be a data loader?
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 

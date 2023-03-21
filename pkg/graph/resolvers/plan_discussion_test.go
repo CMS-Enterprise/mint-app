@@ -101,7 +101,7 @@ func (suite *ResolverSuite) TestDeletePlanDiscussion() {
 	suite.EqualValues(discussion, result)
 
 	// Check that there's no plans for this user
-	discussions, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	discussions, err := PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
 	suite.Len(discussions, 0)
 }
@@ -206,7 +206,7 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
 	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
 
-	result, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	result, err := PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(result, 1)
 
@@ -217,7 +217,7 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply", true)
 
 	// Assert the count on the is now 2 after adding another discussion
-	result, err = PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	result, err = PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(result, 2)
 }

@@ -199,13 +199,6 @@ func DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uui
 
 }
 
-// PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan, as noted by it's ID
-func PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanDiscussion, error) {
-
-	result, err := store.PlanDiscussionCollectionByModelPlanID(logger, modelPlanID)
-	return result, err
-}
-
 // PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
 func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
 	allLoaders := loaders.Loaders(ctx)
