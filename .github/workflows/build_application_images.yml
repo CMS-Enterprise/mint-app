@@ -114,7 +114,7 @@ jobs:
           file: "Dockerfile.db_clean"
           platforms: "linux/amd64"
           cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_clean
-          cache-to: type=gha,scope=${{ env.GIT_REF_NAME }}-db_clean
+          cache-to: type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-db_clean
           context: .
       - name: Announce failure
         if: ${{ failure() }}
@@ -201,7 +201,8 @@ jobs:
           file: "Dockerfile.faktory"
           platforms: "linux/amd64"
           context: .
-          cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-faktory
+          cache-to: type=gha,scope=${{ env.GIT_REF_NAME }}-faktory
+          cache-from: type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-faktory
       - name: Announce failure
         if: ${{ failure() }}
         run: |
