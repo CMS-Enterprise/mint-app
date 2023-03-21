@@ -53,7 +53,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// plan_basic
 	basics, _ := resolvers.PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_general_characteristic
-	genChar, _ := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	genChar, _ := resolvers.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_participants_and_provider
 	participant, _ := resolvers.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_beneficiaries

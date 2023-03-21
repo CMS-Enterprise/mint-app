@@ -29,17 +29,6 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 	return retGeneralCharacteristics, err
 }
 
-// FetchPlanGeneralCharacteristicsByModelPlanID implements resolver logic to
-// get a plan general characteristics object by a model plan ID
-func FetchPlanGeneralCharacteristicsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanGeneralCharacteristics, error) {
-	gc, err := store.PlanGeneralCharacteristicsGetByModelPlanID(logger, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	return gc, nil
-}
-
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER implements resolver logic to get plan general characteristics by a model plan ID using a data loader
 func PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
 	allLoaders := loaders.Loaders(ctx)

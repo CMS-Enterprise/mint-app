@@ -81,7 +81,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	previousLatestClearanceDts := *planClearance.LatestClearanceDts
 
 	// Update the general characteristics to be marked ready for clearance
-	genChar, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	genChar, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, genChar.ID, map[string]interface{}{
 		"status": model.TaskStatusInputReadyForClearance,

@@ -11,7 +11,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 	// suite.T().Skip("TODO: Skipping while operational needs trigger is disabled")
 	plan := suite.createModelPlan("plan for need")
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{

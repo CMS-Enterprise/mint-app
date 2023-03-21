@@ -42,7 +42,7 @@ func verifyGeneralCharacteristicsLoader(ctx context.Context, modelPlanID uuid.UU
 func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For General Characteristics") // should create the general characteristics as part of the resolver
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, gc.ModelPlanID)
@@ -106,7 +106,7 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	plan := suite.createModelPlan("Plan For General Characteristics") // should create the general characteristics as part of the resolver
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{

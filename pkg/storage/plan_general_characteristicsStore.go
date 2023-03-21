@@ -21,9 +21,6 @@ var planGeneralCharacteristicsUpdateSQL string
 //go:embed SQL/plan_general_characteristics/get_by_id.sql
 var planGeneralCharacteristicsGetByIDSQL string
 
-//go:embed SQL/plan_general_characteristics/get_by_model_plan_id.sql
-var planGeneralCharacteristicsGetByModelPlanIDSQL string
-
 //go:embed SQL/plan_general_characteristics/get_by_model_plan_id_LOADER.sql
 var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 
@@ -71,28 +68,6 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UU
 	}
 
 	err = statement.Get(&gc, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &gc, nil
-}
-
-// PlanGeneralCharacteristicsGetByModelPlanID returns the plan general characteristics for a given model plan id
-func (s *Store) PlanGeneralCharacteristicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
-	gc := models.PlanGeneralCharacteristics{}
-
-	statement, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	err = statement.Get(&gc, arg)
 
 	if err != nil {
 		return nil, err
