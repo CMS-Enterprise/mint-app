@@ -24,6 +24,9 @@ var analyzedAuditGetByModelPlanIDAndDate string
 //go:embed SQL/analyzed_audit/get_collection_by_model_plan_ids_and_date.sql
 var analyzedAuditGetByModelPlanIDsAndDate string
 
+//go:embed SQL/analyzed_audit/get_by_date.sql
+var analyzedAuditGetByDate string
+
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
 func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.AnalyzedAudit) (*models.AnalyzedAudit, error) {
 
@@ -103,6 +106,26 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDsAndDate(logger *zap.Logger, modelP
 	arg := map[string]interface{}{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 		"date":           date.Format("2006-01-02"),
+	}
+
+	err = stmt.Select(&analyzedAudits, arg)
+
+	if err != nil {
+		return nil, err
+	}
+	return analyzedAudits, nil
+}
+
+// AnalyzedAuditGetByDate gets and returns all AnalyzedAudits by date
+func (s *Store) AnalyzedAuditGetByDate(_ *zap.Logger, date time.Time) ([]*models.AnalyzedAudit, error) {
+	var analyzedAudits []*models.AnalyzedAudit
+
+	stmt, err := s.db.PrepareNamed(analyzedAuditGetByDate)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"date": date.Format("2006-01-02"),
 	}
 
 	err = stmt.Select(&analyzedAudits, arg)
