@@ -142,7 +142,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 
 	// Update the payments to be marked ready for clearance
 	// NOTE: This is the final section, so we expect the status to change!
-	payments, err := PlanPaymentsReadByModelPlan(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	payments, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, payments.ID, map[string]interface{}{
 		"status": model.TaskStatusInputReadyForClearance,

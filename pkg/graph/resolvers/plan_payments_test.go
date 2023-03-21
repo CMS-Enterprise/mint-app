@@ -14,7 +14,7 @@ import (
 func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	plan := suite.createModelPlan("Plan Payments")
 
-	pp, err := PlanPaymentsReadByModelPlan(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	pp, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -97,7 +97,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	plan := suite.createModelPlan("Plan Payments")
 
-	pp, err := PlanPaymentsReadByModelPlan(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	pp, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)

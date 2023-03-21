@@ -32,16 +32,6 @@ func PlanPaymentsRead(
 	return store.PlanPaymentsRead(logger, id)
 }
 
-// PlanPaymentsReadByModelPlan handles requests to find a Plan Payment by model plan association
-func PlanPaymentsReadByModelPlan(
-	logger *zap.Logger,
-	store *storage.Store,
-	id uuid.UUID,
-) (*models.PlanPayments, error) {
-
-	return store.PlanPaymentsReadByModelPlan(logger, id)
-}
-
 // PlanPaymentsGetByModelPlanIDLOADER implements resolver logic to get Plan Payments by a model plan ID using a data loader
 func PlanPaymentsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanPayments, error) {
 	allLoaders := loaders.Loaders(ctx)

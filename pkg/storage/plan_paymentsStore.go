@@ -22,9 +22,6 @@ var planPaymentsUpdateSQL string
 //go:embed SQL/plan_payments/get_by_id.sql
 var planPaymentsGetByIDSQL string
 
-//go:embed SQL/plan_payments/get_by_model_plan_id.sql
-var planPaymentsGetByModelPlanIDSQL string
-
 //go:embed SQL/plan_payments/get_by_model_plan_id_LOADER.sql
 var planPaymentsGetByModelPlanIDLoaderSQL string
 
@@ -83,26 +80,6 @@ func (s *Store) PlanPaymentsRead(
 	}
 
 	err = statement.Get(&modelInstance, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &modelInstance, nil
-}
-
-// PlanPaymentsReadByModelPlan finds a plan payments model by model plan association
-func (s *Store) PlanPaymentsReadByModelPlan(
-	_ *zap.Logger,
-	modelPlanID uuid.UUID) (*models.PlanPayments, error) {
-	modelInstance := models.PlanPayments{}
-
-	statement, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	err = statement.Get(&modelInstance, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 
 	if err != nil {
 		return nil, err

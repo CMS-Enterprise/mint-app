@@ -76,9 +76,7 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 
 // Payments is the resolver for the payments field.
 func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanPaymentsReadByModelPlan(logger, r.store, obj.ID)
+	return resolvers.PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // IsFavorite is the resolver for the isFavorite field.

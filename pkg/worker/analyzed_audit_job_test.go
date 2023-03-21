@@ -61,7 +61,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// plan_ops_eval_and_learning
 	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_payments
-	payment, _ := resolvers.PlanPaymentsReadByModelPlan(worker.Logger, worker.Store, plan.ID)
+	payment, _ := resolvers.PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	// Update sections for ReadyForClearance
 	clearanceChanges := map[string]interface{}{
