@@ -56,6 +56,7 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailBatchJob", w.DigestEmailBatchJob)
 	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
+	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
 
 	err := mgr.Run()
 	if err != nil {
