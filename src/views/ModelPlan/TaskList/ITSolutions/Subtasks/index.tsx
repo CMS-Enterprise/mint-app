@@ -163,35 +163,42 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
       });
   };
 
-  const handleFormSubmit = (formikValues: CreateSubTasksType) => {
-    const { createOperationalSolutionSubtasks } = formikValues;
-    // const { name, status } = formikValues;
-    create({
-      variables: {
-        solutionID: operationalSolutionID,
-        inputs: createOperationalSolutionSubtasks!
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessageOnNextPage(
-            <Alert
-              type="success"
-              slim
-              data-testid="success-subtask-alert"
-              className="margin-y-4"
-            >
-              {t('successMessage')}
-            </Alert>
-          );
-          history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
-          );
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+  const handleFormSubmit = ({ subtasks }: FormType) => {
+    if (!isUpdateSubtask(subtasks)) {
+      subtasks.map(subtask =>
+        create({
+          variables: {
+            solutionID: operationalSolutionID,
+            inputs: [
+              {
+                name: subtask.name,
+                status: subtask.status
+              }
+            ]
+          }
+        })
+          .then(response => {
+            if (!response?.errors) {
+              showMessageOnNextPage(
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-subtask-alert"
+                  className="margin-y-4"
+                >
+                  {t('successMessage')}
+                </Alert>
+              );
+              history.push(
+                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+              );
+            }
+          })
+          .catch(errors => {
+            formikRef?.current?.setErrors(errors);
+          })
+      );
+    }
   };
 
   const renderModal = (name: string, id: string) => {
@@ -274,8 +281,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
             <Formik
               initialValues={initialValues}
               onSubmit={values => {
-                console.log(values);
-                // handleFormSubmit(values);
+                handleFormSubmit(values);
               }}
               enableReinitialize
               innerRef={formikRef}
