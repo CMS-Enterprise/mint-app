@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -372,8 +372,7 @@ const Subtasks = ({
                       }}
                     >
                       <FieldArray name="subtasks">
-                        {fieldArrayProps => {
-                          const { push, remove } = fieldArrayProps;
+                        {({ push, remove }) => {
                           const { subtasks } = formValues;
 
                           return (
