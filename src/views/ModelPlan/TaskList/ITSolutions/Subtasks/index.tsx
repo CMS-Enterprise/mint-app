@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -26,14 +26,17 @@ import DeleteOperationalSolutionSubtasks from 'queries/ITSolutions/DeleteOperati
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import {
   CreateOperationalSolutionSubtasks as CreateSubTasksType,
+  CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType,
   CreateOperationalSolutionSubtasksVariables
 } from 'queries/ITSolutions/types/CreateOperationalSolutionSubtasks';
 import { DeleteOperationalSolutionSubtaskVariables } from 'queries/ITSolutions/types/DeleteOperationalSolutionSubtask';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
-  GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
+  GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
+import { UpdateOperationalSolutionSubtasksVariables } from 'queries/ITSolutions/types/UpdateOperationalSolutionSubtasks';
+import UpdateOperationalSolutionSubtasks from 'queries/ITSolutions/UpdateOperationalSolutionSubtasks';
 import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateSubtasks } from 'utils/modelPlan';
@@ -42,6 +45,16 @@ import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type SubTaskType = UpdateType[] | CreateType[];
+
+type FormType = {
+  subTasks: SubTaskType;
+};
+
+export const isUpdateSubtask = (task: SubTaskType): task is UpdateType[] => {
+  return 'id' in task[0];
+};
 
 const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -70,37 +83,29 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
     }
   });
 
-  const solution = useMemo(() => {
-    return (
-      solutionData?.operationalSolution ||
-      ({} as GetOperationalSolutionOperationalSolutionType)
-    );
-  }, [solutionData?.operationalSolution]);
+  const solution = solutionData?.operationalSolution;
+  const subtasks = solution?.operationalSolutionSubtasks!;
 
-  const formikRef = useRef<FormikProps<CreateSubTasksType>>(null);
+  const formikRef = useRef<FormikProps<FormType>>(null);
+
+  const initialValues: FormType = {
+    subTasks: subtasks
+  };
+
   const [create] = useMutation<
     CreateSubTasksType,
     CreateOperationalSolutionSubtasksVariables
   >(CreateOperationalSolutionSubtasks);
+
+  const [update] = useMutation<UpdateOperationalSolutionSubtasksVariables>(
+    UpdateOperationalSolutionSubtasks
+  );
 
   const [
     removeSubtask
   ] = useMutation<DeleteOperationalSolutionSubtaskVariables>(
     DeleteOperationalSolutionSubtasks
   );
-
-  const subtasks =
-    solutionData?.operationalSolution.operationalSolutionSubtasks;
-
-  const initialValues: CreateSubTasksType = {
-    createOperationalSolutionSubtasks: [
-      {
-        __typename: 'OperationalSolutionSubtask',
-        name: '',
-        status: OperationalSolutionSubtaskStatus.TODO
-      }
-    ]
-  };
 
   const handleDelete = (name: string, id: string) => {
     removeSubtask({
