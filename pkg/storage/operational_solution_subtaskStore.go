@@ -31,6 +31,30 @@ var operationalSolutionSubtaskUpdateByIDSQL string
 //go:embed SQL/operational_solution_subtask/delete_by_id.sql
 var operationalSolutionSubtaskDeleteByIDSQL string
 
+//go:embed SQL/operational_solution_subtask/get_by_solution_id_LOADER.sql
+var operationalSolutionSubtaskGetBySolutionIDLoaderSQL string
+
+// OperationalSolutionSubtaskGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolutionSubtask, error) {
+	OpSolSSlice := []*models.OperationalSolutionSubtask{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&OpSolSSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return OpSolSSlice, nil
+}
+
 // OperationalSolutionSubtasksCreate creates a models.OperationalSolutionSubtask
 func (s *Store) OperationalSolutionSubtasksCreate(
 	logger *zap.Logger,
