@@ -33,7 +33,7 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 
 CMD ["./bin/mint"]
 
-FROM gcr.io/distroless/base:latest
+FROM scratch
 
 WORKDIR /mint/
 
