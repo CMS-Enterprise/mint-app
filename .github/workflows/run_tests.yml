@@ -13,9 +13,16 @@ on:
         required: true
       CONTRIBSYS_REPO_PASSWORD:
         required: true
+      OKTA_TEST_USERNAME:
+        required: true
+      OKTA_TEST_PASSWORD:
+        required: true
+      OKTA_TEST_SECRET:
+        required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+  GIT_REF_NAME: ${{ github.event.pull_request.head.ref || github.ref }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   POSTGRES_PASSWORD: mysecretpassword
   POSTGRES_USER: postgres
@@ -25,6 +32,43 @@ env:
   S3_BUCKET: mint-app-file-uploads
 
 jobs:
+
+  build_docker_images:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        service_name:
+          - mint
+          - mint_client
+          - db_migrate
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.GIT_HASH }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          registry: docker.contribsys.com
+          username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
+          password: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Run buildx bake
+        uses: docker/bake-action@v2.3.0
+        with:
+          files: "docker-compose.yml,docker-compose.override.yml"
+          targets: "${{ matrix.service_name }}"
+          set: |
+            ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+            ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
+
   server_test:
     runs-on: ubuntu-latest
 
@@ -91,10 +135,9 @@ jobs:
           s3 mb s3://${{ env.S3_BUCKET }}
 
       - name: Set up go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
-          cache: true
 
       - name: Install go modules
         run: go mod download
@@ -125,8 +168,8 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   e2e_tests:
-    if: ${{ false }} # Disabled until we can pull images to test from ECR
     runs-on: ubuntu-latest
+    needs: build_docker_images
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -137,43 +180,53 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: yarn
-      - name: Install yarn dependencies
-        run: yarn install --immutable
-      - name: Build frontend code
-        env:
-          REACT_APP_API_ADDRESS: http://easi:8080/api/v1
-          REACT_APP_GRAPHQL_ADDRESS: http://easi:8080/api/graph/query
-          REACT_APP_APP_ENV: testing
-          REACT_APP_OKTA_CLIENT_ID: 0oad9awvebnsMwWNa297
-          REACT_APP_OKTA_DOMAIN: https://test.idp.idm.cms.gov
-          REACT_APP_OKTA_SERVER_ID: ausd980kt2CBBzStG297
-          REACT_APP_OKTA_ISSUER: https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
-          REACT_APP_OKTA_REDIRECT_URI: http://localhost:3005/implicit/callback
-          REACT_APP_LOCAL_AUTH_ENABLED: true
-        run: yarn run build
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: Run e2e cypress tests
-        env:
-          APP_ENV: testing
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
-          OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
-          OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
+          registry: docker.contribsys.com
+          username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
+          password: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
+      - name: Write local env vars for testing
         run: |
-          ./scripts/run-cypress-test-docker
+          touch .envrc.local
+          echo "export FLAG_SOURCE=FILE" >> .envrc.local
+          echo "export OKTA_TEST_USERNAME='${{ secrets.OKTA_TEST_USERNAME }}'" >> .envrc.local
+          echo "export OKTA_TEST_PASSWORD='${{ secrets.OKTA_TEST_PASSWORD }}'" >> .envrc.local
+          echo "export OKTA_TEST_SECRET='${{ secrets.OKTA_TEST_SECRET }}'" >> .envrc.local
+      - name: Set env vars with direnv
+        uses: HatsuneMiku3939/direnv-action@v1
+      - name: Add "minio" to /etc/hosts
+        run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Run buildx bake
+        uses: docker/bake-action@v2.3.0
+        with:
+          files: "docker-compose.yml,docker-compose.override.yml"
+          load: true
+          set: |
+            mint.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint
+            mint_client.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-mint_client
+            db_migrate.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
+      - name: Install yarn dependencies
+        run: yarn install --immutable
+      - name: Start all services
+        run: |
+          scripts/dev down
+          scripts/dev up:ci
+      - name: Run Cypress Tests
+        run: |
+          export FLAG_SOURCE=FILE
+          yarn cypress run
+      - name: Docker Compose Down
+        if: always() # Always spin down the container
+        run: |
+          scripts/dev down
       - name: Upload cypress videos
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -209,10 +262,9 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Set up go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
-          cache: true
       - name: Install go modules
         run: go mod download
       # go-swagger is used for pre-commit hooks
