@@ -90,18 +90,20 @@ const Subtasks = ({
   });
 
   const solution = solutionData?.operationalSolution;
-  const queriedSubtasks = solution?.operationalSolutionSubtasks! as UpdateType[];
+  const queriedSubtasks = solution?.operationalSolutionSubtasks!;
 
   const formikRef = useRef<FormikProps<FormType>>(null);
 
   const initialValues: FormType = {
-    subtasks: [
-      {
-        __typename: 'OperationalSolutionSubtask',
-        name: '',
-        status: OperationalSolutionSubtaskStatus.TODO
-      }
-    ]
+    subtasks: managingSubtasks
+      ? queriedSubtasks
+      : [
+          {
+            __typename: 'OperationalSolutionSubtask',
+            name: '',
+            status: OperationalSolutionSubtaskStatus.TODO
+          }
+        ]
   };
 
   const [create] = useMutation<
@@ -156,7 +158,7 @@ const Subtasks = ({
           }
         }
       })
-      .catch(errors => {
+      .catch(() => {
         showMessage(
           <Alert type="error" slim className="margin-y-4">
             <span className="mandatory-fields-alert__text">
@@ -192,6 +194,42 @@ const Subtasks = ({
                   className="margin-y-4"
                 >
                   {t('successMessage')}
+                </Alert>
+              );
+              history.push(
+                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+              );
+            }
+          })
+          .catch(errors => {
+            formikRef?.current?.setErrors(errors);
+          })
+      );
+    } else {
+      subtasks.map(subtask =>
+        update({
+          variables: {
+            inputs: [
+              {
+                id: subtask.id,
+                changes: {
+                  name: subtask.name,
+                  status: subtask.status
+                }
+              }
+            ]
+          }
+        })
+          .then(response => {
+            if (!response?.errors) {
+              showMessageOnNextPage(
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-subtask-alert"
+                  className="margin-y-4"
+                >
+                  {t('successfulUpdateMessage')}
                 </Alert>
               );
               history.push(
@@ -332,69 +370,67 @@ const Subtasks = ({
                       {managingSubtasks ? (
                         <FieldArray name="subtasks">
                           {() => {
+                            const { subtasks } = formValues;
                             return (
                               <>
-                                {queriedSubtasks.map((input, index) => (
-                                  <div
-                                    key={input.id}
-                                    data-testid={`manage-subtasks--${index}`}
-                                    className={
-                                      queriedSubtasks.length > 1
-                                        ? 'border-bottom border-base-light'
-                                        : ''
-                                    }
-                                  >
-                                    <div className="margin-top-4">
-                                      <p className="usa-label margin-0">
-                                        {t('subtaskName')}
-                                      </p>
-                                      <p className="margin-0">
-                                        {queriedSubtasks[index].name}
-                                      </p>
-                                    </div>
+                                {isUpdateSubtask(subtasks) &&
+                                  subtasks.map((input, index) => (
+                                    <div
+                                      key={input.id}
+                                      data-testid={`manage-subtasks--${index}`}
+                                      className={
+                                        subtasks.length > 1
+                                          ? 'border-bottom border-base-light'
+                                          : ''
+                                      }
+                                    >
+                                      <div className="margin-top-4">
+                                        <p className="usa-label margin-0">
+                                          {t('subtaskName')}
+                                        </p>
+                                        <p className="margin-0">{input.name}</p>
+                                      </div>
 
-                                    <FieldGroup className="margin-top-4">
-                                      <Label
-                                        htmlFor={`queriedSubtasks[${index}].status`}
-                                      >
-                                        {t('statusQuestion')}
-                                      </Label>
-                                      {Object.keys(
-                                        OperationalSolutionSubtaskStatus
-                                      )
-                                        .reverse()
-                                        .map(status => {
-                                          return (
+                                      <FieldGroup className="margin-top-4">
+                                        <Label
+                                          htmlFor={`subtasks[${index}].status`}
+                                        >
+                                          {t('statusQuestion')}
+                                        </Label>
+                                        {Object.keys(
+                                          OperationalSolutionSubtaskStatus
+                                        )
+                                          .reverse()
+                                          .map(status => (
                                             <Field
-                                              as={Radio}
                                               key={`subtask-status--${status}`}
+                                              as={Radio}
                                               id={`subtask-status--${index}--${status}`}
-                                              name={`queriedSubtasks[${index}].status`}
+                                              name={`subtasks[${index}].status`}
                                               label={translateSubtasks(status)}
                                               value={status}
                                               checked={
-                                                queriedSubtasks &&
-                                                queriedSubtasks[index]
-                                                  .status === status
+                                                subtasks &&
+                                                subtasks[index].status ===
+                                                  status
                                               }
                                             />
-                                          );
-                                        })}
+                                          ))}
 
-                                      <Button
-                                        type="button"
-                                        onClick={() => {
-                                          setModalOpen(true);
-                                          setInputName(input.name);
-                                          setInputId(input.id);
-                                        }}
-                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                      >
-                                        {t('removeSubtask')}
-                                      </Button>
-                                    </FieldGroup>
-                                  </div>
-                                ))}
+                                        <Button
+                                          type="button"
+                                          onClick={() => {
+                                            setModalOpen(true);
+                                            setInputName(input.name);
+                                            setInputId(input.id);
+                                          }}
+                                          className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                        >
+                                          {t('removeSubtask')}
+                                        </Button>
+                                      </FieldGroup>
+                                    </div>
+                                  ))}
                                 <div className="margin-top-3">
                                   <Button
                                     type="button"
@@ -523,6 +559,7 @@ const Subtasks = ({
                           id="submit-subtasks"
                           disabled={
                             !!(
+                              !managingSubtasks &&
                               formValues.subtasks &&
                               formValues.subtasks.find(
                                 input => input.name === ''
