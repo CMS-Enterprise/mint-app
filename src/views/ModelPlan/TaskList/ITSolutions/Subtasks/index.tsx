@@ -52,8 +52,12 @@ type FormType = {
   subtasks: SubTaskType;
 };
 
-export const isUpdateSubtask = (task: SubTaskType): task is UpdateType[] => {
+export const isUpdateSubtasks = (task: SubTaskType): task is UpdateType[] => {
   return 'id' in task[0];
+};
+
+const isUpdateType = (task: UpdateType | CreateType): task is UpdateType => {
+  return 'id' in task;
 };
 
 const Subtasks = ({
@@ -171,7 +175,7 @@ const Subtasks = ({
   };
 
   const handleFormSubmit = ({ subtasks }: FormType) => {
-    if (!isUpdateSubtask(subtasks)) {
+    if (!isUpdateSubtasks(subtasks)) {
       subtasks.map(subtask =>
         create({
           variables: {
@@ -367,107 +371,36 @@ const Subtasks = ({
                         handleSubmit(e);
                       }}
                     >
-                      {managingSubtasks ? (
-                        <FieldArray name="subtasks">
-                          {() => {
-                            const { subtasks } = formValues;
-                            return (
-                              <>
-                                {isUpdateSubtask(subtasks) &&
-                                  subtasks.map((input, index) => (
-                                    <div
-                                      key={input.id}
-                                      data-testid={`manage-subtasks--${index}`}
-                                      className={
-                                        subtasks.length > 1
-                                          ? 'border-bottom border-base-light'
-                                          : ''
-                                      }
-                                    >
-                                      <div className="margin-top-4">
-                                        <p className="usa-label margin-0">
-                                          {t('subtaskName')}
-                                        </p>
-                                        <p className="margin-0">{input.name}</p>
-                                      </div>
+                      <FieldArray name="subtasks">
+                        {fieldArrayProps => {
+                          const { push, remove } = fieldArrayProps;
+                          const { subtasks } = formValues;
 
-                                      <FieldGroup className="margin-top-4">
-                                        <Label
-                                          htmlFor={`subtasks[${index}].status`}
-                                        >
-                                          {t('statusQuestion')}
-                                        </Label>
-                                        {Object.keys(
-                                          OperationalSolutionSubtaskStatus
-                                        )
-                                          .reverse()
-                                          .map(status => (
-                                            <Field
-                                              key={`subtask-status--${status}`}
-                                              as={Radio}
-                                              id={`subtask-status--${index}--${status}`}
-                                              name={`subtasks[${index}].status`}
-                                              label={translateSubtasks(status)}
-                                              value={status}
-                                              checked={
-                                                subtasks &&
-                                                subtasks[index].status ===
-                                                  status
-                                              }
-                                            />
-                                          ))}
-
-                                        <Button
-                                          type="button"
-                                          onClick={() => {
-                                            setModalOpen(true);
-                                            setInputName(input.name);
-                                            setInputId(input.id);
-                                          }}
-                                          className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                        >
-                                          {t('removeSubtask')}
-                                        </Button>
-                                      </FieldGroup>
+                          return (
+                            <>
+                              {subtasks.map((input, index) => (
+                                <div
+                                  // eslint-disable-next-line react/no-array-index-key
+                                  key={index}
+                                  className={
+                                    subtasks.length > 1
+                                      ? 'border-bottom border-base-light'
+                                      : ''
+                                  }
+                                  data-testid={
+                                    managingSubtasks
+                                      ? `manage-subtasks--${index}`
+                                      : `add-subtask--${index}`
+                                  }
+                                >
+                                  {managingSubtasks ? (
+                                    <div className="margin-top-4">
+                                      <p className="usa-label margin-0">
+                                        {t('subtaskName')}
+                                      </p>
+                                      <p className="margin-0">{input.name}</p>
                                     </div>
-                                  ))}
-                                <div className="margin-top-3">
-                                  <Button
-                                    type="button"
-                                    id="add-another-subtask"
-                                    onClick={() => {
-                                      history.push(
-                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
-                                      );
-                                    }}
-                                    outline
-                                  >
-                                    {t('addAnotherSubtask')}
-                                  </Button>
-                                </div>
-                              </>
-                            );
-                          }}
-                        </FieldArray>
-                      ) : (
-                        <FieldArray name="subtasks">
-                          {fieldArrayProps => {
-                            const { push, remove } = fieldArrayProps;
-                            const { subtasks } = formValues;
-
-                            return (
-                              <>
-                                {subtasks.map((input, index) => (
-                                  <div
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={index}
-                                    className={
-                                      subtasks.length > 1
-                                        ? 'border-bottom border-base-light'
-                                        : ''
-                                    }
-                                    data-testid={`add-subtask--${index}`}
-                                  >
+                                  ) : (
                                     <FieldGroup
                                       scrollElement="name"
                                       error={!!flatErrors.name}
@@ -490,68 +423,84 @@ const Subtasks = ({
                                         name={`subtasks[${index}].name`}
                                       />
                                     </FieldGroup>
-                                    <FieldGroup className="margin-top-4">
-                                      <Label
-                                        htmlFor={`subtasks[${index}].status`}
+                                  )}
+                                  <FieldGroup className="margin-top-4">
+                                    <Label
+                                      htmlFor={`subtasks[${index}].status`}
+                                    >
+                                      {t('statusQuestion')}
+                                    </Label>
+                                    {Object.keys(
+                                      OperationalSolutionSubtaskStatus
+                                    )
+                                      .reverse()
+                                      .map(status => {
+                                        return (
+                                          <Field
+                                            key={`subtask-status--${status}`}
+                                            as={Radio}
+                                            id={`subtask-status--${index}--${status}`}
+                                            name={`subtasks[${index}].status`}
+                                            label={translateSubtasks(status)}
+                                            value={status}
+                                            checked={
+                                              subtasks &&
+                                              subtasks[index].status === status
+                                            }
+                                          />
+                                        );
+                                      })}
+                                    {!managingSubtasks && subtasks.length > 1 && (
+                                      <Button
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
                                       >
-                                        {t('statusQuestion')}
-                                      </Label>
-                                      {Object.keys(
-                                        OperationalSolutionSubtaskStatus
-                                      )
-                                        .reverse()
-                                        .map(status => {
-                                          return (
-                                            <Field
-                                              key={`subtask-status--${status}`}
-                                              as={Radio}
-                                              id={`subtask-status--${index}--${status}`}
-                                              name={`subtasks[${index}].status`}
-                                              label={translateSubtasks(status)}
-                                              value={status}
-                                              checked={
-                                                subtasks &&
-                                                subtasks[index].status ===
-                                                  status
-                                              }
-                                            />
-                                          );
-                                        })}
-                                      {subtasks.length > 1 && (
-                                        <Button
-                                          type="button"
-                                          onClick={() => remove(index)}
-                                          className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                        >
-                                          {t('removeSubtask')}
-                                        </Button>
-                                      )}
-                                    </FieldGroup>
-                                  </div>
-                                ))}
-                                <div className="margin-top-3">
-                                  <Button
-                                    type="button"
-                                    id="add-another-subtask"
-                                    onClick={() =>
-                                      push({
-                                        __typename:
-                                          'OperationalSolutionSubtask',
-                                        name: '',
-                                        status:
-                                          OperationalSolutionSubtaskStatus.TODO
-                                      })
-                                    }
-                                    outline
-                                  >
-                                    {t('addAnotherSubtask')}
-                                  </Button>
+                                        {t('removeSubtask')}
+                                      </Button>
+                                    )}
+                                    {managingSubtasks && isUpdateType(input) && (
+                                      <Button
+                                        type="button"
+                                        onClick={() => {
+                                          setModalOpen(true);
+                                          setInputName(input.name);
+                                          setInputId(input.id);
+                                        }}
+                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                      >
+                                        {t('removeSubtask')}
+                                      </Button>
+                                    )}
+                                  </FieldGroup>
                                 </div>
-                              </>
-                            );
-                          }}
-                        </FieldArray>
-                      )}
+                              ))}
+                              <div className="margin-top-3">
+                                <Button
+                                  type="button"
+                                  id="add-another-subtask"
+                                  onClick={() =>
+                                    managingSubtasks
+                                      ? history.push(
+                                          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
+                                        )
+                                      : push({
+                                          __typename:
+                                            'OperationalSolutionSubtask',
+                                          name: '',
+                                          status:
+                                            OperationalSolutionSubtaskStatus.TODO
+                                        })
+                                  }
+                                  outline
+                                >
+                                  {t('addAnotherSubtask')}
+                                </Button>
+                              </div>
+                            </>
+                          );
+                        }}
+                      </FieldArray>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
