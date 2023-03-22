@@ -56,7 +56,11 @@ export const isUpdateSubtask = (task: SubTaskType): task is UpdateType[] => {
   return 'id' in task[0];
 };
 
-const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
+const Subtasks = ({
+  managingSubtasks = false
+}: {
+  managingSubtasks?: boolean;
+}) => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -70,9 +74,11 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
   const { t } = useTranslation('subtasks');
   const { t: h } = useTranslation('draftModelPlan');
 
+  const { modelName } = useContext(ModelInfoContext);
   const { showMessage, showMessageOnNextPage, message } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
-  const { modelName } = useContext(ModelInfoContext);
+  const [inputName, setInputName] = useState('');
+  const [inputId, setInputId] = useState('');
 
   const { data: solutionData, error, refetch } = useQuery<
     GetOperationalSolutionType,
@@ -84,7 +90,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
   });
 
   const solution = solutionData?.operationalSolution;
-  const queriedSubtasks = solution?.operationalSolutionSubtasks! as CreateType[];
+  const queriedSubtasks = solution?.operationalSolutionSubtasks! as UpdateType[];
 
   const formikRef = useRef<FormikProps<FormType>>(null);
 
@@ -200,12 +206,12 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
     }
   };
 
-  const renderModal = (name: string, id: string) => {
+  const renderModal = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-y-0">
           {t('removeModal.header', {
-            subTaskName: name
+            subTaskName: inputName
           })}
         </PageHeading>
         <p className="margin-top-2 margin-bottom-3">
@@ -215,7 +221,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
           type="button"
           className="margin-right-4"
           onClick={() => {
-            handleDelete(name, id);
+            handleDelete(inputName, inputId);
             setModalOpen(false);
           }}
         >
@@ -239,7 +245,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
       text: t('solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
     },
-    { text: manageSubtasks ? t('manageSubtasks') : t('addSubtask') }
+    { text: managingSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
 
   if (error || !solution) {
@@ -248,6 +254,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
 
   return (
     <>
+      {renderModal()}
       <Breadcrumbs items={breadcrumbs} />
 
       {message}
@@ -255,7 +262,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {manageSubtasks ? t('manageSubtasks') : t('addSubtask')}
+            {managingSubtasks ? t('manageSubtasks') : t('addSubtask')}
           </PageHeading>
 
           <p
@@ -266,7 +273,7 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
           </p>
 
           <p className="line-height-body-4">
-            {manageSubtasks ? t('manageSubtaskInfo') : t('addSubtaskInfo')}
+            {managingSubtasks ? t('manageSubtaskInfo') : t('addSubtaskInfo')}
           </p>
 
           <Grid tablet={{ col: 8 }}>
@@ -322,62 +329,90 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
                         handleSubmit(e);
                       }}
                     >
-                      {manageSubtasks ? (
-                        <>
-                          {/* {subtasks &&
-                            subtasks.map((subtask, index) => {
-                              return (
-                                <div
-                                  // eslint-disable-next-line react/no-array-index-key
-                                  key={index}
-                                  className={
-                                    subtasks.length > 1
-                                      ? 'border-bottom border-base-light'
-                                      : ''
-                                  }
-                                >
-                                  <FieldGroup className="margin-top-4">
-                                    <p className="usa-label margin-0">
-                                      {t('subtaskName')}
-                                    </p>
-                                    <p className="margin-0">{subtask.name}</p>
-                                  </FieldGroup>
-                                  <FieldGroup className="margin-top-4">
-                                    <Label
-                                      htmlFor={`subtasks[${index}].status`}
-                                    >
-                                      {t('statusQuestion')}
-                                    </Label>
-                                    {Object.keys(
-                                      OperationalSolutionSubtaskStatus
-                                    )
-                                      .reverse()
-                                      .map(status => {
-                                        return (
-                                          <Field
-                                            key={`subtask-status--${status}`}
-                                            as={Radio}
-                                            id={`subtask-status--${index}--${status}`}
-                                            name={`subtasks[${index}].status`}
-                                            label={translateSubtasks(status)}
-                                            value={status}
-                                            checked={subtask.status === status}
-                                          />
-                                        );
-                                      })}
-                                    <Button
-                                      type="button"
-                                      onClick={() => setModalOpen(true)}
-                                      className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                    >
-                                      {t('removeSubtask')}
-                                    </Button>
-                                    {renderModal(subtask.name, subtask.id)}
-                                  </FieldGroup>
+                      {managingSubtasks ? (
+                        <FieldArray name="subtasks">
+                          {() => {
+                            return (
+                              <>
+                                {queriedSubtasks.map((input, index) => (
+                                  <div
+                                    key={input.id}
+                                    data-testid={`manage-subtasks--${index}`}
+                                    className={
+                                      queriedSubtasks.length > 1
+                                        ? 'border-bottom border-base-light'
+                                        : ''
+                                    }
+                                  >
+                                    <div className="margin-top-4">
+                                      <p className="usa-label margin-0">
+                                        {t('subtaskName')}
+                                      </p>
+                                      <p className="margin-0">
+                                        {queriedSubtasks[index].name}
+                                      </p>
+                                    </div>
+
+                                    <FieldGroup className="margin-top-4">
+                                      <Label
+                                        htmlFor={`queriedSubtasks[${index}].status`}
+                                      >
+                                        {t('statusQuestion')}
+                                      </Label>
+                                      {Object.keys(
+                                        OperationalSolutionSubtaskStatus
+                                      )
+                                        .reverse()
+                                        .map(status => {
+                                          return (
+                                            <Field
+                                              as={Radio}
+                                              key={`subtask-status--${status}`}
+                                              id={`subtask-status--${index}--${status}`}
+                                              name={`queriedSubtasks[${index}].status`}
+                                              label={translateSubtasks(status)}
+                                              value={status}
+                                              checked={
+                                                queriedSubtasks &&
+                                                queriedSubtasks[index]
+                                                  .status === status
+                                              }
+                                            />
+                                          );
+                                        })}
+
+                                      <Button
+                                        type="button"
+                                        onClick={() => {
+                                          setModalOpen(true);
+                                          setInputName(input.name);
+                                          setInputId(input.id);
+                                        }}
+                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                      >
+                                        {t('removeSubtask')}
+                                      </Button>
+                                    </FieldGroup>
+                                  </div>
+                                ))}
+                                <div className="margin-top-3">
+                                  <Button
+                                    type="button"
+                                    id="add-another-subtask"
+                                    onClick={() => {
+                                      history.push(
+                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
+                                      );
+                                    }}
+                                    outline
+                                  >
+                                    {t('addAnotherSubtask')}
+                                  </Button>
                                 </div>
-                              );
-                            })} */}
-                        </>
+                              </>
+                            );
+                          }}
+                        </FieldArray>
                       ) : (
                         <FieldArray name="subtasks">
                           {fieldArrayProps => {
@@ -496,7 +531,9 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
                           }
                           onClick={() => setErrors({})}
                         >
-                          {t('addSubtask')}
+                          {managingSubtasks
+                            ? t('updateSubtasks')
+                            : t('addSubtask')}
                         </Button>
                       </div>
 
