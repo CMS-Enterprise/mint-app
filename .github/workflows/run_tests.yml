@@ -94,7 +94,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
-          cache: true
 
       - name: Install go modules
         run: go mod download
@@ -212,7 +211,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
-          cache: true
       - name: Install go modules
         run: go mod download
       # go-swagger is used for pre-commit hooks
