@@ -135,10 +135,9 @@ jobs:
           s3 mb s3://${{ env.S3_BUCKET }}
 
       - name: Set up go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
-          cache: true
 
       - name: Install go modules
         run: go mod download
@@ -263,10 +262,9 @@ jobs:
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Set up go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: 'go.mod'
-          cache: true
       - name: Install go modules
         run: go mod download
       # go-swagger is used for pre-commit hooks
