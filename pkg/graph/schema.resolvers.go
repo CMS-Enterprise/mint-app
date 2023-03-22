@@ -484,9 +484,7 @@ func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Conte
 
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
-	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
+	return resolvers.DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
 }
 
 // OtherType is the resolver for the otherType field.

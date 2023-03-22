@@ -191,16 +191,8 @@ func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentic
 	return result, err
 }
 
-// DiscussionReplyCollectionByDiscusionID returns all Discussion reply objects by a Discussion ID
-func DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uuid.UUID, store *storage.Store) ([]*models.DiscussionReply, error) {
-
-	result, err := store.DiscussionReplyCollectionByDiscusionID(logger, discussionID)
-	return result, err
-
-}
-
 // DiscussionReplyCollectionByDiscusionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader
-func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussionID uuid.UUID) (*models.DiscussionReply, error) {
+func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
 	allLoaders := loaders.Loaders(ctx)
 	discRLoader := allLoaders.DiscussionReplyLoader
 	key := loaders.NewKeyArgs()
@@ -213,7 +205,7 @@ func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussio
 		return nil, err
 	}
 
-	return result.(*models.DiscussionReply), nil
+	return result.([]*models.DiscussionReply), nil
 }
 
 // PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader

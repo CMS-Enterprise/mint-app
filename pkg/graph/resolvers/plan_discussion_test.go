@@ -184,7 +184,7 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
 	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
 
-	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	result, err := DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
 	suite.Len(result, 2)
 
@@ -195,7 +195,7 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply", true)
 
 	// Assert the count on the _first_ discussion is still 2
-	result, err = DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	result, err = DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
 	suite.Len(result, 2)
 }
@@ -232,7 +232,7 @@ func (suite *ResolverSuite) TestDeleteDiscussionReply() {
 	suite.NoError(err)
 
 	// Should only have 1 left now
-	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	result, err := DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
 	suite.Len(result, 1)
 }
@@ -295,13 +295,13 @@ func (suite *ResolverSuite) TestDiscussionReplyDataLoader() {
 }
 func verifyDiscussionReplyLoader(ctx context.Context, discussionID uuid.UUID) error {
 
-	discR, err := DiscussionReplyCollectionByDiscusionIDLOADER(ctx, discussionID)
+	discRs, err := DiscussionReplyCollectionByDiscusionIDLOADER(ctx, discussionID)
 	if err != nil {
 		return err
 	}
 
-	if discussionID != discR.DiscussionID {
-		return fmt.Errorf("discussion Reply returned model plan ID %s, expected %s", discR.DiscussionID, discussionID)
+	if discussionID != discRs[0].DiscussionID {
+		return fmt.Errorf("discussion Reply returned model plan ID %s, expected %s", discRs[0].DiscussionID, discussionID)
 	}
 	return nil
 }

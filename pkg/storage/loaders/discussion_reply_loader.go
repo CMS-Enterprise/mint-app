@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/graph-gophers/dataloader"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
@@ -27,9 +26,17 @@ func (loaders *DataLoaders) GetDiscussionReplyByModelPlanID(ctx context.Context,
 	}
 
 	discRs, _ := dr.Store.DiscussionReplyGetByDiscussionIDLOADER(logger, marshaledParams)
-	discRByID := lo.Associate(discRs, func(dr *models.DiscussionReply) (string, *models.DiscussionReply) {
-		return dr.DiscussionID.String(), dr
-	})
+	discRByID := map[string][]*models.DiscussionReply{}
+	for _, discR := range discRs {
+		slice, ok := discRByID[string(discR.DiscussionID.String())]
+		if ok {
+			slice = append(slice, discR) //Add to existing slice
+			discRByID[string(discR.DiscussionID.String())] = slice
+			continue
+		}
+		discRByID[string(discR.DiscussionID.String())] = []*models.DiscussionReply{discR}
+
+	}
 
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))
