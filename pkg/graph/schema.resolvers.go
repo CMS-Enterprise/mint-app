@@ -453,9 +453,7 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 
 // OperationalSolutionSubtasks is the resolver for the operationalSolutionSubtasks field.
 func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Context, obj *models.OperationalSolution) ([]*models.OperationalSolutionSubtask, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.OperationalSolutionSubtasksGetBySolutionID(logger, r.store, obj.ID)
+	return resolvers.OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, obj.ID)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

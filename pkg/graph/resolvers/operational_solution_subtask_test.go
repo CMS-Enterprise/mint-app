@@ -55,9 +55,8 @@ func (suite *ResolverSuite) TestOperationalSolutionSubtaskGetBySolutionID() {
 	solution := suite.createOperationalSolution()
 	subtask := suite.createOperationalSolutionSubtaskWithSolution(solution)
 
-	result, err := OperationalSolutionSubtasksGetBySolutionID(
-		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
+	result, err := OperationalSolutionSubtaskGetBySolutionIDLOADER(
+		suite.testConfigs.Context,
 		solution.ID,
 	)
 	suite.NoError(err)
@@ -112,7 +111,7 @@ func (suite *ResolverSuite) TestOperationalSolutionSubtaskDataLoader() {
 }
 func verifyOperationalSolutionSubtaskLoader(ctx context.Context, solutionID uuid.UUID) error {
 
-	OpSolS, err := OperationalSolutionSubtaskGetByModelPlanIDLOADER(ctx, solutionID)
+	OpSolS, err := OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx, solutionID)
 	if err != nil {
 		return err
 	}

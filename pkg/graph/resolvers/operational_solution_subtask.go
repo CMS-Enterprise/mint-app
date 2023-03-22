@@ -59,25 +59,8 @@ func OperationalSolutionSubtaskGetByID(
 	return subtask, err
 }
 
-// OperationalSolutionSubtasksGetBySolutionID implements the resolver logic to
-// get operational solution subtasks by solution ID
-func OperationalSolutionSubtasksGetBySolutionID(
-	logger *zap.Logger,
-	store *storage.Store,
-	solutionID uuid.UUID,
-) ([]*models.OperationalSolutionSubtask, error) {
-
-	subtasks, err := store.OperationalSolutionSubtasksGetBySolutionID(logger, solutionID)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return subtasks, err
-}
-
-// OperationalSolutionSubtaskGetByModelPlanIDLOADER implements resolver logic to get Operational Solution Subtask by a model plan ID using a data loader
-func OperationalSolutionSubtaskGetByModelPlanIDLOADER(ctx context.Context, solutionID uuid.UUID) ([]*models.OperationalSolutionSubtask, error) {
+// OperationalSolutionSubtaskGetBySolutionIDLOADER implements resolver logic to get Operational Solution Subtask by a model plan ID using a data loader
+func OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx context.Context, solutionID uuid.UUID) ([]*models.OperationalSolutionSubtask, error) {
 	allLoaders := loaders.Loaders(ctx)
 	OpSolSLoader := allLoaders.OperationSolutionSubtaskLoader
 	key := loaders.NewKeyArgs()

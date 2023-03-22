@@ -22,9 +22,6 @@ var operationalSolutionSubtaskCreateSQL string
 //go:embed SQL/operational_solution_subtask/get_by_id.sql
 var operationalSolutionSubtaskGetByIDSQL string
 
-//go:embed SQL/operational_solution_subtask/get_by_solution_id.sql
-var operationalSolutionSubtasksGetBySolutionIDSQL string
-
 //go:embed SQL/operational_solution_subtask/update.sql
 var operationalSolutionSubtaskUpdateByIDSQL string
 
@@ -108,29 +105,6 @@ func (s *Store) OperationalSolutionSubtaskGetByID(_ *zap.Logger, subtaskID uuid.
 	}
 
 	return &subtask, err
-}
-
-// OperationalSolutionSubtasksGetBySolutionID gets a collection of
-// models.OperationalSolutionSubtask by OperationalSolution ID
-func (s *Store) OperationalSolutionSubtasksGetBySolutionID(
-	logger *zap.Logger,
-	solutionID uuid.UUID,
-) ([]*models.OperationalSolutionSubtask, error) {
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtasksGetBySolutionIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	var subtasks []*models.OperationalSolutionSubtask
-	err = statement.Select(
-		&subtasks,
-		utilitySQL.CreateSolutionIDQueryMap(solutionID),
-	)
-	if err != nil {
-		return nil, errors.New("could not fetch operational solution subtasks by solution id")
-	}
-
-	return subtasks, err
 }
 
 // OperationalSolutionSubtaskDelete deletes an operational solution subtask by id
