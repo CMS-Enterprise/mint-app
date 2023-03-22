@@ -2,8 +2,11 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/golang/mock/gomock"
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -184,4 +187,32 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Logger, assessment, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(false, isCollabFalseCase)
+}
+
+func (suite *ResolverSuite) TestPlanCollaboratorDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Collab 1")
+	plan2 := suite.createModelPlan("Plan For Collab 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyPlanCollaboratorLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyPlanCollaboratorLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyPlanCollaboratorLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	collab, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != collab.ModelPlanID {
+		return fmt.Errorf("plan Collaborator returned model plan ID %s, expected %s", collab.ModelPlanID, modelPlanID)
+	}
+	return nil
 }

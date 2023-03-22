@@ -8,6 +8,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -145,6 +146,23 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 func FetchCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCollaborator, error) {
 	collaborators, err := store.PlanCollaboratorsByModelPlanID(logger, modelPlanID)
 	return collaborators, err
+}
+
+// PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader
+func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanCollaborator, error) {
+	allLoaders := loaders.Loaders(ctx)
+	collabLoader := allLoaders.PlanCollaboratorLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+
+	thunk := collabLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*models.PlanCollaborator), nil
 }
 
 // FetchCollaboratorByID implements resolver logic to fetch a plan collaborator by ID

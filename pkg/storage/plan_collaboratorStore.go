@@ -27,6 +27,30 @@ var planCollaboratorFetchByModelPlanIDSQL string
 //go:embed SQL/plan_collaborator/fetch_by_id.sql
 var planCollaboratorFetchByIDSQL string
 
+//go:embed SQL/plan_collaborator/get_by_model_plan_id_LOADER.sql
+var planCollaboratorGetByModelPlanIDLoaderSQL string
+
+// PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanCollaborator, error) {
+	collabSlice := []*models.PlanCollaborator{}
+
+	stmt, err := s.db.PrepareNamed(planCollaboratorGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&collabSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return collabSlice, nil
+}
+
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 
