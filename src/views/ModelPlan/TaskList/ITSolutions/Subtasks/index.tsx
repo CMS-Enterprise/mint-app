@@ -97,7 +97,6 @@ const Subtasks = ({ manageSubtasks = false }: { manageSubtasks?: boolean }) => {
       }
     ]
   };
-  console.log(initialValues);
 
   const [create] = useMutation<
     CreateSubTasksType,
