@@ -111,5 +111,30 @@ services:
         source: ./.faktory/conf.d
         target: /root/.faktory/conf.d
     restart: always
+
+  elasticsearch:
+    container_name: elasticsearch
+    hostname: elasticsearch
+    image: "docker.elastic.co/elasticsearch/elasticsearch:8.6.2"
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
+    mem_limit: ${ES_MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esconfig:/usr/share/elasticsearch/config
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: [ "CMD", "curl","-s" ,"-f", "-u", "${ES_USERNAME}:${ES_PASSWORD}", "http://localhost:9200/_cat/health" ]
+
 volumes:
   faktory:
+  esconfig:
+  esdata:
