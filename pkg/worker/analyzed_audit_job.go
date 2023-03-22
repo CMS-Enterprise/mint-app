@@ -69,7 +69,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 // args[0] date
 func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{}) error {
 	dayToAnalyze := args[0]
-	modelPlans, err := w.Store.ModelPlanFavoritedCollection(w.Logger, false)
+	modelPlans, err := w.Store.ModelPlanCollection(w.Logger, false)
 	if err != nil {
 		return err
 	}
