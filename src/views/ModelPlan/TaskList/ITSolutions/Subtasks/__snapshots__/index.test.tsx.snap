@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IT Solutions Link Documents matches snapshot 1`] = `
+exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -151,7 +151,9 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                         <h3
                           class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
                           style="word-break: break-word;"
-                        />
+                        >
+                          My custom solution
+                        </h3>
                         <div
                           class="tablet:grid-col-6"
                           data-testid="grid"
@@ -169,11 +171,11 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                           <a
                             aria-label="Send an email"
                             class="usa-link line-height-body-5 display-flex flex-align-center"
-                            href="mailto:john.doe@oddball.io"
+                            href="mailto:j.doe@oddball.io"
                             target="_blank"
                           >
                             <div>
-                              john.doe@oddball.io
+                              j.doe@oddball.io
                             </div>
                             <svg
                               class="usa-icon margin-left-05 text-tbottom"
@@ -203,7 +205,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                         >
                           <a
                             class="usa-link margin-right-2 display-flex flex-align-center"
-                            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/add-custom-solution/undefined"
+                            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/add-custom-solution/786f6717-f718-4657-8df9-58ec9bca5c1c"
                           >
                             Update these details
                             <svg
@@ -249,7 +251,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
               <label
                 class="usa-label"
                 data-testid="label"
-                for="createOperationalSolutionSubtasks[0].name"
+                for="subtasks[0].name"
               >
                 Subtask name
                 <span
@@ -263,7 +265,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                 data-testid="textInput"
                 id="subtask-name--0"
                 maxlength="50"
-                name="createOperationalSolutionSubtasks[0].name"
+                name="subtasks[0].name"
                 value=""
               />
             </div>
@@ -273,7 +275,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
               <label
                 class="usa-label"
                 data-testid="label"
-                for="createOperationalSolutionSubtasks[0].status"
+                for="subtasks[0].status"
               >
                 What is the status of this subtask?
               </label>
@@ -285,7 +287,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                   checked=""
                   class="usa-radio__input"
                   id="subtask-status--0--TODO"
-                  name="createOperationalSolutionSubtasks[0].status"
+                  name="subtasks[0].status"
                   type="radio"
                   value="TODO"
                 />
@@ -303,7 +305,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="subtask-status--0--IN_PROGRESS"
-                  name="createOperationalSolutionSubtasks[0].status"
+                  name="subtasks[0].status"
                   type="radio"
                   value="IN_PROGRESS"
                 />
@@ -321,7 +323,7 @@ exports[`IT Solutions Link Documents matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="subtask-status--0--DONE"
-                  name="createOperationalSolutionSubtasks[0].status"
+                  name="subtasks[0].status"
                   type="radio"
                   value="DONE"
                 />

@@ -44,7 +44,7 @@ const returnMockedData = [
   }
 ];
 
-describe('IT Solutions Link Documents', () => {
+describe('IT Solutions Add Subtasks', () => {
   it('renders correctly', async () => {
     const { getByTestId, getByRole } = render(
       <MemoryRouter
@@ -95,7 +95,7 @@ describe('IT Solutions Link Documents', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { getByTestId, getByRole, asFragment } = render(
       <MemoryRouter
         initialEntries={[
           `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
@@ -111,6 +111,10 @@ describe('IT Solutions Link Documents', () => {
       </MemoryRouter>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(getByTestId('add-subtask-form')).toBeInTheDocument();
+      expect(getByRole('radio', { name: 'To do' })).toBeChecked();
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });
