@@ -21,6 +21,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     });
 
     // Basics Clearance Check
+    cy.wait(200);
     cy.get('[data-testid="clearance-basics"]').click();
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -51,6 +52,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     );
 
     // Participants and Providers Clearance Check
+    cy.wait(200);
     cy.get('[data-testid="clearance-participantsAndProviders"]').click();
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -71,6 +73,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('#prepare-for-clearance-beneficiaries').should('be.checked');
 
     // Ops Eval and Learning Clearance Check
+    cy.wait(200);
     cy.get('[data-testid="clearance-opsEvalAndLearning"]').click();
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -87,6 +90,8 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="prepare-for-clearance"]').click();
 
     cy.get('#prepare-for-clearance-payments').should('be.checked');
+
+    cy.get('[data-testid="update-clearance"]').click();
 
     // Task List Check
     cy.get('[data-testid="dont-update-clearance"]').click();
