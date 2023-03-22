@@ -228,7 +228,9 @@ describe('The Model Plan IT solutions tracker', () => {
         cy.get('[type="checkbox"]').uncheck({ force: true });
       });
 
-    cy.get('[data-testid="link-documents-button"]').click();
+    cy.get('[data-testid="link-documents-button"]')
+      .should('not.be.disabled')
+      .click();
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr').should(
       'have.length',
