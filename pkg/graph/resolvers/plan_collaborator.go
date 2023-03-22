@@ -142,14 +142,8 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 	return retCollaborator, err
 }
 
-// FetchCollaboratorsByModelPlanID implements resolver logic to fetch a list of plan collaborators by a model plan ID
-func FetchCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCollaborator, error) {
-	collaborators, err := store.PlanCollaboratorsByModelPlanID(logger, modelPlanID)
-	return collaborators, err
-}
-
 // PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader
-func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanCollaborator, error) {
+func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
 	allLoaders := loaders.Loaders(ctx)
 	collabLoader := allLoaders.PlanCollaboratorLoader
 	key := loaders.NewKeyArgs()
@@ -162,7 +156,7 @@ func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uui
 		return nil, err
 	}
 
-	return result.(*models.PlanCollaborator), nil
+	return result.([]*models.PlanCollaborator), nil
 }
 
 // FetchCollaboratorByID implements resolver logic to fetch a plan collaborator by ID

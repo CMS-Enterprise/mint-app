@@ -113,7 +113,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
 	plan := suite.createModelPlan("Plan For Milestones")
 
-	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	collaborator := collaborators[0]
@@ -127,7 +127,7 @@ func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Milestones")
 	_ = suite.createPlanCollaborator(plan, "SCND", models.TeamRoleLeadership)
 
-	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(collaborators, 2)
 	suite.NotEqual(collaborators[0].ID, collaborators[1].ID) // two different collaborators
@@ -163,7 +163,7 @@ func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 func (suite *ResolverSuite) TestDeletePlanCollaboratorLastModelLead() {
 	plan := suite.createModelPlan("Plan For Milestones")
 
-	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	collaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	collaborator := collaborators[0]
@@ -191,7 +191,14 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 
 func (suite *ResolverSuite) TestPlanCollaboratorDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Collab 1")
+	suite.createPlanCollaborator(plan1, "SCND", models.TeamRoleLeadership)
+	suite.createPlanCollaborator(plan1, "BLOB", models.TeamRoleLeadership)
+	suite.createPlanCollaborator(plan1, "MIKE", models.TeamRoleLeadership)
 	plan2 := suite.createModelPlan("Plan For Collab 2")
+
+	suite.createPlanCollaborator(plan2, "SCTD", models.TeamRoleLeadership)
+	suite.createPlanCollaborator(plan2, "BLIB", models.TeamRoleLeadership)
+	suite.createPlanCollaborator(plan2, "MUKE", models.TeamRoleLeadership)
 
 	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 	g.Go(func() error {
@@ -211,8 +218,8 @@ func verifyPlanCollaboratorLoader(ctx context.Context, modelPlanID uuid.UUID) er
 		return err
 	}
 
-	if modelPlanID != collab.ModelPlanID {
-		return fmt.Errorf("plan Collaborator returned model plan ID %s, expected %s", collab.ModelPlanID, modelPlanID)
+	if modelPlanID != collab[0].ModelPlanID {
+		return fmt.Errorf("plan Collaborator returned model plan ID %s, expected %s", collab[0].ModelPlanID, modelPlanID)
 	}
 	return nil
 }

@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/graph-gophers/dataloader"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
@@ -27,9 +26,16 @@ func (loaders *DataLoaders) GetPlanCollaboratorByModelPlanID(ctx context.Context
 	}
 
 	collabs, _ := dr.Store.PlanCollaboratorGetByModelPlanIDLOADER(logger, marshaledParams)
-	collabByID := lo.Associate(collabs, func(pc *models.PlanCollaborator) (string, *models.PlanCollaborator) {
-		return pc.ModelPlanID.String(), pc
-	})
+	collabByID := map[string][]*models.PlanCollaborator{}
+	for _, collab := range collabs {
+		slice, ok := collabByID[string(collab.ModelPlanID.String())]
+		if ok {
+			slice = append(slice, collab) //Add to existing slice
+			collabByID[string(collab.ModelPlanID.String())] = slice
+			continue
+		}
+		collabByID[string(collab.ModelPlanID.String())] = []*models.PlanCollaborator{collab}
+	}
 
 	// RETURN IN THE SAME ORDER REQUESTED
 	output := make([]*dataloader.Result, len(keys))

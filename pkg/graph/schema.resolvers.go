@@ -51,11 +51,7 @@ func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.
 
 // Collaborators is the resolver for the collaborators field.
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, obj.ID, r.store)
-
-	return collaborators, err
+	return resolvers.PlanCollaboratorGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // Documents is the resolver for the documents field.
