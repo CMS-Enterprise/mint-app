@@ -6,6 +6,8 @@ services:
     command: ['postgres', '-c', 'log_statement=all', '-c', 'max_connections=25']
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
+    networks:
+      - elastic
   db_migrate:
     image: mint-db-migrate:latest
     platform: linux/amd64
@@ -17,6 +19,8 @@ services:
 
     depends_on:
       - db
+    networks:
+      - elastic
   mint:
     environment:
       - CEDAR_API_KEY
@@ -76,12 +80,18 @@ services:
     depends_on:
       db_migrate:
         condition: service_completed_successfully # Only start if migrations completed successfully
+    networks:
+      - elastic
   mint_client:
     image: mint-frontend:latest
+    networks:
+      - elastic
   minio:
     restart: always
     image: minio/minio:latest
     entrypoint: minio server /data --console-address ":9966" --address ":9005"
+    networks:
+      - elastic
   minio_mc:
     image: minio/mc:latest
     volumes:
@@ -94,12 +104,16 @@ services:
       /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
       /usr/bin/mc policy set public s3local/mint-app-file-uploads;
       "
+    networks:
+      - elastic
   email:
     image: dockage/mailcatcher:0.7.1
     platform: linux/amd64
     ports:
       - "1085:1080"
       - "1030:1025"
+    networks:
+      - elastic
   faktory:
     image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
@@ -111,30 +125,64 @@ services:
         source: ./.faktory/conf.d
         target: /root/.faktory/conf.d
     restart: always
+    networks:
+      - elastic
 
   elasticsearch:
-    container_name: elasticsearch
-    hostname: elasticsearch
-    image: "docker.elastic.co/elasticsearch/elasticsearch:8.6.2"
+    image: elasticsearch:7.16.1
+    container_name: es
     environment:
-      - http.host=0.0.0.0
-      - transport.host=127.0.0.1
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms${ES_JVM_HEAP} -Xmx${ES_JVM_HEAP}"
-    mem_limit: ${ES_MEM_LIMIT}
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - esconfig:/usr/share/elasticsearch/config
-      - esdata:/usr/share/elasticsearch/data
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     ports:
-      - 9200:9200
+      - "9200:9200"
+      - "9300:9300"
     healthcheck:
-      test: [ "CMD", "curl","-s" ,"-f", "-u", "${ES_USERNAME}:${ES_PASSWORD}", "http://localhost:9200/_cat/health" ]
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    networks:
+      - elastic
+  logstash:
+    image: logstash:7.16.1
+    container_name: log
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+    volumes:
+      - ./config/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
+      - ./config/logstash/logstash.conf:/usr/share/logstash/logstash.config
+    ports:
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "5044:5044"
+      - "9600:9600"
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+    command: logstash -f /usr/share/logstash/logstash.config
+  kibana:
+    image: kibana:7.16.1
+    container_name: kib
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
 
 volumes:
   faktory:
   esconfig:
   esdata:
+
+networks:
+  elastic:
+    driver: bridge
