@@ -57,6 +57,7 @@ describe('The Model Plan Form', () => {
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
     });
+    cy.wait(500);
     cy.get('#plan-basics-model-name')
       .clear()
       .type('Renamed Model Plan Name')
