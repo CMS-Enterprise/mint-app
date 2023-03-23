@@ -366,7 +366,11 @@ const Subtasks = ({
 
                     <Form
                       className="margin-top-6"
-                      data-testid="add-subtask-form"
+                      data-testid={
+                        managingSubtasks
+                          ? 'manage-subtask-form'
+                          : 'add-subtask-form'
+                      }
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
