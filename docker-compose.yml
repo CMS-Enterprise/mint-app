@@ -3,11 +3,23 @@ version: '3.7'
 services:
   db:
     image: postgres:14.4
-    command: ['postgres', '-c', 'log_statement=all', '-c', 'max_connections=25']
+    command:
+      - 'postgres'
+      - '-c'
+      - 'log_statement=all'
+      - '-c'
+      - 'max_connections=25'
+      - '-c'
+      - 'wal_level=logical'
+      - '-c'
+      - 'max_wal_senders=2'
+      - '-c'
+      - 'max_replication_slots=2'
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
     networks:
       - elastic
+
   db_migrate:
     image: mint-db-migrate:latest
     platform: linux/amd64
@@ -16,11 +28,11 @@ services:
       - FLYWAY_PASSWORD=mysecretpassword
       - FLYWAY_URL=jdbc:postgresql://db/postgres
       - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
-
     depends_on:
       - db
     networks:
       - elastic
+
   mint:
     environment:
       - CEDAR_API_KEY
@@ -82,16 +94,19 @@ services:
         condition: service_completed_successfully # Only start if migrations completed successfully
     networks:
       - elastic
+
   mint_client:
     image: mint-frontend:latest
     networks:
       - elastic
+
   minio:
     restart: always
     image: minio/minio:latest
     entrypoint: minio server /data --console-address ":9966" --address ":9005"
     networks:
       - elastic
+
   minio_mc:
     image: minio/mc:latest
     volumes:
@@ -106,6 +121,7 @@ services:
       "
     networks:
       - elastic
+
   email:
     image: dockage/mailcatcher:0.7.1
     platform: linux/amd64
@@ -114,6 +130,7 @@ services:
       - "1030:1025"
     networks:
       - elastic
+
   faktory:
     image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
@@ -129,7 +146,7 @@ services:
       - elastic
 
   elasticsearch:
-    image: elasticsearch:7.16.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
     container_name: es
     environment:
       discovery.type: single-node
@@ -144,6 +161,7 @@ services:
       retries: 3
     networks:
       - elastic
+
   logstash:
     image: logstash:7.16.1
     container_name: log
@@ -168,6 +186,7 @@ services:
     networks:
       - elastic
     command: logstash -f /usr/share/logstash/logstash.config
+
   kibana:
     image: kibana:7.16.1
     container_name: kib
@@ -177,6 +196,69 @@ services:
       - elasticsearch
     networks:
       - elastic
+
+  # The buffer database
+  statetrace_db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command:
+      - "postgres"
+      - "-p"
+      - "5438"
+    ports:
+      - "5438:5438"
+
+  statetrace:
+    image: statetraceofficial/statetrace-beta
+    environment:
+      STATETRACE_DATABASE_URL: postgres://postgres:postgres@statetrace_db:5438/postgres
+      STATETRACE_SECRET_KEY_BASE: "O7fjqRWWsxS3d51mVHH1UJkANxLwTr06MZANMF6FnBWfqpWffB6B2cFaGWRxy0Kq"
+      STATETRACE_LICENSE: "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKb2tlbiIsImNvcmVfbGljZW5zZV9pZCI6OTAsImV4cCI6MTcxMTA5NTk2NywiaWF0IjoxNjc5NTU5OTY3LCJpc3MiOiJKb2tlbiIsImp0aSI6IjJ0N2Z0cDJ1Nm0yczZwMGVhZzA2NjgzaSIsIm5iZiI6MTY3OTU1OTk2N30.D92s8f0amrkyz_9SGwgvq4NEFnnxSwH8Gh6WQGZShzvso0qzUpk9sKWm1iHVYQbSyM6GbFWOl6wusyWSKXwZrumlg4eq35kad0710WIjjUgaYXsCgnRihyJ_-tvpvrjwk9hscxiYvhCxzCgPOoT0p1qBisQDCwkvxPRFVuc5src"
+      STATETRACE_INBOUND_CONFIG: |
+        inbounds:
+          - name: Postgres DB
+            database_type: postgres
+            username: postgres
+            password: mysecretpassword
+            database: postgres
+            host: db
+            publication: "statetrace"
+            slot: "statetrace"
+            port: 5437
+            log_new_attributes: true
+            tables:
+              - schema: public
+                name: model_plan
+            outbounds:
+                - name: Webhook
+                  handler: webhook
+                  target_url: "http://es:9200/logs-statetrace_dump/_bulk"
+                  middleware: |
+                    fn
+                      %{relation_name: tn} when tn in ["model_plan"] -> :ok
+                      _ -> :skip
+                    end
+                  request_builder: |
+                      fn rows ->
+                        payload =
+                          rows
+                          |> Enum.flat_map(fn row ->
+                              [
+                                  Jason.encode_to_iodata!(%{"create" => %{}}),
+                                  "\n",
+                                  Jason.encode_to_iodata!(Map.merge(%{"@timestamp" => row.row_timestamp}, row)),
+                                  "\n"
+                              ]
+                          end)
+                        %WebhookRequest{method: "POST", headers: [{"content-type", "application/json"}], payload: payload}
+                      end
+    depends_on:
+      - db
+      - statetrace_db
+      - elasticsearch
 
 volumes:
   faktory:
