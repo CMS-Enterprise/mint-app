@@ -1,16 +1,17 @@
 path.data: /usr/share/elasticsearch/data
 http.port: 9200
 
-#----------------------- BEGIN SECURITY AUTO CONFIGURATION -----------------------
-#
-# The following settings, TLS certificates, and keys have been automatically
-# generated to configure Elasticsearch security features on 22-03-2023 22:37:21
-#
-# --------------------------------------------------------------------------------
+# Define a Watcher webhook action
+watcher:
+  webhook:
+    http_method: POST
+    url: "http://localhost:9200/logs-statetrace_dump/_bulk"
+    body: "{{#toJson}}ctx.payload{{/toJson}}"
+    headers:
+      Content-Type: "application/json"
 
 # Enable security features
 xpack.security.enabled: true
-
 xpack.security.enrollment.enabled: true
 
 # Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
@@ -24,8 +25,7 @@ xpack.security.transport.ssl:
   verification_mode: certificate
   keystore.path: certs/transport.p12
   truststore.path: certs/transport.p12
+
 # Create a new cluster with the current node only
 # Additional nodes can still join the cluster later
 cluster.initial_master_nodes: ["elasticsearch"]
-
-#----------------------- END SECURITY AUTO CONFIGURATION -------------------------

@@ -146,8 +146,8 @@ services:
       - elastic
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
-    container_name: es
+    image: elasticsearch:7.16.1
+    container_name: Elasticsearch
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
@@ -164,7 +164,7 @@ services:
 
   logstash:
     image: logstash:7.16.1
-    container_name: log
+    container_name: Logstash
     environment:
       discovery.seed_hosts: logstash
       LS_JAVA_OPTS: "-Xms512m -Xmx512m"
@@ -189,7 +189,7 @@ services:
 
   kibana:
     image: kibana:7.16.1
-    container_name: kib
+    container_name: Kibana
     ports:
       - "5601:5601"
     depends_on:
@@ -213,6 +213,7 @@ services:
 
   statetrace:
     image: statetraceofficial/statetrace-beta
+    container_name: StateTrace
     environment:
       STATETRACE_DATABASE_URL: postgres://postgres:postgres@statetrace_db:5438/postgres
       STATETRACE_SECRET_KEY_BASE: "O7fjqRWWsxS3d51mVHH1UJkANxLwTr06MZANMF6FnBWfqpWffB6B2cFaGWRxy0Kq"
@@ -235,7 +236,7 @@ services:
             outbounds:
                 - name: Webhook
                   handler: webhook
-                  target_url: "http://es:9200/logs-statetrace_dump/_bulk"
+                  target_url: "http://Elasticsearch:9200/logs-statetrace_dump/_bulk"
                   middleware: |
                     fn
                       %{relation_name: tn} when tn in ["model_plan"] -> :ok
@@ -262,8 +263,6 @@ services:
 
 volumes:
   faktory:
-  esconfig:
-  esdata:
 
 networks:
   elastic:
