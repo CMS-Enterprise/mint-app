@@ -294,8 +294,7 @@ const Subtasks = ({
   if (loading || !solution) {
     return <PageLoading />;
   }
-
-  if (error || !loading) {
+  if (error) {
     return <NotFound />;
   }
 
