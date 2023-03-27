@@ -15,6 +15,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -84,7 +85,7 @@ const Subtasks = ({
   const [inputName, setInputName] = useState('');
   const [inputId, setInputId] = useState('');
 
-  const { data: solutionData, error, refetch } = useQuery<
+  const { data: solutionData, loading, error, refetch } = useQuery<
     GetOperationalSolutionType,
     GetOperationalSolutionVariables
   >(GetOperationalSolution, {
@@ -290,7 +291,11 @@ const Subtasks = ({
     { text: managingSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
 
-  if (error || !solution) {
+  if (loading || !solution) {
+    return <PageLoading />;
+  }
+
+  if (error || !loading) {
     return <NotFound />;
   }
 
