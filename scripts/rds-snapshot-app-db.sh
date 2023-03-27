@@ -1,5 +1,5 @@
 #!/bin/bash
-# Creates a snapshot of the app database for the given environment.
+# Creates a snapshot of the app database for the given environment
 
 # Fail on any error
 set -Eexuo pipefail
