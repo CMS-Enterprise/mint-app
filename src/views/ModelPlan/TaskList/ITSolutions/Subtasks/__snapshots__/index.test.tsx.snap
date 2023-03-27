@@ -240,114 +240,119 @@ exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
           class="margin-top-6"
           data-testid="add-subtask-form"
         >
-          <div
-            class=""
-            data-testid="add-subtask--0"
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
           >
             <div
-              class="usa-form-group margin-top-4"
-              data-scroll="name"
+              class=""
+              data-testid="add-subtask--0"
             >
-              <label
-                class="usa-label"
-                data-testid="label"
-                for="subtasks[0].name"
+              <div
+                class="usa-form-group margin-top-4"
+                data-scroll="name"
               >
-                Subtask name
-                <span
-                  class="text-red margin-x-05"
+                <label
+                  class="usa-label"
+                  data-testid="label"
+                  for="subtasks[0].name"
                 >
-                  *
-                </span>
-              </label>
-              <input
-                class="usa-input"
-                data-testid="textInput"
-                id="subtask-name--0"
-                maxlength="50"
-                name="subtasks[0].name"
-                value=""
-              />
+                  Subtask name
+                  <span
+                    class="text-red margin-x-05"
+                  >
+                    *
+                  </span>
+                </label>
+                <input
+                  class="usa-input"
+                  data-testid="textInput"
+                  id="subtask-name--0"
+                  maxlength="50"
+                  name="subtasks[0].name"
+                  value=""
+                />
+              </div>
+              <div
+                class="usa-form-group margin-top-4"
+              >
+                <label
+                  class="usa-label"
+                  data-testid="label"
+                  for="subtasks[0].status"
+                >
+                  What is the status of this subtask?
+                </label>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    checked=""
+                    class="usa-radio__input"
+                    id="subtask-status--0--TODO"
+                    name="subtasks[0].status"
+                    type="radio"
+                    value="TODO"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--0--TODO"
+                  >
+                    To do
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="subtask-status--0--IN_PROGRESS"
+                    name="subtasks[0].status"
+                    type="radio"
+                    value="IN_PROGRESS"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--0--IN_PROGRESS"
+                  >
+                    In progress
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="subtask-status--0--DONE"
+                    name="subtasks[0].status"
+                    type="radio"
+                    value="DONE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--0--DONE"
+                  >
+                    Done
+                  </label>
+                </div>
+              </div>
             </div>
             <div
-              class="usa-form-group margin-top-4"
+              class="margin-top-3"
             >
-              <label
-                class="usa-label"
-                data-testid="label"
-                for="subtasks[0].status"
+              <button
+                class="usa-button usa-button--outline"
+                data-testid="button"
+                id="add-another-subtask"
+                type="button"
               >
-                What is the status of this subtask?
-              </label>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  checked=""
-                  class="usa-radio__input"
-                  id="subtask-status--0--TODO"
-                  name="subtasks[0].status"
-                  type="radio"
-                  value="TODO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--0--TODO"
-                >
-                  To do
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="subtask-status--0--IN_PROGRESS"
-                  name="subtasks[0].status"
-                  type="radio"
-                  value="IN_PROGRESS"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--0--IN_PROGRESS"
-                >
-                  In progress
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="subtask-status--0--DONE"
-                  name="subtasks[0].status"
-                  type="radio"
-                  value="DONE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--0--DONE"
-                >
-                  Done
-                </label>
-              </div>
+                Add another subtask
+              </button>
             </div>
-          </div>
-          <div
-            class="margin-top-3"
-          >
-            <button
-              class="usa-button usa-button--outline"
-              data-testid="button"
-              id="add-another-subtask"
-              type="button"
-            >
-              Add another subtask
-            </button>
-          </div>
+          </fieldset>
           <div
             class="margin-top-6 margin-bottom-3"
           >
@@ -680,202 +685,207 @@ exports[`IT Solutions Manage Subtasks matches snapshot 1`] = `
           class="margin-top-6"
           data-testid="manage-subtask-form"
         >
-          <div
-            class="border-bottom border-base-light"
-            data-testid="manage-subtasks--0"
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
           >
             <div
-              class="margin-top-4"
+              class="border-bottom border-base-light"
+              data-testid="manage-subtasks--0"
             >
-              <p
-                class="usa-label margin-0"
+              <div
+                class="margin-top-4"
               >
-                Subtask name
-              </p>
-              <p
-                class="margin-0"
+                <p
+                  class="usa-label margin-0"
+                >
+                  Subtask name
+                </p>
+                <p
+                  class="margin-0"
+                >
+                  First Subtask
+                </p>
+              </div>
+              <div
+                class="usa-form-group margin-top-4"
               >
-                First Subtask
-              </p>
+                <label
+                  class="usa-label"
+                  data-testid="label"
+                  for="subtasks[0].status"
+                >
+                  What is the status of this subtask?
+                </label>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    checked=""
+                    class="usa-radio__input"
+                    id="subtask-status--0--TODO"
+                    name="subtasks[0].status"
+                    type="radio"
+                    value="TODO"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--0--TODO"
+                  >
+                    To do
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="subtask-status--0--IN_PROGRESS"
+                    name="subtasks[0].status"
+                    type="radio"
+                    value="IN_PROGRESS"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--0--IN_PROGRESS"
+                  >
+                    In progress
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="subtask-status--0--DONE"
+                    name="subtasks[0].status"
+                    type="radio"
+                    value="DONE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--0--DONE"
+                  >
+                    Done
+                  </label>
+                </div>
+                <button
+                  class="usa-button usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                  data-testid="button"
+                  type="button"
+                >
+                  Remove this subtask
+                </button>
+              </div>
             </div>
             <div
-              class="usa-form-group margin-top-4"
+              class="border-bottom border-base-light"
+              data-testid="manage-subtasks--1"
             >
-              <label
-                class="usa-label"
-                data-testid="label"
-                for="subtasks[0].status"
-              >
-                What is the status of this subtask?
-              </label>
               <div
-                class="usa-radio"
-                data-testid="radio"
+                class="margin-top-4"
               >
-                <input
-                  checked=""
-                  class="usa-radio__input"
-                  id="subtask-status--0--TODO"
-                  name="subtasks[0].status"
-                  type="radio"
-                  value="TODO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--0--TODO"
+                <p
+                  class="usa-label margin-0"
                 >
-                  To do
-                </label>
+                  Subtask name
+                </p>
+                <p
+                  class="margin-0"
+                >
+                  Second Subtask
+                </p>
               </div>
               <div
-                class="usa-radio"
-                data-testid="radio"
+                class="usa-form-group margin-top-4"
               >
-                <input
-                  class="usa-radio__input"
-                  id="subtask-status--0--IN_PROGRESS"
-                  name="subtasks[0].status"
-                  type="radio"
-                  value="IN_PROGRESS"
-                />
                 <label
-                  class="usa-radio__label"
-                  for="subtask-status--0--IN_PROGRESS"
+                  class="usa-label"
+                  data-testid="label"
+                  for="subtasks[1].status"
                 >
-                  In progress
+                  What is the status of this subtask?
                 </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="subtask-status--0--DONE"
-                  name="subtasks[0].status"
-                  type="radio"
-                  value="DONE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--0--DONE"
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
                 >
-                  Done
-                </label>
+                  <input
+                    class="usa-radio__input"
+                    id="subtask-status--1--TODO"
+                    name="subtasks[1].status"
+                    type="radio"
+                    value="TODO"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--1--TODO"
+                  >
+                    To do
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="subtask-status--1--IN_PROGRESS"
+                    name="subtasks[1].status"
+                    type="radio"
+                    value="IN_PROGRESS"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--1--IN_PROGRESS"
+                  >
+                    In progress
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    checked=""
+                    class="usa-radio__input"
+                    id="subtask-status--1--DONE"
+                    name="subtasks[1].status"
+                    type="radio"
+                    value="DONE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="subtask-status--1--DONE"
+                  >
+                    Done
+                  </label>
+                </div>
+                <button
+                  class="usa-button usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                  data-testid="button"
+                  type="button"
+                >
+                  Remove this subtask
+                </button>
               </div>
+            </div>
+            <div
+              class="margin-top-3"
+            >
               <button
-                class="usa-button usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                class="usa-button usa-button--outline"
                 data-testid="button"
+                id="add-another-subtask"
                 type="button"
               >
-                Remove this subtask
+                Add another subtask
               </button>
             </div>
-          </div>
-          <div
-            class="border-bottom border-base-light"
-            data-testid="manage-subtasks--1"
-          >
-            <div
-              class="margin-top-4"
-            >
-              <p
-                class="usa-label margin-0"
-              >
-                Subtask name
-              </p>
-              <p
-                class="margin-0"
-              >
-                Second Subtask
-              </p>
-            </div>
-            <div
-              class="usa-form-group margin-top-4"
-            >
-              <label
-                class="usa-label"
-                data-testid="label"
-                for="subtasks[1].status"
-              >
-                What is the status of this subtask?
-              </label>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="subtask-status--1--TODO"
-                  name="subtasks[1].status"
-                  type="radio"
-                  value="TODO"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--1--TODO"
-                >
-                  To do
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="subtask-status--1--IN_PROGRESS"
-                  name="subtasks[1].status"
-                  type="radio"
-                  value="IN_PROGRESS"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--1--IN_PROGRESS"
-                >
-                  In progress
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  checked=""
-                  class="usa-radio__input"
-                  id="subtask-status--1--DONE"
-                  name="subtasks[1].status"
-                  type="radio"
-                  value="DONE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="subtask-status--1--DONE"
-                >
-                  Done
-                </label>
-              </div>
-              <button
-                class="usa-button usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                data-testid="button"
-                type="button"
-              >
-                Remove this subtask
-              </button>
-            </div>
-          </div>
-          <div
-            class="margin-top-3"
-          >
-            <button
-              class="usa-button usa-button--outline"
-              data-testid="button"
-              id="add-another-subtask"
-              type="button"
-            >
-              Add another subtask
-            </button>
-          </div>
+          </fieldset>
           <div
             class="margin-top-6 margin-bottom-3"
           >

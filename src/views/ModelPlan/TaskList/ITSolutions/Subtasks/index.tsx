@@ -4,6 +4,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
+  Fieldset,
   Grid,
   IconArrowBack,
   Label,
@@ -15,7 +16,6 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -291,10 +291,7 @@ const Subtasks = ({
     { text: managingSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
 
-  if (loading || !solution) {
-    return <PageLoading />;
-  }
-  if (error) {
+  if (error || !solution) {
     return <NotFound />;
   }
 
@@ -323,12 +320,14 @@ const Subtasks = ({
           </p>
 
           <Grid tablet={{ col: 8 }}>
-            <NeedQuestionAndAnswer
-              operationalNeedID={operationalNeedID}
-              modelID={modelID}
-              solution={solution}
-              renderSolutionCardLinks={false}
-            />
+            {solution && (
+              <NeedQuestionAndAnswer
+                operationalNeedID={operationalNeedID}
+                modelID={modelID}
+                solution={solution}
+                renderSolutionCardLinks={false}
+              />
+            )}
 
             <Formik
               initialValues={initialValues}
@@ -379,135 +378,139 @@ const Subtasks = ({
                         handleSubmit(e);
                       }}
                     >
-                      <FieldArray name="subtasks">
-                        {({ push, remove }) => {
-                          const { subtasks } = formValues;
+                      <Fieldset disabled={loading}>
+                        <FieldArray name="subtasks">
+                          {({ push, remove }) => {
+                            const { subtasks } = formValues;
 
-                          return (
-                            <>
-                              {subtasks.map((input, index) => (
-                                <div
-                                  // eslint-disable-next-line react/no-array-index-key
-                                  key={index}
-                                  className={
-                                    subtasks.length > 1
-                                      ? 'border-bottom border-base-light'
-                                      : ''
-                                  }
-                                  data-testid={
-                                    managingSubtasks
-                                      ? `manage-subtasks--${index}`
-                                      : `add-subtask--${index}`
-                                  }
-                                >
-                                  {managingSubtasks ? (
-                                    <div className="margin-top-4">
-                                      <p className="usa-label margin-0">
-                                        {t('subtaskName')}
-                                      </p>
-                                      <p className="margin-0">{input.name}</p>
-                                    </div>
-                                  ) : (
-                                    <FieldGroup
-                                      scrollElement="name"
-                                      error={!!flatErrors.name}
-                                      className="margin-top-4"
-                                    >
-                                      <Label
-                                        htmlFor={`subtasks[${index}].name`}
-                                      >
-                                        {t('subtaskName')}
-                                        <RequiredAsterisk />
-                                      </Label>
-                                      <FieldErrorMsg>
-                                        {flatErrors.name}
-                                      </FieldErrorMsg>
-                                      <Field
-                                        as={TextInput}
+                            return (
+                              <>
+                                {subtasks.map((input, index) => (
+                                  <div
+                                    // eslint-disable-next-line react/no-array-index-key
+                                    key={index}
+                                    className={
+                                      subtasks.length > 1
+                                        ? 'border-bottom border-base-light'
+                                        : ''
+                                    }
+                                    data-testid={
+                                      managingSubtasks
+                                        ? `manage-subtasks--${index}`
+                                        : `add-subtask--${index}`
+                                    }
+                                  >
+                                    {managingSubtasks ? (
+                                      <div className="margin-top-4">
+                                        <p className="usa-label margin-0">
+                                          {t('subtaskName')}
+                                        </p>
+                                        <p className="margin-0">{input.name}</p>
+                                      </div>
+                                    ) : (
+                                      <FieldGroup
+                                        scrollElement="name"
                                         error={!!flatErrors.name}
-                                        id={`subtask-name--${index}`}
-                                        maxLength={50}
-                                        name={`subtasks[${index}].name`}
-                                      />
+                                        className="margin-top-4"
+                                      >
+                                        <Label
+                                          htmlFor={`subtasks[${index}].name`}
+                                        >
+                                          {t('subtaskName')}
+                                          <RequiredAsterisk />
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.name}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextInput}
+                                          error={!!flatErrors.name}
+                                          id={`subtask-name--${index}`}
+                                          maxLength={50}
+                                          name={`subtasks[${index}].name`}
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                    <FieldGroup className="margin-top-4">
+                                      <Label
+                                        htmlFor={`subtasks[${index}].status`}
+                                      >
+                                        {t('statusQuestion')}
+                                      </Label>
+                                      {Object.keys(
+                                        OperationalSolutionSubtaskStatus
+                                      )
+                                        .reverse()
+                                        .map(status => {
+                                          return (
+                                            <Field
+                                              key={`subtask-status--${status}`}
+                                              as={Radio}
+                                              id={`subtask-status--${index}--${status}`}
+                                              name={`subtasks[${index}].status`}
+                                              label={translateSubtasks(status)}
+                                              value={status}
+                                              checked={
+                                                subtasks &&
+                                                subtasks[index].status ===
+                                                  status
+                                              }
+                                            />
+                                          );
+                                        })}
+                                      {!managingSubtasks &&
+                                        subtasks.length > 1 && (
+                                          <Button
+                                            type="button"
+                                            onClick={() => remove(index)}
+                                            className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                          >
+                                            {t('removeSubtask')}
+                                          </Button>
+                                        )}
+                                      {managingSubtasks && isUpdateType(input) && (
+                                        <Button
+                                          type="button"
+                                          onClick={() => {
+                                            setModalOpen(true);
+                                            setInputName(input.name);
+                                            setInputId(input.id);
+                                          }}
+                                          className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                        >
+                                          {t('removeSubtask')}
+                                        </Button>
+                                      )}
                                     </FieldGroup>
-                                  )}
-                                  <FieldGroup className="margin-top-4">
-                                    <Label
-                                      htmlFor={`subtasks[${index}].status`}
-                                    >
-                                      {t('statusQuestion')}
-                                    </Label>
-                                    {Object.keys(
-                                      OperationalSolutionSubtaskStatus
-                                    )
-                                      .reverse()
-                                      .map(status => {
-                                        return (
-                                          <Field
-                                            key={`subtask-status--${status}`}
-                                            as={Radio}
-                                            id={`subtask-status--${index}--${status}`}
-                                            name={`subtasks[${index}].status`}
-                                            label={translateSubtasks(status)}
-                                            value={status}
-                                            checked={
-                                              subtasks &&
-                                              subtasks[index].status === status
-                                            }
-                                          />
-                                        );
-                                      })}
-                                    {!managingSubtasks && subtasks.length > 1 && (
-                                      <Button
-                                        type="button"
-                                        onClick={() => remove(index)}
-                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                      >
-                                        {t('removeSubtask')}
-                                      </Button>
-                                    )}
-                                    {managingSubtasks && isUpdateType(input) && (
-                                      <Button
-                                        type="button"
-                                        onClick={() => {
-                                          setModalOpen(true);
-                                          setInputName(input.name);
-                                          setInputId(input.id);
-                                        }}
-                                        className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                      >
-                                        {t('removeSubtask')}
-                                      </Button>
-                                    )}
-                                  </FieldGroup>
+                                  </div>
+                                ))}
+                                <div className="margin-top-3">
+                                  <Button
+                                    type="button"
+                                    id="add-another-subtask"
+                                    onClick={() =>
+                                      managingSubtasks
+                                        ? history.push(
+                                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
+                                          )
+                                        : push({
+                                            __typename:
+                                              'OperationalSolutionSubtask',
+                                            name: '',
+                                            status:
+                                              OperationalSolutionSubtaskStatus.TODO
+                                          })
+                                    }
+                                    outline
+                                  >
+                                    {t('addAnotherSubtask')}
+                                  </Button>
                                 </div>
-                              ))}
-                              <div className="margin-top-3">
-                                <Button
-                                  type="button"
-                                  id="add-another-subtask"
-                                  onClick={() =>
-                                    managingSubtasks
-                                      ? history.push(
-                                          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
-                                        )
-                                      : push({
-                                          __typename:
-                                            'OperationalSolutionSubtask',
-                                          name: '',
-                                          status:
-                                            OperationalSolutionSubtaskStatus.TODO
-                                        })
-                                  }
-                                  outline
-                                >
-                                  {t('addAnotherSubtask')}
-                                </Button>
-                              </div>
-                            </>
-                          );
-                        }}
-                      </FieldArray>
+                              </>
+                            );
+                          }}
+                        </FieldArray>
+                      </Fieldset>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
