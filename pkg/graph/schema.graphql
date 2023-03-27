@@ -1366,6 +1366,7 @@ type Query {
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   crTdl(id: UUID!): PlanCrTdl!
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
   operationalSolution(id: UUID!): OperationalSolution!
