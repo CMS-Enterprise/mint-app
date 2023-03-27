@@ -29,7 +29,7 @@ RUN go install github.com/go-delve/delve/cmd/dlv@latest
 RUN go install golang.org/x/tools/gopls@latest
 RUN go install github.com/cosmtrek/air@4612c12f1ed7c899314b8430bc1d841ca2cb061a
 
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 CMD ["./bin/mint"]
 
@@ -39,7 +39,7 @@ WORKDIR /mint/
 
 COPY --from=build /mint/bin/mint .
 COPY --from=build /mint/pkg/email/templates ./templates
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 ARG ARG_APPLICATION_VERSION
 ARG ARG_APPLICATION_DATETIME
