@@ -147,7 +147,11 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.get('#submit-solutions').click();
 
-    cy.get('[data-testid="it-solutions"]').click({ force: true });
+    cy.get('[data-testid="it-solutions"]')
+      .click({ force: true })
+      .click({ force: true });
+
+    cy.wait(500);
 
     // Add new custom need
     cy.get('[data-testid="add-new-operational-need"]').click();
