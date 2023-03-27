@@ -291,7 +291,7 @@ const Subtasks = ({
     { text: managingSubtasks ? t('manageSubtasks') : t('addSubtask') }
   ];
 
-  if (error || !solution) {
+  if (error || (!solution && !loading)) {
     return <NotFound />;
   }
 
