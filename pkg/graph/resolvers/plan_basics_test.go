@@ -79,7 +79,7 @@ func verifyBasicsLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the milestones as part of the resolver
 
-	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{

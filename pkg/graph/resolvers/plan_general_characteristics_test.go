@@ -1,14 +1,48 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+func (suite *ResolverSuite) TestPlanGeneralCharacteristicsDataLoader() {
+	plan1 := suite.createModelPlan("Plan For GC 1")
+	plan2 := suite.createModelPlan("Plan For GC 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyGeneralCharacteristicsLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyGeneralCharacteristicsLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyGeneralCharacteristicsLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != gc.ModelPlanID {
+		return fmt.Errorf("general characteristics returned model plan ID %s, expected %s", gc.ModelPlanID, modelPlanID)
+	}
+	return nil
+}
+
 func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For General Characteristics") // should create the general characteristics as part of the resolver
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, gc.ModelPlanID)
@@ -72,7 +106,7 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	plan := suite.createModelPlan("Plan For General Characteristics") // should create the general characteristics as part of the resolver
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
