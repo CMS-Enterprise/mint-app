@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/elastic/go-elasticsearch/v8"
+
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -199,6 +201,11 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
+	esClient, err := elasticsearch.NewDefaultClient() // TODO: .envrc settings for ES config
+	if err != nil {
+		s.logger.Fatal("Failed to create an elasticsearch client", zap.Error(err))
+	}
+
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
@@ -211,7 +218,9 @@ func (s *Server) routes(
 		addressBook,
 		ldClient,
 		s.pubsub,
+		esClient,
 	)
+
 	gqlDirectives := generated.DirectiveRoot{
 		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 			hasRole, err := services.HasRole(ctx, role)
