@@ -22,14 +22,35 @@ var operationalSolutionSubtaskCreateSQL string
 //go:embed SQL/operational_solution_subtask/get_by_id.sql
 var operationalSolutionSubtaskGetByIDSQL string
 
-//go:embed SQL/operational_solution_subtask/get_by_solution_id.sql
-var operationalSolutionSubtasksGetBySolutionIDSQL string
-
 //go:embed SQL/operational_solution_subtask/update.sql
 var operationalSolutionSubtaskUpdateByIDSQL string
 
 //go:embed SQL/operational_solution_subtask/delete_by_id.sql
 var operationalSolutionSubtaskDeleteByIDSQL string
+
+//go:embed SQL/operational_solution_subtask/get_by_solution_id_LOADER.sql
+var operationalSolutionSubtaskGetBySolutionIDLoaderSQL string
+
+// OperationalSolutionSubtaskGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalSolutionSubtask, error) {
+	OpSolSSlice := []*models.OperationalSolutionSubtask{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&OpSolSSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return OpSolSSlice, nil
+}
 
 // OperationalSolutionSubtasksCreate creates a models.OperationalSolutionSubtask
 func (s *Store) OperationalSolutionSubtasksCreate(
@@ -84,29 +105,6 @@ func (s *Store) OperationalSolutionSubtaskGetByID(_ *zap.Logger, subtaskID uuid.
 	}
 
 	return &subtask, err
-}
-
-// OperationalSolutionSubtasksGetBySolutionID gets a collection of
-// models.OperationalSolutionSubtask by OperationalSolution ID
-func (s *Store) OperationalSolutionSubtasksGetBySolutionID(
-	logger *zap.Logger,
-	solutionID uuid.UUID,
-) ([]*models.OperationalSolutionSubtask, error) {
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtasksGetBySolutionIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	var subtasks []*models.OperationalSolutionSubtask
-	err = statement.Select(
-		&subtasks,
-		utilitySQL.CreateSolutionIDQueryMap(solutionID),
-	)
-	if err != nil {
-		return nil, errors.New("could not fetch operational solution subtasks by solution id")
-	}
-
-	return subtasks, err
 }
 
 // OperationalSolutionSubtaskDelete deletes an operational solution subtask by id

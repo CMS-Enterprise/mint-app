@@ -22,6 +22,7 @@ COPY config/tls/Entrust_Managed_Services_Root_CA_G2.cer /usr/local/share/ca-cert
 COPY config/tls/Entrust_Managed_Services_Root_CA.cer /usr/local/share/ca-certificates/Entrust_Managed_Services_Root_CA.crt
 COPY config/tls/Federal_Common_Policy_CA_G2.crt /usr/local/share/ca-certificates/Federal_Common_Policy_CA_G2.crt
 RUN update-ca-certificates
+RUN apt install tzdata
 
 FROM modules AS dev
 
@@ -40,6 +41,7 @@ WORKDIR /mint/
 COPY --from=build /mint/bin/mint .
 COPY --from=build /mint/pkg/email/templates ./templates
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=build /usr/share/zoneinfo /usr/share/zoneinfo
 
 ARG ARG_APPLICATION_VERSION
 ARG ARG_APPLICATION_DATETIME

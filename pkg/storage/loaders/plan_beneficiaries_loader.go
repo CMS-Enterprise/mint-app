@@ -12,23 +12,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+// GetPlanBeneficiariesByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Beneficiaries in one query
+func (loaders *DataLoaders) GetPlanBeneficiariesByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
 	arrayCK, err := ConvertToKeyArgsArray(keys)
 	if err != nil {
-		logger.Error("issue converting keys for data loader in Plan Basics", zap.Error(*err))
+		logger.Error("issue converting keys for data loader in Plan Beneficiaries", zap.Error(*err))
 	}
 	marshaledParams, err := arrayCK.ToJSONArray()
 	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Plan Basics", zap.Error(*err))
+		logger.Error("issue converting keys to JSON for data loader in Plan Beneficiaries", zap.Error(*err))
 	}
 
-	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, marshaledParams)
-	basicsByID := lo.Associate(basics, func(b *models.PlanBasics) (string, *models.PlanBasics) {
-		return b.ModelPlanID.String(), b
+	benes, _ := dr.Store.PlanBeneficiariesGetByModelPlanIDLOADER(logger, marshaledParams)
+	benesByID := lo.Associate(benes, func(gc *models.PlanBeneficiaries) (string, *models.PlanBeneficiaries) {
+		return gc.ModelPlanID.String(), gc
 	})
 
 	// RETURN IN THE SAME ORDER REQUESTED
@@ -37,11 +37,11 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := basicsByID[resKey]
+			bene, ok := benesByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloader.Result{Data: bene, Error: nil}
 			} else {
-				err := fmt.Errorf("plan basic not found for model plan %s", resKey)
+				err := fmt.Errorf("plan Beneficiaries not found for model plan %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}
 			}
 		} else {

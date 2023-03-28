@@ -1,11 +1,14 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -56,21 +59,21 @@ func OperationalSolutionSubtaskGetByID(
 	return subtask, err
 }
 
-// OperationalSolutionSubtasksGetBySolutionID implements the resolver logic to
-// get operational solution subtasks by solution ID
-func OperationalSolutionSubtasksGetBySolutionID(
-	logger *zap.Logger,
-	store *storage.Store,
-	solutionID uuid.UUID,
-) ([]*models.OperationalSolutionSubtask, error) {
+// OperationalSolutionSubtaskGetBySolutionIDLOADER implements resolver logic to get Operational Solution Subtask by a model plan ID using a data loader
+func OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx context.Context, solutionID uuid.UUID) ([]*models.OperationalSolutionSubtask, error) {
+	allLoaders := loaders.Loaders(ctx)
+	OpSolSLoader := allLoaders.OperationSolutionSubtaskLoader
+	key := loaders.NewKeyArgs()
+	key.Args["solution_id"] = solutionID
 
-	subtasks, err := store.OperationalSolutionSubtasksGetBySolutionID(logger, solutionID)
+	thunk := OpSolSLoader.Loader.Load(ctx, key)
+	result, err := thunk()
 
 	if err != nil {
 		return nil, err
 	}
 
-	return subtasks, err
+	return result.([]*models.OperationalSolutionSubtask), nil
 }
 
 // OperationalSolutionSubtasksUpdateByID implements the resolver logic to update

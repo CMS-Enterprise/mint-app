@@ -29,16 +29,6 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 	return retBasics, err
 }
 
-// PlanBasicsGetByModelPlanID implements resolver logic to get plan basics by a model plan ID
-func PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
-	plan, err := store.PlanBasicsGetByModelPlanID(logger, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	return plan, nil
-}
-
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
 func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := loaders.Loaders(ctx)
