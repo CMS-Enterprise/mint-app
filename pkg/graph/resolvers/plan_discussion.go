@@ -7,6 +7,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/google/uuid"
 
@@ -190,17 +191,36 @@ func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentic
 	return result, err
 }
 
-// DiscussionReplyCollectionByDiscusionID returns all Discussion reply objects by a Discussion ID
-func DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uuid.UUID, store *storage.Store) ([]*models.DiscussionReply, error) {
+// DiscussionReplyCollectionByDiscusionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader
+func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
+	allLoaders := loaders.Loaders(ctx)
+	discRLoader := allLoaders.DiscussionReplyLoader
+	key := loaders.NewKeyArgs()
+	key.Args["discussion_id"] = discussionID
 
-	result, err := store.DiscussionReplyCollectionByDiscusionID(logger, discussionID)
-	return result, err
+	thunk := discRLoader.Loader.Load(ctx, key)
+	result, err := thunk()
 
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.DiscussionReply), nil
 }
 
-// PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan, as noted by it's ID
-func PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanDiscussion, error) {
+// PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
+func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
+	allLoaders := loaders.Loaders(ctx)
+	discLoader := allLoaders.DiscussionLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
 
-	result, err := store.PlanDiscussionCollectionByModelPlanID(logger, modelPlanID)
-	return result, err
+	thunk := discLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.PlanDiscussion), nil
 }

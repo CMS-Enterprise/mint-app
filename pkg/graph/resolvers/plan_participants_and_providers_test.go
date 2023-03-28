@@ -1,14 +1,76 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 )
+
+func (suite *ResolverSuite) TestPlanOpsEvalAndLearningDataLoader() {
+	plan1 := suite.createModelPlan("Plan For OEL 1")
+	plan2 := suite.createModelPlan("Plan For OEL 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyPlanOpsEvalAndLearningLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyPlanOpsEvalAndLearningLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyPlanOpsEvalAndLearningLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	oel, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != oel.ModelPlanID {
+		return fmt.Errorf("plan Operations Evaluation And Learning returned model plan ID %s, expected %s", oel.ModelPlanID, modelPlanID)
+	}
+	return nil
+}
+
+func (suite *ResolverSuite) TestPlanParticipantsAndProvidersDataLoader() {
+	plan1 := suite.createModelPlan("Plan For PandP 1")
+	plan2 := suite.createModelPlan("Plan For PandP 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyPlanParticipantsAndProvidersLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyPlanParticipantsAndProvidersLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyPlanParticipantsAndProvidersLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	pAndP, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != pAndP.ModelPlanID {
+		return fmt.Errorf("plan Participants and Providers returned model plan ID %s, expected %s", pAndP.ModelPlanID, modelPlanID)
+	}
+	return nil
+}
 
 // TestPlanParticipantsAndProvidersUpdate tests PlanParticipantsAndProvidersUpdate
 func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	plan := suite.createModelPlan("Plan for Participants and Providers")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -73,7 +135,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 
 	plan := suite.createModelPlan("Plan for Participants and Providers")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
