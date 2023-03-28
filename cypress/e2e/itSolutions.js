@@ -251,6 +251,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.contains('button', 'Add subtasks').click();
     cy.get('[data-testid="add-subtask--0"]').within(() => {
       cy.get('#subtask-name--0')
+        .should('not.be.disabled')
         .type('First Subtasks')
         .should('have.value', 'First Subtasks');
       cy.contains('label', 'In progress').click();
@@ -258,6 +259,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.contains('button', 'Add another subtask').click();
     cy.get('[data-testid="add-subtask--1"]').within(() => {
       cy.get('#subtask-name--1')
+        .should('not.be.disabled')
         .type('Second Subtasks')
         .should('have.value', 'Second Subtasks');
       cy.contains('label', 'Done').click();
@@ -275,9 +277,11 @@ describe('The Model Plan IT solutions tracker', () => {
 
     // Manage Subtasks
     cy.contains('button', 'Manage subtasks').click();
-    cy.get('[data-testid="manage-subtasks--0"]').within(() => {
-      cy.contains('button', 'Remove this subtask').click();
-    });
+    cy.contains('First Subtasks')
+      .parents('.border-bottom.border-base-light')
+      .within(() => {
+        cy.contains('button', 'Remove this subtask').click();
+      });
     cy.contains('button', 'Remove subtask').click();
     cy.get('.usa-alert__text').contains(
       'Success! First Subtasks has been removed.'
