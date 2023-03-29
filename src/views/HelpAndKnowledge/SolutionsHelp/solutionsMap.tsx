@@ -46,7 +46,7 @@ export const operationalSolutionCategoryMap: CategoryType = {
   quality: OperationalSolutionCategories.QUALITY
 };
 
-type ContactRoles =
+export type ContactRoles =
   | 'Product Owner'
   | 'Senior Lead'
   | 'Chief Quality Officer and Lead'
