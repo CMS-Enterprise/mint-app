@@ -34,7 +34,7 @@ const OperationalSolutionsHelp = ({
         <CardGroup className={className}>
           {Object.keys(operationalSolutionCategoryMap).map(key => {
             return (
-              <Grid tablet={{ col: 3 }} key={key}>
+              <Grid tablet={{ col: 6 }} desktop={{ col: 3 }} key={key}>
                 <CategoryCard
                   key={key}
                   category={t(`categories.${key}.header`)}
