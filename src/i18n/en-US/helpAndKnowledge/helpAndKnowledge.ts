@@ -428,7 +428,16 @@ Performing model implementation, design, monitoring, and evaluation activities t
   cmsQualtrics: {
     about: {
       description:
-        'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.'
+        'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.',
+      components: [
+        {
+          header: 'Capabilities',
+          items: [
+            'Customizable survey or application creation',
+            'Survey or application distribution'
+          ]
+        }
+      ]
     },
     timeline: {
       description:
