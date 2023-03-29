@@ -43,7 +43,9 @@ const PointOfContactCard = ({
         </Link>
       </CardBody>
       {pointOfContact.role && (
-        <CardFooter className="padding-0">{pointOfContact.role}</CardFooter>
+        <CardFooter className="padding-0 font-body-xs">
+          {pointOfContact.role}
+        </CardFooter>
       )}
     </Card>
   );
@@ -58,7 +60,9 @@ const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
         className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
       }}
     >
-      <CardHeader className="padding-0">{contact.system}</CardHeader>
+      <CardHeader className="font-body-xs padding-0">
+        {contact.system}
+      </CardHeader>
       {contact.name && (
         <CardFooter className="padding-0">
           <h3 className="margin-0">{contact.name}</h3>
