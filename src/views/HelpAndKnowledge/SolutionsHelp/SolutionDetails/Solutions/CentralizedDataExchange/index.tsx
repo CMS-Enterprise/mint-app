@@ -50,11 +50,11 @@ const CentralizedDataExhangeTimeline = ({
             learn more about the system, please contact{' '}
             <Link
               aria-label="Open in a new tab"
-              href="mailto:ModelIntake@cms.hhs.gov"
+              href="mailto:MINTTeam@cms.hhs.gov"
               target="_blank"
               rel="noopener noreferrer"
             >
-              ModelIntake@cms.hhs.gov
+              MINTTeam@cms.hhs.gov
             </Link>{' '}
             to learn more.
           </Trans>
