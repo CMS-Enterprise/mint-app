@@ -330,7 +330,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    categories: [
+      OperationalSolutionCategories.DATA_REPORTING,
+      OperationalSolutionCategories.APPLICATIONS
+    ],
     name: 'CMS Qualtrics',
     pointsOfContact: [
       {
@@ -754,7 +757,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
-    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    categories: [
+      OperationalSolutionCategories.CC_VEHICLES,
+      OperationalSolutionCategories.QUALITY
+    ],
     acronym: 'MIDS',
     name: 'Measure and Instrument Development and Support',
     pointsOfContact: [
