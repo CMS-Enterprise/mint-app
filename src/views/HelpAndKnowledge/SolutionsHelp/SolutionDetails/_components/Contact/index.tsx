@@ -20,15 +20,21 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
 
   return (
     <div className="point-of-contact margin-top-6">
-      <p className="font-body-xs margin-top-0 margin-bottom-2">
+      <p className="font-body-xs margin-top-0 margin-bottom-3">
         {t('contact')}
       </p>
 
-      <h3 className="system-profile__subheader margin-bottom-1 margin-top-1">
+      <h3
+        className={`system-profile__subheader margin-top-0 ${
+          contact.role ? 'margin-bottom-05' : 'margin-bottom-1'
+        }`}
+      >
         {contact.name}
       </h3>
 
-      {contact.role && <p className="margin-y-0">{contact.role}</p>}
+      {contact.role && (
+        <p className="margin-top-0 margin-bottom-1">{contact.role}</p>
+      )}
 
       <Link
         aria-label={h('contactInfo.sendAnEmail')}
