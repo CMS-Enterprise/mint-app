@@ -222,8 +222,7 @@ const solutions: SolutionTType = {
   },
   automatedPlanPayment: {
     about: {
-      description: `The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the
-      Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`,
+      description: `The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`,
       components: [
         {
           header: 'Functions',
@@ -256,9 +255,9 @@ const solutions: SolutionTType = {
   centralizedDataExhange: {
     about: {
       description: `Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
-      
+
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
-    
+
 The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.`,
       components: [
         {
@@ -321,7 +320,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       description: `The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
 
 This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
-    
+
 CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.`,
       items: [
         'CMMI models and demonstrations use the CCW and the VRDC for data analysis, analytics, data mining, and data storage in a SAS environment',
@@ -332,7 +331,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
       components: [
         {
           header: 'Functions',
-          description: `CCW provides researchers with Medicare and Medicaid beneficiary, claims, and assessment data linked by beneficiary across the continuum of care. In the past, researchers analyzing data files had to perform extensive analysis related to beneficiary matching, deduplication, and merging of the files in preparation for their study analysis. With the CCW data, this preliminary linkage work is already accomplished and delivered as part of the data files sent to researchers. 
+          description: `CCW provides researchers with Medicare and Medicaid beneficiary, claims, and assessment data linked by beneficiary across the continuum of care. In the past, researchers analyzing data files had to perform extensive analysis related to beneficiary matching, deduplication, and merging of the files in preparation for their study analysis. With the CCW data, this preliminary linkage work is already accomplished and delivered as part of the data files sent to researchers.
 
 Performing model implementation, design, monitoring, and evaluation activities that include: `,
           items: [
@@ -506,7 +505,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
       description: `CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
 
     They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
-    
+
     CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.`
     }
   },
@@ -625,7 +624,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
       description: `GrantSolutions (GS) is a tool used to manage grants from funding opportunity planning, through the issuance of awards, to grant closeout.
 
 CMS currently utilizes GrantSolutions primarily for awarding, managing, and closing out grants. For some grant programs, CMS utilizes the GS Application Review Module (ARM) for the required merit review of applications.
-    
+
 CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies artificial intelligence, machine learning, and other emerging technologies to collect information from 750,000 organizations contained in seven different public databases. RI analyzes trends and identifies warning signs in the data. This data is presented through key data in actionable dashboards highlighting critical information for conducting risk assessment of applicants and recipients and identify reduce fraud, waste, and abuse.`
     },
     timeline: {
@@ -679,7 +678,7 @@ Specific to CMMI, HIGLAS has two integrated points:`,
       description: `Health Data Reporting (HDR) is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models. HDR is part of the Innovation Support Platform (ISP) Suite of tools that include Expanded Data Feedback Reporting (eDFR) for business analysis and Centralized Data Exchange (CDX) for data exchange within the Suite and across CMS.
 
 HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
-    
+
 HDR’s Configuration Management allows model teams to define and modify performance and submission periods, change data elements to be collected across performance periods, and manage and monitor submissions.`,
       components: [
         {
@@ -742,7 +741,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
         {
           header: 'Development and validation',
           description: `All models will need submission and validation templates to be built and tested prior to the first data submission. Any model requirements not met by HDR’s current functionality will also need built. This will take extra time, so please plan accordingly.
-            
+
 If the model will use HDR’s pre-fill option, the model team’s implementation contractor will need to provide the following:`,
           items: [
             'Participating entity information',
@@ -760,7 +759,7 @@ If the model will use HDR’s pre-fill option, the model team’s implementation
       description: `The Centers for Medicare & Medicaid Services' (CMS) Health Plan Management System (HPMS) is a web-enabled information system that serves a critical role in the ongoing operations of the Medicare Advantage (MA) and Part D programs.
 
 HPMS is a full-service website where health and drug plans, plan consultants, third-party vendors, and pharmaceutical manufacturers can work with CMS to fulfill the plan enrollment and compliance requirements of the Medicare Advantage (MA) and Prescription Drug (Part D) programs.
-    
+
 Health Plan Management System, all health insurance companies participating in the MAPD program use this interface to communicate with CM for their contracting, actuarial, coverage, marketing, and enrollment in the MA and Part D programs.`,
       components: [
         {
@@ -999,9 +998,9 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
       description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities (e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, web services, and APIs.
 
 MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
-    
+
 CMMI, in particular, uses MDM as a repository to store data to inform and resolve model overlaps (when necessary) for both aligned beneficiaries and participating providers among CMS payment models/demonstrations that are primarily shared savings-based models. This use of MDM for CMMI is a limited but critical role so that CMMI, CM, and Duals Office models have a single point of operational data ‘hub’ to resolve overlaps.
-    
+
 MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM provides:`,
       items: [
         'Trusted identity resolution capability for CMS’ expanding catalog of Master Data sources',
@@ -1108,10 +1107,10 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
   },
   marx: {
     about: {
-      description: `The Medicare Advantage (MA) & Prescription Drug (Part D) system maintains enrollment, payment, and premium data for Medicare beneficiary enrollments in Medicare Part C and D Plans. The Medicare Advantage (MA) & Prescription Drug (Part D) systems provide services to beneficiaries, Plans, and CMS. 
+      description: `The Medicare Advantage (MA) & Prescription Drug (Part D) system maintains enrollment, payment, and premium data for Medicare beneficiary enrollments in Medicare Part C and D Plans. The Medicare Advantage (MA) & Prescription Drug (Part D) systems provide services to beneficiaries, Plans, and CMS.
 
-Transaction Processing Plans submit batch files that contain enrollment, disenrollment, and various status update transactions to MARx. Using CMS business rules, MARx validates the transactions and accepts or rejects the submitted enrollments, disenrollment, or changes. Daily response files report the results of all transactions back to the plans. Other Medicare Modernization Act (MMA) systems also interact with MARx. Notifications from other systems, such as the Medicare Beneficiary Database (MBD), which report changes in beneficiary demographics, entitlement, health status, low-income subsidy status, etc. may affect beneficiary enrollment and payment to the Plans. 
-    
+Transaction Processing Plans submit batch files that contain enrollment, disenrollment, and various status update transactions to MARx. Using CMS business rules, MARx validates the transactions and accepts or rejects the submitted enrollments, disenrollment, or changes. Daily response files report the results of all transactions back to the plans. Other Medicare Modernization Act (MMA) systems also interact with MARx. Notifications from other systems, such as the Medicare Beneficiary Database (MBD), which report changes in beneficiary demographics, entitlement, health status, low-income subsidy status, etc. may affect beneficiary enrollment and payment to the Plans.
+
 Payment Processing MARx calculates monthly Medicare payments for each Plan and generates payment adjustments when changes in membership and/or beneficiary health status occur. Monthly reports detail enrollment and payment information for the plans and CMS. Premium Processing MARx receives and processes transactions impacting Part C and Part D premiums, Medicare Part B Reduction, and Medicare Part C/D Plan enrollment status. Beneficiaries may elect to have their premiums withheld from their Social Security Administration (SSA) or Railroad Retirement Board (RRB) checks. MARx is responsible for interfacing with SSA or RRB to establish or terminate withholding and tracks expected withholding amounts. Once the withholding agency completes processing each transaction, a response is sent back to MARx informing CMS of the withholding agency's acceptance or rejection of each of the individual premium withholding requests, cancellations, statuses, and amounts. The withholding agency's acceptance or rejection of the transactions is communicated to the Plans. The Premium Withhold Accounting functionality was implemented to reconcile the withheld premium amounts. Based on reconciliation of the expected and actual premium amounts, the premium dollars to be included in a plan's payment are determined. `,
       components: [
         {
@@ -1493,10 +1492,10 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
   },
   sharedSystems: {
     about: {
-      description: `The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME). 
+      description: `The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME).
 
 Beneficiaries visit a provider of Medicare services, and that provider files a claim with their Medicare Administrative Contractor (MAC). The MAC processes and pays the claim, and sends a remittance to advise the provider and a Medicare Summary Notice (MSN) to the beneficiary. There are many Centers and Offices that receive the Medicare legislation that determines policies; those become change requests implemented through quarterly releases by the Shared System Maintainers (SSM) and the MACs.
-    
+
 The following systems are a part of Shared Systems:`,
       components: [
         {
