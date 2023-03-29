@@ -65,7 +65,7 @@ const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
       </CardHeader>
       {contact.name && (
         <CardFooter className="padding-0">
-          <h3 className="margin-0">{contact.name}</h3>
+          <h3 className="margin-0 line-height-sans-2">{contact.name}</h3>
         </CardFooter>
       )}
     </Card>
