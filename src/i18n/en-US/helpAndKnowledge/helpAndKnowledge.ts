@@ -1517,7 +1517,6 @@ The following systems are a part of Shared Systems:`,
           header: 'Functions',
           level: 'h4',
           items: [
-            'Functions',
             'Adjudication of Part A and Part B institutional claims',
             'FISS is a mainframe system Medicare Part A contractors use to process Medicare Part A and Part B institutional claims nationwide.',
             'Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.'
@@ -1533,7 +1532,6 @@ The following systems are a part of Shared Systems:`,
           header: 'Functions',
           level: 'h4',
           items: [
-            'Functions',
             'The MCS is the shared system that processes Medicare Part B claims for physician care and other outpatient services nationwide.',
             'It interfaces directly with the CWF.',
             'It meets CMS core requirements for processing Medicare Part B claims, including data collection and validation, claims control, pricing, adjudication, correspondence, online inquiry, file maintenance, reimbursement, and financial processing.'
@@ -1549,7 +1547,6 @@ The following systems are a part of Shared Systems:`,
           header: 'Functions',
           level: 'h4',
           items: [
-            'Functions',
             'GDIT maintains the VMS software that processes DME claims through adjudication and payment and for Medical Review.',
             'The VMS claims processing system is the shared system that processes claims for physician and other practitioner services, prior authorization, diagnostic tests, ambulance services, DMEPOS, and other services/supplies not covered by Part A. It interfaces directly with the CWF for verification, validation, and payment authorization.'
           ]

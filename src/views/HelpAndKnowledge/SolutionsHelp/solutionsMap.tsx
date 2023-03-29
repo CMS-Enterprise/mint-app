@@ -84,7 +84,7 @@ type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Division Director, Division of System Support, Operation and Security (DSSOS)';
+  | 'Director, Division of System Support, Operation and Security (DSSOS)';
 
 export type SolutionContactType = {
   name: string;
@@ -1084,7 +1084,7 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Donna Schmidt',
         email: 'donna.schmidt@cms.hhs.gov',
         role:
-          'Division Director, Division of System Support, Operation and Security (DSSOS)'
+          'Director, Division of System Support, Operation and Security (DSSOS)'
       },
       {
         name: 'Madhu Annadata',
