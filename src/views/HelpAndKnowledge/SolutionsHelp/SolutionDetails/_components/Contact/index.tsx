@@ -4,7 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { SolutionContactType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  ContactRoles,
+  SolutionContactType
+} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { formatQueryParam } from '../../Modal';
 
@@ -18,6 +21,16 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
 
   const paramValues = location.search.substring(1).split('&');
   const isOnPointsOfContact = paramValues.includes('section=points-of-contact');
+
+  const shortenRole = (role: ContactRoles) => {
+    if (role.includes('Director')) {
+      if (role.includes('Deputy Director')) {
+        return 'Deputy Director';
+      }
+      return 'Director';
+    }
+    return role;
+  };
 
   return (
     <div className="point-of-contact margin-top-6">
@@ -34,7 +47,9 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
       </h3>
 
       {contact.role && (
-        <p className="margin-top-0 margin-bottom-1">{contact.role}</p>
+        <p className="margin-top-0 margin-bottom-1">
+          {shortenRole(contact.role)}
+        </p>
       )}
 
       <Link
