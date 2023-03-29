@@ -144,16 +144,14 @@ const SolutionDetailsModal = ({
             <Grid row gap>
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  <>
-                    <SideNav
-                      subComponents={subComponents(solution, location)}
-                      isHelpArticle
-                      solutionNavigation
-                      paramActive
-                    />
+                  <SideNav
+                    subComponents={subComponents(solution, location)}
+                    isHelpArticle
+                    solutionNavigation
+                    paramActive
+                  />
 
-                    <Contact contact={solution.pointsOfContact[0]} />
-                  </>
+                  <Contact contact={solution.pointsOfContact[0]} />
                 </Grid>
               )}
 
