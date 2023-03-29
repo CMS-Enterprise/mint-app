@@ -24,7 +24,7 @@ export default function SolutionsTag({
       aria-label="Category tag link"
       className={classNames(
         className,
-        'width-fit-content display-block margin-right-05'
+        'width-fit-content display-block margin-right-05 margin-bottom-1'
       )}
     >
       <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0">
