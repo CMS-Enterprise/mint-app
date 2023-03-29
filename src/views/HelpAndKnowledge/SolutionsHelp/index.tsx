@@ -134,7 +134,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       <GridContainer className="margin-top-4">
         <Divider className="margin-top-6" />
 
-        <CategoryFooter />
+        <CategoryFooter currentCategory={category} />
       </GridContainer>
     </div>
   );
