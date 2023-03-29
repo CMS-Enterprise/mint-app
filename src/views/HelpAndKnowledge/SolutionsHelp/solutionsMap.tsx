@@ -176,7 +176,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: 'CO-OS',
+    acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     pointsOfContact: [
       {
