@@ -171,11 +171,11 @@ func (s *Store) SetCurrentSessionUser(userID uuid.UUID) error {
 func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanDiscussion, error) {
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
-	// _, err := s.db.NamedExec(setSessionCurrentUserSQL, utilitySQL.CreateUserIDQueryMap(userID)) //TODO, should this be prepared first?
-	// // _, err := s.db.Exec(`SET SESSION "app.current_user" = $1`, userID)
-	// if err != nil {
-	// 	return nil, err
-	// }
+	_, err := s.db.NamedExec(setSessionCurrentUserSQL, utilitySQL.CreateUserIDQueryMap(userID)) //TODO, should this be prepared first?
+	// _, err := s.db.Exec(`SET SESSION "app.current_user" = $1`, userID)
+	if err != nil {
+		return nil, err
+	}
 	statement, err := s.db.PrepareNamed(planDiscussionDeleteSQL)
 	if err != nil {
 		return nil, err
@@ -216,25 +216,26 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 	args := map[string]interface{}{
+		"id":      id,
 		"user_id": userID.String(),
 	}
-	userStatement, err := s.db.PrepareNamed(setSessionCurrentUserSQL)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println(args)
-	_, err = userStatement.Exec(args)
+	// userStatement, err := s.db.PrepareNamed(setSessionCurrentUserSQL)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// fmt.Println(args)
+	// _, err = userStatement.Exec(args)
 
-	if err != nil {
-		return nil, err
-	}
+	// if err != nil {
+	// 	return nil, err
+	// }
 	statement, err := s.db.PrepareNamed(discussionReplyDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
 
 	discussionReply := &models.DiscussionReply{}
-	err = statement.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
+	err = statement.Get(discussionReply, args)
 	if err != nil {
 		return nil, err
 	}
