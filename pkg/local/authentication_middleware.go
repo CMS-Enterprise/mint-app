@@ -86,6 +86,10 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		return nil, err
 	}
 	princ.UserAccount = userAccount
+	err = store.SetCurrentSessionUser(userAccount.ID)
+	if err != nil {
+		return nil, err
+	}
 
 	return appcontext.WithPrincipal(ctx, princ), nil
 }

@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -11,6 +12,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
+
+// TODO: move this to a shared location?
+//
+//go:embed SQL/utility/set_session_current_user.sql
+var setSessionCurrentUserSQL string
 
 //go:embed SQL/plan_discussion/create.sql
 var planDiscussionCreateSQL string
@@ -151,8 +157,25 @@ func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.Discussi
 	return reply, nil
 }
 
+// SetCurrentSessionUser sets the session variable in a transaction to state who the current user is
+func (s *Store) SetCurrentSessionUser(userID uuid.UUID) error {
+	_, err := s.db.NamedExec(setSessionCurrentUserSQL, utilitySQL.CreateUserIDQueryMap(userID))
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+
 // PlanDiscussionDelete deletes the plan discussion for a given id
-func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
+func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanDiscussion, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	// _, err := s.db.NamedExec(setSessionCurrentUserSQL, utilitySQL.CreateUserIDQueryMap(userID)) //TODO, should this be prepared first?
+	// // _, err := s.db.Exec(`SET SESSION "app.current_user" = $1`, userID)
+	// if err != nil {
+	// 	return nil, err
+	// }
 	statement, err := s.db.PrepareNamed(planDiscussionDeleteSQL)
 	if err != nil {
 		return nil, err
@@ -162,6 +185,11 @@ func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID) (*models.
 	err = statement.Get(discussion, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit subtask creation transaction: %w", err)
 	}
 
 	return discussion, nil
@@ -184,17 +212,36 @@ func (s *Store) PlanDiscussionByID(logger *zap.Logger, id uuid.UUID) (*models.Pl
 }
 
 // DiscussionReplyDelete deletes the discussion reply for a given id
-func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
+func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.DiscussionReply, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	args := map[string]interface{}{
+		"user_id": userID.String(),
+	}
+	userStatement, err := s.db.PrepareNamed(setSessionCurrentUserSQL)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(args)
+	_, err = userStatement.Exec(args)
+
+	if err != nil {
+		return nil, err
+	}
 	statement, err := s.db.PrepareNamed(discussionReplyDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
-	//TODO should we use generic error handling?
 
 	discussionReply := &models.DiscussionReply{}
 	err = statement.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit subtask creation transaction: %w", err)
 	}
 
 	return discussionReply, nil
