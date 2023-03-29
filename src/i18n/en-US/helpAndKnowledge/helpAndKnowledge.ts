@@ -513,9 +513,9 @@ Performing model implementation, design, monitoring, and evaluation activities t
     about: {
       description: `CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
 
-    They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
+They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
 
-    CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.`
+CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.`
     }
   },
   electronicFileTransfer: {
