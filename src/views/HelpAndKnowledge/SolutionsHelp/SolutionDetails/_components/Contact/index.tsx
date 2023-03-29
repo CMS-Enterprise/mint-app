@@ -17,6 +17,7 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
   const location = useLocation();
 
   const paramValues = location.search.substring(1).split('&');
+  const isOnPointsOfContact = paramValues.includes('section=points-of-contact');
 
   return (
     <div className="point-of-contact margin-top-6">
@@ -47,13 +48,15 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
         <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
       </Link>
 
-      <UswdsReactLink
-        to={formatQueryParam(paramValues, 'points-of-contact')}
-        className="display-flex flex-align-center"
-      >
-        {t('moreContacts')}
-        <IconArrowForward className="margin-left-1" />
-      </UswdsReactLink>
+      {!isOnPointsOfContact && (
+        <UswdsReactLink
+          to={formatQueryParam(paramValues, 'points-of-contact')}
+          className="display-flex flex-align-center"
+        >
+          {t('moreContacts')}
+          <IconArrowForward className="margin-left-1" />
+        </UswdsReactLink>
+      )}
     </div>
   );
 };
