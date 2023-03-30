@@ -856,6 +856,18 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 	return resolvers.UserAccountGetByUsername(logger, r.store, username)
 }
 
+// SearchChangeTable is the resolver for the searchChangeTable field.
+func (r *queryResolver) SearchChangeTable(ctx context.Context, query model.ElasticsearchQuery, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.SearchChangeTable(logger, r.esClient, query, limit, offset)
+}
+
+// SearchChangeTableByModelPlanID is the resolver for the searchChangeTableByModelPlanID field.
+func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.SearchChangeTableByModelPlanID(logger, r.esClient, modelPlanID, limit, offset)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx)

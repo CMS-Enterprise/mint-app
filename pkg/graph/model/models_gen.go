@@ -31,6 +31,10 @@ type DiscussionReplyCreateInput struct {
 	Resolution   bool      `json:"resolution"`
 }
 
+type ElasticsearchQuery struct {
+	Query map[string]interface{} `json:"query"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`

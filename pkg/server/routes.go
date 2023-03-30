@@ -201,7 +201,11 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
-	esClient, err := elasticsearch.NewDefaultClient() // TODO: .envrc settings for ES config
+	esConfig := elasticsearch.Config{ // TODO: .envrc settings for ES config
+		Addresses: []string{"http://elasticsearch:9200"},
+	}
+
+	esClient, err := elasticsearch.NewClient(esConfig)
 	if err != nil {
 		s.logger.Fatal("Failed to create an elasticsearch client", zap.Error(err))
 	}
