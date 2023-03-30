@@ -21,9 +21,6 @@ var planBasicsUpdateSQL string
 //go:embed SQL/plan_basics/get_by_id.sql
 var planBasicsGetByIDSQL string
 
-//go:embed SQL/plan_basics/get_by_model_plan_id.sql
-var planBasicsGetByModelPlanIDSQL string
-
 //go:embed SQL/plan_basics/get_by_model_plan_id_LOADER.sql
 var planBasicsGetByModelPlanIDLoaderSQL string
 
@@ -76,27 +73,6 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 	if err != nil {
 		return nil, err
 	}
-	return &plan, nil
-}
-
-// PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
-func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{} //TOOD use new data loader query instead.
-
-	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-	err = statement.Get(&plan, arg)
-
-	if err != nil {
-		return nil, err
-	}
-
 	return &plan, nil
 }
 
