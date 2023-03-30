@@ -281,3 +281,14 @@ func SearchChangeTableByModelStatus(
 
 	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
 }
+
+func SearchChangeTableDateHistogramConsolidatedAggregations(
+	logger *zap.Logger,
+	esClient *elasticsearch.Client,
+	startDate time.Time,
+	endDate time.Time,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	return nil, nil
+}

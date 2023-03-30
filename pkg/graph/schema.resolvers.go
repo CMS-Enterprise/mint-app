@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -897,6 +898,11 @@ func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableByModelStatus(logger, r.esClient, modelStatus, limit, offset)
+}
+
+// SearchChangeTableDateHistogramConsolidatedAggregations is the resolver for the searchChangeTableDateHistogramConsolidatedAggregations field.
+func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context) ([]*models.DateHistogramAggregationBucket, error) {
+	panic(fmt.Errorf("not implemented: SearchChangeTableDateHistogramConsolidatedAggregations - searchChangeTableDateHistogramConsolidatedAggregations"))
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

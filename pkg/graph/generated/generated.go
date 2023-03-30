@@ -91,6 +91,13 @@ type ComplexityRoot struct {
 		LaunchDarkly func(childComplexity int) int
 	}
 
+	DateHistogramAggregationBucket struct {
+		DocCount       func(childComplexity int) int
+		Key            func(childComplexity int) int
+		MaxModifiedDts func(childComplexity int) int
+		MinModifiedDts func(childComplexity int) int
+	}
+
 	DiscussionReply struct {
 		Content               func(childComplexity int) int
 		CreatedBy             func(childComplexity int) int
@@ -786,30 +793,31 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AuditChanges                   func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CrTdl                          func(childComplexity int, id uuid.UUID) int
-		CurrentUser                    func(childComplexity int) int
-		ExistingModelCollection        func(childComplexity int) int
-		ModelPlan                      func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection            func(childComplexity int, filter model.ModelPlanFilter) int
-		NdaInfo                        func(childComplexity int) int
-		OperationalNeed                func(childComplexity int, id uuid.UUID) int
-		OperationalSolution            func(childComplexity int, id uuid.UUID) int
-		OperationalSolutions           func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
-		PlanCollaboratorByID           func(childComplexity int, id uuid.UUID) int
-		PlanDocument                   func(childComplexity int, id uuid.UUID) int
-		PlanPayments                   func(childComplexity int, id uuid.UUID) int
-		PossibleOperationalNeeds       func(childComplexity int) int
-		PossibleOperationalSolutions   func(childComplexity int) int
-		SearchChangeTable              func(childComplexity int, query model.ElasticsearchQuery, limit int, offset int) int
-		SearchChangeTableByActor       func(childComplexity int, actor string, limit int, offset int) int
-		SearchChangeTableByDateRange   func(childComplexity int, startDate time.Time, endDate time.Time, limit int, offset int) int
-		SearchChangeTableByModelPlanID func(childComplexity int, modelPlanID uuid.UUID, limit int, offset int) int
-		SearchChangeTableByModelStatus func(childComplexity int, modelStatus models.ModelStatus, limit int, offset int) int
-		SearchChangeTableWithFreeText  func(childComplexity int, searchText string, limit int, offset int) int
-		SearchOktaUsers                func(childComplexity int, searchTerm string) int
-		TaskListSectionLocks           func(childComplexity int, modelPlanID uuid.UUID) int
-		UserAccount                    func(childComplexity int, username string) int
+		AuditChanges                                           func(childComplexity int, tableName string, primaryKey uuid.UUID) int
+		CrTdl                                                  func(childComplexity int, id uuid.UUID) int
+		CurrentUser                                            func(childComplexity int) int
+		ExistingModelCollection                                func(childComplexity int) int
+		ModelPlan                                              func(childComplexity int, id uuid.UUID) int
+		ModelPlanCollection                                    func(childComplexity int, filter model.ModelPlanFilter) int
+		NdaInfo                                                func(childComplexity int) int
+		OperationalNeed                                        func(childComplexity int, id uuid.UUID) int
+		OperationalSolution                                    func(childComplexity int, id uuid.UUID) int
+		OperationalSolutions                                   func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
+		PlanCollaboratorByID                                   func(childComplexity int, id uuid.UUID) int
+		PlanDocument                                           func(childComplexity int, id uuid.UUID) int
+		PlanPayments                                           func(childComplexity int, id uuid.UUID) int
+		PossibleOperationalNeeds                               func(childComplexity int) int
+		PossibleOperationalSolutions                           func(childComplexity int) int
+		SearchChangeTable                                      func(childComplexity int, query model.ElasticsearchQuery, limit int, offset int) int
+		SearchChangeTableByActor                               func(childComplexity int, actor string, limit int, offset int) int
+		SearchChangeTableByDateRange                           func(childComplexity int, startDate time.Time, endDate time.Time, limit int, offset int) int
+		SearchChangeTableByModelPlanID                         func(childComplexity int, modelPlanID uuid.UUID, limit int, offset int) int
+		SearchChangeTableByModelStatus                         func(childComplexity int, modelStatus models.ModelStatus, limit int, offset int) int
+		SearchChangeTableDateHistogramConsolidatedAggregations func(childComplexity int) int
+		SearchChangeTableWithFreeText                          func(childComplexity int, searchText string, limit int, offset int) int
+		SearchOktaUsers                                        func(childComplexity int, searchTerm string) int
+		TaskListSectionLocks                                   func(childComplexity int, modelPlanID uuid.UUID) int
+		UserAccount                                            func(childComplexity int, username string) int
 	}
 
 	Subscription struct {
@@ -1037,6 +1045,7 @@ type QueryResolver interface {
 	SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context) ([]*models.DateHistogramAggregationBucket, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1176,6 +1185,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CurrentUser.LaunchDarkly(childComplexity), true
+
+	case "DateHistogramAggregationBucket.docCount":
+		if e.complexity.DateHistogramAggregationBucket.DocCount == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.DocCount(childComplexity), true
+
+	case "DateHistogramAggregationBucket.key":
+		if e.complexity.DateHistogramAggregationBucket.Key == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.Key(childComplexity), true
+
+	case "DateHistogramAggregationBucket.maxModifiedDts":
+		if e.complexity.DateHistogramAggregationBucket.MaxModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.MaxModifiedDts(childComplexity), true
+
+	case "DateHistogramAggregationBucket.minModifiedDts":
+		if e.complexity.DateHistogramAggregationBucket.MinModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.MinModifiedDts(childComplexity), true
 
 	case "DiscussionReply.content":
 		if e.complexity.DiscussionReply.Content == nil {
@@ -5946,6 +5983,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.SearchChangeTableByModelStatus(childComplexity, args["modelStatus"].(models.ModelStatus), args["limit"].(int), args["offset"].(int)), true
 
+	case "Query.searchChangeTableDateHistogramConsolidatedAggregations":
+		if e.complexity.Query.SearchChangeTableDateHistogramConsolidatedAggregations == nil {
+			break
+		}
+
+		return e.complexity.Query.SearchChangeTableDateHistogramConsolidatedAggregations(childComplexity), true
+
 	case "Query.searchChangeTableWithFreeText":
 		if e.complexity.Query.SearchChangeTableWithFreeText == nil {
 			break
@@ -7622,6 +7666,7 @@ type ChangeTableRecord {
   tableID: Int!
   primaryKey: UUID!
   foreignKey: UUID
+  # action: String!
   fields: Map
   modifiedDts: Time
   modifiedBy: UserAccount
@@ -7629,6 +7674,13 @@ type ChangeTableRecord {
 
 input ElasticsearchQuery {
   query: Map!
+}
+
+type DateHistogramAggregationBucket {
+  key: String!
+  docCount: Int!
+  maxModifiedDts: Time!
+  minModifiedDts: Time!
 }
 
 """
@@ -7659,6 +7711,7 @@ type Query {
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTableDateHistogramConsolidatedAggregations: [DateHistogramAggregationBucket!]!
 }
 
 enum ModelPlanFilter {
@@ -10543,6 +10596,182 @@ func (ec *executionContext) fieldContext_CurrentUser_launchDarkly(ctx context.Co
 				return ec.fieldContext_LaunchDarklySettings_signedHash(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type LaunchDarklySettings", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_key(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_key(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Key, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_key(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_docCount(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_docCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DocCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_docCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_maxModifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_maxModifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MaxModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_maxModifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_minModifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_minModifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MinModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_minModifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -43886,6 +44115,60 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByModelStatus(ct
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().SearchChangeTableDateHistogramConsolidatedAggregations(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.DateHistogramAggregationBucket)
+	fc.Result = res
+	return ec.marshalNDateHistogramAggregationBucket2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucketᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "key":
+				return ec.fieldContext_DateHistogramAggregationBucket_key(ctx, field)
+			case "docCount":
+				return ec.fieldContext_DateHistogramAggregationBucket_docCount(ctx, field)
+			case "maxModifiedDts":
+				return ec.fieldContext_DateHistogramAggregationBucket_maxModifiedDts(ctx, field)
+			case "minModifiedDts":
+				return ec.fieldContext_DateHistogramAggregationBucket_minModifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DateHistogramAggregationBucket", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -47517,6 +47800,55 @@ func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionS
 		case "launchDarkly":
 
 			out.Values[i] = ec._CurrentUser_launchDarkly(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var dateHistogramAggregationBucketImplementors = []string{"DateHistogramAggregationBucket"}
+
+func (ec *executionContext) _DateHistogramAggregationBucket(ctx context.Context, sel ast.SelectionSet, obj *models.DateHistogramAggregationBucket) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dateHistogramAggregationBucketImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DateHistogramAggregationBucket")
+		case "key":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_key(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "docCount":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_docCount(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "maxModifiedDts":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_maxModifiedDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "minModifiedDts":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_minModifiedDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -53362,6 +53694,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "searchChangeTableDateHistogramConsolidatedAggregations":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "__type":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -55140,6 +55495,60 @@ func (ec *executionContext) marshalNDataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNDateHistogramAggregationBucket2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucketᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DateHistogramAggregationBucket) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNDateHistogramAggregationBucket2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucket(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNDateHistogramAggregationBucket2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucket(ctx context.Context, sel ast.SelectionSet, v *models.DateHistogramAggregationBucket) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._DateHistogramAggregationBucket(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {

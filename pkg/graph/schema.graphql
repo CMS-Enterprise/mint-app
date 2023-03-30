@@ -1355,6 +1355,7 @@ type ChangeTableRecord {
   tableID: Int!
   primaryKey: UUID!
   foreignKey: UUID
+  # action: String!
   fields: Map
   modifiedDts: Time
   modifiedBy: UserAccount
@@ -1362,6 +1363,13 @@ type ChangeTableRecord {
 
 input ElasticsearchQuery {
   query: Map!
+}
+
+type DateHistogramAggregationBucket {
+  key: String!
+  docCount: Int!
+  maxModifiedDts: Time!
+  minModifiedDts: Time!
 }
 
 """
@@ -1392,6 +1400,7 @@ type Query {
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTableDateHistogramConsolidatedAggregations: [DateHistogramAggregationBucket!]!
 }
 
 enum ModelPlanFilter {
