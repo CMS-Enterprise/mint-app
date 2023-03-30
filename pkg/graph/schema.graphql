@@ -1355,7 +1355,7 @@ type ChangeTableRecord {
   tableID: Int!
   primaryKey: UUID!
   foreignKey: UUID
-  fields: Map!
+  fields: Map
   modifiedDts: Time
   modifiedBy: UserAccount
 }
@@ -1387,15 +1387,17 @@ type Query {
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   userAccount(username: String!): UserAccount!
   searchChangeTable(query: ElasticsearchQuery!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
 }
 
 enum ModelPlanFilter {
   INCLUDE_ALL,
   COLLAB_ONLY,
   WITH_CR_TDLS,
-
-
 }
 
 """

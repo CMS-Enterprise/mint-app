@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"time"
 
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/google/uuid"
@@ -16,7 +17,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func marshalQuery(query model.ElasticsearchQuery) (io.Reader, error) {
+func marshalElasticsearchQuery(query model.ElasticsearchQuery) (io.Reader, error) {
 	queryBody, err := json.Marshal(query)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling query body: %s", err)
@@ -29,11 +30,12 @@ func performSearch(
 	queryReader io.Reader,
 	limit int,
 	offset int,
+	sortBy string,
 ) (*esapi.Response, error) {
 	return esClient.Search(
 		esClient.Search.WithIndex("change_table_idx"),
 		esClient.Search.WithBody(queryReader),
-		esClient.Search.WithSort("modified_dts:desc"),
+		esClient.Search.WithSort(sortBy),
 		esClient.Search.WithSize(limit),
 		esClient.Search.WithFrom(offset),
 		esClient.Search.WithTrackTotalHits(true),
@@ -41,7 +43,7 @@ func performSearch(
 	)
 }
 
-func handleError(res *esapi.Response, logger *zap.Logger) error {
+func handleElasticsearchError(res *esapi.Response, logger *zap.Logger) error {
 	var e map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
 		logger.Error("Error parsing the response body", zap.Error(err))
@@ -53,11 +55,12 @@ func handleError(res *esapi.Response, logger *zap.Logger) error {
 		zap.String("status", res.Status()),
 		zap.String("type", e["error"].(map[string]interface{})["type"].(string)),
 		zap.String("reason", e["error"].(map[string]interface{})["reason"].(string)),
+		zap.Reflect("error_details", e),
 	)
 	return fmt.Errorf("error searching change table: %s", e["error"].(map[string]interface{})["reason"])
 }
 
-func parseResponseBody(res *esapi.Response, logger *zap.Logger) (map[string]interface{}, error) {
+func parseElasticsearchResponseBody(res *esapi.Response, logger *zap.Logger) (map[string]interface{}, error) {
 	var r map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		logger.Error("Error parsing the response body", zap.Error(err))
@@ -99,14 +102,15 @@ func SearchChangeTable(
 	query model.ElasticsearchQuery,
 	limit int,
 	offset int,
+	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
 
-	queryReader, err := marshalQuery(query)
+	queryReader, err := marshalElasticsearchQuery(query)
 	if err != nil {
 		return nil, err
 	}
 
-	res, err := performSearch(esClient, queryReader, limit, offset)
+	res, err := performSearch(esClient, queryReader, limit, offset, sortBy)
 	if err != nil {
 		return nil, err
 	}
@@ -118,10 +122,10 @@ func SearchChangeTable(
 	}(res.Body)
 
 	if res.IsError() {
-		return nil, handleError(res, logger)
+		return nil, handleElasticsearchError(res, logger)
 	}
 
-	r, err := parseResponseBody(res, logger)
+	r, err := parseElasticsearchResponseBody(res, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -132,6 +136,27 @@ func SearchChangeTable(
 	}
 
 	return changeTableRecords, nil
+}
+
+// SearchChangeTableWithFreeText searches for change table records in Elasticsearch using a free-text search
+func SearchChangeTableWithFreeText(
+	logger *zap.Logger,
+	esClient *elasticsearch.Client,
+	searchText string,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	query := model.ElasticsearchQuery{
+		Query: map[string]interface{}{
+			"multi_match": map[string]interface{}{
+				"query":         searchText,
+				"fuzziness":     "AUTO",
+				"prefix_length": 1,
+			},
+		},
+	}
+
+	return SearchChangeTable(logger, esClient, query, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelPlanID searches the change table for records matching the given model plan ID
@@ -161,5 +186,98 @@ func SearchChangeTableByModelPlanID(
 		},
 	}
 
-	return SearchChangeTable(logger, esClient, query, limit, offset)
+	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
+}
+
+// SearchChangeTableByDateRange searches the change table for records with a modified_dts within the specified date range
+func SearchChangeTableByDateRange(
+	logger *zap.Logger,
+	esClient *elasticsearch.Client,
+	startDate time.Time,
+	endDate time.Time,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	query := model.ElasticsearchQuery{
+		Query: map[string]interface{}{
+			"bool": map[string]interface{}{
+				"filter": []interface{}{
+					map[string]interface{}{
+						"range": map[string]interface{}{
+							"modified_dts": map[string]interface{}{
+								"gte": startDate.Format(time.RFC3339),
+								"lte": endDate.Format(time.RFC3339),
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
+}
+
+// SearchChangeTableByActor searches the change table for records with a modified_by field matching the given actor
+func SearchChangeTableByActor(
+	logger *zap.Logger,
+	esClient *elasticsearch.Client,
+	actor string,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	query := model.ElasticsearchQuery{
+		Query: map[string]interface{}{
+			"multi_match": map[string]interface{}{
+				"query":         actor,
+				"fuzziness":     "AUTO",
+				"prefix_length": 1,
+				"fields": []string{
+					"modified_by.common_name",
+					"modified_by.username",
+					"modified_by.given_name",
+					"modified_by.family_name",
+				},
+			},
+		},
+	}
+
+	return SearchChangeTable(logger, esClient, query, limit, offset, "_score:desc")
+}
+
+// SearchChangeTableByModelStatus searches the change table for records with a
+// status field matching the given model plan status
+func SearchChangeTableByModelStatus(
+	logger *zap.Logger,
+	esClient *elasticsearch.Client,
+	status models.ModelStatus,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	query := model.ElasticsearchQuery{
+		Query: map[string]interface{}{
+			"bool": map[string]interface{}{
+				"should": []interface{}{
+					map[string]interface{}{
+						"term": map[string]interface{}{
+							"fields.status.new.keyword": status,
+						},
+					},
+					map[string]interface{}{
+						"term": map[string]interface{}{
+							"fields.status.old.keyword": status,
+						},
+					},
+				},
+				"minimum_should_match": 1,
+				"filter": map[string]interface{}{
+					"term": map[string]interface{}{
+						"table_id": 1,
+					},
+				},
+			},
+		},
+	}
+
+	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
 }
