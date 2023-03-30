@@ -101,10 +101,11 @@ describe('IT Solutions Add Subtasks', () => {
       </MemoryRouter>
     );
 
+    const button = getByRole('button', { name: 'Add another subtask' });
+    userEvent.click(button);
+
     await waitFor(() => {
       expect(getByTestId('add-subtask-form')).toBeInTheDocument();
-      const button = getByRole('button', { name: 'Add another subtask' });
-      userEvent.click(button);
       expect(queryAllByRole('radio', { name: 'To do' }).length).toBe(2);
     });
   });
