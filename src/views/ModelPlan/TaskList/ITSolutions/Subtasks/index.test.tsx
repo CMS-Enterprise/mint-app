@@ -1,6 +1,5 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -10,6 +9,9 @@ import {
   OperationalSolutionSubtaskStatus,
   OpSolutionStatus
 } from 'types/graphql-global-types';
+import VerboseMockedProvider from 'utils/testing/MockedProvider';
+
+import needQuestionAndAnswerMock from '../_components/NeedQuestionAndAnswer/mocks';
 
 import Subtasks from '.';
 
@@ -57,8 +59,11 @@ const mockData = [
         }
       }
     }
-  }
+  },
+  ...needQuestionAndAnswerMock
 ];
+
+// const
 
 describe('IT Solutions Add Subtasks', () => {
   it('renders correctly', async () => {
@@ -70,9 +75,9 @@ describe('IT Solutions Add Subtasks', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
           <MessageProvider>
-            <MockedProvider mocks={mockData} addTypename={false}>
+            <VerboseMockedProvider mocks={mockData} addTypename={false}>
               <Subtasks />
-            </MockedProvider>
+            </VerboseMockedProvider>
           </MessageProvider>
         </Route>
       </MemoryRouter>
@@ -93,9 +98,9 @@ describe('IT Solutions Add Subtasks', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
           <MessageProvider>
-            <MockedProvider mocks={mockData} addTypename={false}>
+            <VerboseMockedProvider mocks={mockData} addTypename={false}>
               <Subtasks />
-            </MockedProvider>
+            </VerboseMockedProvider>
           </MessageProvider>
         </Route>
       </MemoryRouter>
@@ -119,9 +124,9 @@ describe('IT Solutions Add Subtasks', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
           <MessageProvider>
-            <MockedProvider mocks={mockData} addTypename={false}>
+            <VerboseMockedProvider mocks={mockData} addTypename={false}>
               <Subtasks />
-            </MockedProvider>
+            </VerboseMockedProvider>
           </MessageProvider>
         </Route>
       </MemoryRouter>
@@ -145,9 +150,9 @@ describe('IT Solutions Manage Subtasks', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
           <MessageProvider>
-            <MockedProvider mocks={mockData} addTypename={false}>
+            <VerboseMockedProvider mocks={mockData} addTypename={false}>
               <Subtasks managingSubtasks />
-            </MockedProvider>
+            </VerboseMockedProvider>
           </MessageProvider>
         </Route>
       </MemoryRouter>
@@ -179,9 +184,9 @@ describe('IT Solutions Manage Subtasks', () => {
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
           <MessageProvider>
-            <MockedProvider mocks={mockData} addTypename={false}>
+            <VerboseMockedProvider mocks={mockData} addTypename={false}>
               <Subtasks managingSubtasks />
-            </MockedProvider>
+            </VerboseMockedProvider>
           </MessageProvider>
         </Route>
       </MemoryRouter>

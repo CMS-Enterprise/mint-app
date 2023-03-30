@@ -385,105 +385,111 @@ const Subtasks = ({
 
                             return (
                               <>
-                                {subtasks.map((input, index) => (
-                                  <div
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={index}
-                                    className={
-                                      subtasks.length > 1
-                                        ? 'border-bottom border-base-light'
-                                        : ''
-                                    }
-                                    data-testid={
-                                      managingSubtasks
-                                        ? `manage-subtasks--${index}`
-                                        : `add-subtask--${index}`
-                                    }
-                                  >
-                                    {managingSubtasks ? (
-                                      <div className="margin-top-4">
-                                        <p className="usa-label margin-0">
-                                          {t('subtaskName')}
-                                        </p>
-                                        <p className="margin-0">{input.name}</p>
-                                      </div>
-                                    ) : (
-                                      <FieldGroup
-                                        scrollElement="name"
-                                        error={!!flatErrors.name}
-                                        className="margin-top-4"
-                                      >
-                                        <Label
-                                          htmlFor={`subtasks[${index}].name`}
-                                        >
-                                          {t('subtaskName')}
-                                          <RequiredAsterisk />
-                                        </Label>
-                                        <FieldErrorMsg>
-                                          {flatErrors.name}
-                                        </FieldErrorMsg>
-                                        <Field
-                                          as={TextInput}
+                                {subtasks &&
+                                  subtasks.map((input, index) => (
+                                    <div
+                                      // eslint-disable-next-line react/no-array-index-key
+                                      key={index}
+                                      className={
+                                        subtasks.length > 1
+                                          ? 'border-bottom border-base-light'
+                                          : ''
+                                      }
+                                      data-testid={
+                                        managingSubtasks
+                                          ? `manage-subtasks--${index}`
+                                          : `add-subtask--${index}`
+                                      }
+                                    >
+                                      {managingSubtasks ? (
+                                        <div className="margin-top-4">
+                                          <p className="usa-label margin-0">
+                                            {t('subtaskName')}
+                                          </p>
+                                          <p className="margin-0">
+                                            {input.name}
+                                          </p>
+                                        </div>
+                                      ) : (
+                                        <FieldGroup
+                                          scrollElement="name"
                                           error={!!flatErrors.name}
-                                          id={`subtask-name--${index}`}
-                                          maxLength={50}
-                                          name={`subtasks[${index}].name`}
-                                        />
-                                      </FieldGroup>
-                                    )}
-                                    <FieldGroup className="margin-top-4">
-                                      <Label
-                                        htmlFor={`subtasks[${index}].status`}
-                                      >
-                                        {t('statusQuestion')}
-                                      </Label>
-                                      {Object.keys(
-                                        OperationalSolutionSubtaskStatus
-                                      )
-                                        .reverse()
-                                        .map(status => {
-                                          return (
-                                            <Field
-                                              key={`subtask-status--${status}`}
-                                              as={Radio}
-                                              id={`subtask-status--${index}--${status}`}
-                                              name={`subtasks[${index}].status`}
-                                              label={translateSubtasks(status)}
-                                              value={status}
-                                              checked={
-                                                subtasks &&
-                                                subtasks[index].status ===
-                                                  status
-                                              }
-                                            />
-                                          );
-                                        })}
-                                      {!managingSubtasks &&
-                                        subtasks.length > 1 && (
-                                          <Button
-                                            type="button"
-                                            onClick={() => remove(index)}
-                                            className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
-                                          >
-                                            {t('removeSubtask')}
-                                          </Button>
-                                        )}
-                                      {managingSubtasks && isUpdateType(input) && (
-                                        <Button
-                                          type="button"
-                                          onClick={() => {
-                                            setModalOpen(true);
-                                            setInputName(input.name);
-                                            setInputId(input.id);
-                                          }}
-                                          className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                          className="margin-top-4"
                                         >
-                                          {t('removeSubtask')}
-                                        </Button>
+                                          <Label
+                                            htmlFor={`subtasks[${index}].name`}
+                                          >
+                                            {t('subtaskName')}
+                                            <RequiredAsterisk />
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.name}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            error={!!flatErrors.name}
+                                            id={`subtask-name--${index}`}
+                                            maxLength={50}
+                                            name={`subtasks[${index}].name`}
+                                          />
+                                        </FieldGroup>
                                       )}
-                                    </FieldGroup>
-                                  </div>
-                                ))}
+                                      <FieldGroup className="margin-top-4">
+                                        <Label
+                                          htmlFor={`subtasks[${index}].status`}
+                                        >
+                                          {t('statusQuestion')}
+                                        </Label>
+                                        {Object.keys(
+                                          OperationalSolutionSubtaskStatus
+                                        )
+                                          .reverse()
+                                          .map(status => {
+                                            return (
+                                              <Field
+                                                key={`subtask-status--${status}`}
+                                                as={Radio}
+                                                id={`subtask-status--${index}--${status}`}
+                                                name={`subtasks[${index}].status`}
+                                                label={translateSubtasks(
+                                                  status
+                                                )}
+                                                value={status}
+                                                checked={
+                                                  subtasks &&
+                                                  subtasks[index].status ===
+                                                    status
+                                                }
+                                              />
+                                            );
+                                          })}
+                                        {!managingSubtasks &&
+                                          subtasks.length > 1 && (
+                                            <Button
+                                              type="button"
+                                              onClick={() => remove(index)}
+                                              className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                            >
+                                              {t('removeSubtask')}
+                                            </Button>
+                                          )}
+                                        {managingSubtasks &&
+                                          isUpdateType(input) && (
+                                            <Button
+                                              type="button"
+                                              onClick={() => {
+                                                setModalOpen(true);
+                                                setInputName(input.name);
+                                                setInputId(input.id);
+                                              }}
+                                              className="usa-button usa-button--unstyled line-height-body-5 text-red margin-y-3"
+                                            >
+                                              {t('removeSubtask')}
+                                            </Button>
+                                          )}
+                                      </FieldGroup>
+                                    </div>
+                                  ))}
                                 <div className="margin-top-3">
                                   <Button
                                     type="button"
