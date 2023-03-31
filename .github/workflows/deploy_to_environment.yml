@@ -55,7 +55,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
       - name: Backup the database
-        if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
+        # if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
+        if: contains(inputs.env, 'dev')
         run: |
           ./scripts/rds-snapshot-app-db.sh
       - name: Clean the database
