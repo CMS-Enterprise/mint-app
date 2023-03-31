@@ -168,10 +168,6 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	if err != nil {
 		return nil, err
 	}
-	err = f.Store.SetCurrentSessionUser(userAccount.ID)
-	if err != nil {
-		return nil, err
-	}
 
 	return &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(euaID),

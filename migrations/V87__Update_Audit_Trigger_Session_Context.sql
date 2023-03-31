@@ -23,10 +23,9 @@ DECLARE
     changeJSON JSONB;
     modified_by_user_id UUID;
     created_by_user_id UUID;
-    deleted_user_uuid UUID = COALESCE(current_setting('app.current_user',TRUE),'00000000-0000-0000-0000-000000000000');
+    deleted_user_uuid UUID = '00000000-0000-0000-0000-000000000000'; -- default to unknown user
 
 BEGIN
-
     IF TG_WHEN <> 'AFTER' THEN
         RAISE EXCEPTION 'audit.audit_trigger() may only run as an AFTER trigger';
     END IF;
@@ -97,7 +96,12 @@ BEGIN
         modified_by_user_id --modified_by
     );
     IF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
-        audit_row.modified_by = deleted_user_uuid; --We don't have the context of who deleted the row
+        BEGIN
+            deleted_user_uuid = COALESCE(current_setting('app.current_user',TRUE),'00000000-0000-0000-0000-000000000000'); --Try to get user from variable, if not will default to unknown
+            EXCEPTION
+                WHEN OTHERS THEN RAISE NOTICE 'yep, there was an issue';
+        END;
+        audit_row.modified_by = deleted_user_uuid;
         audit_row.primary_key = h_old -> pkey_f; --New is null
         audit_row.foreign_key = h_old -> fkey_f;
     ELSIF (TG_OP = 'INSERT' AND TG_LEVEL = 'ROW') THEN

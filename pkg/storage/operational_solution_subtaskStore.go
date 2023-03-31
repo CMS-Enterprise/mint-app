@@ -60,7 +60,7 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtaskCreateSQL)
+	statement, err := s.db.PrepareNamed(operationalSolutionSubtaskCreateSQL) //TODO: This isn't using the transaction, needs to be tx.PrepareNamed
 	if err != nil {
 		return nil, fmt.Errorf("could not prepare subtask creation statement: %w", err)
 	}

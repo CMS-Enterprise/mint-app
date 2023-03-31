@@ -216,8 +216,8 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 	args := map[string]interface{}{
-		"id":      id,
-		"user_id": userID.String(),
+		"id": id,
+		// "user_id": userID.String(),
 	}
 	// userStatement, err := s.db.PrepareNamed(setSessionCurrentUserSQL)
 	// if err != nil {
@@ -229,7 +229,14 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 	// if err != nil {
 	// 	return nil, err
 	// }
-	statement, err := s.db.PrepareNamed(discussionReplyDeleteSQL)
+	argsUser := map[string]interface{}{
+		"user_id": userID.String(),
+	}
+	_, err := tx.NamedExec(setSessionCurrentUserSQL, argsUser)
+	if err != nil {
+		return nil, err
+	}
+	statement, err := tx.PrepareNamed(discussionReplyDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
