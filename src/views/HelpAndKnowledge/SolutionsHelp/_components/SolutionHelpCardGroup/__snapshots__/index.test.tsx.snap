@@ -658,18 +658,6 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     <a
                       aria-label="Category tag link"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
-                      href="/help-and-knowledge/operational-solutions?category=data-reporting"
-                    >
-                      <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
-                        data-testid="tag"
-                      >
-                        Data reporting
-                      </span>
-                    </a>
-                    <a
-                      aria-label="Category tag link"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
                       href="/help-and-knowledge/operational-solutions?category=applications"
                     >
                       <span
