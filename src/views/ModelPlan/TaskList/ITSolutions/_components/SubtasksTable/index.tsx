@@ -1,5 +1,5 @@
 /*
-Subtask component and links component 
+Subtask Table component and links component
 Columns split between 'Todo', 'In progress', and 'Done'
 If no subtasks, renders text for no subtasks
 */
@@ -10,24 +10,18 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-// TODO: Once subtasks are added to BE, replace this any enum with gql generated enum
-export enum SubtaskStatus {
-  TO_DO = 'TO_DO',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE'
-}
+import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 
-// TODO: Once subtasks are added to BE, replace this any type with gql generated type
 type SubtaskType = {
   name: string;
-  status: SubtaskStatus;
+  status: OperationalSolutionSubtaskStatus;
 };
 
 // Used for label translations
 const columnTypes = {
-  todo: SubtaskStatus.TO_DO,
-  inProgress: SubtaskStatus.IN_PROGRESS,
-  done: SubtaskStatus.DONE
+  todo: OperationalSolutionSubtaskStatus.TODO,
+  inProgress: OperationalSolutionSubtaskStatus.IN_PROGRESS,
+  done: OperationalSolutionSubtaskStatus.DONE
 };
 
 type SubtaskColumnsProps = {
@@ -55,22 +49,29 @@ const SubtaskColumns = ({
 
       <div className="border-top" data-testid={status}>
         {subtasks.length === 0 &&
-        columnTypes[status] === SubtaskStatus.TO_DO ? (
+        columnTypes[status] === OperationalSolutionSubtaskStatus.TODO ? (
           <div className="padding-x-1 margin-y-105">
             {t('subtasks.noSubtasks')}
           </div>
         ) : (
-          <ul>
-            {subtasks
-              .filter(
-                (subtask: SubtaskType) => subtask.status === columnTypes[status]
-              )
-              .map((subtask: SubtaskType) => (
-                <li key={subtask.name} className="margin-y-1">
-                  {subtask.name}
-                </li>
-              ))}
-          </ul>
+          <>
+            {subtasks.filter(
+              (subtask: SubtaskType) => subtask.status === columnTypes[status]
+            ).length !== 0 && (
+              <ul>
+                {subtasks
+                  .filter(
+                    (subtask: SubtaskType) =>
+                      subtask.status === columnTypes[status]
+                  )
+                  .map((subtask: SubtaskType) => (
+                    <li key={subtask.name} className="margin-y-1">
+                      {subtask.name}
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </>
         )}
       </div>
     </Grid>
@@ -92,9 +93,10 @@ export const SubtaskLinks = ({
   subtasks: SubtaskType[];
 }) => {
   const { t } = useTranslation('itSolutions');
-  const { modelID, operationalNeedID } = useParams<{
+  const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
     operationalNeedID: string;
+    operationalSolutionID: string;
   }>();
 
   const history = useHistory();
@@ -118,7 +120,7 @@ export const SubtaskLinks = ({
             className="usa-button usa-button--outline"
             onClick={() => {
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${subtaskLinks[link]}`
+                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/${subtaskLinks[link]}`
               );
             }}
           >
@@ -135,7 +137,7 @@ type SubtasksProps = {
   className?: string;
 };
 
-const Subtasks = ({ subtasks, className }: SubtasksProps) => {
+const SubtasksTable = ({ subtasks, className }: SubtasksProps) => {
   const { t } = useTranslation('itSolutions');
 
   return (
@@ -158,4 +160,4 @@ const Subtasks = ({ subtasks, className }: SubtasksProps) => {
   );
 };
 
-export default Subtasks;
+export default SubtasksTable;

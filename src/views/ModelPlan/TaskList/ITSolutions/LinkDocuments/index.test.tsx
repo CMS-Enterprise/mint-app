@@ -53,7 +53,8 @@ const operationalSolution = {
     }
   ],
   mustFinishDts: '2022-05-12T15:01:39.190679Z',
-  mustStartDts: '2022-05-12T15:01:39.190679Z'
+  mustStartDts: '2022-05-12T15:01:39.190679Z',
+  operationalSolutionSubtasks: []
 };
 
 const operationalSolutionMocks = [

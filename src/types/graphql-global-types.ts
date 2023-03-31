@@ -394,6 +394,12 @@ export enum OperationalSolutionKey {
   THROUGH_A_CONTRACTOR = "THROUGH_A_CONTRACTOR",
 }
 
+export enum OperationalSolutionSubtaskStatus {
+  DONE = "DONE",
+  IN_PROGRESS = "IN_PROGRESS",
+  TODO = "TODO",
+}
+
 export enum OverlapType {
   NO = "NO",
   YES_NEED_POLICIES = "YES_NEED_POLICIES",
@@ -561,6 +567,11 @@ export enum WaiverType {
   FRAUD_ABUSE = "FRAUD_ABUSE",
   MEDICAID = "MEDICAID",
   PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
+}
+
+export interface CreateOperationalSolutionSubtaskInput {
+  name: string;
+  status: OperationalSolutionSubtaskStatus;
 }
 
 /**
@@ -983,6 +994,16 @@ export interface PlanPaymentsChanges {
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
   status?: TaskStatusInput | null;
+}
+
+export interface UpdateOperationalSolutionSubtaskChangesInput {
+  name: string;
+  status: OperationalSolutionSubtaskStatus;
+}
+
+export interface UpdateOperationalSolutionSubtaskInput {
+  id: UUID;
+  changes: UpdateOperationalSolutionSubtaskChangesInput;
 }
 
 //==============================================================

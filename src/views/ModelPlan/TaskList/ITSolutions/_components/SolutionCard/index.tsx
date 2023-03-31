@@ -33,13 +33,15 @@ type SolutionCardProps = {
   shadow?: boolean;
   solution: SolutionCardType;
   addingCustom?: boolean; // Used to render additional card actions/links when adding a custom solution
+  renderSolutionCardLinks?: boolean;
 };
 
 const SolutionCard = ({
   className,
   shadow,
   solution,
-  addingCustom
+  addingCustom,
+  renderSolutionCardLinks = true
 }: SolutionCardProps) => {
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
@@ -107,7 +109,7 @@ const SolutionCard = ({
           )}
 
           {/* Show 'About Dettails' link if not updating solution details and not a custom solution */}
-          {solution.name && (
+          {renderSolutionCardLinks && solution.name && (
             <>
               <Divider />
 
