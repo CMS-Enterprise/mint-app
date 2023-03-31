@@ -55,6 +55,7 @@ type CustomOperationalSolutionFormType = Omit<
   | 'status'
   | 'mustFinishDts'
   | 'mustStartDts'
+  | 'operationalSolutionSubtasks'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {
