@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SolutionDetailsCard matches snapshot 1`] = `
+exports[`Subtasks Table Component matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class=""
@@ -58,9 +58,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
           <div
             class="border-top"
             data-testid="inProgress"
-          >
-            <ul />
-          </div>
+          />
         </div>
         <div
           class="desktop:grid-col-4"
@@ -78,9 +76,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
           <div
             class="border-top"
             data-testid="done"
-          >
-            <ul />
-          </div>
+          />
         </div>
       </div>
     </div>
