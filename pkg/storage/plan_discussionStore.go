@@ -13,11 +13,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-// TODO: move this to a shared location?
-//
-//go:embed SQL/utility/set_session_current_user.sql
-var setSessionCurrentUserSQL string
-
 //go:embed SQL/plan_discussion/create.sql
 var planDiscussionCreateSQL string
 
@@ -171,12 +166,12 @@ func (s *Store) SetCurrentSessionUser(userID uuid.UUID) error {
 func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanDiscussion, error) {
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
-	_, err := s.db.NamedExec(setSessionCurrentUserSQL, utilitySQL.CreateUserIDQueryMap(userID)) //TODO, should this be prepared first?
-	// _, err := s.db.Exec(`SET SESSION "app.current_user" = $1`, userID)
+
+	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
-	statement, err := s.db.PrepareNamed(planDiscussionDeleteSQL)
+	statement, err := tx.PrepareNamed(planDiscussionDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -217,22 +212,9 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 	defer tx.Rollback()
 	args := map[string]interface{}{
 		"id": id,
-		// "user_id": userID.String(),
 	}
-	// userStatement, err := s.db.PrepareNamed(setSessionCurrentUserSQL)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// fmt.Println(args)
-	// _, err = userStatement.Exec(args)
 
-	// if err != nil {
-	// 	return nil, err
-	// }
-	argsUser := map[string]interface{}{
-		"user_id": userID.String(),
-	}
-	_, err := tx.NamedExec(setSessionCurrentUserSQL, argsUser)
+	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
