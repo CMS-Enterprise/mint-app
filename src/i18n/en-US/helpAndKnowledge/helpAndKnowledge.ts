@@ -1341,7 +1341,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           header: 'Deployment'
         }
       ],
-      links: ['Go to Salesforce cCMT']
+      links: ['Go to Salesforce CMT']
     }
   },
   salesforceConnect: {

@@ -330,10 +330,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
-    categories: [
-      OperationalSolutionCategories.DATA_REPORTING,
-      OperationalSolutionCategories.APPLICATIONS
-    ],
+    categories: [OperationalSolutionCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
     pointsOfContact: [
       {
