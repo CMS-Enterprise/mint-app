@@ -36,8 +36,7 @@ import { DocumentStatusType } from 'views/ModelPlan/ReadOnly/Documents';
 import NotFound from 'views/NotFound';
 
 import SolutionDetailCard from '../_components/SolutionDetailCard';
-// TODO: remove manual SubtaskStatus enum once generated from BE
-import Subtasks, { SubtaskLinks, SubtaskStatus } from '../_components/Subtasks';
+import SubtasksTable, { SubtaskLinks } from '../_components/SubtasksTable';
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -74,25 +73,7 @@ const SolutionDetails = () => {
     data?.operationalSolution ||
     ({} as GetOperationalSolutionOperationalSolutionType);
 
-  // TODO: remove temp subtasks
-  const tempSubtasks = [
-    {
-      name: 'Review requirements document',
-      status: SubtaskStatus.TO_DO
-    },
-    {
-      name: 'Review onboarding materials',
-      status: SubtaskStatus.TO_DO
-    },
-    {
-      name: 'Write onboarding request',
-      status: SubtaskStatus.IN_PROGRESS
-    },
-    {
-      name: 'Gather recipient data',
-      status: SubtaskStatus.DONE
-    }
-  ];
+  const subtasks = data?.operationalSolution.operationalSolutionSubtasks || [];
 
   const [deleteSolutionLink] = useMutation<DeleteDocumentSolutionLinkVariables>(
     DeleteDocumentSolutionLinks
@@ -203,11 +184,9 @@ const SolutionDetails = () => {
               modelID={modelID}
             />
 
-            {/* TODO: remove temp subtask data */}
-            <Subtasks subtasks={tempSubtasks} className="margin-top-6" />
+            <SubtasksTable subtasks={subtasks} className="margin-top-6" />
 
-            {/* TODO: remove temp subtask data */}
-            <SubtaskLinks className="margin-top-3" subtasks={tempSubtasks} />
+            <SubtaskLinks className="margin-top-3" subtasks={subtasks} />
 
             {/* Documents table and link */}
             <div className="margin-top-6">
