@@ -38,7 +38,8 @@ const returnMockedData = (results: boolean) => {
                 status: OpSolutionStatus.COMPLETED,
                 documents: [],
                 mustFinishDts: '2022-05-12T15:01:39.190679Z',
-                mustStartDts: '2022-05-12T15:01:39.190679Z'
+                mustStartDts: '2022-05-12T15:01:39.190679Z',
+                operationalSolutionSubtasks: []
               }
             : {
                 nameOther: '',
