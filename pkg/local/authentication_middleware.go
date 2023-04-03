@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -95,8 +94,6 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
 		// Get the token from payload
-		all := initPayload
-		fmt.Println("ALL OF EM BABY", all)
 		any := initPayload["authToken"]
 		token, ok := any.(string)
 		if !ok || token == "" {
