@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -859,7 +858,7 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 }
 
 // SearchChangeTable is the resolver for the searchChangeTable field.
-func (r *queryResolver) SearchChangeTable(ctx context.Context, query model.ElasticsearchQuery, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+func (r *queryResolver) SearchChangeTable(ctx context.Context, query models.ElasticsearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTable(logger, r.esClient, query, limit, offset, "modified_dts:desc")
@@ -901,8 +900,10 @@ func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, mode
 }
 
 // SearchChangeTableDateHistogramConsolidatedAggregations is the resolver for the searchChangeTableDateHistogramConsolidatedAggregations field.
-func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context) ([]*models.DateHistogramAggregationBucket, error) {
-	panic(fmt.Errorf("not implemented: SearchChangeTableDateHistogramConsolidatedAggregations - searchChangeTableDateHistogramConsolidatedAggregations"))
+func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableDateHistogramConsolidatedAggregations(logger, r.esClient, interval, limit, offset)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

@@ -808,12 +808,12 @@ type ComplexityRoot struct {
 		PlanPayments                                           func(childComplexity int, id uuid.UUID) int
 		PossibleOperationalNeeds                               func(childComplexity int) int
 		PossibleOperationalSolutions                           func(childComplexity int) int
-		SearchChangeTable                                      func(childComplexity int, query model.ElasticsearchQuery, limit int, offset int) int
+		SearchChangeTable                                      func(childComplexity int, query models.ElasticsearchRequest, limit int, offset int) int
 		SearchChangeTableByActor                               func(childComplexity int, actor string, limit int, offset int) int
 		SearchChangeTableByDateRange                           func(childComplexity int, startDate time.Time, endDate time.Time, limit int, offset int) int
 		SearchChangeTableByModelPlanID                         func(childComplexity int, modelPlanID uuid.UUID, limit int, offset int) int
 		SearchChangeTableByModelStatus                         func(childComplexity int, modelStatus models.ModelStatus, limit int, offset int) int
-		SearchChangeTableDateHistogramConsolidatedAggregations func(childComplexity int) int
+		SearchChangeTableDateHistogramConsolidatedAggregations func(childComplexity int, interval string, limit int, offset int) int
 		SearchChangeTableWithFreeText                          func(childComplexity int, searchText string, limit int, offset int) int
 		SearchOktaUsers                                        func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks                                   func(childComplexity int, modelPlanID uuid.UUID) int
@@ -1039,13 +1039,13 @@ type QueryResolver interface {
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
-	SearchChangeTable(ctx context.Context, query model.ElasticsearchQuery, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTable(ctx context.Context, query models.ElasticsearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error)
-	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context) ([]*models.DateHistogramAggregationBucket, error)
+	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -5933,7 +5933,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.SearchChangeTable(childComplexity, args["query"].(model.ElasticsearchQuery), args["limit"].(int), args["offset"].(int)), true
+		return e.complexity.Query.SearchChangeTable(childComplexity, args["query"].(models.ElasticsearchRequest), args["limit"].(int), args["offset"].(int)), true
 
 	case "Query.searchChangeTableByActor":
 		if e.complexity.Query.SearchChangeTableByActor == nil {
@@ -5988,7 +5988,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.SearchChangeTableDateHistogramConsolidatedAggregations(childComplexity), true
+		args, err := ec.field_Query_searchChangeTableDateHistogramConsolidatedAggregations_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableDateHistogramConsolidatedAggregations(childComplexity, args["interval"].(string), args["limit"].(int), args["offset"].(int)), true
 
 	case "Query.searchChangeTableWithFreeText":
 		if e.complexity.Query.SearchChangeTableWithFreeText == nil {
@@ -6226,7 +6231,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputCreateOperationalSolutionSubtaskInput,
 		ec.unmarshalInputDiscussionReplyCreateInput,
-		ec.unmarshalInputElasticsearchQuery,
+		ec.unmarshalInputElasticsearchRequest,
 		ec.unmarshalInputPlanCollaboratorCreateInput,
 		ec.unmarshalInputPlanCrTdlCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
@@ -7672,8 +7677,8 @@ type ChangeTableRecord {
   modifiedBy: UserAccount
 }
 
-input ElasticsearchQuery {
-  query: Map!
+input ElasticsearchRequest {
+  request: Map!
 }
 
 type DateHistogramAggregationBucket {
@@ -7705,13 +7710,13 @@ type Query {
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   userAccount(username: String!): UserAccount!
-  searchChangeTable(query: ElasticsearchQuery!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTable(query: ElasticsearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  searchChangeTableDateHistogramConsolidatedAggregations: [DateHistogramAggregationBucket!]!
+  searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
 }
 
 enum ModelPlanFilter {
@@ -9648,6 +9653,39 @@ func (ec *executionContext) field_Query_searchChangeTableByModelStatus_args(ctx 
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_searchChangeTableDateHistogramConsolidatedAggregations_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["interval"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("interval"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["interval"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_searchChangeTableWithFreeText_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9684,10 +9722,10 @@ func (ec *executionContext) field_Query_searchChangeTableWithFreeText_args(ctx c
 func (ec *executionContext) field_Query_searchChangeTable_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.ElasticsearchQuery
+	var arg0 models.ElasticsearchRequest
 	if tmp, ok := rawArgs["query"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("query"))
-		arg0, err = ec.unmarshalNElasticsearchQuery2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐElasticsearchQuery(ctx, tmp)
+		arg0, err = ec.unmarshalNElasticsearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐElasticsearchRequest(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -43703,7 +43741,7 @@ func (ec *executionContext) _Query_searchChangeTable(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SearchChangeTable(rctx, fc.Args["query"].(model.ElasticsearchQuery), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		return ec.resolvers.Query().SearchChangeTable(rctx, fc.Args["query"].(models.ElasticsearchRequest), fc.Args["limit"].(int), fc.Args["offset"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -44129,7 +44167,7 @@ func (ec *executionContext) _Query_searchChangeTableDateHistogramConsolidatedAgg
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SearchChangeTableDateHistogramConsolidatedAggregations(rctx)
+		return ec.resolvers.Query().SearchChangeTableDateHistogramConsolidatedAggregations(rctx, fc.Args["interval"].(string), fc.Args["limit"].(int), fc.Args["offset"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -44165,6 +44203,17 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableDateHistogramCon
 			}
 			return nil, fmt.Errorf("no field named %q was found under type DateHistogramAggregationBucket", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableDateHistogramConsolidatedAggregations_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -47351,25 +47400,25 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputElasticsearchQuery(ctx context.Context, obj interface{}) (model.ElasticsearchQuery, error) {
-	var it model.ElasticsearchQuery
+func (ec *executionContext) unmarshalInputElasticsearchRequest(ctx context.Context, obj interface{}) (models.ElasticsearchRequest, error) {
+	var it models.ElasticsearchRequest
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"query"}
+	fieldsInOrder := [...]string{"request"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "query":
+		case "request":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("query"))
-			it.Query, err = ec.unmarshalNMap2map(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+			it.Request, err = ec.unmarshalNMap2map(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -55650,8 +55699,8 @@ func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑ
 	return res
 }
 
-func (ec *executionContext) unmarshalNElasticsearchQuery2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐElasticsearchQuery(ctx context.Context, v interface{}) (model.ElasticsearchQuery, error) {
-	res, err := ec.unmarshalInputElasticsearchQuery(ctx, v)
+func (ec *executionContext) unmarshalNElasticsearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐElasticsearchRequest(ctx context.Context, v interface{}) (models.ElasticsearchRequest, error) {
+	res, err := ec.unmarshalInputElasticsearchRequest(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

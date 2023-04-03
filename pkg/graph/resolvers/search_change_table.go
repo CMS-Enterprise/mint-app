@@ -8,21 +8,22 @@ import (
 	"time"
 
 	"github.com/elastic/go-elasticsearch/v8"
+
 	"github.com/google/uuid"
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func marshalElasticsearchQuery(query model.ElasticsearchQuery) (io.Reader, error) {
-	queryBody, err := json.Marshal(query)
+// Marshal and perform Elasticsearch queries
+func marshalElasticsearchQuery(request models.ElasticsearchRequest) (io.Reader, error) {
+	requestBody, err := json.Marshal(request.Request)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling query body: %s", err)
+		return nil, fmt.Errorf("error marshaling request body: %s", err)
 	}
-	return bytes.NewReader(queryBody), nil
+	return bytes.NewReader(requestBody), nil
 }
 
 func performSearch(
@@ -43,6 +44,7 @@ func performSearch(
 	)
 }
 
+// Handle Elasticsearch errors and parse response
 func handleElasticsearchError(res *esapi.Response, logger *zap.Logger) error {
 	var e map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
@@ -69,6 +71,7 @@ func parseElasticsearchResponseBody(res *esapi.Response, logger *zap.Logger) (ma
 	return r, nil
 }
 
+// Extract change table records from Elasticsearch response
 func extractChangeTableRecords(
 	r map[string]interface{},
 	logger *zap.Logger,
@@ -95,16 +98,15 @@ func extractChangeTableRecords(
 	return changeTableRecords, nil
 }
 
-// SearchChangeTable searches the change table for records matching the given query
-func SearchChangeTable(
+// Search functions for change table
+func searchChangeTableBase(
 	logger *zap.Logger,
 	esClient *elasticsearch.Client,
-	query model.ElasticsearchQuery,
+	query models.ElasticsearchRequest,
 	limit int,
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-
 	queryReader, err := marshalElasticsearchQuery(query)
 	if err != nil {
 		return nil, err
@@ -138,6 +140,18 @@ func SearchChangeTable(
 	return changeTableRecords, nil
 }
 
+// SearchChangeTable searches the change table for records matching the given query
+func SearchChangeTable(
+	logger *zap.Logger,
+	esClient *elasticsearch.Client,
+	query models.ElasticsearchRequest,
+	limit int,
+	offset int,
+	sortBy string,
+) ([]*models.ChangeTableRecord, error) {
+	return searchChangeTableBase(logger, esClient, query, limit, offset, sortBy)
+}
+
 // SearchChangeTableWithFreeText searches for change table records in Elasticsearch using a free-text search
 func SearchChangeTableWithFreeText(
 	logger *zap.Logger,
@@ -146,8 +160,8 @@ func SearchChangeTableWithFreeText(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := model.ElasticsearchQuery{
-		Query: map[string]interface{}{
+	request := models.ElasticsearchRequest{
+		Request: map[string]interface{}{
 			"multi_match": map[string]interface{}{
 				"query":         searchText,
 				"fuzziness":     "AUTO",
@@ -155,8 +169,7 @@ func SearchChangeTableWithFreeText(
 			},
 		},
 	}
-
-	return SearchChangeTable(logger, esClient, query, limit, offset, "_score:desc")
+	return searchChangeTableBase(logger, esClient, request, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelPlanID searches the change table for records matching the given model plan ID
@@ -167,18 +180,20 @@ func SearchChangeTableByModelPlanID(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := model.ElasticsearchQuery{
-		Query: map[string]interface{}{
-			"bool": map[string]interface{}{
-				"filter": []interface{}{
-					map[string]interface{}{
-						"term": map[string]interface{}{
-							"table_id": "1",
+	query := models.ElasticsearchRequest{
+		Request: map[string]interface{}{
+			"query": map[string]interface{}{
+				"bool": map[string]interface{}{
+					"filter": []interface{}{
+						map[string]interface{}{
+							"term": map[string]interface{}{
+								"table_id": "1",
+							},
 						},
-					},
-					map[string]interface{}{
-						"term": map[string]interface{}{
-							"primary_key.keyword": modelPlanID.String(),
+						map[string]interface{}{
+							"term": map[string]interface{}{
+								"primary_key.keyword": modelPlanID.String(),
+							},
 						},
 					},
 				},
@@ -186,7 +201,7 @@ func SearchChangeTableByModelPlanID(
 		},
 	}
 
-	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
+	return searchChangeTableBase(logger, esClient, query, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableByDateRange searches the change table for records with a modified_dts within the specified date range
@@ -198,15 +213,17 @@ func SearchChangeTableByDateRange(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := model.ElasticsearchQuery{
-		Query: map[string]interface{}{
-			"bool": map[string]interface{}{
-				"filter": []interface{}{
-					map[string]interface{}{
-						"range": map[string]interface{}{
-							"modified_dts": map[string]interface{}{
-								"gte": startDate.Format(time.RFC3339),
-								"lte": endDate.Format(time.RFC3339),
+	request := models.ElasticsearchRequest{
+		Request: map[string]interface{}{
+			"request": map[string]interface{}{
+				"bool": map[string]interface{}{
+					"filter": []interface{}{
+						map[string]interface{}{
+							"range": map[string]interface{}{
+								"modified_dts": map[string]interface{}{
+									"gte": startDate.Format(time.RFC3339),
+									"lte": endDate.Format(time.RFC3339),
+								},
 							},
 						},
 					},
@@ -215,7 +232,7 @@ func SearchChangeTableByDateRange(
 		},
 	}
 
-	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
+	return searchChangeTableBase(logger, esClient, request, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableByActor searches the change table for records with a modified_by field matching the given actor
@@ -226,23 +243,25 @@ func SearchChangeTableByActor(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := model.ElasticsearchQuery{
-		Query: map[string]interface{}{
-			"multi_match": map[string]interface{}{
-				"query":         actor,
-				"fuzziness":     "AUTO",
-				"prefix_length": 1,
-				"fields": []string{
-					"modified_by.common_name",
-					"modified_by.username",
-					"modified_by.given_name",
-					"modified_by.family_name",
+	query := models.ElasticsearchRequest{
+		Request: map[string]interface{}{
+			"query": map[string]interface{}{
+				"multi_match": map[string]interface{}{
+					"query":         actor,
+					"fuzziness":     "AUTO",
+					"prefix_length": 1,
+					"fields": []string{
+						"modified_by.common_name",
+						"modified_by.username",
+						"modified_by.given_name",
+						"modified_by.family_name",
+					},
 				},
 			},
 		},
 	}
 
-	return SearchChangeTable(logger, esClient, query, limit, offset, "_score:desc")
+	return searchChangeTableBase(logger, esClient, query, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelStatus searches the change table for records with a
@@ -254,41 +273,32 @@ func SearchChangeTableByModelStatus(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := model.ElasticsearchQuery{
-		Query: map[string]interface{}{
-			"bool": map[string]interface{}{
-				"should": []interface{}{
-					map[string]interface{}{
-						"term": map[string]interface{}{
-							"fields.status.new.keyword": status,
+	query := models.ElasticsearchRequest{
+		Request: map[string]interface{}{
+			"query": map[string]interface{}{
+				"bool": map[string]interface{}{
+					"should": []interface{}{
+						map[string]interface{}{
+							"term": map[string]interface{}{
+								"fields.status.new.keyword": status,
+							},
+						},
+						map[string]interface{}{
+							"term": map[string]interface{}{
+								"fields.status.old.keyword": status,
+							},
 						},
 					},
-					map[string]interface{}{
+					"minimum_should_match": 1,
+					"filter": map[string]interface{}{
 						"term": map[string]interface{}{
-							"fields.status.old.keyword": status,
+							"table_id": 1,
 						},
-					},
-				},
-				"minimum_should_match": 1,
-				"filter": map[string]interface{}{
-					"term": map[string]interface{}{
-						"table_id": 1,
 					},
 				},
 			},
 		},
 	}
 
-	return SearchChangeTable(logger, esClient, query, limit, offset, "modified_dts:desc")
-}
-
-func SearchChangeTableDateHistogramConsolidatedAggregations(
-	logger *zap.Logger,
-	esClient *elasticsearch.Client,
-	startDate time.Time,
-	endDate time.Time,
-	limit int,
-	offset int,
-) ([]*models.ChangeTableRecord, error) {
-	return nil, nil
+	return searchChangeTableBase(logger, esClient, query, limit, offset, "modified_dts:desc")
 }

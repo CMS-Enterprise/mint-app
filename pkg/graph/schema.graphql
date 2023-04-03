@@ -1361,8 +1361,8 @@ type ChangeTableRecord {
   modifiedBy: UserAccount
 }
 
-input ElasticsearchQuery {
-  query: Map!
+input ElasticsearchRequest {
+  request: Map!
 }
 
 type DateHistogramAggregationBucket {
@@ -1394,13 +1394,13 @@ type Query {
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   userAccount(username: String!): UserAccount!
-  searchChangeTable(query: ElasticsearchQuery!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTable(query: ElasticsearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
-  searchChangeTableDateHistogramConsolidatedAggregations: [DateHistogramAggregationBucket!]!
+  searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
 }
 
 enum ModelPlanFilter {
