@@ -46,7 +46,7 @@ export const operationalSolutionCategoryMap: CategoryType = {
   quality: OperationalSolutionCategories.QUALITY
 };
 
-type ContactRoles =
+export type ContactRoles =
   | 'Product Owner'
   | 'Senior Lead'
   | 'Chief Quality Officer and Lead'
@@ -84,7 +84,7 @@ type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Division Director, Division of System Support, Operation and Security (DSSOS)';
+  | 'Director, Division of System Support, Operation and Security (DSSOS)';
 
 export type SolutionContactType = {
   name: string;
@@ -176,7 +176,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: 'CO-OS',
+    acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     pointsOfContact: [
       {
@@ -330,7 +330,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    categories: [OperationalSolutionCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
     pointsOfContact: [
       {
@@ -754,7 +754,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
-    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    categories: [
+      OperationalSolutionCategories.CC_VEHICLES,
+      OperationalSolutionCategories.QUALITY
+    ],
     acronym: 'MIDS',
     name: 'Measure and Instrument Development and Support',
     pointsOfContact: [
@@ -1078,7 +1081,7 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Donna Schmidt',
         email: 'donna.schmidt@cms.hhs.gov',
         role:
-          'Division Director, Division of System Support, Operation and Security (DSSOS)'
+          'Director, Division of System Support, Operation and Security (DSSOS)'
       },
       {
         name: 'Madhu Annadata',

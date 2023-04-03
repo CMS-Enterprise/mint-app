@@ -53,15 +53,16 @@ const SolutionHelpCard = ({
               <p className="margin-y-0">{solution.acronym}</p>
             )}
 
-            {!category &&
-              solution.categories.map(categoryTag => (
-                <SolutionsTag
-                  className="margin-bottom-1 margin-top-05"
-                  key={categoryTag}
-                  category={categoryTag}
-                  route={categoryTag}
-                />
-              ))}
+            <div className="display-flex flex-wrap padding-top-05">
+              {!category &&
+                solution.categories.map(categoryTag => (
+                  <SolutionsTag
+                    key={categoryTag}
+                    category={categoryTag}
+                    route={categoryTag}
+                  />
+                ))}
+            </div>
 
             <p className="solution-card__body">
               {t(`solutions.${solution.key}.about.description`)}
