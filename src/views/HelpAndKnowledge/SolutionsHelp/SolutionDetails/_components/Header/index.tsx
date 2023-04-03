@@ -27,13 +27,20 @@ const Header = ({ className, solution }: HeaderProps) => {
     <div
       className={classNames(
         className,
-        'padding-y-4 padding-bottom-4 bg-primary-darker text-white padding-left-4'
+        'bg-primary-darker text-white padding-x-4 padding-top-5 padding-bottom-6'
       )}
     >
       <div>
-        <p className="margin-0">{solutionsHeader}</p>
+        <h4 className="margin-0 text-primary-lighter">{solutionsHeader}</h4>
 
-        <h1 className="margin-top-2 line-height-body-2">{solution.name}</h1>
+        <h1 className="margin-0 margin-top-05 line-height-body-2">
+          {solution.name}
+          {solution.acronym && (
+            <span className="margin-0 font-body-lg text-normal margin-left-1">
+              ({solution.acronym})
+            </span>
+          )}
+        </h1>
       </div>
     </div>
   );

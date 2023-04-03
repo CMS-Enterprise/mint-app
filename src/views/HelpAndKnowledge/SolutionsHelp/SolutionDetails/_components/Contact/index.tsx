@@ -4,7 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { SolutionContactType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  ContactRoles,
+  SolutionContactType
+} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { formatQueryParam } from '../../Modal';
 
@@ -17,18 +20,37 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
   const location = useLocation();
 
   const paramValues = location.search.substring(1).split('&');
+  const isOnPointsOfContact = paramValues.includes('section=points-of-contact');
+
+  const shortenRole = (role: ContactRoles) => {
+    if (role.includes('Director')) {
+      if (role.includes('Deputy Director')) {
+        return 'Deputy Director';
+      }
+      return 'Director';
+    }
+    return role;
+  };
 
   return (
     <div className="point-of-contact margin-top-6">
-      <p className="font-body-xs margin-top-0 margin-bottom-2">
+      <p className="font-body-xs margin-top-0 margin-bottom-3">
         {t('contact')}
       </p>
 
-      <h3 className="system-profile__subheader margin-bottom-1 margin-top-1">
+      <h3
+        className={`system-profile__subheader margin-top-0 ${
+          contact.role ? 'margin-bottom-05' : 'margin-bottom-1'
+        }`}
+      >
         {contact.name}
       </h3>
 
-      {contact.role && <p className="margin-y-0">{contact.role}</p>}
+      {contact.role && (
+        <p className="margin-top-0 margin-bottom-1">
+          {shortenRole(contact.role)}
+        </p>
+      )}
 
       <Link
         aria-label={h('contactInfo.sendAnEmail')}
@@ -41,13 +63,15 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
         <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
       </Link>
 
-      <UswdsReactLink
-        to={formatQueryParam(paramValues, 'points-of-contact')}
-        className="display-flex flex-align-center"
-      >
-        {t('moreContacts')}
-        <IconArrowForward className="margin-left-1" />
-      </UswdsReactLink>
+      {!isOnPointsOfContact && (
+        <UswdsReactLink
+          to={formatQueryParam(paramValues, 'points-of-contact')}
+          className="display-flex flex-align-center"
+        >
+          {t('moreContacts')}
+          <IconArrowForward className="margin-left-1" />
+        </UswdsReactLink>
+      )}
     </div>
   );
 };

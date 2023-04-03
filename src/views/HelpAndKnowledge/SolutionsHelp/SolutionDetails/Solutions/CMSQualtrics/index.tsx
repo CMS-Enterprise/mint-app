@@ -57,7 +57,7 @@ const CMSQualtricsTimeline = ({ solution }: { solution: HelpSolutionType }) => {
           <p>
             <Link
               aria-label="Open in a new tab"
-              href="https://cms.gov1.qualtrics.com/"
+              href="https://surveys.cms.gov/"
               target="_blank"
               rel="noopener noreferrer"
               variant="external"

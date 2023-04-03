@@ -65,11 +65,11 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             Send an email to{' '}
             <Link
               aria-label="Open in a new tab"
-              href="mailto:ACO-OIT@cms.hhs.go"
+              href="mailto:ACO-OIT@cms.hhs.gov"
               target="_blank"
               rel="noopener noreferrer"
             >
-              ACO-OIT@cms.hhs.go
+              ACO-OIT@cms.hhs.gov
             </Link>{' '}
             if interested in using 4i and ACO-OS for your model. Please also
             include Ashley Corbin and Nora Fleming on the email.

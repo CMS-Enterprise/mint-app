@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { Grid, IconArrowForward } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -10,11 +9,13 @@ import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
 type CategoryFooterProps = {
   className?: string;
+  currentCategory?: string | null;
 };
 
-const CategoryFooter = ({ className }: CategoryFooterProps) => {
-  const { category } = useParams<{ category: string }>();
-
+const CategoryFooter = ({
+  className,
+  currentCategory
+}: CategoryFooterProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
   return (
@@ -25,7 +26,7 @@ const CategoryFooter = ({ className }: CategoryFooterProps) => {
         {Object.keys(operationalSolutionCategoryMap)
           .filter(
             //  If current page is a category, don't list the category
-            key => key !== category
+            key => key !== currentCategory
           )
           .map(key => {
             return (
