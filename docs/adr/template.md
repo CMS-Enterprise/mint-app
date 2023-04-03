@@ -5,18 +5,18 @@
 *[context and problem statement]*
 *[decision drivers | forces]* <!-- optional -->
 
-## Considered Alternatives
+## Considered Options
 
-* *[alternative 1]*
-* *[alternative 2]*
-* *[alternative 3]*
-* *[...]* <!-- numbers of alternatives can vary -->
+* *[option 1]*
+* *[option 2]*
+* *[option 3]*
+* *[...]* <!-- numbers of options can vary -->
 
 ## Decision Outcome
 
-* Chosen Alternative: *[alternative 1]*
+* Chosen Option: *[option 1]*
 * *[justification.
-  e.g., only alternative,
+  e.g., only option,
   which meets KO criterion decision driver
   | which resolves force force
   | ...
@@ -26,23 +26,23 @@
   follow-up decisions required,
   ...]* <!-- optional -->
 
-## Pros and Cons of the Alternatives <!-- optional -->
+## Pros and Cons of the Options <!-- optional -->
 
-### *[alternative 1]*
-
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
-
-### *[alternative 2]*
+### *[option 1]*
 
 * `+` *[argument 1 pro]*
 * `+` *[argument 2 pro]*
 * `-` *[argument 1 con]*
 * *[...]* <!-- numbers of pros and cons can vary -->
 
-### *[alternative 3]*
+### *[option 2]*
+
+* `+` *[argument 1 pro]*
+* `+` *[argument 2 pro]*
+* `-` *[argument 1 con]*
+* *[...]* <!-- numbers of pros and cons can vary -->
+
+### *[option 3]*
 
 * `+` *[argument 1 pro]*
 * `+` *[argument 2 pro]*
