@@ -94,7 +94,7 @@ func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID, userID uuid.
 		return nil, err
 	}
 
-	statement, err := s.db.PrepareNamed(planCollaboratorDeleteSQL)
+	statement, err := tx.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
 		return nil, err
 	}

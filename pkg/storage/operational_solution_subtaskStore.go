@@ -115,7 +115,7 @@ func (s *Store) OperationalSolutionSubtaskDelete(logger *zap.Logger, id uuid.UUI
 	if err != nil {
 		return nil, err
 	}
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
+	statement, err := tx.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
 	if err != nil {
 		return nil, err
 	}
