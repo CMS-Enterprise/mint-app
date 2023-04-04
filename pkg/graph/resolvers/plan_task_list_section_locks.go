@@ -253,7 +253,7 @@ func onLockTaskListSectionUnsubscribeComplete(
 		_, err := UnlockTaskListSection(ps, modelPlanID, section, subscriber.GetPrincipal().Account().ID, model.ActionTypeNormal)
 
 		if err != nil {
-			fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
+			fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error()) //TODO: can we pass a reference to the logger to the pubsub?
 		}
 	}
 }
