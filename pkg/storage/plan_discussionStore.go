@@ -152,16 +152,6 @@ func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.Discussi
 	return reply, nil
 }
 
-// SetCurrentSessionUser sets the session variable in a transaction to state who the current user is
-func (s *Store) SetCurrentSessionUser(userID uuid.UUID) error {
-	_, err := s.db.NamedExec(setSessionCurrentUserSQL, utilitySQL.CreateUserIDQueryMap(userID))
-	if err != nil {
-		return err
-	}
-	return nil
-
-}
-
 // PlanDiscussionDelete deletes the plan discussion for a given id
 func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanDiscussion, error) {
 	tx := s.db.MustBegin()
