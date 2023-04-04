@@ -1365,22 +1365,39 @@ Query definition for the schema
 type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planDocument(id: UUID!): PlanDocument!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelCollection: [ExistingModel!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchOktaUsers(searchTerm: String!): [UserInfo!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planPayments(id: UUID!): PlanPayments!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   ndaInfo: NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   crTdl(id: UUID!): PlanCrTdl!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolution(id: UUID!): OperationalSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalNeed(id: UUID!): OperationalNeed!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userAccount(username: String!): UserAccount!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 enum ModelPlanFilter {
@@ -1558,6 +1575,7 @@ enum TeamRole {
   LEARNING
   EVALUATION
   IT_LEAD
+  QUALITY
 }
 
 enum ModelType

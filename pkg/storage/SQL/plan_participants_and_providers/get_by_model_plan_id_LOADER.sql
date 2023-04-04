@@ -1,0 +1,68 @@
+WITH QUERIED_IDS AS (
+    /*Translate the input to a table */
+    SELECT model_plan_id
+    FROM
+        JSON_TO_RECORDSET(:paramTableJSON)
+        AS x("model_plan_id" UUID) --noqa
+)
+
+SELECT
+    pAndP.id,
+    pAndP.model_plan_id,
+    pAndP.participants,
+    pAndP.medicare_provider_type,
+    pAndP.states_engagement,
+    pAndP.participants_other,
+    pAndP.participants_note,
+    pAndP.participants_currently_in_models,
+    pAndP.participants_currently_in_models_note,
+    pAndP.model_application_level,
+    pAndP.expected_number_of_participants,
+    pAndP.estimate_confidence,
+    pAndP.confidence_note,
+    pAndP.recruitment_method,
+    pAndP.recruitment_other,
+    pAndP.recruitment_note,
+    pAndP.selection_method,
+    pAndP.selection_other,
+    pAndP.selection_note,
+    pAndP.communication_method,
+    pAndP.communication_method_other,
+    pAndP.communication_note,
+    pAndP.participant_assume_risk,
+    pAndP.risk_type,
+    pAndP.risk_other,
+    pAndP.risk_note,
+    pAndP.will_risk_change,
+    pAndP.will_risk_change_note,
+    pAndP.coordinate_work,
+    pAndP.coordinate_work_note,
+    pAndP.gainshare_payments,
+    pAndP.gainshare_payments_track,
+    pAndP.gainshare_payments_note,
+    pAndP.participants_ids,
+    pAndP.participants_ids_other,
+    pAndP.participants_ids_note,
+    pAndP.provider_addition_frequency,
+    pAndP.provider_addition_frequency_other,
+    pAndP.provider_addition_frequency_note,
+    pAndP.provider_add_method,
+    pAndP.provider_add_method_other,
+    pAndP.provider_add_method_note,
+    pAndP.provider_leave_method,
+    pAndP.provider_leave_method_other,
+    pAndP.provider_leave_method_note,
+    pAndP.provider_overlap,
+    pAndP.provider_overlap_hierarchy,
+    pAndP.provider_overlap_note,
+    pAndP.created_by,
+    pAndP.created_dts,
+    pAndP.modified_by,
+    pAndP.modified_dts,
+    pAndP.ready_for_review_by,
+    pAndP.ready_for_review_dts,
+    pAndP.ready_for_clearance_by,
+    pAndP.ready_for_clearance_dts,
+    pAndP.status
+FROM QUERIED_IDS AS qIDs
+INNER JOIN plan_participants_and_providers AS pAndP ON pAndP.model_plan_id = qIDs.model_plan_id;

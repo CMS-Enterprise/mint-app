@@ -3,7 +3,8 @@ import i18next from 'i18next';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import {
   ComplexityCalculationLevelType,
-  DocumentType
+  DocumentType,
+  OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
 
 /**
@@ -72,6 +73,8 @@ export const translateTeamRole = (teamRole: string) => {
       return i18next.t('modelPlan:teamRoles.modelLead');
     case 'MODEL_TEAM':
       return i18next.t('modelPlan:teamRoles.modelTeam');
+    case 'QUALITY':
+      return i18next.t('modelPlan:teamRoles.quality');
     default:
       return '';
   }
@@ -682,6 +685,19 @@ export const translateFrequencyType = (type: string) => {
       return i18next.t('participantsAndProviders:frequencyOptions.rolling');
     case 'OTHER':
       return i18next.t('participantsAndProviders:frequencyOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateSubtasks = (status: string) => {
+  switch (status) {
+    case OperationalSolutionSubtaskStatus.TODO:
+      return i18next.t('itSolutions:subtasks.todo');
+    case OperationalSolutionSubtaskStatus.IN_PROGRESS:
+      return i18next.t('itSolutions:subtasks.inProgress');
+    case OperationalSolutionSubtaskStatus.DONE:
+      return i18next.t('itSolutions:subtasks.done');
     default:
       return '';
   }

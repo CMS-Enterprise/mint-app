@@ -11,7 +11,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
       data-testid="grid"
     >
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -42,18 +42,22 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   >
                     4i
                   </p>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=data-reporting"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=data-reporting"
                     >
-                      Data reporting
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data reporting
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
@@ -109,7 +113,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -138,20 +142,24 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   <p
                     class="margin-y-0"
                   >
-                    CO-OS
+                    ACO-OS
                   </p>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=data-reporting"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=data-reporting"
                     >
-                      Data reporting
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data reporting
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
@@ -207,7 +215,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -238,23 +246,26 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   >
                     APPS
                   </p>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                     >
-                      Medicare Advantage and Part D
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Medicare Advantage and Part D
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
-                    The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the
-      Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).
+                    The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).
                   </p>
                   <div
                     class="tablet:grid-col-6 margin-bottom-2"
@@ -306,7 +317,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -337,25 +348,29 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                   >
                     CDX
                   </p>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=data-exchange"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
-                      Data exchange
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data exchange
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
                     Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
-      
+
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
-    
+
 The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.
                   </p>
                   <div
@@ -408,7 +423,7 @@ The business function of CDX is a centralized data exchange to enable interopera
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -439,25 +454,29 @@ The business function of CDX is a centralized data exchange to enable interopera
                   >
                     CCW
                   </p>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                     >
-                      Databases and data management
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Databases and data management
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
                     The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
 
 This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
-    
+
 CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.
                   </p>
                   <div
@@ -510,7 +529,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -536,18 +555,22 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     CMS Box
                   </h3>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=data-exchange"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
-                      Data exchange
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data exchange
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
@@ -603,7 +626,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -629,18 +652,22 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     CMS Qualtrics
                   </h3>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=data-reporting"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=applications"
                     >
-                      Data reporting
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Applications
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
@@ -696,7 +723,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -727,18 +754,22 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     CBOSC
                   </p>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=help-desks"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=help-desks"
                     >
-                      Help desks
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Help desks
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
@@ -794,7 +825,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
         </ul>
       </div>
       <div
-        class="tablet:grid-col-4"
+        class="tablet:grid-col-6 desktop:grid-col-4"
         data-testid="grid"
       >
         <ul
@@ -820,26 +851,30 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     CPI Vetting
                   </h3>
-                  <a
-                    aria-label="Category tag link"
-                    class="usa-link margin-bottom-1 margin-top-05 width-fit-content display-block margin-right-05"
-                    href="/help-and-knowledge/operational-solutions?category=data-exchange"
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
                   >
-                    <span
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0"
-                      data-testid="tag"
+                    <a
+                      aria-label="Category tag link"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
-                      Data exchange
-                    </span>
-                  </a>
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data exchange
+                      </span>
+                    </a>
+                  </div>
                   <p
                     class="solution-card__body"
                   >
                     CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
 
-    They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
-    
-    CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.
+They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
+
+CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.
                   </p>
                   <div
                     class="tablet:grid-col-6 margin-bottom-2"

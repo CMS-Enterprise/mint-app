@@ -10,7 +10,7 @@ import (
 func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 	plan := suite.createModelPlan("plan for need")
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -61,7 +61,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 	plan := suite.createModelPlan("plan for complex need")
 
-	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(oelExisting)
 
@@ -137,7 +137,7 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 	plan := suite.createModelPlan("plan for selection need")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{

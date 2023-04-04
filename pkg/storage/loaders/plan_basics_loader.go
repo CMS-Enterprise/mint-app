@@ -19,11 +19,11 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 	logger := appcontext.ZLogger(ctx)
 	arrayCK, err := ConvertToKeyArgsArray(keys)
 	if err != nil {
-		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
+		logger.Error("issue converting keys for data loader in Plan Basics", zap.Error(*err))
 	}
 	marshaledParams, err := arrayCK.ToJSONArray()
 	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Operational Solutions", zap.Error(*err))
+		logger.Error("issue converting keys to JSON for data loader in Plan Basics", zap.Error(*err))
 	}
 
 	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, marshaledParams)

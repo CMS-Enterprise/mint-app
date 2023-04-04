@@ -12,6 +12,7 @@ import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulati
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
+import subtasks from './draftModelPlan/subtasks';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
@@ -66,6 +67,7 @@ const enUS = {
   privacyPolicy,
   readOnlyModelPlan,
   sampleModelPlan,
+  subtasks,
   tableAndPagination,
   termsAndConditions
 };

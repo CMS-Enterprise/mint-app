@@ -250,8 +250,6 @@ type MiddlewareFactory struct {
 func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
 		// Get the token from payload
-		all := initPayload
-		fmt.Println("ALL OF EM BABY (OKTA)", all)
 		any := initPayload["authToken"]
 		token, ok := any.(string)
 		if !ok || token == "" {
@@ -261,12 +259,10 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.
 		// Parse auth header into JWT object
 		jwt, err := f.jwt(logger, token)
 		if err != nil {
-			fmt.Println("ERROR PARSING JWT", err)
-			// TODO How to error handle here?
+			logger.Warn("could not parse jwt from token", zap.Error(err))
 		}
 		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
-		// devCtx, err := devUserContext(ctx, token)
 		principal, err := f.newPrincipal(ctx)
 		if err != nil {
 			logger.Error("could not set context for okta auth", zap.Error(err))

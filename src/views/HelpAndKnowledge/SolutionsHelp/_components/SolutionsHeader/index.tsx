@@ -4,6 +4,7 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Breadcrumbs from 'components/Breadcrumbs';
+import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
@@ -56,13 +57,13 @@ const SolutionsHeader = ({
           className="help-header__breadcrumbs bg-primary-darker text-white padding-top-0 margin-top-neg-2 margin-bottom-4"
         />
 
-        <h2 className="margin-0">
+        <PageHeading className="margin-0">
           {categoryKey
             ? t(`categories.${categoryKey}.header`)
             : t('operationalSolutions')}
-        </h2>
+        </PageHeading>
 
-        <p className="margin-bottom-4">
+        <p className="margin-bottom-4 font-body-lg">
           {categoryKey
             ? t(`categories.${categoryKey}.description`)
             : t('operationalSolutionsInfo')}

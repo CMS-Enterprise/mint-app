@@ -80,6 +80,7 @@ type NeedQuestionAndAnswerProps = {
   expanded?: boolean;
   solution?: GetOperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
   isRenderingOnSolutionsDetails?: boolean;
+  renderSolutionCardLinks?: boolean;
 };
 
 const NeedQuestionAndAnswer = ({
@@ -88,7 +89,8 @@ const NeedQuestionAndAnswer = ({
   modelID,
   expanded,
   solution,
-  isRenderingOnSolutionsDetails = false
+  isRenderingOnSolutionsDetails = false,
+  renderSolutionCardLinks = true
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -229,7 +231,10 @@ const NeedQuestionAndAnswer = ({
           {solution && (
             <div>
               <p className="text-bold margin-top-4">{t('solution')}</p>
-              <SolutionCard solution={solution} />
+              <SolutionCard
+                solution={solution}
+                renderSolutionCardLinks={renderSolutionCardLinks}
+              />
             </div>
           )}
         </Grid>
