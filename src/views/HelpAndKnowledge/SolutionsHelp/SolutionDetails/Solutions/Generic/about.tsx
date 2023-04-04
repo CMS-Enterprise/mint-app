@@ -88,7 +88,7 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
             >
               <HeadingLevel
                 className={classNames('margin-bottom-2', {
-                  'margin-bottom-0': component.level === 'h4'
+                  'margin-bottom-0 font-body-md': component.level === 'h4'
                 })}
               >
                 {component.header}

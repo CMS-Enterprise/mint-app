@@ -115,7 +115,7 @@ const SolutionDetailsModal = ({
         contentLabel={t('ariaLabel')}
         appElement={document.getElementById('root')! as HTMLElement}
       >
-        <div data-testid="discussion-modal">
+        <div data-testid="operational-solution-modal">
           <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
             <button
               type="button"
@@ -144,16 +144,14 @@ const SolutionDetailsModal = ({
             <Grid row gap>
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  <>
-                    <SideNav
-                      subComponents={subComponents(solution, location)}
-                      isHelpArticle
-                      solutionNavigation
-                      paramActive
-                    />
+                  <SideNav
+                    subComponents={subComponents(solution, location)}
+                    isHelpArticle
+                    solutionNavigation
+                    paramActive
+                  />
 
-                    <Contact contact={solution.pointsOfContact[0]} />
-                  </>
+                  <Contact contact={solution.pointsOfContact[0]} />
                 </Grid>
               )}
 

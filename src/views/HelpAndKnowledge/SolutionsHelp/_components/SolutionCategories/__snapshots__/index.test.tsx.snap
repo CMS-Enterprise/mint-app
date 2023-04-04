@@ -15,7 +15,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
         Operational solutions
       </h2>
       <p
-        class="margin-bottom-4"
+        class="margin-bottom-4 font-body-md"
       >
         Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.
       </p>
@@ -24,7 +24,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
         data-testid="CardGroup"
       >
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -72,7 +72,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -120,7 +120,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -168,7 +168,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -216,7 +216,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -264,7 +264,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -312,7 +312,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -360,7 +360,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -408,7 +408,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -456,7 +456,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -504,7 +504,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li
@@ -552,7 +552,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
           </li>
         </div>
         <div
-          class="tablet:grid-col-3"
+          class="tablet:grid-col-6 desktop:grid-col-3"
           data-testid="grid"
         >
           <li

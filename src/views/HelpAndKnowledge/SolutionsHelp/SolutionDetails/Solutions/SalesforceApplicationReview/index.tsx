@@ -57,7 +57,7 @@ const SalesforceApplicationReviewTimeline = ({
 
           <Link
             aria-label="Open in a new tab"
-            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf."
+            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf"
             target="_blank"
             rel="noopener noreferrer"
             variant="external"
