@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
@@ -85,7 +86,14 @@ func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanC
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanCollaborator, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
+
 	statement, err := s.db.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
 		return nil, err
@@ -95,6 +103,11 @@ func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID) (*models.Pla
 	err = statement.Get(collaborator, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit collaborator delete transaction: %w", err)
 	}
 
 	return collaborator, nil

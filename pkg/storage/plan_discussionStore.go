@@ -174,7 +174,7 @@ func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uu
 
 	err = tx.Commit()
 	if err != nil {
-		return nil, fmt.Errorf("could not commit subtask creation transaction: %w", err)
+		return nil, fmt.Errorf("could not commit discussion delete transaction: %w", err)
 	}
 
 	return discussion, nil
@@ -221,7 +221,7 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 
 	err = tx.Commit()
 	if err != nil {
-		return nil, fmt.Errorf("could not commit subtask creation transaction: %w", err)
+		return nil, fmt.Errorf("could not commit discussion reply delete transaction: %w", err)
 	}
 
 	return discussionReply, nil
