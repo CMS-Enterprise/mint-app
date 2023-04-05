@@ -84,7 +84,8 @@ export type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)';
+  | 'Director, Division of System Support, Operation and Security (DSSOS)'
+  | 'Director, Division of Budget and Administrative Services (DBAS)';
 
 export type SolutionContactType = {
   name: string;
@@ -576,10 +577,9 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Innovation Payment Contractor',
     pointsOfContact: [
       {
-        name: 'Donna Schmidt',
-        email: 'donna.schmidt@cms.hhs.gov',
-        role:
-          'Director, Division of System Support, Operation and Security (DSSOS)'
+        name: 'Ron Tipper',
+        email: 'ronald.topper@cms.hhs.gov',
+        role: 'Director, Division of Budget and Administrative Services (DBAS)'
       },
       {
         name: 'Sue Nonemaker',
@@ -599,7 +599,7 @@ export const helpSolutions: HelpSolutionType[] = [
     ],
     systemOwner: {
       name:
-        'Business Services Group, Division of System Support, Operation and Security',
+        'Business Services Group, Division of Budget and Administrative Services',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
