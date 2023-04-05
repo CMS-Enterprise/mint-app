@@ -71,7 +71,10 @@ const Discussions = ({
   // Used to replace query params after reply has been asnwered from linked email
   const location = useLocation();
   const history = useHistory();
-  const queryParams = new URLSearchParams(location.search);
+
+  const queryParams = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
 
   const { data, loading, error, refetch } = useQuery<
     GetModelPlanDiscussionsType,
@@ -143,15 +146,28 @@ const Discussions = ({
 
   // Hook used to open reply form if discussionID present
   useEffect(() => {
-    const discussionTpReply = discussions.find(
+    const discussionToReply = discussions.find(
       dis => dis.id === discussionReplyID
     );
-    if (discussionTpReply) {
-      setReply(discussionTpReply);
-    } else {
-      // Render error that discussion was already answered
+
+    if (discussionToReply && !loading) {
+      if (discussionToReply.replies.length === 0) {
+        setReply(discussionToReply);
+      } else {
+        setDiscussionReplyID(null);
+        queryParams.delete('discussionID');
+        history.replace({
+          search: queryParams.toString()
+        });
+        setInitQuestion(false);
+        setDiscussionStatusMessage(
+          t('alreadyAnswered', {
+            question: discussionToReply.content
+          })
+        );
+      }
     }
-  }, [discussionReplyID, discussions]);
+  }, [discussionReplyID, discussions, loading, queryParams, history, t]);
 
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
