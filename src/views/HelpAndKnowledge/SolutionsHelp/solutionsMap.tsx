@@ -71,10 +71,8 @@ export type ContactRoles =
   | 'Director, Division of Model Learning Systems (DMLS)'
   | 'Deputy Director, Division of Model Learning Systems (DMLS)'
   | 'Beneficiary Listening Session Point of Contact'
-  | 'Beneficiary Listening Session Point of Contact'
   | 'Deputy Director, Division of Enterprise Information Management Services'
   | 'System Owner'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)'
   | 'CMMI/BSG Point of Contact'
   | 'CMMI/BSG Project Support'
   | 'Overlaps Operations Support'
@@ -84,7 +82,6 @@ export type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)'
   | 'Director, Division of Budget and Administrative Services (DBAS)';
 
 export type SolutionContactType = {
