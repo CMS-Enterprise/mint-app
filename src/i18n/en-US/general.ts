@@ -1,5 +1,5 @@
 const general = {
-  appName: 'MINT',
+  appName: 'Model Innovation Tool (MINT)',
   date: {
     day: 'Day',
     month: 'Month',

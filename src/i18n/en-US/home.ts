@@ -1,5 +1,5 @@
 const home = {
-  title: 'Welcome to MINT',
+  title: 'Welcome to Model Innovation Tool (MINT)',
   subheading:
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
   signIn: 'Sign in to start',
