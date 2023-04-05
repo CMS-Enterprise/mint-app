@@ -574,7 +574,7 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Innovation Payment Contractor',
     pointsOfContact: [
       {
-        name: 'Ron Tipper',
+        name: 'Ron Topper',
         email: 'ronald.topper@cms.hhs.gov',
         role: 'Director, Division of Budget and Administrative Services (DBAS)'
       },
