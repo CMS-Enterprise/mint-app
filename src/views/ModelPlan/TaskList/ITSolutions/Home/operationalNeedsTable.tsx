@@ -105,7 +105,11 @@ const OperationalNeedsTable = ({
 
   const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
-  const hiddenTableColumns = hasEditAccess ? [] : ['Actions'];
+  const hiddenTableColumns = [...(hiddenColumns || [])];
+
+  if (!hasEditAccess) {
+    hiddenTableColumns.push('Actions');
+  }
 
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -324,9 +328,7 @@ const OperationalNeedsTable = ({
                 .filter(
                   column =>
                     // @ts-ignore
-                    !hiddenTableColumns?.includes(column.Header) &&
-                    // @ts-ignore
-                    !hiddenColumns?.includes(column.Header)
+                    !hiddenTableColumns?.includes(column.Header)
                 )
                 .map((column, index) => (
                   <th
@@ -364,9 +366,7 @@ const OperationalNeedsTable = ({
                   .filter(
                     cell =>
                       // @ts-ignore
-                      !hiddenTableColumns?.includes(cell.column.Header) &&
-                      // @ts-ignore
-                      !hiddenColumns?.includes(cell.column.Header)
+                      !hiddenTableColumns?.includes(cell.column.Header)
                   )
                   .map((cell, i) => {
                     if (i === 0) {
