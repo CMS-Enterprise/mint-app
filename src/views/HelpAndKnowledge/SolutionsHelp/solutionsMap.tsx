@@ -71,10 +71,8 @@ export type ContactRoles =
   | 'Director, Division of Model Learning Systems (DMLS)'
   | 'Deputy Director, Division of Model Learning Systems (DMLS)'
   | 'Beneficiary Listening Session Point of Contact'
-  | 'Beneficiary Listening Session Point of Contact'
   | 'Deputy Director, Division of Enterprise Information Management Services'
   | 'System Owner'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)'
   | 'CMMI/BSG Point of Contact'
   | 'CMMI/BSG Project Support'
   | 'Overlaps Operations Support'
@@ -84,7 +82,7 @@ export type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)';
+  | 'Director, Division of Budget and Administrative Services (DBAS)';
 
 export type SolutionContactType = {
   name: string;
@@ -576,10 +574,9 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Innovation Payment Contractor',
     pointsOfContact: [
       {
-        name: 'Donna Schmidt',
-        email: 'donna.schmidt@cms.hhs.gov',
-        role:
-          'Director, Division of System Support, Operation and Security (DSSOS)'
+        name: 'Ron Topper',
+        email: 'ronald.topper@cms.hhs.gov',
+        role: 'Director, Division of Budget and Administrative Services (DBAS)'
       },
       {
         name: 'Sue Nonemaker',
@@ -599,7 +596,7 @@ export const helpSolutions: HelpSolutionType[] = [
     ],
     systemOwner: {
       name:
-        'Business Services Group, Division of System Support, Operation and Security',
+        'Business Services Group, Division of Budget and Administrative Services',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
