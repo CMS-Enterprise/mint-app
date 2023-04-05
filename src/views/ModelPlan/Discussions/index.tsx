@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Accordion,
@@ -49,6 +50,7 @@ import './index.scss';
 
 export type DiscussionsProps = {
   modelID: string;
+  discussionID?: string | null;
   readOnly?: boolean;
   askAQuestion?: boolean;
 };
@@ -57,9 +59,19 @@ type DicussionFormPropTypes = {
   content: string;
 };
 
-const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
+const Discussions = ({
+  modelID,
+  discussionID,
+  askAQuestion,
+  readOnly
+}: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  // Used to replace query params after reply has been asnwered from linked email
+  const location = useLocation();
+  const history = useHistory();
+  const queryParams = new URLSearchParams(location.search);
 
   const { data, loading, error, refetch } = useQuery<
     GetModelPlanDiscussionsType,
@@ -98,9 +110,13 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     reply: createReply
   };
 
+  const [discussionReplyID, setDiscussionReplyID] = useState<
+    string | null | undefined
+  >(discussionID);
+
   const [discussionType, setDiscussionType] = useState<
     'question' | 'reply' | 'discussion'
-  >('question');
+  >(discussionReplyID ? 'reply' : 'question');
 
   const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
     'success'
@@ -110,7 +126,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
   // State used to control when the component is being rendered from a form page rather than the task-list
   const [initQuestion, setInitQuestion] = useState<boolean | undefined>(
-    askAQuestion
+    discussionReplyID ? true : askAQuestion
   );
 
   const [questionCount, setQuestionCount] = useState({
@@ -125,15 +141,29 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     content: Yup.string().trim().required(`Please enter a ${discussionType}`)
   });
 
+  // Hook used to open reply form if discussionID present
+  useEffect(() => {
+    const discussionTpReply = discussions.find(
+      dis => dis.id === discussionReplyID
+    );
+    if (discussionTpReply) {
+      setReply(discussionTpReply);
+    } else {
+      // Render error that discussion was already answered
+    }
+  }, [discussionReplyID, discussions]);
+
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
-    if ((discussions?.length === 0 || initQuestion) && !readOnly) {
+    if (discussions?.length > 0 && discussionReplyID) {
+      setDiscussionType('reply');
+    } else if ((discussions?.length === 0 || initQuestion) && !readOnly) {
       setDiscussionType('question');
     } else {
       setDiscussionType('discussion');
     }
     setQuestionCount(getUnansweredQuestions(discussions));
-  }, [discussions, initQuestion, readOnly]);
+  }, [discussions, initQuestion, readOnly, discussionReplyID]);
 
   // Handles the default expanded render of accordions based on if there are more than zero questions
   const openStatus = (status: DiscussionStatus) => {
@@ -169,6 +199,11 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
       .then(response => {
         if (!response?.errors) {
           if (discussionType === 'reply' && reply?.id) {
+            setDiscussionReplyID(null);
+            queryParams.delete('discussionID');
+            history.replace({
+              search: queryParams.toString()
+            });
             handleUpdateDiscussion(reply.id);
           } else {
             refetch().then(() => {
@@ -325,6 +360,14 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       type="button"
                       onClick={() => {
+                        if (discussionReplyID) {
+                          setDiscussionReplyID(null);
+                          queryParams.delete('discussionID');
+                          history.replace({
+                            search: queryParams.toString()
+                          });
+                          setInitQuestion(false);
+                        }
                         if (discussionType) {
                           setDiscussionStatusMessage('');
                           setDiscussionType('discussion');
