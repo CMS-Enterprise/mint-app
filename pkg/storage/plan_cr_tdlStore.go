@@ -73,8 +73,16 @@ func (s *Store) PlanCrTdlUpdate(logger *zap.Logger, planCrTdl *models.PlanCrTdl)
 }
 
 // PlanCrTdlDelete deletes a plan_cr_tdl
-func (s *Store) PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID) (*models.PlanCrTdl, error) {
-	stmt, err := s.db.PrepareNamed(planCrTdlDeleteSQL)
+func (s *Store) PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanCrTdl, error) {
+
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	stmt, err := tx.PrepareNamed(planCrTdlDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -85,6 +93,10 @@ func (s *Store) PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID) (*models.PlanC
 	err = stmt.Get(&deleteCrTdl, arg)
 	if err != nil {
 		return nil, err
+	}
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit cr tdl delete transaction: %w", err)
 	}
 
 	return &deleteCrTdl, nil
