@@ -13,7 +13,7 @@ const solution: SolutionCardType = {
   __typename: 'OperationalSolution',
   id: '9d3b71c0-2bd0-4390-a40f-9f6befe8e83e',
   name: 'Internal staff',
-  key: OperationalSolutionKey.THROUGH_A_CONTRACTOR,
+  key: OperationalSolutionKey.SHARED_SYSTEMS,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',
   needed: true,
