@@ -1,0 +1,15 @@
+@use 'colors' as *;
+
+.landing {
+    &__heading {
+        font-size: 80px;
+    }
+
+    &__description {
+        font-size: 40px;
+    }
+
+    &__footer {
+        border-top: 1px solid $mint-cool-20
+    }
+}

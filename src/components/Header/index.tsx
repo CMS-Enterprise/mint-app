@@ -97,7 +97,7 @@ export const Header = ({ children }: HeaderProps) => {
   return (
     <header
       className={classnames('usa-header mint-header', {
-        'bg-primary-darker': isLanding
+        'bg-primary-darker shadow-none': isLanding
       })}
       role="banner"
       ref={navbarRef}

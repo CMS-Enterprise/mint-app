@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -30,6 +31,10 @@ const Home = () => {
   const [tableHidden, hideTable] = useState<boolean>(false);
 
   const { message } = useMessage();
+
+  const { authState } = useOktaAuth();
+  const { pathname } = useLocation();
+  const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
 
   const headingType = (groups: typeof JOB_CODES) => {
     if (isAssessment(groups, flags)) {
@@ -139,15 +144,7 @@ const Home = () => {
         </>
       );
     }
-    return (
-      <>
-        <NDABanner />
-        <GridContainer>
-          <Landing />
-          {/* <WelcomeText /> */}
-        </GridContainer>
-      </>
-    );
+    return <>{isLanding ? <Landing /> : <NDABanner />}</>;
   };
 
   return <MainContent>{renderView()}</MainContent>;
