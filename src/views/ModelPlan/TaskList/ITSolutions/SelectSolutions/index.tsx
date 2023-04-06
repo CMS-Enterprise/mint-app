@@ -114,6 +114,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
     await Promise.all(
       solutions.map(solution => {
+        debugger;
         // Update possibleSolution needed bool and status
         if (solution.key) {
           return updateSolution({
@@ -142,12 +143,14 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
         const errors = response?.find(result => result?.errors);
 
         if (response && !errors) {
+          debugger;
           if (
             formikRef?.current?.values.solutions.find(
               solution => solution.needed
             ) ||
             update
           ) {
+            debugger;
             showMessageOnNextPage(removedSolutions);
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
