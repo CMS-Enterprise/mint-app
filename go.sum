@@ -249,8 +249,8 @@ github.com/mitchellh/mapstructure v1.5.0/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RR
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
 github.com/okta/okta-jwt-verifier-golang v1.3.1 h1:V+9W5KD3nG7xN0UYtnzXtkurGcs71bLwzPFuUGNMwdE=
 github.com/okta/okta-jwt-verifier-golang v1.3.1/go.mod h1:cHffA777f7Yi4K+yDzUp89sGD5v8sk04Pc3CiT1OMR8=
-github.com/okta/okta-sdk-golang/v2 v2.16.0 h1:wSiDZwZDU9t58I1b0xJcuy36NteU1I3cUis7xbn1FsA=
-github.com/okta/okta-sdk-golang/v2 v2.16.0/go.mod h1:dz30v3ctAiMb7jpsCngGfQUAEGm1/NsWT92uTbNDQIs=
+github.com/okta/okta-sdk-golang/v2 v2.17.0 h1:awY6FyunU4bA90KsQ4ygCJm2qunZTkjZKAq4DbphwSQ=
+github.com/okta/okta-sdk-golang/v2 v2.17.0/go.mod h1:dz30v3ctAiMb7jpsCngGfQUAEGm1/NsWT92uTbNDQIs=
 github.com/opentracing/opentracing-go v1.2.0 h1:uEJPy/1a5RIPAJ0Ov+OIO8OxWu77jEv+1B0VhjKrZUs=
 github.com/opentracing/opentracing-go v1.2.0/go.mod h1:GxEUsuufX4nBwe+T+Wl9TAgYrxe9dPLANfrWvHYVTgc=
 github.com/patrickmn/go-cache v0.0.0-20180815053127-5633e0862627/go.mod h1:3Qf8kWWT7OJRJbdiICTKqZju1ZixQ/KpMGzzAfe6+WQ=

@@ -1,7 +1,6 @@
 export type Flags = {
   hideITLeadExperience: boolean;
   downgradeAssessmentTeam: boolean;
-  operationalSolutionHelp: boolean;
 };
 
 export type FlagsState = {
