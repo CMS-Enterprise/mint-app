@@ -12,6 +12,22 @@ export type FooterItemType = {
   description: string;
 };
 
+export type TableItemType = {
+  need: string;
+  solution: string;
+  status: string;
+};
+
+export const Landing = () => {
+  return (
+    <div className="display-flex flex-column">
+      <LandingHeader />
+      <LandingBody />
+      <LandingFooter />
+    </div>
+  );
+};
+
 export const LandingHeader = () => {
   const { t } = useTranslation('landing');
 
@@ -43,8 +59,24 @@ export const LandingBody = () => {
   const { t } = useTranslation('landing');
 
   return (
-    <GridContainer className="padding-top-2">
-      <p className="text-bold landing__description">{t('bodyHeading')}</p>
+    <GridContainer className="padding-top-2 padding-bottom-8">
+      <Grid row gap>
+        <Grid tablet={{ col: 12 }} className="display-flex flex-justify-center">
+          <p className="text-bold landing__description">{t('bodyHeading')}</p>
+        </Grid>
+
+        <Grid tablet={{ col: 6 }}>
+          <SolutionTable />
+        </Grid>
+
+        <Grid
+          tablet={{ col: 6 }}
+          className="landing__content flex-align-self-center padding-x-4"
+        >
+          <h2 className="margin-bottom-0">{t('bodyItem1.heading')}</h2>
+          <p>{t('bodyItem1.description')}</p>
+        </Grid>
+      </Grid>
     </GridContainer>
   );
 };
@@ -63,7 +95,7 @@ export const LandingFooter = () => {
 
         <Grid row gap>
           {footerItems.map(item => (
-            <Grid tablet={{ col: 4 }}>
+            <Grid tablet={{ col: 4 }} key={item.heading}>
               <h3 className="margin-bottom-0">{item.heading}</h3>
               <p className="margin-top-1 line-height-mono-4">
                 {item.description}
@@ -87,13 +119,35 @@ export const LandingFooter = () => {
   );
 };
 
-export const Landing = () => {
+const SolutionTable = () => {
+  const { t } = useTranslation('landing');
+
+  const tableHeaders: string[] = t('tableHeaders', {
+    returnObjects: true
+  });
+
+  const tableItems: TableItemType[] = t('table', {
+    returnObjects: true
+  });
+
   return (
-    <div>
-      <LandingHeader />
-      <LandingBody />
-      <LandingFooter />
-    </div>
+    <table className="landing__table radius-md padding-2">
+      <tr>
+        {tableHeaders.map(header => (
+          <th className="padding-1 padding-left-0 border-bottom-2px">
+            {header}
+          </th>
+        ))}
+      </tr>
+
+      {tableItems.map(item => (
+        <tr>
+          <td className="padding-1 padding-left-0">{item.need}</td>
+          <td className="padding-1 padding-left-0">{item.solution}</td>
+          <td className="padding-1 padding-left-0">{item.status}</td>
+        </tr>
+      ))}
+    </table>
   );
 };
 

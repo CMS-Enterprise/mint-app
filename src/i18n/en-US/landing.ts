@@ -20,6 +20,29 @@ const landing = {
     description:
       'Follow the upcoming models and demonstrations you care about to receive email notifications when something changes.'
   },
+  tableHeaders: ['Operational need', 'Solution', 'Status'],
+  table: [
+    {
+      need: 'Quality performance scores',
+      solution: 'Health Data Reporting (HDR)',
+      status: 'Onboarding'
+    },
+    {
+      need: 'Recruit participants',
+      solution: 'Salesforce Request for Application (RFA)',
+      status: 'In progress'
+    },
+    {
+      need: 'Review and score applications',
+      solution: 'Salesforce Application Review and Scoring (ARS)',
+      status: 'Backlog'
+    },
+    {
+      need: 'Send reports/data to participants',
+      solution: 'Internal staff',
+      status: 'Not started'
+    }
+  ],
   footerHeading: 'Something for everyone',
   footerItems: [
     {
