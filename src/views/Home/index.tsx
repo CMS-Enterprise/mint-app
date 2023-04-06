@@ -15,10 +15,10 @@ import JOB_CODES from 'constants/jobCodes';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
+import Landing from 'views/Landing';
 import DraftModelPlansTable from 'views/ModelPlan/Table';
 
-import WelcomeText from './WelcomeText';
-
+// import WelcomeText from './WelcomeText';
 import './index.scss';
 
 const Home = () => {
@@ -143,7 +143,8 @@ const Home = () => {
       <>
         <NDABanner />
         <GridContainer>
-          <WelcomeText />
+          <Landing />
+          {/* <WelcomeText /> */}
         </GridContainer>
       </>
     );

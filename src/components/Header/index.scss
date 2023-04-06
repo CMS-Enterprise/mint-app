@@ -150,4 +150,10 @@
       }
     }
   }
+
+  .landing-gov-banner {
+    .usa-banner__header-text, .usa-banner__header-action, .usa-banner__button-text {
+      color: white !important;
+    }
+  }
 }
