@@ -160,6 +160,7 @@ const Discussions = ({
           search: queryParams.toString()
         });
         setInitQuestion(false);
+        setDiscussionStatus('error');
         setDiscussionStatusMessage(
           t('alreadyAnswered', {
             question: discussionToReply.content
