@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Link, Tag } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
@@ -60,18 +61,18 @@ export const LandingBody = () => {
 
   return (
     <GridContainer className="padding-top-2 padding-bottom-8">
-      <Grid row gap>
+      <Grid row gap={6}>
         <Grid tablet={{ col: 12 }} className="display-flex flex-justify-center">
           <p className="text-bold landing__description">{t('bodyHeading')}</p>
         </Grid>
 
-        <Grid tablet={{ col: 6 }}>
+        <Grid tablet={{ col: 6 }} className="padding-bottom-2">
           <SolutionTable />
         </Grid>
 
         <Grid
           tablet={{ col: 6 }}
-          className="landing__content flex-align-self-center padding-x-4"
+          className="landing__content flex-align-self-center"
         >
           <h2 className="margin-bottom-0">{t('bodyItem1.heading')}</h2>
           <p>{t('bodyItem1.description')}</p>
@@ -130,6 +131,28 @@ const SolutionTable = () => {
     returnObjects: true
   });
 
+  const renderStatus = (status: string): string => {
+    let statusClass = '';
+
+    switch (status) {
+      case tableItems[0].status:
+        statusClass = 'bg-base-lighter';
+        break;
+      case tableItems[1].status:
+        statusClass = 'bg-warning';
+        break;
+      case tableItems[2].status:
+        statusClass = 'bg-accent-cool';
+        break;
+      case tableItems[3].status:
+        statusClass = 'transparent border text-base';
+        break;
+      default:
+        break;
+    }
+    return statusClass;
+  };
+
   return (
     <table className="landing__table radius-md padding-2">
       <tr>
@@ -140,11 +163,24 @@ const SolutionTable = () => {
         ))}
       </tr>
 
-      {tableItems.map(item => (
+      {tableItems.map((item, index) => (
         <tr>
           <td className="padding-1 padding-left-0">{item.need}</td>
           <td className="padding-1 padding-left-0">{item.solution}</td>
-          <td className="padding-1 padding-left-0">{item.status}</td>
+          <td
+            className={classNames('padding-1 padding-left-0', {
+              'padding-right-0': index === 3
+            })}
+          >
+            <Tag
+              className={classNames(
+                'padding-1 line-height-body-1 text-bold',
+                renderStatus(item.status)
+              )}
+            >
+              {item.status}
+            </Tag>
+          </td>
         </tr>
       ))}
     </table>
