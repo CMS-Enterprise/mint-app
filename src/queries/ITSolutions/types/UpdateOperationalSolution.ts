@@ -19,6 +19,6 @@ export interface UpdateOperationalSolution {
 }
 
 export interface UpdateOperationalSolutionVariables {
-  operationalSolutionID: UUID;
+  id: UUID;
   changes: OperationalSolutionChanges;
 }

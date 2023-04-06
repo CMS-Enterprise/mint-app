@@ -2,10 +2,10 @@ import { gql } from '@apollo/client';
 
 export default gql`
   mutation UpdateOperationalSolution(
-    $operationalSolutionID: UUID!
+    $id: UUID!
     $changes: OperationalSolutionChanges!
   ) {
-    updateOperationalSolution(id: $operationalSolutionID, changes: $changes) {
+    updateOperationalSolution(id: $id, changes: $changes) {
       id
     }
   }
