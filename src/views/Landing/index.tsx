@@ -2,9 +2,13 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Link, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
+import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { DiscussionStatus } from 'types/graphql-global-types';
+import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
 
@@ -60,21 +64,65 @@ export const LandingBody = () => {
   const { t } = useTranslation('landing');
 
   return (
-    <GridContainer className="padding-top-2 padding-bottom-8">
+    <GridContainer className="padding-top-2 padding-bottom-8 landing__contain">
       <Grid row gap={6}>
-        <Grid tablet={{ col: 12 }} className="display-flex flex-justify-center">
+        <Grid
+          desktop={{ col: 12 }}
+          className="display-flex flex-justify-center"
+        >
           <p className="text-bold landing__description">{t('bodyHeading')}</p>
         </Grid>
-
-        <Grid tablet={{ col: 6 }} className="padding-bottom-2">
+      </Grid>
+      <Grid row gap={6} className="margin-bottom-5">
+        <Grid
+          desktop={{ col: 6 }}
+          className="padding-bottom-2 landing__section-1"
+        >
           <SolutionTable />
         </Grid>
 
         <Grid
-          tablet={{ col: 6 }}
+          desktop={{ col: 6 }}
           className="landing__content flex-align-self-center"
         >
           <h2 className="margin-bottom-0">{t('bodyItem1.heading')}</h2>
+
+          <p>{t('bodyItem1.description')}</p>
+        </Grid>
+      </Grid>
+
+      <Grid row gap={6} className="margin-bottom-5 landing__row-2">
+        <Grid
+          desktop={{ col: 6 }}
+          className="landing__content flex-align-self-center landing__section-3"
+        >
+          <h2 className="margin-bottom-0">{t('bodyItem2.heading')}</h2>
+
+          <p>{t('bodyItem2.description')}</p>
+        </Grid>
+
+        <Grid
+          desktop={{ col: 6 }}
+          className="padding-bottom-2 landing__section-4"
+        >
+          <DiscussionCard />
+        </Grid>
+      </Grid>
+
+      <Grid row gap={6} className="margin-bottom-5">
+        <Grid
+          desktop={{ col: 6 }}
+          className="padding-bottom-2 landing__section-1"
+        >
+          <SolutionTable />
+        </Grid>
+
+        <Grid
+          desktop={{ col: 6 }}
+          className="landing__content flex-align-self-center"
+        >
+          <h2 className="margin-bottom-0">{t('bodyItem1.heading')}</h2>
+
           <p>{t('bodyItem1.description')}</p>
         </Grid>
       </Grid>
@@ -155,35 +203,98 @@ const SolutionTable = () => {
 
   return (
     <table className="landing__table radius-md padding-2">
-      <tr>
-        {tableHeaders.map(header => (
-          <th className="padding-1 padding-left-0 border-bottom-2px">
-            {header}
-          </th>
-        ))}
-      </tr>
-
-      {tableItems.map((item, index) => (
+      <thead>
         <tr>
-          <td className="padding-1 padding-left-0">{item.need}</td>
-          <td className="padding-1 padding-left-0">{item.solution}</td>
-          <td
-            className={classNames('padding-1 padding-left-0', {
-              'padding-right-0': index === 3
-            })}
-          >
-            <Tag
-              className={classNames(
-                'padding-1 line-height-body-1 text-bold',
-                renderStatus(item.status)
-              )}
+          {tableHeaders.map(header => (
+            <th
+              key={header}
+              className="padding-1 padding-left-0 border-bottom-2px"
             >
-              {item.status}
-            </Tag>
-          </td>
+              {header}
+            </th>
+          ))}
         </tr>
-      ))}
+      </thead>
+
+      <tbody>
+        {tableItems.map((item, index) => (
+          <tr key={item.need}>
+            <td className="padding-1 padding-y-2 padding-left-0">
+              {item.need}
+            </td>
+            <td className="padding-1 padding-y-2 padding-left-0">
+              {item.solution}
+            </td>
+            <td
+              className={classNames('padding-1 padding-y-2 padding-left-0', {
+                'padding-right-0': index === 3
+              })}
+            >
+              <Tag
+                className={classNames(
+                  'padding-1 line-height-body-1 text-bold',
+                  renderStatus(item.status)
+                )}
+              >
+                {item.status}
+              </Tag>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
+  );
+};
+
+const DiscussionCard = () => {
+  const justNow = DateTime.local().toISO();
+
+  const hour3ago = DateTime.local().plus({ hours: 3, minutes: 30 }).toISO();
+
+  const discussions: DiscussionType[] = [
+    {
+      id: 'c5960290-81b2-4303-8249-84d334de56b3',
+      content: 'When should we submit an onboarding request to use Salesforce?',
+      createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
+      createdDts: hour3ago,
+      status: DiscussionStatus.ANSWERED,
+      isAssessment: false,
+      createdByUserAccount: {
+        commonName: 'Jane Middleton',
+        __typename: 'UserAccount'
+      },
+      replies: [
+        {
+          id: 'f2ac7d06-de24-4960-83fe-0dd8ed2b526f',
+          discussionID: 'c5960290-81b2-4303-8249-84d334de56b3',
+          content:
+            'You should submit an onboarding request as soon as your team has a sense of what direction you want for IT support.',
+          isAssessment: true,
+          createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
+          createdDts: justNow,
+          resolution: true,
+          createdByUserAccount: {
+            commonName: 'Zoe Hruban',
+            __typename: 'UserAccount'
+          },
+          __typename: 'DiscussionReply'
+        }
+      ],
+      __typename: 'PlanDiscussion'
+    }
+  ];
+
+  return (
+    <div className="landing__discussions line-height-mono-4 padding-2 radius-md">
+      <FormatDiscussion
+        discussionsContent={discussions}
+        status={DiscussionStatus.ANSWERED}
+        hasEditAccess
+        setDiscussionStatusMessage={() => null}
+        setDiscussionType={() => null}
+        setReply={() => null}
+      />
+    </div>
   );
 };
 
