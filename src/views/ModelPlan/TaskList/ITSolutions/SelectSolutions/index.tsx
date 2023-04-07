@@ -31,6 +31,11 @@ import {
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
+import {
+  UpdateOperationalSolution as UpdateOperationalSolutionType,
+  UpdateOperationalSolutionVariables
+} from 'queries/ITSolutions/types/UpdateOperationalSolution';
+import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -96,10 +101,15 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [updateSolution] = useMutation<
+  const [createSolution] = useMutation<
     CreateOperationalSolutionType,
     CreateOperationalSolutionVariables
   >(CreateOperationalSolution);
+
+  const [updateSolution] = useMutation<
+    UpdateOperationalSolutionType,
+    UpdateOperationalSolutionVariables
+  >(UpdateOperationalSolution);
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
@@ -114,10 +124,9 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
     await Promise.all(
       solutions.map(solution => {
-        debugger;
         // Update possibleSolution needed bool and status
-        if (solution.key) {
-          return updateSolution({
+        if (solution.id === '00000000-0000-0000-0000-000000000000') {
+          return createSolution({
             variables: {
               operationalNeedID,
               solutionType: solution.key,
@@ -127,10 +136,21 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
             }
           });
         }
+
+        if (solution.key) {
+          return updateSolution({
+            variables: {
+              id: solution.id,
+              changes: {
+                needed: solution.needed || false
+              }
+            }
+          });
+        }
         // Update custom solution needed bool - status should already be set
         return updateSolution({
           variables: {
-            operationalNeedID,
+            id: solution.id,
             changes: {
               needed: solution.needed || false,
               nameOther: solution.nameOther || ''
@@ -143,14 +163,12 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
         const errors = response?.find(result => result?.errors);
 
         if (response && !errors) {
-          debugger;
           if (
             formikRef?.current?.values.solutions.find(
               solution => solution.needed
             ) ||
             update
           ) {
-            debugger;
             showMessageOnNextPage(removedSolutions);
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
