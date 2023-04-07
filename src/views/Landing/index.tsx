@@ -154,9 +154,9 @@ export const LandingFooter = () => {
   return (
     <div className="landing bg-mint-cool-5 margin-bottom-neg-7">
       <GridContainer className="padding-top-6 padding-bottom-4">
-        <h2 className="margin-bottom-2 margin-top-0">{t('heading')}</h2>
+        <h2 className="margin-bottom-2 margin-top-0">{t('footerHeading')}</h2>
 
-        <Grid row gap>
+        <Grid row gap={4}>
           {footerItems.map(item => (
             <Grid tablet={{ col: 4 }} key={item.heading}>
               <h3 className="margin-bottom-0">{item.heading}</h3>
@@ -167,15 +167,15 @@ export const LandingFooter = () => {
           ))}
         </Grid>
 
-        <div className="display-flex landing__footer padding-top-2">
-          <p className="text-bold margin-right-1">{t('access')}</p>
-          <p>
+        <div className="landing__footer padding-top-4 padding-bottom-2">
+          <span className="text-bold margin-right-1">{t('access')}</span>
+          <span>
             <Trans i18nKey="landing:email">
               indexOne
               <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
               indexTwo
             </Trans>
-          </p>
+          </span>
         </div>
       </GridContainer>
     </div>

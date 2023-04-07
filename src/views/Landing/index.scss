@@ -4,6 +4,10 @@
 .landing {
     &__heading {
         font-size: 80px;
+
+        @media screen and (max-width: $tablet) {
+            font-size: 70px;
+        }
     }
 
     &__heading-underline {
