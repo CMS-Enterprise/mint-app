@@ -330,7 +330,7 @@ const EmailCard = () => {
 
       <p className="margin-y-0 text-bold font-sans-md">{t('sampleModel')}</p>
 
-      <ul className="margin-top-1">
+      <ul className="margin-top-1 padding-left-4">
         <li>{t('bullet1')}</li>
         <li>{t('bullet2')}</li>
       </ul>

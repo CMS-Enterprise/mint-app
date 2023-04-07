@@ -59,6 +59,10 @@
         background: linear-gradient(180deg, rgba(6,138,235,1) 35%, rgba(1,98,166,1) 100%);
         margin-right: -2rem;
         top: 15.5rem;
+
+        @media screen and (max-width: $mobile) {
+            top: 17rem;
+        }
     }
 
     &__email-icon {
