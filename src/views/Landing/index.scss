@@ -51,7 +51,10 @@
 
     &__email {
         box-shadow: 0px .5rem 1rem rgba(0, 0, 0, 0.1);
-        
+    }
+
+    &__email-label {
+        font-size: 14px;
     }
 
     &__email-icon-contain {

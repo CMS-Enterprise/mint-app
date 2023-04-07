@@ -324,7 +324,9 @@ const EmailCard = () => {
     <div className="landing__email line-height-mono-4 padding-2 radius-md">
       <h2 className="margin-y-0">{t('emailHeading')}</h2>
 
-      <p className="margin-y-0 text-base">{t('subHeading')}</p>
+      <p className="margin-y-0 text-base landing__email-label">
+        {t('subHeading')}
+      </p>
 
       <h3 className="margin-y-1 landing__subHeading">{t('dailyUpdates')}</h3>
 
