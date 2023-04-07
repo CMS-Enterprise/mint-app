@@ -9,6 +9,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width: $desktop) {
+      margin-top: 2rem;
+  }
   }
 
   &__user {
