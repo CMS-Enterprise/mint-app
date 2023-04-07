@@ -1,11 +1,18 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Grid, GridContainer, Link, Tag } from '@trussworks/react-uswds';
+import {
+  Grid,
+  GridContainer,
+  IconMail,
+  Link,
+  Tag
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import { DiscussionStatus } from 'types/graphql-global-types';
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
@@ -63,9 +70,11 @@ export const LandingHeader = () => {
 export const LandingBody = () => {
   const { t } = useTranslation('landing');
 
+  const isXL = useCheckResponsiveScreen('xl');
+
   return (
     <GridContainer className="padding-top-2 padding-bottom-8 landing__contain">
-      <Grid row gap={6}>
+      <Grid row gap={isXL ? 6 : 3}>
         <Grid
           desktop={{ col: 12 }}
           className="display-flex flex-justify-center"
@@ -73,7 +82,7 @@ export const LandingBody = () => {
           <p className="text-bold landing__description">{t('bodyHeading')}</p>
         </Grid>
       </Grid>
-      <Grid row gap={6} className="margin-bottom-5">
+      <Grid row gap={isXL ? 6 : 3} className="margin-bottom-5">
         <Grid
           desktop={{ col: 6 }}
           className="padding-bottom-2 landing__section-1"
@@ -91,7 +100,7 @@ export const LandingBody = () => {
         </Grid>
       </Grid>
 
-      <Grid row gap={6} className="margin-bottom-5 landing__row-2">
+      <Grid row gap={isXL ? 6 : 3} className="margin-bottom-5 landing__row-2">
         <Grid
           desktop={{ col: 6 }}
           className="landing__content flex-align-self-center landing__section-3"
@@ -109,21 +118,21 @@ export const LandingBody = () => {
         </Grid>
       </Grid>
 
-      <Grid row gap={6} className="margin-bottom-5">
+      <Grid row gap={isXL ? 6 : 3} className="margin-bottom-5">
         <Grid
           desktop={{ col: 6 }}
-          className="padding-bottom-2 landing__section-1"
+          className="padding-bottom-2 landing__section-5"
         >
-          <SolutionTable />
+          <EmailCard />
         </Grid>
 
         <Grid
           desktop={{ col: 6 }}
           className="landing__content flex-align-self-center"
         >
-          <h2 className="margin-bottom-0">{t('bodyItem1.heading')}</h2>
+          <h2 className="margin-bottom-0">{t('bodyItem3.heading')}</h2>
 
-          <p>{t('bodyItem1.description')}</p>
+          <p>{t('bodyItem3.description')}</p>
         </Grid>
       </Grid>
     </GridContainer>
@@ -294,6 +303,41 @@ const DiscussionCard = () => {
         setDiscussionType={() => null}
         setReply={() => null}
       />
+    </div>
+  );
+};
+
+const EmailCard = () => {
+  const { t } = useTranslation('landing');
+
+  return (
+    <div className="landing__email line-height-mono-4 padding-2 radius-md">
+      <h2 className="margin-y-0">{t('emailHeading')}</h2>
+
+      <p className="margin-y-0 text-base">{t('subHeading')}</p>
+
+      <h3 className="margin-y-1 landing__subHeading">{t('dailyUpdates')}</h3>
+
+      <p className="margin-y-0 text-bold font-sans-md">{t('sampleModel')}</p>
+
+      <ul className="margin-top-1">
+        <li>{t('bullet1')}</li>
+        <li>{t('bullet2')}</li>
+      </ul>
+
+      <p className="text-primary text-underline text-bold  margin-bottom-0">
+        {t('viewPlan')}
+      </p>
+
+      <div className="display-flex flex-justify-end width-full">
+        <div className="landing__email-icon-contain display-flex flex-align-center flex-justify-center position-absolute">
+          <IconMail size={5} className="landing__email-icon" />
+
+          <div className="bg-red radius-top-pill radius-bottom-pill text-white padding-1 width-3 height-3 display-flex flex-align-center flex-justify-center position-absolute margin-left-8 margin-bottom-8">
+            1
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -43,6 +43,13 @@ const landing = {
       status: 'Not started'
     }
   ],
+  emailHeading: 'MINT',
+  subHeading: 'The Model Innovation Tool',
+  dailyUpdates: 'Your daily updates',
+  sampleModel: 'Enhancing Oncology Model',
+  bullet1: '3 new documents have been uploaded',
+  bullet2: 'Updates to CRs/TDLs',
+  viewPlan: 'View this Model Plan in MINT',
   footerHeading: 'Something for everyone',
   footerItems: [
     {
