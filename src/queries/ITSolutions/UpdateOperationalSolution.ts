@@ -7,6 +7,9 @@ export default gql`
   ) {
     updateOperationalSolution(id: $id, changes: $changes) {
       id
+      nameOther
+      needed
+      key
     }
   }
 `;
