@@ -147,7 +147,7 @@ export const Header = ({ children }: HeaderProps) => {
         ) : (
           <Link
             className={classnames('mint-header__nav-link margin-right-2', {
-              'text-white radius-md border': isLanding
+              'text-white radius-md border padding-y-105': isLanding
             })}
             to="/signin"
           >
