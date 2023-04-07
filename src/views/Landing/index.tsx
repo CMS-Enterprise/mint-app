@@ -56,7 +56,7 @@ export const LandingHeader = () => {
         <p className="landing__description">{t('description')}</p>
 
         <UswdsReactLink
-          className="usa-button bg-mint-cool-vivid text-white"
+          className="usa-button bg-mint-cool-vivid text-white width-auto"
           variant="unstyled"
           to="/signin"
         >
