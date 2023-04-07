@@ -124,7 +124,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
     await Promise.all(
       solutions.map(solution => {
-        // Update possibleSolution needed bool and status
+        // if solution id is all zeros, it needs to be created
         if (solution.id === '00000000-0000-0000-0000-000000000000') {
           return createSolution({
             variables: {
@@ -137,17 +137,8 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
           });
         }
 
-        if (solution.key) {
-          return updateSolution({
-            variables: {
-              id: solution.id,
-              changes: {
-                needed: solution.needed || false
-              }
-            }
-          });
-        }
-        // Update custom solution needed bool - status should already be set
+        // Otherwise, set the NEEDED bool for solution
+        // Custom Solution will have a "nameOther", otherwise, it will be empty
         return updateSolution({
           variables: {
             id: solution.id,
