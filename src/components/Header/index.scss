@@ -5,6 +5,11 @@
   margin-bottom: -1px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
+  .heading {
+    font-size: 22px;
+    line-height: 26px;
+  }
+
   &__basic {
     display: flex;
     justify-content: space-between;

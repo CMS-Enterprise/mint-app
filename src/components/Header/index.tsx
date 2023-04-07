@@ -107,11 +107,15 @@ export const Header = ({ children }: HeaderProps) => {
           'landing-gov-banner bg-base-darkest': isLanding
         })}
       />
-      <div className="grid-container mint-header__basic">
-        <div className="usa-logo site-logo" id="logo">
+      <div
+        className={classnames('grid-container mint-header__basic', {
+          'margin-top-2': isLanding
+        })}
+      >
+        <div className="usa-logo site-logo margin-y-4" id="logo">
           <Link to="/">
             <em
-              className={classnames('usa-logo__text', {
+              className={classnames('usa-logo__text heading', {
                 'text-white': isLanding
               })}
               aria-label={t('header:returnHome')}
