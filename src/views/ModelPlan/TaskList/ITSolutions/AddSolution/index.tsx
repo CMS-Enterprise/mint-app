@@ -128,7 +128,6 @@ const AddSolution = () => {
     const { key } = formikValues;
 
     let updateMutation;
-    debugger;
     try {
       // Add from list of possible solutions
       if (key !== OperationalSolutionKey.OTHER_NEW_PROCESS) {
@@ -142,12 +141,23 @@ const AddSolution = () => {
             }
           }
         });
-      } else {
-        // Update/add a custom solution
-        // TODO: this is not 100% right
-        updateMutation = await updateCustomSolution({
+      } else if (!operationalSolutionID) {
+        // Add custom solution
+        updateMutation = await createSolution({
           variables: {
             operationalNeedID,
+            changes: {
+              needed: true,
+              nameOther: t('otherSolution'),
+              status: OpSolutionStatus.NOT_STARTED
+            }
+          }
+        });
+      } else {
+        // Update a custom solution
+        updateMutation = await updateCustomSolution({
+          variables: {
+            id: operationalSolutionID,
             changes: {
               needed: true,
               nameOther:
@@ -158,7 +168,6 @@ const AddSolution = () => {
         });
       }
     } catch {
-      console.log(updateMutation);
       setMutationError(true);
     }
 
