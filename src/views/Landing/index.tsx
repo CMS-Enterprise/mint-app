@@ -78,7 +78,7 @@ export const LandingBody = () => {
   const isXL = useCheckResponsiveScreen('xl');
 
   return (
-    <GridContainer className="padding-top-2 padding-bottom-8 landing__contain">
+    <GridContainer className="padding-top-2 padding-bottom-3 landing__contain">
       <Grid row gap={isXL ? 6 : 3}>
         <Grid
           desktop={{ col: 12 }}
