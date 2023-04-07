@@ -105,7 +105,6 @@ export const returnActionLinks = (
   modelID: string,
   readOnly?: boolean
 ): JSX.Element => {
-  /* eslint no-underscore-dangle: 0 */
   const operationalNeedKey = operationalNeed.key || operationalNeed.needKey;
 
   const operationalNeedObj = operationalNeedMap[operationalNeedKey || 'NONE'];

@@ -61,7 +61,7 @@ export const searchSolutions = (
     solution =>
       solution.name.toLowerCase().includes(query.toLowerCase()) ||
       solution?.acronym?.toLowerCase().includes(query.toLowerCase()) ||
-      solution.categories.some(e => queryRegex.test(e))
+      solution.categories.some(e => queryRegex.test(e.replace('-', ' ')))
   );
 };
 

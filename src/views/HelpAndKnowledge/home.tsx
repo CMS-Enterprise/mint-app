@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -13,7 +12,6 @@ import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const flags = useFlags();
   return (
     <MainContent>
       <SummaryBox
@@ -41,7 +39,7 @@ export const HelpAndKnowledgeHome = () => {
         {/* <ArticlePageInfo /> */}
       </GridContainer>
 
-      {flags.operationalSolutionHelp && <SolutionCategories />}
+      <SolutionCategories />
     </MainContent>
   );
 };
