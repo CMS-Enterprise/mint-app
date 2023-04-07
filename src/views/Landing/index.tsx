@@ -156,7 +156,7 @@ export const LandingFooter = () => {
       <GridContainer className="padding-top-6 padding-bottom-4">
         <h2 className="margin-bottom-2 margin-top-0">{t('footerHeading')}</h2>
 
-        <Grid row gap={4}>
+        <Grid row gap={4} className="padding-bottom-2">
           {footerItems.map(item => (
             <Grid tablet={{ col: 4 }} key={item.heading}>
               <h3 className="margin-bottom-0">{item.heading}</h3>
