@@ -1,6 +1,8 @@
 @use 'colors' as *;
 @use 'viewports' as *;
 
+$card-shadow: 0px 1rem 2rem rgba(0, 0, 0, 0.1);
+
 .landing {
     word-break: break-word;
 
@@ -36,13 +38,13 @@
         border-spacing: 0;
         text-align: left;
         line-height: 23px;
-        box-shadow: 0px .5rem 1rem rgba(0, 0, 0, 0.1);
+        box-shadow: $card-shadow;
         width: 100%;
         
     }
 
     &__discussions {
-        box-shadow: 0px .5rem 1rem rgba(0, 0, 0, 0.1);
+        box-shadow: $card-shadow;
     }
 
     &__subHeading {
@@ -50,7 +52,7 @@
     }
 
     &__email {
-        box-shadow: 0px .5rem 1rem rgba(0, 0, 0, 0.1);
+        box-shadow: $card-shadow;
     }
 
     &__email-label {
