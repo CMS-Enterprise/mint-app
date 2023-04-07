@@ -2,6 +2,7 @@
 @use 'viewports' as *;
 
 $card-shadow: 0px 1rem 2rem rgba(0, 0, 0, 0.1);
+$card-radius: 6px;
 
 .landing {
     word-break: break-word;
@@ -40,11 +41,13 @@ $card-shadow: 0px 1rem 2rem rgba(0, 0, 0, 0.1);
         line-height: 23px;
         box-shadow: $card-shadow;
         width: 100%;
+        border-radius: $card-radius;
         
     }
 
     &__discussions {
         box-shadow: $card-shadow;
+        border-radius: $card-radius;
     }
 
     &__subHeading {
@@ -62,7 +65,7 @@ $card-shadow: 0px 1rem 2rem rgba(0, 0, 0, 0.1);
     &__email-icon-contain {
         width: 4rem;
         height: 4rem;
-        border-radius: .5rem;
+        border-radius: .75rem;
         background: rgb(6,138,235);
         background: linear-gradient(180deg, rgba(6,138,235,1) 35%, rgba(1,98,166,1) 100%);
         margin-right: -2rem;
@@ -75,6 +78,8 @@ $card-shadow: 0px 1rem 2rem rgba(0, 0, 0, 0.1);
 
     &__email-icon {
         fill: white !important;
+        height: 2.75rem !important;
+        width: 2.75rem !important;
     }
 
     &__contain {

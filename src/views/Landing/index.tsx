@@ -216,7 +216,7 @@ const SolutionTable = () => {
   };
 
   return (
-    <table className="landing__table radius-md padding-2">
+    <table className="landing__table padding-2">
       <thead>
         <tr>
           {tableHeaders.map((header, index) => (
@@ -304,7 +304,7 @@ const DiscussionCard = () => {
   ];
 
   return (
-    <div className="landing__discussions line-height-mono-4 padding-2 radius-md">
+    <div className="landing__discussions line-height-mono-4 padding-2">
       <FormatDiscussion
         discussionsContent={discussions}
         status={DiscussionStatus.ANSWERED}
