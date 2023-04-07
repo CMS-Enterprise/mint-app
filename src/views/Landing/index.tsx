@@ -45,7 +45,7 @@ export const LandingHeader = () => {
 
   return (
     <div className="landing bg-primary-darker text-white">
-      <GridContainer className="padding-top-2">
+      <GridContainer className="padding-top-1">
         <h1 className="landing__heading margin-bottom-3">
           {t('headingPart1')}
           <span className="landing__heading-underline">
