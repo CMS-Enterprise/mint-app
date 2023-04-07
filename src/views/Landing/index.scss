@@ -5,6 +5,7 @@
     &__heading {
         font-size: 80px;
         font-weight: 400;
+        word-break: break-word;
 
         @media screen and (max-width: $tablet) {
             font-size: 70px;
