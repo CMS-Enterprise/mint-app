@@ -137,7 +137,7 @@ export const LandingBody = () => {
         >
           <h2 className="margin-bottom-0">{t('bodyItem3.heading')}</h2>
 
-          <p>{t('bodyItem3.description')}</p>
+          <p className="margin-bottom-0">{t('bodyItem3.description')}</p>
         </Grid>
       </Grid>
     </GridContainer>
