@@ -110,7 +110,7 @@ describe('IT Solutions Home', () => {
 
     await waitFor(() => {
       expect(getByText('Recruit participants')).toBeInTheDocument();
-      expect(getByText('Salesforce')).toBeInTheDocument();
+      expect(getByText('Shared Systems')).toBeInTheDocument();
     });
   });
 
