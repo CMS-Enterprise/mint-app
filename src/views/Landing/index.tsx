@@ -343,7 +343,7 @@ const EmailCard = () => {
 
       <div className="display-flex flex-justify-end width-full">
         <div className="landing__email-icon-contain display-flex flex-align-center flex-justify-center position-absolute">
-          <IconMail size={5} className="landing__email-icon" />
+          <IconMail size={6} className="landing__email-icon" />
 
           <div className="bg-red radius-top-pill radius-bottom-pill text-white padding-1 width-3 height-3 display-flex flex-align-center flex-justify-center position-absolute margin-left-8 margin-bottom-8">
             1
