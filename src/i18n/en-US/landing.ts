@@ -1,6 +1,7 @@
 const landing = {
   mint: 'Model Innovation Tool (MINT)',
-  heading: 'Say hello to better planning and collaboration.',
+  headingPart1: 'Say hello to ',
+  headingPart2: 'better planning and collaboration.',
   description:
     'The Model Innovation Tool provides a single source of truth for all upcoming CMMI models and demonstrations that breaks down silos, bringing transparency and awareness across CMS.',
   signIn: 'Sign in to get started',

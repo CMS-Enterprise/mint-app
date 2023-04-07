@@ -46,7 +46,12 @@ export const LandingHeader = () => {
   return (
     <div className="landing bg-primary-darker text-white">
       <GridContainer className="padding-top-2">
-        <h1 className="landing__heading">{t('heading')}</h1>
+        <h1 className="landing__heading">
+          {t('headingPart1')}
+          <span className="landing__heading-underline">
+            {t('headingPart2')}
+          </span>
+        </h1>
 
         <p className="landing__description">{t('description')}</p>
 
@@ -214,10 +219,15 @@ const SolutionTable = () => {
     <table className="landing__table radius-md padding-2">
       <thead>
         <tr>
-          {tableHeaders.map(header => (
+          {tableHeaders.map((header, index) => (
             <th
               key={header}
-              className="padding-1 padding-left-0 border-bottom-2px"
+              className={classNames(
+                'padding-1 padding-left-0 border-bottom-2px',
+                {
+                  'width-card': index === 0
+                }
+              )}
             >
               {header}
             </th>
@@ -228,14 +238,14 @@ const SolutionTable = () => {
       <tbody>
         {tableItems.map((item, index) => (
           <tr key={item.need}>
-            <td className="padding-1 padding-y-2 padding-left-0">
+            <td className="padding-1 padding-y-1 padding-left-0">
               {item.need}
             </td>
-            <td className="padding-1 padding-y-2 padding-left-0">
+            <td className="padding-1 padding-y-1 padding-left-0">
               {item.solution}
             </td>
             <td
-              className={classNames('padding-1 padding-y-2 padding-left-0', {
+              className={classNames('padding-1 padding-y-1 padding-left-0', {
                 'padding-right-0': index === 3
               })}
             >
