@@ -230,7 +230,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 		}}
