@@ -238,16 +238,19 @@ const SolutionTable = () => {
       <tbody>
         {tableItems.map((item, index) => (
           <tr key={item.need}>
-            <td className="padding-1 padding-y-1 padding-left-0">
+            <td className="padding-1 padding-y-1 padding-left-0 landing__cell-contain">
               {item.need}
             </td>
-            <td className="padding-1 padding-y-1 padding-left-0">
+            <td className="padding-1 padding-y-1 padding-left-0 landing__cell-contain">
               {item.solution}
             </td>
             <td
-              className={classNames('padding-1 padding-y-1 padding-left-0', {
-                'padding-right-0': index === 3
-              })}
+              className={classNames(
+                'padding-1 padding-y-1 padding-left-0 landing__cell-contain padding-top-2',
+                {
+                  'padding-right-0': index === 3
+                }
+              )}
             >
               <Tag
                 className={classNames(
