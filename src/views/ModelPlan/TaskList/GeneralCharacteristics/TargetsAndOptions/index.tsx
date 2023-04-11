@@ -25,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
 import {
   GetTargetsAndOptions as GetTargetsAndOptionsType,
@@ -88,6 +89,9 @@ const TargetsAndOptions = () => {
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts
   );
+
+  // If redirected from IT Solutions, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
     UpdatePlanGeneralCharacteristics

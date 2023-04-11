@@ -24,6 +24,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
 import {
   GetCCWAndQuality as GetCCWAndQualityType,
@@ -83,6 +84,9 @@ const CCWAndQuality = () => {
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts
   );
+
+  // If redirected from IT Solutions, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
