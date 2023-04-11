@@ -28,6 +28,8 @@ export const Header = ({ children }: HeaderProps) => {
   const mobileSideNav = useRef<any>();
   const navbarRef = useRef<HTMLDivElement | null>(null); // Ref used for setting setNavbarHeight
 
+  const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
+
   useEffect(() => {
     let isMounted = true;
     if (authState?.isAuthenticated) {
@@ -93,12 +95,31 @@ export const Header = ({ children }: HeaderProps) => {
   };
 
   return (
-    <header className="usa-header mint-header" role="banner" ref={navbarRef}>
-      <GovBanner />
-      <div className="grid-container mint-header__basic">
-        <div className="usa-logo site-logo" id="logo">
+    <header
+      className={classnames('usa-header mint-header', {
+        'bg-primary-darker shadow-none': isLanding
+      })}
+      role="banner"
+      ref={navbarRef}
+    >
+      <GovBanner
+        className={classnames({
+          'landing-gov-banner bg-base-darkest': isLanding
+        })}
+      />
+      <div
+        className={classnames('grid-container mint-header__basic', {
+          'margin-top-2': isLanding
+        })}
+      >
+        <div className="usa-logo site-logo margin-y-4" id="logo">
           <Link to="/">
-            <em className="usa-logo__text" aria-label={t('header:returnHome')}>
+            <em
+              className={classnames('usa-logo__text heading', {
+                'text-white': isLanding
+              })}
+              aria-label={t('header:returnHome')}
+            >
               {t('general:appName')}
             </em>
           </Link>
@@ -128,7 +149,12 @@ export const Header = ({ children }: HeaderProps) => {
             </button>
           </div>
         ) : (
-          <Link className="mint-header__nav-link" to="/signin">
+          <Link
+            className={classnames('mint-header__nav-link margin-right-2', {
+              'text-white radius-md border padding-y-105': isLanding
+            })}
+            to="/signin"
+          >
             {t('header:signIn')}
           </Link>
         )}

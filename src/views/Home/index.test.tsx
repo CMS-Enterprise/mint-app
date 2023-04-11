@@ -15,6 +15,20 @@ import Table from 'views/ModelPlan/Table';
 
 import Home from './index';
 
+jest.mock('@okta/okta-react', () => ({
+  useOktaAuth: () => {
+    return {
+      authState: {
+        isAuthenticated: true
+      },
+      oktaAuth: {
+        getUser: async () => {},
+        logout: async () => {}
+      }
+    };
+  }
+}));
+
 const defaultFlags: Flags = {
   hideITLeadExperience: false
 } as Flags;
