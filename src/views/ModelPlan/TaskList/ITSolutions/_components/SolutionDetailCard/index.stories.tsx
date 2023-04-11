@@ -21,6 +21,7 @@ const solution: GetOperationalSolutionType = {
   id: operationalSolutionID,
   name: 'Internal staff',
   key: OperationalSolutionKey.SHARED_SYSTEMS,
+  isOther: false,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',
   needed: true,

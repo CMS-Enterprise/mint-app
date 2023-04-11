@@ -37,6 +37,7 @@ export interface GetOperationalSolution_operationalSolution {
   id: UUID;
   key: OperationalSolutionKey | null;
   needed: boolean | null;
+  isOther: boolean | null;
   name: string | null;
   nameOther: string | null;
   pocName: string | null;

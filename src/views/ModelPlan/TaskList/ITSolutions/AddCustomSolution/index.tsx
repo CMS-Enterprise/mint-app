@@ -62,6 +62,7 @@ type CustomOperationalSolutionFormType = Omit<
   | '__typename'
   | 'id'
   | 'key'
+  | 'isOther'
   | 'name'
   | 'status'
   | 'mustFinishDts'
