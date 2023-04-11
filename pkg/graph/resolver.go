@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -16,8 +18,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"github.com/google/uuid"
-
-	"github.com/elastic/go-elasticsearch/v8"
 )
 
 //go:generate go run github.com/99designs/gqlgen
@@ -36,7 +36,7 @@ type Resolver struct {
 	addressBook          email.AddressBook
 	ldClient             *ldclient.LDClient
 	pubsub               pubsub.PubSub
-	esClient             *elasticsearch.Client
+	searchClient         *opensearch.Client
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -58,7 +58,7 @@ func NewResolver(
 	addressBook email.AddressBook,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
-	esClient *elasticsearch.Client,
+	osClient *opensearch.Client,
 ) *Resolver {
 	return &Resolver{
 		store:                store,
@@ -69,6 +69,6 @@ func NewResolver(
 		addressBook:          addressBook,
 		ldClient:             ldClient,
 		pubsub:               pubsub,
-		esClient:             esClient,
+		searchClient:         osClient,
 	}
 }

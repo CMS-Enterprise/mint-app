@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/opensearch-project/opensearch-go/v2"
 
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -201,13 +201,13 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
-	esConfig := elasticsearch.Config{ // TODO: .envrc settings for ES config
-		Addresses: []string{"http://elasticsearch:9200"},
+	osConfig := opensearch.Config{ // TODO: .envrc settings for OpenSearch config
+		Addresses: []string{"http://opensearch:9200"},
 	}
 
-	esClient, err := elasticsearch.NewClient(esConfig)
+	osClient, err := opensearch.NewClient(osConfig)
 	if err != nil {
-		s.logger.Fatal("Failed to create an elasticsearch client", zap.Error(err))
+		s.logger.Fatal("Failed to create an OpenSearch client", zap.Error(err))
 	}
 
 	resolver := graph.NewResolver(
@@ -222,7 +222,7 @@ func (s *Server) routes(
 		addressBook,
 		ldClient,
 		s.pubsub,
-		esClient,
+		osClient,
 	)
 
 	gqlDirectives := generated.DirectiveRoot{

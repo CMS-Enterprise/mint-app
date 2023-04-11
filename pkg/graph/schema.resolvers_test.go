@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/opensearch-project/opensearch-go/v2"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -157,7 +157,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	resolverService.FetchUserInfo = oktaClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
-	es, _ := elasticsearch.NewDefaultClient()
+	searchClient, _ := opensearch.NewDefaultClient()
 
 	resolver := NewResolver(
 		store,
@@ -168,7 +168,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 		email.AddressBook{},
 		ldClient,
 		ps,
-		es,
+		searchClient,
 	)
 
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})

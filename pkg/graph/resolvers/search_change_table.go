@@ -7,11 +7,11 @@ import (
 	"io"
 	"time"
 
-	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/opensearch-project/opensearch-go/v2"
+	"github.com/opensearch-project/opensearch-go/v2/opensearchapi"
 
 	"github.com/google/uuid"
 
-	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -27,25 +27,25 @@ func marshalElasticsearchQuery(request models.ElasticsearchRequest) (io.Reader, 
 }
 
 func performSearch(
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	queryReader io.Reader,
 	limit int,
 	offset int,
 	sortBy string,
-) (*esapi.Response, error) {
-	return esClient.Search(
-		esClient.Search.WithIndex("change_table_idx"),
-		esClient.Search.WithBody(queryReader),
-		esClient.Search.WithSort(sortBy),
-		esClient.Search.WithSize(limit),
-		esClient.Search.WithFrom(offset),
-		esClient.Search.WithTrackTotalHits(true),
-		esClient.Search.WithPretty(),
+) (*opensearchapi.Response, error) {
+	return searchClient.Search(
+		searchClient.Search.WithIndex("change_table_idx"),
+		searchClient.Search.WithBody(queryReader),
+		searchClient.Search.WithSort(sortBy),
+		searchClient.Search.WithSize(limit),
+		searchClient.Search.WithFrom(offset),
+		searchClient.Search.WithTrackTotalHits(true),
+		searchClient.Search.WithPretty(),
 	)
 }
 
 // Handle Elasticsearch errors and parse response
-func handleElasticsearchError(res *esapi.Response, logger *zap.Logger) error {
+func handleElasticsearchError(res *opensearchapi.Response, logger *zap.Logger) error {
 	var e map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
 		logger.Error("Error parsing the response body", zap.Error(err))
@@ -62,7 +62,7 @@ func handleElasticsearchError(res *esapi.Response, logger *zap.Logger) error {
 	return fmt.Errorf("error searching change table: %s", e["error"].(map[string]interface{})["reason"])
 }
 
-func parseElasticsearchResponseBody(res *esapi.Response, logger *zap.Logger) (map[string]interface{}, error) {
+func parseElasticsearchResponseBody(res *opensearchapi.Response, logger *zap.Logger) (map[string]interface{}, error) {
 	var r map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		logger.Error("Error parsing the response body", zap.Error(err))
@@ -101,7 +101,7 @@ func extractChangeTableRecords(
 // Search functions for change table
 func searchChangeTableBase(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	query models.ElasticsearchRequest,
 	limit int,
 	offset int,
@@ -112,7 +112,7 @@ func searchChangeTableBase(
 		return nil, err
 	}
 
-	res, err := performSearch(esClient, queryReader, limit, offset, sortBy)
+	res, err := performSearch(searchClient, queryReader, limit, offset, sortBy)
 	if err != nil {
 		return nil, err
 	}
@@ -143,39 +143,41 @@ func searchChangeTableBase(
 // SearchChangeTable searches the change table for records matching the given query
 func SearchChangeTable(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	query models.ElasticsearchRequest,
 	limit int,
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	return searchChangeTableBase(logger, esClient, query, limit, offset, sortBy)
+	return searchChangeTableBase(logger, searchClient, query, limit, offset, sortBy)
 }
 
 // SearchChangeTableWithFreeText searches for change table records in Elasticsearch using a free-text search
 func SearchChangeTableWithFreeText(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	searchText string,
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
 	request := models.ElasticsearchRequest{
 		Request: map[string]interface{}{
-			"multi_match": map[string]interface{}{
-				"query":         searchText,
-				"fuzziness":     "AUTO",
-				"prefix_length": 1,
+			"query": map[string]interface{}{
+				"multi_match": map[string]interface{}{
+					"query":         searchText,
+					"fuzziness":     "AUTO",
+					"prefix_length": 1,
+				},
 			},
 		},
 	}
-	return searchChangeTableBase(logger, esClient, request, limit, offset, "_score:desc")
+	return searchChangeTableBase(logger, searchClient, request, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelPlanID searches the change table for records matching the given model plan ID
 func SearchChangeTableByModelPlanID(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	modelPlanID uuid.UUID,
 	limit int,
 	offset int,
@@ -201,13 +203,13 @@ func SearchChangeTableByModelPlanID(
 		},
 	}
 
-	return searchChangeTableBase(logger, esClient, query, limit, offset, "modified_dts:desc")
+	return searchChangeTableBase(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableByDateRange searches the change table for records with a modified_dts within the specified date range
 func SearchChangeTableByDateRange(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	startDate time.Time,
 	endDate time.Time,
 	limit int,
@@ -215,7 +217,7 @@ func SearchChangeTableByDateRange(
 ) ([]*models.ChangeTableRecord, error) {
 	request := models.ElasticsearchRequest{
 		Request: map[string]interface{}{
-			"request": map[string]interface{}{
+			"query": map[string]interface{}{
 				"bool": map[string]interface{}{
 					"filter": []interface{}{
 						map[string]interface{}{
@@ -232,13 +234,13 @@ func SearchChangeTableByDateRange(
 		},
 	}
 
-	return searchChangeTableBase(logger, esClient, request, limit, offset, "modified_dts:desc")
+	return searchChangeTableBase(logger, searchClient, request, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableByActor searches the change table for records with a modified_by field matching the given actor
 func SearchChangeTableByActor(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	actor string,
 	limit int,
 	offset int,
@@ -261,14 +263,14 @@ func SearchChangeTableByActor(
 		},
 	}
 
-	return searchChangeTableBase(logger, esClient, query, limit, offset, "_score:desc")
+	return searchChangeTableBase(logger, searchClient, query, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelStatus searches the change table for records with a
 // status field matching the given model plan status
 func SearchChangeTableByModelStatus(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	status models.ModelStatus,
 	limit int,
 	offset int,
@@ -300,5 +302,5 @@ func SearchChangeTableByModelStatus(
 		},
 	}
 
-	return searchChangeTableBase(logger, esClient, query, limit, offset, "modified_dts:desc")
+	return searchChangeTableBase(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }

@@ -1,0 +1,3 @@
+opensearch.ssl.http.enabled: false
+opensearch.ssl.transport.enabled: false
+plugins.security.disabled: true

@@ -9,9 +9,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"go.uber.org/zap"
 
-	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -53,7 +54,7 @@ func createDateHistogram(timeDuration string, limit int) (string, error) {
 }
 
 func searchAndUnmarshal(
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	query string,
 	result interface{},
 ) error {
@@ -62,7 +63,7 @@ func searchAndUnmarshal(
 		Body:  strings.NewReader(query),
 	}
 
-	res, err := req.Do(context.Background(), esClient)
+	res, err := req.Do(context.Background(), searchClient)
 	if err != nil {
 		return err
 	}
@@ -140,7 +141,7 @@ func processBucket(bucketHead models.DateHistogramAggregationBucket, currentBuck
 // SearchChangeTableDateHistogramConsolidatedAggregations returns a list of date histogram buckets for the change table
 func SearchChangeTableDateHistogramConsolidatedAggregations(
 	logger *zap.Logger,
-	esClient *elasticsearch.Client,
+	searchClient *opensearch.Client,
 	timeDuration string,
 	limit int,
 	offset int,
@@ -152,7 +153,7 @@ func SearchChangeTableDateHistogramConsolidatedAggregations(
 	}
 
 	var response models.DateHistogramAggregationResponse
-	err = searchAndUnmarshal(esClient, query, &response)
+	err = searchAndUnmarshal(searchClient, query, &response)
 	if err != nil {
 		return nil, err
 	}
