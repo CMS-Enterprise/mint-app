@@ -10,7 +10,6 @@ type ITypedError interface {
 	Code() ErrorCode
 	Message() string
 	error
-	// Error() string
 }
 
 // String implements the stringer interface
@@ -23,7 +22,6 @@ func (ec ErrorCode) String() string {
 type typedError struct {
 	code    ErrorCode
 	message string
-	// error
 }
 
 func (te *typedError) Error() string {
