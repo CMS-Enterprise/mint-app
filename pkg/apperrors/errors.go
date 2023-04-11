@@ -13,6 +13,12 @@ type ITypedError interface {
 	// Error() string
 }
 
+// String implements the stringer interface
+func (ec ErrorCode) String() string {
+	return string(ec)
+
+}
+
 // typedError represents the shared data in common betwen all typedErrors, and implements ITypedError
 type typedError struct {
 	code    ErrorCode
@@ -21,7 +27,7 @@ type typedError struct {
 }
 
 func (te *typedError) Error() string {
-	return te.message
+	return fmt.Sprintf(`{"code": "%s", "message": "%s"}`, te.code, te.message)
 }
 func (te *typedError) Message() string {
 	return te.message
