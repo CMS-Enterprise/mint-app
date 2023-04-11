@@ -322,8 +322,14 @@ const AddSolution = () => {
                                 })}
                             </Field>
 
-                            {values.key ===
-                              OperationalSolutionKey.OTHER_NEW_PROCESS &&
+                            {(values.key ===
+                              OperationalSolutionKey.CONTRACTOR ||
+                              values.key ===
+                                OperationalSolutionKey.CROSS_MODEL_CONTRACT ||
+                              values.key ===
+                                OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS ||
+                              values.key ===
+                                OperationalSolutionKey.OTHER_NEW_PROCESS) &&
                               !operationalSolutionID && (
                                 <Button
                                   type="button"
@@ -331,7 +337,8 @@ const AddSolution = () => {
                                   className="usa-button usa-button--outline margin-top-3"
                                   onClick={() => {
                                     history.push(
-                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`,
+                                      { selectedSolution: values.key }
                                     );
                                   }}
                                 >

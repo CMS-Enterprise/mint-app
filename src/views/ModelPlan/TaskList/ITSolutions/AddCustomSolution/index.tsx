@@ -39,12 +39,23 @@ import {
   UpdateOperationalSolutionVariables
 } from 'queries/ITSolutions/types/UpdateOperationalSolution';
 import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+export type SelectedOpertionalSolutionKeyType =
+  | OperationalSolutionKey.CONTRACTOR
+  | OperationalSolutionKey.CROSS_MODEL_CONTRACT
+  | OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS
+  | OperationalSolutionKey.INTERNAL_STAFF
+  | OperationalSolutionKey.OTHER_NEW_PROCESS;
 
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
@@ -90,6 +101,12 @@ const AddCustomSolution = () => {
     modelID: string;
     operationalNeedID: string;
     operationalSolutionID?: string;
+  }>();
+
+  const {
+    state: { selectedSolution }
+  } = useLocation<{
+    selectedSolution?: SelectedOpertionalSolutionKeyType;
   }>();
 
   // Hash variable to trigger removal of pocName and pocEmail
@@ -314,9 +331,12 @@ const AddCustomSolution = () => {
                           handleSubmit(e);
                         }}
                       >
-                        <h3 className="margin-top-6 margin-bottom-0">
-                          {t('selectedSectionHeading')}
-                        </h3>
+                        {selectedSolution && (
+                          <h3 className="margin-top-6 margin-bottom-0">
+                            {t('selectedSectionHeading')}{' '}
+                            {translateOperationalSolutionKey(selectedSolution)}
+                          </h3>
+                        )}
                         <Fieldset disabled={loading}>
                           <FieldGroup
                             scrollElement="nameOther"
