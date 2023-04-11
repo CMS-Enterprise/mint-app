@@ -41,7 +41,9 @@ const discussions = {
   },
   ariaLabel: 'Discussion Center Modal',
   assessment: 'MINT Team',
-  viewMoreQuestions: 'View more questions'
+  viewMoreQuestions: 'View more questions',
+  alreadyAnswered:
+    '“{{-question}}” has already been answered. You can view it in the answered questions below.'
 };
 
 export default discussions;
