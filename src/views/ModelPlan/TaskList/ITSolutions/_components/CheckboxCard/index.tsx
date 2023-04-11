@@ -101,7 +101,8 @@ const CheckboxCard = ({
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
               onClick={() =>
                 history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`
+                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
+                  { selectedSolution: null }
                 )
               }
             >
