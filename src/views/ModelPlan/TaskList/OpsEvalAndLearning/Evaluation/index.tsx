@@ -17,7 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITSolutionsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -264,7 +264,7 @@ const Evaluation = () => {
                       </legend>
 
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="ops-eval-and-learning-evaluation-approach-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -419,7 +419,7 @@ const Evaluation = () => {
                     {t('dataNeeded')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-data-needed-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -489,7 +489,7 @@ const Evaluation = () => {
                     {t('dataToSend')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-data-to-send-warning"
                       onClick={() =>
                         handleFormSubmit(

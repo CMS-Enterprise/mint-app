@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITSolutionsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -309,7 +309,7 @@ const ClaimsBasedPayment = () => {
                           {t('excludedFromPayment')}
                         </Label>
                         {itSolutionsStarted && (
-                          <ITToolsWarning
+                          <ITSolutionsWarning
                             id="payment-provider-exclusion-ffs-system-warning"
                             className="margin-top-neg-5"
                             onClick={() =>

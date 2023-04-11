@@ -16,7 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITSolutionsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -250,7 +250,7 @@ const Performance = () => {
                     {t('establishBenchmark')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-benchmark-performance-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -446,7 +446,7 @@ const Performance = () => {
                   </Label>
 
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-appeal-performance-warning"
                       onClick={() =>
                         handleFormSubmit(

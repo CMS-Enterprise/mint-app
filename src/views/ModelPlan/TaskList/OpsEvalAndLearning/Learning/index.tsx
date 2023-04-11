@@ -14,7 +14,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITSolutionsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -241,7 +241,7 @@ const Learning = () => {
                       </legend>
 
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="ops-eval-and-learning-learning-systems-warning"
                           onClick={() =>
                             handleFormSubmit(

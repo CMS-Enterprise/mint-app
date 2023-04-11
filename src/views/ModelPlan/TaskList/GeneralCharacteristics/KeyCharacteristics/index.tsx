@@ -17,7 +17,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITSolutionsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -371,7 +371,7 @@ const KeyCharacteristics = () => {
                         {t('reviewPlanBids')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-collect-bids-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -427,7 +427,7 @@ const KeyCharacteristics = () => {
                         {t('manageEnrollment')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-manage-enrollment-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -483,7 +483,7 @@ const KeyCharacteristics = () => {
                         {t('updatedContract')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-contact-updated-warning"
                           onClick={() =>
                             handleFormSubmit(

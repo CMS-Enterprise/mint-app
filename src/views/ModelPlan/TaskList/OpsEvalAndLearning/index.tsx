@@ -19,7 +19,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITSolutionsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -430,7 +430,7 @@ export const OpsEvalAndLearningContent = () => {
                     {t('helpDesk')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-help-desk-use-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -574,7 +574,7 @@ export const OpsEvalAndLearningContent = () => {
                     {t('iddocSupport')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-iddoc-support-warning"
                       onClick={() =>
                         handleFormSubmit(
