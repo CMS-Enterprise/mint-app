@@ -134,7 +134,7 @@ const itSolutions = {
   solutionPOCInfo: 'Point of contact',
   solutionEmailInfo: 'Email or other contact information',
   otherSolution: 'Other',
-  selectedSectionHeading: 'Selected solution: Other',
+  selectedSectionHeading: 'Selected solution: ',
   updateTheseDetails: 'Update these details',
   removeTheseDetails: 'Remove these details',
   addError:
