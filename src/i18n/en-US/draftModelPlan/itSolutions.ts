@@ -214,6 +214,13 @@ const itSolutions = {
   errorMessage: {
     operationalNeedRemoval:
       'Sorry, we encountered a problem removing {{-operationalNeedName}}. Please try again.'
+  },
+  operationalSolutionKey: {
+    contractor: 'Contractor',
+    crossModelContract: 'Cross-model contract',
+    existingCmsDataAndProcess: 'Existing CMS data and process',
+    interalStaff: 'Internal staff',
+    otherNewProcess: 'Other'
   }
 };
 export default itSolutions;
