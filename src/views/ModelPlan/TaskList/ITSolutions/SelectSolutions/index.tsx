@@ -291,16 +291,41 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
                         {!loading && (
                           <CardGroup>
-                            {values.solutions.map(
-                              (solution: any, index: number) => (
+                            {values.solutions
+                              .filter(solution => solution.nameOther === null)
+                              .map((solution: any, index: number) => (
                                 <CheckboxCard
                                   solution={solution}
                                   index={index}
                                   key={solution.nameOther || solution.name}
                                 />
-                              )
-                            )}
+                              ))}
                           </CardGroup>
+                        )}
+
+                        {values.solutions.filter(
+                          solution => solution.nameOther !== null
+                        ).length > 0 && (
+                          <>
+                            <legend className="text-bold margin-top-5 margin-bottom-2">
+                              {t('chooseOtherSolution')}
+                            </legend>
+                            {!loading && (
+                              <CardGroup>
+                                {values.solutions
+                                  .filter(
+                                    solution => solution.nameOther !== null
+                                  )
+                                  .map((solution: any, index: number) => (
+                                    <CheckboxCard
+                                      solution={solution}
+                                      index={index}
+                                      key={solution.nameOther || solution.name}
+                                    />
+                                  ))}
+                              </CardGroup>
+                            )}
+                          </>
                         )}
 
                         <Button
