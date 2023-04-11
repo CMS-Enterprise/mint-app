@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 
 import deviceBreakpoints from '../stylesheets/_variables.module.scss';
 
-type deviceProps = 'mobile' | 'tablet' | 'desktop';
+type deviceProps = 'mobile' | 'tablet' | 'desktop' | 'xl';
 
 export const mobile: number = parseInt(deviceBreakpoints.tablet, 10);
 export const tablet: number = parseInt(deviceBreakpoints.desktop, 10);
+export const desktop: number = parseInt(deviceBreakpoints.xl, 10);
 
 const useCheckResponsiveScreen = (device: deviceProps) => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -22,11 +23,13 @@ const useCheckResponsiveScreen = (device: deviceProps) => {
 
   switch (device) {
     case 'mobile':
-      return width < mobile;
+      return width <= mobile;
     case 'tablet':
-      return width < tablet;
+      return width <= tablet;
     case 'desktop':
-      return true;
+      return width <= desktop;
+    case 'xl':
+      return width > desktop;
     default:
       return true;
   }

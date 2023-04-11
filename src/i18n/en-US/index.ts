@@ -27,6 +27,7 @@ import footer from './footer';
 import general from './general';
 import header from './header';
 import home from './home';
+import landing from './landing';
 import modelPlan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
 import nda from './nda';
@@ -54,6 +55,7 @@ const enUS = {
   home,
   itSolutions,
   itTools,
+  landing,
   modelPlan,
   modelPlanOverview,
   modelPlanTaskList,
