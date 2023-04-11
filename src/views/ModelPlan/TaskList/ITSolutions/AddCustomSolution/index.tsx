@@ -309,12 +309,14 @@ const AddCustomSolution = () => {
                       )}
 
                       <Form
-                        className="margin-top-3"
                         data-testid="it-solutions-add-solution"
                         onSubmit={e => {
                           handleSubmit(e);
                         }}
                       >
+                        <h3 className="margin-top-6 margin-bottom-0">
+                          {t('selectedSectionHeading')}
+                        </h3>
                         <Fieldset disabled={loading}>
                           <FieldGroup
                             scrollElement="nameOther"

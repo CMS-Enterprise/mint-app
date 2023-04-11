@@ -129,11 +129,12 @@ const itSolutions = {
   dontAddSolution: 'Don’t add and return to previous page',
   dontUpdateSolution: 'Don’t update and return to previous page',
   updateSolutionDetails: 'Update solution details',
-  solutionName: 'Please add a name for your solution',
+  solutionName: 'Please add a name for your solution or contractor',
   solutionPOC: 'Point of contact information',
   solutionPOCInfo: 'Point of contact',
   solutionEmailInfo: 'Email or other contact information',
   otherSolution: 'Other',
+  selectedSectionHeading: 'Selected solution: Other',
   updateTheseDetails: 'Update these details',
   removeTheseDetails: 'Remove these details',
   addError:
