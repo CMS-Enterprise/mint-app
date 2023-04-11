@@ -144,7 +144,7 @@ const modelPlanTaskList = {
     basics: 'Model basics',
     beneficiaries: 'Beneficiaries',
     characteristics: 'General characteristics',
-    'it-tools': 'IT tools',
+    'it-solutions': 'IT solutions tracker',
     'ops-eval-and-learning': 'Operation, evaluation, and learning',
     'participants-and-providers': 'Participants and providers',
     payment: 'payment'

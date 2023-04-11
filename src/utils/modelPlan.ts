@@ -1163,17 +1163,6 @@ export const translateModelLearningSystemType = (type: string) => {
   }
 };
 
-export const translateGcPartCDType = (type: string) => {
-  switch (type) {
-    case 'MARX':
-      return i18next.t('itTools:partCDTypes.marx');
-    case 'OTHER':
-      return i18next.t('itTools:partCDTypes.other');
-    default:
-      return '';
-  }
-};
-
 export const translateGcCollectBidsType = (type: string) => {
   switch (type) {
     case 'HPMS':

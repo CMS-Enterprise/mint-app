@@ -278,7 +278,6 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
                       <Form
                         className="margin-top-2"
-                        data-testid="it-tools-page-seven-form"
                         onSubmit={e => {
                           handleSubmit(e);
                         }}
