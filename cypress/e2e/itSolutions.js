@@ -77,7 +77,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Adding a few other solutions
     cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
 
-    cy.get('#it-solutions-through_a_contractor')
+    cy.get('#it-solutions-contractor')
       .check({ force: true })
       .should('be.checked');
 
@@ -135,7 +135,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait(500);
 
     // Removing a solution
-    cy.get('#it-solutions-through_a_contractor')
+    cy.get('#it-solutions-contractor')
       .uncheck({ force: true })
       .should('not.be.checked');
 
