@@ -12,6 +12,7 @@ import { OperationalNeedKey, OperationalSolutionKey, OpSolutionStatus } from "./
 export interface GetOperationalNeed_operationalNeed_solutions {
   __typename: "OperationalSolution";
   id: UUID;
+  isOther: boolean | null;
   name: string | null;
   key: OperationalSolutionKey | null;
   pocName: string | null;

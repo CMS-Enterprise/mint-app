@@ -292,7 +292,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                         {!loading && (
                           <CardGroup>
                             {values.solutions
-                              .filter(solution => solution.nameOther === null)
+                              .filter(solution => solution.isOther === false)
                               .map((solution: any, index: number) => (
                                 <CheckboxCard
                                   solution={solution}
@@ -304,7 +304,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                         )}
 
                         {values.solutions.filter(
-                          solution => solution.nameOther !== null
+                          solution => solution.isOther === true
                         ).length > 0 && (
                           <>
                             <legend className="text-bold margin-top-5 margin-bottom-2">
@@ -313,9 +313,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                             {!loading && (
                               <CardGroup>
                                 {values.solutions
-                                  .filter(
-                                    solution => solution.nameOther !== null
-                                  )
+                                  .filter(solution => solution.isOther === true)
                                   .map((solution: any, index: number) => (
                                     <CheckboxCard
                                       solution={solution}

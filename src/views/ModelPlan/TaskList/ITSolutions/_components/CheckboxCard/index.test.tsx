@@ -17,6 +17,7 @@ const solution = [
     __typename: 'OperationalSolution' as const,
     id: '00000000-0000-0000-0000-000000000000',
     name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+    isOther: false,
     key: OperationalSolutionKey.RMADA,
     mustStartDts: null,
     mustFinishDts: null,

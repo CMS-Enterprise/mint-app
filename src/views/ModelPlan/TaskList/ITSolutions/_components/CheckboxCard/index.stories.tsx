@@ -34,6 +34,7 @@ export default {
 const solution: GetOperationalNeedSolutionsType = {
   __typename: 'OperationalSolution' as const,
   id: '00000000-0000-0000-0000-000000000000',
+  isOther: false,
   name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
   key: OperationalSolutionKey.RMADA,
   mustStartDts: null,
