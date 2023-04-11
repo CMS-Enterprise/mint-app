@@ -105,7 +105,7 @@ const itSolutions = {
   youAnswered: 'In the Model Plan, you answered:',
   changeAnswer: 'Want to change your answer? ',
   goToQuestion: 'Go to the question.',
-  chooseSolution: 'Choose from common solutions',
+  chooseCommonSolution: 'Choose from common solutions',
   selectThisSolution: 'Select this solution',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',

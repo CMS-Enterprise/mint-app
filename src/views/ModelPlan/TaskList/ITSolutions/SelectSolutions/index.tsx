@@ -286,7 +286,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                         }}
                       >
                         <legend className="text-bold margin-bottom-2">
-                          {t('chooseSolution')}
+                          {t('chooseCommonSolution')}
                         </legend>
 
                         {!loading && (
