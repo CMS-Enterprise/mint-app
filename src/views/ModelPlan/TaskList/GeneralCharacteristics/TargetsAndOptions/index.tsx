@@ -16,6 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -84,11 +85,15 @@ const TargetsAndOptions = () => {
     data?.modelPlan?.generalCharacteristics ||
     ({} as TargetsAndOptionsFormType);
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: string) => {
     update({
       variables: {
         id,
@@ -463,9 +468,22 @@ const TargetsAndOptions = () => {
                       <legend className="usa-label">
                         {t('agreementType')}
                       </legend>
+
+                      {itSolutionsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-data-needed-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              `/models/${modelID}/task-list/it-solutions`
+                            )
+                          }
+                        />
+                      )}
+
                       <p className="text-base margin-y-1">
                         {t('agreementNote')}
                       </p>
+
                       <FieldErrorMsg>{flatErrors.agreementTypes}</FieldErrorMsg>
 
                       {Object.keys(AgreementType)

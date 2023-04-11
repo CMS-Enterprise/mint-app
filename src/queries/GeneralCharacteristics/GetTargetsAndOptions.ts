@@ -20,6 +20,10 @@ export default gql`
         multiplePatricipationAgreementsNeeded
         multiplePatricipationAgreementsNeededNote
       }
+      operationalNeeds {
+        id
+        modifiedDts
+      }
     }
   }
 `;

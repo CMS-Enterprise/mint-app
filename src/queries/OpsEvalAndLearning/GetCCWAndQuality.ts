@@ -22,6 +22,10 @@ export default gql`
         qualityPerformanceImpactsPayment
         qualityPerformanceImpactsPaymentNote
       }
+      operationalNeeds {
+        id
+        modifiedDts
+      }
     }
   }
 `;

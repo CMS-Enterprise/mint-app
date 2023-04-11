@@ -16,6 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -79,11 +80,15 @@ const CCWAndQuality = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: string) => {
     update({
       variables: {
         id,
@@ -374,6 +379,18 @@ const CCWAndQuality = () => {
                       >
                         {t('validatedQuality')}
                       </Label>
+
+                      {itSolutionsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-data-needed-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              `/models/${modelID}/task-list/it-solutions`
+                            )
+                          }
+                        />
+                      )}
+
                       <FieldErrorMsg>
                         {flatErrors.developNewQualityMeasures}
                       </FieldErrorMsg>

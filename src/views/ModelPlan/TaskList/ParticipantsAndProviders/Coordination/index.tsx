@@ -16,6 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -69,11 +70,15 @@ export const Coordination = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: string) => {
     update({
       variables: {
         id,
@@ -318,9 +323,22 @@ export const Coordination = () => {
                   render={arrayHelpers => (
                     <>
                       <legend className="usa-label">{t('collectTINs')}</legend>
+
+                      {itSolutionsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-data-needed-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              `/models/${modelID}/task-list/it-solutions`
+                            )
+                          }
+                        />
+                      )}
+
                       <p className="text-base margin-0 line-height-body-3">
                         {t('collectTINsInfo')}
                       </p>
+
                       <FieldErrorMsg>
                         {flatErrors.participantsIds}
                       </FieldErrorMsg>
