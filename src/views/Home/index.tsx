@@ -19,7 +19,6 @@ import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
 import DraftModelPlansTable from 'views/ModelPlan/Table';
 
-// import WelcomeText from './WelcomeText';
 import './index.scss';
 
 const Home = () => {

@@ -76,6 +76,7 @@ export const LandingBody = () => {
   const { t } = useTranslation('landing');
 
   const isXL = useCheckResponsiveScreen('xl');
+  const isMobile = useCheckResponsiveScreen('mobile');
 
   return (
     <GridContainer className="padding-top-2 padding-bottom-3 landing__contain">
@@ -84,7 +85,11 @@ export const LandingBody = () => {
           desktop={{ col: 12 }}
           className="display-flex flex-justify-center"
         >
-          <p className="text-bold landing__description">{t('bodyHeading')}</p>
+          {isMobile ? (
+            <h2>{t('bodyHeading')}</h2>
+          ) : (
+            <p className="text-bold landing__description">{t('bodyHeading')}</p>
+          )}
         </Grid>
       </Grid>
       <Grid row gap={isXL ? 6 : 3} className="margin-bottom-5">
