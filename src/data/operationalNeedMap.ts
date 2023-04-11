@@ -34,6 +34,13 @@ const operationalNeedMap: NeedMapType = {
     question: 'generalCharacteristics:updatedContract',
     answer: 'translateBoolean'
   },
+  SIGN_PARTICIPATION_AGREEMENTS: {
+    route: 'characteristics/targets-and-options',
+    fieldName: 'agreementTypes',
+    parentField: 'generalCharacteristics',
+    question: 'generalCharacteristics:agreementType',
+    answer: 'translateAgreementTypes'
+  },
   RECRUIT_PARTICIPANTS: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
@@ -68,6 +75,13 @@ const operationalNeedMap: NeedMapType = {
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:overlap',
     answer: 'translateOverlapType'
+  },
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY: {
+    route: 'participants-and-providers/coordination',
+    fieldName: 'participantsIds',
+    parentField: 'participantsAndProviders',
+    question: 'participantsAndProviders:collectTINs',
+    answer: 'translateParticipantIDType'
   },
   MANAGE_BEN_OVERLAP: {
     route: 'beneficiaries/beneficiary-frequency',
@@ -175,6 +189,20 @@ const operationalNeedMap: NeedMapType = {
     answer: 'translateModelLearningSystemType'
   },
   ACQUIRE_A_LEARN_CONT: {
+    route: 'ops-eval-and-learning/learning',
+    fieldName: 'modelLearningSystems',
+    parentField: 'opsEvalAndLearning',
+    question: 'operationsEvaluationAndLearning:learningSystem',
+    answer: 'translateModelLearningSystemType'
+  },
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
+    route: 'ops-eval-and-learning/ccw-and-quality',
+    fieldName: 'developNewQualityMeasures',
+    parentField: 'opsEvalAndLearning',
+    question: 'operationsEvaluationAndLearning:validatedQuality',
+    answer: 'translateBoolean'
+  },
+  IT_PLATFORM_FOR_LEARNING: {
     route: 'ops-eval-and-learning/learning',
     fieldName: 'modelLearningSystems',
     parentField: 'opsEvalAndLearning',
