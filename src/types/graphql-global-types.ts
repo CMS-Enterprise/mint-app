@@ -597,10 +597,13 @@ export interface ModelPlanChanges {
 
 export interface OperationalSolutionChanges {
   needed?: boolean | null;
+  name?: string | null;
+  nameOther?: string | null;
   pocName?: string | null;
   pocEmail?: string | null;
   mustStartDts?: Time | null;
   mustFinishDts?: Time | null;
+  otherHeader?: string | null;
   status?: OpSolutionStatus | null;
 }
 

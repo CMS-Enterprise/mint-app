@@ -41,10 +41,10 @@ func (suite *ResolverSuite) TestPlanDocumentSolutionLinkCreateAndRemove() {
 	changes["needed"] = false
 	defStatus := models.OpSNotStarted
 
-	sol, err := OperationalSolutionInsertOrUpdate(
+	sol, err := OperationalSolutionCreate(
 		suite.testConfigs.Logger,
 		need.ID,
-		solType,
+		&solType,
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

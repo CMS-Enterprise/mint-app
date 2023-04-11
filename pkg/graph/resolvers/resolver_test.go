@@ -169,15 +169,10 @@ func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolut
 
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
-	operationalSolution, _ := OperationalSolutionInsertOrUpdateCustom(
-		suite.testConfigs.Logger,
-		need.ID,
-		"AnotherSolution",
-		nil,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-	)
-
+	changes := map[string]interface{}{
+		"nameOther": "AnotherSolution",
+	}
+	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	return operationalSolution
 }
 
