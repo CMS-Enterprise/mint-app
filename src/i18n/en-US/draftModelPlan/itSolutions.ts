@@ -106,6 +106,7 @@ const itSolutions = {
   changeAnswer: 'Want to change your answer? ',
   goToQuestion: 'Go to the question.',
   chooseCommonSolution: 'Choose from common solutions',
+  chooseOtherSolution: 'Other solutions',
   selectThisSolution: 'Select this solution',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
