@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -90,11 +91,19 @@ describe('Discussion Component', () => {
 
   it('renders discussions and replies without errors', async () => {
     const { getByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Provider store={store}>
-          <Discussions modelID={modelID} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+        ]}
+      >
+        <Route path="/models/:modelID/task-list">
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <Provider store={store}>
+              <Discussions modelID={modelID} />
+            </Provider>
+          </MockedProvider>
+        </Route>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -109,11 +118,19 @@ describe('Discussion Component', () => {
 
   it('renders a question', async () => {
     const { getByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Provider store={store}>
-          <Discussions modelID={modelID} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+        ]}
+      >
+        <Route path="/models/:modelID/task-list">
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <Provider store={store}>
+              <Discussions modelID={modelID} />
+            </Provider>
+          </MockedProvider>
+        </Route>
+      </MemoryRouter>
     );
 
     await waitFor(async () => {
@@ -135,5 +152,27 @@ describe('Discussion Component', () => {
     userEvent.type(feedbackField, 'Test feedback');
 
     expect(feedbackField).toHaveValue('Test feedback');
+  });
+
+  it('renders the reply form from email generated url param', async () => {
+    const { getByText } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list?discussionID=123'
+        ]}
+      >
+        <Route path="/models/:modelID/task-list">
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <Provider store={store}>
+              <Discussions modelID={modelID} discussionID="123" />
+            </Provider>
+          </MockedProvider>
+        </Route>
+      </MemoryRouter>
+    );
+
+    await waitFor(async () => {
+      expect(getByText(/This is a question./i)).toBeInTheDocument();
+    });
   });
 });

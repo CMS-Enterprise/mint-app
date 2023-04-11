@@ -22,7 +22,7 @@ const solution: GetOperationalSolutionType = {
   __typename: 'OperationalSolution',
   id: operationalSolutionID,
   name: 'Internal staff',
-  key: OperationalSolutionKey.THROUGH_A_CONTRACTOR,
+  key: OperationalSolutionKey.SHARED_SYSTEMS,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',
   needed: true,

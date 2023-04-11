@@ -28,18 +28,18 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
+import { CreateOperationalSolutionVariables } from 'queries/ITSolutions/types/CreateOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { GetPossibleOperationalSolutions as GetPossibleOperationalSolutionsType } from 'queries/ITSolutions/types/GetPossibleOperationalSolutions';
-import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
-import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
-import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
-import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
+import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
+import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import {
   OperationalSolutionKey,
   OpSolutionStatus
@@ -112,14 +112,14 @@ const AddSolution = () => {
     key: operationalSolutionID ? OperationalSolutionKey.OTHER_NEW_PROCESS : ''
   };
 
-  const [addSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
-    UpdateOperationalNeedSolution
+  const [createSolution] = useMutation<CreateOperationalSolutionVariables>(
+    CreateOperationalSolution
   );
 
   const [
     updateCustomSolution
-  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
-    UpdateCustomOperationalSolution
+  ] = useMutation<UpdateOperationalSolutionVariables>(
+    UpdateOperationalSolution
   );
 
   const handleFormSubmit = async (
@@ -128,11 +128,10 @@ const AddSolution = () => {
     const { key } = formikValues;
 
     let updateMutation;
-
     try {
       // Add from list of possible solutions
       if (key !== OperationalSolutionKey.OTHER_NEW_PROCESS) {
-        updateMutation = await addSolution({
+        updateMutation = await createSolution({
           variables: {
             operationalNeedID,
             solutionType: key,
@@ -142,15 +141,27 @@ const AddSolution = () => {
             }
           }
         });
-      } else {
-        // Update/add a custom solution
-        updateMutation = await updateCustomSolution({
+      } else if (!operationalSolutionID) {
+        // Add custom solution
+        updateMutation = await createSolution({
           variables: {
             operationalNeedID,
-            customSolutionType:
-              customOperationalSolution?.nameOther || t('otherSolution'),
             changes: {
               needed: true,
+              nameOther: t('otherSolution'),
+              status: OpSolutionStatus.NOT_STARTED
+            }
+          }
+        });
+      } else {
+        // Update a custom solution
+        updateMutation = await updateCustomSolution({
+          variables: {
+            id: operationalSolutionID,
+            changes: {
+              needed: true,
+              nameOther:
+                customOperationalSolution?.nameOther || t('otherSolution'),
               status: OpSolutionStatus.NOT_STARTED
             }
           }

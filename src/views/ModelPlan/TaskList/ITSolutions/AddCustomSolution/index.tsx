@@ -23,22 +23,22 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
+import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
+import {
+  CreateOperationalSolution as CreateOperationalSolutionType,
+  CreateOperationalSolutionVariables
+} from 'queries/ITSolutions/types/CreateOperationalSolution';
 import {
   GetOperationalSolution as GetOperationalSolutionType,
   GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType,
   GetOperationalSolutionVariables
 } from 'queries/ITSolutions/types/GetOperationalSolution';
 import {
-  UpdateCustomOperationalSolution as UpdateCustomOperationalSolutionType,
-  UpdateCustomOperationalSolutionVariables
-} from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
-import {
-  UpdateCustomOperationalSolutionByID as UpdateCustomOperationalSolutionByIDType,
-  UpdateCustomOperationalSolutionByIDVariables
-} from 'queries/ITSolutions/types/UpdateCustomOperationalSolutionByID';
-import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
-import UpdateCustomOperationalSolutionByID from 'queries/ITSolutions/UpdateCustomOperationalSolutionByID';
+  UpdateOperationalSolution as UpdateOperationalSolutionType,
+  UpdateOperationalSolutionVariables
+} from 'queries/ITSolutions/types/UpdateOperationalSolution';
+import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import { OpSolutionStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -129,15 +129,15 @@ const AddCustomSolution = () => {
     data?.operationalSolution || initialValues
   );
 
-  const [addCustomSolution] = useMutation<
-    UpdateCustomOperationalSolutionType,
-    UpdateCustomOperationalSolutionVariables
-  >(UpdateCustomOperationalSolution);
+  const [createSolution] = useMutation<
+    CreateOperationalSolutionType,
+    CreateOperationalSolutionVariables
+  >(CreateOperationalSolution);
 
-  const [updateCustomSolutionByID] = useMutation<
-    UpdateCustomOperationalSolutionByIDType,
-    UpdateCustomOperationalSolutionByIDVariables
-  >(UpdateCustomOperationalSolutionByID);
+  const [updateSolution] = useMutation<
+    UpdateOperationalSolutionType,
+    UpdateOperationalSolutionVariables
+  >(UpdateOperationalSolution);
 
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
@@ -149,12 +149,12 @@ const AddCustomSolution = () => {
     try {
       // Add a new custom solution
       if (!operationalSolutionID) {
-        updateMutation = await addCustomSolution({
+        updateMutation = await createSolution({
           variables: {
             operationalNeedID,
-            customSolutionType: nameOther || '',
             changes: {
               needed: customOperationalSolution.needed,
+              nameOther: nameOther || '',
               status: OpSolutionStatus.NOT_STARTED,
               pocEmail,
               pocName
@@ -163,12 +163,12 @@ const AddCustomSolution = () => {
         });
         // Update existing custom solution
       } else {
-        updateMutation = await updateCustomSolutionByID({
+        updateMutation = await updateSolution({
           variables: {
             id: operationalSolutionID,
-            customSolutionType: nameOther || '',
             changes: {
               needed: customOperationalSolution.needed,
+              nameOther: nameOther || '',
               pocEmail,
               pocName
             }
@@ -184,9 +184,9 @@ const AddCustomSolution = () => {
 
       if (!operationalSolutionID) {
         history.push(
-          // If this block of code is hit, property addOrUpdateCustomOperationalSolution will always exist - ts doesn't know this
+          // If this block of code is hit, property createOperationalSolution will always exist - ts doesn't know this
           // @ts-ignore
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`,
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.createOperationalSolution.id}`,
           { isCustomNeed: false }
         );
       } else {

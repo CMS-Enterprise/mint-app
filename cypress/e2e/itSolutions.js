@@ -77,7 +77,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Adding a few other solutions
     cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
 
-    cy.get('#it-solutions-through_a_contractor')
+    cy.get('#it-solutions-contractor')
       .check({ force: true })
       .should('be.checked');
 
@@ -135,7 +135,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait(500);
 
     // Removing a solution
-    cy.get('#it-solutions-through_a_contractor')
+    cy.get('#it-solutions-contractor')
       .uncheck({ force: true })
       .should('not.be.checked');
 
@@ -144,7 +144,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait(500);
 
     cy.get('[data-testid="alert"]').contains(
-      'Saving these selections will delete the Through a contractor solution page/s that is associated with this operational need.'
+      'Saving these selections will delete the Contractor solution page/s that is associated with this operational need.'
     );
 
     cy.get('#submit-solutions').click();
@@ -175,7 +175,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.get('#it-solutions-key')
       .should('not.be.disabled')
-      .select('A cross-model contract')
+      .select('Cross-model contract')
       .should('have.value', 'CROSS_MODEL_CONTRACT');
 
     cy.get('[data-testid="add-solution-details-button"]').click();
@@ -195,7 +195,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .eq(0)
       .within(() => {
         cy.contains('My custom need');
-        cy.contains('A cross-model contract');
+        cy.contains('Cross-model contract');
         cy.contains('View details').click();
       });
 
