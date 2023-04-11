@@ -808,7 +808,7 @@ type ComplexityRoot struct {
 		PlanPayments                                           func(childComplexity int, id uuid.UUID) int
 		PossibleOperationalNeeds                               func(childComplexity int) int
 		PossibleOperationalSolutions                           func(childComplexity int) int
-		SearchChangeTable                                      func(childComplexity int, query models.ElasticsearchRequest, limit int, offset int) int
+		SearchChangeTable                                      func(childComplexity int, query models.SearchRequest, limit int, offset int) int
 		SearchChangeTableByActor                               func(childComplexity int, actor string, limit int, offset int) int
 		SearchChangeTableByDateRange                           func(childComplexity int, startDate time.Time, endDate time.Time, limit int, offset int) int
 		SearchChangeTableByModelPlanID                         func(childComplexity int, modelPlanID uuid.UUID, limit int, offset int) int
@@ -1039,7 +1039,7 @@ type QueryResolver interface {
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
-	SearchChangeTable(ctx context.Context, query models.ElasticsearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTable(ctx context.Context, query models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error)
@@ -5933,7 +5933,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.SearchChangeTable(childComplexity, args["query"].(models.ElasticsearchRequest), args["limit"].(int), args["offset"].(int)), true
+		return e.complexity.Query.SearchChangeTable(childComplexity, args["query"].(models.SearchRequest), args["limit"].(int), args["offset"].(int)), true
 
 	case "Query.searchChangeTableByActor":
 		if e.complexity.Query.SearchChangeTableByActor == nil {
@@ -6231,11 +6231,11 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputCreateOperationalSolutionSubtaskInput,
 		ec.unmarshalInputDiscussionReplyCreateInput,
-		ec.unmarshalInputElasticsearchRequest,
 		ec.unmarshalInputPlanCollaboratorCreateInput,
 		ec.unmarshalInputPlanCrTdlCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
+		ec.unmarshalInputSearchRequest,
 		ec.unmarshalInputUpdateOperationalSolutionSubtaskInput,
 	)
 	first := true
@@ -7677,7 +7677,7 @@ type ChangeTableRecord {
   modifiedBy: UserAccount
 }
 
-input ElasticsearchRequest {
+input SearchRequest {
   request: Map!
 }
 
@@ -7710,7 +7710,7 @@ type Query {
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   userAccount(username: String!): UserAccount!
-  searchChangeTable(query: ElasticsearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTable(query: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
@@ -9722,10 +9722,10 @@ func (ec *executionContext) field_Query_searchChangeTableWithFreeText_args(ctx c
 func (ec *executionContext) field_Query_searchChangeTable_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 models.ElasticsearchRequest
+	var arg0 models.SearchRequest
 	if tmp, ok := rawArgs["query"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("query"))
-		arg0, err = ec.unmarshalNElasticsearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐElasticsearchRequest(ctx, tmp)
+		arg0, err = ec.unmarshalNSearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSearchRequest(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -43741,7 +43741,7 @@ func (ec *executionContext) _Query_searchChangeTable(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().SearchChangeTable(rctx, fc.Args["query"].(models.ElasticsearchRequest), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		return ec.resolvers.Query().SearchChangeTable(rctx, fc.Args["query"].(models.SearchRequest), fc.Args["limit"].(int), fc.Args["offset"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -47400,34 +47400,6 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputElasticsearchRequest(ctx context.Context, obj interface{}) (models.ElasticsearchRequest, error) {
-	var it models.ElasticsearchRequest
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"request"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "request":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
-			it.Request, err = ec.unmarshalNMap2map(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorCreateInput, error) {
 	var it model.PlanCollaboratorCreateInput
 	asMap := map[string]interface{}{}
@@ -47627,6 +47599,34 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalNotes"))
 			it.OptionalNotes, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputSearchRequest(ctx context.Context, obj interface{}) (models.SearchRequest, error) {
+	var it models.SearchRequest
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"request"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "request":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+			it.Request, err = ec.unmarshalNMap2map(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -55699,11 +55699,6 @@ func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑ
 	return res
 }
 
-func (ec *executionContext) unmarshalNElasticsearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐElasticsearchRequest(ctx context.Context, v interface{}) (models.ElasticsearchRequest, error) {
-	res, err := ec.unmarshalInputElasticsearchRequest(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) unmarshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx context.Context, v interface{}) (model.EvaluationApproachType, error) {
 	var res model.EvaluationApproachType
 	err := res.UnmarshalGQL(v)
@@ -57906,6 +57901,11 @@ func (ec *executionContext) marshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑapp�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNSearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSearchRequest(ctx context.Context, v interface{}) (models.SearchRequest, error) {
+	res, err := ec.unmarshalInputSearchRequest(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx context.Context, v interface{}) (model.SelectionMethodType, error) {

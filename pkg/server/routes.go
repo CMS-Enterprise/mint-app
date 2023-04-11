@@ -202,7 +202,7 @@ func (s *Server) routes(
 	// gql.Use(requirePrincipalMiddleware)
 
 	osConfig := opensearch.Config{ // TODO: .envrc settings for OpenSearch config
-		Addresses: []string{"http://opensearch:9200"},
+		Addresses: []string{s.Config.GetString(appconfig.OpenSearchHostKey)},
 	}
 
 	osClient, err := opensearch.NewClient(osConfig)

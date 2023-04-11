@@ -18,7 +18,7 @@ import (
 )
 
 // Marshal and perform Elasticsearch queries
-func marshalElasticsearchQuery(request models.ElasticsearchRequest) (io.Reader, error) {
+func marshalElasticsearchQuery(request models.SearchRequest) (io.Reader, error) {
 	requestBody, err := json.Marshal(request.Request)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling request body: %s", err)
@@ -102,7 +102,7 @@ func extractChangeTableRecords(
 func searchChangeTableBase(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
-	query models.ElasticsearchRequest,
+	query models.SearchRequest,
 	limit int,
 	offset int,
 	sortBy string,
@@ -144,7 +144,7 @@ func searchChangeTableBase(
 func SearchChangeTable(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
-	query models.ElasticsearchRequest,
+	query models.SearchRequest,
 	limit int,
 	offset int,
 	sortBy string,
@@ -160,7 +160,7 @@ func SearchChangeTableWithFreeText(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	request := models.ElasticsearchRequest{
+	request := models.SearchRequest{
 		Request: map[string]interface{}{
 			"query": map[string]interface{}{
 				"multi_match": map[string]interface{}{
@@ -182,7 +182,7 @@ func SearchChangeTableByModelPlanID(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := models.ElasticsearchRequest{
+	query := models.SearchRequest{
 		Request: map[string]interface{}{
 			"query": map[string]interface{}{
 				"bool": map[string]interface{}{
@@ -215,7 +215,7 @@ func SearchChangeTableByDateRange(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	request := models.ElasticsearchRequest{
+	request := models.SearchRequest{
 		Request: map[string]interface{}{
 			"query": map[string]interface{}{
 				"bool": map[string]interface{}{
@@ -245,7 +245,7 @@ func SearchChangeTableByActor(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := models.ElasticsearchRequest{
+	query := models.SearchRequest{
 		Request: map[string]interface{}{
 			"query": map[string]interface{}{
 				"multi_match": map[string]interface{}{
@@ -275,7 +275,7 @@ func SearchChangeTableByModelStatus(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := models.ElasticsearchRequest{
+	query := models.SearchRequest{
 		Request: map[string]interface{}{
 			"query": map[string]interface{}{
 				"bool": map[string]interface{}{

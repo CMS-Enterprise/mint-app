@@ -1361,7 +1361,7 @@ type ChangeTableRecord {
   modifiedBy: UserAccount
 }
 
-input ElasticsearchRequest {
+input SearchRequest {
   request: Map!
 }
 
@@ -1394,7 +1394,7 @@ type Query {
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
   userAccount(username: String!): UserAccount!
-  searchChangeTable(query: ElasticsearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTable(query: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!

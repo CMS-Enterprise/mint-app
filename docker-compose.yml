@@ -84,6 +84,7 @@ services:
       - FAKTORY_URL
       - FAKTORY_PROCESS_JOBS
       - FAKTORY_CONNECTIONS
+      - OPENSEARCH_HOST
 
     depends_on:
       db_migrate:

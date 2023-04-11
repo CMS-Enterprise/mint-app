@@ -223,6 +223,9 @@ const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
 // FaktoryConnections number of connections for a manager
 const FaktoryConnections = "FAKTORY_CONNECTIONS"
 
+// OpenSearchHostKey is the key for the OpenSearch host environment variable
+const OpenSearchHostKey = "OPENSEARCH_HOST"
+
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 
