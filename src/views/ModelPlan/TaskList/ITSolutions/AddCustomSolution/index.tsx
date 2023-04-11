@@ -184,9 +184,7 @@ const AddCustomSolution = () => {
 
       if (!operationalSolutionID) {
         history.push(
-          // If this block of code is hit, property addOrUpdateCustomOperationalSolution will always exist - ts doesn't know this
-          // @ts-ignore
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.addOrUpdateCustomOperationalSolution.id}`,
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
           { isCustomNeed: false }
         );
       } else {
