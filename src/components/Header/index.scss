@@ -5,10 +5,19 @@
   margin-bottom: -1px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
+  .heading {
+    font-size: 22px;
+    line-height: 26px;
+  }
+
   &__basic {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width: $desktop) {
+      margin-top: 2rem;
+  }
   }
 
   &__user {
@@ -149,5 +158,15 @@
         display: block;
       }
     }
+  }
+
+  .landing-gov-banner {
+    .usa-banner__header-text, .usa-banner__header-action, .usa-banner__button-text, .usa-banner__guidance {
+      color: white !important;
+    }
+  }
+
+  .usa-banner__inner {
+    max-width: 75rem !important;
   }
 }
