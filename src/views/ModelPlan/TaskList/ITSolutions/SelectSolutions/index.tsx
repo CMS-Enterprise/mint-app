@@ -256,6 +256,13 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                 ) => {
                   const { errors, handleSubmit, values } = formikProps;
 
+                  const allTheSolutions = values.solutions;
+                  const commonSolutions = allTheSolutions.filter(
+                    solution => solution.isOther === false
+                  );
+                  const otherSolutions = allTheSolutions.filter(
+                    solution => solution.isOther === true
+                  );
                   const flatErrors = flattenErrors(errors);
 
                   return (
@@ -291,36 +298,34 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
                         {!loading && (
                           <CardGroup>
-                            {values.solutions
-                              .filter(solution => solution.isOther === false)
-                              .map((solution: any, index: number) => (
-                                <CheckboxCard
-                                  solution={solution}
-                                  index={index}
-                                  key={solution.nameOther || solution.name}
-                                />
-                              ))}
+                            {commonSolutions.map((solution: any) => (
+                              <CheckboxCard
+                                solution={solution}
+                                index={allTheSolutions.findIndex(
+                                  x => x.name === solution.name
+                                )}
+                                key={solution.nameOther || solution.name}
+                              />
+                            ))}
                           </CardGroup>
                         )}
 
-                        {values.solutions.filter(
-                          solution => solution.isOther === true
-                        ).length > 0 && (
+                        {otherSolutions.length > 0 && (
                           <>
                             <legend className="text-bold margin-top-5 margin-bottom-2">
                               {t('chooseOtherSolution')}
                             </legend>
                             {!loading && (
                               <CardGroup>
-                                {values.solutions
-                                  .filter(solution => solution.isOther === true)
-                                  .map((solution: any, index: number) => (
-                                    <CheckboxCard
-                                      solution={solution}
-                                      index={index}
-                                      key={solution.nameOther || solution.name}
-                                    />
-                                  ))}
+                                {otherSolutions.map((solution: any) => (
+                                  <CheckboxCard
+                                    solution={solution}
+                                    index={allTheSolutions.findIndex(
+                                      x => x.name === solution.name
+                                    )}
+                                    key={solution.nameOther || solution.name}
+                                  />
+                                ))}
                               </CardGroup>
                             )}
                           </>
