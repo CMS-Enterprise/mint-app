@@ -6,7 +6,6 @@ export default gql`
       id
       key
       needed
-      isOther
       name
       nameOther
       pocName
@@ -14,6 +13,8 @@ export default gql`
       status
       mustFinishDts
       mustStartDts
+      isOther
+      otherHeader
       documents {
         id
         virusScanned

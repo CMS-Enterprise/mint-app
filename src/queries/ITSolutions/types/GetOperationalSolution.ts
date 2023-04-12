@@ -37,7 +37,6 @@ export interface GetOperationalSolution_operationalSolution {
   id: UUID;
   key: OperationalSolutionKey | null;
   needed: boolean | null;
-  isOther: boolean | null;
   name: string | null;
   nameOther: string | null;
   pocName: string | null;
@@ -45,6 +44,8 @@ export interface GetOperationalSolution_operationalSolution {
   status: OpSolutionStatus;
   mustFinishDts: Time | null;
   mustStartDts: Time | null;
+  isOther: boolean | null;
+  otherHeader: string | null;
   documents: GetOperationalSolution_operationalSolution_documents[];
   operationalSolutionSubtasks: GetOperationalSolution_operationalSolution_operationalSolutionSubtasks[];
 }

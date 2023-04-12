@@ -11,13 +11,14 @@ export default gql`
       needed
       solutions(includeNotNeeded: $includeNotNeeded) {
         id
-        isOther
         name
         key
         pocName
         pocEmail
         needed
         nameOther
+        isOther
+        otherHeader
         mustStartDts
         mustFinishDts
         status

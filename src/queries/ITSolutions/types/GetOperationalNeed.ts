@@ -12,13 +12,14 @@ import { OperationalNeedKey, OperationalSolutionKey, OpSolutionStatus } from "./
 export interface GetOperationalNeed_operationalNeed_solutions {
   __typename: "OperationalSolution";
   id: UUID;
-  isOther: boolean | null;
   name: string | null;
   key: OperationalSolutionKey | null;
   pocName: string | null;
   pocEmail: string | null;
   needed: boolean | null;
   nameOther: string | null;
+  isOther: boolean | null;
+  otherHeader: string | null;
   mustStartDts: Time | null;
   mustFinishDts: Time | null;
   status: OpSolutionStatus;
