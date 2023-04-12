@@ -17,8 +17,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// Marshal and perform Elasticsearch queries
-func marshalElasticsearchQuery(request models.SearchRequest) (io.Reader, error) {
+// Marshal and perform queries
+func marshalSearchQuery(request models.SearchRequest) (io.Reader, error) {
 	requestBody, err := json.Marshal(request.Request)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling request body: %s", err)
@@ -44,8 +44,8 @@ func performSearch(
 	)
 }
 
-// Handle Elasticsearch errors and parse response
-func handleElasticsearchError(res *opensearchapi.Response, logger *zap.Logger) error {
+// Handle search errors and parse response
+func handleSearchError(res *opensearchapi.Response, logger *zap.Logger) error {
 	var e map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
 		logger.Error("Error parsing the response body", zap.Error(err))
@@ -62,7 +62,7 @@ func handleElasticsearchError(res *opensearchapi.Response, logger *zap.Logger) e
 	return fmt.Errorf("error searching change table: %s", e["error"].(map[string]interface{})["reason"])
 }
 
-func parseElasticsearchResponseBody(res *opensearchapi.Response, logger *zap.Logger) (map[string]interface{}, error) {
+func parseSearchResponseBody(res *opensearchapi.Response, logger *zap.Logger) (map[string]interface{}, error) {
 	var r map[string]interface{}
 	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
 		logger.Error("Error parsing the response body", zap.Error(err))
@@ -71,7 +71,7 @@ func parseElasticsearchResponseBody(res *opensearchapi.Response, logger *zap.Log
 	return r, nil
 }
 
-// Extract change table records from Elasticsearch response
+// Extract change table records from search response
 func extractChangeTableRecords(
 	r map[string]interface{},
 	logger *zap.Logger,
@@ -107,7 +107,7 @@ func searchChangeTableBase(
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	queryReader, err := marshalElasticsearchQuery(query)
+	queryReader, err := marshalSearchQuery(query)
 	if err != nil {
 		return nil, err
 	}
@@ -124,10 +124,10 @@ func searchChangeTableBase(
 	}(res.Body)
 
 	if res.IsError() {
-		return nil, handleElasticsearchError(res, logger)
+		return nil, handleSearchError(res, logger)
 	}
 
-	r, err := parseElasticsearchResponseBody(res, logger)
+	r, err := parseSearchResponseBody(res, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func SearchChangeTable(
 	return searchChangeTableBase(logger, searchClient, query, limit, offset, sortBy)
 }
 
-// SearchChangeTableWithFreeText searches for change table records in Elasticsearch using a free-text search
+// SearchChangeTableWithFreeText searches for change table records in search using a free-text search
 func SearchChangeTableWithFreeText(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,

@@ -9,11 +9,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2/opensearchapi"
+
 	"github.com/opensearch-project/opensearch-go/v2"
 
 	"go.uber.org/zap"
-
-	"github.com/elastic/go-elasticsearch/v8/esapi"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -58,7 +58,7 @@ func searchAndUnmarshal(
 	query string,
 	result interface{},
 ) error {
-	req := esapi.SearchRequest{
+	req := opensearchapi.SearchRequest{
 		Index: []string{"change_table_idx"},
 		Body:  strings.NewReader(query),
 	}
