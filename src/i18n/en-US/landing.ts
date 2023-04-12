@@ -5,7 +5,7 @@ const landing = {
   description:
     'The Model Innovation Tool provides a single source of truth for all upcoming CMMI models and demonstrations that breaks down silos, bringing transparency and awareness across CMS.',
   signIn: 'Sign in to get started',
-  bodyHeading: 'Product hightlights',
+  bodyHeading: 'Product highlights',
   bodyItem1: {
     heading: 'No more asking around',
     description:
