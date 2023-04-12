@@ -42,6 +42,8 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     pathname.split('/')[3] === 'documents' ||
     pathname.split('/')[3] === 'collaborators';
 
+  const helpArticle: boolean = pathname.split('/')[1] === 'help-and-knowledge';
+
   const { data, loading } = useQuery<
     GetIsCollaboratorType,
     GetIsCollaboratorVariables
@@ -49,7 +51,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     variables: {
       id: modelID
     },
-    skip: !editable || isMAC(groups)
+    skip: !editable || isMAC(groups) || helpArticle
   });
 
   const isCollaborator: boolean = data?.modelPlan?.isCollaborator || false;

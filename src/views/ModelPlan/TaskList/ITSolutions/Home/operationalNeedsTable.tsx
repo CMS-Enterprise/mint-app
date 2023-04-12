@@ -105,6 +105,12 @@ const OperationalNeedsTable = ({
 
   const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
+  const hiddenTableColumns = [...(hiddenColumns || [])];
+
+  if (!hasEditAccess) {
+    hiddenTableColumns.push('Actions');
+  }
+
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
@@ -266,8 +272,7 @@ const OperationalNeedsTable = ({
       autoResetPage: false,
       initialState: {
         sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
-        pageIndex: 0,
-        hiddenColumns: hasEditAccess ? [] : ['Actions']
+        pageIndex: 0
       }
     },
     useFilters,
@@ -320,8 +325,11 @@ const OperationalNeedsTable = ({
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers
-                // @ts-ignore
-                .filter(column => !hiddenColumns?.includes(column.Header))
+                .filter(
+                  column =>
+                    // @ts-ignore
+                    !hiddenTableColumns?.includes(column.Header)
+                )
                 .map((column, index) => (
                   <th
                     {...column.getHeaderProps()}
@@ -355,10 +363,11 @@ const OperationalNeedsTable = ({
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
-                  .filter(cell => {
-                    // @ts-ignore
-                    return !hiddenColumns?.includes(cell.column.Header);
-                  })
+                  .filter(
+                    cell =>
+                      // @ts-ignore
+                      !hiddenTableColumns?.includes(cell.column.Header)
+                  )
                   .map((cell, i) => {
                     if (i === 0) {
                       return (

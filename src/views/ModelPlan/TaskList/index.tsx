@@ -3,11 +3,12 @@ import React, {
   Fragment,
   SetStateAction,
   useContext,
+  useEffect,
   useState
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -98,7 +99,13 @@ const taskListSectionMap: TaskListSectionMapType = {
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
+
   const { modelID } = useParams<{ modelID: string }>();
+
+  // Get discussionID from generated email link
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const discussionID = params.get('discussionID');
 
   const flags = useFlags();
 
@@ -167,6 +174,10 @@ const TaskList = () => {
     discussions
   );
 
+  useEffect(() => {
+    if (discussionID) setIsDiscussionOpen(true);
+  }, [discussionID]);
+
   const getTaskListLockedStatus = (
     section: string
   ): LockSectionType | undefined => {
@@ -228,7 +239,7 @@ const TaskList = () => {
                   isOpen={isDiscussionOpen}
                   closeModal={() => setIsDiscussionOpen(false)}
                 >
-                  <Discussions modelID={modelID} />
+                  <Discussions modelID={modelID} discussionID={discussionID} />
                 </DiscussionModalWrapper>
               )}
 

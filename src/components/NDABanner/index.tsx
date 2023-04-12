@@ -13,24 +13,31 @@ import CollapsableLink from 'components/shared/CollapsableLink';
 
 type NDABannerType = {
   collapsable?: boolean;
+  landing?: boolean;
   className?: string;
 };
 
-const NDABanner = ({ collapsable, className }: NDABannerType) => {
+const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
   const { t } = useTranslation('nda');
+
+  const HeadingLevel = React.createElement(
+    landing ? 'h4' : 'h3',
+    { className: 'margin-0' },
+    t('header')
+  );
 
   return (
     <SummaryBox
       heading=""
-      className={classNames(className, 'padding-1 border-0')}
+      className={classNames('padding-1 border-0', className)}
     >
       <MainContent>
-        <GridContainer>
+        <GridContainer className={classNames({ 'padding-0': landing })}>
           <Grid desktop={{ col: 12 }}>
             <div className="display-flex padding-top-2">
               <IconInfo size={4} className="minw-4" />
               <div className="margin-left-105">
-                <h3 className="margin-0">{t('header')}</h3>
+                {HeadingLevel}
 
                 {collapsable ? (
                   <CollapsableLink
