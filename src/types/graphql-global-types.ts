@@ -597,7 +597,6 @@ export interface ModelPlanChanges {
 
 export interface OperationalSolutionChanges {
   needed?: boolean | null;
-  name?: string | null;
   nameOther?: string | null;
   pocName?: string | null;
   pocEmail?: string | null;

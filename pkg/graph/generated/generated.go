@@ -769,6 +769,7 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		Name                  func(childComplexity int) int
+		TreatAsOther          func(childComplexity int) int
 	}
 
 	PrepareForClearance struct {
@@ -5648,6 +5649,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PossibleOperationalSolution.Name(childComplexity), true
 
+	case "PossibleOperationalSolution.treatAsOther":
+		if e.complexity.PossibleOperationalSolution.TreatAsOther == nil {
+			break
+		}
+
+		return e.complexity.PossibleOperationalSolution.TreatAsOther(childComplexity), true
+
 	case "PrepareForClearance.latestClearanceDts":
 		if e.complexity.PrepareForClearance.LatestClearanceDts == nil {
 			break
@@ -6233,6 +6241,7 @@ type PossibleOperationalSolution {
     id: Int!
     name: String!
     key: OperationalSolutionKey!
+    treatAsOther: Boolean!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -7414,7 +7423,7 @@ type OperationalSolution {
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
-    isOther: Boolean
+    isOther: Boolean!
     otherHeader: String
     status: OpSolutionStatus!
 
@@ -7431,7 +7440,6 @@ type OperationalSolution {
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     needed: Boolean
-    name: String
     nameOther: String # Only valid for when solution type is null
 
     pocName: String
@@ -19110,11 +19118,14 @@ func (ec *executionContext) _OperationalSolution_isOther(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_OperationalSolution_isOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -40203,6 +40214,8 @@ func (ec *executionContext) fieldContext_PossibleOperationalNeed_possibleSolutio
 				return ec.fieldContext_PossibleOperationalSolution_name(ctx, field)
 			case "key":
 				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
+			case "treatAsOther":
+				return ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -40777,6 +40790,50 @@ func (ec *executionContext) fieldContext_PossibleOperationalSolution_key(ctx con
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type OperationalSolutionKey does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PossibleOperationalSolution_treatAsOther(ctx context.Context, field graphql.CollectedField, obj *models.PossibleOperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TreatAsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PossibleOperationalSolution_treatAsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PossibleOperationalSolution",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -43025,6 +43082,8 @@ func (ec *executionContext) fieldContext_Query_possibleOperationalSolutions(ctx 
 				return ec.fieldContext_PossibleOperationalSolution_name(ctx, field)
 			case "key":
 				return ec.fieldContext_PossibleOperationalSolution_key(ctx, field)
+			case "treatAsOther":
+				return ec.fieldContext_PossibleOperationalSolution_treatAsOther(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PossibleOperationalSolution_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -47984,6 +48043,9 @@ func (ec *executionContext) _OperationalSolution(ctx context.Context, sel ast.Se
 
 			out.Values[i] = ec._OperationalSolution_isOther(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "otherHeader":
 
 			out.Values[i] = ec._OperationalSolution_otherHeader(ctx, field, obj)
@@ -51861,6 +51923,13 @@ func (ec *executionContext) _PossibleOperationalSolution(ctx context.Context, se
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "treatAsOther":
+
+			out.Values[i] = ec._PossibleOperationalSolution_treatAsOther(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdBy":
 
 			out.Values[i] = ec._PossibleOperationalSolution_createdBy(ctx, field, obj)
@@ -53494,6 +53563,27 @@ func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interf
 
 func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
 	res := graphql.MarshalBoolean(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNBoolean2ᚖbool(ctx context.Context, v interface{}) (*bool, error) {
+	res, err := graphql.UnmarshalBoolean(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNBoolean2ᚖbool(ctx context.Context, sel ast.SelectionSet, v *bool) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	res := graphql.MarshalBoolean(*v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

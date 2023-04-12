@@ -108,6 +108,7 @@ type PossibleOperationalSolution {
     id: Int!
     name: String!
     key: OperationalSolutionKey!
+    treatAsOther: Boolean!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -1289,7 +1290,7 @@ type OperationalSolution {
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
-    isOther: Boolean
+    isOther: Boolean!
     otherHeader: String
     status: OpSolutionStatus!
 
@@ -1306,7 +1307,6 @@ type OperationalSolution {
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     needed: Boolean
-    name: String
     nameOther: String # Only valid for when solution type is null
 
     pocName: String
