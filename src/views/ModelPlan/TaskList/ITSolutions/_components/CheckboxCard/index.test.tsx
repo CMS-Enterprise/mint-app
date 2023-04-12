@@ -23,6 +23,7 @@ const solution = [
     mustFinishDts: null,
     status: OpSolutionStatus.IN_PROGRESS,
     needed: true,
+    otherHeader: null,
     pocName: 'John Doe',
     pocEmail: '',
     nameOther: null

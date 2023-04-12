@@ -62,12 +62,13 @@ type CustomOperationalSolutionFormType = Omit<
   | '__typename'
   | 'id'
   | 'key'
-  | 'isOther'
   | 'name'
   | 'status'
   | 'mustFinishDts'
   | 'mustStartDts'
   | 'operationalSolutionSubtasks'
+  | 'isOther'
+  | 'otherHeader'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {

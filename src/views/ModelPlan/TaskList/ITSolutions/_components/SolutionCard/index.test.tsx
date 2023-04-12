@@ -16,6 +16,7 @@ const solution: SolutionCardType = {
   isOther: false,
   key: OperationalSolutionKey.SHARED_SYSTEMS,
   pocName: 'John Mint',
+  otherHeader: null,
   pocEmail: 'john.mint@oddball.io',
   needed: true,
   nameOther: null

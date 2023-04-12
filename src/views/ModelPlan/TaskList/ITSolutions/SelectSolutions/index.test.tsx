@@ -36,6 +36,7 @@ const operationalNeed: GetOperationalNeedType = {
       key: OperationalSolutionKey.RMADA,
       mustStartDts: null,
       mustFinishDts: null,
+      otherHeader: null,
       status: OpSolutionStatus.AT_RISK,
       needed: null,
       pocName: 'John Doe',
