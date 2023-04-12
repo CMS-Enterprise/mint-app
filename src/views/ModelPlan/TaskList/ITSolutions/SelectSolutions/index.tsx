@@ -350,7 +350,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                             type="submit"
                             className="margin-bottom-1"
                             disabled={
-                              values.solutions.filter(
+                              allTheSolutions.filter(
                                 solution => solution.needed
                               ).length === 0
                             }
