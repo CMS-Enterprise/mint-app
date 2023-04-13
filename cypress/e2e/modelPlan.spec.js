@@ -25,74 +25,55 @@ describe('The Model Plan Form', () => {
     cy.get('[data-testid="continue-to-tasklist"]').click();
 
     cy.contains('h1', 'Model Plan task list');
-  });
 
-  it('create and renames a model plan', () => {
-    cy.visit('/');
-
-    cy.wait(250);
-
-    cy.contains('a', 'Start a new Model Plan').click();
-    cy.contains('h1', 'Start a new model plan');
-    cy.get('[data-testid="continue-link"]').click();
-
-    // Creates a new plan
-    cy.get('#new-plan-model-name')
-      .type('Model Plan Name')
-      .should('have.value', 'Model Plan Name');
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
-    });
-    cy.get('[data-testid="continue-to-tasklist"]').click();
-    cy.contains('h1', 'Model Plan task list');
-
+    // renames a model plan
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
+
     cy.contains('h3', 'Model basics');
+
     cy.contains('button', 'Start').click();
+
+    cy.clickOutside();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
     });
-    cy.wait(500);
+
     cy.get('#plan-basics-model-name')
       .clear()
       .type('Renamed Model Plan Name')
       .should('have.value', 'Renamed Model Plan Name');
+
     cy.contains('button', 'Save and return to task list').click();
+
+    cy.clickOutside();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
+
     cy.get('[data-testid="model-plan-name"]').contains(
       'p',
       'Renamed Model Plan Name'
     );
-  });
 
-  it('create a minimum Model Basics plan', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.get('[data-testid="basics"]').click();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    });
-    cy.contains('h3', 'Model basics');
-    cy.contains('button', 'Start').click();
+    cy.clickOutside();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
-    });
-
-    cy.get('#plan-basics-model-name').should('have.value', 'Empty Plan');
     cy.get('#plan-basics-model-category').select('Demonstration');
+
     cy.get('#plan-basics-model-category').contains('Demonstration');
+
     cy.get('#new-plan-cmsCenters-CENTER_FOR_MEDICARE')
       .check({ force: true })
       .should('be.checked');
+
     cy.contains('button', 'Next').click();
+
+    cy.clickOutside();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -100,54 +81,7 @@ describe('The Model Plan Form', () => {
       );
     });
 
-    cy.wait(500);
-
-    cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
-
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/basics\/milestones/
-      );
-    });
-    cy.contains('h3', 'Anticipated high level timeline');
-    cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
-    cy.contains('button', 'Save and return to task list').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    });
-
-    cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
-    cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
-  });
-
-  it('completes a Model Plan Basics', () => {
-    cy.clickPlanTableByName('Empty Plan');
-
-    cy.contains('h3', 'Model basics');
-    cy.contains('button', 'Start').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
-    });
-
-    cy.get('#plan-basics-model-category')
-      .select('Demonstration')
-      .contains('Demonstration');
-    cy.get('#new-plan-cmsCenters-CENTER_FOR_MEDICARE')
-      .check({ force: true })
-      .should('be.checked');
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/basics\/overview/
-      );
-    });
-
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
 
@@ -168,12 +102,16 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
+    cy.clickOutside();
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/basics\/milestones/
       );
     });
+
     cy.contains('h3', 'Anticipated high level timeline');
+
     cy.get('#Milestone-completeICIP')
       .type('05/23/2025')
       .should('have.value', '05/23/2025');
@@ -211,50 +149,39 @@ describe('The Model Plan Form', () => {
       .should('have.value', '05/23/2025');
 
     cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
+
     cy.contains('button', 'Save and return to task list').click();
 
+    cy.clickOutside();
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
+
+    cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
 
     cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
-  });
 
-  it('updates model plan status', () => {
-    cy.visit('/');
+    // updates model plan status
 
-    cy.contains('a', 'Start a new Model Plan').click();
-    cy.contains('h1', 'Start a new model plan');
-    cy.get('[data-testid="continue-link"]').click();
-
-    // Creates a new plan
-    cy.get('#new-plan-model-name')
-      .type('Updating Status')
-      .should('have.value', 'Updating Status');
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
-    });
-    cy.get('[data-testid="continue-to-tasklist"]').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    });
-    cy.contains('h1', 'Model Plan task list');
     cy.get('.mint-tag').contains('Draft model plan');
+
     cy.contains('a', 'Update').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/status/);
     });
+
     cy.contains('h1', 'Update status');
+
     cy.get('[data-testid="button"]')
       .contains('Update status')
       .should('be.disabled');
+
     cy.get('#Status-Dropdown')
       .select('Cleared')
       .should('have.value', 'CLEARED');
+
     cy.get('[data-testid="button"]')
       .contains('Update status')
       .should('be.not.disabled')
@@ -263,13 +190,13 @@ describe('The Model Plan Form', () => {
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
-    cy.get('.mint-tag').contains('Cleared');
-  });
 
-  it('favorites and unfavorites a model plan', () => {
+    cy.get('.mint-tag').contains('Cleared');
+
+    // favorites and unfavorites a model plan
     cy.visit('/models');
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // cy.contains('tr', 'Empty Plan').find('th button svg[data-cy="favorited"]');
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');

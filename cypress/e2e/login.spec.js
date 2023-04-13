@@ -23,30 +23,32 @@ describe('Logging in', () => {
         'equal',
         '/pre-decisional-notice'
       );
+
+      cy.logout();
+
+      // logs in with local auth an verifies NDA
+      cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+      cy.get('h1', { timeout: 20000 }).should(
+        'have.text',
+        'Welcome to Model Innovation Tool (MINT)'
+      );
+
+      cy.logout();
+
+      cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
+
+      cy.get('h1', { timeout: 20000 }).should(
+        'have.text',
+        'Welcome to Model Innovation Tool (MINT)'
+      );
+
+      cy.logout();
+
+      // logs in with local MAC
+      cy.localLogin({ name: 'ABCD', role: 'MINT MAC Users' });
+
+      cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
     }
   );
-
-  it('logs in with local auth an verifies NDA', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
-
-    cy.get('h1', { timeout: 20000 }).should(
-      'have.text',
-      'Welcome to Model Innovation Tool (MINT)'
-    );
-
-    cy.logout();
-
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
-
-    cy.get('h1', { timeout: 20000 }).should(
-      'have.text',
-      'Welcome to Model Innovation Tool (MINT)'
-    );
-  });
-
-  it('logs in with local MAC', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT MAC Users' });
-
-    cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
-  });
 });

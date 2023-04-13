@@ -9,7 +9,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Enter into op eval and learning and answer helpdesk op needs question
     cy.get('[data-testid="ops-eval-and-learning"]').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-help-desk-use-true')
       .check({ force: true })
@@ -21,7 +21,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.get('#ops-eval-and-learning-help-desk-use-warning').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // Click into the it solutions tracker for helpdesk op needs
     cy.get('[data-testid="needs-table"] tbody tr')
@@ -67,12 +67,12 @@ describe('The Model Plan IT solutions tracker', () => {
     // Submitting the custom solution
     cy.get('#submit-custom-solution').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // Adding the custom solution
     cy.get('#add-solution-details-button').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // Adding a few other solutions
     cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
@@ -83,7 +83,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.contains('button', 'Continue').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // Filling out solutions details
     cy.get('#solution-must-start-CBOSC')
@@ -126,13 +126,13 @@ describe('The Model Plan IT solutions tracker', () => {
     // Click button to update existing solutions for the relevant need
     cy.get('[data-testid="update-solutions-link"]').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('[data-testid="alert"]').contains(
       'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.'
     );
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // Removing a solution
     cy.get('#it-solutions-contractor')
@@ -141,7 +141,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.contains('button', 'Continue').click();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('[data-testid="alert"]').contains(
       'Saving these selections will delete the Contractor solution page/s that is associated with this operational need.'
@@ -153,7 +153,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .click({ force: true })
       .click({ force: true });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     // Add new custom need
     cy.get('[data-testid="add-new-operational-need"]').click();
@@ -223,7 +223,7 @@ describe('The Model Plan IT solutions tracker', () => {
         cy.contains('test.pdf');
       });
 
-    cy.wait(500);
+    cy.clickOutside();
     cy.get('#link-documents').click();
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr')
@@ -234,9 +234,9 @@ describe('The Model Plan IT solutions tracker', () => {
         cy.get('[type="checkbox"]').should('be.checked');
         cy.get('[type="checkbox"]').uncheck({ force: true });
       });
-    cy.wait(500);
+    cy.clickOutside();
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('[data-testid="link-documents-button"]')
       .should('not.be.disabled')

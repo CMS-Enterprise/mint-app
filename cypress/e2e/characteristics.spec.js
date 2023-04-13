@@ -18,11 +18,14 @@ describe('The Model Plan General Characteristics Form', () => {
     // Page - /characteristics
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
+    cy.clickOutside();
+
     cy.get('#plan-characteristics-is-new-model-no')
       .check({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-existing-model')
+      .should('be.visible')
       .click()
       .type('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
@@ -57,7 +60,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#plan-characteristics-alternative-payment-MIPS')
       .check({ force: true })
@@ -88,9 +91,10 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/involvements
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#plan-characteristics-care-coordination-involved')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 
@@ -124,7 +128,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/targets-and-options
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#plan-characteristics-geographies-targeted')
       .check({ force: true })
@@ -162,7 +166,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/authority
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#plan-characteristics-rulemaking-required')
       .check({ force: true })
