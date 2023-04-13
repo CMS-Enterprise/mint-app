@@ -64,7 +64,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true')
       .check({ force: true })
@@ -90,7 +90,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc-testing
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-uat-needs')
       .type('Users to make sure this works correctly')
@@ -129,7 +129,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc-monitoring
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-fulltime-or-incremental-INCREMENTAL')
       .check({ force: true })
@@ -159,7 +159,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/performance
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-benchmark-performance-YES_RECONCILE')
       .check({ force: true })
@@ -205,7 +205,8 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/evaluation
 
-    cy.wait(500);
+    cy.clickOutside();
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-evaluation-approach-OTHER')
       .check({ force: true })
@@ -259,7 +260,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/ccw-and-quality
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-send-files-true')
       .check({ force: true })
@@ -285,7 +286,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/data-sharing
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-data-sharing-starts').select('Other');
 
@@ -333,9 +334,10 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/learning
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-learning-systems-OTHER')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 

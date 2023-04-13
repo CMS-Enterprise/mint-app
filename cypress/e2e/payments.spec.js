@@ -15,7 +15,7 @@ describe('The Model Plan Payment Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
       .check({ force: true })
@@ -57,7 +57,7 @@ describe('The Model Plan Payment Form', () => {
       );
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-pay-claims').within(() => {
       cy.get("input[type='text']").click();
@@ -97,7 +97,7 @@ describe('The Model Plan Payment Form', () => {
       );
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-creating-dependencies-between-services-true')
       .check({ force: true })
@@ -125,7 +125,7 @@ describe('The Model Plan Payment Form', () => {
       );
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-beneficiary-cost-sharing')
       .type('Bill in accounting')
@@ -153,7 +153,7 @@ describe('The Model Plan Payment Form', () => {
       );
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-nonclaims-payments').within(() => {
       cy.get("input[type='text']").click();
@@ -195,7 +195,7 @@ describe('The Model Plan Payment Form', () => {
       );
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-complexity-LOW')
       .check({ force: true })
@@ -233,7 +233,7 @@ describe('The Model Plan Payment Form', () => {
       );
     });
 
-    cy.wait(500);
+    cy.clickOutside();
 
     cy.get('#payment-recover-payment-true')
       .check({ force: true })
