@@ -4,7 +4,7 @@ describe('The Model Plan Form', () => {
   });
 
   it('archives a model plan', () => {
-    cy.clickPlanTableByName('Enhancing Oncology Model');
+    cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Remove your Model Plan').click();
 
@@ -16,7 +16,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Enhancing Oncology Model').should('not.exist');
+        cy.contains('th', 'Empty Plan').should('not.exist');
       });
     });
   });
