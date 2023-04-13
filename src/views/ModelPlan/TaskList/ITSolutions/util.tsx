@@ -188,7 +188,12 @@ export const returnActionLinks = (
         <UswdsReactLink
           to={{
             pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
-            state: { scrollElement: operationalNeedObj.fieldName.toString() }
+            state: {
+              scrollElement:
+                typeof operationalNeedObj.fieldName !== 'string'
+                  ? operationalNeedObj.fieldName[0]
+                  : operationalNeedObj.fieldName
+            }
           }}
         >
           {i18next.t('itSolutions:itSolutionsTable.answer')}

@@ -467,90 +467,97 @@ const TargetsAndOptions = () => {
                   field="participationOptionsNote"
                 />
 
-                <FieldArray
-                  name="agreementTypes"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('agreementType')}
-                      </legend>
+                <FieldGroup
+                  scrollElement="agreementTypes"
+                  error={!!flatErrors.agreementTypes}
+                >
+                  <FieldArray
+                    name="agreementTypes"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('agreementType')}
+                        </legend>
 
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="ops-eval-and-learning-data-needed-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
-                      )}
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="ops-eval-and-learning-data-needed-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
 
-                      <p className="text-base margin-y-1">
-                        {t('agreementNote')}
-                      </p>
+                        <p className="text-base margin-y-1">
+                          {t('agreementNote')}
+                        </p>
 
-                      <FieldErrorMsg>{flatErrors.agreementTypes}</FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.agreementTypes}
+                        </FieldErrorMsg>
 
-                      {Object.keys(AgreementType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`plan-characteristics-agreement-type-${type}`}
-                                name="agreementTypes"
-                                label={translateAgreementTypes(type)}
-                                value={type}
-                                checked={values.agreementTypes.includes(
-                                  type as AgreementType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.agreementTypes.indexOf(
-                                      e.target.value as AgreementType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === 'OTHER' &&
-                                values.agreementTypes.includes(
-                                  type as AgreementType
-                                ) && (
-                                  <FieldGroup
-                                    className="margin-left-4 margin-top-2 margin-bottom-0"
-                                    error={!!flatErrors.agreementTypesOther}
-                                  >
-                                    <Label
-                                      htmlFor="plan-characteristics-agreement-type-other"
-                                      className="text-normal"
+                        {Object.keys(AgreementType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`plan-characteristics-agreement-type-${type}`}
+                                  name="agreementTypes"
+                                  label={translateAgreementTypes(type)}
+                                  value={type}
+                                  checked={values.agreementTypes.includes(
+                                    type as AgreementType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.agreementTypes.indexOf(
+                                        e.target.value as AgreementType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === 'OTHER' &&
+                                  values.agreementTypes.includes(
+                                    type as AgreementType
+                                  ) && (
+                                    <FieldGroup
+                                      className="margin-left-4 margin-top-2 margin-bottom-0"
+                                      error={!!flatErrors.agreementTypesOther}
                                     >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.agreementTypesOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextAreaField}
-                                      className="mint-textarea"
-                                      id="plan-characteristics-agreement-type-other"
-                                      maxLength={5000}
-                                      name="agreementTypesOther"
-                                    />
-                                  </FieldGroup>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                    </>
-                  )}
-                />
+                                      <Label
+                                        htmlFor="plan-characteristics-agreement-type-other"
+                                        className="text-normal"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.agreementTypesOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="mint-textarea"
+                                        id="plan-characteristics-agreement-type-other"
+                                        maxLength={5000}
+                                        name="agreementTypesOther"
+                                      />
+                                    </FieldGroup>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 {values.agreementTypes.includes(
                   'PARTICIPATION' as AgreementType

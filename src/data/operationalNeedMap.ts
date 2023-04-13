@@ -70,7 +70,7 @@ const operationalNeedMap: NeedMapType = {
     answer: 'translateCommunicationType'
   },
   MANAGE_PROV_OVERLAP: {
-    route: 'participants-and-providers/provder-options',
+    route: 'participants-and-providers/provider-options',
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:overlap',
@@ -238,7 +238,7 @@ const operationalNeedMap: NeedMapType = {
     answer: 'translateNonClaimsBasedPayType'
   },
   RECOVER_PAYMENTS: {
-    route: 'payment/recover',
+    route: 'payment/recover-payment',
     fieldName: 'willRecoverPayments',
     parentField: 'payments',
     question: 'payments:willRecoverPayments',

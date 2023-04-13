@@ -324,90 +324,97 @@ export const Coordination = () => {
                   />
                 </FieldGroup>
 
-                <FieldArray
-                  name="participantsIds"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">{t('collectTINs')}</legend>
+                <FieldGroup
+                  scrollElement="participantsIds"
+                  error={!!flatErrors.participantsIds}
+                >
+                  <FieldArray
+                    name="participantsIds"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('collectTINs')}
+                        </legend>
 
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="ops-eval-and-learning-data-needed-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="ops-eval-and-learning-data-needed-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <p className="text-base margin-0 line-height-body-3">
+                          {t('collectTINsInfo')}
+                        </p>
+
+                        <FieldErrorMsg>
+                          {flatErrors.participantsIds}
+                        </FieldErrorMsg>
+
+                        {Object.keys(ParticipantsIDType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`participants-and-providers-participant-id-${type}`}
+                                  name="participantsIds"
+                                  label={translateParticipantIDType(type)}
+                                  value={type}
+                                  checked={values?.participantsIds.includes(
+                                    type as ParticipantsIDType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.participantsIds.indexOf(
+                                        e.target.value as ParticipantsIDType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === ('OTHER' as ParticipantsIDType) &&
+                                  values.participantsIds.includes(type) && (
+                                    <div className="margin-left-4">
+                                      <Label
+                                        htmlFor="participants-and-providers-participant-id-other"
+                                        className="text-normal margin-top-1"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.participantsIdsOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="participants-and-providers-participant-id-other"
+                                        data-testid="participants-and-providers-participant-id-other"
+                                        maxLength={5000}
+                                        name="participantsIdsOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="participants-and-providers-participant-id-note"
+                          field="participantsIDSNote"
                         />
-                      )}
-
-                      <p className="text-base margin-0 line-height-body-3">
-                        {t('collectTINsInfo')}
-                      </p>
-
-                      <FieldErrorMsg>
-                        {flatErrors.participantsIds}
-                      </FieldErrorMsg>
-
-                      {Object.keys(ParticipantsIDType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`participants-and-providers-participant-id-${type}`}
-                                name="participantsIds"
-                                label={translateParticipantIDType(type)}
-                                value={type}
-                                checked={values?.participantsIds.includes(
-                                  type as ParticipantsIDType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.participantsIds.indexOf(
-                                      e.target.value as ParticipantsIDType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === ('OTHER' as ParticipantsIDType) &&
-                                values.participantsIds.includes(type) && (
-                                  <div className="margin-left-4">
-                                    <Label
-                                      htmlFor="participants-and-providers-participant-id-other"
-                                      className="text-normal margin-top-1"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.participantsIdsOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="participants-and-providers-participant-id-other"
-                                      data-testid="participants-and-providers-participant-id-other"
-                                      maxLength={5000}
-                                      name="participantsIdsOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="participants-and-providers-participant-id-note"
-                        field="participantsIDSNote"
-                      />
-                    </>
-                  )}
-                />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
