@@ -206,7 +206,7 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                   data-testid="label"
                   for="it-solution-custom-poc-email"
                 >
-                  Email or other contact information
+                  Email
                 </label>
                 <input
                   class="usa-input"

@@ -23,6 +23,8 @@ possibleSolution AS (
         OpSol.poc_email,
         OpSol.must_start_dts,
         OpSol.must_finish_dts,
+        COALESCE(OpSol.is_other, pOpSol.treat_as_other) AS is_other,
+        OpSol.other_header,
         COALESCE(OpSol.status, 'NOT_STARTED') AS status,
         COALESCE(OpNd.created_by, '00000000-0000-0000-0000-000000000000') AS created_by, -- This is UUID.NIL, the same as the UNKNOWN_USER account in the DB
         COALESCE(OpSol.created_dts, CURRENT_TIMESTAMP) AS created_dts,
@@ -53,6 +55,8 @@ resultSet AS (
         OpSol.poc_email,
         OpSol.must_start_dts,
         OpSol.must_finish_dts,
+        OpSol.is_other,
+        OpSol.other_header,
         OpSol.status,
         OpSol.created_by,
         OpSol.created_dts,

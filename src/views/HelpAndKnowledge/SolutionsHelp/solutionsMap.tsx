@@ -461,7 +461,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.GRANT_SOLUTIONS,
+    enum: null,
     key: 'grantSolutions',
     route: 'grant-solutions',
     categories: [
@@ -510,7 +510,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.NEW_CMMI_PROCESS,
+    enum: null,
     key: 'healthDataReporting',
     route: 'health-data-reporting',
     categories: [OperationalSolutionCategories.QUALITY],
@@ -992,7 +992,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.SALESFORCE_PORTAL,
+    enum: null,
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
