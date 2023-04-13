@@ -10,6 +10,8 @@ SELECT
     OpSol.poc_email,
     OpSol.must_start_dts,
     OpSol.must_finish_dts,
+    OpSol.is_other,
+    OpSol.other_header,
     OpSol.status,
     OpSol.created_by,
     OpSol.created_dts,

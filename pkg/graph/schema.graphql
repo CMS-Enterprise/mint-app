@@ -108,6 +108,7 @@ type PossibleOperationalSolution {
     id: Int!
     name: String!
     key: OperationalSolutionKey!
+    treatAsOther: Boolean!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -1289,7 +1290,10 @@ type OperationalSolution {
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    isOther: Boolean!
+    otherHeader: String
     status: OpSolutionStatus!
+
     documents: [PlanDocument!]!
     operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
 
@@ -1303,10 +1307,13 @@ type OperationalSolution {
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     needed: Boolean
+    nameOther: String # Only valid for when solution type is null
+
     pocName: String
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    otherHeader: String
     status: OpSolutionStatus
 }
 
@@ -1495,13 +1502,10 @@ addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! nee
 updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution!
+createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution!
-@hasRole(role: MINT_USER)
-
-updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution!
+updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
 createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
@@ -2034,42 +2038,42 @@ enum OperationalNeedKey{
 }
 
 enum OperationalSolutionKey{
-  MARX
-  HPMS
-  SALESFORCE
-  GRANT_SOLUTIONS
-  RFA
-  ARS
-  RMADA
-  OUTLOOK_MAILBOX
-  GOVDELIVERY
-  SALESFORCE_PORTAL
-  MDM
-  CBOSC
-  THROUGH_A_CONTRACTOR
-  ACO_OS
-  ACO_UI
   INNOVATION
-  IDR
-  CCW
-  MEDICARE_APPEAL_SYSTEM
-  IDOS
-  ISP
-  ANOTHER_CONTRACTOR
-  EXISTING_CMS_DATA_AND_PROCESS
-  NEW_CMMI_PROCESS
-  OTHER_NEW_PROCESS
-  INTERNAL_STAFF
-  CROSS_MODEL_CONTRACT
-  CONNECT
-  OC
-  SHARED_SYSTEMS
-  HIGLAS
-  FFS_COMPETENCY_CENTER
+  ACO_OS
   APPS
+  CDX
+  CCW
+  CMS_BOX
+  CMS_QUALTRICS
+  CBOSC
+  CONTRACTOR
+  CPI_VETTING
+  CROSS_MODEL_CONTRACT
+  EFT
+  EXISTING_CMS_DATA_AND_PROCESS
+  EDFR
+  GOVDELIVERY
+  GS
+  HDR
+  HPMS
+  HIGLAS
   IPC
-  MAC
-  RMADA_CONTRACTOR
+  IDR
+  INTERNAL_STAFF
+  LDG
+  LV
+  MDM
+  MARX
+  OTHER_NEW_PROCESS
+  OUTLOOK_MAILBOX
+  QV
+  RMADA
+  ARS
+  CONNECT
+  LOI
+  POST_PORTAL
+  RFA
+  SHARED_SYSTEMS
 }
 
 enum OperationalSolutionSubtaskStatus {

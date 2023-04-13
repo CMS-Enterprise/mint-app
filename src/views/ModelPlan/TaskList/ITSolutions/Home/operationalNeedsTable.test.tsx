@@ -44,8 +44,8 @@ const returnNeeds = (needed: boolean | null) => {
                     __typename: 'OperationalSolution',
                     id: 3,
                     status: OpSolutionStatus.IN_PROGRESS,
-                    name: 'Salesforce',
-                    key: OperationalSolutionKey.SALESFORCE,
+                    name: 'Shared Systems',
+                    key: OperationalSolutionKey.SHARED_SYSTEMS,
                     mustStartDts: null,
                     mustFinishDts: null,
                     needed: true,
@@ -110,7 +110,7 @@ describe('IT Solutions Home', () => {
 
     await waitFor(() => {
       expect(getByText('Recruit participants')).toBeInTheDocument();
-      expect(getByText('Salesforce')).toBeInTheDocument();
+      expect(getByText('Shared Systems')).toBeInTheDocument();
     });
   });
 
