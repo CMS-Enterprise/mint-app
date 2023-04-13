@@ -2,7 +2,7 @@ const maxAttempts = 3;
 
 describe('Logging in', () => {
   it(
-    'logs in with okta',
+    'logs in',
     {
       retries: {
         runMode: maxAttempts - 1, // 2 retries when running from `cypress run` (3 total attempts)
@@ -18,7 +18,11 @@ describe('Logging in', () => {
         );
         cy.wait(30000);
       }
+
       cy.login();
+
+      cy.clickOutside();
+
       cy.location('pathname', { timeout: 20000 }).should(
         'equal',
         '/pre-decisional-notice'
@@ -26,24 +30,34 @@ describe('Logging in', () => {
 
       cy.logout();
 
+      cy.clickOutside();
+
       // logs in with local auth an verifies NDA
       cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
 
+      cy.clickOutside();
+
       cy.get('h1', { timeout: 20000 }).should(
         'have.text',
         'Welcome to Model Innovation Tool (MINT)'
       );
 
       cy.logout();
+
+      cy.clickOutside();
 
       cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
 
+      cy.clickOutside();
+
       cy.get('h1', { timeout: 20000 }).should(
         'have.text',
         'Welcome to Model Innovation Tool (MINT)'
       );
 
       cy.logout();
+
+      cy.clickOutside();
 
       // logs in with local MAC
       cy.localLogin({ name: 'ABCD', role: 'MINT MAC Users' });

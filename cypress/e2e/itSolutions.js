@@ -75,7 +75,8 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.clickOutside();
 
     // Adding a few other solutions
-    cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
+    cy.get('#it-solutions-cbosc').as('cbosc').check({ force: true });
+    cy.get('@cbosc').should('be.checked');
 
     cy.get('#it-solutions-contractor')
       .check({ force: true })

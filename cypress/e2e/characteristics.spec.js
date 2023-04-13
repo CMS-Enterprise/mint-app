@@ -98,6 +98,8 @@ describe('The Model Plan General Characteristics Form', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.clickOutside();
+
     cy.get('#plan-characteristics-care-coordination-description')
       .type('Yes, care coordination is involved in every way')
       .should('have.value', 'Yes, care coordination is involved in every way');

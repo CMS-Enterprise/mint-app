@@ -67,8 +67,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true')
-      .check({ force: true })
-      .should('be.checked');
+      .as('contacts')
+      .check({ force: true });
+    cy.get('@contacts').should('be.checked');
 
     cy.get('#ops-eval-and-learning-technical-contacts-identified-detail')
       .type('Bill in accounting')
