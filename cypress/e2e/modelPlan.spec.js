@@ -1,6 +1,19 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('The Model Plan Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+    cy.intercept('POST', '/api/graph/query', req => {
+      aliasQuery(req, 'GetModelPlan');
+      aliasQuery(req, 'GetIsCollaborator');
+      aliasQuery(req, 'GetModelPlanBase');
+      aliasQuery(req, 'GetModelCollaborators');
+      aliasQuery(req, 'GetModelPlanInfo');
+      aliasQuery(req, 'GetBasics');
+      aliasQuery(req, 'GetMilestones');
+      aliasQuery(req, 'GetAllModelPlans');
+    });
   });
 
   it('fills out model plan name and creates plan', () => {
@@ -18,11 +31,21 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
+    cy.wait('@GetIsCollaborator').its('response.statusCode').should('eq', 200);
+
+    cy.wait('@GetModelPlanBase').its('response.statusCode').should('eq', 200);
+
+    cy.wait('@GetModelCollaborators')
+      .its('response.statusCode')
+      .should('eq', 200);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
 
     cy.get('[data-testid="continue-to-tasklist"]').click();
+
+    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
 
     cy.contains('h1', 'Model Plan task list');
 
@@ -35,7 +58,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Start').click();
 
-    cy.clickOutside();
+    cy.wait('@GetModelPlanInfo').its('response.statusCode').should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
@@ -48,7 +71,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.clickOutside();
+    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -61,7 +84,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="basics"]').click();
 
-    cy.clickOutside();
+    cy.wait('@GetModelPlanInfo').its('response.statusCode').should('eq', 200);
 
     cy.get('#plan-basics-model-category').select('Demonstration');
 
@@ -73,15 +96,13 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.clickOutside();
+    cy.wait('@GetBasics').its('response.statusCode').should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/basics\/overview/
       );
     });
-
-    cy.clickOutside();
 
     cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
 
@@ -102,7 +123,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.clickOutside();
+    cy.wait('@GetMilestones').its('response.statusCode').should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -152,7 +173,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.clickOutside();
+    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -187,6 +208,8 @@ describe('The Model Plan Form', () => {
       .should('be.not.disabled')
       .click();
 
+    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
@@ -196,9 +219,8 @@ describe('The Model Plan Form', () => {
     // favorites and unfavorites a model plan
     cy.visit('/models');
 
-    cy.clickOutside();
+    cy.wait('@GetAllModelPlans').its('response.statusCode').should('eq', 200);
 
-    // cy.contains('tr', 'Empty Plan').find('th button svg[data-cy="favorited"]');
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 
     cy.contains('tr', 'Empty Plan')
