@@ -1,6 +1,16 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('The Model Plan General Characteristics Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+    cy.intercept('POST', '/api/graph/query', req => {
+      aliasQuery(req, 'GetGeneralCharacteristics');
+      aliasQuery(req, 'GetKeyCharacteristics');
+      aliasQuery(req, 'GetInvolvements');
+      aliasQuery(req, 'GetTargetsAndOptions');
+      aliasQuery(req, 'GetAuthority');
+    });
   });
 
   it('completes a Model Plan Characteristics', () => {
@@ -16,9 +26,12 @@ describe('The Model Plan General Characteristics Form', () => {
     });
 
     // Page - /characteristics
-    cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
-    cy.clickOutside();
+    cy.wait('@GetGeneralCharacteristics')
+      .its('response.statusCode')
+      .should('eq', 200);
+
+    cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#plan-characteristics-is-new-model-no')
       .check({ force: true })
@@ -60,7 +73,9 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
-    cy.clickOutside();
+    cy.wait('@GetKeyCharacteristics')
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#plan-characteristics-alternative-payment-MIPS')
       .check({ force: true })
@@ -91,7 +106,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/involvements
 
-    cy.clickOutside();
+    cy.wait('@GetInvolvements').its('response.statusCode').should('eq', 200);
 
     cy.get('#plan-characteristics-care-coordination-involved')
       .check({ force: true })
@@ -130,7 +145,9 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/targets-and-options
 
-    cy.clickOutside();
+    cy.wait('@GetTargetsAndOptions')
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#plan-characteristics-geographies-targeted')
       .check({ force: true })
@@ -168,7 +185,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/authority
 
-    cy.clickOutside();
+    cy.wait('@GetAuthority').its('response.statusCode').should('eq', 200);
 
     cy.get('#plan-characteristics-rulemaking-required')
       .check({ force: true })

@@ -21,8 +21,6 @@ describe('Logging in', () => {
 
       cy.login();
 
-      cy.clickOutside();
-
       cy.location('pathname', { timeout: 20000 }).should(
         'equal',
         '/pre-decisional-notice'
@@ -30,13 +28,11 @@ describe('Logging in', () => {
 
       cy.logout();
 
-      cy.clickOutside();
+      cy.wait(500);
 
       // logs in with local auth an verifies NDA
       cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
 
-      cy.clickOutside();
-
       cy.get('h1', { timeout: 20000 }).should(
         'have.text',
         'Welcome to Model Innovation Tool (MINT)'
@@ -44,12 +40,10 @@ describe('Logging in', () => {
 
       cy.logout();
 
-      cy.clickOutside();
+      cy.wait(500);
 
       cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
 
-      cy.clickOutside();
-
       cy.get('h1', { timeout: 20000 }).should(
         'have.text',
         'Welcome to Model Innovation Tool (MINT)'
@@ -57,7 +51,7 @@ describe('Logging in', () => {
 
       cy.logout();
 
-      cy.clickOutside();
+      cy.wait(500);
 
       // logs in with local MAC
       cy.localLogin({ name: 'ABCD', role: 'MINT MAC Users' });
