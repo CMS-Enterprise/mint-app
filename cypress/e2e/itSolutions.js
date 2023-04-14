@@ -37,7 +37,9 @@ describe('The Model Plan IT solutions tracker', () => {
       .its('response.statusCode')
       .should('eq', 200);
 
-    cy.get('#ops-eval-and-learning-help-desk-use-warning').click();
+    cy.get('#ops-eval-and-learning-help-desk-use-warning')
+      .should('be.visible')
+      .click();
 
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')

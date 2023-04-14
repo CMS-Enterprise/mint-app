@@ -93,16 +93,18 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.get('@contacts').should('be.checked');
 
     cy.get('#ops-eval-and-learning-technical-contacts-identified-detail')
-      .type('Bill in accounting')
-      .should('have.value', 'Bill in accounting');
+      .as('technical-contacts')
+      .type('Bill in accounting');
+    cy.get('@technical-contacts').should('have.value', 'Bill in accounting');
 
     cy.get('#ops-eval-and-learning-capture-participant-info')
       .check({ force: true })
       .should('be.checked');
 
     cy.get('#ops-eval-and-learning-capture-icd-owner')
-      .type('Mark in accounting')
-      .should('have.value', 'Mark in accounting');
+      .as('icd-owner')
+      .type('Mark in accounting');
+    cy.get('@icd-owner').should('have.value', 'Mark in accounting');
 
     cy.get('#ops-eval-and-learning-icd-due-date')
       .type('10/26/2028')
