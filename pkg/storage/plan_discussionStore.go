@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
@@ -15,9 +14,6 @@ import (
 
 //go:embed SQL/plan_discussion/create.sql
 var planDiscussionCreateSQL string
-
-//go:embed SQL/plan_discussion/collection_by_model_plan_id.sql
-var planDiscussionCollectionByModelPlanIDSQL string
 
 //go:embed SQL/plan_discussion/update.sql
 var planDiscussionUpdateSQL string
@@ -31,9 +27,6 @@ var planDiscussionGetByID string
 //go:embed SQL/discussion_reply/create.sql
 var discussionReplyCreateSQL string
 
-//go:embed SQL/discussion_reply/collection_by_discussion_id.sql
-var discussionReplyCollectionByDiscussionIDSQL string
-
 //go:embed SQL/discussion_reply/update.sql
 var discussionReplyUpdateSQL string
 
@@ -42,6 +35,54 @@ var discussionReplyDeleteSQL string
 
 //go:embed SQL/discussion_reply/get_by_id.sql
 var discussionReplyGetByID string
+
+//go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
+var planDiscussionGetByModelPlanIDLoaderSQL string
+
+//go:embed SQL/discussion_reply/get_by_discussion_id_LOADER.sql
+var discussionReplyGetByDiscussionIDLoaderSQL string
+
+// DiscussionReplyGetByDiscussionIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.DiscussionReply, error) {
+	discRSlice := []*models.DiscussionReply{}
+
+	stmt, err := s.db.PrepareNamed(discussionReplyGetByDiscussionIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&discRSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return discRSlice, nil
+}
+
+// PlanDiscussionGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanDiscussion, error) {
+	discSlice := []*models.PlanDiscussion{}
+
+	stmt, err := s.db.PrepareNamed(planDiscussionGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&discSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return discSlice, nil
+}
 
 // PlanDiscussionCreate creates a plan discussion
 func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
@@ -78,57 +119,6 @@ func (s *Store) DiscussionReplyCreate(logger *zap.Logger, reply *models.Discussi
 	}
 
 	return reply, nil
-}
-
-// DiscussionReplyCollectionByDiscusionID returns all Discussion repilies related to a plan discussion
-func (s *Store) DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
-	replies := []*models.DiscussionReply{}
-
-	stmt, err := s.db.PrepareNamed(discussionReplyCollectionByDiscussionIDSQL)
-	if err != nil {
-		return nil, err
-	}
-	arg := map[string]interface{}{"discussion_id": discussionID}
-
-	err = stmt.Select(&replies, arg) //this returns more than one
-
-	if err != nil {
-		logger.Error(
-			"Failed to fetch discusion replies",
-			zap.Error(err),
-			zap.String("discussion_id", discussionID.String()),
-		)
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     replies,
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return replies, nil
-}
-
-// PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan
-func (s *Store) PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
-	discusions := []*models.PlanDiscussion{}
-
-	stmt, err := s.db.PrepareNamed(planDiscussionCollectionByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-
-		"model_plan_id": modelPlanID,
-	}
-
-	err = stmt.Select(&discusions, arg) //this returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-	return discusions, nil
-
 }
 
 // PlanDiscussionUpdate updates a plan discussion object

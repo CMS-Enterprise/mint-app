@@ -54,6 +54,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
+      - name: Backup the database
+        if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
+        run: |
+          ./scripts/rds-snapshot-app-db.sh
       - name: Clean the database
         if: contains(inputs.env, 'dev')
         env:
@@ -77,10 +81,6 @@ jobs:
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/run_ecs_task.sh
-      # - name: Backup the database
-      #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
-      #   run: |
-      #     ./scripts/rds-snapshot-app-db
       - name: Deploy Faktory ECS service
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}

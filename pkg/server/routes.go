@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -305,29 +304,30 @@ func (s *Server) routes(
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
+		s.logger.Debug("debugging routes")
 		// useful for debugging route issues
 		_ = s.router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
 			pathTemplate, err := route.GetPathTemplate()
 			if err == nil {
-				fmt.Println("ROUTE:", pathTemplate)
+				s.logger.Debug("ROUTE: ", zap.String("ROUTE", pathTemplate))
 			}
 			pathRegexp, err := route.GetPathRegexp()
 			if err == nil {
-				fmt.Println("Path regexp:", pathRegexp)
+				s.logger.Debug("Path regexp:", zap.String("Path regexp", pathRegexp))
 			}
 			queriesTemplates, err := route.GetQueriesTemplates()
 			if err == nil {
-				fmt.Println("Queries templates:", strings.Join(queriesTemplates, ","))
+				s.logger.Debug("Queries templates:", zap.String("Queries templates", strings.Join(queriesTemplates, ",")))
 			}
 			queriesRegexps, err := route.GetQueriesRegexp()
 			if err == nil {
-				fmt.Println("Queries regexps:", strings.Join(queriesRegexps, ","))
+				s.logger.Debug("Queries regexps:", zap.String("Queries regexps", strings.Join(queriesRegexps, ",")))
 			}
 			methods, err := route.GetMethods()
 			if err == nil {
-				fmt.Println("Methods:", strings.Join(methods, ","))
+				s.logger.Debug("Methods:", zap.String("Methods", strings.Join(methods, ",")))
 			}
-			fmt.Println()
+			s.logger.Debug("debugging routes end")
 			return nil
 		})
 	}

@@ -38,13 +38,15 @@ exports[`Operation Solution Help Header matches snapshot 1`] = `
           </li>
         </ol>
       </nav>
-      <h2
-        class="margin-0"
+      <h1
+        aria-live="polite"
+        class="mint-h1 margin-0"
+        tabindex="-1"
       >
         Operational solutions
-      </h2>
+      </h1>
       <p
-        class="margin-bottom-4"
+        class="margin-bottom-4 font-body-lg"
       >
         Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.
       </p>

@@ -5,6 +5,7 @@ import { useOktaAuth } from '@okta/okta-react';
 
 import { localAuthStorageKey } from 'constants/localAuth';
 import GetNDA from 'queries/NDA/GetNDA';
+import { GetNDA as GetNDAType } from 'queries/NDA/types/GetNDA';
 import { setUser } from 'reducers/authReducer';
 import { isLocalAuthEnabled } from 'utils/auth';
 
@@ -22,7 +23,9 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const dispatch = useDispatch();
   const { authState, oktaAuth } = useOktaAuth();
 
-  const { data } = useQuery(GetNDA);
+  const { data } = useQuery<GetNDAType>(GetNDA, {
+    skip: !authState?.isAuthenticated
+  });
 
   const storeUserInfo = async () => {
     if (

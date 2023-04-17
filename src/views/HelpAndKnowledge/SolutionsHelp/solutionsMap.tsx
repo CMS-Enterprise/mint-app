@@ -46,7 +46,7 @@ export const operationalSolutionCategoryMap: CategoryType = {
   quality: OperationalSolutionCategories.QUALITY
 };
 
-type ContactRoles =
+export type ContactRoles =
   | 'Product Owner'
   | 'Senior Lead'
   | 'Chief Quality Officer and Lead'
@@ -71,10 +71,8 @@ type ContactRoles =
   | 'Director, Division of Model Learning Systems (DMLS)'
   | 'Deputy Director, Division of Model Learning Systems (DMLS)'
   | 'Beneficiary Listening Session Point of Contact'
-  | 'Beneficiary Listening Session Point of Contact'
   | 'Deputy Director, Division of Enterprise Information Management Services'
   | 'System Owner'
-  | 'Director, Division of System Support, Operation and Security (DSSOS)'
   | 'CMMI/BSG Point of Contact'
   | 'CMMI/BSG Project Support'
   | 'Overlaps Operations Support'
@@ -84,7 +82,7 @@ type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Division Director, Division of System Support, Operation and Security (DSSOS)';
+  | 'Director, Division of Budget and Administrative Services (DBAS)';
 
 export type SolutionContactType = {
   name: string;
@@ -176,7 +174,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
-    acronym: 'CO-OS',
+    acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     pointsOfContact: [
       {
@@ -330,7 +328,7 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    categories: [OperationalSolutionCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
     pointsOfContact: [
       {
@@ -576,10 +574,9 @@ export const helpSolutions: HelpSolutionType[] = [
     name: 'Innovation Payment Contractor',
     pointsOfContact: [
       {
-        name: 'Donna Schmidt',
-        email: 'donna.schmidt@cms.hhs.gov',
-        role:
-          'Director, Division of System Support, Operation and Security (DSSOS)'
+        name: 'Ron Topper',
+        email: 'ronald.topper@cms.hhs.gov',
+        role: 'Director, Division of Budget and Administrative Services (DBAS)'
       },
       {
         name: 'Sue Nonemaker',
@@ -599,7 +596,7 @@ export const helpSolutions: HelpSolutionType[] = [
     ],
     systemOwner: {
       name:
-        'Business Services Group, Division of System Support, Operation and Security',
+        'Business Services Group, Division of Budget and Administrative Services',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
@@ -754,7 +751,10 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: null,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
-    categories: [OperationalSolutionCategories.CC_VEHICLES],
+    categories: [
+      OperationalSolutionCategories.CC_VEHICLES,
+      OperationalSolutionCategories.QUALITY
+    ],
     acronym: 'MIDS',
     name: 'Measure and Instrument Development and Support',
     pointsOfContact: [
@@ -1078,7 +1078,7 @@ export const helpSolutions: HelpSolutionType[] = [
         name: 'Donna Schmidt',
         email: 'donna.schmidt@cms.hhs.gov',
         role:
-          'Division Director, Division of System Support, Operation and Security (DSSOS)'
+          'Director, Division of System Support, Operation and Security (DSSOS)'
       },
       {
         name: 'Madhu Annadata',

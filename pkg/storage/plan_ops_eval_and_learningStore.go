@@ -21,8 +21,29 @@ var planOpsEvalAndLearningUpdateSQL string
 //go:embed SQL/plan_ops_eval_and_learning/get_by_id.sql
 var planOpsEvalAndLearningGetByIDSQL string
 
-//go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id.sql
-var planOpsEvalAndLearningGetByModelPlanIDSQL string
+//go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id_LOADER.sql
+var planOpsEvalAndLearningGetByModelPlanIDLoaderSQL string
+
+// PlanOpsEvalAndLearningGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanOpsEvalAndLearning, error) {
+	oelSlice := []*models.PlanOpsEvalAndLearning{}
+
+	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&oelSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return oelSlice, nil
+}
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
 func (s *Store) PlanOpsEvalAndLearningCreate(logger *zap.Logger, oel *models.PlanOpsEvalAndLearning) (*models.PlanOpsEvalAndLearning, error) {
@@ -68,28 +89,6 @@ func (s *Store) PlanOpsEvalAndLearningGetByID(logger *zap.Logger, id uuid.UUID) 
 	}
 
 	err = statement.Get(&oel, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &oel, nil
-}
-
-// PlanOpsEvalAndLearningGetByModelPlanID returns the providers_and_participants for a given model plan id
-func (s *Store) PlanOpsEvalAndLearningGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanOpsEvalAndLearning, error) {
-	oel := models.PlanOpsEvalAndLearning{}
-
-	statement, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	err = statement.Get(&oel, arg)
 
 	if err != nil {
 		return nil, err

@@ -1,3 +1,5 @@
+@use 'colors' as *;
+
 // Custom USWDS Button
 .mint-button {
   &__save {
@@ -84,4 +86,28 @@
 
 .usa-date-picker__calendar {
   font-size: 14px !important;
+}
+
+.mint-cool-vivid {
+  color: $mint-cool-vivid !important;
+}
+
+.bg-mint-cool-vivid {
+  background-color: $mint-cool-vivid !important
+}
+
+.mint-cool-5 {
+  color: $mint-cool-5 !important;
+}
+
+.bg-mint-cool-5 {
+  background-color: $mint-cool-5 !important
+}
+
+.mint-cool-20 {
+  color: $mint-cool-5 !important;
+}
+
+.bg-mint-cool-20 {
+  background-color: $mint-cool-20 !important
 }

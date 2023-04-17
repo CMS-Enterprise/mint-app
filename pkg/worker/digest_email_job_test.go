@@ -146,9 +146,9 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	suite.NoError(err)
 
 	err = pool.With(func(cl *faktory.Client) error {
-		queues, err2 := cl.QueueSizes()
+		queueSize, err2 := cl.QueueSizes()
 		suite.NoError(err2)
-		suite.True(queues[emailQueue] == 2)
+		suite.True(queueSize[emailQueue] == 3)
 
 		// Check jobs arguments equal are corrrect userID and  date
 		job1, err2 := cl.Fetch(emailQueue)
@@ -168,6 +168,11 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 		suite.Equal(date, job2.Args[0].(string))
 		suite.True(lo.Contains(emails, job2.Args[1].(string)))
 
+		job3, err3 := cl.Fetch(emailQueue)
+		suite.NoError(err3)
+		suite.Equal(emailQueue, job3.Queue)
+		suite.Equal(date, job3.Args[0].(string))
+
 		// Check Batch Job
 		batchStatusPending, err2 := cl.BatchStatus(batchID)
 		suite.NoError(err2)
@@ -175,9 +180,12 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 		suite.Equal("", batchStatusPending.CompleteState)
 		// complete jobs
 		err = cl.Ack(job1.Jid)
+		suite.NoError(err)
+		err2 = cl.Ack(job2.Jid)
 		suite.NoError(err2)
-		err = cl.Ack(job2.Jid)
-		suite.NoError(err2)
+
+		err3 = cl.Ack(job3.Jid)
+		suite.NoError(err3)
 
 		// Check callback
 		batchStatusComplete, err2 := cl.BatchStatus(batchID)

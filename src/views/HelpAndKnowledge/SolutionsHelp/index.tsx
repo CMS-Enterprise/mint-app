@@ -56,10 +56,12 @@ export const searchSolutions = (
   query: string,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
+  const queryRegex = new RegExp(query.toLowerCase());
   return solutions.filter(
     solution =>
       solution.name.toLowerCase().includes(query.toLowerCase()) ||
-      solution?.acronym?.toLowerCase().includes(query.toLowerCase())
+      solution?.acronym?.toLowerCase().includes(query.toLowerCase()) ||
+      solution.categories.some(e => queryRegex.test(e.replace('-', ' ')))
   );
 };
 
@@ -134,7 +136,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
       <GridContainer className="margin-top-4">
         <Divider className="margin-top-6" />
 
-        <CategoryFooter />
+        <CategoryFooter currentCategory={category} />
       </GridContainer>
     </div>
   );

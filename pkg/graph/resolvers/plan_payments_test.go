@@ -1,12 +1,20 @@
 package resolvers
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import (
+	"context"
+	"fmt"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
 // TestPlanPaymentsUpdate tests PlanPaymentsUpdate
 func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	plan := suite.createModelPlan("Plan Payments")
 
-	pp, err := PlanPaymentsReadByModelPlan(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	pp, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -89,7 +97,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	plan := suite.createModelPlan("Plan Payments")
 
-	pp, err := PlanPaymentsReadByModelPlan(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	pp, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)
@@ -159,4 +167,32 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(pp.PaymentStartDate)
 	suite.Nil(pp.PaymentStartDateNote)
+}
+
+func (suite *ResolverSuite) TestPlanPaymentsDataLoader() {
+	plan1 := suite.createModelPlan("Plan For PAY 1")
+	plan2 := suite.createModelPlan("Plan For PAY 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyPlanPaymentsLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyPlanPaymentsLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyPlanPaymentsLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	pay, err := PlanPaymentsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != pay.ModelPlanID {
+		return fmt.Errorf("plan Payments returned model plan ID %s, expected %s", pay.ModelPlanID, modelPlanID)
+	}
+	return nil
 }

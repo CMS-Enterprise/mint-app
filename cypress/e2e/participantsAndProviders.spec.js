@@ -162,6 +162,7 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     cy.get('#participants-and-providers-additional-frequency-OTHER')
       .check({ force: true })
+      .check({ force: true })
       .should('be.checked');
 
     cy.get('#participants-and-providers-additional-frequency-other')
