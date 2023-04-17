@@ -258,10 +258,11 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
                   const allTheSolutions = values.solutions;
                   const commonSolutions = allTheSolutions.filter(
-                    solution => solution.isOther === false
+                    solution => solution.nameOther === null
                   );
+                  // otherSolutions are custom solutions
                   const otherSolutions = allTheSolutions.filter(
-                    solution => solution.isOther === true
+                    solution => solution.nameOther !== null
                   );
                   const flatErrors = flattenErrors(errors);
 
