@@ -130,7 +130,7 @@ func (s *Server) routes(
 	// Create Okta API Client
 	var oktaClient oktaapi.Client
 	var oktaClientErr error
-	if s.environment.Local() {
+	if !s.environment.Local() {
 		// Ensure Okta API Variables are set
 		oktaClient, oktaClientErr = local.NewOktaAPIClient(s.logger)
 		if oktaClientErr != nil {
