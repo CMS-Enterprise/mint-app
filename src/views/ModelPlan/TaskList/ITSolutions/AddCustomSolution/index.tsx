@@ -169,34 +169,23 @@ const AddCustomSolution = () => {
     try {
       // Add a new custom solution
       if (!operationalSolutionID) {
-        if (selectedSolution === OperationalSolutionKey.OTHER_NEW_PROCESS) {
-          updateMutation = await createSolution({
-            variables: {
-              operationalNeedID,
-              changes: {
-                needed: customOperationalSolution.needed,
-                nameOther: nameOther || '',
-                status: OpSolutionStatus.NOT_STARTED,
-                pocEmail,
-                pocName
-              }
+        updateMutation = await createSolution({
+          variables: {
+            operationalNeedID,
+            solutionType:
+              selectedSolution !== OperationalSolutionKey.OTHER_NEW_PROCESS
+                ? selectedSolution
+                : null,
+            changes: {
+              needed: customOperationalSolution.needed,
+              nameOther: nameOther ?? null,
+              otherHeader: otherHeader ?? null,
+              status: OpSolutionStatus.NOT_STARTED,
+              pocEmail,
+              pocName
             }
-          });
-        } else {
-          updateMutation = await createSolution({
-            variables: {
-              operationalNeedID,
-              solutionType: selectedSolution,
-              changes: {
-                needed: customOperationalSolution.needed,
-                otherHeader,
-                status: OpSolutionStatus.NOT_STARTED,
-                pocEmail,
-                pocName
-              }
-            }
-          });
-        }
+          }
+        });
         // Update existing custom solution
       } else {
         updateMutation = await updateSolution({
@@ -204,7 +193,8 @@ const AddCustomSolution = () => {
             id: operationalSolutionID,
             changes: {
               needed: customOperationalSolution.needed,
-              nameOther: nameOther || '',
+              nameOther: !selectedSolution ? nameOther : null,
+              otherHeader: selectedSolution ? otherHeader : null,
               pocEmail,
               pocName
             }
