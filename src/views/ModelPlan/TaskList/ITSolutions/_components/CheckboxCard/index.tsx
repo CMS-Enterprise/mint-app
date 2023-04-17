@@ -19,6 +19,8 @@ import { Field } from 'formik';
 
 import Divider from 'components/shared/Divider';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { OperationalSolutionKey } from 'types/graphql-global-types';
+import { translateOperationalSolutionKey } from 'utils/modelPlan';
 
 import './index.scss';
 
@@ -68,7 +70,20 @@ const CheckboxCard = ({
             checked={!!solution.needed}
           />
 
-          <h3 className="margin-y-2">{solution.nameOther || solution.name}</h3>
+          {solution.key === OperationalSolutionKey.CONTRACTOR ? (
+            <>
+              <h3 className="margin-top-2 margin-bottom-0">
+                {solution.otherHeader}
+              </h3>
+              <h5 className="text-normal margin-top-0 margin-bottom-2">
+                {translateOperationalSolutionKey(solution.key)}
+              </h5>
+            </>
+          ) : (
+            <h3 className="margin-y-2">
+              {solution.nameOther || solution.name}
+            </h3>
+          )}
 
           {!solution.isOther && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
