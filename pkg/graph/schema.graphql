@@ -1355,7 +1355,7 @@ type ChangeTableRecord {
   tableID: Int!
   primaryKey: UUID!
   foreignKey: UUID
-  # action: String!
+  action: String!
   fields: Map
   modifiedDts: Time
   modifiedBy: UserAccount

@@ -14,6 +14,7 @@ type ChangeTableRecord struct {
 	TableID     int                         `json:"table_id"`
 	PrimaryKey  uuid.UUID                   `json:"primary_key"`
 	ForeignKey  *uuid.UUID                  `json:"foreign_key"`
+	Action      string                      `json:"action"`
 	Fields      map[string]interface{}      `json:"fields"`
 	ModifiedDts *time.Time                  `json:"modified_dts"`
 	ModifiedBy  *authentication.UserAccount `json:"modified_by"`
