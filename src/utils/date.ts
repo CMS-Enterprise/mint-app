@@ -33,10 +33,11 @@ export const getTimeElapsed = (discussionCreated: string) => {
       const floatTime = Math.abs(
         timePassed[time as keyof typeof getTimeElapsed]
       );
+
       // Only show parent most level of time, rather than all increments
       if (dateString === '') {
         dateString += `${floatTime} ${
-          timePassed[time as keyof typeof getTimeElapsed] >= 2
+          timePassed[time as keyof typeof getTimeElapsed] !== 1
             ? time
             : time.slice(0, -1) // If singular, remove last letter 's's from time string
         } `;

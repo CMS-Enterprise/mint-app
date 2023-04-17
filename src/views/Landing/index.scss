@@ -6,7 +6,7 @@ $card-radius: 6px;
 
 .landing {
     word-break: break-word;
-
+    
     &__heading {
         font-size: 80px;
         font-weight: 400;
@@ -41,8 +41,7 @@ $card-radius: 6px;
         line-height: 23px;
         box-shadow: $card-shadow;
         width: 100%;
-        border-radius: $card-radius;
-        
+        border-radius: $card-radius; 
     }
 
     &__discussions {
@@ -63,13 +62,13 @@ $card-radius: 6px;
     }
 
     &__email-icon-contain {
-        width: 4rem;
-        height: 4rem;
+        width: 5rem;
+        height: 5rem;
         border-radius: .75rem;
         background: rgb(6,138,235);
         background: linear-gradient(180deg, rgba(6,138,235,1) 35%, rgba(1,98,166,1) 100%);
         margin-right: -2rem;
-        top: 15.5rem;
+        top: 14.5rem;
 
         @media screen and (max-width: $mobile) {
             top: 17rem;
@@ -78,8 +77,8 @@ $card-radius: 6px;
 
     &__email-icon {
         fill: white !important;
-        height: 2.75rem !important;
-        width: 2.75rem !important;
+        height: 3.5rem !important;
+        width: 3.5rem !important;
     }
 
     &__contain {

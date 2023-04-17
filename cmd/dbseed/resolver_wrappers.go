@@ -188,7 +188,7 @@ func (s *Seeder) getOperationalNeedsByModelPlanID(modelPlanID uuid.UUID) []*mode
 	return operationalNeeds
 }
 
-// addOperationalSolution is a wrapper for resolvers.OperationalSolutionInsertOrUpdate
+// addOperationalSolution is a wrapper for resolvers.OperationalSolutionCreate
 // It will panic if an error occurs, rather than bubbling the error up
 func (s *Seeder) addOperationalSolution(
 
@@ -197,11 +197,12 @@ func (s *Seeder) addOperationalSolution(
 	changes map[string]interface{},
 ) *models.OperationalSolution {
 	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
+	solType := models.OpSKMarx
 
-	operationalSolution, err := resolvers.OperationalSolutionInsertOrUpdate(
+	operationalSolution, err := resolvers.OperationalSolutionCreate(
 		s.Config.Logger,
 		operationalNeedID,
-		"FFS_COMPETENCY_CENTER",
+		&solType,
 		changes,
 		principal,
 		s.Config.Store,

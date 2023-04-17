@@ -72,7 +72,8 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	//  Check Operational Need relation with Operational Solutions
 	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
-	opSol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, opNeeds[0].ID, models.OpSKOutlookMailbox, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	solType := models.OpSKOutlookMailbox
+	opSol, err := OperationalSolutionCreate(suite.testConfigs.Logger, opNeeds[0].ID, &solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//9. User is collaborator by solutionID
