@@ -68,11 +68,11 @@ type CustomOperationalSolutionFormType = Omit<
   | 'mustStartDts'
   | 'operationalSolutionSubtasks'
   | 'isOther'
-  | 'otherHeader'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {
   nameOther: '',
+  otherHeader: null,
   pocName: '',
   pocEmail: '',
   documents: [],
@@ -89,6 +89,7 @@ const clearFields = (
   if (removeDetails) {
     return {
       nameOther: customSolution.nameOther,
+      otherHeader: null,
       pocName: '',
       pocEmail: '',
       documents: [],
@@ -161,25 +162,41 @@ const AddCustomSolution = () => {
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
   ) => {
-    const { nameOther, pocName, pocEmail } = formikValues;
+    const { nameOther, pocName, pocEmail, otherHeader } = formikValues;
 
     let updateMutation;
 
     try {
       // Add a new custom solution
       if (!operationalSolutionID) {
-        updateMutation = await createSolution({
-          variables: {
-            operationalNeedID,
-            changes: {
-              needed: customOperationalSolution.needed,
-              nameOther: nameOther || '',
-              status: OpSolutionStatus.NOT_STARTED,
-              pocEmail,
-              pocName
+        if (selectedSolution === OperationalSolutionKey.OTHER_NEW_PROCESS) {
+          updateMutation = await createSolution({
+            variables: {
+              operationalNeedID,
+              changes: {
+                needed: customOperationalSolution.needed,
+                nameOther: nameOther || '',
+                status: OpSolutionStatus.NOT_STARTED,
+                pocEmail,
+                pocName
+              }
             }
-          }
-        });
+          });
+        } else {
+          updateMutation = await createSolution({
+            variables: {
+              operationalNeedID,
+              solutionType: selectedSolution,
+              changes: {
+                needed: customOperationalSolution.needed,
+                otherHeader,
+                status: OpSolutionStatus.NOT_STARTED,
+                pocEmail,
+                pocName
+              }
+            }
+          });
+        }
         // Update existing custom solution
       } else {
         updateMutation = await updateSolution({
@@ -340,29 +357,57 @@ const AddCustomSolution = () => {
                           </h3>
                         )}
                         <Fieldset disabled={loading}>
-                          <FieldGroup
-                            scrollElement="nameOther"
-                            error={!!flatErrors.nameOther}
-                            className="margin-top-3"
-                          >
-                            <Label htmlFor="it-solution-custom-name-other">
-                              {t('solutionName')}
-                              <RequiredAsterisk />
-                            </Label>
-
-                            <FieldErrorMsg>
-                              {flatErrors.nameOther}
-                            </FieldErrorMsg>
-
-                            <Field
-                              as={TextInput}
+                          {selectedSolution ===
+                          OperationalSolutionKey.OTHER_NEW_PROCESS ? (
+                            <FieldGroup
+                              scrollElement="nameOther"
                               error={!!flatErrors.nameOther}
-                              id="it-solution-custom-name-other"
-                              data-testid="it-solution-custom-name-other"
-                              maxLength={50}
-                              name="nameOther"
-                            />
-                          </FieldGroup>
+                              className="margin-top-3"
+                            >
+                              <Label htmlFor="it-solution-custom-name-other">
+                                {t('solutionName')}
+                                <RequiredAsterisk />
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.nameOther}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors.nameOther}
+                                id="it-solution-custom-name-other"
+                                data-testid="it-solution-custom-name-other"
+                                maxLength={50}
+                                name="nameOther"
+                              />
+                            </FieldGroup>
+                          ) : (
+                            <FieldGroup
+                              scrollElement="otherHeader"
+                              error={!!flatErrors.otherHeader}
+                              className="margin-top-3"
+                            >
+                              <Label htmlFor="it-solution-other-header">
+                                {/* Other Header */}
+                                {t('solutionName')}
+                                <RequiredAsterisk />
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.otherHeader}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors.otherHeader}
+                                id="it-solution-other-header"
+                                data-testid="it-solution-other-header"
+                                maxLength={50}
+                                name="otherHeader"
+                              />
+                            </FieldGroup>
+                          )}
 
                           <FieldGroup
                             scrollElement="pocName"
@@ -418,7 +463,12 @@ const AddCustomSolution = () => {
                               type="submit"
                               className="margin-bottom-1"
                               id="submit-custom-solution"
-                              disabled={!values.nameOther}
+                              disabled={
+                                selectedSolution ===
+                                OperationalSolutionKey.OTHER_NEW_PROCESS
+                                  ? !values.nameOther
+                                  : !values.otherHeader
+                              }
                             >
                               {operationalSolutionID
                                 ? t('updateSolutionDetails')
