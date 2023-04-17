@@ -358,7 +358,8 @@ const AddCustomSolution = () => {
                         )}
                         <Fieldset disabled={loading}>
                           {selectedSolution ===
-                          OperationalSolutionKey.OTHER_NEW_PROCESS ? (
+                            OperationalSolutionKey.OTHER_NEW_PROCESS ||
+                          selectedSolution === null ? (
                             <FieldGroup
                               scrollElement="nameOther"
                               error={!!flatErrors.nameOther}
@@ -465,7 +466,8 @@ const AddCustomSolution = () => {
                               id="submit-custom-solution"
                               disabled={
                                 selectedSolution ===
-                                OperationalSolutionKey.OTHER_NEW_PROCESS
+                                  OperationalSolutionKey.OTHER_NEW_PROCESS ||
+                                selectedSolution === null
                                   ? !values.nameOther
                                   : !values.otherHeader
                               }
