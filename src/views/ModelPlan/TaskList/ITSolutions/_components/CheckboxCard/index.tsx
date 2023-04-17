@@ -70,7 +70,10 @@ const CheckboxCard = ({
             checked={!!solution.needed}
           />
 
-          {solution.key === OperationalSolutionKey.CONTRACTOR ? (
+          {solution.key === OperationalSolutionKey.CONTRACTOR ||
+          solution.key === OperationalSolutionKey.CROSS_MODEL_CONTRACT ||
+          solution.key ===
+            OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS ? (
             <>
               <h3 className="margin-top-2 margin-bottom-0">
                 {solution.otherHeader}
