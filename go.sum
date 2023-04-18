@@ -67,8 +67,8 @@ github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354/go.mod h1:WmhPx2Nbnht
 github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
 github.com/contribsys/faktory v1.6.2 h1:HuqJI9ZEeInN2nJg10WRy8zPpxNwVIZgACbex7wQG1A=
 github.com/contribsys/faktory v1.6.2/go.mod h1:R8+inlM1rq3GzyG8iZUL7qhfNfXGIgcbQRvTHmSyuUI=
-github.com/contribsys/faktory_worker_go v1.6.0 h1:ov69BLHL62i/wRLJwvuj5UphwgjMOINRCGW3KzrKOjk=
-github.com/contribsys/faktory_worker_go v1.6.0/go.mod h1:XMNGn3sBJdqFGfTH4SkmYkMovhdkq5cDJj36wowfbNY=
+github.com/contribsys/faktory_worker_go v1.6.1 h1:ErFrulG2gcCtj6ew5H8MposJfjQ++OBvA51HY6yCiRY=
+github.com/contribsys/faktory_worker_go v1.6.1/go.mod h1:BjJ6VZLnp8ji/bA3mFABNy+BI2pEgTEGb7mXPdyui+E=
 github.com/cpuguy83/go-md2man/v2 v2.0.2 h1:p1EgwI/C7NhT0JmVkwCD2ZBK8j4aeHQX2pMHHBfMQ6w=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=

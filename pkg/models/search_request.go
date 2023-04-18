@@ -2,10 +2,10 @@ package models
 
 // SearchRequest represents a request to Elasticsearch
 type SearchRequest struct {
-	Request map[string]interface{} `json:"request"`
+	Query map[string]interface{} `json:"query"`
 }
 
 // NewSearchRequest creates a new SearchRequest object from the given request map
-func NewSearchRequest(request map[string]interface{}) *SearchRequest {
-	return &SearchRequest{Request: request}
+func NewSearchRequest(query map[string]interface{}) *SearchRequest {
+	return &SearchRequest{Query: query}
 }

@@ -81,9 +81,15 @@ func (suite *ResolverSuite) TestOperationalSolutionSubtaskDataLoader() {
 	plan := suite.createModelPlan("Plan For OpSolS 1")
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
-	sol1, _ := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
-	sol2, _ := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	changes := map[string]interface{}{}
+	changes["nameOther"] = "AnotherSolution"
+
+	sol1, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+
+	changes["nameOther"] = "AnotherSolution Again"
+
+	sol2, _ := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	inputs := []*model.CreateOperationalSolutionSubtaskInput{{
 		Name:   "Test Operational Solution Input 1",

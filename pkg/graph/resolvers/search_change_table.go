@@ -19,7 +19,7 @@ import (
 
 // Marshal and perform queries
 func marshalSearchQuery(request models.SearchRequest) (io.Reader, error) {
-	requestBody, err := json.Marshal(request.Request)
+	requestBody, err := json.Marshal(request.Query)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling request body: %s", err)
 	}
@@ -102,12 +102,12 @@ func extractChangeTableRecords(
 func searchChangeTableBase(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
-	query models.SearchRequest,
+	request models.SearchRequest,
 	limit int,
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	queryReader, err := marshalSearchQuery(query)
+	queryReader, err := marshalSearchQuery(request)
 	if err != nil {
 		return nil, err
 	}
@@ -144,12 +144,12 @@ func searchChangeTableBase(
 func SearchChangeTable(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
-	query models.SearchRequest,
+	request models.SearchRequest,
 	limit int,
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	return searchChangeTableBase(logger, searchClient, query, limit, offset, sortBy)
+	return searchChangeTableBase(logger, searchClient, request, limit, offset, sortBy)
 }
 
 // SearchChangeTableWithFreeText searches for change table records in search using a free-text search
@@ -161,7 +161,7 @@ func SearchChangeTableWithFreeText(
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
 	request := models.SearchRequest{
-		Request: map[string]interface{}{
+		Query: map[string]interface{}{
 			"query": map[string]interface{}{
 				"multi_match": map[string]interface{}{
 					"query":         searchText,
@@ -183,7 +183,7 @@ func SearchChangeTableByModelPlanID(
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
 	query := models.SearchRequest{
-		Request: map[string]interface{}{
+		Query: map[string]interface{}{
 			"query": map[string]interface{}{
 				"bool": map[string]interface{}{
 					"filter": []interface{}{
@@ -216,7 +216,7 @@ func SearchChangeTableByDateRange(
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
 	request := models.SearchRequest{
-		Request: map[string]interface{}{
+		Query: map[string]interface{}{
 			"query": map[string]interface{}{
 				"bool": map[string]interface{}{
 					"filter": []interface{}{
@@ -246,7 +246,7 @@ func SearchChangeTableByActor(
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
 	query := models.SearchRequest{
-		Request: map[string]interface{}{
+		Query: map[string]interface{}{
 			"query": map[string]interface{}{
 				"multi_match": map[string]interface{}{
 					"query":         actor,
@@ -276,7 +276,7 @@ func SearchChangeTableByModelStatus(
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
 	query := models.SearchRequest{
-		Request: map[string]interface{}{
+		Query: map[string]interface{}{
 			"query": map[string]interface{}{
 				"bool": map[string]interface{}{
 					"should": []interface{}{

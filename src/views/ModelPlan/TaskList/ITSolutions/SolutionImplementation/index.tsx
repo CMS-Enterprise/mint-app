@@ -22,10 +22,8 @@ import {
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
-import { UpdateCustomOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
-import { UpdateOperationalNeedSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
-import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
-import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
+import { UpdateOperationalSolutionVariables } from 'queries/ITSolutions/types/UpdateOperationalSolution';
+import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -95,14 +93,8 @@ const SolutionImplementation = ({
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [updateSolution] = useMutation<UpdateOperationalNeedSolutionVariables>(
-    UpdateOperationalNeedSolution
-  );
-
-  const [
-    updateCustomSolution
-  ] = useMutation<UpdateCustomOperationalSolutionVariables>(
-    UpdateCustomOperationalSolution
+  const [updateSolution] = useMutation<UpdateOperationalSolutionVariables>(
+    UpdateOperationalSolution
   );
 
   // Cycles and updates all solutions on a need
@@ -121,8 +113,7 @@ const SolutionImplementation = ({
         if (solution.key) {
           return updateSolution({
             variables: {
-              operationalNeedID,
-              solutionType: solution.key,
+              id: solution.id,
               changes: {
                 needed: solutionNeeded,
                 mustStartDts: solution.mustStartDts,
@@ -133,12 +124,12 @@ const SolutionImplementation = ({
           });
         }
         // Update custom solution needed bool - status should already be set
-        return updateCustomSolution({
+        return updateSolution({
           variables: {
-            operationalNeedID,
-            customSolutionType: solution.nameOther,
+            id: solution.id,
             changes: {
               needed: solutionNeeded,
+              nameOther: solution.nameOther,
               mustStartDts: solution.mustStartDts,
               mustFinishDts: solution.mustFinishDts,
               status: solution.status

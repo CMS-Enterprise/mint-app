@@ -1203,27 +1203,6 @@
 			"name": "Operational Needs And Solutions",
 			"item": [
 				{
-					"name": "PossibleOperationalNeedsGet",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query PossibleOperationalNeeds{\n  \n  possibleOperationalNeeds{\n            name\n            key\n                possibleSolutions {\n                    id\n                    name\n                    key                    \n                }       \n  }\n}\n  \n  ",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "ModelPlanCreateForOpNeeds",
 					"event": [
 						{
@@ -1240,7 +1219,6 @@
 									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
 									"modelLeadID = responseData.collaborators[0].id",
 									"paymentsID = responseData.payments.id",
-									"itToolsID = responseData.itTools.id",
 									"",
 									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
 									"pm.collectionVariables.set(\"basicsID\", basicsID);",
@@ -1250,8 +1228,7 @@
 									"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
 									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
 									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
-									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
-									"pm.collectionVariables.set(\"itToolsID\", itToolsID);"
+									"pm.collectionVariables.set(\"paymentsID\", paymentsID);"
 								],
 								"type": "text/javascript"
 							}
@@ -1263,7 +1240,49 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n\n    id\n    modelName\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        section\n        key\n        nameOther\n        needed\n        \n    solutions(includeNotNeeded:false) {\n        # id\n        # status\n        # mustStartDts\n        \n        \n        name\n        key   \n        needed\n        nameOther\n        pocEmail\n        pocName     \n        createdBy\n        createdDts\n    }\n                    \n        \n    }\n  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      euaUserID\n      teamRole\n      fullName\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    itTools {\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n\n    id\n    modelName\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        section\n        key\n        nameOther\n        needed\n        \n    solutions(includeNotNeeded:false) {\n        # id\n        # status\n        # mustStartDts\n        \n        \n        name\n        key   \n        needed\n        nameOther\n        pocEmail\n        pocName     \n        createdBy\n        createdDts\n    }\n                    \n        \n    }\n  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanGetForOpNeeds",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    operationalNeeds {\n \n        id\n        modelPlanID\n        name\n        section\n        key\n        nameOther\n        needed\n                \n    solutions(includeNotNeeded:false) {\n        # id\n        # status\n        # mustStartDts\n        \n        \n        name\n        key   \n        needed\n        nameOther\n        pocEmail\n        pocName     \n        createdBy\n        createdDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n                    \n\n\n\n    }\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PossibleOperationalNeedsGet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query PossibleOperationalNeeds{\n  \n  possibleOperationalNeeds{\n            name\n            key\n                possibleSolutions {\n                    id\n                    name\n                    key                    \n                } \n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }       \n  }\n}\n  \n  ",
 								"variables": ""
 							}
 						},
@@ -1299,79 +1318,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalNeed{\n  \n  addOrUpdateCustomOperationalNeed(\n      modelPlanID:\"{{modelPlanID}}\"\n      ,customNeedType :\"To have a fun day\"\n      ,needed: true)\n      {\n    \n        id\n        modelPlanID\n\n        name\n        key\n        nameOther\n        needed\n        section\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "OperationSolutionInsertUpdate",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.addOrUpdateOperationalSolution",
-									"",
-									"operationalSolutionID = responseData.id",
-									"",
-									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  addOrUpdateOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",solutionType:FFS_COMPETENCY_CENTER, changes: {\n      needed: false\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n    #   status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "OperationSolutionInsertUpdateOther",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.addOrUpdateCustomOperationalSolution",
-									"",
-									"operationalSolutionID = responseData.id",
-									"",
-									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  addOrUpdateCustomOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",customSolutionType: \"Barbecue some good meat\", changes: {\n      needed: true\n      pocName: \"Grill Master\"\n      pocEmail: \"bbqKing@gump.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalNeed{\n  \n  addOrUpdateCustomOperationalNeed(\n      modelPlanID:\"{{modelPlanID}}\"\n      ,customNeedType :\"To have a fun day\"\n      ,needed: true)\n      {\n    \n        id\n        modelPlanID\n\n        name\n        key\n        nameOther\n        needed\n        section\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1407,135 +1354,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalNeed{\n  \n  updateCustomOperationalNeedByID(id:\"{{operationalNeedID}}\"\n  ,customNeedType:\"To Dance in the Rain 3 times\"\n  ,needed: true)\n  {\n    \n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "OperationSolutionsGetByOperationalNeedID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    \n\n    \n  }\n}\n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ModelPlanGetForOpNeeds",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    operationalNeeds {\n \n        id\n        modelPlanID\n        name\n        section\n        key\n        nameOther\n        needed\n                \n    solutions(includeNotNeeded:false) {\n        # id\n        # status\n        # mustStartDts\n        \n        \n        name\n        key   \n        needed\n        nameOther\n        pocEmail\n        pocName     \n        createdBy\n        createdDts\n    }\n                    \n\n\n\n    }\n  }\n  \n  \n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "OperationSolutionGetByID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
-								"variables": "{\r\n  \"id\": \"c3f14574-fd64-4b38-8729-e8dbacd1e148\"\r\n}"
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "OperationSolutionUpdateCustom",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.updateCustomOperationalSolutionByID",
-									"",
-									"operationalSolutionID = responseData.id",
-									"",
-									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  updateCustomOperationalSolutionByID(id:\"{{operationalSolutionID}}\",customSolutionType: \"Have the ice cream come to you!\", changes: {\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalNeed{\n  \n  updateCustomOperationalNeedByID(id:\"{{operationalNeedID}}\"\n  ,customNeedType:\"To Dance in the Rain 3 times\"\n  ,needed: true)\n  {\n    \n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section\n        # solutions\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1571,7 +1390,182 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query OperationalNeed{\n  \n  operationalNeed(id:\"{{operationalNeedID}}\"){\n \n        id\n        modelPlanID\n        name\n        key\n        # section\n        nameOther\n        needed\n    solutions(includeNotNeeded:true) {\n        # id\n        # status\n        # mustStartDts\n        \n        \n        name\n        key   \n        needed\n        nameOther\n        pocEmail\n        pocName     \n        createdBy\n        createdDts\n    }\n  }\n}",
+								"query": "query OperationalNeed{\n  \n  operationalNeed(id:\"{{operationalNeedID}}\"){\n \n        id\n        modelPlanID\n        name\n        key\n        # section\n        nameOther\n        needed\n    solutions(includeNotNeeded:true) {\n        # id\n        # status\n        # mustStartDts\n        \n        \n        name\n        key   \n        needed\n        nameOther\n        pocEmail\n        pocName     \n        createdBy\n        createdDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n    }\n    createdByUserAccount \n    {\n        commonName\n    }   \n    modifiedByUserAccount\n    {\n        commonName\n    }     \n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOperationalSolution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createOperationalSolution",
+									"",
+									"operationalSolutionID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOperationalSolutionOtherExample",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createOperationalSolution",
+									"",
+									"operationalSolutionID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOperationalSolution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationSolutionGetByID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
+								"variables": "{\r\n  \"id\": \"{{operationalSolutionID}}\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationSolutionsGetByOperationalNeedID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
 								"variables": ""
 							}
 						},

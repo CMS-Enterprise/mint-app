@@ -53,7 +53,9 @@ export const LandingHeader = () => {
           </span>
         </h1>
 
-        <p className="landing__description">{t('description')}</p>
+        <p className="text-primary-lighter landing__description">
+          {t('description')}
+        </p>
 
         <UswdsReactLink
           className="usa-button bg-mint-cool-vivid text-white width-auto"
@@ -64,7 +66,7 @@ export const LandingHeader = () => {
         </UswdsReactLink>
 
         <NDABanner
-          className="bg-primary-darker text-white padding-x-0 border-top border-primary-dark margin-top-6"
+          className="bg-primary-darker text-white padding-x-0 border-top border-primary-dark margin-top-6 text-primary-lighter"
           landing
         />
       </GridContainer>
@@ -251,7 +253,7 @@ const SolutionTable = () => {
             </td>
             <td
               className={classNames(
-                'padding-1 padding-y-1 padding-left-0 text-top padding-top-2',
+                'padding-1 padding-y-2 padding-left-0 text-top padding-top-2',
                 {
                   'padding-right-0': index === 3
                 }
@@ -353,7 +355,7 @@ const EmailCard = () => {
         <div className="landing__email-icon-contain display-flex flex-align-center flex-justify-center position-absolute">
           <IconMail size={6} className="landing__email-icon" />
 
-          <div className="bg-red radius-top-pill radius-bottom-pill text-white padding-1 width-3 height-3 display-flex flex-align-center flex-justify-center position-absolute margin-left-8 margin-bottom-8">
+          <div className="bg-red radius-top-pill radius-bottom-pill text-white padding-1 width-3 height-3 display-flex flex-align-center flex-justify-center position-absolute margin-left-9 margin-bottom-9">
             1
           </div>
         </div>

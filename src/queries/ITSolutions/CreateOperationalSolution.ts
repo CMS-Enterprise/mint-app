@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation UpdateCustomOperationalSolution(
+  mutation CreateOperationalSolution(
     $operationalNeedID: UUID!
-    $customSolutionType: String!
+    $solutionType: OperationalSolutionKey
     $changes: OperationalSolutionChanges!
   ) {
-    addOrUpdateCustomOperationalSolution(
+    createOperationalSolution(
       operationalNeedID: $operationalNeedID
-      customSolutionType: $customSolutionType
+      solutionType: $solutionType
       changes: $changes
     ) {
       id

@@ -19,6 +19,8 @@ type OperationalSolution struct {
 	PocEmail      *string                 `json:"pocEmail" db:"poc_email"`
 	MustStartDts  *time.Time              `json:"mustStartDts" db:"must_start_dts"`
 	MustFinishDts *time.Time              `json:"mustFinishDts" db:"must_finish_dts"`
+	IsOther       *bool                   `json:"isOther" db:"is_other"`
+	OtherHeader   *string                 `json:"otherHeader" db:"other_header"`
 	Status        OpSolutionStatus        `json:"status" db:"status"`
 }
 
