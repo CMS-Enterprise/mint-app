@@ -44,7 +44,7 @@ export interface GetOperationalSolution_operationalSolution {
   status: OpSolutionStatus;
   mustFinishDts: Time | null;
   mustStartDts: Time | null;
-  isOther: boolean | null;
+  isOther: boolean;
   otherHeader: string | null;
   documents: GetOperationalSolution_operationalSolution_documents[];
   operationalSolutionSubtasks: GetOperationalSolution_operationalSolution_operationalSolutionSubtasks[];

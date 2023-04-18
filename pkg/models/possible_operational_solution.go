@@ -6,8 +6,9 @@ type PossibleOperationalSolution struct {
 	createdByRelation
 	modifiedByRelation
 
-	Name string                 `json:"name" db:"sol_name"`
-	Key  OperationalSolutionKey `json:"key" db:"sol_key"`
+	Name         string                 `json:"name" db:"sol_name"`
+	Key          OperationalSolutionKey `json:"key" db:"sol_key"`
+	TreatAsOther bool                   `json:"treatAsOther" db:"treat_as_other"`
 }
 
 // OperationalSolutionKey represents the types of OperationalSolutionKey types.
