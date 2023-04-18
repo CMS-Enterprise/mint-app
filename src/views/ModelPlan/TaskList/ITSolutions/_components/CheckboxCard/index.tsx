@@ -19,6 +19,8 @@ import { Field } from 'formik';
 
 import Divider from 'components/shared/Divider';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { OperationalSolutionKey } from 'types/graphql-global-types';
+import { translateOperationalSolutionKey } from 'utils/modelPlan';
 
 import './index.scss';
 
@@ -68,13 +70,31 @@ const CheckboxCard = ({
             checked={!!solution.needed}
           />
 
-          <h3 className="margin-y-2">{solution.nameOther || solution.name}</h3>
+          {solution.key === OperationalSolutionKey.CONTRACTOR ||
+          solution.key === OperationalSolutionKey.CROSS_MODEL_CONTRACT ||
+          solution.key ===
+            OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS ? (
+            <>
+              <h3 className="margin-top-2 margin-bottom-0">
+                {solution.otherHeader}
+              </h3>
+              <h5 className="text-normal margin-top-0 margin-bottom-2">
+                {translateOperationalSolutionKey(solution.key)}
+              </h5>
+            </>
+          ) : (
+            <h3 className="margin-y-2">
+              {solution.nameOther || solution.name}
+            </h3>
+          )}
 
-          <div className="margin-bottom-2 solutions-checkbox__body-text">
-            {/* TODO: replace tempDescription with real data */}
-            {tempDescription}
-            {/* {solution?.description} */}
-          </div>
+          {!solution.isOther && (
+            <div className="margin-bottom-2 solutions-checkbox__body-text">
+              {/* TODO: replace tempDescription with real data */}
+              {tempDescription}
+              {/* {solution?.description} */}
+            </div>
+          )}
 
           {solution.pocName && (
             <>
@@ -95,13 +115,14 @@ const CheckboxCard = ({
 
           <Divider />
 
-          {solution.nameOther ? (
+          {solution.nameOther || solution.otherHeader ? (
             <Button
               type="button"
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
               onClick={() =>
                 history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`
+                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
+                  { selectedSolution: solution.key }
                 )
               }
             >

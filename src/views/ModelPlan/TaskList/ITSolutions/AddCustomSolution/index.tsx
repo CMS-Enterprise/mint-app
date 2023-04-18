@@ -89,6 +89,7 @@ const clearFields = (
   if (removeDetails) {
     return {
       nameOther: customSolution.nameOther,
+      otherHeader: null,
       pocName: '',
       pocEmail: '',
       documents: [],
