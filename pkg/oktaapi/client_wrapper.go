@@ -42,7 +42,7 @@ type oktaUserResponse struct {
 	Login       string `json:"login"`
 }
 
-func (cw *clientWrapper) parseOktaProfileResponse(profile *okta.UserProfile) (*models.UserInfo, error) {
+func (cw *clientWrapper) parseOktaProfileResponse(profile *okta.UserProfile) (*oktaUserResponse, error) {
 	// Create an okaUserProfile to return
 	parsedProfile := &oktaUserResponse{}
 
@@ -60,15 +60,17 @@ func (cw *clientWrapper) parseOktaProfileResponse(profile *okta.UserProfile) (*m
 		return nil, err
 	}
 
-	returnInfo := &models.UserInfo{
-		DisplayName: parsedProfile.DisplayName,
-		Email:       parsedProfile.Email,
-		Username:    parsedProfile.Login,
-		FirstName:   parsedProfile.FirstName,
-		LastName:    parsedProfile.LastName,
-	}
+	return parsedProfile, nil
+}
 
-	return returnInfo, nil
+func (o *oktaUserResponse) toUserInfo() *models.UserInfo {
+	return &models.UserInfo{
+		DisplayName: o.DisplayName,
+		Email:       o.Email,
+		Username:    o.Login,
+		FirstName:   o.FirstName,
+		LastName:    o.LastName,
+	}
 }
 
 func (cw *clientWrapper) FetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
@@ -83,7 +85,7 @@ func (cw *clientWrapper) FetchUserInfo(ctx context.Context, username string) (*m
 		return nil, err
 	}
 
-	return profile, nil
+	return profile.toUserInfo(), nil
 }
 
 func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([]*models.UserInfo, error) {
@@ -92,7 +94,10 @@ func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([
 	// status eq "ACTIVE" or status eq "STAGED" ensures we only get users who have EUAs (Staged means they just haven't logged in yet)
 	// TODO: Searching on MAC users might be something like profile.cmsRolesArray eq "mint-medicare-admin-contractor"
 	// TODO: If we need to search on MAC users, validate that this works even if the user has OTHER IDM roles (not _just_ this one)
-	searchString := fmt.Sprintf(`(profile.SourceType eq "EUA" or profile.SourceType eq "EUA-AD") and (status eq "ACTIVE" or status eq "STAGED") and (profile.firstName sw "%v" or profile.lastName sw "%v" or profile.displayName sw "%v")`, searchTerm, searchTerm, searchTerm)
+	isFromEUA := `(profile.SourceType eq "EUA" or profile.SourceType eq "EUA-AD")`
+	isActiveOrStaged := `(status eq "ACTIVE" or status eq "STAGED")`
+	nameSearch := fmt.Sprintf(`(profile.firstName sw "%v" or profile.lastName sw "%v" or profile.displayName sw "%v")`, searchTerm, searchTerm, searchTerm)
+	searchString := fmt.Sprintf(`%v and %v and %v`, isFromEUA, isActiveOrStaged, nameSearch)
 	search := query.NewQueryParams(query.WithSearch(searchString))
 
 	searchedUsers, _, err := cw.oktaClient.User.ListUsers(ctx, search)
@@ -101,13 +106,18 @@ func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([
 		return nil, err
 	}
 
-	users := make([]*models.UserInfo, len(searchedUsers))
-	for idx, user := range searchedUsers {
+	users := []*models.UserInfo{}
+	for _, user := range searchedUsers {
 		profile, err := cw.parseOktaProfileResponse(user.Profile)
 		if err != nil {
 			return nil, err
 		}
-		users[idx] = profile
+
+		// If we find EUA users that have logins longer than 4 characters, they're a test user (don't add them to the array)
+		if len(profile.Login) > 4 {
+			continue
+		}
+		users = append(users, profile.toUserInfo())
 	}
 	return users, nil
 }
