@@ -69,15 +69,14 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(500);
 
-    // Adding the custom solution
-    cy.get('#add-solution-details-button').click();
-
-    cy.wait(500);
-
     // Adding a few other solutions
     cy.get('#it-solutions-cbosc').check({ force: true }).should('be.checked');
 
     cy.get('#it-solutions-contractor')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#it-solutions-my-custom-solution')
       .check({ force: true })
       .should('be.checked');
 
