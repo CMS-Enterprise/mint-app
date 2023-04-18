@@ -42,6 +42,8 @@ const mockData = [
           status: OpSolutionStatus.COMPLETED,
           mustFinishDts: '2022-05-12T15:01:39.190679Z',
           mustStartDts: '2022-05-12T15:01:39.190679Z',
+          isOther: false,
+          otherHeader: null,
           operationalSolutionSubtasks: [
             {
               __typename: 'OperationalSolutionSubtask',

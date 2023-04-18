@@ -20,7 +20,7 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
             class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
             style="word-break: break-word;"
           >
-            Internal staff
+            Shared Systems
           </h3>
           <div
             class="tablet:grid-col-6 margin-bottom-2"

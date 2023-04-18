@@ -39,6 +39,8 @@ const needQuestionAndAnswerMock = [
               pocEmail: null,
               needed: null,
               nameOther: null,
+              isOther: false,
+              otherHeader: null,
               mustStartDts: null,
               mustFinishDts: null,
               status: OpSolutionStatus.NOT_STARTED
