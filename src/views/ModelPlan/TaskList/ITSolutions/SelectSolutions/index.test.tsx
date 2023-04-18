@@ -36,6 +36,8 @@ const operationalNeed: GetOperationalNeedType = {
       mustStartDts: null,
       mustFinishDts: null,
       status: OpSolutionStatus.AT_RISK,
+      isOther: false,
+      otherHeader: null,
       needed: null,
       pocName: 'John Doe',
       nameOther: null

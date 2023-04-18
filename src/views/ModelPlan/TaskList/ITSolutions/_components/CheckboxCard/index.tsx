@@ -46,7 +46,7 @@ const CheckboxCard = ({
 
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
-    ? `it-solutions-${solution?.nameOther?.toLowerCase().replace(' ', '-')}`
+    ? `it-solutions-${solution?.nameOther?.toLowerCase().replaceAll(' ', '-')}`
     : `it-solutions-${solution?.key?.toLowerCase().replace(' ', '-')}`;
 
   // TODO: replace with real solution data once populated
