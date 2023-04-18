@@ -4,8 +4,10 @@ import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/ty
 import {
   ComplexityCalculationLevelType,
   DocumentType,
+  OperationalSolutionKey,
   OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
+import { SelectedOpertionalSolutionKeyType } from 'views/ModelPlan/TaskList/ITSolutions/AddCustomSolution';
 
 /**
  * Translate the API enum to a human readable string
@@ -698,6 +700,27 @@ export const translateSubtasks = (status: string) => {
       return i18next.t('itSolutions:subtasks.inProgress');
     case OperationalSolutionSubtaskStatus.DONE:
       return i18next.t('itSolutions:subtasks.done');
+    default:
+      return '';
+  }
+};
+
+export const translateOperationalSolutionKey = (
+  key: SelectedOpertionalSolutionKeyType
+) => {
+  switch (key) {
+    case OperationalSolutionKey.CONTRACTOR:
+      return i18next.t('itSolutions:operationalSolutionKey.contractor');
+    case OperationalSolutionKey.CROSS_MODEL_CONTRACT:
+      return i18next.t('itSolutions:operationalSolutionKey.crossModelContract');
+    case OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS:
+      return i18next.t(
+        'itSolutions:operationalSolutionKey.existingCmsDataAndProcess'
+      );
+    case OperationalSolutionKey.INTERNAL_STAFF:
+      return i18next.t('itSolutions:operationalSolutionKey.interalStaff');
+    case OperationalSolutionKey.OTHER_NEW_PROCESS:
+      return i18next.t('itSolutions:operationalSolutionKey.otherNewProcess');
     default:
       return '';
   }

@@ -39,12 +39,22 @@ import {
   UpdateOperationalSolutionVariables
 } from 'queries/ITSolutions/types/UpdateOperationalSolution';
 import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+export type SelectedOpertionalSolutionKeyType =
+  | OperationalSolutionKey.CONTRACTOR
+  | OperationalSolutionKey.CROSS_MODEL_CONTRACT
+  | OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS
+  | OperationalSolutionKey.INTERNAL_STAFF
+  | OperationalSolutionKey.OTHER_NEW_PROCESS;
 
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
