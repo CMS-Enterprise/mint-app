@@ -21,8 +21,12 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
 	// _, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	changes := map[string]interface{}{
+		"nameOther": "AnotherSolution",
+	}
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	changes["nameOther"] = "AnotherSolution Again"
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
@@ -33,7 +37,7 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	suite.Len(opSols, 3) //We now have the possible need that is not needed
 
 	//INSERt the possible and return only needed types, verify it still returns 3
-	_, _ = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
@@ -41,8 +45,10 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 
 	//2. Get possible solutions for a custom type
 	need, _ = OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, "Testing custom need types", true, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
-	_, _ = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, "AnotherSolution Again", nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+	changes["nameOther"] = "Yet AnotherSolution Again"
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	changes["nameOther"] = "Yet AnotherSolution Again"
+	_, _ = OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
@@ -53,7 +59,6 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 }
 
 func (suite *ResolverSuite) TestOperationalSolutionLoader() {
-	suite.T().Skip("skipping until the new operational needs have possilbe solutions added, else this will fail")
 
 	numModels := 3
 	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
@@ -79,7 +84,6 @@ func (suite *ResolverSuite) TestOperationalSolutionLoaderNotNeeded() {
 
 }
 
-//lint:ignore U1000 We are currently calling `t.Skip()` on tests, and this method is unused because of it.
 func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
 	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
 	if err != nil {
@@ -94,7 +98,6 @@ func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) err
 	return nil
 }
 
-//lint:ignore U1000 We are currently calling `t.Skip()` on tests, and this method is unused because of it.
 func getSolutionLoaderVerificationFunction(ctx context.Context, operationalNeedID uuid.UUID, verifySolutionsFunc func(ctx context.Context, operationalNeedID uuid.UUID) error) func() error {
 	return func() error {
 		return verifySolutionsFunc(ctx, operationalNeedID)
@@ -127,7 +130,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	changes["needed"] = false
 	defStatus := models.OpSNotStarted
 
-	sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(sol)
 
@@ -162,7 +165,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdate() {
 	changes["mustFinishDts"] = mustFinishDts
 	changes["status"] = inProg
 
-	sol, err = OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err = OperationalSolutionUpdate(suite.testConfigs.Logger, sol.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//modified fields correct
@@ -191,9 +194,10 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{}
+	changes["nameOther"] = solTypeCustom
 	defStatus := models.OpSNotStarted
 
-	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, solTypeCustom, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(sol)
 
@@ -230,7 +234,7 @@ func (suite *ResolverSuite) TestOperationalSolutionInsertOrUpdateCustom() {
 	changes["mustFinishDts"] = mustFinishDts
 	changes["status"] = inProg
 
-	sol, err = OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, solTypeCustom, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err = OperationalSolutionUpdate(suite.testConfigs.Logger, sol.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	//modified fields correct
@@ -259,15 +263,17 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{}
+	changes["nameOther"] = solTypeCustom
 
-	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, need.ID, solTypeCustom, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(sol)
-
-	newSolType := "A Modified unit test to test operational Solutions"
 	suite.EqualValues(sol.CreatedBy, suite.testConfigs.Principal.Account().ID)
 
-	sol2, err := OperationalSolutionCustomUpdateByID(suite.testConfigs.Logger, sol.ID, &newSolType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	newSolType := "A Modified unit test to test operational Solutions"
+	changes["nameOther"] = newSolType
+
+	sol2, err := OperationalSolutionUpdate(suite.testConfigs.Logger, sol.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	suite.EqualValues(sol2.NameOther, &newSolType)
@@ -276,8 +282,9 @@ func (suite *ResolverSuite) TestOperationalSolutionCustomUpdateByID() {
 	suite.EqualValues(sol2.CreatedBy, suite.testConfigs.Principal.Account().ID)
 	suite.EqualValues(sol2.ModifiedBy, &suite.testConfigs.Principal.Account().ID)
 
-	// 2. Fail update when set solution type to null
-	_, err = OperationalSolutionCustomUpdateByID(suite.testConfigs.Logger, sol.ID, nil, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	// 2. Fail update when set solution name to empty string, as it has a type
+	changes["nameOther"] = ""
+	_, err = OperationalSolutionUpdate(suite.testConfigs.Logger, sol.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
 
 }
@@ -290,7 +297,8 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByID() {
 
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
-	sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, need.ID, solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
+
+	sol, err := OperationalSolutionCreate(suite.testConfigs.Logger, need.ID, &solType, nil, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(sol)
 	solGet, err := OperationalSolutionGetByID(suite.testConfigs.Logger, sol.ID, suite.testConfigs.Store)
