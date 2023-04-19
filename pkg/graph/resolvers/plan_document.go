@@ -116,7 +116,7 @@ func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, id uuid.U
 		return 0, err
 	}
 
-	sqlResult, err := store.PlanDocumentDelete(logger, id)
+	sqlResult, err := store.PlanDocumentDelete(logger, id, principal.Account().ID)
 	if err != nil {
 		return 0, err
 	}

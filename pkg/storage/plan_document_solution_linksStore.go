@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/lib/pq"
 
@@ -66,8 +67,18 @@ func (s *Store) PlanDocumentSolutionLinksRemove(
 	logger *zap.Logger,
 	solutionID uuid.UUID,
 	documentIDs []uuid.UUID,
+	userID uuid.UUID,
 ) (bool, error) {
-	statement, err := s.db.PrepareNamed(planDocumentSolutionLinkDeleteByIDsSQL)
+
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return false, err
+	}
+
+	statement, err := tx.PrepareNamed(planDocumentSolutionLinkDeleteByIDsSQL)
 	if err != nil {
 		return false, err
 	}
@@ -81,6 +92,11 @@ func (s *Store) PlanDocumentSolutionLinksRemove(
 	_, err = statement.Exec(arg)
 	if err != nil {
 		return false, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return false, fmt.Errorf("could not commit plan document solution link delete transaction: %w", err)
 	}
 
 	return true, nil
