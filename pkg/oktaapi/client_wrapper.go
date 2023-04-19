@@ -40,6 +40,7 @@ type oktaUserResponse struct {
 	DisplayName string `json:"displayName"`
 	Email       string `json:"email"`
 	Login       string `json:"login"`
+	SourceType  string `json:"SourceType"`
 }
 
 func (cw *clientWrapper) parseOktaProfileResponse(profile *okta.UserProfile) (*oktaUserResponse, error) {
@@ -88,13 +89,16 @@ func (cw *clientWrapper) FetchUserInfo(ctx context.Context, username string) (*m
 	return profile.toUserInfo(), nil
 }
 
+const euaSourceType = "EUA"
+const euaADSourceType = "EUA-AD"
+
 func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([]*models.UserInfo, error) {
 	// profile.SourceType can be EUA, EUA-AD, or cmsidm
 	// the first 2 represent EUA users, the latter represents users created directly in IDM
 	// status eq "ACTIVE" or status eq "STAGED" ensures we only get users who have EUAs (Staged means they just haven't logged in yet)
 	// TODO: Searching on MAC users might be something like profile.cmsRolesArray eq "mint-medicare-admin-contractor"
 	// TODO: If we need to search on MAC users, validate that this works even if the user has OTHER IDM roles (not _just_ this one)
-	isFromEUA := `(profile.SourceType eq "EUA" or profile.SourceType eq "EUA-AD")`
+	isFromEUA := fmt.Sprintf(`(profile.SourceType eq "%v" or profile.SourceType eq "%v")`, euaSourceType, euaADSourceType)
 	isActiveOrStaged := `(status eq "ACTIVE" or status eq "STAGED")`
 	nameSearch := fmt.Sprintf(`(profile.firstName sw "%v" or profile.lastName sw "%v" or profile.displayName sw "%v")`, searchTerm, searchTerm, searchTerm)
 	searchString := fmt.Sprintf(`%v and %v and %v`, isFromEUA, isActiveOrStaged, nameSearch)
@@ -114,7 +118,7 @@ func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([
 		}
 
 		// If we find EUA users that have logins longer than 4 characters, they're a test user (don't add them to the array)
-		if len(profile.Login) > 4 {
+		if (profile.SourceType == euaSourceType || profile.SourceType == euaADSourceType) && len(profile.Login) > 4 {
 			continue
 		}
 		users = append(users, profile.toUserInfo())
