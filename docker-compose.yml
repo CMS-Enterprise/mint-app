@@ -121,8 +121,8 @@ services:
   faktory:
     image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
-      - 7419:7419
-      - 7420:7420
+      - "7419:7419"
+      - "7420:7420"
     volumes:
       - faktory:/var/lib/faktory
       - type: bind
@@ -150,14 +150,14 @@ services:
     volumes:
       - opensearch-data:/usr/share/opensearch/data
     ports:
-      - 9200:9200 # REST API
-      - 9400:9600 # Performance Analyzer
+      - "9200:9200" # REST API
+      - "9400:9600" # Performance Analyzer
 
   opensearch-dashboards:
     image: public.ecr.aws/opensearchproject/opensearch-dashboards:latest
     container_name: opensearch-dashboards
     ports:
-      - 5601:5601
+      - "5601:5601"
     expose:
       - "5601"
     environment:
@@ -180,9 +180,6 @@ services:
       - ./config/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
       - ./config/logstash/logstash.conf:/usr/share/logstash/logstash.config
     ports:
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "5044:5044"
       - "9600:9600"
     depends_on:
       - opensearch

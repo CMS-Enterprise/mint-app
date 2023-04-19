@@ -1418,7 +1418,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userAccount(username: String!): UserAccount!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  searchChangeTable(query: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
