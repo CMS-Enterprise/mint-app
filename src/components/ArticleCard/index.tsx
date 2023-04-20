@@ -10,7 +10,6 @@ import {
 import classnames from 'classnames';
 
 import HelpAndKnowledgeCategoryTag from 'components/HelpAndKnowledgeCategoryTag';
-import UswdsReactLink from 'components/LinkWrapper';
 import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
 
 import './index.scss';
@@ -61,13 +60,15 @@ const ArticleCard = ({
         <p>{t('description')}</p>
       </CardBody>
       <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
-        <UswdsReactLink
-          to="#"
+        <button
+          type="button"
           className="usa-button usa-button--outline"
-          variant="unstyled"
+          aria-label={`${useTranslation('helpAndKnowledge').t('read')} ${t(
+            'title'
+          )} article`}
         >
           {useTranslation('helpAndKnowledge').t('read')}
-        </UswdsReactLink>
+        </button>
       </CardFooter>
     </Card>
   );
