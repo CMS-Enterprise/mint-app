@@ -8,6 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   Dropdown,
+  Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
@@ -308,78 +309,79 @@ const BasicsContent = () => {
                         error={!!flatErrors['basics.cmsCenters']}
                         className="margin-top-4"
                       >
-                        <FieldArray
-                          name="basics.cmsCenters"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {t('cmsComponent')}
-                              </legend>
-                              <FieldErrorMsg>
-                                {flatErrors['basics.cmsCenters']}
-                              </FieldErrorMsg>
+                        <Fieldset legend={t('cmsComponent')}>
+                          <FieldArray
+                            name="basics.cmsCenters"
+                            render={arrayHelpers => (
+                              <>
+                                <FieldErrorMsg>
+                                  {flatErrors['basics.cmsCenters']}
+                                </FieldErrorMsg>
 
-                              {Object.keys(CMSCenter).map(center => {
-                                return (
-                                  <Field
-                                    key={center}
-                                    as={CheckboxField}
-                                    id={`new-plan-cmsCenters-${center}`}
-                                    name="basics.cmsCenters"
-                                    label={translateCmsCenter(center)}
-                                    value={center}
-                                    checked={values.basics.cmsCenters.includes(
-                                      center as CMSCenter
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.basics.cmsCenters.indexOf(
-                                          e.target.value as CMSCenter
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                      if (e.target.value === CMSCenter.CMMI) {
-                                        setAreCmmiGroupsShown(
-                                          !areCmmiGroupsShown
-                                        );
-                                      }
-                                      if (e.target.value === CMSCenter.OTHER) {
-                                        setShowOther(!showOther);
-                                      }
-                                    }}
-                                  />
-                                );
-                              })}
+                                {Object.keys(CMSCenter).map(center => {
+                                  return (
+                                    <Field
+                                      key={center}
+                                      as={CheckboxField}
+                                      id={`new-plan-cmsCenters-${center}`}
+                                      name="basics.cmsCenters"
+                                      label={translateCmsCenter(center)}
+                                      value={center}
+                                      checked={values.basics.cmsCenters.includes(
+                                        center as CMSCenter
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.basics.cmsCenters.indexOf(
+                                            e.target.value as CMSCenter
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                        if (e.target.value === CMSCenter.CMMI) {
+                                          setAreCmmiGroupsShown(
+                                            !areCmmiGroupsShown
+                                          );
+                                        }
+                                        if (
+                                          e.target.value === CMSCenter.OTHER
+                                        ) {
+                                          setShowOther(!showOther);
+                                        }
+                                      }}
+                                    />
+                                  );
+                                })}
 
-                              {values.basics.cmsCenters.includes(
-                                CMSCenter.OTHER
-                              ) && (
-                                <FieldGroup
-                                  className="margin-top-4"
-                                  error={!!flatErrors['basics.cmsOther']}
-                                >
-                                  <Label htmlFor="plan-basics-cmsCategory--Other">
-                                    {h('pleaseSpecify')}
-                                  </Label>
-                                  <FieldErrorMsg>
-                                    {flatErrors['basics.cmsOther']}
-                                  </FieldErrorMsg>
-                                  <Field
-                                    as={TextAreaField}
-                                    id="plan-basics-cmsCategory--Other"
-                                    maxLength={5000}
-                                    className="mint-textarea"
-                                    name="basics.cmsOther"
-                                  />
-                                </FieldGroup>
-                              )}
-                            </>
-                          )}
-                        />
+                                {values.basics.cmsCenters.includes(
+                                  CMSCenter.OTHER
+                                ) && (
+                                  <FieldGroup
+                                    className="margin-top-4"
+                                    error={!!flatErrors['basics.cmsOther']}
+                                  >
+                                    <Label htmlFor="plan-basics-cmsCategory--Other">
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors['basics.cmsOther']}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextAreaField}
+                                      id="plan-basics-cmsCategory--Other"
+                                      maxLength={5000}
+                                      className="mint-textarea"
+                                      name="basics.cmsOther"
+                                    />
+                                  </FieldGroup>
+                                )}
+                              </>
+                            )}
+                          />
+                        </Fieldset>
                       </FieldGroup>
                       <FieldGroup
                         error={!!flatErrors['basics.cmmiGroups']}
