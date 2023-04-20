@@ -231,7 +231,7 @@ const Table = ({
         showNoResults={false}
       />
       <UswdsTable {...getTableProps()} fullWidth scrollable>
-        <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
+        <caption className="usa-sr-only">{f('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
