@@ -21,7 +21,7 @@ const articleTypes: ArticleRouteProps[] = [
   }
 ];
 
-export default function HelpTag({
+export default function HelpAndKnowledgeCategoryTag({
   type,
   className
 }: { className?: string } & ArticleTypeProps) {
