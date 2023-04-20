@@ -138,7 +138,7 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 	if err != nil {
 		return nil, err
 	}
-	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
+	retCollaborator, err := store.PlanCollaboratorDelete(logger, id, principal.Account().ID)
 	return retCollaborator, err
 }
 

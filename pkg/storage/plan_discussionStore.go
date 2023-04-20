@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -152,8 +153,15 @@ func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.Discussi
 }
 
 // PlanDiscussionDelete deletes the plan discussion for a given id
-func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
-	statement, err := s.db.PrepareNamed(planDiscussionDeleteSQL)
+func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanDiscussion, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
+	statement, err := tx.PrepareNamed(planDiscussionDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -162,6 +170,11 @@ func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID) (*models.
 	err = statement.Get(discussion, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit discussion delete transaction: %w", err)
 	}
 
 	return discussion, nil
@@ -184,17 +197,31 @@ func (s *Store) PlanDiscussionByID(logger *zap.Logger, id uuid.UUID) (*models.Pl
 }
 
 // DiscussionReplyDelete deletes the discussion reply for a given id
-func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
-	statement, err := s.db.PrepareNamed(discussionReplyDeleteSQL)
+func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.DiscussionReply, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	args := map[string]interface{}{
+		"id": id,
+	}
+
+	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
-	//TODO should we use generic error handling?
-
-	discussionReply := &models.DiscussionReply{}
-	err = statement.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
+	statement, err := tx.PrepareNamed(discussionReplyDeleteSQL)
 	if err != nil {
 		return nil, err
+	}
+
+	discussionReply := &models.DiscussionReply{}
+	err = statement.Get(discussionReply, args)
+	if err != nil {
+		return nil, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit discussion reply delete transaction: %w", err)
 	}
 
 	return discussionReply, nil
