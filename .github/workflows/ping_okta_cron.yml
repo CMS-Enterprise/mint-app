@@ -1,0 +1,14 @@
+name: Ping Okta API
+
+on:
+  schedule:
+    - cron: "0 12 * * *" # Every day at 12:00
+  workflow_dispatch:
+
+jobs:
+  ping_okta_cron:
+    strategy:
+      matrix:
+        env: [dev, test, impl, prod]
+    uses: ./.github/workflows/ping_okta.yml
+    secrets: inherit

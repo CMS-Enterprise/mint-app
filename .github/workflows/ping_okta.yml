@@ -1,0 +1,26 @@
+name: Ping Okta API
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
+
+jobs:
+  ping_okta_api:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    steps:
+      - name: Ping Okta API 
+        env:
+          APP_ENV: impl
+        run: |
+          curl ${{ secrets.OKTA_API_URL }}/api/v1/users -H "Authorization: SSWS ${{ secrets.OKTA_API_TOKEN}}" -H "Accept: application/json" -H "Content-Type: application/json"
+      - name: Check deployed image for vulnerability findings - prod
+        env:
+          APP_ENV: prod
+        run: bash ./scripts/check_deployed_image_findings "easi-backend" "7"
+      - name: Announce failure
+        if: ${{ failure() }}
+        run: ./scripts/github-action-announce-broken-branch
