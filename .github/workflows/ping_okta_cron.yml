@@ -14,4 +14,6 @@ jobs:
       matrix:
         env: [dev, test, impl, prod]
     uses: ./.github/workflows/ping_okta.yml
+    with:
+      environment: ${{ matrix.env }}
     secrets: inherit
