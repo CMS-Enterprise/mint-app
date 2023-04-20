@@ -309,7 +309,10 @@ export const ProviderOptions = () => {
                   error={!!flatErrors.providerAddMethod}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="participants-and-providers-provider-add-method">
+                  <Label
+                    htmlFor="participants-and-providers-provider-add-method"
+                    id="label-participants-and-providers-provider-add-method"
+                  >
                     {t('decideProviders')}
                   </Label>
                   <p className="text-base margin-0 line-height-body-3">
@@ -321,6 +324,7 @@ export const ProviderOptions = () => {
                     as={MultiSelect}
                     id="participants-and-providers-provider-add-method"
                     name="providerAddMethod"
+                    ariaLabel="label-participants-and-providers-provider-add-method"
                     options={mapMultiSelectOptions(
                       translateProviderAddType,
                       ProviderAddType

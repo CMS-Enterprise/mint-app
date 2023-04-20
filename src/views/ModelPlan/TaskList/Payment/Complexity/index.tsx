@@ -396,7 +396,10 @@ const Complexity = () => {
                         error={!!flatErrors.anticipatedPaymentFrequency}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="anticipatedPaymentFrequency">
+                        <Label
+                          htmlFor="anticipatedPaymentFrequency"
+                          id="label-anticipatedPaymentFrequency"
+                        >
                           {t('anticipatedPaymentFrequency')}
                         </Label>
                         <FieldErrorMsg>
@@ -407,6 +410,7 @@ const Complexity = () => {
                           as={MultiSelect}
                           id="payment-frequency-payments"
                           name="anticipatedPaymentFrequency"
+                          ariaLabel="label-anticipatedPaymentFrequency"
                           options={dataFrequencyOptions.map(key => ({
                             value: key,
                             label: translateAnticipatedPaymentFrequencyType(key)

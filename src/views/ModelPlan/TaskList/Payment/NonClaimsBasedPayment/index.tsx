@@ -262,7 +262,10 @@ const NonClaimsBasedPayment = () => {
                         error={!!flatErrors.nonClaimsPayments}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="payment-nonclaims-payments">
+                        <Label
+                          htmlFor="payment-nonclaims-payments"
+                          id="label-payment-nonclaims-payments"
+                        >
                           {t('nonClaimsPayments')}
                         </Label>
                         {itSolutionsStarted && (
@@ -283,6 +286,7 @@ const NonClaimsBasedPayment = () => {
                           as={MultiSelect}
                           id="payment-nonclaims-payments"
                           name="payment-nonclaims-payments"
+                          ariaLabel="label-payment-nonclaims-payments"
                           options={mapMultiSelectOptions(
                             translateNonClaimsBasedPayType,
                             NonClaimsBasedPayType

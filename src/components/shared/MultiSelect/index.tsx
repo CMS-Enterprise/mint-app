@@ -146,7 +146,7 @@ const MultiSelect = ({
   onChange: (values: string[]) => void;
   initialValues?: string[];
   className?: string;
-  ariaLabel?: string;
+  ariaLabel: string;
 }) => {
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues

@@ -375,7 +375,10 @@ export const OpsEvalAndLearningContent = () => {
                   error={!!flatErrors.stakeholders}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="ops-eval-and-learning-stakeholders">
+                  <Label
+                    htmlFor="ops-eval-and-learning-stakeholders"
+                    id="label-ops-eval-and-learning-stakeholders"
+                  >
                     {t('stakeholders')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
@@ -384,6 +387,7 @@ export const OpsEvalAndLearningContent = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-stakeholders"
                     name="stakeholders"
+                    ariaLabel="label-ops-eval-and-learning-stakeholders"
                     role="combobox"
                     options={mapMultiSelectOptions(
                       translateStakeholdersType,
