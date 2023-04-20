@@ -133,14 +133,14 @@ func (s *Server) routes(
 	var oktaClientErr error
 	if s.environment.Local() {
 		// Ensure Okta API Variables are set
-		oktaClient, oktaClientErr = local.NewOktaAPIClient(s.logger)
+		oktaClient, oktaClientErr = local.NewOktaAPIClient()
 		if oktaClientErr != nil {
 			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 		}
 	} else {
 		// Ensure Okta API Variables are set
 		s.NewOktaAPIClientCheck()
-		oktaClient, oktaClientErr = oktaapi.NewClient(s.logger, s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
 		if oktaClientErr != nil {
 			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 		}

@@ -144,7 +144,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	emailTemplateService, err := email.NewTemplateServiceImpl()
 	assert.NoError(t, err)
 
-	oktaClient, err := local.NewOktaAPIClient(logger)
+	oktaClient, err := local.NewOktaAPIClient()
 	assert.NoError(t, err)
 
 	directives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
