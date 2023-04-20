@@ -207,7 +207,7 @@ func (s *Server) routes(
 
 	osClient, err := opensearch.NewClient(osConfig)
 	if err != nil {
-		s.logger.Fatal("Failed to create an OpenSearch client", zap.Error(err))
+		s.logger.Warn("failed to create an OpenSearch client", zap.Error(err))
 	}
 
 	resolver := graph.NewResolver(

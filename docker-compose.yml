@@ -147,8 +147,6 @@ services:
       nofile:
         soft: 65536
         hard: 65536
-    volumes:
-      - opensearch-data:/usr/share/opensearch/data
     ports:
       - "9200:9200" # REST API
       - "9400:9600" # Performance Analyzer
@@ -171,6 +169,7 @@ services:
     environment:
       discovery.seed_hosts: logstash
       LS_JAVA_OPTS: "-Xms1024m -Xmx1024m"
+      xpack.monitoring.enabled: false
     logging:
       driver: "json-file"
       options:
@@ -179,6 +178,7 @@ services:
     volumes:
       - ./config/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
       - ./config/logstash/logstash.conf:/usr/share/logstash/logstash.config
+      - ./config/logstash/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
     ports:
       - "9600:9600"
     depends_on:
@@ -191,4 +191,3 @@ services:
 
 volumes:
   faktory:
-  opensearch-data:
