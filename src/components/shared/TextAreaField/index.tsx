@@ -35,12 +35,7 @@ const TextAreaField = ({
   return (
     <>
       {label && (
-        <label
-          className="usa-label"
-          htmlFor={id}
-          aria-describedby="garytest"
-          id={`label-${id}`}
-        >
+        <label className="usa-label" htmlFor={id} id={`label-${id}`}>
           {label}
         </label>
       )}
