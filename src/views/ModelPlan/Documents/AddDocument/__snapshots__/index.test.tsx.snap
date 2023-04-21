@@ -97,6 +97,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
         >
           All fields marked with  
           <span
+            aria-label="(Field required)"
             class="text-red margin-x-05"
           >
             *
@@ -119,6 +120,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 >
                   Document upload
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
@@ -193,6 +195,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   >
                     What type of document are you uploading?
                     <span
+                      aria-label="(Field required)"
                       class="text-red margin-x-05"
                     >
                       *
@@ -296,6 +299,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 >
                   Does this document contain cost information?
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
@@ -361,6 +365,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   Optional notes about the document
                 </label>
                 <textarea
+                  aria-labelledby="label-ModelPlanDocument-optionalNotes hint-ModelPlanDocument-optionalNotes"
                   class="model-plan-document__optional-notes height-10 usa-textarea"
                   id="ModelPlanDocument-optionalNotes"
                   maxlength="2000"
