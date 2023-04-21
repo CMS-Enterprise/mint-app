@@ -7,7 +7,9 @@ exports[`Table Results Componenet matches snapshot 1`] = `
     data-testid="page-results"
   >
     <span>
-      <div>
+      <div
+        role="status"
+      >
         Showing 1-10 of 100 results 
       </div>
     </span>

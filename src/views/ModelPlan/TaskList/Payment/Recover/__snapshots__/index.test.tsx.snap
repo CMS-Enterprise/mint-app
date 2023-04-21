@@ -172,10 +172,12 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="payment-recover-payment-note"
+                  id="label-payment-recover-payment-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-payment-recover-payment-note hint-payment-recover-payment-note"
                   class="usa-textarea"
                   data-testid="payment-recover-payment-note"
                   id="payment-recover-payment-note"
@@ -249,10 +251,12 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="payment-anticipate-reconciling-payment-retro-note"
+                  id="label-payment-anticipate-reconciling-payment-retro-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-payment-anticipate-reconciling-payment-retro-note hint-payment-anticipate-reconciling-payment-retro-note"
                   class="usa-textarea"
                   data-testid="payment-anticipate-reconciling-payment-retro-note"
                   id="payment-anticipate-reconciling-payment-retro-note"
@@ -271,6 +275,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               class="usa-label usa-legend margin-top-0"
               data-testid="label"
               for="payment-payment-start-date"
+              id="label-payment-payment-start-date"
             >
               When will payments start? (Enter an approximate date)
             </label>
@@ -294,6 +299,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               >
                 <input
                   aria-hidden="true"
+                  aria-labelledby="label-payment-payment-start-date appointment-date-hint"
                   class="usa-input usa-sr-only usa-date-picker__internal-input"
                   data-testid="date-picker-internal-input"
                   error="0"
@@ -309,6 +315,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   tabindex="-1"
                 >
                   <input
+                    aria-labelledby="label-payment-payment-start-date appointment-date-hint"
                     class="usa-input usa-date-picker__external-input"
                     data-testid="date-picker-external-input"
                     error="0"
@@ -353,10 +360,12 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               <label
                 class="usa-label"
                 for="payment-payment-start-date-note"
+                id="label-payment-payment-start-date-note"
               >
                 Notes
               </label>
               <textarea
+                aria-labelledby="label-payment-payment-start-date-note hint-payment-payment-start-date-note"
                 class="usa-textarea"
                 data-testid="payment-payment-start-date-note"
                 id="payment-payment-start-date-note"

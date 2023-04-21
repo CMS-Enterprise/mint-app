@@ -226,6 +226,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           Please specify what the other geography type is.
         </label>
         <textarea
+          aria-labelledby="label-plan-characteristics-geographies-targeted-other hint-plan-characteristics-geographies-targeted-other"
           class="mint-textarea usa-textarea"
           data-testid="plan-characteristics-geographies-targeted-other"
           id="plan-characteristics-geographies-targeted-other"

@@ -178,6 +178,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         class="usa-label maxw-none text-normal"
         data-testid="label"
         for="ops-eval-and-learning-data-sharing-frequency"
+        id="label-ops-eval-and-learning-data-sharing-frequency"
       >
         How often do you anticipate sharing data?
       </label>
@@ -217,6 +218,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
                   aria-describedby="react-select-4-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-sharing-frequency"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -370,6 +372,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         class="usa-label maxw-none text-normal"
         data-testid="label"
         for="ops-eval-and-learning-data-collection-frequency"
+        id="label-ops-eval-and-learning-data-collection-frequency"
       >
         How often do you anticipate collecting data?
       </label>
@@ -409,6 +412,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
                   aria-describedby="react-select-5-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-collection-frequency"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -561,6 +565,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Please specify
         </label>
         <textarea
+          aria-labelledby="label-ops-eval-and-learning-data-reporting-starts-other hint-ops-eval-and-learning-data-reporting-starts-other"
           class="maxw-none mint-textarea usa-textarea"
           data-testid="ops-eval-and-learning-data-reporting-starts-other"
           id="ops-eval-and-learning-data-reporting-starts-other"

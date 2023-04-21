@@ -147,6 +147,7 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
                 >
                   How will you solve this?
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
