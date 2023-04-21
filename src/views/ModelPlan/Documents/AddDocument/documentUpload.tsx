@@ -217,6 +217,9 @@ const DocumentUpload = ({
                       accept=".pdf,.doc,.docx,.xls,.xlsx"
                       inputProps={{
                         'aria-expanded': !!values.file,
+                        'aria-label':
+                          values.file &&
+                          `${t('documentUpload')} ${t('ariaLabelChangeFile')}`,
                         'aria-controls': 'file-type'
                       }}
                     />
