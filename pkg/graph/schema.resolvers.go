@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -113,6 +114,11 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
 	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// ExistingModelLinks is the resolver for the existingModelLinks field.
+func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error) {
+	panic(fmt.Errorf("not implemented: ExistingModelLinks - existingModelLinks"))
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.

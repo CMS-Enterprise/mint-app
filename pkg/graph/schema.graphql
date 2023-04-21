@@ -68,6 +68,7 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
+  existingModelLinks: [ExistingModelLink!]!
 }
 
 type OperationalNeed {
@@ -150,7 +151,7 @@ type PlanCollaborator {
 ExistingModel represents a model that already exists outside of the scope of MINT
 """
 type ExistingModel {
-  id: String
+  id: Int
   modelName: String
   stage: String!
   numberOfParticipants: String
@@ -166,6 +167,20 @@ type ExistingModel {
   url: String
   displayModelSummary: Boolean
   
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type ExistingModelLink {
+  id: UUID
+  modelPlanID: UUID!
+  existingModelID: Int
+  currentModelPlanID: UUID
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!

@@ -4,9 +4,7 @@ INSERT INTO existing_model_link(
     existing_model_id,
     current_model_plan_id,
     created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+    modified_by
 )
 VALUES(
     :id,
@@ -14,9 +12,7 @@ VALUES(
     :existing_model_id,
     :current_model_plan_id,
     :created_by,
-    :created_dts,
-    :modified_by,
-    :modified_dts
+    :modified_by
 )
 RETURNING
 id,
