@@ -204,6 +204,7 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: jdwoodson/dockerhub-rlc:latest
+          run: python3 check_docker_hub_limit.py
       - name: Write local env vars for testing
         run: |
           touch .envrc.local
