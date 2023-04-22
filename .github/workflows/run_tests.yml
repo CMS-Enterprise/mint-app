@@ -30,6 +30,8 @@ env:
   MINIO_ADDRESS: http://localhost:9005
   MINIO_KEY: minioadmin
   S3_BUCKET: mint-app-file-uploads
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
 
@@ -198,6 +200,10 @@ jobs:
           registry: docker.contribsys.com
           username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
           password: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
+      - name: Check Dockerhub Rate Limit
+        uses: addnab/docker-run-action@v3
+        with:
+          image: jdwoodson/dockerhub-rlc:latest
       - name: Write local env vars for testing
         run: |
           touch .envrc.local
