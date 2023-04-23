@@ -33,6 +33,11 @@ env:
   MINIO_KEY: minioadmin
   S3_BUCKET: mint-app-file-uploads
 
+
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
+      
 jobs:
 
   build_docker_images:
@@ -50,7 +55,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1
@@ -189,7 +194,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1
