@@ -9,10 +9,16 @@ services:
       - 'log_statement=all'
       - '-c'
       - 'max_connections=25'
+      # Sets the Write-Ahead Log (WAL) level to logical allowing replication and change data capture (CDC)
       - '-c'
       - 'wal_level=logical'
+      # Sets the maximum number of concurrent WAL sender processes. A WAL sender is used by a replica to send WAL
+      # records to the master. This value should be at least 2 to allow for replication and change data capture (CDC).
       - '-c'
       - 'max_wal_senders=2'
+      # Sets the maximum number of replication slots that can be used. A replication slot is used by a replica to keep
+      # track of the changes that have been made to the database. This value should be at least 2 to allow for
+      # replication and change data capture (CDC).
       - '-c'
       - 'max_replication_slots=2'
     environment:
