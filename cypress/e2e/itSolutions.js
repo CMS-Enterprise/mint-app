@@ -454,11 +454,6 @@ describe('The Model Plan IT solutions tracker', () => {
       .its('response.statusCode')
       .should('eq', 200);
 
-    cy.wait('@GetOperationalNeedAnswer')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.get('[data-testid="add-subtask--0"]').within(() => {
       cy.get('#subtask-name--0').as('subtask');
       cy.get('@subtask').should('not.be.disabled');
@@ -514,11 +509,6 @@ describe('The Model Plan IT solutions tracker', () => {
       .its('response.statusCode')
       .should('eq', 200);
 
-    cy.wait('@GetOperationalNeedAnswer')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.contains('First Subtasks')
       .parents('.border-bottom.border-base-light')
       .within(() => {
@@ -527,11 +517,18 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.contains('button', 'Remove subtask').click();
 
+    cy.wait('@GetOperationalSolution')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
+
     cy.get('.usa-alert__text').contains(
       'Success! First Subtasks has been removed.'
     );
 
-    cy.contains('button', 'Add another subtask').click();
+    cy.contains('button', 'Add another subtask')
+      .should('not.be.disabled')
+      .click();
 
     cy.get('[data-testid="add-subtask--0"]').within(() => {
       cy.get('#subtask-name--0').as('subtask0');
@@ -542,7 +539,7 @@ describe('The Model Plan IT solutions tracker', () => {
       );
     });
 
-    cy.get('#submit-subtasks').click();
+    cy.get('#submit-subtasks').should('not.be.disabled').click();
 
     cy.wait('@GetOperationalNeed')
       .wait(100)
