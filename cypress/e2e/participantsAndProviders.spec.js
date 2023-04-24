@@ -17,12 +17,16 @@ describe('The Model Plan Participants and Providers Form', () => {
   it('completes a Model Plan Participants and Providers', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlan')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     // Clicks the Participants and Providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
 
     cy.wait('@GetParticipantsAndProviders')
+      .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
 
@@ -85,6 +89,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     // Page - /participants-and-providers/participant-options
 
     cy.wait('@GetParticipantOptions')
+      .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
 
@@ -126,7 +131,10 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/communication
 
-    cy.wait('@GetCommunication').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetCommunication')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
       .as('communication')
@@ -153,7 +161,10 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/coordination
 
-    cy.wait('@GetCoordination').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetCoordination')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#participants-and-providers-coordniate-work')
       .check({ force: true })
@@ -179,7 +190,10 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/provider-options
 
-    cy.wait('@GetProviderOptions').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetProviderOptions')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#participants-and-providers-additional-frequency-OTHER')
       .check({ force: true })
@@ -233,7 +247,10 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlan')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);

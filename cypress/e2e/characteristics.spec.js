@@ -28,6 +28,7 @@ describe('The Model Plan General Characteristics Form', () => {
     // Page - /characteristics
 
     cy.wait('@GetGeneralCharacteristics')
+      .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
 
@@ -74,6 +75,7 @@ describe('The Model Plan General Characteristics Form', () => {
     // Page - /characteristics/key-charactertics
 
     cy.wait('@GetKeyCharacteristics')
+      .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
 
@@ -106,7 +108,10 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/involvements
 
-    cy.wait('@GetInvolvements').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetInvolvements')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#plan-characteristics-care-coordination-involved')
       .check({ force: true })
@@ -143,6 +148,7 @@ describe('The Model Plan General Characteristics Form', () => {
     // Page - /characteristics/targets-and-options
 
     cy.wait('@GetTargetsAndOptions')
+      .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
 
@@ -182,7 +188,10 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/authority
 
-    cy.wait('@GetAuthority').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetAuthority')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#plan-characteristics-rulemaking-required')
       .check({ force: true })

@@ -31,11 +31,18 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait('@GetIsCollaborator').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetIsCollaborator')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
-    cy.wait('@GetModelPlanBase').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlanBase')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.wait('@GetModelCollaborators')
+      .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
 
@@ -45,7 +52,10 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="continue-to-tasklist"]').click();
 
-    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlan')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.contains('h1', 'Model Plan task list');
 
@@ -58,7 +68,10 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Start').click();
 
-    cy.wait('@GetModelPlanInfo').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlanInfo')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
@@ -71,7 +84,10 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlan')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -84,7 +100,10 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="basics"]').click();
 
-    cy.wait('@GetModelPlanInfo').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlanInfo')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.get('#plan-basics-model-category').select('Demonstration');
 
@@ -96,7 +115,10 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait('@GetBasics').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetBasics')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -123,7 +145,10 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait('@GetMilestones').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetMilestones')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -173,7 +198,10 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlan')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -208,7 +236,10 @@ describe('The Model Plan Form', () => {
       .should('be.not.disabled')
       .click();
 
-    cy.wait('@GetModelPlan').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetModelPlan')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -219,7 +250,10 @@ describe('The Model Plan Form', () => {
     // favorites and unfavorites a model plan
     cy.visit('/models');
 
-    cy.wait('@GetAllModelPlans').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetAllModelPlans')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 
