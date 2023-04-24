@@ -22,6 +22,7 @@ type OktaUserSelectProps = {
   className?: string;
   id: string;
   name: string;
+  ariaLabelledBy?: string;
   ariaDescribedBy?: string;
   value?: OktaUserType | null;
   onChange: (contact: OktaUserType | null) => void;
@@ -134,6 +135,7 @@ export default function OktaUserSelect({
   className,
   id,
   name,
+  ariaLabelledBy,
   ariaDescribedBy,
   value,
   onChange,
@@ -274,7 +276,7 @@ export default function OktaUserSelect({
       isDisabled={disabled}
       aria-describedby={ariaDescribedBy}
       aria-disabled={disabled}
-      aria-label="Cedar-Users"
+      aria-labelledby={ariaLabelledBy}
       components={{ Input, IndicatorsContainer, ClearIndicator, Option, Menu }}
       options={contacts.map((contact: OktaUserType) => ({
         label: `${contact.displayName}, ${contact.username}`,
