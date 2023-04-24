@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -8,16 +10,24 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
-// ExistingModelLinkCollectionGetByModelPlanID returns all existing models Links for a model plan ID
-func ExistingModelLinkCollectionGetByModelPlanID(logger *zap.Logger, store *storage.Store) ([]*models.ExistingModelLink, error) { // TODO: make this a data loaders
-	existingModels, err := store.ExistingModelLinkCollectionGetByModelPlanID(logger)
+// ExistingModelLinkGetByModelPlanIDLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
+func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.ExistingModelLink, error) {
+	allLoaders := loaders.Loaders(ctx)
+	linkLoader := allLoaders.ExistingModelLinkLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+
+	thunk := linkLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
 	if err != nil {
 		return nil, err
 	}
-	return existingModels, err
 
+	return result.([]*models.ExistingModelLink), nil
 }
 
 // ExistingModelLinkCreate creates a new existing model link
@@ -26,6 +36,28 @@ func ExistingModelLinkCreate(logger *zap.Logger, store *storage.Store, principal
 	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, existingModelID, currentModelPlanID)
 
 	retLink, err := store.ExistingModelLinkCreate(logger, link)
+	if err != nil {
+		return nil, err
+	}
+	return retLink, err
+
+}
+
+// ExistingModelLinkGetByID returns an existing model link by it's id
+func ExistingModelLinkGetByID(logger *zap.Logger, store *storage.Store, principal authentication.Principal, id uuid.UUID) (*models.ExistingModelLink, error) {
+
+	retLink, err := store.ExistingModelLinkGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+	return retLink, err
+
+}
+
+// ExistingModelLinkDelete deletes an existing model link
+func ExistingModelLinkDelete(logger *zap.Logger, store *storage.Store, principal authentication.Principal, id uuid.UUID) (*models.ExistingModelLink, error) {
+
+	retLink, err := store.ExistingModelLinkGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}

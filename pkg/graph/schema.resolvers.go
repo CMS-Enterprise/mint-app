@@ -118,7 +118,7 @@ func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.Mo
 
 // ExistingModelLinks is the resolver for the existingModelLinks field.
 func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error) {
-	panic(fmt.Errorf("not implemented: ExistingModelLinks - existingModelLinks"))
+	return resolvers.ExistingModelLinkGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -427,6 +427,22 @@ func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context,
 	principal := appcontext.Principal(ctx)
 
 	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
+}
+
+// CreateExistingModelLink is the resolver for the createExistingModelLink field.
+func (r *mutationResolver) CreateExistingModelLink(ctx context.Context, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) (*models.ExistingModelLink, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.ExistingModelLinkCreate(logger, r.store, principal, modelPlanID, existingModelID, currentModelPlanID)
+}
+
+// DeleteExistingModelLink is the resolver for the deleteExistingModelLink field.
+func (r *mutationResolver) DeleteExistingModelLink(ctx context.Context, id *uuid.UUID) (*models.ExistingModelLink, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.ExistingModelLinkDelete(logger, r.store, principal, *id)
 }
 
 // Solutions is the resolver for the solutions field.
@@ -834,6 +850,11 @@ func (r *queryResolver) PossibleOperationalSolutions(ctx context.Context) ([]*mo
 func (r *queryResolver) UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.UserAccountGetByUsername(logger, r.store, username)
+}
+
+// ExistingModelLink is the resolver for the existingModelLink field.
+func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error) {
+	panic(fmt.Errorf("not implemented: ExistingModelLink - existingModelLink"))
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
