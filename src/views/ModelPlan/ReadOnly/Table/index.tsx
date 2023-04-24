@@ -68,7 +68,7 @@ const Table = ({
               role="checkbox"
               data-testid={`${row.original.modelName}-favorite`}
               className="usa-button usa-button--unstyled display-block"
-              aria-label="Click to unfavorite model plan"
+              aria-label={`Click to unfavorite ${row.original.modelName} model plan`}
               aria-checked="true"
             >
               <IconStar data-cy="favorited" size={3} />
@@ -80,7 +80,7 @@ const Table = ({
               role="checkbox"
               data-testid={`${row.original.modelName}-unfavorite`}
               className="usa-button usa-button--unstyled display-block"
-              aria-label="Click to favorite model plan"
+              aria-label={`Click to favorite ${row.original.modelName} model plan`}
               aria-checked="false"
             >
               <IconStarOutline
