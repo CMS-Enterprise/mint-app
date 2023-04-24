@@ -454,6 +454,11 @@ describe('The Model Plan IT solutions tracker', () => {
       .its('response.statusCode')
       .should('eq', 200);
 
+    cy.wait('@GetOperationalNeedAnswer')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
+
     cy.get('[data-testid="add-subtask--0"]').within(() => {
       cy.get('#subtask-name--0').as('subtask');
       cy.get('@subtask').should('not.be.disabled');
@@ -505,6 +510,11 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('eq', 200);
 
     cy.wait('@GetOperationalSolution')
+      .wait(100)
+      .its('response.statusCode')
+      .should('eq', 200);
+
+    cy.wait('@GetOperationalNeedAnswer')
       .wait(100)
       .its('response.statusCode')
       .should('eq', 200);
