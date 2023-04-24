@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -132,17 +133,25 @@ func (s *Server) routes(
 	var oktaClientErr error
 	if s.environment.Local() {
 		// Ensure Okta API Variables are set
-		oktaClient, oktaClientErr = local.NewOktaAPIClient(s.logger)
+		oktaClient, oktaClientErr = local.NewOktaAPIClient()
 		if oktaClientErr != nil {
 			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 		}
 	} else {
 		// Ensure Okta API Variables are set
 		s.NewOktaAPIClientCheck()
-		oktaClient, oktaClientErr = oktaapi.NewClient(s.logger, s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
 		if oktaClientErr != nil {
 			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 		}
+	}
+
+	// This is a bit of a hack... sorry...
+	// Okta API tokens expire every 30 days if unused. This call to the Okta API below is strictly to ensure that the token is used whenever we deploy or
+	// create a new instance of the app. This should probably be a cron job, but this is the quick fix that helps us not have to worry about this for the time being.
+	_, err = oktaClient.SearchByName(context.Background(), "MINT") // shouldn't return any results, but that's ok, we used the token
+	if err != nil {
+		s.logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
 	}
 
 	// set up Email Template Service
@@ -218,7 +227,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 
@@ -229,7 +238,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 		}}

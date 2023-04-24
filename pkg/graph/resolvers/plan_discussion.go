@@ -143,7 +143,7 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 	if err != nil {
 		return nil, err
 	}
-	result, err := store.PlanDiscussionDelete(logger, id)
+	result, err := store.PlanDiscussionDelete(logger, id, principal.Account().ID)
 	return result, err
 }
 
@@ -186,7 +186,7 @@ func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentic
 	if err != nil {
 		return nil, err
 	}
-	result, err := store.DiscussionReplyDelete(logger, id)
+	result, err := store.DiscussionReplyDelete(logger, id, principal.Account().ID)
 
 	return result, err
 }

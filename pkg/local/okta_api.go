@@ -7,19 +7,16 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // client is a mock client for pkg/oktaapi
-type client struct {
-	logger *zap.Logger
-}
+type client struct{}
 
 // NewOktaAPIClient returns a mock Okta client
-func NewOktaAPIClient(logger *zap.Logger) (*client, error) {
-	return &client{
-		logger: logger,
-	}, nil
+func NewOktaAPIClient() (*client, error) {
+	return &client{}, nil
 }
 
 // getMockUserData returns a slice of *models.UserInfo that represents a response from the CEDAR LDAP server.
@@ -464,8 +461,9 @@ func getMockUserData() []*models.UserInfo {
 }
 
 // FetchUserInfo fetches a user's personal details
-func (c *client) FetchUserInfo(_ context.Context, username string) (*models.UserInfo, error) {
-	c.logger.Info("Mock FetchUserInfo from Okta API", zap.String("username", username))
+func (c *client) FetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
+	logger := appcontext.ZLogger(ctx)
+	logger.Info("Mock FetchUserInfo from Okta API", zap.String("username", username))
 	for _, mockUser := range getMockUserData() {
 		if mockUser.Username == username {
 			return mockUser, nil
@@ -475,8 +473,9 @@ func (c *client) FetchUserInfo(_ context.Context, username string) (*models.User
 }
 
 // SearchByName fetches a user's personal details by their common name
-func (c *client) SearchByName(_ context.Context, DisplayName string) ([]*models.UserInfo, error) {
-	c.logger.Info("Mock SearchByName from Okta API")
+func (c *client) SearchByName(ctx context.Context, DisplayName string) ([]*models.UserInfo, error) {
+	logger := appcontext.ZLogger(ctx)
+	logger.Info("Mock SearchByName from Okta API")
 
 	mockUserData := getMockUserData()
 	searchResults := []*models.UserInfo{}
