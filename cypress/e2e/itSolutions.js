@@ -455,10 +455,10 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('eq', 200);
 
     cy.get('[data-testid="add-subtask--0"]').within(() => {
-      cy.get('#subtask-name--0')
-        .should('not.be.disabled')
-        .type('First Subtasks')
-        .should('have.value', 'First Subtasks');
+      cy.get('#subtask-name--0').as('@subtask');
+      cy.get('@subtask').should('not.be.disabled');
+      cy.get('@subtask').type('First Subtasks');
+      cy.get('@subtask').should('have.value', 'First Subtasks');
 
       cy.contains('label', 'In progress').click();
     });
@@ -466,10 +466,10 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.contains('button', 'Add another subtask').click();
 
     cy.get('[data-testid="add-subtask--1"]').within(() => {
-      cy.get('#subtask-name--1')
-        .should('not.be.disabled')
-        .type('Second Subtasks')
-        .should('have.value', 'Second Subtasks');
+      cy.get('#subtask-name--1').as('@subtask1');
+      cy.get('@subtask1').should('not.be.disabled');
+      cy.get('@subtask1').type('Second Subtasks');
+      cy.get('@subtask1').should('have.value', 'Second Subtasks');
 
       cy.contains('label', 'Done').click();
     });
@@ -524,9 +524,12 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.contains('button', 'Add another subtask').click();
 
     cy.get('[data-testid="add-subtask--0"]').within(() => {
-      cy.get('#subtask-name--0')
-        .type('This should be in To Do column')
-        .should('have.value', 'This should be in To Do column');
+      cy.get('#subtask-name--0').as('@subtask0');
+      cy.get('@subtask0').type('This should be in To Do column');
+      cy.get('@subtask0').should(
+        'have.value',
+        'This should be in To Do column'
+      );
     });
 
     cy.get('#submit-subtasks').click();

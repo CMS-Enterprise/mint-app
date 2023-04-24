@@ -2,7 +2,7 @@ const maxAttempts = 3;
 
 describe('Logging in', () => {
   it(
-    'logs in',
+    'logs in with okta',
     {
       retries: {
         runMode: maxAttempts - 1, // 2 retries when running from `cypress run` (3 total attempts)
@@ -18,45 +18,35 @@ describe('Logging in', () => {
         );
         cy.wait(30000);
       }
-
       cy.login();
-
       cy.location('pathname', { timeout: 20000 }).should(
         'equal',
         '/pre-decisional-notice'
       );
-
-      cy.logout();
-
-      cy.wait(500);
-
-      // logs in with local auth an verifies NDA
-      cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
-
-      cy.get('h1', { timeout: 20000 }).should(
-        'have.text',
-        'Welcome to Model Innovation Tool (MINT)'
-      );
-
-      cy.logout();
-
-      cy.wait(500);
-
-      cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
-
-      cy.get('h1', { timeout: 20000 }).should(
-        'have.text',
-        'Welcome to Model Innovation Tool (MINT)'
-      );
-
-      cy.logout();
-
-      cy.wait(500);
-
-      // logs in with local MAC
-      cy.localLogin({ name: 'ABCD', role: 'MINT MAC Users' });
-
-      cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
     }
   );
+
+  it('logs in with local auth an verifies NDA', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+    cy.get('h1', { timeout: 20000 }).should(
+      'have.text',
+      'Welcome to Model Innovation Tool (MINT)'
+    );
+
+    cy.logout();
+
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
+
+    cy.get('h1', { timeout: 20000 }).should(
+      'have.text',
+      'Welcome to Model Innovation Tool (MINT)'
+    );
+  });
+
+  it('logs in with local MAC', () => {
+    cy.localLogin({ name: 'MINT', role: 'MINT MAC Users' });
+
+    cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
+  });
 });
