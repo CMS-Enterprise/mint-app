@@ -21,7 +21,9 @@ export default function SolutionsTag({
   return (
     <UswdsReactLink
       to={`/help-and-knowledge/operational-solutions?category=${route}`}
-      aria-label="Category tag link"
+      aria-label={t(
+        `Articles under the ${t(`categories.${category}.header`)} category`
+      )}
       className={classNames(
         className,
         'display-block margin-right-05 margin-bottom-1'
