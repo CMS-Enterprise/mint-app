@@ -115,6 +115,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('#plan-characteristics-care-coordination-involved')
       .check({ force: true })
+      .check({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-care-coordination-description')
