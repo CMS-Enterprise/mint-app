@@ -59,7 +59,7 @@ func PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, principal authentication.
 		return nil, err
 	}
 
-	return store.PlanCrTdlDelete(logger, id)
+	return store.PlanCrTdlDelete(logger, id, principal.Account().ID)
 
 }
 

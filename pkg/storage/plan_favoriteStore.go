@@ -56,8 +56,15 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 }
 
 // PlanFavoriteDelete deletes a plan favorite
-func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, planID uuid.UUID) (*models.PlanFavorite, error) {
-	stmt, err := s.db.PrepareNamed(planFavoriteDeleteSQL)
+func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, planID uuid.UUID, deletedByUserID uuid.UUID) (*models.PlanFavorite, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+
+	err := setCurrentSessionUserVariable(tx, deletedByUserID)
+	if err != nil {
+		return nil, err
+	}
+	stmt, err := tx.PrepareNamed(planFavoriteDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -71,6 +78,10 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, userAccountID uuid.UUID, 
 		return nil, err
 	}
 
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit plan favorite delete transaction: %w", err)
+	}
 	return &delFavorite, nil
 }
 

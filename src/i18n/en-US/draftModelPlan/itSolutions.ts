@@ -132,7 +132,7 @@ const itSolutions = {
   solutionName: 'Please add a name for your solution',
   solutionPOC: 'Point of contact information',
   solutionPOCInfo: 'Point of contact',
-  solutionEmailInfo: 'Email or other contact information',
+  solutionEmailInfo: 'Email',
   otherSolution: 'Other',
   updateTheseDetails: 'Update these details',
   removeTheseDetails: 'Remove these details',

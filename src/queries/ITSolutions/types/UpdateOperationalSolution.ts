@@ -6,10 +6,10 @@
 import { OperationalSolutionChanges, OperationalSolutionKey } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL mutation operation: UpdateCustomOperationalSolution
+// GraphQL mutation operation: UpdateOperationalSolution
 // ====================================================
 
-export interface UpdateCustomOperationalSolution_addOrUpdateCustomOperationalSolution {
+export interface UpdateOperationalSolution_updateOperationalSolution {
   __typename: "OperationalSolution";
   id: UUID;
   nameOther: string | null;
@@ -17,12 +17,11 @@ export interface UpdateCustomOperationalSolution_addOrUpdateCustomOperationalSol
   key: OperationalSolutionKey | null;
 }
 
-export interface UpdateCustomOperationalSolution {
-  addOrUpdateCustomOperationalSolution: UpdateCustomOperationalSolution_addOrUpdateCustomOperationalSolution;
+export interface UpdateOperationalSolution {
+  updateOperationalSolution: UpdateOperationalSolution_updateOperationalSolution;
 }
 
-export interface UpdateCustomOperationalSolutionVariables {
-  operationalNeedID: UUID;
-  customSolutionType: string;
+export interface UpdateOperationalSolutionVariables {
+  id: UUID;
   changes: OperationalSolutionChanges;
 }

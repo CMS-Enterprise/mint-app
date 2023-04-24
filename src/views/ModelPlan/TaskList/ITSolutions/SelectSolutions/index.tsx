@@ -20,22 +20,22 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
+import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
+import {
+  CreateOperationalSolution as CreateOperationalSolutionType,
+  CreateOperationalSolutionVariables
+} from 'queries/ITSolutions/types/CreateOperationalSolution';
 import {
   GetOperationalNeed as GetOperationalNeedType,
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
-  UpdateCustomOperationalSolution as UpdateCustomOperationalSolutionType,
-  UpdateCustomOperationalSolutionVariables
-} from 'queries/ITSolutions/types/UpdateCustomOperationalSolution';
-import {
-  UpdateOperationalNeedSolution as UpdateOperationalNeedSolutionType,
-  UpdateOperationalNeedSolutionVariables
-} from 'queries/ITSolutions/types/UpdateOperationalNeedSolution';
-import UpdateCustomOperationalSolution from 'queries/ITSolutions/UpdateCustomOperationalSolution';
-import UpdateOperationalNeedSolution from 'queries/ITSolutions/UpdateOperationalNeedSolution';
+  UpdateOperationalSolution as UpdateOperationalSolutionType,
+  UpdateOperationalSolutionVariables
+} from 'queries/ITSolutions/types/UpdateOperationalSolution';
+import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -101,15 +101,15 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [updateSolution] = useMutation<
-    UpdateOperationalNeedSolutionType,
-    UpdateOperationalNeedSolutionVariables
-  >(UpdateOperationalNeedSolution);
+  const [createSolution] = useMutation<
+    CreateOperationalSolutionType,
+    CreateOperationalSolutionVariables
+  >(CreateOperationalSolution);
 
-  const [updateCustomSolution] = useMutation<
-    UpdateCustomOperationalSolutionType,
-    UpdateCustomOperationalSolutionVariables
-  >(UpdateCustomOperationalSolution);
+  const [updateSolution] = useMutation<
+    UpdateOperationalSolutionType,
+    UpdateOperationalSolutionVariables
+  >(UpdateOperationalSolution);
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (
@@ -124,9 +124,9 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
     await Promise.all(
       solutions.map(solution => {
-        // Update possibleSolution needed bool and status
-        if (solution.key) {
-          return updateSolution({
+        // if solution id is all zeros, it needs to be created
+        if (solution.id === '00000000-0000-0000-0000-000000000000') {
+          return createSolution({
             variables: {
               operationalNeedID,
               solutionType: solution.key,
@@ -136,13 +136,15 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
             }
           });
         }
-        // Update custom solution needed bool - status should already be set
-        return updateCustomSolution({
+
+        // Otherwise, set the NEEDED bool for solution
+        // Custom Solution will have a "nameOther", otherwise, it will be empty
+        return updateSolution({
           variables: {
-            operationalNeedID,
-            customSolutionType: solution.nameOther || '',
+            id: solution.id,
             changes: {
-              needed: solution.needed || false
+              needed: solution.needed || false,
+              nameOther: solution.nameOther || ''
             }
           }
         });
