@@ -44,6 +44,13 @@ const ccwAndQualityMock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
+          operationalNeeds: [
+            {
+              id: '780c990e-91f5-48a2-869a-59420940a533',
+              modifiedDts: '2024-05-12T15:01:39.190679Z',
+              __typename: 'OperationalNeed'
+            }
+          ],
           opsEvalAndLearning: ccwAndQualityMockData
         }
       }

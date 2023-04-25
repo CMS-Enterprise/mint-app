@@ -162,7 +162,10 @@ export const returnActionLinks = (
       }
       return (
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+          to={{
+            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            state: { scrollElement: operationalNeedObj.fieldName.toString() }
+          }}
         >
           {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
@@ -170,7 +173,10 @@ export const returnActionLinks = (
     case OperationalNeedStatus.NOT_NEEDED:
       return operationalNeedObj ? (
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+          to={{
+            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            state: { scrollElement: operationalNeedObj.fieldName.toString() }
+          }}
         >
           {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
         </UswdsReactLink>
@@ -180,7 +186,15 @@ export const returnActionLinks = (
     case OperationalNeedStatus.NOT_ANSWERED:
       return operationalNeedObj ? (
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+          to={{
+            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            state: {
+              scrollElement:
+                typeof operationalNeedObj.fieldName !== 'string'
+                  ? operationalNeedObj.fieldName[0]
+                  : operationalNeedObj.fieldName
+            }
+          }}
         >
           {i18next.t('itSolutions:itSolutionsTable.answer')}
         </UswdsReactLink>
