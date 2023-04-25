@@ -94,6 +94,8 @@ const Recover = () => {
     need => need.modifiedDts
   );
 
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
@@ -250,7 +252,7 @@ const Recover = () => {
                       }}
                     >
                       <FieldGroup
-                        scrollElement="payment-recover-payment"
+                        scrollElement="willRecoverPayments"
                         error={!!flatErrors.willRecoverPayments}
                         className="margin-top-4"
                       >

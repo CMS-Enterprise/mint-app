@@ -258,7 +258,7 @@ const NonClaimsBasedPayment = () => {
                       </PageHeading>
 
                       <FieldGroup
-                        scrollElement="payment-nonclaims-payments"
+                        scrollElement="nonClaimsPayments"
                         error={!!flatErrors.nonClaimsPayments}
                         className="margin-top-4"
                       >

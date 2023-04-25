@@ -266,165 +266,192 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
         </button>
       </div>
     </div>
-    <legend
-      class="usa-label"
-    >
-      Will you collect participant IDs? If so, select which types.
-    </legend>
-    <p
-      class="text-base margin-0 line-height-body-3"
-    >
-      Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.
-    </p>
     <div
-      class="mint-checkbox usa-checkbox"
+      class="usa-form-group"
+      data-scroll="participantsIds"
     >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-participant-id-CCNS"
-        name="participantsIds"
-        type="checkbox"
-        value="CCNS"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-participant-id-CCNS"
+      <legend
+        class="usa-label"
       >
-        CCNs
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-participant-id-NPIS"
-        name="participantsIds"
-        type="checkbox"
-        value="NPIS"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-participant-id-NPIS"
+        Will you collect participant IDs? If so, select which types.
+      </legend>
+      <div
+        class="usa-alert usa-alert--warning flex it-tools-warning"
+        data-testid="alert"
       >
-        NPIs
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-participant-id-TINS"
-        name="participantsIds"
-        type="checkbox"
-        value="TINS"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-participant-id-TINS"
-      >
-        TINs
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-participant-id-OTHER"
-        name="participantsIds"
-        type="checkbox"
-        value="OTHER"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-participant-id-OTHER"
-      >
-        Other
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="margin-left-4"
-    >
-      <label
-        class="usa-label text-normal margin-top-1"
-        data-testid="label"
-        for="participants-and-providers-participant-id-other"
-      >
-        Please specify
-      </label>
-      <textarea
-        aria-labelledby="label-participants-and-providers-participant-id-other hint-participants-and-providers-participant-id-other"
-        class="maxw-none mint-textarea usa-textarea"
-        data-testid="participants-and-providers-participant-id-other"
-        id="participants-and-providers-participant-id-other"
-        maxlength="5000"
-        name="participantsIdsOther"
-      >
-        Candy Kingdom Operations Number
-      </textarea>
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-participant-id-NO_IDENTIFIERS"
-        name="participantsIds"
-        type="checkbox"
-        value="NO_IDENTIFIERS"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-participant-id-NO_IDENTIFIERS"
-      >
-        No, we will not collect provider identifiers
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="usa-alert__body"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-data-needed-warning"
+              type="button"
+            >
+              Go to IT solutions tracker.
+            </button>
+          </p>
+        </div>
+      </div>
+      <p
+        class="text-base margin-0 line-height-body-3"
+      >
+        Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.
+      </p>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-participant-id-CCNS"
+          name="participantsIds"
+          type="checkbox"
+          value="CCNS"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-participant-id-CCNS"
+        >
+          CCNs
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-participant-id-NPIS"
+          name="participantsIds"
+          type="checkbox"
+          value="NPIS"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-participant-id-NPIS"
+        >
+          NPIs
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-participant-id-TINS"
+          name="participantsIds"
+          type="checkbox"
+          value="TINS"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-participant-id-TINS"
+        >
+          TINs
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-participant-id-OTHER"
+          name="participantsIds"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-participant-id-OTHER"
+        >
+          Other
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="margin-left-4"
+      >
+        <label
+          class="usa-label text-normal margin-top-1"
+          data-testid="label"
+          for="participants-and-providers-participant-id-other"
+        >
+          Please specify
+        </label>
+        <textarea
+          aria-labelledby="label-participants-and-providers-participant-id-other hint-participants-and-providers-participant-id-other"
+          class="maxw-none mint-textarea usa-textarea"
+          data-testid="participants-and-providers-participant-id-other"
+          id="participants-and-providers-participant-id-other"
+          maxlength="5000"
+          name="participantsIdsOther"
+        >
+          Candy Kingdom Operations Number
+        </textarea>
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-participant-id-NO_IDENTIFIERS"
+          name="participantsIds"
+          type="checkbox"
+          value="NO_IDENTIFIERS"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-participant-id-NO_IDENTIFIERS"
+        >
+          No, we will not collect provider identifiers
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
     </div>
     <div
       class="margin-top-6 margin-bottom-3"
