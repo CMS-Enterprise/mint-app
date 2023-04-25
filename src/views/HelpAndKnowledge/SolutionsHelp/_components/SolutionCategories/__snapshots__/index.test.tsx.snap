@@ -45,6 +45,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Applications"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=applications"
                 >
@@ -93,6 +94,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Communication tools"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=communication-tools"
                 >
@@ -141,6 +143,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Contractors and contract vehicles"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=contractors-and-contract-vehicles"
                 >
@@ -189,6 +192,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Databases and data management"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                 >
@@ -237,6 +241,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Data exchange"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=data-exchange"
                 >
@@ -285,6 +290,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Data reporting"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=data-reporting"
                 >
@@ -333,6 +339,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Help desks"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=help-desks"
                 >
@@ -381,6 +388,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Learning"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=learning"
                 >
@@ -429,6 +437,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Legal"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=legal"
                 >
@@ -477,6 +486,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Medicare Advantage and Part D"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                 >
@@ -525,6 +535,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Medicare Fee-for-Service"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=medicare-fee-for-service"
                 >
@@ -573,6 +584,7 @@ exports[`Solution Help Categories matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <a
+                  aria-label="Learn more about Quality"
                   class="usa-link display-flex flex-align-center"
                   href="/help-and-knowledge/operational-solutions?category=quality"
                 >

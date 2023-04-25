@@ -20,6 +20,7 @@ exports[`Operational Solution Category Card matches snapshot 1`] = `
         data-testid="CardBody"
       >
         <a
+          aria-label="Learn more about Data reporting"
           class="usa-link display-flex flex-align-center"
           href="/help-and-knowledge/operational-solutions?category=data-reporting"
         >
