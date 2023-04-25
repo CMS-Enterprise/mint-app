@@ -255,88 +255,95 @@ const Evaluation = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldArray
-                  name="evaluationApproaches"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('evaluationApproach')}
-                      </legend>
+                <FieldGroup
+                  scrollElement="evaluationApproaches"
+                  error={!!flatErrors.evaluationApproaches}
+                >
+                  <FieldArray
+                    name="evaluationApproaches"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('evaluationApproach')}
+                        </legend>
 
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="ops-eval-and-learning-evaluation-approach-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="ops-eval-and-learning-evaluation-approach-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.evaluationApproaches}
+                        </FieldErrorMsg>
+
+                        {Object.keys(EvaluationApproachType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                  data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                  name="evaluationApproaches"
+                                  label={translateEvaluationApproachType(type)}
+                                  value={type}
+                                  checked={values?.evaluationApproaches.includes(
+                                    type as EvaluationApproachType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.evaluationApproaches.indexOf(
+                                        e.target.value as EvaluationApproachType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === EvaluationApproachType.OTHER &&
+                                  values.evaluationApproaches.includes(
+                                    type
+                                  ) && (
+                                    <div className="margin-left-4 margin-top-neg-2">
+                                      <Label
+                                        htmlFor="ops-eval-and-learning-evaluation-approach-other"
+                                        className="text-normal maxw-none"
+                                      >
+                                        {t('evaluationOther')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.evaluationApproachOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextInput}
+                                        className="maxw-none"
+                                        id="ops-eval-and-learning-evaluation-approach-other"
+                                        maxLength={50}
+                                        name="evaluationApproachOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="ops-eval-and-learning-evaluation-approach-note"
+                          field="evalutaionApproachNote"
                         />
-                      )}
-
-                      <FieldErrorMsg>
-                        {flatErrors.evaluationApproaches}
-                      </FieldErrorMsg>
-
-                      {Object.keys(EvaluationApproachType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                name="evaluationApproaches"
-                                label={translateEvaluationApproachType(type)}
-                                value={type}
-                                checked={values?.evaluationApproaches.includes(
-                                  type as EvaluationApproachType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.evaluationApproaches.indexOf(
-                                      e.target.value as EvaluationApproachType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === EvaluationApproachType.OTHER &&
-                                values.evaluationApproaches.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-2">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-evaluation-approach-other"
-                                      className="text-normal maxw-none"
-                                    >
-                                      {t('evaluationOther')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.evaluationApproachOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="ops-eval-and-learning-evaluation-approach-other"
-                                      maxLength={50}
-                                      name="evaluationApproachOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="ops-eval-and-learning-evaluation-approach-note"
-                        field="evalutaionApproachNote"
-                      />
-                    </>
-                  )}
-                />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <FieldArray
                   name="ccmInvolvment"

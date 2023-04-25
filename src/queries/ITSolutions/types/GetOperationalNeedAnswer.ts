@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, OverlapType, BenchmarkForPerformanceType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, ModelLearningSystemType, PayType, NonClaimsBasedPayType } from "./../../../types/graphql-global-types";
+import { AgreementType, RecruitmentType, ParticipantSelectionType, ParticipantCommunicationType, OverlapType, ParticipantsIDType, BenchmarkForPerformanceType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, ModelLearningSystemType, PayType, NonClaimsBasedPayType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetOperationalNeedAnswer
@@ -14,6 +14,7 @@ export interface GetOperationalNeedAnswer_modelPlan_generalCharacteristics {
   managePartCDEnrollment: boolean | null;
   collectPlanBids: boolean | null;
   planContractUpdated: boolean | null;
+  agreementTypes: AgreementType[];
 }
 
 export interface GetOperationalNeedAnswer_modelPlan_participantsAndProviders {
@@ -22,6 +23,7 @@ export interface GetOperationalNeedAnswer_modelPlan_participantsAndProviders {
   selectionMethod: ParticipantSelectionType[];
   communicationMethod: ParticipantCommunicationType[];
   providerOverlap: OverlapType | null;
+  participantsIds: ParticipantsIDType[];
 }
 
 export interface GetOperationalNeedAnswer_modelPlan_beneficiaries {
@@ -42,6 +44,7 @@ export interface GetOperationalNeedAnswer_modelPlan_opsEvalAndLearning {
   dataNeededForMonitoring: DataForMonitoringType[];
   dataToSendParticicipants: DataToSendParticipantsType[];
   modelLearningSystems: ModelLearningSystemType[];
+  developNewQualityMeasures: boolean | null;
 }
 
 export interface GetOperationalNeedAnswer_modelPlan_payments {
@@ -77,10 +80,12 @@ export interface GetOperationalNeedAnswerVariables {
   managePartCDEnrollment: boolean;
   collectPlanBids: boolean;
   planContractUpdated: boolean;
+  agreementTypes: boolean;
   recruitmentMethod: boolean;
   selectionMethod: boolean;
   communicationMethod: boolean;
   providerOverlap: boolean;
+  participantsIds: boolean;
   beneficiaryOverlap: boolean;
   helpdeskUse: boolean;
   iddocSupport: boolean;
@@ -93,6 +98,7 @@ export interface GetOperationalNeedAnswerVariables {
   dataNeededForMonitoring: boolean;
   dataToSendParticicipants: boolean;
   modelLearningSystems: boolean;
+  developNewQualityMeasures: boolean;
   payType: boolean;
   shouldAnyProvidersExcludedFFSSystems: boolean;
   nonClaimsPayments: boolean;
