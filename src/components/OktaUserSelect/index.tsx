@@ -308,7 +308,11 @@ export default function OktaUserSelect({
       }}
       defaultInputValue={searchTerm}
       inputValue={searchTerm}
-      noOptionsMessage={() => t('No results')}
+      noOptionsMessage={() => (
+        <div className="margin-y-0" aria-live="polite">
+          {t('No results')}
+        </div>
+      )}
       classNamePrefix="cedar-contact-select"
       instanceId={id}
       placeholder={false}
