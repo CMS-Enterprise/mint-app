@@ -54,7 +54,7 @@ func (s *Store) ExistingModelLinkCreate(logger *zap.Logger, link *models.Existin
 		return nil, genericmodel.HandleModelCreationError(logger, err, link)
 	}
 	newlink := models.ExistingModelLink{}
-	err = statement.Get(newlink, link)
+	err = statement.Get(&newlink, link)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, link)
 	}

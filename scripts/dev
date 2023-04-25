@@ -378,6 +378,7 @@ namespace :db do
     operational_solution_subtask,
     operational_solution,
     operational_need,
+    existing_model_link,
     model_plan,
     audit.change"
 

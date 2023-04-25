@@ -8,6 +8,66 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+func (suite *ResolverSuite) ExistingModelLinkGetByID() {
+	plan1 := suite.createModelPlan("Plan For Link 1")
+	existingModels, _ := ExistingModelCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
+
+	link1, err := ExistingModelLinkCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, &existingModels[0].ID, nil)
+	suite.NoError(err)
+	suite.NotNil(link1)
+
+	retLink, err := ExistingModelLinkGetByID(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, link1.ID)
+	suite.NoError(err)
+	suite.Equal(retLink.ExistingModelID, existingModels[0].ID)
+	suite.Nil(retLink.CurrentModelPlanID)
+	suite.Nil(retLink.ModifiedBy)
+	suite.Nil(retLink.ModifiedDts)
+
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, retLink.CreatedBy)
+
+}
+
+func (suite *ResolverSuite) ExistingModelLinkCreate() {
+
+	plan1 := suite.createModelPlan("Plan For Link 1")
+	existingModels, _ := ExistingModelCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
+
+	link1, err := ExistingModelLinkCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, &existingModels[0].ID, nil)
+	suite.NoError(err)
+	suite.NotNil(link1)
+
+	suite.Equal(link1.ExistingModelID, &existingModels[0].ID)
+	/*
+	   1. Create Model
+	   2. Get Model
+	   2. Confirm model info matches
+	*/
+}
+
+func (suite *ResolverSuite) ExistingModelLinkDelete() {
+
+	plan1 := suite.createModelPlan("Plan For Link 1")
+	existingModels, _ := ExistingModelCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
+
+	link1, err := ExistingModelLinkCreate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan1.ID, &existingModels[0].ID, nil)
+	suite.NoError(err)
+	suite.NotNil(link1)
+
+	delLink, err := ExistingModelLinkDelete(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, link1.ID)
+	suite.NoError(err)
+	suite.NotNil(delLink)
+
+	retLink, err := ExistingModelLinkGetByID(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, link1.ID)
+	suite.Error(err)
+	suite.Nil(retLink)
+	/*
+	   1. Create Model
+	   2. Get Model
+	   3. delete Model
+	   4. Confrim
+	*/
+}
+
 func (suite *ResolverSuite) TestExistingModelLinkDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Link 1")
 	plan2 := suite.createModelPlan("Plan For Link 2")

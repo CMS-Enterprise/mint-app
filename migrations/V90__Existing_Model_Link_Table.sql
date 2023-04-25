@@ -11,9 +11,9 @@ CREATE TABLE existing_model_link (
     current_model_plan_id UUID,
 
     --META DATA
-    created_by EUA_ID NOT NULL,
+    created_by UUID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID,
+    modified_by UUID,
     modified_dts TIMESTAMP WITH TIME ZONE
 );
 
