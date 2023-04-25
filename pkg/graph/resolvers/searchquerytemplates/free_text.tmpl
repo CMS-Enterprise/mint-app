@@ -1,0 +1,10 @@
+{
+	"query": {
+		"multi_match": {
+			"query": "{{.SearchText}}",
+			"fuzziness": "AUTO",
+			"prefix_length": 1
+		}
+	}
+}
+

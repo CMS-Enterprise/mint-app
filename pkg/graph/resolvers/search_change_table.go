@@ -2,10 +2,12 @@ package resolvers
 
 import (
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"io"
 	"strings"
+	"text/template"
 	"time"
 
 	"github.com/opensearch-project/opensearch-go/v2"
@@ -18,9 +20,79 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+// SearchQueryTemplate is an enum for the different search query templates
+type SearchQueryTemplate string
+
+// These are the different search query template enums
+const (
+	FreeTextSearchTemplate    SearchQueryTemplate = "FreeTextSearch"
+	ModelPlanIDSearchTemplate SearchQueryTemplate = "ModelPlanIDSearch"
+	DateRangeSearchTemplate   SearchQueryTemplate = "DateRangeSearch"
+	ActorSearchTemplate       SearchQueryTemplate = "ActorSearch"
+	ModelStatusSearchTemplate SearchQueryTemplate = "ModelStatusSearch"
+)
+
+// Embed the template files
+//go:embed searchquerytemplates/free_text.tmpl
+var freeTextSearchTmpl string
+
+//go:embed searchquerytemplates/by_model_plan_id.tmpl
+var modelPlanIDSearchTmpl string
+
+//go:embed searchquerytemplates/by_date_range.tmpl
+var dateRangeSearchTmpl string
+
+//go:embed searchquerytemplates/by_actor.tmpl
+var actorSearchTmpl string
+
+//go:embed searchquerytemplates/by_model_status.tmpl
+var modelStatusSearchTmpl string
+
+var templateFileMapping = map[SearchQueryTemplate]string{
+	FreeTextSearchTemplate:    freeTextSearchTmpl,
+	ModelPlanIDSearchTemplate: modelPlanIDSearchTmpl,
+	DateRangeSearchTemplate:   dateRangeSearchTmpl,
+	ActorSearchTemplate:       actorSearchTmpl,
+	ModelStatusSearchTemplate: modelStatusSearchTmpl,
+}
+
+var templateCache = make(map[SearchQueryTemplate]*template.Template)
+
+func getTemplate(tmplEnum SearchQueryTemplate) (*template.Template, error) {
+	if tmpl, ok := templateCache[tmplEnum]; ok {
+		return tmpl, nil
+	}
+
+	tmplContent, ok := templateFileMapping[tmplEnum]
+	if !ok {
+		return nil, fmt.Errorf("template enum not found in templateFileMapping: %v", tmplEnum)
+	}
+
+	tmpl, err := template.New(string(tmplEnum)).Parse(tmplContent)
+	if err != nil {
+		return nil, err
+	}
+
+	templateCache[tmplEnum] = tmpl
+	return tmpl, nil
+}
+
 // convertQueryToReader converts a string to an io.Reader
 func convertQueryToReader(query string) (io.Reader, error) {
 	return strings.NewReader(query), nil
+}
+
+func buildSearchQuery(tmpl SearchQueryTemplate, data map[string]interface{}) (string, error) {
+	queryTemplate, err := getTemplate(tmpl)
+	if err != nil {
+		return "", err
+	}
+	var queryBuffer bytes.Buffer
+	err = queryTemplate.Execute(&queryBuffer, data)
+	if err != nil {
+		return "", err
+	}
+	return queryBuffer.String(), nil
 }
 
 // marshalSearchQuery converts a SearchRequest to an io.Reader
@@ -183,15 +255,12 @@ func SearchChangeTableWithFreeText(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := fmt.Sprintf(`{
-		"query": {
-			"multi_match": {
-				"query": "%s",
-				"fuzziness": "AUTO",
-				"prefix_length": 1
-			}
-		}
-	}`, searchText)
+	query, err := buildSearchQuery(FreeTextSearchTemplate, map[string]interface{}{
+		"SearchText": searchText,
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "_score:desc")
 }
@@ -204,24 +273,12 @@ func SearchChangeTableByModelPlanID(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := fmt.Sprintf(`{
-		"query": {
-			"bool": {
-				"filter": [
-					{
-						"term": {
-							"table_id": "1"
-						}
-					},
-					{
-						"term": {
-							"primary_key.keyword": "%s"
-						}
-					}
-				]
-			}
-		}
-	}`, modelPlanID.String())
+	query, err := buildSearchQuery(ModelPlanIDSearchTemplate, map[string]interface{}{
+		"ModelPlanID": modelPlanID.String(),
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }
@@ -235,22 +292,13 @@ func SearchChangeTableByDateRange(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := fmt.Sprintf(`{
-		"query": {
-			"bool": {
-				"filter": [
-					{
-						"range": {
-							"modified_dts": {
-								"gte": "%s",
-								"lte": "%s"
-							}
-						}
-					}
-				]
-			}
-		}
-	}`, startDate.Format(time.RFC3339), endDate.Format(time.RFC3339))
+	query, err := buildSearchQuery(DateRangeSearchTemplate, map[string]interface{}{
+		"StartDate": startDate.Format(time.RFC3339),
+		"EndDate":   endDate.Format(time.RFC3339),
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }
@@ -263,21 +311,12 @@ func SearchChangeTableByActor(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := fmt.Sprintf(`{
-		"query": {
-			"multi_match": {
-				"query": "%s",
-				"fuzziness": "AUTO",
-				"prefix_length": 1,
-				"fields": [
-					"modified_by.common_name",
-					"modified_by.username",
-					"modified_by.given_name",
-					"modified_by.family_name"
-				]
-			}
-		}
-	}`, actor)
+	query, err := buildSearchQuery(ActorSearchTemplate, map[string]interface{}{
+		"Actor": actor,
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "_score:desc")
 }
@@ -291,30 +330,12 @@ func SearchChangeTableByModelStatus(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := fmt.Sprintf(`{
-		"query": {
-			"bool": {
-				"should": [
-					{
-						"term": {
-							"fields.status.new.keyword": "%s"
-						}
-					},
-					{
-						"term": {
-							"fields.status.old.keyword": "%s"
-						}
-					}
-				],
-				"minimum_should_match": 1,
-				"filter": {
-					"term": {
-						"table_id": 1
-					}
-				}
-			}
-		}
-	}`, status, status)
+	query, err := buildSearchQuery(ModelStatusSearchTemplate, map[string]interface{}{
+		"Status": status,
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }
