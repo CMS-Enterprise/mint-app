@@ -247,8 +247,9 @@ type MiddlewareFactory struct {
 
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
 // the websocket connection payload to authenticate an Okta user.
-func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware(logger *zap.Logger) transport.WebsocketInitFunc {
+func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware() transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+		logger := appcontext.ZLogger(ctx)
 		// Get the token from payload
 		any := initPayload["authToken"]
 		token, ok := any.(string)
