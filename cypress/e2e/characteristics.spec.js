@@ -17,7 +17,7 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     // Clicks the General Charactstics tasklist item
-    cy.get('[data-testid="characteristics"]').click();
+    cy.get('[data-testid="characteristics"]').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -27,29 +27,26 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics
 
-    cy.wait('@GetGeneralCharacteristics')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#plan-characteristics-is-new-model-no')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-existing-model')
       .should('be.visible')
-      .click()
-      .type('Plan with B{downArrow}{enter}')
+      .clickEnabled()
+      .typeEnabled('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 
     cy.get('#plan-characteristics-resembles-existing-model')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-resembles-which-model').within(() => {
-      cy.get("input[type='text']").type('advance payment{downArrow}{enter}');
+      cy.get("input[type='text']").typeEnabled(
+        'advance payment{downArrow}{enter}'
+      );
     });
 
     cy.get('[data-testid="multiselect-tag--Advance Payment ACO Model"]')
@@ -59,29 +56,24 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.clickOutside();
 
     cy.get('#plan-characteristics-resembles-how-model')
-      .type('In every way')
+      .typeEnabled('In every way')
       .should('have.value', 'In every way');
 
     cy.get('#plan-characteristics-has-component-or-tracks')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-tracks-differ-how')
-      .type('In no way')
+      .typeEnabled('In no way')
       .should('have.value', 'In no way');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Next').clickEnabled();
 
     // Page - /characteristics/key-charactertics
 
-    cy.wait('@GetKeyCharacteristics')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.get('#plan-characteristics-alternative-payment-MIPS')
-      .check({ force: true })
-      .check({ force: true })
+      .checkEnabled({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('[data-testid="mandatory-fields-alert"]').contains(
@@ -90,12 +82,12 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('#plan-characteristics-key-characteristics').within(() => {
       cy.get("input[type='text']")
-        .type('payment')
+        .typeEnabled('payment')
         .should('have.value', 'payment');
     });
 
     cy.get('[data-testid="option-PAYMENT"]')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('[data-testid="multiselect-tag--Payment Model"]')
@@ -104,121 +96,109 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.clickOutside();
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Next').clickEnabled();
 
     // Page - /characteristics/involvements
 
-    cy.wait('@GetInvolvements')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.get('#plan-characteristics-care-coordination-involved')
-      .check({ force: true })
-      .check({ force: true })
+      .checkEnabled({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-care-coordination-description')
-      .type('Yes, care coordination is involved in every way')
+      .typeEnabled('Yes, care coordination is involved in every way')
       .should('have.value', 'Yes, care coordination is involved in every way');
 
     cy.get('#plan-characteristics-additional-services')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-additional-services-description')
-      .type('Yes, additional services are involved in every way')
+      .typeEnabled('Yes, additional services are involved in every way')
       .should(
         'have.value',
         'Yes, additional services are involved in every way'
       );
 
     cy.get('#plan-characteristics-community-partners-involved')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-community-partners-description')
-      .type('Yes, community partners are involved in every way')
+      .typeEnabled('Yes, community partners are involved in every way')
       .should(
         'have.value',
         'Yes, community partners are involved in every way'
       );
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Next').clickEnabled();
 
     // Page - /characteristics/targets-and-options
 
-    cy.wait('@GetTargetsAndOptions')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.get('#plan-characteristics-geographies-targeted')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-geographies-type-STATE')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-geographies-applied-to-PARTICIPANTS')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-participation')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-agreement-type-PARTICIPATION')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-agreement-type-OTHER')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-agreement-type-other')
-      .type('Just a different agreement type')
+      .typeEnabled('Just a different agreement type')
       .should('have.value', 'Just a different agreement type');
 
     cy.get('#plan-characteristics-multiple-participation-needed')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Next').clickEnabled();
 
     // Page - /characteristics/authority
 
-    cy.wait('@GetAuthority')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.get('#plan-characteristics-rulemaking-required')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-rulemaking-required-description')
-      .type('Standard rule for next year')
+      .typeEnabled('Standard rule for next year')
       .should('have.value', 'Standard rule for next year');
 
     cy.get('#plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-waivers-required')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-waiver-types-FRAUD_ABUSE')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-waiver-types-PROGRAM_PAYMENT')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
-    cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains(
+      'button',
+      'Save and start next Model Plan section'
+    ).clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(

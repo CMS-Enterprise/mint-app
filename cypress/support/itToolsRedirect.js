@@ -20,33 +20,33 @@ Cypress.Commands.add(
   ) => {
     if (!shouldBeEnabled) cy.get(toolElement).should('be.disabled');
 
-    cy.get(`[data-testid="${redirectElement}"]`).first().click();
+    cy.get(`[data-testid="${redirectElement}"]`).first().clickEnabled();
 
     cy.wait(1000);
 
     if (multiselect) {
       cy.get(multiselect).within(() => {
-        cy.get("input[type='text']").click({ force: true });
+        cy.get("input[type='text']").clickEnabled({ force: true });
       });
     }
 
-    cy.get(elementToCheck).check({ force: true }).should('be.checked');
+    cy.get(elementToCheck).checkEnabled({ force: true }).should('be.checked');
 
     if (multiselect) {
       cy.clickOutside();
     }
 
-    cy.get(warningRedirect).first().click();
+    cy.get(warningRedirect).first().clickEnabled();
 
     if (backOrNext) {
       cy.wait(1000);
-      cy.contains('button', backOrNext).click();
+      cy.contains('button', backOrNext).clickEnabled();
     }
 
     cy.wait(alias).its('response.statusCode').should('eq', 200);
 
     cy.wait(1000);
 
-    cy.get(toolElement).check({ force: true }).should('be.checked');
+    cy.get(toolElement).checkEnabled({ force: true }).should('be.checked');
   }
 );

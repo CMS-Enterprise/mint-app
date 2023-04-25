@@ -6,7 +6,7 @@ describe('The Collaborator/Team Member Form', () => {
   it('adds a collaborator to model plan', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('a', 'Edit team').click();
+    cy.contains('a', 'Edit team').clickEnabled();
 
     cy.contains('h1', 'Add model team members');
 
@@ -24,18 +24,18 @@ describe('The Collaborator/Team Member Form', () => {
       });
     });
 
-    cy.contains('a', 'Add team member').click();
+    cy.contains('a', 'Add team member').clickEnabled();
 
     cy.get('#react-select-model-team-cedar-contact-input')
-      .click()
-      .type('Jerry{enter}', { delay: 500 })
+      .clickEnabled()
+      .typeEnabled('Jerry{enter}', { delay: 500 })
       .should('have.value', 'Jerry Seinfeld, SF13');
 
     cy.contains('button', 'Add team member').should('be.disabled');
 
     cy.get('select').select('Evaluation').should('have.value', 'EVALUATION');
 
-    cy.contains('button', 'Add team member').click();
+    cy.contains('button', 'Add team member').clickEnabled();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -47,11 +47,14 @@ describe('The Collaborator/Team Member Form', () => {
     // Edits a collaborator
     cy.clickPlanTableByName('Plan With Collaborators');
 
-    cy.contains('a', 'Edit team').click();
+    cy.contains('a', 'Edit team').clickEnabled();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'BTAL Doe').siblings().contains('a', 'Edit').click();
+        cy.contains('th', 'BTAL Doe')
+          .siblings()
+          .contains('a', 'Edit')
+          .clickEnabled();
       });
     });
 
@@ -59,7 +62,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('select').select('Model Team').should('have.value', 'MODEL_TEAM');
 
-    cy.contains('button', 'Update team member').click();
+    cy.contains('button', 'Update team member').clickEnabled();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -70,18 +73,18 @@ describe('The Collaborator/Team Member Form', () => {
     // Removes a collaborator
     cy.clickPlanTableByName('Plan With Collaborators');
 
-    cy.contains('a', 'Edit team').click();
+    cy.contains('a', 'Edit team').clickEnabled();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
         cy.contains('th', 'BTAL Doe')
           .siblings()
           .contains('button', 'Remove')
-          .click();
+          .clickEnabled();
       });
     });
 
-    cy.contains('button', 'Yes, remove team member').click();
+    cy.contains('button', 'Yes, remove team member').clickEnabled();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -91,7 +94,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     // The Collaborator Access Control
     // attempts to enter a model plan where not a collaborator
-    cy.get('[data-testid="signout-link"]').click();
+    cy.get('[data-testid="signout-link"]').clickEnabled();
 
     cy.localLogin({ name: 'ABCD', role: 'MINT_USER_NONPROD' });
 
@@ -103,7 +106,7 @@ describe('The Collaborator/Team Member Form', () => {
         cy.wrap($el.attr('href')).as('modelPlanURL');
       });
 
-    cy.get('[data-testid="table"] a').contains('Empty Plan').click();
+    cy.get('[data-testid="table"] a').contains('Empty Plan').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/read-only\/model-basics/);

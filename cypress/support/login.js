@@ -4,12 +4,14 @@ Cypress.Commands.add('login', () => {
 
   cy.visit('/signin');
 
-  cy.get('#okta-signin-username').type(Cypress.env('username'), { log: false });
-  cy.get('#okta-signin-password').type(Cypress.env('password'), {
+  cy.get('#okta-signin-username').typeEnabled(Cypress.env('username'), {
+    log: false
+  });
+  cy.get('#okta-signin-password').typeEnabled(Cypress.env('password'), {
     log: false,
     parseSpecialCharSequences: false
   });
-  cy.get('#okta-signin-submit').click();
+  cy.get('#okta-signin-submit').clickEnabled();
 
   cy.get('.beacon-loading').should('not.exist');
   cy.get('body').then($body => {
@@ -17,9 +19,11 @@ Cypress.Commands.add('login', () => {
       cy.get('input[name="answer"]').then(() => {
         cy.task('generateOTP', Cypress.env('otpSecret'), { log: false }).then(
           token => {
-            cy.get('input[name="answer"]').type(token, { log: false });
-            cy.get('input[name="rememberDevice"]').check({ force: true });
-            cy.get('input[value="Verify"').click();
+            cy.get('input[name="answer"]').typeEnabled(token, { log: false });
+            cy.get('input[name="rememberDevice"]').checkEnabled({
+              force: true
+            });
+            cy.get('input[value="Verify"').clickEnabled();
           }
         );
       });
@@ -36,22 +40,22 @@ Cypress.Commands.add(
   ({ name, role = 'MINT_USER_NONPROD', nda }) => {
     cy.visit('/login');
 
-    cy.get('[data-testid="LocalAuth-Visit"]').click();
-    cy.get('[data-testid="LocalAuth-EUA"]').type(name);
+    cy.get('[data-testid="LocalAuth-Visit"]').clickEnabled();
+    cy.get('[data-testid="LocalAuth-EUA"]').typeEnabled(name);
 
     if (role) {
-      cy.get(`input[value="${role}"]`).check();
+      cy.get(`input[value="${role}"]`).checkEnabled();
     }
-    cy.get('[data-testid="LocalAuth-Submit"]').click();
+    cy.get('[data-testid="LocalAuth-Submit"]').clickEnabled();
 
     if (!nda) {
-      cy.get('#nda-check').check({ force: true }).should('be.checked');
+      cy.get('#nda-check').checkEnabled({ force: true }).should('be.checked');
 
-      cy.get('#nda-submit').click();
+      cy.get('#nda-submit').clickEnabled();
     } else {
       cy.get('#nda-alert').should('contain.text', 'Accepted on');
 
-      cy.get('[data-testid="nda-continue"]').click();
+      cy.get('[data-testid="nda-continue"]').clickEnabled();
     }
 
     cy.url().should('eq', 'http://localhost:3005/');
@@ -59,6 +63,6 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('logout', () => {
-  cy.get('[data-testid="signout-link"]').click();
+  cy.get('[data-testid="signout-link"]').clickEnabled();
   cy.url().should('eq', 'http://localhost:3005/');
 });

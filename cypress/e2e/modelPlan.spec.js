@@ -19,43 +19,23 @@ describe('The Model Plan Form', () => {
   it('fills out model plan name and creates plan', () => {
     cy.visit('/');
 
-    cy.contains('a', 'Start a new Model Plan').click();
+    cy.contains('a', 'Start a new Model Plan').clickEnabled();
     cy.contains('h1', 'Start a new model plan');
-    cy.get('[data-testid="continue-link"]').click();
+    cy.get('[data-testid="continue-link"]').clickEnabled();
 
     // General Model Plan Information
 
     cy.get('#new-plan-model-name')
-      .type('My New Model Plan')
+      .typeEnabled('My New Model Plan')
       .should('have.value', 'My New Model Plan');
 
-    cy.contains('button', 'Next').click();
-
-    cy.wait('@GetIsCollaborator')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetModelPlanBase')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetModelCollaborators')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.contains('button', 'Next').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
 
-    cy.get('[data-testid="continue-to-tasklist"]').click();
-
-    cy.wait('@GetModelPlan')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.get('[data-testid="continue-to-tasklist"]').clickEnabled();
 
     cy.contains('h1', 'Model Plan task list');
 
@@ -66,12 +46,7 @@ describe('The Model Plan Form', () => {
 
     cy.contains('h3', 'Model basics');
 
-    cy.contains('button', 'Start').click();
-
-    cy.wait('@GetModelPlanInfo')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.contains('button', 'Start').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
@@ -79,15 +54,10 @@ describe('The Model Plan Form', () => {
 
     cy.get('#plan-basics-model-name')
       .clear()
-      .type('Renamed Model Plan Name')
+      .typeEnabled('Renamed Model Plan Name')
       .should('have.value', 'Renamed Model Plan Name');
 
-    cy.contains('button', 'Save and return to task list').click();
-
-    cy.wait('@GetModelPlan')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.contains('button', 'Save and return to task list').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -98,27 +68,17 @@ describe('The Model Plan Form', () => {
       'Renamed Model Plan Name'
     );
 
-    cy.get('[data-testid="basics"]').click();
-
-    cy.wait('@GetModelPlanInfo')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.get('[data-testid="basics"]').clickEnabled();
 
     cy.get('#plan-basics-model-category').select('Demonstration');
 
     cy.get('#plan-basics-model-category').contains('Demonstration');
 
     cy.get('#new-plan-cmsCenters-CENTER_FOR_MEDICARE')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
-    cy.contains('button', 'Next').click();
-
-    cy.wait('@GetBasics')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.contains('button', 'Next').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -126,29 +86,26 @@ describe('The Model Plan Form', () => {
       );
     });
 
-    cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
+    cy.get('#ModelType-Voluntary')
+      .checkEnabled({ force: true })
+      .should('be.checked');
 
     cy.get('#ModelType-Problem')
       .first()
-      .type('The problem')
+      .typeEnabled('The problem')
       .should('have.value', 'The problem');
 
     cy.get('#ModelType-Goal')
       .first()
-      .type('The goal')
+      .typeEnabled('The goal')
       .should('have.value', 'The goal');
 
     cy.get('#ModelType-testInterventions')
       .first()
-      .type('The interventions')
+      .typeEnabled('The interventions')
       .should('have.value', 'The interventions');
 
-    cy.contains('button', 'Next').click();
-
-    cy.wait('@GetMilestones')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.contains('button', 'Next').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -159,49 +116,47 @@ describe('The Model Plan Form', () => {
     cy.contains('h3', 'Anticipated high level timeline');
 
     cy.get('#Milestone-completeICIP')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-clearanceStarts')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-clearanceEnds')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-announced')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-applicationsStart')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-applicationsEnd')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-performancePeriodStarts')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-performancePeriodEnds')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
     cy.get('#Milestone-wrapUpEnds')
-      .type('05/23/2025')
+      .typeEnabled('05/23/2025')
       .should('have.value', '05/23/2025');
 
-    cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
+    cy.get('#phasedIn-Yes')
+      .first()
+      .checkEnabled({ force: true })
+      .should('be.checked');
 
-    cy.contains('button', 'Save and return to task list').click();
-
-    cy.wait('@GetModelPlan')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+    cy.contains('button', 'Save and return to task list').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -215,7 +170,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('.mint-tag').contains('Draft model plan');
 
-    cy.contains('a', 'Update').click();
+    cy.contains('a', 'Update').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/status/);
@@ -234,12 +189,7 @@ describe('The Model Plan Form', () => {
     cy.get('[data-testid="button"]')
       .contains('Update status')
       .should('be.not.disabled')
-      .click();
-
-    cy.wait('@GetModelPlan')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+      .clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -250,16 +200,11 @@ describe('The Model Plan Form', () => {
     // favorites and unfavorites a model plan
     cy.visit('/models');
 
-    cy.wait('@GetAllModelPlans')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 
     cy.contains('tr', 'Empty Plan')
       .get('[data-testid="Empty Plan-favorite"]')
-      .click();
+      .clickEnabled();
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="unfavorited"]');
   });

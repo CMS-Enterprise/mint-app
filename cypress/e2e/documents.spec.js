@@ -6,7 +6,7 @@ describe('Model Plan Documents', () => {
   it('uploads and removes a document', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('a', 'Upload a document').click();
+    cy.contains('a', 'Upload a document').clickEnabled();
 
     cy.contains('h1', 'Upload a document');
 
@@ -16,14 +16,14 @@ describe('Model Plan Documents', () => {
     // enter the document type
     cy.contains('.usa-radio', 'Concept Paper')
       .find('input')
-      .check({ force: true });
+      .checkEnabled({ force: true });
 
     cy.get('#document-upload-restricted-true')
-      .check({ force: true })
+      .checkEnabled({ force: true })
       .should('be.checked');
 
     // click upload button
-    cy.get('[data-testid="upload-document"]').click();
+    cy.get('[data-testid="upload-document"]').clickEnabled();
 
     // check if document is in table
     cy.get('[data-testid="model-plan-documents-table"] tbody tr')
@@ -41,7 +41,7 @@ describe('Model Plan Documents', () => {
         // // Mark file as passing virus scan
         // cy.exec(`scripts/tag_minio_file ${path} CLEAN`);
 
-        // cy.get('[data-testid="remove-document"]').click();
+        // cy.get('[data-testid="remove-document"]').clickEnabled();
       });
 
     // // no documents are listed
@@ -50,7 +50,7 @@ describe('Model Plan Documents', () => {
     //   'No documents uploaded'
     // );
 
-    cy.contains('a', 'Return to Model Plan task list').click();
+    cy.contains('a', 'Return to Model Plan task list').clickEnabled();
 
     cy.get('[data-testid="document-items"]').contains('strong', '1');
 

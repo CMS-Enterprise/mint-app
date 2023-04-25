@@ -6,9 +6,9 @@ describe('The Model Plan Form', () => {
   it('archives a model plan', () => {
     cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('button', 'Remove your Model Plan').click();
+    cy.contains('button', 'Remove your Model Plan').clickEnabled();
 
-    cy.contains('button', 'Remove Model Plan').click();
+    cy.contains('button', 'Remove Model Plan').clickEnabled();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.eq('/');

@@ -16,7 +16,7 @@ describe('Email Unfollow Link', () => {
 
     cy.get('[data-testid="table"] button > svg[data-cy="unfavorited"]')
       .first()
-      .click();
+      .clickEnabled();
 
     cy.get('#favorite-table').within(() => {
       cy.contains('Empty Plan').then($el => {

@@ -130,6 +130,7 @@
     "apollo-link-error": "^1.1.13",
     "babel-loader": "8.1.0",
     "cypress": "^12.8.1",
+    "cypress-network-idle": "^1.14.2",
     "cypress-otp": "^1.0.2",
     "enzyme": "^3.10.0",
     "eslint": "^7.11.0",
