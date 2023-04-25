@@ -51,7 +51,7 @@ func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, 
 		return nil, err
 	}
 
-	return store.PlanFavoriteDelete(logger, principal.Account().ID, modelPlanID)
+	return store.PlanFavoriteDelete(logger, principal.Account().ID, modelPlanID, principal.Account().ID)
 
 }
 

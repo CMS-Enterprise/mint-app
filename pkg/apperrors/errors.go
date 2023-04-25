@@ -5,6 +5,45 @@ import (
 	"fmt"
 )
 
+// ITypedError is an interface that all models must implement
+type ITypedError interface {
+	Code() ErrorCode
+	Message() string
+	error
+}
+
+// String implements the stringer interface
+func (ec ErrorCode) String() string {
+	return string(ec)
+
+}
+
+// typedError represents the shared data in common betwen all typedErrors, and implements ITypedError
+type typedError struct {
+	code    ErrorCode
+	message string
+}
+
+func (te *typedError) Error() string {
+	return fmt.Sprintf(`{"code": "%s", "message": "%s"}`, te.code, te.message)
+}
+func (te *typedError) Message() string {
+	return te.message
+}
+
+func (te *typedError) Code() ErrorCode {
+	return te.code
+}
+
+// New instantiates a new typedError
+func New(message string, code ErrorCode) *typedError {
+	return &typedError{
+		code:    code,
+		message: message,
+	}
+
+}
+
 // UnauthorizedError is a typed error for when authorization fails
 type UnauthorizedError struct {
 	Err error

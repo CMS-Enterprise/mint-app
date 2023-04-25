@@ -74,7 +74,12 @@ describe('IT Solutions Util', () => {
       )
     ).toEqual(
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+        to={{
+          pathname: `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`,
+          state: {
+            scrollElement: 'evaluationApproaches'
+          }
+        }}
       >
         {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
       </UswdsReactLink>
@@ -113,7 +118,12 @@ describe('IT Solutions Util', () => {
       )
     ).toEqual(
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+        to={{
+          pathname: `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`,
+          state: {
+            scrollElement: 'evaluationApproaches'
+          }
+        }}
       >
         {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
       </UswdsReactLink>
