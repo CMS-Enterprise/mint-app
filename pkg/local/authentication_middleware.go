@@ -91,8 +91,9 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 
 // NewLocalWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
 // the websocket connection payload to authenticate a local user.
-func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) transport.WebsocketInitFunc {
+func NewLocalWebSocketAuthenticationMiddleware(store *storage.Store) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+		logger := appcontext.ZLogger(ctx)
 		// Get the token from payload
 		any := initPayload["authToken"]
 		token, ok := any.(string)
