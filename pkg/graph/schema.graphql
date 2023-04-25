@@ -179,7 +179,9 @@ type ExistingModelLink {
   id: UUID
   modelPlanID: UUID!
   existingModelID: Int
+  existingModel: ExistingModel
   currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!

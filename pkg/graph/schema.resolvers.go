@@ -26,6 +26,24 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// ExistingModel is the resolver for the existingModel field.
+func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+
+// CurrentModelPlan is the resolver for the currentModelPlan field.
+func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ModelPlanGetByID(logger, *obj.CurrentModelPlanID, r.store) //TODO, implement loader, or this will be many queries
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -874,6 +892,11 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
+// ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
+func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
+	return &existingModelLinkResolver{r}
+}
+
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -936,6 +959,7 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
+type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }

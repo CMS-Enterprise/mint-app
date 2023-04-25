@@ -11,6 +11,30 @@ import (
 //go:embed SQL/existing_model/collection_get.sql
 var existingModelCollectionGetSQL string
 
+//go:embed SQL/existing_model/get_by_id_LOADER.sql
+var existingModelGetByModelPlanIDLoaderSQL string
+
+// ExistingModelGetByIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModel, error) {
+	eMSlice := []*models.ExistingModel{}
+
+	stmt, err := s.db.PrepareNamed(existingModelGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&eMSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return eMSlice, nil
+}
+
 // ExistingModelCollectionGet returns a list of existing models
 func (s *Store) ExistingModelCollectionGet(logger *zap.Logger) ([]*models.ExistingModel, error) {
 	existingModels := []*models.ExistingModel{}
