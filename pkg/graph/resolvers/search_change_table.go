@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strings"
 	"time"
 
 	"github.com/opensearch-project/opensearch-go/v2"
@@ -17,7 +18,12 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// Marshal and perform queries
+// convertQueryToReader converts a string to an io.Reader
+func convertQueryToReader(query string) (io.Reader, error) {
+	return strings.NewReader(query), nil
+}
+
+// marshalSearchQuery converts a SearchRequest to an io.Reader
 func marshalSearchQuery(request models.SearchRequest) (io.Reader, error) {
 	requestBody, err := json.Marshal(request.Query)
 	if err != nil {
@@ -98,20 +104,31 @@ func extractChangeTableRecords(
 	return changeTableRecords, nil
 }
 
-// Search functions for change table
-func searchChangeTableBase(
+func searchChangeTableBaseWithQueryString(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
-	request models.SearchRequest,
+	query string,
 	limit int,
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	queryReader, err := marshalSearchQuery(request)
+	queryReader, err := convertQueryToReader(query)
 	if err != nil {
 		return nil, err
 	}
 
+	return searchChangeTableBase(logger, searchClient, queryReader, limit, offset, sortBy)
+}
+
+// Search functions for change table
+func searchChangeTableBase(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	queryReader io.Reader,
+	limit int,
+	offset int,
+	sortBy string,
+) ([]*models.ChangeTableRecord, error) {
 	res, err := performSearch(searchClient, queryReader, limit, offset, sortBy)
 	if err != nil {
 		return nil, err
@@ -149,7 +166,13 @@ func SearchChangeTable(
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	return searchChangeTableBase(logger, searchClient, request, limit, offset, sortBy)
+	queryReader, err := marshalSearchQuery(request)
+	if err != nil {
+		logger.Error("Error marshaling search query", zap.Error(err))
+		return nil, err
+	}
+
+	return searchChangeTableBase(logger, searchClient, queryReader, limit, offset, sortBy)
 }
 
 // SearchChangeTableWithFreeText searches for change table records in search using a free-text search
@@ -160,18 +183,17 @@ func SearchChangeTableWithFreeText(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	request := models.SearchRequest{
-		Query: map[string]interface{}{
-			"query": map[string]interface{}{
-				"multi_match": map[string]interface{}{
-					"query":         searchText,
-					"fuzziness":     "AUTO",
-					"prefix_length": 1,
-				},
-			},
-		},
-	}
-	return searchChangeTableBase(logger, searchClient, request, limit, offset, "_score:desc")
+	query := fmt.Sprintf(`{
+		"query": {
+			"multi_match": {
+				"query": "%s",
+				"fuzziness": "AUTO",
+				"prefix_length": 1
+			}
+		}
+	}`, searchText)
+
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelPlanID searches the change table for records matching the given model plan ID
@@ -182,28 +204,26 @@ func SearchChangeTableByModelPlanID(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := models.SearchRequest{
-		Query: map[string]interface{}{
-			"query": map[string]interface{}{
-				"bool": map[string]interface{}{
-					"filter": []interface{}{
-						map[string]interface{}{
-							"term": map[string]interface{}{
-								"table_id": "1",
-							},
-						},
-						map[string]interface{}{
-							"term": map[string]interface{}{
-								"primary_key.keyword": modelPlanID.String(),
-							},
-						},
+	query := fmt.Sprintf(`{
+		"query": {
+			"bool": {
+				"filter": [
+					{
+						"term": {
+							"table_id": "1"
+						}
 					},
-				},
-			},
-		},
-	}
+					{
+						"term": {
+							"primary_key.keyword": "%s"
+						}
+					}
+				]
+			}
+		}
+	}`, modelPlanID.String())
 
-	return searchChangeTableBase(logger, searchClient, query, limit, offset, "modified_dts:desc")
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableByDateRange searches the change table for records with a modified_dts within the specified date range
@@ -215,26 +235,24 @@ func SearchChangeTableByDateRange(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	request := models.SearchRequest{
-		Query: map[string]interface{}{
-			"query": map[string]interface{}{
-				"bool": map[string]interface{}{
-					"filter": []interface{}{
-						map[string]interface{}{
-							"range": map[string]interface{}{
-								"modified_dts": map[string]interface{}{
-									"gte": startDate.Format(time.RFC3339),
-									"lte": endDate.Format(time.RFC3339),
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	}
+	query := fmt.Sprintf(`{
+		"query": {
+			"bool": {
+				"filter": [
+					{
+						"range": {
+							"modified_dts": {
+								"gte": "%s",
+								"lte": "%s"
+							}
+						}
+					}
+				]
+			}
+		}
+	}`, startDate.Format(time.RFC3339), endDate.Format(time.RFC3339))
 
-	return searchChangeTableBase(logger, searchClient, request, limit, offset, "modified_dts:desc")
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableByActor searches the change table for records with a modified_by field matching the given actor
@@ -245,25 +263,23 @@ func SearchChangeTableByActor(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := models.SearchRequest{
-		Query: map[string]interface{}{
-			"query": map[string]interface{}{
-				"multi_match": map[string]interface{}{
-					"query":         actor,
-					"fuzziness":     "AUTO",
-					"prefix_length": 1,
-					"fields": []string{
-						"modified_by.common_name",
-						"modified_by.username",
-						"modified_by.given_name",
-						"modified_by.family_name",
-					},
-				},
-			},
-		},
-	}
+	query := fmt.Sprintf(`{
+		"query": {
+			"multi_match": {
+				"query": "%s",
+				"fuzziness": "AUTO",
+				"prefix_length": 1,
+				"fields": [
+					"modified_by.common_name",
+					"modified_by.username",
+					"modified_by.given_name",
+					"modified_by.family_name"
+				]
+			}
+		}
+	}`, actor)
 
-	return searchChangeTableBase(logger, searchClient, query, limit, offset, "_score:desc")
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "_score:desc")
 }
 
 // SearchChangeTableByModelStatus searches the change table for records with a
@@ -275,32 +291,30 @@ func SearchChangeTableByModelStatus(
 	limit int,
 	offset int,
 ) ([]*models.ChangeTableRecord, error) {
-	query := models.SearchRequest{
-		Query: map[string]interface{}{
-			"query": map[string]interface{}{
-				"bool": map[string]interface{}{
-					"should": []interface{}{
-						map[string]interface{}{
-							"term": map[string]interface{}{
-								"fields.status.new.keyword": status,
-							},
-						},
-						map[string]interface{}{
-							"term": map[string]interface{}{
-								"fields.status.old.keyword": status,
-							},
-						},
+	query := fmt.Sprintf(`{
+		"query": {
+			"bool": {
+				"should": [
+					{
+						"term": {
+							"fields.status.new.keyword": "%s"
+						}
 					},
-					"minimum_should_match": 1,
-					"filter": map[string]interface{}{
-						"term": map[string]interface{}{
-							"table_id": 1,
-						},
-					},
-				},
-			},
-		},
-	}
+					{
+						"term": {
+							"fields.status.old.keyword": "%s"
+						}
+					}
+				],
+				"minimum_should_match": 1,
+				"filter": {
+					"term": {
+						"table_id": 1
+					}
+				}
+			}
+		}
+	}`, status, status)
 
-	return searchChangeTableBase(logger, searchClient, query, limit, offset, "modified_dts:desc")
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
 }

@@ -832,10 +832,10 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 }
 
 // SearchChangeTable is the resolver for the searchChangeTable field.
-func (r *queryResolver) SearchChangeTable(ctx context.Context, query models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.SearchChangeTable(logger, r.searchClient, query, limit, offset, "modified_dts:desc")
+	return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableWithFreeText is the resolver for the searchChangeTableWithFreeText field.
