@@ -28,6 +28,7 @@ export default function SolutionsTag({
         className,
         'display-block margin-right-05 margin-bottom-1'
       )}
+      data-testid="solutions-tag"
     >
       <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2">
         {t(`categories.${category}.header`)}

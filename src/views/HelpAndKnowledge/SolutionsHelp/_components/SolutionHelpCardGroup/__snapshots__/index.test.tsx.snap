@@ -48,6 +48,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     <a
                       aria-label="Articles under the Data reporting category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-reporting"
                     >
                       <span
@@ -151,6 +152,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     <a
                       aria-label="Articles under the Data reporting category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-reporting"
                     >
                       <span
@@ -254,6 +256,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     <a
                       aria-label="Articles under the Medicare Advantage and Part D category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                     >
                       <span
@@ -357,6 +360,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     <a
                       aria-label="Articles under the Data exchange category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
                       <span
@@ -464,6 +468,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                     <a
                       aria-label="Articles under the Databases and data management category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                     >
                       <span
@@ -566,6 +571,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     <a
                       aria-label="Articles under the Data exchange category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
                       <span
@@ -664,6 +670,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     <a
                       aria-label="Articles under the Applications category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications"
                     >
                       <span
@@ -767,6 +774,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     <a
                       aria-label="Articles under the Help desks category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=help-desks"
                     >
                       <span
@@ -865,6 +873,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     <a
                       aria-label="Articles under the Data exchange category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
                       <span
