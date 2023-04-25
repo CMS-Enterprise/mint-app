@@ -81,16 +81,26 @@ func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 }
 
 // ExistingModelLinkDelete deletes an existing model link
-func (s *Store) ExistingModelLinkDelete(logger *zap.Logger, id uuid.UUID) (*models.ExistingModelLink, error) {
+func (s *Store) ExistingModelLinkDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.ExistingModelLink, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
 	link := models.ExistingModelLink{}
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
 
-	statement, err := s.db.PrepareNamed(existingModelLinkDeleteSQL)
+	statement, err := tx.PrepareNamed(existingModelLinkDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
 
 	err = statement.Get(&link, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, err
+	}
 
+	err = tx.Commit()
 	if err != nil {
 		return nil, err
 	}

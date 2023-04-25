@@ -32,8 +32,11 @@ func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 
 // ExistingModelLinkCreate creates a new existing model link
 func ExistingModelLinkCreate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) (*models.ExistingModelLink, error) {
-	//TODO: pass the changes object?
 	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, existingModelID, currentModelPlanID)
+	err := BaseStructPreCreate(logger, link, principal, store, false)
+	if err != nil {
+		return nil, err
+	}
 
 	retLink, err := store.ExistingModelLinkCreate(logger, link)
 	if err != nil {
@@ -57,7 +60,17 @@ func ExistingModelLinkGetByID(logger *zap.Logger, store *storage.Store, principa
 // ExistingModelLinkDelete deletes an existing model link
 func ExistingModelLinkDelete(logger *zap.Logger, store *storage.Store, principal authentication.Principal, id uuid.UUID) (*models.ExistingModelLink, error) {
 
-	retLink, err := store.ExistingModelLinkGetByID(logger, id)
+	existing, err := store.ExistingModelLinkGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	err = BaseStructPreDelete(logger, existing, principal, store, true) //Only allow delete if collab or admin
+	if err != nil {
+		return nil, err
+	}
+
+	retLink, err := store.ExistingModelLinkDelete(logger, id, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
