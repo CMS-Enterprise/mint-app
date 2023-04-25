@@ -22,11 +22,18 @@ export interface GetCoordination_modelPlan_participantsAndProviders {
   participantsIDSNote: string | null;
 }
 
+export interface GetCoordination_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  id: UUID;
+  modifiedDts: Time | null;
+}
+
 export interface GetCoordination_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   participantsAndProviders: GetCoordination_modelPlan_participantsAndProviders;
+  operationalNeeds: GetCoordination_modelPlan_operationalNeeds[];
 }
 
 export interface GetCoordination {
