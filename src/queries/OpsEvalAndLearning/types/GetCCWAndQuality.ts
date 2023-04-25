@@ -28,11 +28,18 @@ export interface GetCCWAndQuality_modelPlan_opsEvalAndLearning {
   qualityPerformanceImpactsPaymentNote: string | null;
 }
 
+export interface GetCCWAndQuality_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  id: UUID;
+  modifiedDts: Time | null;
+}
+
 export interface GetCCWAndQuality_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   opsEvalAndLearning: GetCCWAndQuality_modelPlan_opsEvalAndLearning;
+  operationalNeeds: GetCCWAndQuality_modelPlan_operationalNeeds[];
 }
 
 export interface GetCCWAndQuality {

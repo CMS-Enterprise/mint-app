@@ -34,6 +34,13 @@ const operationalNeedMap: NeedMapType = {
     question: 'generalCharacteristics:updatedContract',
     answer: 'translateBoolean'
   },
+  SIGN_PARTICIPATION_AGREEMENTS: {
+    route: 'characteristics/targets-and-options',
+    fieldName: 'agreementTypes',
+    parentField: 'generalCharacteristics',
+    question: 'generalCharacteristics:agreementType',
+    answer: 'translateAgreementTypes'
+  },
   RECRUIT_PARTICIPANTS: {
     route: 'participants-and-providers/participants-options',
     fieldName: 'recruitmentMethod',
@@ -63,11 +70,18 @@ const operationalNeedMap: NeedMapType = {
     answer: 'translateCommunicationType'
   },
   MANAGE_PROV_OVERLAP: {
-    route: 'participants-and-providers/provder-options',
+    route: 'participants-and-providers/provider-options',
     fieldName: 'providerOverlap',
     parentField: 'participantsAndProviders',
     question: 'participantsAndProviders:overlap',
     answer: 'translateOverlapType'
+  },
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY: {
+    route: 'participants-and-providers/coordination',
+    fieldName: 'participantsIds',
+    parentField: 'participantsAndProviders',
+    question: 'participantsAndProviders:collectTINs',
+    answer: 'translateParticipantIDType'
   },
   MANAGE_BEN_OVERLAP: {
     route: 'beneficiaries/beneficiary-frequency',
@@ -181,6 +195,20 @@ const operationalNeedMap: NeedMapType = {
     question: 'operationsEvaluationAndLearning:learningSystem',
     answer: 'translateModelLearningSystemType'
   },
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR: {
+    route: 'ops-eval-and-learning/ccw-and-quality',
+    fieldName: 'developNewQualityMeasures',
+    parentField: 'opsEvalAndLearning',
+    question: 'operationsEvaluationAndLearning:validatedQuality',
+    answer: 'translateBoolean'
+  },
+  IT_PLATFORM_FOR_LEARNING: {
+    route: 'ops-eval-and-learning/learning',
+    fieldName: 'modelLearningSystems',
+    parentField: 'opsEvalAndLearning',
+    question: 'operationsEvaluationAndLearning:learningSystem',
+    answer: 'translateModelLearningSystemType'
+  },
   ADJUST_FFS_CLAIMS: {
     route: 'payment',
     fieldName: 'payType',
@@ -210,7 +238,7 @@ const operationalNeedMap: NeedMapType = {
     answer: 'translateNonClaimsBasedPayType'
   },
   RECOVER_PAYMENTS: {
-    route: 'payment/recover',
+    route: 'payment/recover-payment',
     fieldName: 'willRecoverPayments',
     parentField: 'payments',
     question: 'payments:willRecoverPayments',
