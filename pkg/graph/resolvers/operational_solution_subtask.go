@@ -129,7 +129,7 @@ func OperationalSolutionSubtaskDelete(
 		return 0, err
 	}
 
-	sqlResult, err := store.OperationalSolutionSubtaskDelete(logger, id)
+	sqlResult, err := store.OperationalSolutionSubtaskDelete(logger, id, principal.Account().ID)
 	if err != nil {
 		return 0, err
 	}

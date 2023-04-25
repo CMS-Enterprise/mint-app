@@ -60,7 +60,7 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtaskCreateSQL)
+	statement, err := tx.PrepareNamed(operationalSolutionSubtaskCreateSQL)
 	if err != nil {
 		return nil, fmt.Errorf("could not prepare subtask creation statement: %w", err)
 	}
@@ -108,8 +108,14 @@ func (s *Store) OperationalSolutionSubtaskGetByID(_ *zap.Logger, subtaskID uuid.
 }
 
 // OperationalSolutionSubtaskDelete deletes an operational solution subtask by id
-func (s *Store) OperationalSolutionSubtaskDelete(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	statement, err := s.db.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
+func (s *Store) OperationalSolutionSubtaskDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
+	statement, err := tx.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -119,6 +125,10 @@ func (s *Store) OperationalSolutionSubtaskDelete(logger *zap.Logger, id uuid.UUI
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}
 
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit solution subtask delete transaction: %w", err)
+	}
 	return sqlResult, nil
 }
 

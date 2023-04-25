@@ -15,9 +15,6 @@ import (
 //go:embed SQL/analyzed_audit/create.sql
 var analyzedAuditCreate string
 
-//go:embed SQL/analyzed_audit/delete.sql
-var analyzedAuditDelete string
-
 //go:embed SQL/analyzed_audit/get_by_model_plan_id_and_date.sql
 var analyzedAuditGetByModelPlanIDAndDate string
 
@@ -54,24 +51,6 @@ func (s *Store) AnalyzedAuditCreate(logger *zap.Logger, AnalyzedAudit *models.An
 	}
 
 	return &retAnalyzedAudit, nil
-}
-
-// AnalyzedAuditDelete deletes an AnalyzedAudit by ID
-func (s *Store) AnalyzedAuditDelete(logger *zap.Logger, id uuid.UUID) (*models.AnalyzedAudit, error) {
-	stmt, err := s.db.PrepareNamed(analyzedAuditDelete)
-	if err != nil {
-		return nil, err
-	}
-	arg := map[string]interface{}{
-		"id": id,
-	}
-	deletedAnalyzedAudit := models.AnalyzedAudit{}
-	err = stmt.Get(&deletedAnalyzedAudit, arg)
-	if err != nil {
-		return nil, err
-	}
-
-	return &deletedAnalyzedAudit, nil
 }
 
 // AnalyzedAuditGetByModelPlanIDAndDate gets and returns all AnalyzedAudits by modelPlanID
