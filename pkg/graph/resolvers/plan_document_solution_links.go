@@ -41,7 +41,7 @@ func PlanDocumentSolutionLinkRemove(logger *zap.Logger, solutionID uuid.UUID, do
 	if err != nil {
 		return false, err
 	}
-	return store.PlanDocumentSolutionLinksRemove(logger, solutionID, documentIDs)
+	return store.PlanDocumentSolutionLinksRemove(logger, solutionID, documentIDs, principal.Account().ID)
 }
 
 // PlanDocumentSolutionLinksGetBySolutionID implements resolver logic to get plan document solution links associated with a plan ID

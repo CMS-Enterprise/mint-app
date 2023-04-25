@@ -27,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import getFrequency from 'queries/Beneficiaries/getFrequency';
 import {
   GetFrequency as BeneficiaryFrequencyType,
@@ -88,6 +89,8 @@ const Frequency = () => {
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts
   );
+
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
     UpdateModelPlanBeneficiaries

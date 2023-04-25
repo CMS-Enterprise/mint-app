@@ -232,87 +232,95 @@ const Learning = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldArray
-                  name="modelLearningSystems"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('learningSystem')}
-                      </legend>
+                <FieldGroup
+                  scrollElement="modelLearningSystems"
+                  error={!!flatErrors.modelLearningSystems}
+                >
+                  <FieldArray
+                    name="modelLearningSystems"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('learningSystem')}
+                        </legend>
 
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="ops-eval-and-learning-learning-systems-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
+                        {itSolutionsStarted && (
+                          <ITToolsWarning
+                            id="ops-eval-and-learning-data-needed-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.modelLearningSystems}
+                        </FieldErrorMsg>
+
+                        {Object.keys(ModelLearningSystemType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`ops-eval-and-learning-learning-systems-${type}`}
+                                  name="modelLearningSystems"
+                                  label={translateModelLearningSystemType(type)}
+                                  value={type}
+                                  checked={values?.modelLearningSystems.includes(
+                                    type as ModelLearningSystemType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.modelLearningSystems.indexOf(
+                                        e.target
+                                          .value as ModelLearningSystemType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === ModelLearningSystemType.OTHER &&
+                                  values.modelLearningSystems.includes(
+                                    type
+                                  ) && (
+                                    <div className="margin-left-4 margin-top-neg-3">
+                                      <Label
+                                        htmlFor="ops-eval-and-learning-learning-systems-other"
+                                        className="text-normal maxw-none"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.modelLearningSystemsOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="ops-eval-and-learning-learning-systems-other"
+                                        maxLength={5000}
+                                        name="modelLearningSystemsOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="ops-eval-and-learning-learning-systems-note"
+                          field="modelLearningSystemsNote"
                         />
-                      )}
-
-                      <FieldErrorMsg>
-                        {flatErrors.modelLearningSystems}
-                      </FieldErrorMsg>
-
-                      {Object.keys(ModelLearningSystemType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-learning-systems-${type}`}
-                                name="modelLearningSystems"
-                                label={translateModelLearningSystemType(type)}
-                                value={type}
-                                checked={values?.modelLearningSystems.includes(
-                                  type as ModelLearningSystemType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.modelLearningSystems.indexOf(
-                                      e.target.value as ModelLearningSystemType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === ModelLearningSystemType.OTHER &&
-                                values.modelLearningSystems.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-learning-systems-other"
-                                      className="text-normal maxw-none"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.modelLearningSystemsOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextAreaField}
-                                      className="maxw-none mint-textarea"
-                                      id="ops-eval-and-learning-learning-systems-other"
-                                      maxLength={5000}
-                                      name="modelLearningSystemsOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="ops-eval-and-learning-learning-systems-note"
-                        field="modelLearningSystemsNote"
-                      />
-                    </>
-                  )}
-                />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <FieldGroup
                   scrollElement="anticipatedChallenges"
