@@ -14,7 +14,7 @@ var existingModelCollectionGetSQL string
 //go:embed SQL/existing_model/get_by_id_LOADER.sql
 var existingModelGetByModelPlanIDLoaderSQL string
 
-// ExistingModelGetByIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+// ExistingModelGetByIDLOADER returns the existing model for a slice of model plan ids
 func (s *Store) ExistingModelGetByIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModel, error) {
 	eMSlice := []*models.ExistingModel{}
 

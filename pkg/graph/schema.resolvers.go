@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -40,8 +39,7 @@ func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *m
 	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
 		return nil, nil
 	}
-	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanGetByID(logger, *obj.CurrentModelPlanID, r.store) //TODO, implement loader, or this will be many queries
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
 }
 
 // Basics is the resolver for the basics field.
@@ -872,7 +870,9 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 
 // ExistingModelLink is the resolver for the existingModelLink field.
 func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error) {
-	panic(fmt.Errorf("not implemented: ExistingModelLink - existingModelLink"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ExistingModelLinkGetByID(logger, r.store, principal, id)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
