@@ -89,7 +89,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc
 
-    cy.wait('@GetIDDOC').its('response.statusCode').should('eq', 200);
+    cy.wait('@GetIDDOC').its('response.statusCode').should('eq', 200).wait(100);
 
     cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true')
       .as('contacts')
