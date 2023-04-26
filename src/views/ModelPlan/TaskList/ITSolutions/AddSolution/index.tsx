@@ -122,6 +122,14 @@ const AddSolution = () => {
     UpdateOperationalSolution
   );
 
+  const treatAsOtherSolutions = [
+    OperationalSolutionKey.CONTRACTOR,
+    OperationalSolutionKey.CROSS_MODEL_CONTRACT,
+    OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
+    OperationalSolutionKey.INTERNAL_STAFF,
+    OperationalSolutionKey.OTHER_NEW_PROCESS
+  ];
+
   const handleFormSubmit = async (
     formikValues: OperationalSolutionFormType
   ) => {
@@ -322,14 +330,9 @@ const AddSolution = () => {
                                 })}
                             </Field>
 
-                            {(values.key ===
-                              OperationalSolutionKey.CONTRACTOR ||
-                              values.key ===
-                                OperationalSolutionKey.CROSS_MODEL_CONTRACT ||
-                              values.key ===
-                                OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS ||
-                              values.key ===
-                                OperationalSolutionKey.OTHER_NEW_PROCESS) &&
+                            {treatAsOtherSolutions.includes(
+                              values.key as OperationalSolutionKey
+                            ) &&
                               !operationalSolutionID && (
                                 <Button
                                   type="button"
