@@ -42,6 +42,10 @@ autobind:
 # The first line in each type will be used as defaults for resolver arguments and
 # modelgen, the others will be allowed when binding to fields. Configure them to
 # your liking
+
+# Optional: turn on to exclude the gqlgen version in the generated file notice. No effect if `omit_gqlgen_file_notice` is true.
+omit_gqlgen_version_in_file_notice: true
+
 models:
   ID:
     model:
