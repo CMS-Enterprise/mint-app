@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import UswdsReactLink from 'components/LinkWrapper';
 import { NeedMap } from 'data/operationalNeedMap';
 import {
+  translateAgreementTypes,
   translateAppealsQuestionType,
   translateBenchmarkForPerformanceType,
   translateBoolean,
@@ -16,6 +17,7 @@ import {
   translateModelLearningSystemType,
   translateNonClaimsBasedPayType,
   translateOverlapType,
+  translateParticipantIDType,
   translateParticipantSelectiontType,
   translatePayType,
   translateRecruitmentType
@@ -41,6 +43,8 @@ type InfoToggleTypes = {
 // Collection of translations needed for operational needs questions/answers
 const needsTranslations: NeedMapType = {
   translateBoolean,
+  translateAgreementTypes,
+  translateParticipantIDType,
   translateRecruitmentType,
   translateParticipantSelectiontType,
   translateCommunicationType,
@@ -124,7 +128,10 @@ const InfoToggle = ({
             <p className="margin-bottom-0">
               {t('changeAnswer')}
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/${needConfig?.route}`}
+                to={{
+                  pathname: `/models/${modelID}/task-list/${needConfig?.route}`,
+                  state: { scrollElement: needConfig.fieldName.toString() }
+                }}
               >
                 {t('goToQuestion')}
               </UswdsReactLink>

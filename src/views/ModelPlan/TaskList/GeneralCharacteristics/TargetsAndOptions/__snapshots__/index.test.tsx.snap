@@ -432,75 +432,102 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         Add an additional note
       </button>
     </div>
-    <legend
-      class="usa-label"
-    >
-      What is the agreement type?
-    </legend>
-    <p
-      class="text-base margin-y-1"
-    >
-      Note: CMMI writes, Office of General Council (OGC) approves both types of agreements
-    </p>
     <div
-      class="mint-checkbox usa-checkbox"
+      class="usa-form-group"
+      data-scroll="agreementTypes"
     >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-agreement-type-COOPERATIVE"
-        name="agreementTypes"
-        type="checkbox"
-        value="COOPERATIVE"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-agreement-type-COOPERATIVE"
+      <legend
+        class="usa-label"
       >
-        Co-Operative Agreement/Grant
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-agreement-type-PARTICIPATION"
-        name="agreementTypes"
-        type="checkbox"
-        value="PARTICIPATION"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-agreement-type-PARTICIPATION"
+        What is the agreement type?
+      </legend>
+      <div
+        class="usa-alert usa-alert--warning flex it-tools-warning"
+        data-testid="alert"
       >
-        Participation Agreement
-      </label>
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-data-needed-warning"
+              type="button"
+            >
+              Go to IT solutions tracker.
+            </button>
+          </p>
+        </div>
+      </div>
       <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="plan-characteristics-agreement-type-OTHER"
-        name="agreementTypes"
-        type="checkbox"
-        value="OTHER"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="plan-characteristics-agreement-type-OTHER"
+        class="text-base margin-y-1"
       >
-        Other
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
+        Note: CMMI writes, Office of General Council (OGC) approves both types of agreements
+      </p>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-agreement-type-COOPERATIVE"
+          name="agreementTypes"
+          type="checkbox"
+          value="COOPERATIVE"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-agreement-type-COOPERATIVE"
+        >
+          Co-Operative Agreement/Grant
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-agreement-type-PARTICIPATION"
+          name="agreementTypes"
+          type="checkbox"
+          value="PARTICIPATION"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-agreement-type-PARTICIPATION"
+        >
+          Participation Agreement
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="plan-characteristics-agreement-type-OTHER"
+          name="agreementTypes"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="plan-characteristics-agreement-type-OTHER"
+        >
+          Other
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
     </div>
     <div
       class="margin-top-6 margin-bottom-3"

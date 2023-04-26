@@ -16,6 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -23,6 +24,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
 import {
   GetCCWAndQuality as GetCCWAndQualityType,
@@ -79,11 +81,18 @@ const CCWAndQuality = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
+  // If redirected from IT Solutions, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: string) => {
     update({
       variables: {
         id,
@@ -105,6 +114,8 @@ const CCWAndQuality = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -374,6 +385,18 @@ const CCWAndQuality = () => {
                       >
                         {t('validatedQuality')}
                       </Label>
+
+                      {itSolutionsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-data-needed-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              `/models/${modelID}/task-list/it-solutions`
+                            )
+                          }
+                        />
+                      )}
+
                       <FieldErrorMsg>
                         {flatErrors.developNewQualityMeasures}
                       </FieldErrorMsg>

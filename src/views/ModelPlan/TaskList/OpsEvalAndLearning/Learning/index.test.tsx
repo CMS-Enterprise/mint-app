@@ -42,8 +42,9 @@ const learningMock = [
           opsEvalAndLearning: learningMockData,
           operationalNeeds: [
             {
-              id: '111',
-              modifiedDts: ''
+              id: '780c990e-91f5-48a2-869a-59420940a533',
+              modifiedDts: '2024-05-12T15:01:39.190679Z',
+              __typename: 'OperationalNeed'
             }
           ]
         }
