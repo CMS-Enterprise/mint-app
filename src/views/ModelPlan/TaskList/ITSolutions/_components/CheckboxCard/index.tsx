@@ -55,6 +55,13 @@ const CheckboxCard = ({
   const tempDescription: string =
     'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
 
+  const treatAsOtherSolutions = [
+    OperationalSolutionKey.CONTRACTOR,
+    OperationalSolutionKey.CROSS_MODEL_CONTRACT,
+    OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
+    OperationalSolutionKey.INTERNAL_STAFF
+  ];
+
   return (
     <Grid tablet={{ col: 6 }}>
       <Card className={classNames(className)}>
@@ -70,10 +77,8 @@ const CheckboxCard = ({
             checked={!!solution.needed}
           />
 
-          {solution.key === OperationalSolutionKey.CONTRACTOR ||
-          solution.key === OperationalSolutionKey.CROSS_MODEL_CONTRACT ||
-          solution.key ===
-            OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS ? (
+          {/* If solution is one of the treatAsOther, then render the following  */}
+          {solution.key && treatAsOtherSolutions.includes(solution.key) && (
             <>
               <h3 className="margin-top-2 margin-bottom-0">
                 {solution.otherHeader}
@@ -82,11 +87,16 @@ const CheckboxCard = ({
                 {translateOperationalSolutionKey(solution.key)}
               </h5>
             </>
-          ) : (
-            <h3 className="margin-y-2">
-              {solution.nameOther || solution.name}
-            </h3>
           )}
+
+          {/* If solution key is not one of the treatAsOther, then render its name/nameOther */}
+          {/* If solution is custom (aka solution key is null), then render its name/nameOther */}
+          {!solution.key ||
+            (!treatAsOtherSolutions.includes(solution.key) && (
+              <h3 className="margin-y-2">
+                {solution.nameOther || solution.name}
+              </h3>
+            ))}
 
           {!solution.isOther && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
