@@ -20,9 +20,9 @@ describe('The Model Plan Payment Form', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();
@@ -30,9 +30,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment
 
     cy.wait('@GetFunding')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
@@ -73,9 +73,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment/claims-based-payment
 
     cy.wait('@GetClaimsBasedPayment')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -116,9 +116,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment/anticipating-dependencies
 
     cy.wait('@GetAnticipateDependencies')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -147,9 +147,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment/beneficiary-cost-sharing
 
     cy.wait('@GetBeneficiaryCostSharing')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -178,9 +178,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment/non-claims-based-payment
 
     cy.wait('@GetNonClaimsBasedPayment')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -223,9 +223,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment/complexity
 
     cy.wait('@GetComplexity')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -264,9 +264,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment/recover-payment
 
     cy.wait('@GetRecover')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(

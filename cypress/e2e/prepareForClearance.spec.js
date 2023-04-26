@@ -17,9 +17,9 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.clickPlanTableByName('Plan with Basics');
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="task-list-intake-form-prepareForClearance"]').within(
       () => {
@@ -30,9 +30,9 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="prepare-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -44,31 +44,26 @@ describe('The Model Plan Prepare for Clearance Form', () => {
 
     cy.get('[data-testid="clearance-basics"]').click();
 
-    cy.wait('@GetClearanceStatuses')
-      .wait(100)
+    cy.wait(['@GetClearanceStatuses', '@GetAllBasics'])
       .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetAllBasics')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#prepare-for-clearance-basics').should('be.checked');
 
     cy.get('[data-testid="dont-update-clearance"]').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="task-list-intake-form-prepareForClearance"]').within(
       () => {
@@ -79,9 +74,9 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="prepare-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     // General Characteristics Clearance Check
     cy.get('#prepare-for-clearance-generalCharacteristics')
@@ -91,16 +86,16 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="update-clearance"]').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="prepare-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#prepare-for-clearance-generalCharacteristics').should(
       'be.checked'
@@ -110,22 +105,17 @@ describe('The Model Plan Prepare for Clearance Form', () => {
 
     cy.get('[data-testid="clearance-participantsAndProviders"]').click();
 
-    cy.wait('@GetClearanceStatuses')
-      .wait(100)
+    cy.wait(['@GetClearanceStatuses', '@GetAllParticipants'])
       .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetAllParticipants')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#prepare-for-clearance-participantsAndProviders').should(
       'be.checked'
@@ -139,38 +129,33 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="update-clearance"]').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="prepare-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#prepare-for-clearance-beneficiaries').should('be.checked');
 
     // Ops Eval and Learning Clearance Check
     cy.get('[data-testid="clearance-opsEvalAndLearning"]').click();
 
-    cy.wait('@GetClearanceStatuses')
-      .wait(100)
+    cy.wait(['@GetClearanceStatuses', '@GetAllOpsEvalAndLearning'])
       .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetAllOpsEvalAndLearning')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#prepare-for-clearance-opsEvalAndLearning').should('be.checked');
 
@@ -182,16 +167,16 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="update-clearance"]').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="prepare-for-clearance"]').click();
 
     cy.wait('@GetClearanceStatuses')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#prepare-for-clearance-payments').should('be.checked');
 
@@ -200,9 +185,9 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     // Task List Check
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('[data-testid="task-list-intake-form-prepareForClearance"]').within(
       () => {

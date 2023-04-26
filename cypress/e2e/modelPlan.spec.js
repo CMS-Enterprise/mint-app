@@ -31,20 +31,14 @@ describe('The Model Plan Form', () => {
 
     cy.contains('button', 'Next').click();
 
-    cy.wait('@GetIsCollaborator')
-      .wait(100)
+    cy.wait([
+      '@GetIsCollaborator',
+      '@GetModelPlanBase',
+      '@GetModelCollaborators'
+    ])
       .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetModelPlanBase')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
-
-    cy.wait('@GetModelCollaborators')
-      .wait(100)
-      .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
@@ -53,9 +47,9 @@ describe('The Model Plan Form', () => {
     cy.get('[data-testid="continue-to-tasklist"]').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.contains('h1', 'Model Plan task list');
 
@@ -69,9 +63,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Start').click();
 
     cy.wait('@GetModelPlanInfo')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
@@ -85,9 +79,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Save and return to task list').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -101,9 +95,9 @@ describe('The Model Plan Form', () => {
     cy.get('[data-testid="basics"]').click();
 
     cy.wait('@GetModelPlanInfo')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#plan-basics-model-category').select('Demonstration');
 
@@ -116,9 +110,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.wait('@GetBasics')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -146,9 +140,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.wait('@GetMilestones')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -199,9 +193,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Save and return to task list').click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -237,9 +231,9 @@ describe('The Model Plan Form', () => {
       .click();
 
     cy.wait('@GetModelPlan')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -251,9 +245,9 @@ describe('The Model Plan Form', () => {
     cy.visit('/models');
 
     cy.wait('@GetAllModelPlans')
-      .wait(100)
       .its('response.statusCode')
-      .should('eq', 200);
+      .should('eq', 200)
+      .wait(100);
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 
