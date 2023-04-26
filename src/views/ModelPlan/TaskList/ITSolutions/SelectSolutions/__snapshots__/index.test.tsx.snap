@@ -136,7 +136,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
             <legend
               class="text-bold margin-bottom-2"
             >
-              chooseSolution
+              Choose from common solutions
             </legend>
             <ul
               class="usa-card-group"

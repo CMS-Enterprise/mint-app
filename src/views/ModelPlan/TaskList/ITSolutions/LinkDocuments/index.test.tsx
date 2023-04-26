@@ -33,6 +33,8 @@ const operationalSolution = {
   pocName: 'John Doe',
   pocEmail: 'j.doe@oddball.io',
   nameOther: 'My custom solution',
+  isOther: false,
+  otherHeader: null,
   status: OpSolutionStatus.COMPLETED,
   documents: [
     {

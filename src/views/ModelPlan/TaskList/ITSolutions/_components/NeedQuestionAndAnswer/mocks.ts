@@ -37,6 +37,8 @@ const needQuestionAndAnswerMock = [
               name:
                 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
               key: OperationalSolutionKey.RMADA,
+              isOther: false,
+              otherHeader: null,
               pocName: null,
               pocEmail: null,
               needed: null,
