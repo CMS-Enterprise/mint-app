@@ -45,8 +45,10 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="clearance-basics"]').click();
 
     cy.wait(['@GetClearanceStatuses', '@GetAllBasics'])
-      .its('response.statusCode')
-      .should('eq', 200)
+      .spread((GetClearanceStatuses, GetAllBasics) => {
+        cy.wrap(GetClearanceStatuses.response.statusCode).should('eq', 200);
+        cy.wrap(GetAllBasics.response.statusCode).should('eq', 200);
+      })
       .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -106,8 +108,10 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="clearance-participantsAndProviders"]').click();
 
     cy.wait(['@GetClearanceStatuses', '@GetAllParticipants'])
-      .its('response.statusCode')
-      .should('eq', 200)
+      .spread((GetClearanceStatuses, GetAllParticipants) => {
+        cy.wrap(GetClearanceStatuses.response.statusCode).should('eq', 200);
+        cy.wrap(GetAllParticipants.response.statusCode).should('eq', 200);
+      })
       .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -146,8 +150,10 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="clearance-opsEvalAndLearning"]').click();
 
     cy.wait(['@GetClearanceStatuses', '@GetAllOpsEvalAndLearning'])
-      .its('response.statusCode')
-      .should('eq', 200)
+      .spread((GetClearanceStatuses, GetAllOpsEvalAndLearning) => {
+        cy.wrap(GetClearanceStatuses.response.statusCode).should('eq', 200);
+        cy.wrap(GetAllOpsEvalAndLearning.response.statusCode).should('eq', 200);
+      })
       .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();

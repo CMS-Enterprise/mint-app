@@ -36,8 +36,11 @@ describe('The Model Plan Form', () => {
       '@GetModelPlanBase',
       '@GetModelCollaborators'
     ])
-      .its('response.statusCode')
-      .should('eq', 200)
+      .spread((GetIsCollaborator, GetModelPlanBase, GetModelCollaborators) => {
+        cy.wrap(GetIsCollaborator.response.statusCode).should('eq', 200);
+        cy.wrap(GetModelPlanBase.response.statusCode).should('eq', 200);
+        cy.wrap(GetModelCollaborators.response.statusCode).should('eq', 200);
+      })
       .wait(100);
 
     cy.location().should(loc => {

@@ -91,9 +91,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.wait('@GetIDDOC').its('response.statusCode').should('eq', 200);
 
-    cy.get(
-      '#ops-ev.wait(100);l-and-learning-technical-contacts-identified-use-true'
-    )
+    cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true')
       .as('contacts')
       .check({ force: true });
     cy.get('@contacts').should('be.checked');
