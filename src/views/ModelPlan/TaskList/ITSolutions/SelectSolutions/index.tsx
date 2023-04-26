@@ -256,6 +256,14 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                 ) => {
                   const { errors, handleSubmit, values } = formikProps;
 
+                  const allTheSolutions = values.solutions;
+                  const commonSolutions = allTheSolutions.filter(
+                    solution => solution.nameOther === null
+                  );
+                  // otherSolutions are custom solutions
+                  const otherSolutions = allTheSolutions.filter(
+                    solution => solution.nameOther !== null
+                  );
                   const flatErrors = flattenErrors(errors);
 
                   return (
@@ -286,21 +294,42 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                         }}
                       >
                         <legend className="text-bold margin-bottom-2">
-                          {t('chooseSolution')}
+                          {t('chooseCommonSolution')}
                         </legend>
 
                         {!loading && (
                           <CardGroup>
-                            {values.solutions.map(
-                              (solution: any, index: number) => (
-                                <CheckboxCard
-                                  solution={solution}
-                                  index={index}
-                                  key={solution.nameOther || solution.name}
-                                />
-                              )
-                            )}
+                            {commonSolutions.map((solution: any) => (
+                              <CheckboxCard
+                                solution={solution}
+                                index={allTheSolutions.findIndex(
+                                  x => x.name === solution.name
+                                )}
+                                key={solution.nameOther || solution.name}
+                              />
+                            ))}
                           </CardGroup>
+                        )}
+
+                        {otherSolutions.length > 0 && (
+                          <>
+                            <legend className="text-bold margin-top-5 margin-bottom-2">
+                              {t('chooseOtherSolution')}
+                            </legend>
+                            {!loading && (
+                              <CardGroup>
+                                {otherSolutions.map((solution: any) => (
+                                  <CheckboxCard
+                                    solution={solution}
+                                    index={allTheSolutions.findIndex(
+                                      x => x.name === solution.name
+                                    )}
+                                    key={solution.nameOther || solution.name}
+                                  />
+                                ))}
+                              </CardGroup>
+                            )}
+                          </>
                         )}
 
                         <Button
@@ -322,7 +351,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                             type="submit"
                             className="margin-bottom-1"
                             disabled={
-                              values.solutions.filter(
+                              allTheSolutions.filter(
                                 solution => solution.needed
                               ).length === 0
                             }
