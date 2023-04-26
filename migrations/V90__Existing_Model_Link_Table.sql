@@ -47,3 +47,6 @@ ADD CONSTRAINT unique_existing_model_link_current_model UNIQUE (model_plan_id, c
 /* Add constraint that requires either existing or current model id*/
 ALTER TABLE existing_model_link
 ADD CONSTRAINT current_model_plan_id_null_if_existing CHECK ((existing_model_id IS NULL OR current_model_plan_id IS NULL) AND NOT (existing_model_id IS NULL AND current_model_plan_id IS NULL)); -- Can't be a existing model table and current model at the same time. One is required
+
+/* TURN ON AUDITING */
+SELECT audit.AUDIT_TABLE('public', 'existing_model_link', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{existing_model_id, current_model_plan_id}'::TEXT[]);
