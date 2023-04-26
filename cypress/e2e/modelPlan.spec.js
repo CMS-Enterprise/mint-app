@@ -38,7 +38,7 @@ describe('The Model Plan Form', () => {
       '@GetModelCollaborators'
     ])
       .then(verifyStatus)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
@@ -49,7 +49,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.contains('h1', 'Model Plan task list');
 
@@ -65,7 +65,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetModelPlanInfo')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
@@ -81,7 +81,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -97,7 +97,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetModelPlanInfo')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#plan-basics-model-category').select('Demonstration');
 
@@ -112,7 +112,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetBasics')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -142,7 +142,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetMilestones')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -195,7 +195,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -233,7 +233,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -247,7 +247,7 @@ describe('The Model Plan Form', () => {
     cy.wait('@GetAllModelPlans')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="favorited"]');
 

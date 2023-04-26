@@ -20,7 +20,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     // Clicks the Participants and Providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
@@ -28,7 +28,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetParticipantsAndProviders')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -91,7 +91,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetParticipantOptions')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#participants-and-providers-expected-participants')
       .invoke('val', 2345)
@@ -134,7 +134,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetCommunication')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
       .as('communication')
@@ -164,7 +164,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetCoordination')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#participants-and-providers-coordniate-work')
       .check({ force: true })
@@ -193,7 +193,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetProviderOptions')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#participants-and-providers-additional-frequency-OTHER')
       .check({ force: true })
@@ -250,7 +250,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);

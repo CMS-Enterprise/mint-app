@@ -25,7 +25,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOpsEvalAndLearning')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     cy.get('#ops-eval-and-learning-help-desk-use-true')
       .check({ force: true })
@@ -38,7 +38,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOpsEvalAndLearning')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     cy.get('#ops-eval-and-learning-help-desk-use-warning')
       .should('be.visible')
@@ -47,7 +47,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     // Click into the it solutions tracker for helpdesk op needs
     cy.get('[data-testid="needs-table"] tbody tr')
@@ -61,7 +61,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Toggle the NeedsQuestionsAndAnswer component to see previously answered question
     cy.get('[data-testid="toggle-need-answer"]').click();
@@ -81,7 +81,7 @@ describe('The Model Plan IT solutions tracker', () => {
       '@GetPossibleOperationalSolutions'
     ])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Selecting other to adda custom solution
     cy.get('#it-solutions-key').select('Other');
@@ -91,7 +91,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Fill out other custom solution form
     cy.get('#it-solution-custom-name-other')
@@ -116,14 +116,14 @@ describe('The Model Plan IT solutions tracker', () => {
       '@GetOperationalSolution'
     ])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Adding the custom solution
     cy.get('#add-solution-details-button').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Adding a few other solutions
     cy.get('#it-solutions-cbosc').as('cbosc').check({ force: true });
@@ -137,7 +137,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Filling out solutions details
     cy.get('#solution-must-start-CBOSC')
@@ -161,7 +161,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     // Verifying solutions are added on the IT solutions tracker
     cy.get('[data-testid="needs-table"] tbody tr')
@@ -188,14 +188,14 @@ describe('The Model Plan IT solutions tracker', () => {
       '@GetOperationalSolution'
     ])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     // Click button to update existing solutions for the relevant need
     cy.get('[data-testid="update-solutions-link"]').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
     cy.get('[data-testid="alert"]').contains(
       'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.'
     );
@@ -209,7 +209,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('[data-testid="alert"]').contains(
       'Saving these selections will delete the Contractor solution page/s that is associated with this operational need.'
@@ -220,7 +220,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     // Add new custom need
     cy.get('[data-testid="add-new-operational-need"]').click();
@@ -242,7 +242,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetPossibleOperationalSolutions'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('#it-solutions-key')
       .should('not.be.disabled')
@@ -254,21 +254,21 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOperationalNeed')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     cy.get('button').contains('Continue').click();
 
     cy.wait('@GetOperationalNeed')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     cy.get('#submit-solutions').should('not.be.disabled').click();
 
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     cy.get('span').contains(
       'Success! Your operational need “My custom need” and solution are added.'
@@ -287,7 +287,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.contains('button', 'Upload a document').click();
 
@@ -308,7 +308,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr')
       .should('have.length', 1)
@@ -325,7 +325,7 @@ describe('The Model Plan IT solutions tracker', () => {
       '@GetModelPlanDocuments'
     ])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr')
       .should('have.length', 1)
@@ -342,7 +342,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr').should(
       'have.length',
@@ -354,7 +354,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('[data-testid="add-subtask--0"]').within(() => {
       cy.get('#subtask-name--0').as('subtask');
@@ -380,7 +380,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('.usa-alert__text').contains(
       'Success! Your subtasks have been added.'
@@ -397,7 +397,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.contains('First Subtasks')
       .parents('.border-bottom.border-base-light')
@@ -410,7 +410,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.wait('@GetOperationalSolution')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(250);
 
     cy.get('.usa-alert__text').contains(
       'Success! First Subtasks has been removed.'
@@ -433,7 +433,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
-      .wait(100);
+      .wait(250);
 
     cy.get('.usa-alert__text').contains(
       'Success! Your subtasks have been added.'

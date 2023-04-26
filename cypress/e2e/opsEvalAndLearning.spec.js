@@ -24,7 +24,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     // Clicks the Ops Eval and Learning tasklist item
     cy.get('[data-testid="ops-eval-and-learning"]').click();
@@ -32,7 +32,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetOpsEvalAndLearning')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -89,16 +89,18 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc
 
-    cy.wait('@GetIDDOC').its('response.statusCode').should('eq', 200).wait(100);
+    cy.wait('@GetIDDOC').its('response.statusCode').should('eq', 200).wait(500);
 
-    cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true')
-      .as('contacts')
-      .check({ force: true });
+    cy.get('#ops-eval-and-learning-technical-contacts-identified-use-true').as(
+      'contacts'
+    );
+    cy.get('@contacts').check({ force: true });
     cy.get('@contacts').should('be.checked');
 
-    cy.get('#ops-eval-and-learning-technical-contacts-identified-detail')
-      .as('technical-contacts')
-      .type('Bill in accounting');
+    cy.get('#ops-eval-and-learning-technical-contacts-identified-detail').as(
+      'technical-contacts'
+    );
+    cy.get('@technical-contacts').type('Bill in accounting');
     cy.get('@technical-contacts').should('have.value', 'Bill in accounting');
 
     cy.get('#ops-eval-and-learning-capture-participant-info')
@@ -121,7 +123,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetIDDOCTesting')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#ops-eval-and-learning-uat-needs')
       .type('Users to make sure this works correctly')
@@ -163,13 +165,14 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetIDDOCMonitoring')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(200);
 
     cy.get('#ops-eval-and-learning-fulltime-or-incremental-INCREMENTAL')
       .check({ force: true })
       .should('be.checked');
 
     cy.get('#ops-eval-and-learning-eft-setup-true')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 
@@ -196,7 +199,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetPerformance')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#ops-eval-and-learning-benchmark-performance-YES_RECONCILE')
       .check({ force: true })
@@ -245,7 +248,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetEvaluation')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#ops-eval-and-learning-evaluation-approach-OTHER')
       .check({ force: true })
@@ -302,7 +305,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetCCWAndQuality')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#ops-eval-and-learning-send-files-true')
       .check({ force: true })
@@ -331,7 +334,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetDataSharing')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#ops-eval-and-learning-data-sharing-starts').select('Other');
 
@@ -382,7 +385,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetLearning')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.get('#ops-eval-and-learning-learning-systems-OTHER')
       .check({ force: true })
@@ -407,7 +410,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);

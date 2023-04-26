@@ -22,7 +22,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();
@@ -32,7 +32,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetFunding')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
@@ -75,7 +75,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetClaimsBasedPayment')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -118,7 +118,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetAnticipateDependencies')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -149,7 +149,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetBeneficiaryCostSharing')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -180,7 +180,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetNonClaimsBasedPayment')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -225,7 +225,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetComplexity')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -266,7 +266,7 @@ describe('The Model Plan Payment Form', () => {
     cy.wait('@GetRecover')
       .its('response.statusCode')
       .should('eq', 200)
-      .wait(100);
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
