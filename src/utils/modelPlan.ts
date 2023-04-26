@@ -7,7 +7,6 @@ import {
   OperationalSolutionKey,
   OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
-import { SelectedOpertionalSolutionKeyType } from 'views/ModelPlan/TaskList/ITSolutions/AddCustomSolution';
 
 /**
  * Translate the API enum to a human readable string
@@ -706,7 +705,7 @@ export const translateSubtasks = (status: string) => {
 };
 
 export const translateOperationalSolutionKey = (
-  key: SelectedOpertionalSolutionKeyType
+  key: OperationalSolutionKey
 ) => {
   switch (key) {
     case OperationalSolutionKey.CONTRACTOR:
