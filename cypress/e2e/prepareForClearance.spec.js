@@ -1,4 +1,5 @@
 import { aliasQuery } from '../support/graphql-test-utils';
+import verifyStatus from '../support/verifyRequestStatus';
 
 describe('The Model Plan Prepare for Clearance Form', () => {
   beforeEach(() => {
@@ -45,10 +46,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="clearance-basics"]').click();
 
     cy.wait(['@GetClearanceStatuses', '@GetAllBasics'])
-      .spread((GetClearanceStatuses, GetAllBasics) => {
-        cy.wrap(GetClearanceStatuses.response.statusCode).should('eq', 200);
-        cy.wrap(GetAllBasics.response.statusCode).should('eq', 200);
-      })
+      .then(verifyStatus)
       .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -108,10 +106,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="clearance-participantsAndProviders"]').click();
 
     cy.wait(['@GetClearanceStatuses', '@GetAllParticipants'])
-      .spread((GetClearanceStatuses, GetAllParticipants) => {
-        cy.wrap(GetClearanceStatuses.response.statusCode).should('eq', 200);
-        cy.wrap(GetAllParticipants.response.statusCode).should('eq', 200);
-      })
+      .then(verifyStatus)
       .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();
@@ -150,10 +145,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.get('[data-testid="clearance-opsEvalAndLearning"]').click();
 
     cy.wait(['@GetClearanceStatuses', '@GetAllOpsEvalAndLearning'])
-      .spread((GetClearanceStatuses, GetAllOpsEvalAndLearning) => {
-        cy.wrap(GetClearanceStatuses.response.statusCode).should('eq', 200);
-        cy.wrap(GetAllOpsEvalAndLearning.response.statusCode).should('eq', 200);
-      })
+      .then(verifyStatus)
       .wait(100);
 
     cy.get('[data-testid="mark-task-list-for-clearance"]').click();

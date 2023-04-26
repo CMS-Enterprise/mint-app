@@ -1,4 +1,5 @@
 import { aliasQuery } from '../support/graphql-test-utils';
+import verifyStatus from '../support/verifyRequestStatus';
 
 describe('The Model Plan Form', () => {
   beforeEach(() => {
@@ -36,11 +37,7 @@ describe('The Model Plan Form', () => {
       '@GetModelPlanBase',
       '@GetModelCollaborators'
     ])
-      .spread((GetIsCollaborator, GetModelPlanBase, GetModelCollaborators) => {
-        cy.wrap(GetIsCollaborator.response.statusCode).should('eq', 200);
-        cy.wrap(GetModelPlanBase.response.statusCode).should('eq', 200);
-        cy.wrap(GetModelCollaborators.response.statusCode).should('eq', 200);
-      })
+      .then(verifyStatus)
       .wait(100);
 
     cy.location().should(loc => {
