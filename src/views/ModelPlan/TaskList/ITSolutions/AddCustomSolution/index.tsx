@@ -50,7 +50,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-export type SelectedOpertionalSolutionKeyType =
+type SelectedOpertionalSolutionKeyType =
   | OperationalSolutionKey.CONTRACTOR
   | OperationalSolutionKey.CROSS_MODEL_CONTRACT
   | OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS
