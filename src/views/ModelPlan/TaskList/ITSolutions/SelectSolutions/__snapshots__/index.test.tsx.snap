@@ -161,15 +161,14 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                       >
                         <input
                           class="usa-checkbox__input"
-                          id="it-solutions-rmada"
+                          id="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
                           name="solutions[0].needed"
-                          testid="it-solutions-rmada"
                           type="checkbox"
                           value="false"
                         />
                         <label
                           class="usa-checkbox__label"
-                          for="it-solutions-rmada"
+                          for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
                         >
                           Select a solution
                         </label>
