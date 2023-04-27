@@ -131,7 +131,6 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
           <form
             action="#"
             class="margin-top-2"
-            data-testid="it-tools-page-seven-form"
           >
             <legend
               class="text-bold margin-bottom-2"

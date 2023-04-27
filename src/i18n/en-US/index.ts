@@ -6,7 +6,6 @@ import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import generalCharacteristics from './draftModelPlan/generalCharacteristics';
 import itSolutions from './draftModelPlan/itSolutions';
-import itTools from './draftModelPlan/itTools';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
@@ -54,7 +53,6 @@ const enUS = {
   helpAndKnowledge,
   home,
   itSolutions,
-  itTools,
   landing,
   modelPlan,
   modelPlanOverview,

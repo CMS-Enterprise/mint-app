@@ -87,7 +87,7 @@ const itSolutions = {
 
   warningRedirect:
     'Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  ',
-  goToITTools: 'Go to IT solutions tracker.',
+  goToITSolutions: 'Go to IT solutions tracker.',
   helpBox: {
     heading: 'Don’t see what you’re looking for?',
     info:
@@ -200,6 +200,13 @@ const itSolutions = {
       'You will not be able to access any associated solution details pages once it has been removed.',
     confirmButton: 'Remove operational need',
     cancel: 'Cancel'
+  },
+  modal: {
+    heading:
+      'Someone is currently editing the Model Plan section you’re trying to access.',
+    subHeading: 'Please try again later.',
+    return: 'Return to the task list',
+    goBack: 'Go back'
   },
   successMessage: {
     onlyOperationalNeed:

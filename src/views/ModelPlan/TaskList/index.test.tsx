@@ -36,7 +36,6 @@ describe('The Model Plan Task List', () => {
     generalCharacteristics: [] as any,
     participantsAndProviders: [] as any,
     beneficiaries: [] as any,
-    itTools: [] as any,
     prepareForClearance: [] as any,
     payments: [] as any,
     crTdls: [] as any,
