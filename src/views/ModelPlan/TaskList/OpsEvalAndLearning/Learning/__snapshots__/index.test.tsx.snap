@@ -107,7 +107,7 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         Will the model have a learning strategy?
       </legend>
       <div
-        class="usa-alert usa-alert--warning flex it-tools-warning"
+        class="usa-alert usa-alert--warning flex it-solutions-warning"
         data-testid="alert"
       >
         <div
@@ -120,7 +120,7 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
             <button
               class="usa-button usa-button usa-button--unstyled"
               data-testid="button"
-              id="ops-eval-and-learning-data-needed-warning"
+              id="ops-eval-and-learning-learning-systems-warning"
               type="button"
             >
               Go to IT solutions tracker.

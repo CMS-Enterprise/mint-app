@@ -17,7 +17,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -89,7 +89,7 @@ const KeyCharacteristics = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
@@ -375,7 +375,7 @@ const KeyCharacteristics = () => {
                         {t('reviewPlanBids')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-collect-bids-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -431,7 +431,7 @@ const KeyCharacteristics = () => {
                         {t('manageEnrollment')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-manage-enrollment-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -487,7 +487,7 @@ const KeyCharacteristics = () => {
                         {t('updatedContract')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-contact-updated-warning"
                           onClick={() =>
                             handleFormSubmit(

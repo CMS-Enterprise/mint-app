@@ -2,9 +2,9 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import ITToolsWarning from './index';
+import ITSolutionsWarning from './index';
 
-describe('The ITToolsWarning component', () => {
+describe('The ITSolutionsWarning component', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
@@ -13,7 +13,7 @@ describe('The ITToolsWarning component', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/ops-eval-and-learning">
-          <ITToolsWarning id="test-id" onClick={() => null} />
+          <ITSolutionsWarning id="test-id" onClick={() => null} />
         </Route>
       </MemoryRouter>
     );

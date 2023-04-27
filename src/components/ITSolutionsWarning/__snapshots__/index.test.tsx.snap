@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The ITToolsWarning component matches snapshot 1`] = `
+exports[`The ITSolutionsWarning component matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="usa-alert usa-alert--warning flex it-tools-warning"
+    class="usa-alert usa-alert--warning flex it-solutions-warning"
     data-testid="alert"
   >
     <div

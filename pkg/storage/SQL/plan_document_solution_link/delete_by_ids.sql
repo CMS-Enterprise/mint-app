@@ -6,5 +6,6 @@ WITH PlanDocumentSolutionLinkDelete AS ( --noqa
 
 DELETE FROM plan_document_solution_link
 USING PlanDocumentSolutionLinkDelete
-WHERE plan_document_solution_link.solution_id = PlanDocumentSolutionLinkDelete.SolutionID
-      AND plan_document_solution_link.document_id = PlanDocumentSolutionLinkDelete.DocumentID
+WHERE
+    plan_document_solution_link.solution_id = PlanDocumentSolutionLinkDelete.SolutionID
+    AND plan_document_solution_link.document_id = PlanDocumentSolutionLinkDelete.DocumentID

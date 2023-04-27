@@ -5,7 +5,7 @@ describe('The Collaborator/Team Member Form', () => {
 
   it('adds a collaborator to model plan', () => {
     cy.clickPlanTableByName('Empty Plan');
-    // cy.wait(1000);
+
     cy.contains('a', 'Edit team').click();
 
     cy.contains('h1', 'Add model team members');
@@ -43,9 +43,8 @@ describe('The Collaborator/Team Member Form', () => {
         cy.contains('td', 'Evaluation');
       });
     });
-  });
 
-  it('edits a collaborator', () => {
+    // Edits a collaborator
     cy.clickPlanTableByName('Plan With Collaborators');
 
     cy.contains('a', 'Edit team').click();
@@ -67,9 +66,8 @@ describe('The Collaborator/Team Member Form', () => {
         cy.contains('th', 'BTAL Doe').siblings('td').contains('Model Team');
       });
     });
-  });
 
-  it('removes a collaborator', () => {
+    // Removes a collaborator
     cy.clickPlanTableByName('Plan With Collaborators');
 
     cy.contains('a', 'Edit team').click();
@@ -90,11 +88,11 @@ describe('The Collaborator/Team Member Form', () => {
         cy.contains('th', 'BTAL Doe').should('not.exist');
       });
     });
-  });
-});
 
-describe('The Collaborator Access Control', () => {
-  it('attempts to enter a model plan where not a collaborator', () => {
+    // The Collaborator Access Control
+    // attempts to enter a model plan where not a collaborator
+    cy.get('[data-testid="signout-link"]').click();
+
     cy.localLogin({ name: 'ABCD', role: 'MINT_USER_NONPROD' });
 
     cy.visit('/models');

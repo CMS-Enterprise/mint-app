@@ -16,7 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -84,7 +84,7 @@ export const Communication = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
@@ -229,7 +229,7 @@ export const Communication = () => {
                           {t('participantCommunication')}
                         </legend>
                         {itSolutionsStarted && (
-                          <ITToolsWarning
+                          <ITSolutionsWarning
                             id="participants-and-providers-communication-method-warning"
                             onClick={() =>
                               handleFormSubmit(
