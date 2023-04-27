@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -873,6 +874,55 @@ func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*m
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.ExistingModelLinkGetByID(logger, r.store, principal, id)
+}
+
+// SearchChangeTable is the resolver for the searchChangeTable field.
+func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTable(logger, r.searchClient, request, limit, offset, "modified_dts:desc")
+}
+
+// SearchChangeTableWithFreeText is the resolver for the searchChangeTableWithFreeText field.
+func (r *queryResolver) SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableWithFreeText(logger, r.searchClient, searchText, limit, offset)
+}
+
+// SearchChangeTableByModelPlanID is the resolver for the searchChangeTableByModelPlanID field.
+func (r *queryResolver) SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableByModelPlanID(logger, r.searchClient, modelPlanID, limit, offset)
+}
+
+// SearchChangeTableByDateRange is the resolver for the searchChangeTableByDateRange field.
+func (r *queryResolver) SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
+}
+
+// SearchChangeTableByActor is the resolver for the searchChangeTableByActor field.
+func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableByActor(logger, r.searchClient, actor, limit, offset)
+}
+
+// SearchChangeTableByModelStatus is the resolver for the searchChangeTableByModelStatus field.
+func (r *queryResolver) SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableByModelStatus(logger, r.searchClient, modelStatus, limit, offset)
+}
+
+// SearchChangeTableDateHistogramConsolidatedAggregations is the resolver for the searchChangeTableDateHistogramConsolidatedAggregations field.
+func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangeTableDateHistogramConsolidatedAggregations(logger, r.searchClient, interval, limit, offset)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

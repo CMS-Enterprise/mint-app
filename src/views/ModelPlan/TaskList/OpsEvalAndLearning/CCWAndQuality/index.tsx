@@ -16,7 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -387,7 +387,7 @@ const CCWAndQuality = () => {
                       </Label>
 
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="ops-eval-and-learning-data-needed-warning"
                           onClick={() =>
                             handleFormSubmit(

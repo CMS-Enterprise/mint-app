@@ -22,8 +22,6 @@ scalar UUID
 Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
-
-
 """
 Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
@@ -166,7 +164,7 @@ type ExistingModel {
   keywords: String
   url: String
   displayModelSummary: Boolean
-  
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -501,7 +499,7 @@ type PlanGeneralCharacteristics {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status: TaskStatus!
 }
 
@@ -620,7 +618,7 @@ type PlanBeneficiaries {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status: TaskStatus!
 }
 
@@ -730,7 +728,7 @@ type PlanParticipantsAndProviders {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status: TaskStatus!
 
 }
@@ -897,7 +895,7 @@ type PlanPayments {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status:      TaskStatus!
 }
 
@@ -1376,6 +1374,28 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
+type ChangeTableRecord {
+  guid: ID!
+  tableID: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  action: String!
+  fields: Map
+  modifiedDts: Time
+  modifiedBy: UserAccount
+}
+
+input SearchRequest {
+  query: Map!
+}
+
+type DateHistogramAggregationBucket {
+  key: String!
+  docCount: Int!
+  maxModifiedDts: Time!
+  minModifiedDts: Time!
+}
+
 """
 Query definition for the schema
 """
@@ -1417,14 +1437,26 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelLink(id: UUID!): ExistingModelLink!
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 enum ModelPlanFilter {
   INCLUDE_ALL,
   COLLAB_ONLY,
   WITH_CR_TDLS,
-
-
 }
 
 """

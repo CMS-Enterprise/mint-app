@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -207,6 +209,15 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
+	osConfig := opensearch.Config{
+		Addresses: []string{s.Config.GetString(appconfig.OpenSearchHostKey)},
+	}
+
+	osClient, err := opensearch.NewClient(osConfig)
+	if err != nil {
+		s.logger.Warn("failed to create an OpenSearch client", zap.Error(err))
+	}
+
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
@@ -219,7 +230,9 @@ func (s *Server) routes(
 		addressBook,
 		ldClient,
 		s.pubsub,
+		osClient,
 	)
+
 	gqlDirectives := generated.DirectiveRoot{
 		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 			hasRole, err := services.HasRole(ctx, role)

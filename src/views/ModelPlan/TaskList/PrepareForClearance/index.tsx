@@ -12,7 +12,7 @@ export const PrepareForClearance = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   return (
-    <MainContent data-testid="model-it-tools">
+    <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>

@@ -4,28 +4,24 @@
 dialect = postgres
 ignore = parsing
 
-# Ignoring L014 because it seems to want to uppercase column names if there are capitalized enums defined before the table (like in V11__Add_Plan_General_Characteristics)
-# Ignoring L016 because we break line-length requirements in a few places with comments
-# Ignoring L031 so we can use table aliases
-# Ignoreing L034 becase we like to order SQL statements similarly across files
-exclude_rules = L014, L016, L031, L034
+# Ignoring capitalisation.identifiers because it seems to want to uppercase column names if there are capitalized enums defined before the table (like in V11__Add_Plan_General_Characteristics)
+# Ignoring layout.long_lines because we break line-length requirements in a few places with comments
+# Ignoring aliasing.forbid so we can use table aliases
+# Ignoring structure.column_order becase we like to order SQL statements similarly across files
+exclude_rules = capitalisation.identifiers, layout.long_lines, aliasing.forbid, structure.column_order, layout.spacing
 
-[sqlfluff:rules:L010]
-# Inconsistent capitalisation of keywords.
-# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L010
+[sqlfluff:rules:capitalisation.keywords]
+# https://docs.sqlfluff.com/en/stable/rules.html#rule-capitalisation.keywords
 capitalisation_policy = upper
 
-[sqlfluff:rules:L031]
-# Avoid table aliases in from clauses and join conditions.
-# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.rules.Rule_L031
+[sqlfluff:rules:aliasing.forbid]
+# https://docs.sqlfluff.com/en/stable/rules.html#rule-aliasing.forbid
 force_enable = False
 
-[sqlfluff:rules:L040]
-# Inconsistent capitalisation of boolean/null literal.
-# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L040
+[sqlfluff:rules:capitalisation.literals]
+# https://docs.sqlfluff.com/en/stable/rules.html#rule-capitalisation.literals
 capitalisation_policy = upper
 
-[sqlfluff:rules:L063]
-# Inconsistent capitalisation of datatypes.
-# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L063
+[sqlfluff:rules:capitalisation.types]
+# https://docs.sqlfluff.com/en/stable/rules.html#rule-capitalisation.types
 extended_capitalisation_policy = upper

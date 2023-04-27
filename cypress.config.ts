@@ -5,6 +5,7 @@ export default defineConfig({
   viewportWidth: 1280,
   projectId: 'vc6vw5',
   defaultCommandTimeout: 10000,
+  execTimeout: 120000,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

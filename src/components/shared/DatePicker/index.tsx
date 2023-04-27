@@ -10,7 +10,7 @@ import DatePickerWarning from '../DatePickerWarning';
 import FieldErrorMsg from '../FieldErrorMsg';
 import FieldGroup from '../FieldGroup';
 
-interface ITToolsFormComponentType {
+interface ITSolutionsFormComponentType {
   id: string;
   className?: string;
   fieldName: string;
@@ -40,7 +40,7 @@ export const MINTDatePicker = ({
   error,
   warning = true,
   half
-}: ITToolsFormComponentType) => {
+}: ITSolutionsFormComponentType) => {
   const { t: h } = useTranslation('draftModelPlan');
 
   return (
