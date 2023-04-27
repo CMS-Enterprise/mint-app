@@ -14,7 +14,7 @@ SELECT
     CAST(ROW_TO_JSON(user_account.*) AS TEXT) AS modified_by,
 
     -- Creates a GUID from the table_id and primary_key
-    CONCAT(audit.change.table_id::TEXT, '_', audit.change.primary_key::TEXT) AS guid
+    CONCAT(CAST(audit.change.table_id AS TEXT), '_', CAST(audit.change.primary_key AS TEXT)) AS guid
 
 FROM audit.change
 LEFT JOIN user_account ON audit.change.modified_by = user_account.id

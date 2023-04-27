@@ -1,5 +1,36 @@
 WITH retVal AS (
-INSERT INTO operational_solution(
+    INSERT INTO operational_solution(
+        id,
+        operational_need_id,
+        solution_type,
+        needed,
+        name_other,
+        poc_name,
+        poc_email,
+        must_start_dts,
+        must_finish_dts,
+        is_other,
+        other_header,
+        status,
+        created_by
+    )
+    (
+        SELECT
+            :id AS id,
+            :operational_need_id AS operational_need_id,
+            (SELECT possible_operational_solution.id FROM possible_operational_solution WHERE possible_operational_solution.sol_key = :sol_key) AS solution_type,
+            :needed AS needed,
+            :name_other AS name_other,
+            :poc_name AS poc_name,
+            :poc_email AS poc_email,
+            :must_start_dts AS must_start_dts,
+            :must_finish_dts AS must_finish_dts,
+            COALESCE((SELECT possible_operational_solution.treat_as_other FROM possible_operational_solution WHERE possible_operational_solution.sol_key = :sol_key), TRUE) AS is_other, -- IF NULL, then custom
+            :other_header AS other_header,
+            :status AS status,
+            :created_by AS created_by
+    )
+    RETURNING
     id,
     operational_need_id,
     solution_type,
@@ -12,39 +43,10 @@ INSERT INTO operational_solution(
     is_other,
     other_header,
     status,
-    created_by
-)
-SELECT
-    :id AS id,
-    :operational_need_id AS operational_need_id,
-    (SELECT possible_operational_solution.id FROM possible_operational_solution WHERE possible_operational_solution.sol_key = :sol_key) AS solution_type,
-    :needed AS needed,
-    :name_other AS name_other,
-    :poc_name AS poc_name,
-    :poc_email AS poc_email,
-    :must_start_dts AS must_start_dts,
-    :must_finish_dts AS must_finish_dts,
-    COALESCE((SELECT possible_operational_solution.treat_as_other FROM possible_operational_solution WHERE possible_operational_solution.sol_key = :sol_key), TRUE) AS is_other, -- IF NULL, then custom
-    :other_header AS other_header,
-    :status AS status,
-    :created_by AS created_by
-RETURNING
-id,
-operational_need_id,
-solution_type,
-needed,
-name_other,
-poc_name,
-poc_email,
-must_start_dts,
-must_finish_dts,
-is_other,
-other_header,
-status,
-created_by,
-created_dts,
-modified_by,
-modified_dts
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts
 )
 
 SELECT
