@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -34,6 +36,7 @@ type Resolver struct {
 	addressBook          email.AddressBook
 	ldClient             *ldclient.LDClient
 	pubsub               pubsub.PubSub
+	searchClient         *opensearch.Client
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -55,6 +58,7 @@ func NewResolver(
 	addressBook email.AddressBook,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
+	osClient *opensearch.Client,
 ) *Resolver {
 	return &Resolver{
 		store:                store,
@@ -65,5 +69,6 @@ func NewResolver(
 		addressBook:          addressBook,
 		ldClient:             ldClient,
 		pubsub:               pubsub,
+		searchClient:         osClient,
 	}
 }

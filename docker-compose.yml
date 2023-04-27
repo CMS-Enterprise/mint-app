@@ -3,9 +3,27 @@ version: '3.7'
 services:
   db:
     image: postgres:14.4
-    command: ['postgres', '-c', 'log_statement=all', '-c', 'max_connections=25']
+    command:
+      - 'postgres'
+      - '-c'
+      - 'log_statement=all'
+      - '-c'
+      - 'max_connections=25'
+      # Sets the Write-Ahead Log (WAL) level to logical allowing replication and change data capture (CDC)
+      - '-c'
+      - 'wal_level=logical'
+      # Sets the maximum number of concurrent WAL sender processes. A WAL sender is used by a replica to send WAL
+      # records to the master. This value should be at least 2 to allow for replication and change data capture (CDC).
+      - '-c'
+      - 'max_wal_senders=2'
+      # Sets the maximum number of replication slots that can be used. A replication slot is used by a replica to keep
+      # track of the changes that have been made to the database. This value should be at least 2 to allow for
+      # replication and change data capture (CDC).
+      - '-c'
+      - 'max_replication_slots=2'
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
+
   db_migrate:
     image: mint-db-migrate:latest
     platform: linux/amd64
@@ -14,9 +32,9 @@ services:
       - FLYWAY_PASSWORD=mysecretpassword
       - FLYWAY_URL=jdbc:postgresql://db/postgres
       - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
-
     depends_on:
       - db
+
   mint:
     environment:
       - CEDAR_API_KEY
@@ -72,16 +90,20 @@ services:
       - FAKTORY_URL
       - FAKTORY_PROCESS_JOBS
       - FAKTORY_CONNECTIONS
+      - OPENSEARCH_HOST
 
     depends_on:
       db_migrate:
         condition: service_completed_successfully # Only start if migrations completed successfully
+
   mint_client:
     image: mint-frontend:latest
+
   minio:
     restart: always
     image: minio/minio:latest
     entrypoint: minio server /data --console-address ":9966" --address ":9005"
+
   minio_mc:
     image: minio/mc:latest
     volumes:
@@ -94,22 +116,84 @@ services:
       /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
       /usr/bin/mc policy set public s3local/mint-app-file-uploads;
       "
+
   email:
     image: dockage/mailcatcher:0.7.1
     platform: linux/amd64
     ports:
       - "1085:1080"
       - "1030:1025"
+
   faktory:
     image: docker.contribsys.com/contribsys/faktory-ent:latest
     ports:
-      - 7419:7419
-      - 7420:7420
+      - "7419:7419"
+      - "7420:7420"
     volumes:
       - faktory:/var/lib/faktory
       - type: bind
         source: ./.faktory/conf.d
         target: /root/.faktory/conf.d
     restart: always
+
+  opensearch:
+    image: public.ecr.aws/opensearchproject/opensearch:latest
+    container_name: opensearch
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - plugins.security.disabled=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200" # REST API
+      - "9400:9600" # Performance Analyzer
+
+  opensearch-dashboards:
+    image: public.ecr.aws/opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - "5601:5601"
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
+      opensearch.ssl.verificationMode: none
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
+
+  logstash:
+    image: logstash:7.16.1
+    container_name: Logstash
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms1024m -Xmx1024m"
+      xpack.monitoring.enabled: false
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+    volumes:
+      - ./config/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
+      - ./config/logstash/logstash.conf:/usr/share/logstash/logstash.config
+      - ./config/logstash/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
+    ports:
+      - "9600:9600"
+    depends_on:
+      - opensearch
+    command: >
+      bash -c "
+        logstash-plugin install logstash-output-opensearch;
+        logstash -f /usr/share/logstash/logstash.config
+      "
+
 volumes:
   faktory:

@@ -17,6 +17,7 @@ require (
 	github.com/lib/pq v1.10.7
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/okta/okta-jwt-verifier-golang v1.3.1
+	github.com/opensearch-project/opensearch-go/v2 v2.0.0
 	github.com/pquerna/otp v1.4.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.13.0

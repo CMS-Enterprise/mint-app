@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -155,6 +157,8 @@ func TestGraphQLTestSuite(t *testing.T) {
 	resolverService.FetchUserInfo = oktaClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
+	searchClient, _ := opensearch.NewDefaultClient()
+
 	resolver := NewResolver(
 		store,
 		resolverService,
@@ -164,7 +168,9 @@ func TestGraphQLTestSuite(t *testing.T) {
 		email.AddressBook{},
 		ldClient,
 		ps,
+		searchClient,
 	)
+
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 
