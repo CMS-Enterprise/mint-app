@@ -1,21 +1,42 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('The Model Plan Payment Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+    cy.intercept('POST', '/api/graph/query', req => {
+      aliasQuery(req, 'GetModelPlan');
+      aliasQuery(req, 'GetFunding');
+      aliasQuery(req, 'GetClaimsBasedPayment');
+      aliasQuery(req, 'GetAnticipateDependencies');
+      aliasQuery(req, 'GetBeneficiaryCostSharing');
+      aliasQuery(req, 'GetNonClaimsBasedPayment');
+      aliasQuery(req, 'GetComplexity');
+      aliasQuery(req, 'GetRecover');
+    });
   });
 
   it('completes a Model Plan Ops Eval and Learning form', () => {
     cy.clickPlanTableByName('Empty Plan');
+
+    cy.wait('@GetModelPlan')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();
 
     // Page - /payment
 
+    cy.wait('@GetFunding')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
-
-    cy.wait(500);
 
     cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
       .check({ force: true })
@@ -51,13 +72,16 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/claims-based-payment
 
+    cy.wait('@GetClaimsBasedPayment')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/claims-based-payment/
       );
     });
-
-    cy.wait(500);
 
     cy.get('#payment-pay-claims').within(() => {
       cy.get("input[type='text']").click();
@@ -91,13 +115,16 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/anticipating-dependencies
 
+    cy.wait('@GetAnticipateDependencies')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/anticipating-dependencies/
       );
     });
-
-    cy.wait(500);
 
     cy.get('#payment-creating-dependencies-between-services-true')
       .check({ force: true })
@@ -119,13 +146,16 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/beneficiary-cost-sharing
 
+    cy.wait('@GetBeneficiaryCostSharing')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/beneficiary-cost-sharing/
       );
     });
-
-    cy.wait(500);
 
     cy.get('#payment-beneficiary-cost-sharing')
       .type('Bill in accounting')
@@ -147,13 +177,16 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/non-claims-based-payment
 
+    cy.wait('@GetNonClaimsBasedPayment')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/non-claims-based-payment/
       );
     });
-
-    cy.wait(500);
 
     cy.get('#payment-nonclaims-payments').within(() => {
       cy.get("input[type='text']").click();
@@ -189,13 +222,16 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/complexity
 
+    cy.wait('@GetComplexity')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/complexity/
       );
     });
-
-    cy.wait(500);
 
     cy.get('#payment-complexity-LOW')
       .check({ force: true })
@@ -227,13 +263,16 @@ describe('The Model Plan Payment Form', () => {
 
     // Page - /payment/recover-payment
 
+    cy.wait('@GetRecover')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
         /\/models\/.{36}\/task-list\/payment\/recover-payment/
       );
     });
-
-    cy.wait(500);
 
     cy.get('#payment-recover-payment-true')
       .check({ force: true })
