@@ -62,6 +62,8 @@ const CheckboxCard = ({
     OperationalSolutionKey.INTERNAL_STAFF
   ];
 
+  const isDefaultSolutionOptions = solution.name !== null;
+
   return (
     <Grid tablet={{ col: 6 }}>
       <Card className={classNames(className)}>
@@ -78,26 +80,30 @@ const CheckboxCard = ({
           />
 
           {/* If solution is one of the treatAsOther, then render the following  */}
-          {solution.key && treatAsOtherSolutions.includes(solution.key) && (
-            <>
-              <h3 className="margin-top-2 margin-bottom-0">
-                {solution.otherHeader}
-              </h3>
-              <h5 className="text-normal margin-top-0 margin-bottom-2">
-                {translateOperationalSolutionKey(solution.key)}
-              </h5>
-            </>
-          )}
+          {solution.key &&
+            treatAsOtherSolutions.includes(solution.key) &&
+            !isDefaultSolutionOptions && (
+              <>
+                <h3 className="margin-top-2 margin-bottom-0">
+                  {solution.otherHeader}
+                </h3>
+                <h5 className="text-normal margin-top-0 margin-bottom-2">
+                  {translateOperationalSolutionKey(solution.key)}
+                </h5>
+              </>
+            )}
 
           {/* If solution key is not one of the treatAsOther, then render its name/nameOther */}
           {/* If solution is custom (aka solution key is null), then render its name/nameOther */}
-          {(!solution.key || !treatAsOtherSolutions.includes(solution.key)) && (
+          {(!solution.key ||
+            !treatAsOtherSolutions.includes(solution.key) ||
+            isDefaultSolutionOptions) && (
             <h3 className="margin-y-2">
               {solution.nameOther || solution.name}
             </h3>
           )}
 
-          {!solution.isOther && (
+          {(!solution.isOther || isDefaultSolutionOptions) && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
               {/* TODO: replace tempDescription with real data */}
               {tempDescription}
