@@ -1357,13 +1357,30 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
+type ChangedFields {
+  changes: [Field!]!
+}
+
+type Field {
+  name: String!
+  value: ChangedFieldValue!
+}
+
+union ChangedFieldValue = ChangedFields | FieldValue
+
+type FieldValue {
+  new: String
+  old: String
+}
+
 type ChangeTableRecord {
   guid: ID!
   tableID: Int!
+  tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
   action: String!
-  fields: Map
+  fields: ChangedFields!
   modifiedDts: Time
   modifiedBy: UserAccount
 }
