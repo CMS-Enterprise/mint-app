@@ -143,7 +143,10 @@ const SolutionCard = ({
               >
                 <UswdsReactLink
                   className="margin-right-2 display-flex flex-align-center"
-                  to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`}
+                  to={{
+                    pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
+                    state: { selectedSolution: solution.key }
+                  }}
                 >
                   {t('updateTheseDetails')}
                   {!addingCustom && (
