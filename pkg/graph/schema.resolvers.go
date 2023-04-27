@@ -542,11 +542,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
-// ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
-func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error) {
-	return obj.ResemblesExistingModelWhich, nil
-}
-
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
 func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
 	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)

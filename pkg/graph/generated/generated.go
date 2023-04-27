@@ -519,7 +519,6 @@ type ComplexityRoot struct {
 		ResemblesExistingModel                    func(childComplexity int) int
 		ResemblesExistingModelHow                 func(childComplexity int) int
 		ResemblesExistingModelNote                func(childComplexity int) int
-		ResemblesExistingModelWhich               func(childComplexity int) int
 		RulemakingRequired                        func(childComplexity int) int
 		RulemakingRequiredDescription             func(childComplexity int) int
 		RulemakingRequiredNote                    func(childComplexity int) int
@@ -979,8 +978,6 @@ type PlanDocumentResolver interface {
 	NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error)
 }
 type PlanGeneralCharacteristicsResolver interface {
-	ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error)
-
 	AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error)
 
 	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
@@ -4005,13 +4002,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelNote(childComplexity), true
 
-	case "PlanGeneralCharacteristics.resemblesExistingModelWhich":
-		if e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelWhich == nil {
-			break
-		}
-
-		return e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelWhich(childComplexity), true
-
 	case "PlanGeneralCharacteristics.rulemakingRequired":
 		if e.complexity.PlanGeneralCharacteristics.RulemakingRequired == nil {
 			break
@@ -6920,7 +6910,6 @@ type PlanGeneralCharacteristics {
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]!
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -7004,7 +6993,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -13869,8 +13857,6 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
 			case "resemblesExistingModel":
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
-			case "resemblesExistingModelWhich":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
 			case "resemblesExistingModelHow":
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
 			case "resemblesExistingModelNote":
@@ -16220,8 +16206,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
 			case "resemblesExistingModel":
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
-			case "resemblesExistingModelWhich":
-				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
 			case "resemblesExistingModelHow":
 				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
 			case "resemblesExistingModelNote":
@@ -29327,50 +29311,6 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExi
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanGeneralCharacteristics().ResemblesExistingModelWhich(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]string)
-	fc.Result = res
-	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanGeneralCharacteristics",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -52956,26 +52896,6 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_resemblesExistingModel(ctx, field, obj)
 
-		case "resemblesExistingModelWhich":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "resemblesExistingModelHow":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field, obj)

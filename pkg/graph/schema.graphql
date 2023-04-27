@@ -430,7 +430,6 @@ type PlanGeneralCharacteristics {
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]!
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -514,7 +513,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
