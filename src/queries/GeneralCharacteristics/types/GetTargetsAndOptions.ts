@@ -26,11 +26,18 @@ export interface GetTargetsAndOptions_modelPlan_generalCharacteristics {
   multiplePatricipationAgreementsNeededNote: string | null;
 }
 
+export interface GetTargetsAndOptions_modelPlan_operationalNeeds {
+  __typename: "OperationalNeed";
+  id: UUID;
+  modifiedDts: Time | null;
+}
+
 export interface GetTargetsAndOptions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   generalCharacteristics: GetTargetsAndOptions_modelPlan_generalCharacteristics;
+  operationalNeeds: GetTargetsAndOptions_modelPlan_operationalNeeds[];
 }
 
 export interface GetTargetsAndOptions {

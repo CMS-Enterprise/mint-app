@@ -9,6 +9,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -52,7 +55,7 @@ import (
 //
 // This function requires the OktaMiddlewareFactory object because it, in some cases (as described above), needs to perform operations that decode JWTs, which is a responsibility of
 // some of the functions attached to that factory. A refactor to clean up this cross-package dependency was considered but determined to be too much effort. (Don't hurt me)
-func HandleLocalOrOktaWebSocketAuth(logger *zap.Logger, omf *okta.MiddlewareFactory) transport.WebsocketInitFunc {
+func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
 		authToken := initPayload["authToken"]
 		token, ok := authToken.(string)
@@ -62,9 +65,9 @@ func HandleLocalOrOktaWebSocketAuth(logger *zap.Logger, omf *okta.MiddlewareFact
 
 		localToken := strings.HasPrefix(token, "Local ")
 		if localToken {
-			return local.NewLocalWebSocketAuthenticationMiddleware(logger, omf.Store)(ctx, initPayload)
+			return local.NewLocalWebSocketAuthenticationMiddleware(omf.Store)(ctx, initPayload)
 		}
-		return omf.NewOktaWebSocketAuthenticationMiddleware(logger)(ctx, initPayload)
+		return omf.NewOktaWebSocketAuthenticationMiddleware()(ctx, initPayload)
 	}
 }
 
@@ -132,17 +135,25 @@ func (s *Server) routes(
 	var oktaClientErr error
 	if s.environment.Local() {
 		// Ensure Okta API Variables are set
-		oktaClient, oktaClientErr = local.NewOktaAPIClient(s.logger)
+		oktaClient, oktaClientErr = local.NewOktaAPIClient()
 		if oktaClientErr != nil {
 			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 		}
 	} else {
 		// Ensure Okta API Variables are set
 		s.NewOktaAPIClientCheck()
-		oktaClient, oktaClientErr = oktaapi.NewClient(s.logger, s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
 		if oktaClientErr != nil {
 			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 		}
+	}
+
+	// This is a bit of a hack... sorry...
+	// Okta API tokens expire every 30 days if unused. This call to the Okta API below is strictly to ensure that the token is used whenever we deploy or
+	// create a new instance of the app. This should probably be a cron job, but this is the quick fix that helps us not have to worry about this for the time being.
+	_, err = oktaClient.SearchByName(context.Background(), "MINT") // shouldn't return any results, but that's ok, we used the token
+	if err != nil {
+		s.logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
 	}
 
 	// set up Email Template Service
@@ -198,6 +209,15 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
+	osConfig := opensearch.Config{
+		Addresses: []string{s.Config.GetString(appconfig.OpenSearchHostKey)},
+	}
+
+	osClient, err := opensearch.NewClient(osConfig)
+	if err != nil {
+		s.logger.Warn("failed to create an OpenSearch client", zap.Error(err))
+	}
+
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
@@ -210,7 +230,9 @@ func (s *Server) routes(
 		addressBook,
 		ldClient,
 		s.pubsub,
+		osClient,
 	)
+
 	gqlDirectives := generated.DirectiveRoot{
 		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 			hasRole, err := services.HasRole(ctx, role)
@@ -218,7 +240,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 
@@ -229,7 +251,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 		}}
@@ -245,7 +267,7 @@ func (s *Server) routes(
 			},
 			Subprotocols: []string{"graphql-transport-ws"},
 		},
-		InitFunc: HandleLocalOrOktaWebSocketAuth(s.logger, oktaMiddlewareFactory),
+		InitFunc: HandleLocalOrOktaWebSocketAuth(oktaMiddlewareFactory),
 	})
 	graphqlServer.AddTransport(transport.Options{})
 	graphqlServer.AddTransport(transport.GET{})

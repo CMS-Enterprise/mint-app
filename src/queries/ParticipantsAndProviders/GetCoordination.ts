@@ -16,6 +16,10 @@ export default gql`
         participantsIdsOther
         participantsIDSNote
       }
+      operationalNeeds {
+        id
+        modifiedDts
+      }
     }
   }
 `;

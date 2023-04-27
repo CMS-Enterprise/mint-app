@@ -257,9 +257,13 @@ func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument
 }
 
 // PlanDocumentDelete deletes a plan document object by id
-func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
+func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
 
 	statement, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
 	if err != nil {
