@@ -62,7 +62,8 @@ const CheckboxCard = ({
     OperationalSolutionKey.INTERNAL_STAFF
   ];
 
-  const isDefaultSolutionOptions = solution.name !== null;
+  const isDefaultSolutionOptions =
+    solution.name !== null && solution.pocEmail === null;
 
   return (
     <Grid tablet={{ col: 6 }}>
