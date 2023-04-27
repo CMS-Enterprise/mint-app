@@ -49,7 +49,7 @@ const CheckboxCard = ({
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
     ? `it-solutions-${solution?.nameOther?.toLowerCase().replaceAll(' ', '-')}`
-    : `it-solutions-${solution?.key?.toLowerCase().replace(' ', '-')}`;
+    : `it-solutions-${solution?.key?.toLowerCase().replace('_', '-')}`;
 
   // TODO: replace with real solution data once populated
   const tempDescription: string =
@@ -72,8 +72,7 @@ const CheckboxCard = ({
           <Field
             as={Checkbox}
             disabled={disabled}
-            id={id}
-            testid={id}
+            id={`${id}-${solution.id}`}
             name={`solutions[${index}].needed`}
             label={t('selectSolution')}
             value={!!solution.needed}
