@@ -119,7 +119,7 @@ const SolutionCard = ({
           </Grid>
 
           {/* Show 'About Details' link if not updating solution details and not a custom solution */}
-          {renderSolutionCardLinks && solution.name && (
+          {renderSolutionCardLinks && solution.name && !solution.otherHeader && (
             <>
               <Divider />
 
@@ -134,7 +134,7 @@ const SolutionCard = ({
           )}
 
           {/* Renders links to either update solution details or remove solution details */}
-          {(addingCustom || !solution.name) && (
+          {(addingCustom || !solution.name || solution.otherHeader) && (
             <>
               {!addingCustom && <Divider className="margin-top-2" />}
               <div
