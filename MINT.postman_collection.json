@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "03dabeb1-ceb2-4b5e-9efa-e07ae3df43ee",
+		"_postman_id": "a006d860-3a1b-4c9a-a54a-301aa132190e",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"_exporter_id": "20320964"
 	},
 	"item": [
 		{
@@ -1041,7 +1041,6 @@
 									"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
 									"modelLeadID = responseData.collaborators[0].id",
 									"paymentsID = responseData.payments.id",
-									"itToolsID = responseData.itTools.id",
 									"",
 									"",
 									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
@@ -1053,7 +1052,6 @@
 									"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
 									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
 									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
-									"pm.collectionVariables.set(\"itToolsID\", itToolsID);",
 									"",
 									"console.log(modelPlanID)"
 								],
@@ -1067,21 +1065,14 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    itTools {\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n      userID\n      teamRole\n    }\n    # documents{\n    #     id\n    # }\n    # discussions{\n    #     id\n    #     replies{\n    #         id\n    #     }\n    # }\n    payments{\n        id\n    }\n    # crTdls{\n    #     id\n    # }\n    \n    \n  }\n  \n  \n}",
 								"variables": ""
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
@@ -1841,6 +1832,148 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "ExistingModelLink",
+			"item": [
+				{
+					"name": "ExistingModelLinkCreate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createExistingModelLink",
+									"",
+									"existingModelLinkID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"existingModelLinkID\", existingModelLinkID);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createExistingModelLink{\n  \n  createExistingModelLink(modelPlanID:\"{{modelPlanID}}\", existingModelID:100014, currentModelPlanID: null)\n  {\n      id\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExistingModelLinkCreate (MODEL PLAN LINK)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.createExistingModelLink",
+									"",
+									"existingModelLinkID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"existingModelLinkID\", existingModelLinkID);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createExistingModelLink{\n  \n  createExistingModelLink(modelPlanID:\"{{modelPlanID}}\", existingModelID:null,\n   currentModelPlanID: \"{{modelPlanID}}\")\n  {\n      id\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExistingModelLink GET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query existingModelLink{\n  \n  existingModelLink(id:\"{{existingModelLinkID}}\"){\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanGetExisting ModelLinks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    nameHistory\n    existingModelLinks{\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n    }\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExistingModelLinkDelete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deleteExistingModelLink{\n  \n  deleteExistingModelLink(id:\"{{existingModelLinkID}}\"){\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -1927,10 +2060,6 @@
 			"value": ""
 		},
 		{
-			"key": "itToolsID",
-			"value": ""
-		},
-		{
 			"key": "operationalNeedID",
 			"value": ""
 		},
@@ -1958,6 +2087,10 @@
 			"key": "documentID",
 			"value": "0b188e43-21a6-45b4-8dc2-a09929d3402d",
 			"type": "string"
+		},
+		{
+			"key": "existingModelLinkID",
+			"value": ""
 		}
 	]
 }
