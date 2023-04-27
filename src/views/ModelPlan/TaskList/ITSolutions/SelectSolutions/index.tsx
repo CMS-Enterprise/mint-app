@@ -29,6 +29,7 @@ import {
 import {
   GetOperationalNeed as GetOperationalNeedType,
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
+  GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
@@ -298,15 +299,23 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
                         {!loading && (
                           <CardGroup>
-                            {commonSolutions.map((solution: any) => (
-                              <CheckboxCard
-                                solution={solution}
-                                index={allTheSolutions.findIndex(
-                                  x => x.id === solution.id
-                                )}
-                                key={solution.nameOther || solution.name}
-                              />
-                            ))}
+                            {commonSolutions.map(
+                              (solution: GetOperationalNeedSolutionsType) => (
+                                <CheckboxCard
+                                  solution={solution}
+                                  index={allTheSolutions.findIndex(x =>
+                                    x.id ===
+                                    '00000000-0000-0000-0000-000000000000'
+                                      ? x.name === solution.name
+                                      : x.id === solution.id
+                                  )}
+                                  // Default Operational Solutions start with an id full of zeroes.
+                                  // if solution is default solution, then check name to find index
+                                  // otherwise, continue to use id to find index
+                                  key={solution.nameOther || solution.name}
+                                />
+                              )
+                            )}
                           </CardGroup>
                         )}
 
@@ -317,15 +326,19 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                             </legend>
                             {!loading && (
                               <CardGroup>
-                                {otherSolutions.map((solution: any) => (
-                                  <CheckboxCard
-                                    solution={solution}
-                                    index={allTheSolutions.findIndex(
-                                      x => x.id === solution.id
-                                    )}
-                                    key={solution.nameOther || solution.name}
-                                  />
-                                ))}
+                                {otherSolutions.map(
+                                  (
+                                    solution: GetOperationalNeedSolutionsType
+                                  ) => (
+                                    <CheckboxCard
+                                      solution={solution}
+                                      index={allTheSolutions.findIndex(
+                                        x => x.id === solution.id
+                                      )}
+                                      key={solution.nameOther || solution.name}
+                                    />
+                                  )
+                                )}
                               </CardGroup>
                             )}
                           </>
