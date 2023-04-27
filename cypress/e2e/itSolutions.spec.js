@@ -109,18 +109,6 @@ describe('The Model Plan IT solutions tracker', () => {
     // Submitting the custom solution
     cy.get('#submit-custom-solution').click();
 
-    cy.wait([
-      '@GetOperationalNeed',
-      '@GetOperationalNeedAnswer',
-      '@GetPossibleOperationalSolutions',
-      '@GetOperationalSolution'
-    ])
-      .then(verifyStatus)
-      .wait(250);
-
-    // Adding the custom solution
-    cy.get('#add-solution-details-button').click();
-
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
       .wait(250);
