@@ -109,9 +109,9 @@ repos:
         entry: git-secrets --pre_commit_hook
 
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 1.2.1
+    rev: 2.0.7
     hooks:
       - id: sqlfluff-fix
-        exclude: ^scripts/data/
+        exclude: ^migrations/
       - id: sqlfluff-lint
-        exclude: ^scripts/data/
+        exclude: ^migrations/

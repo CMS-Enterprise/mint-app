@@ -1,5 +1,6 @@
 UPDATE plan_ops_eval_and_learning
-SET agency_or_state_help = :agency_or_state_help,
+SET
+    agency_or_state_help = :agency_or_state_help,
     agency_or_state_help_other = :agency_or_state_help_other,
     agency_or_state_help_note = :agency_or_state_help_note,
     stakeholders = :stakeholders,
