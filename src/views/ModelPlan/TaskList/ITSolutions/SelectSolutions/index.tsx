@@ -302,7 +302,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                               <CheckboxCard
                                 solution={solution}
                                 index={allTheSolutions.findIndex(
-                                  x => x.name === solution.name
+                                  x => x.id === solution.id
                                 )}
                                 key={solution.nameOther || solution.name}
                               />
