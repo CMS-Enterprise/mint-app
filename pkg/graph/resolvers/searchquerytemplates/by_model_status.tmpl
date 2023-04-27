@@ -1,0 +1,24 @@
+{
+	"query": {
+		"bool": {
+			"should": [
+				{
+					"term": {
+						"fields.status.new.keyword": "{{.Status}}"
+					}
+				},
+				{
+					"term": {
+						"fields.status.old.keyword": "{{.Status}}"
+					}
+				}
+			],
+			"minimum_should_match": 1,
+			"filter": {
+				"term": {
+					"table_id": 1
+				}
+			}
+		}
+	}
+}

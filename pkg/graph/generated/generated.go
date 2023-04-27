@@ -77,8 +77,26 @@ type ComplexityRoot struct {
 		TableName             func(childComplexity int) int
 	}
 
+	ChangeTableRecord struct {
+		Action      func(childComplexity int) int
+		Fields      func(childComplexity int) int
+		ForeignKey  func(childComplexity int) int
+		GUID        func(childComplexity int) int
+		ModifiedBy  func(childComplexity int) int
+		ModifiedDts func(childComplexity int) int
+		PrimaryKey  func(childComplexity int) int
+		TableID     func(childComplexity int) int
+	}
+
 	CurrentUser struct {
 		LaunchDarkly func(childComplexity int) int
+	}
+
+	DateHistogramAggregationBucket struct {
+		DocCount       func(childComplexity int) int
+		Key            func(childComplexity int) int
+		MaxModifiedDts func(childComplexity int) int
+		MinModifiedDts func(childComplexity int) int
 	}
 
 	DiscussionReply struct {
@@ -778,24 +796,31 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AuditChanges                 func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CrTdl                        func(childComplexity int, id uuid.UUID) int
-		CurrentUser                  func(childComplexity int) int
-		ExistingModelCollection      func(childComplexity int) int
-		ModelPlan                    func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection          func(childComplexity int, filter model.ModelPlanFilter) int
-		NdaInfo                      func(childComplexity int) int
-		OperationalNeed              func(childComplexity int, id uuid.UUID) int
-		OperationalSolution          func(childComplexity int, id uuid.UUID) int
-		OperationalSolutions         func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
-		PlanCollaboratorByID         func(childComplexity int, id uuid.UUID) int
-		PlanDocument                 func(childComplexity int, id uuid.UUID) int
-		PlanPayments                 func(childComplexity int, id uuid.UUID) int
-		PossibleOperationalNeeds     func(childComplexity int) int
-		PossibleOperationalSolutions func(childComplexity int) int
-		SearchOktaUsers              func(childComplexity int, searchTerm string) int
-		TaskListSectionLocks         func(childComplexity int, modelPlanID uuid.UUID) int
-		UserAccount                  func(childComplexity int, username string) int
+		AuditChanges                                           func(childComplexity int, tableName string, primaryKey uuid.UUID) int
+		CrTdl                                                  func(childComplexity int, id uuid.UUID) int
+		CurrentUser                                            func(childComplexity int) int
+		ExistingModelCollection                                func(childComplexity int) int
+		ModelPlan                                              func(childComplexity int, id uuid.UUID) int
+		ModelPlanCollection                                    func(childComplexity int, filter model.ModelPlanFilter) int
+		NdaInfo                                                func(childComplexity int) int
+		OperationalNeed                                        func(childComplexity int, id uuid.UUID) int
+		OperationalSolution                                    func(childComplexity int, id uuid.UUID) int
+		OperationalSolutions                                   func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
+		PlanCollaboratorByID                                   func(childComplexity int, id uuid.UUID) int
+		PlanDocument                                           func(childComplexity int, id uuid.UUID) int
+		PlanPayments                                           func(childComplexity int, id uuid.UUID) int
+		PossibleOperationalNeeds                               func(childComplexity int) int
+		PossibleOperationalSolutions                           func(childComplexity int) int
+		SearchChangeTable                                      func(childComplexity int, request models.SearchRequest, limit int, offset int) int
+		SearchChangeTableByActor                               func(childComplexity int, actor string, limit int, offset int) int
+		SearchChangeTableByDateRange                           func(childComplexity int, startDate time.Time, endDate time.Time, limit int, offset int) int
+		SearchChangeTableByModelPlanID                         func(childComplexity int, modelPlanID uuid.UUID, limit int, offset int) int
+		SearchChangeTableByModelStatus                         func(childComplexity int, modelStatus models.ModelStatus, limit int, offset int) int
+		SearchChangeTableDateHistogramConsolidatedAggregations func(childComplexity int, interval string, limit int, offset int) int
+		SearchChangeTableWithFreeText                          func(childComplexity int, searchText string, limit int, offset int) int
+		SearchOktaUsers                                        func(childComplexity int, searchTerm string) int
+		TaskListSectionLocks                                   func(childComplexity int, modelPlanID uuid.UUID) int
+		UserAccount                                            func(childComplexity int, username string) int
 	}
 
 	Subscription struct {
@@ -1016,6 +1041,13 @@ type QueryResolver interface {
 	PossibleOperationalNeeds(ctx context.Context) ([]*models.PossibleOperationalNeed, error)
 	PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
+	SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableWithFreeText(ctx context.Context, searchText string, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableByModelPlanID(ctx context.Context, modelPlanID uuid.UUID, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableByDateRange(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error)
+	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1100,12 +1132,96 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.AuditChange.TableName(childComplexity), true
 
+	case "ChangeTableRecord.action":
+		if e.complexity.ChangeTableRecord.Action == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.Action(childComplexity), true
+
+	case "ChangeTableRecord.fields":
+		if e.complexity.ChangeTableRecord.Fields == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.Fields(childComplexity), true
+
+	case "ChangeTableRecord.foreignKey":
+		if e.complexity.ChangeTableRecord.ForeignKey == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.ForeignKey(childComplexity), true
+
+	case "ChangeTableRecord.guid":
+		if e.complexity.ChangeTableRecord.GUID == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.GUID(childComplexity), true
+
+	case "ChangeTableRecord.modifiedBy":
+		if e.complexity.ChangeTableRecord.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.ModifiedBy(childComplexity), true
+
+	case "ChangeTableRecord.modifiedDts":
+		if e.complexity.ChangeTableRecord.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.ModifiedDts(childComplexity), true
+
+	case "ChangeTableRecord.primaryKey":
+		if e.complexity.ChangeTableRecord.PrimaryKey == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.PrimaryKey(childComplexity), true
+
+	case "ChangeTableRecord.tableID":
+		if e.complexity.ChangeTableRecord.TableID == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.TableID(childComplexity), true
+
 	case "CurrentUser.launchDarkly":
 		if e.complexity.CurrentUser.LaunchDarkly == nil {
 			break
 		}
 
 		return e.complexity.CurrentUser.LaunchDarkly(childComplexity), true
+
+	case "DateHistogramAggregationBucket.docCount":
+		if e.complexity.DateHistogramAggregationBucket.DocCount == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.DocCount(childComplexity), true
+
+	case "DateHistogramAggregationBucket.key":
+		if e.complexity.DateHistogramAggregationBucket.Key == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.Key(childComplexity), true
+
+	case "DateHistogramAggregationBucket.maxModifiedDts":
+		if e.complexity.DateHistogramAggregationBucket.MaxModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.MaxModifiedDts(childComplexity), true
+
+	case "DateHistogramAggregationBucket.minModifiedDts":
+		if e.complexity.DateHistogramAggregationBucket.MinModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.DateHistogramAggregationBucket.MinModifiedDts(childComplexity), true
 
 	case "DiscussionReply.content":
 		if e.complexity.DiscussionReply.Content == nil {
@@ -5825,6 +5941,90 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.PossibleOperationalSolutions(childComplexity), true
 
+	case "Query.searchChangeTable":
+		if e.complexity.Query.SearchChangeTable == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTable_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTable(childComplexity, args["request"].(models.SearchRequest), args["limit"].(int), args["offset"].(int)), true
+
+	case "Query.searchChangeTableByActor":
+		if e.complexity.Query.SearchChangeTableByActor == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTableByActor_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableByActor(childComplexity, args["actor"].(string), args["limit"].(int), args["offset"].(int)), true
+
+	case "Query.searchChangeTableByDateRange":
+		if e.complexity.Query.SearchChangeTableByDateRange == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTableByDateRange_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableByDateRange(childComplexity, args["startDate"].(time.Time), args["endDate"].(time.Time), args["limit"].(int), args["offset"].(int)), true
+
+	case "Query.searchChangeTableByModelPlanID":
+		if e.complexity.Query.SearchChangeTableByModelPlanID == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTableByModelPlanID_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableByModelPlanID(childComplexity, args["modelPlanID"].(uuid.UUID), args["limit"].(int), args["offset"].(int)), true
+
+	case "Query.searchChangeTableByModelStatus":
+		if e.complexity.Query.SearchChangeTableByModelStatus == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTableByModelStatus_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableByModelStatus(childComplexity, args["modelStatus"].(models.ModelStatus), args["limit"].(int), args["offset"].(int)), true
+
+	case "Query.searchChangeTableDateHistogramConsolidatedAggregations":
+		if e.complexity.Query.SearchChangeTableDateHistogramConsolidatedAggregations == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTableDateHistogramConsolidatedAggregations_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableDateHistogramConsolidatedAggregations(childComplexity, args["interval"].(string), args["limit"].(int), args["offset"].(int)), true
+
+	case "Query.searchChangeTableWithFreeText":
+		if e.complexity.Query.SearchChangeTableWithFreeText == nil {
+			break
+		}
+
+		args, err := ec.field_Query_searchChangeTableWithFreeText_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.SearchChangeTableWithFreeText(childComplexity, args["searchText"].(string), args["limit"].(int), args["offset"].(int)), true
+
 	case "Query.searchOktaUsers":
 		if e.complexity.Query.SearchOktaUsers == nil {
 			break
@@ -6053,6 +6253,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputPlanCrTdlCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
+		ec.unmarshalInputSearchRequest,
 		ec.unmarshalInputUpdateOperationalSolutionSubtaskInput,
 	)
 	first := true
@@ -6155,8 +6356,6 @@ scalar UUID
 Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
-
-
 """
 Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
@@ -6298,7 +6497,7 @@ type ExistingModel {
   keywords: String
   url: String
   displayModelSummary: Boolean
-  
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -6617,7 +6816,7 @@ type PlanGeneralCharacteristics {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status: TaskStatus!
 }
 
@@ -6736,7 +6935,7 @@ type PlanBeneficiaries {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status: TaskStatus!
 }
 
@@ -6846,7 +7045,7 @@ type PlanParticipantsAndProviders {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status: TaskStatus!
 
 }
@@ -7013,7 +7212,7 @@ type PlanPayments {
   readyForClearanceBy: UUID
   readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
-  
+
   status:      TaskStatus!
 }
 
@@ -7492,6 +7691,28 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
+type ChangeTableRecord {
+  guid: ID!
+  tableID: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  action: String!
+  fields: Map
+  modifiedDts: Time
+  modifiedBy: UserAccount
+}
+
+input SearchRequest {
+  query: Map!
+}
+
+type DateHistogramAggregationBucket {
+  key: String!
+  docCount: Int!
+  maxModifiedDts: Time!
+  minModifiedDts: Time!
+}
+
 """
 Query definition for the schema
 """
@@ -7531,14 +7752,26 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userAccount(username: String!): UserAccount!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 enum ModelPlanFilter {
   INCLUDE_ALL,
   COLLAB_ONLY,
   WITH_CR_TDLS,
-
-
 }
 
 """
@@ -9283,6 +9516,246 @@ func (ec *executionContext) field_Query_planPayments_args(ctx context.Context, r
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_searchChangeTableByActor_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["actor"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("actor"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["actor"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchChangeTableByDateRange_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 time.Time
+	if tmp, ok := rawArgs["startDate"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+		arg0, err = ec.unmarshalNTime2timeᚐTime(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["startDate"] = arg0
+	var arg1 time.Time
+	if tmp, ok := rawArgs["endDate"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+		arg1, err = ec.unmarshalNTime2timeᚐTime(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["endDate"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg2
+	var arg3 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg3, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg3
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchChangeTableByModelPlanID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchChangeTableByModelStatus_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 models.ModelStatus
+	if tmp, ok := rawArgs["modelStatus"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelStatus"))
+		arg0, err = ec.unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelStatus"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchChangeTableDateHistogramConsolidatedAggregations_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["interval"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("interval"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["interval"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchChangeTableWithFreeText_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["searchText"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("searchText"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["searchText"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_searchChangeTable_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 models.SearchRequest
+	if tmp, ok := rawArgs["request"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+		arg0, err = ec.unmarshalNSearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSearchRequest(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["request"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["limit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("limit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg1
+	var arg2 int
+	if tmp, ok := rawArgs["offset"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offset"))
+		arg2, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["offset"] = arg2
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_searchOktaUsers_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -9802,6 +10275,368 @@ func (ec *executionContext) fieldContext_AuditChange_modifiedDts(ctx context.Con
 	return fc, nil
 }
 
+func (ec *executionContext) _ChangeTableRecord_guid(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GUID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNID2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_guid(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_tableID(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TableID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_tableID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_primaryKey(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PrimaryKey, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_primaryKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_foreignKey(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ForeignKey, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_foreignKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_action(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_action(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Action, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_action(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_fields(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Fields, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(map[string]interface{})
+	fc.Result = res
+	return ec.marshalOMap2map(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_fields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Map does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _CurrentUser_launchDarkly(ctx context.Context, field graphql.CollectedField, obj *model.CurrentUser) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_CurrentUser_launchDarkly(ctx, field)
 	if err != nil {
@@ -9847,6 +10682,182 @@ func (ec *executionContext) fieldContext_CurrentUser_launchDarkly(ctx context.Co
 				return ec.fieldContext_LaunchDarklySettings_signedHash(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type LaunchDarklySettings", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_key(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_key(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Key, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_key(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_docCount(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_docCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DocCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_docCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_maxModifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_maxModifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MaxModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_maxModifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateHistogramAggregationBucket_minModifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.DateHistogramAggregationBucket) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateHistogramAggregationBucket_minModifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MinModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateHistogramAggregationBucket_minModifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateHistogramAggregationBucket",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -43204,6 +44215,677 @@ func (ec *executionContext) fieldContext_Query_userAccount(ctx context.Context, 
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_searchChangeTable(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTable(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTable(rctx, fc.Args["request"].(models.SearchRequest), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ChangeTableRecord); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ChangeTableRecord`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ChangeTableRecord)
+	fc.Result = res
+	return ec.marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTable(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "guid":
+				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+			case "tableID":
+				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_ChangeTableRecord_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ChangeTableRecord", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTable_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchChangeTableWithFreeText(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableWithFreeText(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTableWithFreeText(rctx, fc.Args["searchText"].(string), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ChangeTableRecord); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ChangeTableRecord`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ChangeTableRecord)
+	fc.Result = res
+	return ec.marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableWithFreeText(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "guid":
+				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+			case "tableID":
+				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_ChangeTableRecord_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ChangeTableRecord", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableWithFreeText_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchChangeTableByModelPlanID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableByModelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTableByModelPlanID(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ChangeTableRecord); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ChangeTableRecord`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ChangeTableRecord)
+	fc.Result = res
+	return ec.marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableByModelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "guid":
+				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+			case "tableID":
+				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_ChangeTableRecord_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ChangeTableRecord", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableByModelPlanID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchChangeTableByDateRange(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableByDateRange(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTableByDateRange(rctx, fc.Args["startDate"].(time.Time), fc.Args["endDate"].(time.Time), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ChangeTableRecord); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ChangeTableRecord`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ChangeTableRecord)
+	fc.Result = res
+	return ec.marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableByDateRange(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "guid":
+				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+			case "tableID":
+				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_ChangeTableRecord_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ChangeTableRecord", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableByDateRange_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchChangeTableByActor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableByActor(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTableByActor(rctx, fc.Args["actor"].(string), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ChangeTableRecord); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ChangeTableRecord`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ChangeTableRecord)
+	fc.Result = res
+	return ec.marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableByActor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "guid":
+				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+			case "tableID":
+				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_ChangeTableRecord_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ChangeTableRecord", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableByActor_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchChangeTableByModelStatus(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableByModelStatus(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTableByModelStatus(rctx, fc.Args["modelStatus"].(models.ModelStatus), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.ChangeTableRecord); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ChangeTableRecord`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ChangeTableRecord)
+	fc.Result = res
+	return ec.marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableByModelStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "guid":
+				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
+			case "tableID":
+				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_ChangeTableRecord_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_ChangeTableRecord_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_ChangeTableRecord_fields(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ChangeTableRecord_modifiedDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ChangeTableRecord_modifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ChangeTableRecord", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableByModelStatus_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().SearchChangeTableDateHistogramConsolidatedAggregations(rctx, fc.Args["interval"].(string), fc.Args["limit"].(int), fc.Args["offset"].(int))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*models.DateHistogramAggregationBucket); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.DateHistogramAggregationBucket`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.DateHistogramAggregationBucket)
+	fc.Result = res
+	return ec.marshalNDateHistogramAggregationBucket2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucketᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "key":
+				return ec.fieldContext_DateHistogramAggregationBucket_key(ctx, field)
+			case "docCount":
+				return ec.fieldContext_DateHistogramAggregationBucket_docCount(ctx, field)
+			case "maxModifiedDts":
+				return ec.fieldContext_DateHistogramAggregationBucket_maxModifiedDts(ctx, field)
+			case "minModifiedDts":
+				return ec.fieldContext_DateHistogramAggregationBucket_minModifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DateHistogramAggregationBucket", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_searchChangeTableDateHistogramConsolidatedAggregations_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -46594,6 +48276,34 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputSearchRequest(ctx context.Context, obj interface{}) (models.SearchRequest, error) {
+	var it models.SearchRequest
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"query"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "query":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("query"))
+			it.Query, err = ec.unmarshalNMap2map(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(ctx context.Context, obj interface{}) (model.UpdateOperationalSolutionSubtaskInput, error) {
 	var it model.UpdateOperationalSolutionSubtaskInput
 	asMap := map[string]interface{}{}
@@ -46736,6 +48446,71 @@ func (ec *executionContext) _AuditChange(ctx context.Context, sel ast.SelectionS
 	return out
 }
 
+var changeTableRecordImplementors = []string{"ChangeTableRecord"}
+
+func (ec *executionContext) _ChangeTableRecord(ctx context.Context, sel ast.SelectionSet, obj *models.ChangeTableRecord) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, changeTableRecordImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ChangeTableRecord")
+		case "guid":
+
+			out.Values[i] = ec._ChangeTableRecord_guid(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "tableID":
+
+			out.Values[i] = ec._ChangeTableRecord_tableID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "primaryKey":
+
+			out.Values[i] = ec._ChangeTableRecord_primaryKey(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "foreignKey":
+
+			out.Values[i] = ec._ChangeTableRecord_foreignKey(ctx, field, obj)
+
+		case "action":
+
+			out.Values[i] = ec._ChangeTableRecord_action(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "fields":
+
+			out.Values[i] = ec._ChangeTableRecord_fields(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._ChangeTableRecord_modifiedDts(ctx, field, obj)
+
+		case "modifiedBy":
+
+			out.Values[i] = ec._ChangeTableRecord_modifiedBy(ctx, field, obj)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var currentUserImplementors = []string{"CurrentUser"}
 
 func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionSet, obj *model.CurrentUser) graphql.Marshaler {
@@ -46749,6 +48524,55 @@ func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionS
 		case "launchDarkly":
 
 			out.Values[i] = ec._CurrentUser_launchDarkly(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var dateHistogramAggregationBucketImplementors = []string{"DateHistogramAggregationBucket"}
+
+func (ec *executionContext) _DateHistogramAggregationBucket(ctx context.Context, sel ast.SelectionSet, obj *models.DateHistogramAggregationBucket) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dateHistogramAggregationBucketImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DateHistogramAggregationBucket")
+		case "key":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_key(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "docCount":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_docCount(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "maxModifiedDts":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_maxModifiedDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "minModifiedDts":
+
+			out.Values[i] = ec._DateHistogramAggregationBucket_minModifiedDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -52465,6 +54289,167 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "searchChangeTable":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTable(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "searchChangeTableWithFreeText":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableWithFreeText(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "searchChangeTableByModelPlanID":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableByModelPlanID(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "searchChangeTableByDateRange":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableByDateRange(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "searchChangeTableByActor":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableByActor(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "searchChangeTableByModelStatus":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableByModelStatus(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "searchChangeTableDateHistogramConsolidatedAggregations":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "__type":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -53805,6 +55790,60 @@ func (ec *executionContext) marshalNCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
+func (ec *executionContext) marshalNChangeTableRecord2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecordᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ChangeTableRecord) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNChangeTableRecord2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecord(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNChangeTableRecord2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangeTableRecord(ctx context.Context, sel ast.SelectionSet, v *models.ChangeTableRecord) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ChangeTableRecord(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx context.Context, v interface{}) (model.ChangeType, error) {
 	var res model.ChangeType
 	err := res.UnmarshalGQL(v)
@@ -54210,6 +56249,60 @@ func (ec *executionContext) marshalNDataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNDateHistogramAggregationBucket2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucketᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DateHistogramAggregationBucket) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNDateHistogramAggregationBucket2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucket(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNDateHistogramAggregationBucket2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateHistogramAggregationBucket(ctx context.Context, sel ast.SelectionSet, v *models.DateHistogramAggregationBucket) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._DateHistogramAggregationBucket(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
@@ -54653,6 +56746,21 @@ func (ec *executionContext) marshalNGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
+	res, err := graphql.UnmarshalID(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	res := graphql.MarshalID(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
@@ -56498,6 +58606,11 @@ func (ec *executionContext) marshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑapp�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNSearchRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSearchRequest(ctx context.Context, v interface{}) (models.SearchRequest, error) {
+	res, err := ec.unmarshalInputSearchRequest(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx context.Context, v interface{}) (model.SelectionMethodType, error) {
@@ -58828,6 +60941,22 @@ func (ec *executionContext) marshalOKeyCharacteristic2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOMap2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalMap(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOMap2map(ctx context.Context, sel ast.SelectionSet, v map[string]interface{}) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalMap(v)
+	return res
 }
 
 func (ec *executionContext) unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (*models.ModelCategory, error) {

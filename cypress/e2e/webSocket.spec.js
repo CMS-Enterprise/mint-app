@@ -23,15 +23,8 @@ describe('Web Socket Connections', () => {
 
       cy.get('[data-testid="basics"]').should('be.disabled');
     });
-  });
 
-  it('tries to edit an occupied section', () => {
-    cy.clickPlanTableByName('Empty Plan');
-
-    cy.location().then(location => {
-      cy.wrap(location.pathname.split('/')[2]).as('modelPlanID');
-    });
-
+    // tries to edit an occupied section
     cy.get('@modelPlanID').then(modelPlanID => {
       cy.task('lockTaskListSection', {
         euaId: 'ABCD',

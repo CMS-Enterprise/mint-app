@@ -8,13 +8,17 @@ import Alert from 'components/shared/Alert';
 
 import './index.scss';
 
-interface ITToolsWarningType {
+interface ITSolutionsWarningType {
   className?: string;
   id: string;
   onClick: () => void;
 }
 
-const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
+const ITSolutionsWarning = ({
+  className,
+  id,
+  onClick
+}: ITSolutionsWarningType) => {
   const { t } = useTranslation('itSolutions');
 
   const flags = useFlags();
@@ -24,7 +28,10 @@ const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
   }
 
   return (
-    <Alert type="warning" className={classNames('it-tools-warning', className)}>
+    <Alert
+      type="warning"
+      className={classNames('it-solutions-warning', className)}
+    >
       {t('warningRedirect')}
       <Button
         type="button"
@@ -32,10 +39,10 @@ const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
         className="usa-button usa-button--unstyled"
         onClick={onClick}
       >
-        {t('goToITTools')}
+        {t('goToITSolutions')}
       </Button>
     </Alert>
   );
 };
 
-export default ITToolsWarning;
+export default ITSolutionsWarning;
