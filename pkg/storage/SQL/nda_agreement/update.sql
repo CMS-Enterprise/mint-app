@@ -1,5 +1,6 @@
 UPDATE nda_agreement
-SET agreed = :agreed,
+SET
+    agreed = :agreed,
     agreed_dts = :agreed_dts,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
