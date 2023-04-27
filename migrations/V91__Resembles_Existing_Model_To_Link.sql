@@ -22,11 +22,11 @@ matched AS (
 /* Use the view to insert links*/
 INSERT INTO existing_model_link(id, model_plan_id, existing_model_id, current_model_plan_id, created_by)
 SELECT
-    GEN_RANDOM_UUID(),
+    GEN_RANDOM_UUID() AS id,
     matched.model_plan_id,
     matched.existing_model_id,
     matched.current_model_plan_id,
     matched.created_by
-FROM matched
+FROM matched;
 
-/* TODO: remove old general characteristics fields! */
+ALTER TABLE plan_general_characteristics DROP COLUMN resembles_existing_model_which;
