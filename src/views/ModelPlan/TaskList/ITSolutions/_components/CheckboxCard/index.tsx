@@ -91,12 +91,11 @@ const CheckboxCard = ({
 
           {/* If solution key is not one of the treatAsOther, then render its name/nameOther */}
           {/* If solution is custom (aka solution key is null), then render its name/nameOther */}
-          {!solution.key ||
-            (!treatAsOtherSolutions.includes(solution.key) && (
-              <h3 className="margin-y-2">
-                {solution.nameOther || solution.name}
-              </h3>
-            ))}
+          {(!solution.key || !treatAsOtherSolutions.includes(solution.key)) && (
+            <h3 className="margin-y-2">
+              {solution.nameOther || solution.name}
+            </h3>
+          )}
 
           {!solution.isOther && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
