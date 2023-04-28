@@ -116,7 +116,7 @@ const CheckboxCard = ({
     <Grid tablet={{ col: 6 }} className="display-flex">
       <Card
         className={classNames(className)}
-        containerProps={{ className: 'padding-3' }}
+        containerProps={{ className: 'padding-3 flex-justify' }}
       >
         <div className="solutions-checkbox__above-the-border">
           <div className="solutions-checkbox__header">
