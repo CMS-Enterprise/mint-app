@@ -72,7 +72,7 @@ const CheckboxCard = ({
           className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/`,
               { selectedSolution: solution.key }
             )
           }
@@ -115,7 +115,7 @@ const CheckboxCard = ({
   return (
     <Grid tablet={{ col: 6 }} className="display-flex">
       <Card
-        className={classNames(className)}
+        className={classNames('width-full', className)}
         containerProps={{ className: 'padding-3 flex-justify' }}
       >
         <div className="solutions-checkbox__above-the-border">
