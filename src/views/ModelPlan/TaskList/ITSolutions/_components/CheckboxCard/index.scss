@@ -1,19 +1,19 @@
 .solutions-checkbox {
-    &__header {
-        word-break: break-all;
+  &__header {
+    word-break: break-all;
 
-        .usa-checkbox__label {
-          margin-top: 0;
-        }
+    .usa-checkbox__label {
+      margin-top: 0;
     }
-    &__body-text {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+  }
+  &__body-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 
-    .usa-card__container {
-        border-radius: 4px;
-    }
+  .usa-card__container {
+    border-radius: 4px;
+  }
 }
