@@ -65,6 +65,54 @@ const CheckboxCard = ({
   const isDefaultSolutionOptions =
     solution.name !== null && solution.pocEmail === null;
 
+  const renderCTALink = () => {
+    if (isDefaultSolutionOptions && solution.isOther) {
+      return (
+        <Button
+          type="button"
+          className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+          onClick={() =>
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
+              { selectedSolution: solution.key }
+            )
+          }
+        >
+          {t('addDetails')}
+          <IconArrowForward className="margin-left-1" />
+        </Button>
+      );
+    }
+
+    if (solution.nameOther || solution.otherHeader) {
+      return (
+        <Button
+          type="button"
+          className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+          onClick={() =>
+            history.push(
+              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
+              { selectedSolution: solution.key }
+            )
+          }
+        >
+          {t('updateTheseDetails')}
+          <IconArrowForward className="margin-left-1" />
+        </Button>
+      );
+    }
+
+    return (
+      <Button
+        type="button"
+        className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+      >
+        {t('aboutSolution')}
+        <IconArrowForward className="margin-left-1" />
+      </Button>
+    );
+  };
+
   return (
     <Grid tablet={{ col: 6 }}>
       <Card className={classNames(className)}>
@@ -130,29 +178,7 @@ const CheckboxCard = ({
 
           <Divider />
 
-          {solution.nameOther || solution.otherHeader ? (
-            <Button
-              type="button"
-              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
-              onClick={() =>
-                history.push(
-                  `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
-                  { selectedSolution: solution.key }
-                )
-              }
-            >
-              {t('updateTheseDetails')}
-              <IconArrowForward className="margin-left-1" />
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
-            >
-              {t('aboutSolution')}
-              <IconArrowForward className="margin-left-1" />
-            </Button>
-          )}
+          {renderCTALink()}
         </div>
       </Card>
     </Grid>

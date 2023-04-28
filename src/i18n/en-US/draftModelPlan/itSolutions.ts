@@ -136,6 +136,7 @@ const itSolutions = {
   solutionEmailInfo: 'Email',
   otherSolution: 'Other',
   selectedSectionHeading: 'Selected solution: ',
+  addDetails: 'Add Details',
   updateTheseDetails: 'Update these details',
   removeTheseDetails: 'Remove these details',
   addError:
