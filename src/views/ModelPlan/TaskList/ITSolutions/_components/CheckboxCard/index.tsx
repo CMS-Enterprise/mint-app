@@ -69,7 +69,7 @@ const CheckboxCard = ({
       return (
         <Button
           type="button"
-          className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+          className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
@@ -87,7 +87,7 @@ const CheckboxCard = ({
       return (
         <Button
           type="button"
-          className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+          className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
               `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
@@ -104,7 +104,7 @@ const CheckboxCard = ({
     return (
       <Button
         type="button"
-        className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+        className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
       >
         {t('aboutSolution')}
         <IconArrowForward className="margin-left-1" />
@@ -116,7 +116,7 @@ const CheckboxCard = ({
     <Grid tablet={{ col: 6 }} className="display-flex">
       <Card
         className={classNames(className)}
-        containerProps={{ className: 'padding-2' }}
+        containerProps={{ className: 'padding-3' }}
       >
         <div className="solutions-checkbox__above-the-border">
           <div className="solutions-checkbox__header">
@@ -128,6 +128,7 @@ const CheckboxCard = ({
               label={t('selectSolution')}
               value={!!solution.needed}
               checked={!!solution.needed}
+              className="margin-y-0"
             />
 
             {/* If solution is one of the treatAsOther, then render the following  */}

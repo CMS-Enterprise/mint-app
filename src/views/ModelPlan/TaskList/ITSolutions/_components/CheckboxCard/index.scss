@@ -1,6 +1,10 @@
 .solutions-checkbox {
     &__header {
         word-break: break-all;
+
+        .usa-checkbox__label {
+          margin-top: 0;
+        }
     }
     &__body-text {
         display: -webkit-box;
@@ -9,7 +13,7 @@
         overflow: hidden;
     }
 
-    .usa-card__container {   
+    .usa-card__container {
         border-radius: 4px;
     }
 }
