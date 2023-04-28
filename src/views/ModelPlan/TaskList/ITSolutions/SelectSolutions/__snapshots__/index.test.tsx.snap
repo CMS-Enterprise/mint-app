@@ -142,7 +142,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
               data-testid="CardGroup"
             >
               <div
-                class="tablet:grid-col-6"
+                class="tablet:grid-col-6 display-flex"
                 data-testid="grid"
               >
                 <li
@@ -150,34 +150,38 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                   data-testid="Card"
                 >
                   <div
-                    class="usa-card__container"
+                    class="usa-card__container padding-2"
                   >
                     <div
-                      class="solutions-checkbox__header padding-2"
+                      class="solutions-checkbox__above-the-border"
                     >
                       <div
-                        class="usa-checkbox"
-                        data-testid="checkbox"
+                        class="solutions-checkbox__header"
                       >
-                        <input
-                          class="usa-checkbox__input"
-                          id="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
-                          name="solutions[0].needed"
-                          type="checkbox"
-                          value="false"
-                        />
-                        <label
-                          class="usa-checkbox__label"
-                          for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                        <div
+                          class="usa-checkbox"
+                          data-testid="checkbox"
                         >
-                          Select a solution
-                        </label>
+                          <input
+                            class="usa-checkbox__input"
+                            id="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                            name="solutions[0].needed"
+                            type="checkbox"
+                            value="false"
+                          />
+                          <label
+                            class="usa-checkbox__label"
+                            for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                          >
+                            Select a solution
+                          </label>
+                        </div>
+                        <h3
+                          class="margin-y-2"
+                        >
+                          Research, Measurement, Assessment, Design, and Analysis (RMADA)
+                        </h3>
                       </div>
-                      <h3
-                        class="margin-y-2"
-                      >
-                        Research, Measurement, Assessment, Design, and Analysis (RMADA)
-                      </h3>
                       <div
                         class="margin-bottom-2 solutions-checkbox__body-text"
                       >
@@ -203,9 +207,10 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                           class="margin-bottom-2"
                         />
                       </a>
-                      <div
-                        class="mint-divider"
-                      />
+                    </div>
+                    <div
+                      class="border-top border-base-light"
+                    >
                       <button
                         class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
                         data-testid="button"
