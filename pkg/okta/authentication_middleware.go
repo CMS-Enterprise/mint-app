@@ -134,8 +134,13 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 	}
 
 	// Get job codes out of the JWT
-	jcUser := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
+	var jcUser bool
 	jcAssessment := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetAssessmentJobCode())
+	if jcAssessment { //Assessment users automatically are granted the base user permissions
+		jcUser = true
+	} else {
+		jcUser = jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetUserJobCode())
+	}
 	jcMAC := jwtGroupsContainsJobCode(enhanced.JWT, f.jobCodes.GetMACUserJobCode())
 
 	// Create a LaunchDarkly user

@@ -33,6 +33,7 @@ const (
 )
 
 // Embed the template files
+//
 //go:embed searchquerytemplates/free_text.tmpl
 var freeTextSearchTmpl string
 
