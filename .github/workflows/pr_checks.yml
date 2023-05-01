@@ -13,12 +13,12 @@ concurrency:
 jobs:
   run_tests:
     uses: ./.github/workflows/run_tests.yml
-    secrets:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      CONTRIBSYS_REPO_USERNAME: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
-      CONTRIBSYS_REPO_PASSWORD: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
-      OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
-      OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
-      OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
+    secrets: inherit
+      # SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      # DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      # CONTRIBSYS_REPO_USERNAME: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
+      # CONTRIBSYS_REPO_PASSWORD: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
+      # OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
+      # OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
+      # OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
