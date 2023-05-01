@@ -16,7 +16,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -27,6 +27,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
 import {
   GetProviderOptions as GetProviderOptionsType,
@@ -104,6 +105,8 @@ export const ProviderOptions = () => {
   const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
     need => need.modifiedDts
   );
+
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
@@ -453,7 +456,7 @@ export const ProviderOptions = () => {
                   </Label>
 
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="participants-and-providers-provider-overlap-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -465,7 +468,6 @@ export const ProviderOptions = () => {
 
                   <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
 
-                  <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
                   <Fieldset>
                     {Object.keys(OverlapType)
                       .sort(sortOtherEnum)

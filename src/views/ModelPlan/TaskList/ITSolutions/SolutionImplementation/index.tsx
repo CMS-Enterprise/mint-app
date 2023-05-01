@@ -321,7 +321,6 @@ const SolutionImplementation = ({
 
                     <Form
                       className="margin-top-6"
-                      data-testid="it-tools-page-seven-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}

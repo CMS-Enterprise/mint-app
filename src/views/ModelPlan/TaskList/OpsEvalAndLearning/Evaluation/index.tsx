@@ -17,7 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -103,7 +103,7 @@ const Evaluation = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
@@ -255,88 +255,95 @@ const Evaluation = () => {
                   handleSubmit(e);
                 }}
               >
-                <FieldArray
-                  name="evaluationApproaches"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('evaluationApproach')}
-                      </legend>
+                <FieldGroup
+                  scrollElement="evaluationApproaches"
+                  error={!!flatErrors.evaluationApproaches}
+                >
+                  <FieldArray
+                    name="evaluationApproaches"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('evaluationApproach')}
+                        </legend>
 
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="ops-eval-and-learning-evaluation-approach-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="ops-eval-and-learning-evaluation-approach-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.evaluationApproaches}
+                        </FieldErrorMsg>
+
+                        {Object.keys(EvaluationApproachType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                  data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                  name="evaluationApproaches"
+                                  label={translateEvaluationApproachType(type)}
+                                  value={type}
+                                  checked={values?.evaluationApproaches.includes(
+                                    type as EvaluationApproachType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.evaluationApproaches.indexOf(
+                                        e.target.value as EvaluationApproachType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === EvaluationApproachType.OTHER &&
+                                  values.evaluationApproaches.includes(
+                                    type
+                                  ) && (
+                                    <div className="margin-left-4 margin-top-neg-2">
+                                      <Label
+                                        htmlFor="ops-eval-and-learning-evaluation-approach-other"
+                                        className="text-normal maxw-none"
+                                      >
+                                        {t('evaluationOther')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.evaluationApproachOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextInput}
+                                        className="maxw-none"
+                                        id="ops-eval-and-learning-evaluation-approach-other"
+                                        maxLength={50}
+                                        name="evaluationApproachOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="ops-eval-and-learning-evaluation-approach-note"
+                          field="evalutaionApproachNote"
                         />
-                      )}
-
-                      <FieldErrorMsg>
-                        {flatErrors.evaluationApproaches}
-                      </FieldErrorMsg>
-
-                      {Object.keys(EvaluationApproachType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
-                                name="evaluationApproaches"
-                                label={translateEvaluationApproachType(type)}
-                                value={type}
-                                checked={values?.evaluationApproaches.includes(
-                                  type as EvaluationApproachType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.evaluationApproaches.indexOf(
-                                      e.target.value as EvaluationApproachType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === EvaluationApproachType.OTHER &&
-                                values.evaluationApproaches.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-2">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-evaluation-approach-other"
-                                      className="text-normal maxw-none"
-                                    >
-                                      {t('evaluationOther')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.evaluationApproachOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="ops-eval-and-learning-evaluation-approach-other"
-                                      maxLength={50}
-                                      name="evaluationApproachOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="ops-eval-and-learning-evaluation-approach-note"
-                        field="evalutaionApproachNote"
-                      />
-                    </>
-                  )}
-                />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <FieldArray
                   name="ccmInvolvment"
@@ -419,7 +426,7 @@ const Evaluation = () => {
                     {t('dataNeeded')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-data-needed-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -489,7 +496,7 @@ const Evaluation = () => {
                     {t('dataToSend')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-data-to-send-warning"
                       onClick={() =>
                         handleFormSubmit(

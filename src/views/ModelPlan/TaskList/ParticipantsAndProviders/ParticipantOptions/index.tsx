@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -90,7 +90,7 @@ export const ParticipantOptions = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
@@ -327,7 +327,7 @@ export const ParticipantOptions = () => {
                     {t('recruitParticipants')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="participants-and-providers-recruitment-method-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -397,7 +397,7 @@ export const ParticipantOptions = () => {
                     {t('howWillYouSelect')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="participants-and-providers-selection-method-warning"
                       onClick={() =>
                         handleFormSubmit(

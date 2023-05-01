@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -69,7 +69,7 @@ const NonClaimsBasedPayment = () => {
     }
   });
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const {
@@ -258,7 +258,7 @@ const NonClaimsBasedPayment = () => {
                       </PageHeading>
 
                       <FieldGroup
-                        scrollElement="payment-nonclaims-payments"
+                        scrollElement="nonClaimsPayments"
                         error={!!flatErrors.nonClaimsPayments}
                         className="margin-top-4"
                       >
@@ -266,7 +266,7 @@ const NonClaimsBasedPayment = () => {
                           {t('nonClaimsPayments')}
                         </Label>
                         {itSolutionsStarted && (
-                          <ITToolsWarning
+                          <ITSolutionsWarning
                             id="payment-nonclaims-payments-warning"
                             onClick={() =>
                               handleFormSubmit(

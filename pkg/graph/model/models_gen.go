@@ -40,7 +40,7 @@ type LaunchDarklySettings struct {
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
-	AgreedDts *time.Time `json:"agreedDts"`
+	AgreedDts *time.Time `json:"agreedDts,omitempty"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -55,7 +55,7 @@ type PlanCrTdlCreateInput struct {
 	IDNumber      string    `json:"idNumber"`
 	DateInitiated time.Time `json:"dateInitiated"`
 	Title         string    `json:"title"`
-	Note          *string   `json:"note"`
+	Note          *string   `json:"note,omitempty"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
@@ -70,13 +70,13 @@ type PlanDocumentInput struct {
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
-	OtherTypeDescription *string             `json:"otherTypeDescription"`
-	OptionalNotes        *string             `json:"optionalNotes"`
+	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
+	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
 type PrepareForClearance struct {
 	Status             PrepareForClearanceStatus `json:"status"`
-	LatestClearanceDts *time.Time                `json:"latestClearanceDts"`
+	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
 }
 
 type TaskListSectionLockStatus struct {
