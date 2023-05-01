@@ -326,28 +326,31 @@ const SolutionImplementation = ({
                       }}
                     >
                       <Fieldset disabled={loading}>
-                        {formikNeed.solutions.map((solution, index) => {
-                          const identifier = (
-                            solution.nameOther ||
-                            solution.key ||
-                            ''
-                          ).replaceAll(' ', '-');
-                          return (
-                            <Solution
-                              key={solution.id}
-                              formikProps={formikProps}
-                              solution={solution as GetOperationalSolutionType}
-                              identifier={identifier}
-                              index={index}
-                              length={formikNeed.solutions.length}
-                              flatErrors={flatErrors}
-                              loading={loading}
-                              operationalNeedID={operationalNeedID}
-                              operationalSolutionID={solutionId}
-                              modelID={modelID}
-                            />
-                          );
-                        })}
+                        {!loading &&
+                          formikNeed.solutions.map((solution, index) => {
+                            const identifier = (
+                              solution.nameOther ||
+                              solution.key ||
+                              ''
+                            ).replaceAll(' ', '-');
+                            return (
+                              <Solution
+                                key={solution.id}
+                                formikProps={formikProps}
+                                solution={
+                                  solution as GetOperationalSolutionType
+                                }
+                                identifier={identifier}
+                                index={index}
+                                length={formikNeed.solutions.length}
+                                flatErrors={flatErrors}
+                                loading={loading}
+                                operationalNeedID={operationalNeedID}
+                                operationalSolutionID={solutionId}
+                                modelID={modelID}
+                              />
+                            );
+                          })}
 
                         {message && (
                           <Alert type="warning" slim className="margin-top-6">
