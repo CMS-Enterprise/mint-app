@@ -7,11 +7,11 @@ exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
     data-testid="grid"
   >
     <li
-      class="usa-card"
+      class="usa-card width-full"
       data-testid="Card"
     >
       <div
-        class="usa-card__container padding-2"
+        class="usa-card__container padding-3 flex-justify"
       >
         <div
           class="solutions-checkbox__above-the-border"
@@ -20,7 +20,7 @@ exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
             class="solutions-checkbox__header"
           >
             <div
-              class="usa-checkbox"
+              class="usa-checkbox margin-y-0"
               data-testid="checkbox"
             >
               <input
@@ -74,7 +74,7 @@ exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
           class="border-top border-base-light"
         >
           <button
-            class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+            class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
             data-testid="button"
             type="button"
           >
