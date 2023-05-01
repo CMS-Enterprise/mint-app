@@ -41,6 +41,7 @@
     "detect-browser": "^5.0.0",
     "font-awesome": "^4.7.0",
     "formik": "^2.1.6",
+    "graphql": "^16.6.0",
     "i18next": "^19.8.5",
     "i18next-browser-languagedetector": "^5.0.0",
     "istanbul-lib-coverage": "^3.0.0",
@@ -115,6 +116,8 @@
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",
     "@cypress/webpack-preprocessor": "^5.12.2",
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/client-preset": "^3.0.1",
     "@storybook/addon-actions": "^6.3.1",
     "@storybook/addon-controls": "^6.3.1",
     "@storybook/addon-essentials": "^6.3.1",
