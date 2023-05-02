@@ -235,7 +235,9 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               class=""
               role="cell"
               style="padding-left: 0px;"
-            />
+            >
+              Participants and Providers
+            </td>
             <td
               class=""
               role="cell"
