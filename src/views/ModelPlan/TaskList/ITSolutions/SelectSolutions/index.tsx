@@ -17,6 +17,7 @@ import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
@@ -57,6 +58,16 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   needed: false,
   solutions: []
 };
+
+// Type guard for mutation promise reponse of both create and update
+function isUpdateResponse(
+  update: UpdateOperationalSolutionType | CreateOperationalSolutionType
+): update is UpdateOperationalSolutionType {
+  return (
+    (update as UpdateOperationalSolutionType).updateOperationalSolution !==
+    undefined
+  );
+}
 
 type SelectSolutionsProps = {
   update?: boolean;
@@ -125,7 +136,10 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     await Promise.all(
       solutions.map(solution => {
         // if solution id is all zeros, it needs to be created
-        if (solution.id === '00000000-0000-0000-0000-000000000000') {
+        if (
+          solution.id === '00000000-0000-0000-0000-000000000000' &&
+          solution.needed
+        ) {
           return createSolution({
             variables: {
               operationalNeedID,
@@ -136,28 +150,37 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
             }
           });
         }
-
-        // Otherwise, set the NEEDED bool for solution
-        // Custom Solution will have a "nameOther", otherwise, it will be empty
-        return updateSolution({
-          variables: {
-            id: solution.id,
-            changes: {
-              needed: solution.needed || false,
-              nameOther: solution.nameOther || ''
+        if (solution.id !== '00000000-0000-0000-0000-000000000000') {
+          // Otherwise, set the NEEDED bool for solution
+          // Custom Solution will have a "nameOther", otherwise, it will be empty
+          return updateSolution({
+            variables: {
+              id: solution.id,
+              changes: {
+                needed: solution.needed || false,
+                nameOther: solution.nameOther || ''
+              }
             }
-          }
-        });
+          });
+        }
+        return null;
       })
     )
-      .then(response => {
-        const errors = response?.find(result => result?.errors);
+      .then(responses => {
+        const errors = responses?.find(result => result?.errors);
 
-        if (response && !errors) {
+        if (responses && !errors) {
           if (
-            formikRef?.current?.values.solutions.find(
-              solution => solution.needed
-            ) ||
+            responses.find(response => {
+              if (!response?.data) return false;
+              let neededFound;
+              if (isUpdateResponse(response.data)) {
+                neededFound = response?.data?.updateOperationalSolution?.needed;
+              } else {
+                neededFound = response?.data?.createOperationalSolution?.needed;
+              }
+              return neededFound;
+            }) ||
             update
           ) {
             showMessageOnNextPage(removedSolutions);
@@ -288,7 +311,9 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                           {t('chooseSolution')}
                         </legend>
 
-                        {!loading && (
+                        {loading ? (
+                          <PageLoading />
+                        ) : (
                           <CardGroup>
                             {values.solutions.map(
                               (solution: any, index: number) => (
