@@ -2,19 +2,6 @@ name: Build and Push Application Images
 
 on:
   workflow_call:
-    # secrets:
-    #   DOCKERHUB_USERNAME:
-    #     required: true
-    #   DOCKERHUB_TOKEN:
-    #     required: true
-    #   INFRA_ROLE_TO_ASSUME:
-    #     required: true
-    #   SLACK_WEBHOOK_URL:
-    #     required: true
-    #   CONTRIBSYS_REPO_USERNAME:
-    #     required: true
-    #   CONTRIBSYS_REPO_PASSWORD:
-    #     required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
