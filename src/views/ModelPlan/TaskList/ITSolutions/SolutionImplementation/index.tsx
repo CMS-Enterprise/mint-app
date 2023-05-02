@@ -12,6 +12,7 @@ import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
@@ -326,7 +327,9 @@ const SolutionImplementation = ({
                       }}
                     >
                       <Fieldset disabled={loading}>
-                        {!loading &&
+                        {loading ? (
+                          <PageLoading />
+                        ) : (
                           formikNeed.solutions.map((solution, index) => {
                             const identifier = (
                               solution.nameOther ||
@@ -350,7 +353,8 @@ const SolutionImplementation = ({
                                 modelID={modelID}
                               />
                             );
-                          })}
+                          })
+                        )}
 
                         {message && (
                           <Alert type="warning" slim className="margin-top-6">
