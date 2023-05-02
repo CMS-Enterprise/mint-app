@@ -78,6 +78,8 @@ jobs:
           platforms: "linux/amd64"
           context: .
           cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
+          build-args: |
+            TAG=9.10-alpine
       - name: Announce failure
         if: ${{ failure() }}
         run: |
