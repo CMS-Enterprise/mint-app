@@ -68,7 +68,7 @@ func (tjv TestJwtVerifier) VerifyAccessToken(jwt string) (*jwtverifier.Jwt, erro
 	return tjv.verify(jwt)
 }
 
-func (s *AuthenticationMiddlewareTestSuite) buidMiddleWareFactory(verify func(jwt string) (*jwtverifier.Jwt, error)) *MiddlewareFactory {
+func (s *AuthenticationMiddlewareTestSuite) buildMiddleWareFactory(verify func(jwt string) (*jwtverifier.Jwt, error)) *MiddlewareFactory {
 	verifier := TestJwtVerifier{
 		verify: verify,
 	}
@@ -93,7 +93,7 @@ func (s *AuthenticationMiddlewareTestSuite) buidMiddleWareFactory(verify func(jw
 }
 
 func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt string) (*jwtverifier.Jwt, error)) func(http.Handler) http.Handler {
-	factory := s.buidMiddleWareFactory(verify)
+	factory := s.buildMiddleWareFactory(verify)
 	return factory.NewAuthenticationMiddleware
 }
 
@@ -165,7 +165,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 }
 func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 	s.Run("Assessment has user permissions", func() {
-		faktory := s.buidMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
+		faktory := s.buildMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
@@ -184,7 +184,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 	})
 
 	s.Run("User only have USER assessment permissions", func() {
-		faktory := s.buidMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
+		faktory := s.buildMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
@@ -202,7 +202,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 		s.False(princ.JobCodeMAC)
 	})
 	s.Run("MAC users only have MAC permissions", func() {
-		faktory := s.buidMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
+		faktory := s.buildMiddleWareFactory(func(jwt string) (*jwtverifier.Jwt, error) {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()

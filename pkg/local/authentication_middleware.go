@@ -73,14 +73,15 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
-	var jcUser bool
+	// Pull job codes from config
+	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
 	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
-	if jcAssessment { //Assessment users automatically are granted the base user permissions
-		jcUser = true
-	} else {
-		jcUser = swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
-	}
 	jcMAC := swag.ContainsStrings(config.JobCodes, "MINT MAC Users")
+
+	// Always set assessment users to have base user permissions
+	if jcAssessment {
+		jcUser = true
+	}
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(config.EUA),
