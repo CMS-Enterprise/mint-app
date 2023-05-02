@@ -2,23 +2,23 @@ name: Run Tests
 
 on:
   workflow_call:
-    secrets:
-      SLACK_WEBHOOK_URL:
-        required: true
-      DOCKERHUB_USERNAME:
-        required: true
-      DOCKERHUB_TOKEN:
-        required: true
-      CONTRIBSYS_REPO_USERNAME:
-        required: true
-      CONTRIBSYS_REPO_PASSWORD:
-        required: true
-      OKTA_TEST_USERNAME:
-        required: true
-      OKTA_TEST_PASSWORD:
-        required: true
-      OKTA_TEST_SECRET:
-        required: true
+    # secrets:
+    #   SLACK_WEBHOOK_URL:
+    #     required: true
+    #   DOCKERHUB_USERNAME:
+    #     required: true
+    #   DOCKERHUB_TOKEN:
+    #     required: true
+    #   CONTRIBSYS_REPO_USERNAME:
+    #     required: true
+    #   CONTRIBSYS_REPO_PASSWORD:
+    #     required: true
+    #   OKTA_TEST_USERNAME:
+    #     required: true
+    #   OKTA_TEST_PASSWORD:
+    #     required: true
+    #   OKTA_TEST_SECRET:
+    #     required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}

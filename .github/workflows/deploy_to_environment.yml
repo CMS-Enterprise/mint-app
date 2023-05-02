@@ -6,21 +6,21 @@ on:
       env:
         required: true
         type: string
-    secrets:
-      AWS_ROLE_TO_ASSUME:
-        required: true
-      SLACK_WEBHOOK_URL:
-        required: true
-      LD_CLIENT_ID:
-        required: true
-      OKTA_CLIENT_ID:
-        required: true
-      OKTA_SERVER_ID:
-        required: true
-      STATIC_S3_BUCKET:
-        required: true
-      ECR_REGISTRY:
-        required: true
+    # secrets:
+    #   AWS_ROLE_TO_ASSUME:
+    #     required: true
+    #   SLACK_WEBHOOK_URL:
+    #     required: true
+    #   LD_CLIENT_ID:
+    #     required: true
+    #   OKTA_CLIENT_ID:
+    #     required: true
+    #   OKTA_SERVER_ID:
+    #     required: true
+    #   STATIC_S3_BUCKET:
+    #     required: true
+    #   ECR_REGISTRY:
+    #     required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
