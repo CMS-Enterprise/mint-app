@@ -59,12 +59,13 @@ const SolutionImplementation = ({
     solutionId?: string | undefined;
   }>();
 
-  const {
-    state: { fromSolutionDetails, isCustomNeed }
-  } = useLocation<{
-    fromSolutionDetails: boolean;
-    isCustomNeed: boolean;
+  const { state } = useLocation<{
+    fromSolutionDetails?: boolean;
+    isCustomNeed?: boolean;
   }>();
+
+  const fromSolutionDetails = state?.fromSolutionDetails;
+  const isCustomNeed = state?.isCustomNeed;
 
   const history = useHistory();
 
