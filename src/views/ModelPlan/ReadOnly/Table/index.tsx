@@ -319,6 +319,7 @@ const Table = ({
       {state.globalFilter && page.length === 0 && (
         <Alert
           type="warning"
+          aria-live="polite"
           heading={t('allModels.noResults.heading', {
             searchTerm: state.globalFilter
           })}
