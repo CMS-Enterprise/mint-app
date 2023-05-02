@@ -26,7 +26,9 @@ services:
 
   db_migrate:
     image: mint-db-migrate:latest
-    platform: linux/amd64
+    build:
+      args:
+        TAG: '9.10' # Multi arch tag, rather than '9.10-alpine'
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
@@ -118,8 +120,7 @@ services:
       "
 
   email:
-    image: dockage/mailcatcher:0.7.1
-    platform: linux/amd64
+    image: dockage/mailcatcher:0.8.2
     ports:
       - "1085:1080"
       - "1030:1025"
