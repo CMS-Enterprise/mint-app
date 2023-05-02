@@ -70,7 +70,7 @@ function isUpdateResponse(
   );
 }
 
-function findChangedSolution(
+export function findChangedSolution(
   solutions: GetOperationalNeedSolutionsType[],
   solution: GetOperationalNeedSolutionsType
 ): boolean {
