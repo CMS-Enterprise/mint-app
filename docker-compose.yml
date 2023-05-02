@@ -138,7 +138,8 @@ services:
     restart: always
 
   opensearch:
-    image: public.ecr.aws/opensearchproject/opensearch:latest
+    # As of 5/2/2023 - Latest available version in AWS Opensearch Service: 2.5.0
+    image: opensearchproject/opensearch:2.5.0
     container_name: opensearch
     environment:
       - cluster.name=opensearch-cluster
