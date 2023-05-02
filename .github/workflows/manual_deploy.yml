@@ -46,6 +46,7 @@ jobs:
       OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
       OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
       OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
   deploy:
     # Only deploy if one of the two cases is true:

@@ -19,6 +19,8 @@ on:
         required: true
       OKTA_TEST_SECRET:
         required: true
+      AWS_ROLE_TO_ASSUME:
+        required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
