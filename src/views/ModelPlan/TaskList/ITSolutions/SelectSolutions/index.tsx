@@ -30,6 +30,7 @@ import {
 import {
   GetOperationalNeed as GetOperationalNeedType,
   GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
+  GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType,
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
@@ -66,6 +67,15 @@ function isUpdateResponse(
   return (
     (update as UpdateOperationalSolutionType).updateOperationalSolution !==
     undefined
+  );
+}
+
+function findChangedSolution(
+  solutions: GetOperationalNeedSolutionsType[],
+  solution: GetOperationalNeedSolutionsType
+): boolean {
+  return !!solutions.find(
+    sol => sol.id === solution.id && sol.needed !== solution.needed
   );
 }
 
@@ -150,15 +160,16 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
             }
           });
         }
-        if (solution.id !== '00000000-0000-0000-0000-000000000000') {
+        if (
+          solution.id !== '00000000-0000-0000-0000-000000000000' &&
+          findChangedSolution(operationalNeed.solutions, solution)
+        ) {
           // Otherwise, set the NEEDED bool for solution
-          // Custom Solution will have a "nameOther", otherwise, it will be empty
           return updateSolution({
             variables: {
               id: solution.id,
               changes: {
-                needed: solution.needed || false,
-                nameOther: solution.nameOther || ''
+                needed: solution.needed || false
               }
             }
           });
