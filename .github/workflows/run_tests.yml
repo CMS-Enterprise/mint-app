@@ -19,7 +19,7 @@ on:
         required: true
       OKTA_TEST_SECRET:
         required: true
-      AWS_ROLE_TO_ASSUME:
+      INFRA_ROLE_TO_ASSUME:
         required: true
 
 env:
