@@ -139,10 +139,7 @@ const OperationalNeedsTable = ({
             }
             const selectSolutionHref =
               row.original.key !== null
-                ? {
-                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`,
-                    state: { isCustomNeed: false }
-                  }
+                ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
                 : {
                     pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
                     state: { isCustomNeed: true }

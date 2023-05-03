@@ -2,7 +2,8 @@ const scrollBlackList: string[] = [
   'read-only',
   'sample-model-plan',
   '/help-and-knowledge/operational-solutions',
-  '?solution='
+  '?solution=',
+  '&solution='
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {

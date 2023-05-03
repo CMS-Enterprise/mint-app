@@ -58,18 +58,7 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-interface LocationState {
-  state: {
-    isCustomNeed: boolean;
-  };
-  isCustomNeed: boolean;
-}
-
-type SelectSolutionsProps = {
-  update?: boolean;
-};
-
-const SelectSolutions = ({ update }: SelectSolutionsProps) => {
+const SelectSolutions = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID, operationalNeedID } = useParams<{
@@ -77,9 +66,11 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     operationalNeedID: string;
   }>();
 
-  const { state } = useLocation<LocationState>();
+  const location = useLocation();
 
-  const isCustomNeed = state?.isCustomNeed;
+  const params = new URLSearchParams(location.search);
+  const isCustomNeed = params.get('isCustomNeed');
+  const update = params.get('update');
 
   const history = useHistory();
 
