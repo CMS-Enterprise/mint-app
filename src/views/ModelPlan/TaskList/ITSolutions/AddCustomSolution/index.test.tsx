@@ -54,8 +54,7 @@ describe('AddCustomSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
-            state: { selectedSolution: null }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
           }
         ]}
       >
@@ -92,8 +91,7 @@ describe('AddCustomSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
-            state: { selectedSolution: null }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
           }
         ]}
       >
@@ -124,8 +122,7 @@ describe('AddCustomSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
-            state: { selectedSolution: null }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
           }
         ]}
       >
@@ -156,8 +153,7 @@ describe('AddCustomSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
-            state: { selectedSolution: null }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
           }
         ]}
       >

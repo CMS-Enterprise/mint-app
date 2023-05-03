@@ -106,11 +106,11 @@ const AddCustomSolution = () => {
     operationalSolutionID?: string;
   }>();
 
-  const {
-    state: { selectedSolution }
-  } = useLocation<{
+  const { state } = useLocation<{
     selectedSolution?: SelectedOpertionalSolutionKeyType;
   }>();
+
+  const selectedSolution = state?.selectedSolution;
 
   // Hash variable to trigger removal of pocName and pocEmail
   const removeDetails = useLocation().hash === '#remove-details';
