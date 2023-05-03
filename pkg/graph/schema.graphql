@@ -27,6 +27,12 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+"""
+Any represents any GraphQL value.
+"""
+scalar Any
+
+
 enum SortDirection {
   ASC
   DESC
@@ -1357,13 +1363,28 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
+type ChangedFields {
+  changes: [Field!]!
+}
+
+type Field {
+  name: String!
+  value: FieldValue!
+}
+
+type FieldValue {
+  new: Any
+  old: Any
+}
+
 type ChangeTableRecord {
   guid: ID!
   tableID: Int!
+  tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
   action: String!
-  fields: Map
+  fields: ChangedFields!
   modifiedDts: Time
   modifiedBy: UserAccount
 }

@@ -172,6 +172,29 @@ func extractChangeTableRecords(
 			return nil, fmt.Errorf("error unmarshaling JSON into ChangeTableRecord: %s", err)
 		}
 
+		// Process the fields
+		fieldsMap, ok := source["fields"].(map[string]interface{})
+		if ok {
+			for key, value := range fieldsMap {
+				fieldValueBytes, err := json.Marshal(value)
+				if err != nil {
+					logger.Error("Error marshaling field value into JSON", zap.Error(err))
+					return nil, fmt.Errorf("error marshaling field value into JSON: %s", err)
+				}
+
+				var fieldValue models.FieldValue
+				if err := json.Unmarshal(fieldValueBytes, &fieldValue); err != nil {
+					logger.Error("Error unmarshalling JSON into FieldValue", zap.Error(err))
+					return nil, fmt.Errorf("error unmarshaling JSON into FieldValue: %s", err)
+				}
+
+				record.Fields.Changes = append(record.Fields.Changes, &models.Field{
+					Name:  key,
+					Value: fieldValue,
+				})
+			}
+		}
+
 		changeTableRecords = append(changeTableRecords, &record)
 	}
 	return changeTableRecords, nil
