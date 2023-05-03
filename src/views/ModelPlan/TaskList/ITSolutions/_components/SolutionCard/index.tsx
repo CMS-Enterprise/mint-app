@@ -65,9 +65,11 @@ const SolutionCard = ({
 
   const solutionMap = findSolutionByKey(solution.key, helpSolutions);
 
-  const detailRoute = `${initLocation}${location.search}${
-    location.search ? '&' : '?'
-  }solution=${solutionMap?.route || ''}&section=about`;
+  const detailRoute = solutionMap?.route
+    ? `${initLocation}${location.search}${
+        location.search ? '&' : '?'
+      }solution=${solutionMap?.route || ''}&section=about`
+    : `${initLocation}${location.search}`;
 
   return (
     <>
