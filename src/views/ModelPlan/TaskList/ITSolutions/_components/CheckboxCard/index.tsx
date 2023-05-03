@@ -45,6 +45,7 @@ const CheckboxCard = ({
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: hk } = useTranslation('helpAndKnowledge');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -70,10 +71,6 @@ const CheckboxCard = ({
   const detailRoute = `${initLocation}?solution=${
     solutionMap?.route || ''
   }&section=about`;
-
-  // TODO: replace with real solution data once populated
-  const tempDescription: string =
-    'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
 
   return (
     <Grid tablet={{ col: 6 }}>
@@ -101,26 +98,48 @@ const CheckboxCard = ({
           <h3 className="margin-y-2">{solution.nameOther || solution.name}</h3>
 
           <div className="margin-bottom-2 solutions-checkbox__body-text">
-            {/* TODO: replace tempDescription with real data */}
-            {tempDescription}
-            {/* {solution?.description} */}
+            {solutionMap &&
+              hk(`solutions.${solutionMap.key}.about.description`)}
           </div>
 
-          {solution.pocName && (
-            <>
+          {solutionMap?.pointsOfContact[0].name ? (
+            <Grid
+              tablet={{ col: 12 }}
+              className={classNames({ 'margin-bottom-2': solution.name })}
+            >
+              <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+              <p className="margin-y-0">
+                {solutionMap?.pointsOfContact[0].name}
+              </p>
+
+              <Link
+                aria-label={h('contactInfo.sendAnEmail')}
+                className="line-height-body-5 display-flex flex-align-center"
+                href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
+                target="_blank"
+              >
+                <div>{solutionMap?.pointsOfContact[0].email}</div>
+              </Link>
+            </Grid>
+          ) : (
+            <Grid
+              tablet={{ col: 12 }}
+              className={classNames({ 'margin-bottom-2': solution.name })}
+            >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
               <p className="margin-y-0">{solution.pocName}</p>
 
               <Link
                 aria-label={h('contactInfo.sendAnEmail')}
-                className="line-height-body-5"
+                className="line-height-body-5 display-flex flex-align-center"
                 href={`mailto:${solution.pocEmail}`}
                 target="_blank"
               >
-                <div className="margin-bottom-2">{solution.pocEmail}</div>
+                <div>{solution.pocEmail}</div>
               </Link>
-            </>
+            </Grid>
           )}
 
           <Divider />
