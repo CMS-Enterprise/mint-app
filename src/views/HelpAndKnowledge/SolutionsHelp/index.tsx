@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
 import OperationalSolutionCategories from 'data/operationalSolutionCategories';
-import usePrevLocation from 'hooks/usePrevious';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
@@ -71,11 +71,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const params = new URLSearchParams(location.search);
 
   const category = params.get('category');
-  const solution = params.get('solution');
   const page = params.get('page');
 
-  const prevLocation = usePrevLocation(location);
-  const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
+  // Get the solution map details from solution route param
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState(
+    null
+  );
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
@@ -108,7 +109,10 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     : findCategoryMapByRouteParam(category, helpSolutions);
 
   // Solution to render in modal
-  const selectedSolution = findSolutionByRouteParam(solution, helpSolutions);
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.route || null,
+    helpSolutions
+  );
 
   return (
     <div className={classNames(className)}>
