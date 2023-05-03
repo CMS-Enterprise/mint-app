@@ -3,7 +3,7 @@ CheckboxCard component for selecting needed IT solutions
 Integrated with Formik
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
@@ -19,8 +19,10 @@ import { Field } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
+import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import {
   helpSolutions,
   HelpSolutionType
@@ -52,10 +54,22 @@ const CheckboxCard = ({
 
   const location = useLocation();
 
+  const [initLocation] = useState<string>(location.pathname);
+
+  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
+    solution.key
+  );
+
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
     ? `it-solutions-${solution?.nameOther?.toLowerCase().replace(' ', '-')}`
     : `it-solutions-${solution?.key?.toLowerCase().replace(' ', '-')}`;
+
+  const solutionMap = findSolutionByKey(solution.key, helpSolutions);
+
+  const detailRoute = `${initLocation}?solution=${
+    solutionMap?.route || ''
+  }&section=about`;
 
   // TODO: replace with real solution data once populated
   const tempDescription: string =
@@ -63,6 +77,14 @@ const CheckboxCard = ({
 
   return (
     <Grid tablet={{ col: 6 }}>
+      {renderModal && selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+        />
+      )}
+
       <Card className={classNames(className)}>
         <div className="solutions-checkbox__header padding-2">
           <Field
@@ -119,11 +141,7 @@ const CheckboxCard = ({
           ) : (
             <UswdsReactLink
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions${
-                location.search
-              }${location.search ? '&' : '?'}solution=${
-                findSolutionByKey(solution.key, helpSolutions)?.route || ''
-              }&section=about`}
+              to={detailRoute}
             >
               {t('aboutSolution')}
               <IconArrowForward className="margin-left-1" />

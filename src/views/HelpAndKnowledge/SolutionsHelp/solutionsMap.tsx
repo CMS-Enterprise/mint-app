@@ -244,7 +244,7 @@ export const helpSolutions: HelpSolutionType[] = [
     components: {}
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.CDX,
     key: 'centralizedDataExhange',
     route: 'centralized-data-exchange',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
@@ -309,7 +309,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.CMS_BOX,
     key: 'cmsBox',
     route: 'cms-box',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
@@ -325,7 +325,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.CMS_QUALTRICS,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
     categories: [OperationalSolutionCategories.APPLICATIONS],
@@ -374,7 +374,7 @@ export const helpSolutions: HelpSolutionType[] = [
     components: {}
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.CPI_VETTING,
     key: 'cpiVetting',
     route: 'cpi-vetting',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
@@ -392,7 +392,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.EFT,
     key: 'electronicFileTransfer',
     route: 'electronic-file-transfer',
     categories: [OperationalSolutionCategories.DATA_EXCHANGE],
@@ -411,7 +411,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.EDFR,
     key: 'expandedDataFeedback',
     route: 'expanded-data-feedback-reporting',
     categories: [OperationalSolutionCategories.DATA_REPORTING],
@@ -461,7 +461,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.GS,
     key: 'grantSolutions',
     route: 'grant-solutions',
     categories: [
@@ -510,7 +510,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.HDR,
     key: 'healthDataReporting',
     route: 'health-data-reporting',
     categories: [OperationalSolutionCategories.QUALITY],
@@ -640,7 +640,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.LDG,
     key: 'learningAndDiffusion',
     route: 'learning-and-diffusion-group',
     categories: [OperationalSolutionCategories.LEARNING],
@@ -673,7 +673,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.LV,
     key: 'legalVertical',
     route: 'legal-vertical',
     categories: [OperationalSolutionCategories.LEGAL],
@@ -826,7 +826,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.QV,
     key: 'qualityVertical',
     route: 'quality-vertical',
     categories: [OperationalSolutionCategories.QUALITY],
@@ -954,7 +954,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.LOI,
     key: 'salesforceLOI',
     route: 'salesforce-letter-of-intent',
     categories: [OperationalSolutionCategories.APPLICATIONS],
@@ -992,7 +992,7 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
-    enum: null,
+    enum: OperationalSolutionKey.POST_PORTAL,
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
