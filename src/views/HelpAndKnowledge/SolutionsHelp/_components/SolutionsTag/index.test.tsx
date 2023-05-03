@@ -10,7 +10,7 @@ import SolutionsTag from './index';
 
 describe('Operation Solution Help Tag', () => {
   it('rendered correct information without query', () => {
-    const { getByLabelText } = render(
+    const { getByTestId } = render(
       <MemoryRouter
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
@@ -23,7 +23,7 @@ describe('Operation Solution Help Tag', () => {
       </MemoryRouter>
     );
 
-    const tag = getByLabelText('Category tag link');
+    const tag = getByTestId('solutions-tag');
 
     expect(tag).toBeInTheDocument();
     expect(tag).toHaveTextContent('Data reporting');

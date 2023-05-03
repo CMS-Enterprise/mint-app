@@ -46,8 +46,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Data reporting category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-reporting"
                     >
                       <span
@@ -84,6 +85,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: 4innovation"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
                   >
@@ -148,8 +150,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Data reporting category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-reporting"
                     >
                       <span
@@ -186,6 +189,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: Accountable Care Organization - Operational System"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=about"
                   >
@@ -250,8 +254,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Medicare Advantage and Part D category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                     >
                       <span
@@ -288,6 +293,7 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: Automated Plan Payment System"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=automated-plan-payment-system&section=about"
                   >
@@ -352,8 +358,9 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Data exchange category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
                       <span
@@ -394,6 +401,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: Centralized Data Exchange"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
                   >
@@ -458,8 +466,9 @@ The business function of CDX is a centralized data exchange to enable interopera
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Databases and data management category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
                     >
                       <span
@@ -500,6 +509,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: Chronic Conditions Warehouse"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=chronic-conditions-warehouse&section=about"
                   >
@@ -559,8 +569,9 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Data exchange category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
                       <span
@@ -597,6 +608,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: CMS Box"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=cms-box&section=about"
                   >
@@ -656,8 +668,9 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Applications category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications"
                     >
                       <span
@@ -694,6 +707,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: CMS Qualtrics"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=cms-qualtrics&section=about"
                   >
@@ -758,8 +772,9 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Help desks category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=help-desks"
                     >
                       <span
@@ -796,6 +811,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: Consolidated Business Operations Support Center"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=consolidated-business-operations-support-center&section=about"
                   >
@@ -855,8 +871,9 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
-                      aria-label="Category tag link"
+                      aria-label="Articles under the Data exchange category"
                       class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data-exchange"
                     >
                       <span
@@ -897,6 +914,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
                     class="mint-divider"
                   />
                   <a
+                    aria-label="Click to learn more about this solution: CPI Vetting"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=cpi-vetting&section=about"
                   >

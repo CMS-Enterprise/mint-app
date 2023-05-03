@@ -415,6 +415,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="participants-and-providers-selection-method"
+        id="label-participants-and-providers-selection-method"
       >
         How will you select participants? Select all that appy.
       </label>

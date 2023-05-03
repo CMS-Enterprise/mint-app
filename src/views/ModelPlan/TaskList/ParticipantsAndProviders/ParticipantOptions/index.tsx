@@ -393,7 +393,10 @@ export const ParticipantOptions = () => {
                   error={!!flatErrors.selectionMethod}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="participants-and-providers-selection-method">
+                  <Label
+                    htmlFor="participants-and-providers-selection-method"
+                    id="label-participants-and-providers-selection-method"
+                  >
                     {t('howWillYouSelect')}
                   </Label>
                   {itSolutionsStarted && (
@@ -411,6 +414,7 @@ export const ParticipantOptions = () => {
                     as={MultiSelect}
                     id="participants-and-providers-selection-method"
                     name="selectionMethod"
+                    arialabel="label-participants-and-providers-selection-method"
                     options={mapMultiSelectOptions(
                       translateParticipantSelectiontType,
                       ParticipantSelectionType

@@ -47,6 +47,7 @@ exports[`RelatedArticle matches the snapshot 1`] = `
               href="/help-and-knowledge/getting-started"
             >
               <span
+                aria-label="Articles under the Getting started category"
                 class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
                 data-testid="tag"
               >
@@ -65,12 +66,13 @@ exports[`RelatedArticle matches the snapshot 1`] = `
               class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
               data-testid="CardFooter"
             >
-              <a
+              <button
+                aria-label="Read Sample Model Plan article"
                 class="usa-button usa-button--outline"
-                href="/"
+                type="button"
               >
                 Read
-              </a>
+              </button>
             </div>
           </div>
         </li>

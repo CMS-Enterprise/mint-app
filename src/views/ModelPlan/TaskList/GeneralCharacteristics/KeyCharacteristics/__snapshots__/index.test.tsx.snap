@@ -247,6 +247,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="plan-characteristics-key-characteristics"
+        id="label-plan-characteristics-key-characteristics"
       >
         What are the model key characteristics? Select all that apply.
       </label>
@@ -285,6 +286,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
                   aria-autocomplete="list"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-plan-characteristics-key-characteristics"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"

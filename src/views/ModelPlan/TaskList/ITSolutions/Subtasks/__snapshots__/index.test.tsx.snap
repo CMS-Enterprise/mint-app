@@ -122,6 +122,7 @@ exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
                 >
                   Subtask name
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *

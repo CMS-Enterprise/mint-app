@@ -305,6 +305,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         class="usa-label usa-legend margin-top-0"
         data-testid="label"
         for="ops-eval-and-learning-icd-due-date"
+        id="label-ops-eval-and-learning-icd-due-date"
       >
         Draft ICD required by
       </label>
@@ -323,6 +324,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         >
           <input
             aria-hidden="true"
+            aria-labelledby="label-ops-eval-and-learning-icd-due-date appointment-date-hint"
             class="usa-input usa-sr-only usa-date-picker__internal-input"
             data-testid="date-picker-internal-input"
             error="0"
@@ -338,6 +340,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
             tabindex="-1"
           >
             <input
+              aria-labelledby="label-ops-eval-and-learning-icd-due-date appointment-date-hint"
               class="usa-input usa-date-picker__external-input"
               data-testid="date-picker-external-input"
               error="0"

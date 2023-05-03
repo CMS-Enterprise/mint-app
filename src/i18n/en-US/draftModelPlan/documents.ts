@@ -72,6 +72,7 @@ const documents = {
   documentUpload: 'Document upload',
   selectedFile: 'Selected file',
   changeFile: 'Change file',
+  ariaLabelChangeFile: '-- Click to change file',
   fileSelected: 'File <1>{{file}}</1> selected.',
   dragFile: 'Drag file here or ',
   chooseFromFolder: 'choose from folder',
