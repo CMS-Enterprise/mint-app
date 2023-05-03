@@ -148,12 +148,12 @@ exports[`AddCustomSolution matches snapshot 1`] = `
             >
               <div
                 class="usa-form-group margin-top-3"
-                data-scroll="otherHeader"
+                data-scroll="nameOther"
               >
                 <label
                   class="usa-label"
                   data-testid="label"
-                  for="it-solution-other-header"
+                  for="it-solution-custom-name-other"
                 >
                   Please add a name for your solution or contractor
                   <span
@@ -164,10 +164,10 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                 </label>
                 <input
                   class="usa-input"
-                  data-testid="it-solution-other-header"
-                  id="it-solution-other-header"
+                  data-testid="it-solution-custom-name-other"
+                  id="it-solution-custom-name-other"
                   maxlength="50"
-                  name="otherHeader"
+                  name="nameOther"
                   value=""
                 />
               </div>
