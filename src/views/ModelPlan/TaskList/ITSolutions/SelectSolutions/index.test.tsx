@@ -68,8 +68,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
           }
         ]}
       >
@@ -116,8 +115,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
           }
         ]}
       >

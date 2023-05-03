@@ -71,11 +71,11 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     operationalNeedID: string;
   }>();
 
-  const {
-    state: { isCustomNeed }
-  } = useLocation<{
+  const { state } = useLocation<{
     isCustomNeed?: boolean;
   }>();
+
+  const isCustomNeed = state?.isCustomNeed;
 
   const history = useHistory();
 
