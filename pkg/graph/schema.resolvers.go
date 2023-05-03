@@ -446,20 +446,11 @@ func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context,
 	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
 }
 
-// CreateExistingModelLink is the resolver for the createExistingModelLink field.
-func (r *mutationResolver) CreateExistingModelLink(ctx context.Context, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) (*models.ExistingModelLink, error) {
+// UpdateExistingModelLinks is the resolver for the updateExistingModelLinks field.
+func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-
-	return resolvers.ExistingModelLinkCreate(logger, r.store, principal, modelPlanID, existingModelID, currentModelPlanID)
-}
-
-// DeleteExistingModelLink is the resolver for the deleteExistingModelLink field.
-func (r *mutationResolver) DeleteExistingModelLink(ctx context.Context, id *uuid.UUID) (*models.ExistingModelLink, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	return resolvers.ExistingModelLinkDelete(logger, r.store, principal, *id)
+	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
 }
 
 // Solutions is the resolver for the solutions field.

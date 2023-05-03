@@ -1572,10 +1572,7 @@ updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput
 deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
-createExistingModelLink(modelPlanID: UUID!, existingModelID: Int, currentModelPlanID: UUID): ExistingModelLink!
-@hasRole(role: MINT_USER)
-
-deleteExistingModelLink(id: UUID): ExistingModelLink!
+updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 }
 

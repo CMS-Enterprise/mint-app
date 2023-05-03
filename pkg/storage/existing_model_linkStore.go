@@ -16,6 +16,9 @@ import (
 //go:embed SQL/existing_model_link/create.sql
 var existingModelLinkCreateSQL string
 
+//go:embed SQL/existing_model_link/merge.sql
+var existingModelLinkMergeSQL string
+
 //go:embed SQL/existing_model_link/get_by_id.sql
 var existingModelLinkGetByIDSQL string
 
@@ -59,6 +62,42 @@ func (s *Store) ExistingModelLinkCreate(logger *zap.Logger, link *models.Existin
 		return nil, genericmodel.HandleModelCreationError(logger, err, link)
 	}
 	return &newlink, nil
+
+}
+
+// ExistingModelLinksUpdate creates a new links that don't yet exist, deletes ones that are no longer provided,
+func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
+	// existingIDs := convertToStringArray(existingModelIDs)
+	currentModelPlanIDsArray := convertToStringArray(currentModelPlanIDs)
+	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
+	arg := map[string]interface{}{
+		"model_plan_id":          modelPlanID,
+		"current_model_plan_ids": currentModelPlanIDsArray,
+		"existing_model_ids":     existingModelIDsArray,
+		"created_by":             userID,
+	}
+	linkSlice := []*models.ExistingModelLink{}
+	statement, err := s.db.PrepareNamed(existingModelLinkMergeSQL)
+	if err != nil {
+		return nil, err //TODO: revisit error handling
+	}
+
+	err = statement.Select(&linkSlice, arg)
+	if err != nil {
+		return nil, err //TODO: revisit error handling
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
+	return linkSlice, nil
 
 }
 

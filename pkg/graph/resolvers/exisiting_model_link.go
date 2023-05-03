@@ -30,10 +30,26 @@ func ExistingModelLinkGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 	return result.([]*models.ExistingModelLink), nil
 }
 
+// ExistingModelLinksUpdate creates or deletes existing model links based on the list provided.
+func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, nil, nil) // this is for access check
+	err := BaseStructPreCreate(logger, link, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	retLink, err := store.ExistingModelLinksUpdate(logger, principal.Account().ID, modelPlanID, existingModelIDs, currentModelPlanIDs)
+	if err != nil {
+		return nil, err
+	}
+	return retLink, err
+
+}
+
 // ExistingModelLinkCreate creates a new existing model link
 func ExistingModelLinkCreate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) (*models.ExistingModelLink, error) {
 	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, existingModelID, currentModelPlanID)
-	err := BaseStructPreCreate(logger, link, principal, store, false)
+	err := BaseStructPreCreate(logger, link, principal, store, true)
 	if err != nil {
 		return nil, err
 	}

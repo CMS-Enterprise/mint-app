@@ -192,7 +192,6 @@ type ComplexityRoot struct {
 		AddPlanFavorite                    func(childComplexity int, modelPlanID uuid.UUID) int
 		AgreeToNda                         func(childComplexity int, agree bool) int
 		CreateDiscussionReply              func(childComplexity int, input model.DiscussionReplyCreateInput) int
-		CreateExistingModelLink            func(childComplexity int, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) int
 		CreateModelPlan                    func(childComplexity int, modelName string) int
 		CreateOperationalSolution          func(childComplexity int, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) int
 		CreateOperationalSolutionSubtasks  func(childComplexity int, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) int
@@ -201,7 +200,6 @@ type ComplexityRoot struct {
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocumentSolutionLinks    func(childComplexity int, solutionID uuid.UUID, documentIDs []uuid.UUID) int
 		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
-		DeleteExistingModelLink            func(childComplexity int, id *uuid.UUID) int
 		DeleteOperationalSolutionSubtask   func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
 		DeletePlanCrTdl                    func(childComplexity int, id uuid.UUID) int
@@ -214,6 +212,7 @@ type ComplexityRoot struct {
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID    func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdateExistingModelLinks           func(childComplexity int, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateOperationalSolution          func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateOperationalSolutionSubtasks  func(childComplexity int, inputs []*model.UpdateOperationalSolutionSubtaskInput) int
@@ -947,8 +946,7 @@ type MutationResolver interface {
 	CreateOperationalSolutionSubtasks(ctx context.Context, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error)
 	DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error)
-	CreateExistingModelLink(ctx context.Context, modelPlanID uuid.UUID, existingModelID *int, currentModelPlanID *uuid.UUID) (*models.ExistingModelLink, error)
-	DeleteExistingModelLink(ctx context.Context, id *uuid.UUID) (*models.ExistingModelLink, error)
+	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error)
 }
 type OperationalNeedResolver interface {
 	Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error)
@@ -1806,18 +1804,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyCreateInput)), true
 
-	case "Mutation.createExistingModelLink":
-		if e.complexity.Mutation.CreateExistingModelLink == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createExistingModelLink_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreateExistingModelLink(childComplexity, args["modelPlanID"].(uuid.UUID), args["existingModelID"].(*int), args["currentModelPlanID"].(*uuid.UUID)), true
-
 	case "Mutation.createModelPlan":
 		if e.complexity.Mutation.CreateModelPlan == nil {
 			break
@@ -1913,18 +1899,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeleteDiscussionReply(childComplexity, args["id"].(uuid.UUID)), true
-
-	case "Mutation.deleteExistingModelLink":
-		if e.complexity.Mutation.DeleteExistingModelLink == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteExistingModelLink_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteExistingModelLink(childComplexity, args["id"].(*uuid.UUID)), true
 
 	case "Mutation.deleteOperationalSolutionSubtask":
 		if e.complexity.Mutation.DeleteOperationalSolutionSubtask == nil {
@@ -2069,6 +2043,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateDiscussionReply(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "Mutation.updateExistingModelLinks":
+		if e.complexity.Mutation.UpdateExistingModelLinks == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateExistingModelLinks_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateExistingModelLinks(childComplexity, args["modelPlanID"].(uuid.UUID), args["existingModelIDs"].([]int), args["currentModelPlanIDs"].([]uuid.UUID)), true
 
 	case "Mutation.updateModelPlan":
 		if e.complexity.Mutation.UpdateModelPlan == nil {
@@ -8052,10 +8038,7 @@ updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput
 deleteOperationalSolutionSubtask(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
-createExistingModelLink(modelPlanID: UUID!, existingModelID: Int, currentModelPlanID: UUID): ExistingModelLink!
-@hasRole(role: MINT_USER)
-
-deleteExistingModelLink(id: UUID): ExistingModelLink!
+updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 }
 
@@ -8803,39 +8786,6 @@ func (ec *executionContext) field_Mutation_createDiscussionReply_args(ctx contex
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createExistingModelLink_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["modelPlanID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["modelPlanID"] = arg0
-	var arg1 *int
-	if tmp, ok := rawArgs["existingModelID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("existingModelID"))
-		arg1, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["existingModelID"] = arg1
-	var arg2 *uuid.UUID
-	if tmp, ok := rawArgs["currentModelPlanID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currentModelPlanID"))
-		arg2, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["currentModelPlanID"] = arg2
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_createModelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -8984,21 +8934,6 @@ func (ec *executionContext) field_Mutation_deleteDiscussionReply_args(ctx contex
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
 		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_deleteExistingModelLink_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 *uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -9238,6 +9173,39 @@ func (ec *executionContext) field_Mutation_updateDiscussionReply_args(ctx contex
 		}
 	}
 	args["changes"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateExistingModelLinks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	var arg1 []int
+	if tmp, ok := rawArgs["existingModelIDs"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("existingModelIDs"))
+		arg1, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["existingModelIDs"] = arg1
+	var arg2 []uuid.UUID
+	if tmp, ok := rawArgs["currentModelPlanIDs"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currentModelPlanIDs"))
+		arg2, err = ec.unmarshalOUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["currentModelPlanIDs"] = arg2
 	return args, nil
 }
 
@@ -19821,8 +19789,8 @@ func (ec *executionContext) fieldContext_Mutation_deleteOperationalSolutionSubta
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createExistingModelLink(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createExistingModelLink(ctx, field)
+func (ec *executionContext) _Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateExistingModelLinks(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -19836,7 +19804,7 @@ func (ec *executionContext) _Mutation_createExistingModelLink(ctx context.Contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateExistingModelLink(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["existingModelID"].(*int), fc.Args["currentModelPlanID"].(*uuid.UUID))
+			return ec.resolvers.Mutation().UpdateExistingModelLinks(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["existingModelIDs"].([]int), fc.Args["currentModelPlanIDs"].([]uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -19856,10 +19824,10 @@ func (ec *executionContext) _Mutation_createExistingModelLink(ctx context.Contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.ExistingModelLink); ok {
+		if data, ok := tmp.([]*models.ExistingModelLink); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ExistingModelLink`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ExistingModelLink`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19871,12 +19839,12 @@ func (ec *executionContext) _Mutation_createExistingModelLink(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.ExistingModelLink)
+	res := resTmp.([]*models.ExistingModelLink)
 	fc.Result = res
-	return ec.marshalNExistingModelLink2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLink(ctx, field.Selections, res)
+	return ec.marshalNExistingModelLink2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinkᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_createExistingModelLink(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -19919,112 +19887,7 @@ func (ec *executionContext) fieldContext_Mutation_createExistingModelLink(ctx co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createExistingModelLink_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deleteExistingModelLink(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteExistingModelLink(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteExistingModelLink(rctx, fc.Args["id"].(*uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.ExistingModelLink); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ExistingModelLink`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ExistingModelLink)
-	fc.Result = res
-	return ec.marshalNExistingModelLink2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLink(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_deleteExistingModelLink(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_ExistingModelLink_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_ExistingModelLink_modelPlanID(ctx, field)
-			case "existingModelID":
-				return ec.fieldContext_ExistingModelLink_existingModelID(ctx, field)
-			case "existingModel":
-				return ec.fieldContext_ExistingModelLink_existingModel(ctx, field)
-			case "currentModelPlanID":
-				return ec.fieldContext_ExistingModelLink_currentModelPlanID(ctx, field)
-			case "currentModelPlan":
-				return ec.fieldContext_ExistingModelLink_currentModelPlan(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_ExistingModelLink_createdBy(ctx, field)
-			case "createdByUserAccount":
-				return ec.fieldContext_ExistingModelLink_createdByUserAccount(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_ExistingModelLink_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_ExistingModelLink_modifiedBy(ctx, field)
-			case "modifiedByUserAccount":
-				return ec.fieldContext_ExistingModelLink_modifiedByUserAccount(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_ExistingModelLink_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type ExistingModelLink", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteExistingModelLink_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -51002,19 +50865,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "createExistingModelLink":
+		case "updateExistingModelLinks":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createExistingModelLink(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "deleteExistingModelLink":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteExistingModelLink(ctx, field)
+				return ec._Mutation_updateExistingModelLinks(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -63705,6 +63559,44 @@ func (ec *executionContext) unmarshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(c
 func (ec *executionContext) marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
 	res := models.MarshalUUID(v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx context.Context, v interface{}) ([]uuid.UUID, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]uuid.UUID, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx context.Context, sel ast.SelectionSet, v []uuid.UUID) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, sel, v[i])
+	}
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (*uuid.UUID, error) {
