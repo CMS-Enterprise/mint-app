@@ -60,16 +60,6 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-// Type guard for mutation promise reponse of both create and update
-function isUpdateResponse(
-  update: UpdateOperationalSolutionType | CreateOperationalSolutionType
-): update is UpdateOperationalSolutionType {
-  return (
-    (update as UpdateOperationalSolutionType).updateOperationalSolution !==
-    undefined
-  );
-}
-
 export function findChangedSolution(
   solutions: GetOperationalNeedSolutionsType[],
   solution: GetOperationalNeedSolutionsType
@@ -181,32 +171,16 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
         const errors = responses?.find(result => result?.errors);
 
         if (responses && !errors) {
-          if (
-            responses.find(response => {
-              if (!response?.data) return false;
-              let neededFound;
-              if (isUpdateResponse(response.data)) {
-                neededFound = response?.data?.updateOperationalSolution?.needed;
-              } else {
-                neededFound = response?.data?.createOperationalSolution?.needed;
-              }
-              return neededFound;
-            }) ||
-            update
-          ) {
-            showMessageOnNextPage(removedSolutions);
-            history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
-                update ? 'update-status' : 'solution-implementation-details'
-              }`,
-              {
-                fromSolutionDetails: false,
-                isCustomNeed
-              }
-            );
-          } else {
-            history.push(`/models/${modelID}/task-list/it-solutions`);
-          }
+          showMessageOnNextPage(removedSolutions);
+          history.push(
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
+              update ? 'update-status' : 'solution-implementation-details'
+            }`,
+            {
+              fromSolutionDetails: false,
+              isCustomNeed
+            }
+          );
         } else if (errors) {
           setMutationError(true);
         }
