@@ -25,11 +25,12 @@ type SearchQueryTemplate string
 
 // These are the different search query template enums
 const (
-	FreeTextSearchTemplate    SearchQueryTemplate = "FreeTextSearch"
-	ModelPlanIDSearchTemplate SearchQueryTemplate = "ModelPlanIDSearch"
-	DateRangeSearchTemplate   SearchQueryTemplate = "DateRangeSearch"
-	ActorSearchTemplate       SearchQueryTemplate = "ActorSearch"
-	ModelStatusSearchTemplate SearchQueryTemplate = "ModelStatusSearch"
+	FreeTextSearchTemplate     SearchQueryTemplate = "FreeTextSearch"
+	ModelPlanIDSearchTemplate  SearchQueryTemplate = "ModelPlanIDSearch"
+	DateRangeSearchTemplate    SearchQueryTemplate = "DateRangeSearch"
+	ActorSearchTemplate        SearchQueryTemplate = "ActorSearch"
+	ModelStatusSearchTemplate  SearchQueryTemplate = "ModelStatusSearch"
+	ModelIDDatesSearchTemplate SearchQueryTemplate = "ModelIDDatesSearch"
 )
 
 // Embed the template files
@@ -48,12 +49,16 @@ var actorSearchTmpl string
 //go:embed searchquerytemplates/by_model_status.tmpl
 var modelStatusSearchTmpl string
 
+//go:embed searchquerytemplates/by_model_id_dates.tmpl
+var modelIDDatesSearchTmpl string
+
 var templateFileMapping = map[SearchQueryTemplate]string{
-	FreeTextSearchTemplate:    freeTextSearchTmpl,
-	ModelPlanIDSearchTemplate: modelPlanIDSearchTmpl,
-	DateRangeSearchTemplate:   dateRangeSearchTmpl,
-	ActorSearchTemplate:       actorSearchTmpl,
-	ModelStatusSearchTemplate: modelStatusSearchTmpl,
+	FreeTextSearchTemplate:     freeTextSearchTmpl,
+	ModelPlanIDSearchTemplate:  modelPlanIDSearchTmpl,
+	DateRangeSearchTemplate:    dateRangeSearchTmpl,
+	ActorSearchTemplate:        actorSearchTmpl,
+	ModelStatusSearchTemplate:  modelStatusSearchTmpl,
+	ModelIDDatesSearchTemplate: modelIDDatesSearchTmpl,
 }
 
 var templateCache = make(map[SearchQueryTemplate]*template.Template)
@@ -295,6 +300,31 @@ func SearchChangeTableByDateRange(
 	query, err := buildSearchQuery(DateRangeSearchTemplate, map[string]interface{}{
 		"StartDate": startDate.Format(time.RFC3339),
 		"EndDate":   endDate.Format(time.RFC3339),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return searchChangeTableBaseWithQueryString(logger, searchClient, query, limit, offset, "modified_dts:desc")
+}
+
+// SearchModelPlanChangesByDateRange searches the change table for records with a modified_dts within the specified
+// date range and matching the given model plan ID. This is used to find all changes to a specific model plan across
+// a multitude of record types, e.g. all changes to a specific model plan's model, associated discussions, attached
+// documents, etc.
+func SearchModelPlanChangesByDateRange(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	modelPlanID uuid.UUID,
+	startDate time.Time,
+	endDate time.Time,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	query, err := buildSearchQuery(ModelIDDatesSearchTemplate, map[string]interface{}{
+		"ModelPlanID": modelPlanID.String(),
+		"StartDate":   startDate.Format(time.RFC3339),
+		"EndDate":     endDate.Format(time.RFC3339),
 	})
 	if err != nil {
 		return nil, err
