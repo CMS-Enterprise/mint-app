@@ -159,7 +159,6 @@ export default function OktaUserSelect({
   disabled,
   autoSearch
 }: OktaUserSelectProps) {
-  const { t } = useTranslation();
   // If autoSearch, set name as initial search term
   const [searchTerm, setSearchTerm] = useState<string | undefined>(
     value ? formatLabel(value) : undefined
@@ -339,11 +338,6 @@ export default function OktaUserSelect({
       }}
       defaultInputValue={searchTerm}
       inputValue={searchTerm}
-      noOptionsMessage={() => (
-        <div className="margin-y-0" aria-live="polite">
-          {t('No results')}
-        </div>
-      )}
       classNamePrefix="cedar-contact-select"
       instanceId={id}
       placeholder={false}
