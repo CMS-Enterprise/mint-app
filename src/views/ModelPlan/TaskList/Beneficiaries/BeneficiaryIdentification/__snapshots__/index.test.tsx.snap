@@ -117,6 +117,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="beneficiaries-beneficiaries"
+              id="label-beneficiaries-beneficiaries"
             >
               Who are the beneficiaries of this model? Select all that apply.
             </label>
@@ -155,6 +156,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-beneficiaries-beneficiaries"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -336,10 +338,12 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-note"
+                  id="label-beneficiaries-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-note hint-beneficiaries-note"
                   class="usa-textarea"
                   data-testid="beneficiaries-note"
                   id="beneficiaries-note"
@@ -395,6 +399,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   How so?
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-dual-eligibility-how hint-beneficiaries-dual-eligibility-how"
                   class="height-15 usa-textarea"
                   data-testid="beneficiaries-dual-eligibility-how"
                   id="beneficiaries-dual-eligibility-how"
@@ -449,10 +454,12 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-dual-eligibility-note"
+                  id="label-beneficiaries-dual-eligibility-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-dual-eligibility-note hint-beneficiaries-dual-eligibility-note"
                   class="usa-textarea"
                   data-testid="beneficiaries-dual-eligibility-note"
                   id="beneficiaries-dual-eligibility-note"
@@ -508,6 +515,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   What are the exclusionary criteria?
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-exclude-criteria hint-beneficiaries-exclude-criteria"
                   class="height-15 usa-textarea"
                   data-testid="beneficiaries-exclude-criteria"
                   id="beneficiaries-exclude-criteria"
@@ -562,10 +570,12 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-exclude-note"
+                  id="label-beneficiaries-exclude-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-exclude-note hint-beneficiaries-exclude-note"
                   class="usa-textarea"
                   data-testid="beneficiaries-exclude-note"
                   id="beneficiaries-exclude-note"

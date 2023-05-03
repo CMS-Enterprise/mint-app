@@ -157,6 +157,7 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                 >
                   Please add a name for your solution or contractor
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *

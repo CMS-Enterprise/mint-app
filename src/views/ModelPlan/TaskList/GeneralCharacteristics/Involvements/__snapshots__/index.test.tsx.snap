@@ -227,6 +227,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
               How so?
             </label>
             <textarea
+              aria-labelledby="label-plan-characteristics-additional-services-description hint-plan-characteristics-additional-services-description"
               class="margin-top-0 height-15 usa-textarea"
               data-testid="plan-characteristics-additional-services-description"
               id="plan-characteristics-additional-services-description"

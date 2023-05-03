@@ -35,6 +35,7 @@ const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
         <UswdsReactLink
           className="display-flex flex-align-center"
           to={`/help-and-knowledge/operational-solutions?category=${route}`}
+          aria-label={`${t('learnMore')} about ${category}`}
         >
           {t('learnMore')}
           <IconArrowForward className="margin-left-1" />
