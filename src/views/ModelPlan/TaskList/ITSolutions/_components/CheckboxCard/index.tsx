@@ -5,7 +5,7 @@ Integrated with Formik
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -17,8 +17,14 @@ import {
 import classNames from 'classnames';
 import { Field } from 'formik';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
+import { OperationalSolutionKey } from 'types/graphql-global-types';
+import {
+  helpSolutions,
+  HelpSolutionType
+} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import './index.scss';
 
@@ -43,6 +49,8 @@ const CheckboxCard = ({
   }>();
 
   const history = useHistory();
+
+  const location = useLocation();
 
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
@@ -109,18 +117,30 @@ const CheckboxCard = ({
               <IconArrowForward className="margin-left-1" />
             </Button>
           ) : (
-            <Button
-              type="button"
-              className="display-flex flex-align-center usa-button usa-button--unstyled margin-y-2"
+            <UswdsReactLink
+              className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions${
+                location.search
+              }${location.search ? '&' : '?'}solution=${
+                findSolutionByKey(solution.key, helpSolutions)?.route || ''
+              }&section=about`}
             >
               {t('aboutSolution')}
               <IconArrowForward className="margin-left-1" />
-            </Button>
+            </UswdsReactLink>
           )}
         </div>
       </Card>
     </Grid>
   );
+};
+
+export const findSolutionByKey = (
+  key: OperationalSolutionKey | null,
+  solutions: HelpSolutionType[]
+): HelpSolutionType | undefined => {
+  if (!key) return undefined;
+  return [...solutions].find(solution => solution.enum === key);
 };
 
 export default CheckboxCard;

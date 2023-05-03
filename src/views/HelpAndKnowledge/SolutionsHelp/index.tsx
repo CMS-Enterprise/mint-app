@@ -116,6 +116,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
+          closeRoute="/help-and-knowledge/operational-solutions"
         />
       )}
 

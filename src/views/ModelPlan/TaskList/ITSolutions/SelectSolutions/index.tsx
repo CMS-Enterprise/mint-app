@@ -20,6 +20,7 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
+import usePrevLocation from 'hooks/usePrevious';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
 import {
@@ -38,6 +39,9 @@ import {
 import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
 import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -58,6 +62,13 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
+interface LocationState {
+  state: {
+    isCustomNeed: boolean;
+  };
+  isCustomNeed: boolean;
+}
+
 type SelectSolutionsProps = {
   update?: boolean;
 };
@@ -70,15 +81,27 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     operationalNeedID: string;
   }>();
 
-  const {
-    state: { isCustomNeed }
-  } = useLocation<{
-    isCustomNeed?: boolean;
-  }>();
+  const { state } = useLocation<LocationState>();
+
+  const isCustomNeed = state?.isCustomNeed;
 
   const history = useHistory();
 
   const { showMessageOnNextPage } = useMessage();
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const solutionDetail = params.get('solution');
+
+  const prevLocation = usePrevLocation(location);
+  const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
+
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solutionDetail,
+    helpSolutions
+  );
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
@@ -211,6 +234,14 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
         <Alert type="error" slim>
           {t('addError')}
         </Alert>
+      )}
+
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+        />
       )}
 
       <Grid row gap>
