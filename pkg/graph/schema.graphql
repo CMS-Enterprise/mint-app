@@ -27,6 +27,12 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+"""
+Any represents any GraphQL value.
+"""
+scalar Any
+
+
 enum SortDirection {
   ASC
   DESC
@@ -1363,14 +1369,12 @@ type ChangedFields {
 
 type Field {
   name: String!
-  value: ChangedFieldValue!
+  value: FieldValue!
 }
 
-union ChangedFieldValue = ChangedFields | FieldValue
-
 type FieldValue {
-  new: String
-  old: String
+  new: Any
+  old: Any
 }
 
 type ChangeTableRecord {

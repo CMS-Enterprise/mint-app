@@ -6418,6 +6418,12 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+"""
+Any represents any GraphQL value.
+"""
+scalar Any
+
+
 enum SortDirection {
   ASC
   DESC
@@ -7754,14 +7760,12 @@ type ChangedFields {
 
 type Field {
   name: String!
-  value: ChangedFieldValue!
+  value: FieldValue!
 }
 
-union ChangedFieldValue = ChangedFields | FieldValue
-
 type FieldValue {
-  new: String
-  old: String
+  new: Any
+  old: Any
 }
 
 type ChangeTableRecord {
@@ -12538,9 +12542,9 @@ func (ec *executionContext) _Field_value(ctx context.Context, field graphql.Coll
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.ChangedFieldValue)
+	res := resTmp.(models.FieldValue)
 	fc.Result = res
-	return ec.marshalNChangedFieldValue2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangedFieldValue(ctx, field.Selections, res)
+	return ec.marshalNFieldValue2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFieldValue(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Field_value(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12550,7 +12554,13 @@ func (ec *executionContext) fieldContext_Field_value(ctx context.Context, field 
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ChangedFieldValue does not have child fields")
+			switch field.Name {
+			case "new":
+				return ec.fieldContext_FieldValue_new(ctx, field)
+			case "old":
+				return ec.fieldContext_FieldValue_old(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type FieldValue", field.Name)
 		},
 	}
 	return fc, nil
@@ -12579,9 +12589,9 @@ func (ec *executionContext) _FieldValue_new(ctx context.Context, field graphql.C
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_FieldValue_new(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12591,7 +12601,7 @@ func (ec *executionContext) fieldContext_FieldValue_new(ctx context.Context, fie
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Any does not have child fields")
 		},
 	}
 	return fc, nil
@@ -12620,9 +12630,9 @@ func (ec *executionContext) _FieldValue_old(ctx context.Context, field graphql.C
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_FieldValue_old(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12632,7 +12642,7 @@ func (ec *executionContext) fieldContext_FieldValue_old(ctx context.Context, fie
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Any does not have child fields")
 		},
 	}
 	return fc, nil
@@ -48701,29 +48711,6 @@ func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(
 
 // region    ************************** interface.gotpl ***************************
 
-func (ec *executionContext) _ChangedFieldValue(ctx context.Context, sel ast.SelectionSet, obj models.ChangedFieldValue) graphql.Marshaler {
-	switch obj := (obj).(type) {
-	case nil:
-		return graphql.Null
-	case models.ChangedFields:
-		return ec._ChangedFields(ctx, sel, &obj)
-	case *models.ChangedFields:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._ChangedFields(ctx, sel, obj)
-	case models.FieldValue:
-		return ec._FieldValue(ctx, sel, &obj)
-	case *models.FieldValue:
-		if obj == nil {
-			return graphql.Null
-		}
-		return ec._FieldValue(ctx, sel, obj)
-	default:
-		panic(fmt.Errorf("unexpected type %T", obj))
-	}
-}
-
 // endregion ************************** interface.gotpl ***************************
 
 // region    **************************** object.gotpl ****************************
@@ -48901,7 +48888,7 @@ func (ec *executionContext) _ChangeTableRecord(ctx context.Context, sel ast.Sele
 	return out
 }
 
-var changedFieldsImplementors = []string{"ChangedFields", "ChangedFieldValue"}
+var changedFieldsImplementors = []string{"ChangedFields"}
 
 func (ec *executionContext) _ChangedFields(ctx context.Context, sel ast.SelectionSet, obj *models.ChangedFields) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, changedFieldsImplementors)
@@ -49293,7 +49280,7 @@ func (ec *executionContext) _Field(ctx context.Context, sel ast.SelectionSet, ob
 	return out
 }
 
-var fieldValueImplementors = []string{"FieldValue", "ChangedFieldValue"}
+var fieldValueImplementors = []string{"FieldValue"}
 
 func (ec *executionContext) _FieldValue(ctx context.Context, sel ast.SelectionSet, obj *models.FieldValue) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, fieldValueImplementors)
@@ -56336,16 +56323,6 @@ func (ec *executionContext) marshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑap
 	return v
 }
 
-func (ec *executionContext) marshalNChangedFieldValue2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangedFieldValue(ctx context.Context, sel ast.SelectionSet, v models.ChangedFieldValue) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._ChangedFieldValue(ctx, sel, v)
-}
-
 func (ec *executionContext) marshalNChangedFields2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐChangedFields(ctx context.Context, sel ast.SelectionSet, v models.ChangedFields) graphql.Marshaler {
 	return ec._ChangedFields(ctx, sel, &v)
 }
@@ -57077,6 +57054,10 @@ func (ec *executionContext) marshalNField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑapp�
 		return graphql.Null
 	}
 	return ec._Field(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNFieldValue2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFieldValue(ctx context.Context, sel ast.SelectionSet, v models.FieldValue) graphql.Marshaler {
+	return ec._FieldValue(ctx, sel, &v)
 }
 
 func (ec *executionContext) unmarshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx context.Context, v interface{}) (models.FundingSource, error) {
@@ -60287,6 +60268,22 @@ func (ec *executionContext) marshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗ
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalAny(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOAny2interface(ctx context.Context, sel ast.SelectionSet, v interface{}) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalAny(v)
+	return res
 }
 
 func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {

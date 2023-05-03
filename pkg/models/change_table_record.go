@@ -21,30 +21,19 @@ type ChangeTableRecord struct {
 	ModifiedBy  *authentication.UserAccount `json:"modified_by"`
 }
 
-// ChangedFieldValue represents an interface for changed field values.
-type ChangedFieldValue interface {
-	IsChangedFieldValue()
-}
-
 // ChangedFields contains a slice of changed fields.
 type ChangedFields struct {
 	Changes []*Field `json:"changes"`
 }
 
-// IsChangedFieldValue is a method to satisfy the ChangedFieldValue interface for ChangedFields.
-func (ChangedFields) IsChangedFieldValue() {}
-
 // Field represents an individual field, including its name and associated value.
 type Field struct {
-	Name  string            `json:"name"`
-	Value ChangedFieldValue `json:"value"`
+	Name  string     `json:"name"`
+	Value FieldValue `json:"value"`
 }
 
 // FieldValue represents the new and old values of a changed field.
 type FieldValue struct {
-	New *string `json:"new"`
-	Old *string `json:"old"`
+	New interface{} `json:"new"`
+	Old interface{} `json:"old"`
 }
-
-// IsChangedFieldValue is a method to satisfy the ChangedFieldValue interface for FieldValue.
-func (FieldValue) IsChangedFieldValue() {}
