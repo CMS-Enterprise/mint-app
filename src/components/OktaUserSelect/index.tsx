@@ -59,6 +59,23 @@ const Option = (props: OptionProps<OktaUserSelectOption, false>) => {
   );
 };
 
+const NoOptionsMessage = (props: any) => {
+  const { t } = useTranslation('general');
+  return (
+    <components.NoOptionsMessage {...props}>
+      <button
+        type="button"
+        id="no-results"
+        tabIndex={0}
+        className="usa-button--unstyled text-no-underline text-black"
+        aria-label={t('noResults')}
+      >
+        {t('noResults')}
+      </button>
+    </components.NoOptionsMessage>
+  );
+};
+
 const Menu = (props: MenuProps<OktaUserSelectOption, false>) => {
   const {
     selectProps: { inputValue }
@@ -277,7 +294,21 @@ export default function OktaUserSelect({
       aria-describedby={ariaDescribedBy}
       aria-disabled={disabled}
       aria-labelledby={ariaLabelledBy}
-      components={{ Input, IndicatorsContainer, ClearIndicator, Option, Menu }}
+      // Conditional on menu open to override "No results" selection being tabbable/not closed on focus lost
+      // Menu is closed on user selection
+      menuIsOpen={
+        ((contacts.length === 0 && (searchTerm?.length || 0) > 2) ||
+          !!contacts.length) &&
+        !userSelected
+      }
+      components={{
+        Input,
+        IndicatorsContainer,
+        ClearIndicator,
+        Option,
+        Menu,
+        NoOptionsMessage
+      }}
       options={contacts.map((contact: OktaUserType) => ({
         label: `${contact.displayName}, ${contact.username}`,
         value: contact
