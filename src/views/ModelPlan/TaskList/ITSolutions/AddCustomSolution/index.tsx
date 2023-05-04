@@ -69,7 +69,7 @@ type CustomOperationalSolutionFormType = Omit<
 
 const initialValues: CustomOperationalSolutionFormType = {
   nameOther: '',
-  otherHeader: null,
+  otherHeader: '',
   pocName: '',
   pocEmail: '',
   documents: [],
@@ -290,7 +290,6 @@ const AddCustomSolution = () => {
                   const { errors, handleSubmit, values } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
-
                   return (
                     <>
                       {Object.keys(errors).length > 0 && (
@@ -348,6 +347,7 @@ const AddCustomSolution = () => {
                                 data-testid="it-solution-custom-name-other"
                                 maxLength={50}
                                 name="nameOther"
+                                value={values.nameOther || ''}
                               />
                             </FieldGroup>
                           ) : (
@@ -373,6 +373,7 @@ const AddCustomSolution = () => {
                                 data-testid="it-solution-other-header"
                                 maxLength={50}
                                 name="otherHeader"
+                                value={values.otherHeader || ''}
                               />
                             </FieldGroup>
                           )}
@@ -399,6 +400,7 @@ const AddCustomSolution = () => {
                               data-testid="it-solution-custom-poc-name"
                               maxLength={50}
                               name="pocName"
+                              value={values.pocName || ''}
                             />
                           </FieldGroup>
 
@@ -423,6 +425,7 @@ const AddCustomSolution = () => {
                               data-testid="it-solution-custom-poc-email"
                               maxLength={50}
                               name="pocEmail"
+                              value={values.pocEmail || ''}
                             />
                           </FieldGroup>
 
