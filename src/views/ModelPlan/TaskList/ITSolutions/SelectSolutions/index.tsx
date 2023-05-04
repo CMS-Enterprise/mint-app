@@ -210,7 +210,7 @@ const SelectSolutions = () => {
       )}
 
       <Grid row gap>
-        <Grid tablet={{ col: 9 }}>
+        <Grid tablet={{ col: 12 }} desktop={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
             {update ? t('updateSolutions') : t('selectSolution')}
           </PageHeading>
@@ -238,7 +238,7 @@ const SelectSolutions = () => {
           )}
 
           <Grid row gap>
-            <Grid tablet={{ col: 10 }}>
+            <Grid tablet={{ col: 12 }} desktop={{ col: 10 }}>
               <Formik
                 initialValues={operationalNeed}
                 onSubmit={values => {
@@ -348,7 +348,7 @@ const SelectSolutions = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+        <Grid tablet={{ col: 12 }} desktop={{ col: 3 }} className="padding-x-1">
           <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>
