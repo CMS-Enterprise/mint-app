@@ -73,11 +73,21 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
+	// Pull job codes from config
+	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
+	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
+	jcMAC := swag.ContainsStrings(config.JobCodes, "MINT MAC Users")
+
+	// Always set assessment users to have base user permissions
+	if jcAssessment {
+		jcUser = true
+	}
+
 	princ := &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(config.EUA),
-		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
-		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
-		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
+		JobCodeUSER:       jcUser,
+		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
 	}
 
 	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))

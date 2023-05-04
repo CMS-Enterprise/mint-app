@@ -21,6 +21,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,6 +31,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import operationalNeedMap from 'data/operationalNeedMap';
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
   GetOperationalNeeds as GetOperationalNeedsType,
@@ -213,7 +215,21 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.section'),
-        accessor: 'section'
+        accessor: 'section',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          if (row.original.key && operationalNeedMap[row.original.key]) {
+            return i18next.t(
+              `${operationalNeedMap[row.original.key].section}:heading`
+            );
+          }
+          return '';
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),
