@@ -224,7 +224,11 @@ const SelectSolutions = () => {
 
           <p className="line-height-body-4">{t('selectInfo')}</p>
 
-          <Grid tablet={{ col: 8 }} className="margin-bottom-4">
+          <Grid
+            tablet={{ col: 12 }}
+            desktop={{ col: 8 }}
+            className="margin-bottom-4"
+          >
             <NeedQuestionAndAnswer
               operationalNeedID={operationalNeedID}
               modelID={modelID}

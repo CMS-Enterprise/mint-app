@@ -168,7 +168,16 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.subtasks'),
-        accessor: 'subTasks'
+        accessor: 'operationalSolutionSubtasks',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          return value.length.toString();
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),

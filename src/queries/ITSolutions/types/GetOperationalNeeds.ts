@@ -9,6 +9,11 @@ import { OperationalNeedKey, OpSolutionStatus, OperationalSolutionKey } from "./
 // GraphQL query operation: GetOperationalNeeds
 // ====================================================
 
+export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions_operationalSolutionSubtasks {
+  __typename: "OperationalSolutionSubtask";
+  id: UUID;
+}
+
 export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions {
   __typename: "OperationalSolution";
   id: UUID;
@@ -19,6 +24,7 @@ export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions {
   needed: boolean | null;
   nameOther: string | null;
   key: OperationalSolutionKey | null;
+  operationalSolutionSubtasks: GetOperationalNeeds_modelPlan_operationalNeeds_solutions_operationalSolutionSubtasks[];
   pocEmail: string | null;
   pocName: string | null;
   createdBy: UUID;
