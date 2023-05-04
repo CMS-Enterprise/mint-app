@@ -136,7 +136,7 @@ const SolutionCard = ({
                   href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
                   target="_blank"
                 >
-                  <div>${solutionMap?.pointsOfContact[0].email}</div>
+                  <div>{solutionMap?.pointsOfContact[0].email}</div>
                   <IconMailOutline className="margin-left-05 text-tbottom" />
                 </Link>
               </Grid>

@@ -215,6 +215,26 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                           </svg>
                         </a>
                       </div>
+                      <p
+                        class="text-bold margin-bottom-0"
+                      >
+                        Point of contact
+                      </p>
+                      <p
+                        class="margin-y-0"
+                      >
+                        John Doe
+                      </p>
+                      <a
+                        aria-label="Send an email"
+                        class="usa-link line-height-body-5"
+                        href="mailto:"
+                        target="_blank"
+                      >
+                        <div
+                          class="margin-bottom-2"
+                        />
+                      </a>
                       <div
                         class="mint-divider"
                       />

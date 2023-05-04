@@ -64,6 +64,28 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
               </svg>
             </a>
           </div>
+          <p
+            class="text-bold margin-bottom-0"
+          >
+            Point of contact
+          </p>
+          <p
+            class="margin-y-0"
+          >
+            John Mint
+          </p>
+          <a
+            aria-label="Send an email"
+            class="usa-link line-height-body-5"
+            href="mailto:john.mint@oddball.io"
+            target="_blank"
+          >
+            <div
+              class="margin-bottom-2"
+            >
+              john.mint@oddball.io
+            </div>
+          </a>
           <div
             class="mint-divider"
           />

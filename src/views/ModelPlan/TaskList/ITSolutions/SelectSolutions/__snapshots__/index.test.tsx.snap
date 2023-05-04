@@ -212,9 +212,30 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                           </div>
                         </a>
                       </div>
-                      <div
-                        class="mint-divider"
-                      />
+                      <p
+                        class="text-bold margin-bottom-0"
+                      >
+                        Point of contact
+                      </p>
+                      <p
+                        class="margin-y-0"
+                      >
+                        John Doe
+                      </p>
+                      <a
+                        aria-label="Send an email"
+                        class="usa-link line-height-body-5"
+                        href="mailto:"
+                        target="_blank"
+                      >
+                        <div
+                          class="margin-bottom-2"
+                        />
+                      </a>
+                    </div>
+                    <div
+                      class="border-top border-base-light"
+                    >
                       <a
                         class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                         href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/select-solutions?solution=research-measurement-assessment-design-and-analysis&section=about"
