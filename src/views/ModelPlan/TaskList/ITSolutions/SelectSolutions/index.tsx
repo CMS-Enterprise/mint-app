@@ -312,7 +312,14 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
                                   // Default Operational Solutions start with an id full of zeroes.
                                   // if solution is default solution, then check name to find index
                                   // otherwise, continue to use id to find index
-                                  key={solution.nameOther || solution.name}
+                                  key={`${
+                                    solution.nameOther
+                                      ?.toLowerCase()
+                                      .replaceAll(' ', '-') ||
+                                    solution.name
+                                      ?.toLowerCase()
+                                      .replaceAll(' ', '-')
+                                  }--${solution.id}`}
                                 />
                               )
                             )}
