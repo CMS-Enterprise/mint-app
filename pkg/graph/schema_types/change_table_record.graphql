@@ -1,0 +1,10 @@
+type ChangeTableRecord {
+  guid: ID!
+  tableID: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  action: String!
+  fields: Map
+  modifiedDts: Time
+  modifiedBy: UserAccount
+}

@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/graph/gqlresolvers"
+
 	"github.com/opensearch-project/opensearch-go/v2"
 
 	"github.com/cmsgov/mint-app/pkg/apperrors"
@@ -37,7 +39,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
-	"github.com/cmsgov/mint-app/pkg/graph"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/handlers"
@@ -218,9 +219,9 @@ func (s *Server) routes(
 		s.logger.Warn("failed to create an OpenSearch client", zap.Error(err))
 	}
 
-	resolver := graph.NewResolver(
+	resolver := gqlresolvers.NewResolver(
 		store,
-		graph.ResolverService{
+		gqlresolvers.ResolverService{
 			FetchUserInfo: oktaClient.FetchUserInfo,
 			SearchByName:  oktaClient.SearchByName,
 		},

@@ -1,0 +1,11 @@
+type AuditChange {
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: String!
+  action: String!
+  fields: Map!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}

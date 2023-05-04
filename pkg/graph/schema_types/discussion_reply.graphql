@@ -1,0 +1,17 @@
+"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply  {
+  id: UUID!
+  discussionID: UUID!
+  content: String
+  resolution: Boolean
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}

@@ -1,0 +1,6 @@
+type TaskListSectionLockStatus {
+  modelPlanID: UUID!
+  section: TaskListSection!
+  lockedByUserAccount: UserAccount!
+  isAssessment: Boolean!
+}

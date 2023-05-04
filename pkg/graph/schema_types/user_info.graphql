@@ -1,0 +1,10 @@
+"""
+Represents a person response from the Okta API
+"""
+type UserInfo {
+  firstName: String!
+  lastName: String!
+  displayName: String!
+  email: String!
+  username: String!
+}

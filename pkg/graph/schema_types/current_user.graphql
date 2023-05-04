@@ -1,0 +1,6 @@
+"""
+The current user of the application
+"""
+type CurrentUser {
+  launchDarkly: LaunchDarklySettings!
+}

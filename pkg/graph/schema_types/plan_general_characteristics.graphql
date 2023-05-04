@@ -1,0 +1,83 @@
+"""
+PlanGeneralCharacteristics represents a plan general characteristics object
+"""
+type PlanGeneralCharacteristics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]!
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]!
+  keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]!
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]!
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]!
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]!
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]!
+  waiversRequiredNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}

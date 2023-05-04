@@ -1,0 +1,30 @@
+"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
+"""
+type ModelPlan {
+  id: UUID!
+  modelName: String!
+  archived: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  basics: PlanBasics!
+  generalCharacteristics: PlanGeneralCharacteristics!
+  participantsAndProviders: PlanParticipantsAndProviders!
+  beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
+  collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
+  status: ModelStatus!
+  isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+}

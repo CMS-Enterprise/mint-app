@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/cmsgov/mint-app/pkg/graph/gqlresolvers"
+
 	"github.com/opensearch-project/opensearch-go/v2"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -42,7 +44,7 @@ type GraphQLTestSuite struct {
 	store    *storage.Store
 	client   *client.Client
 	s3Client *mockS3Client
-	resolver *Resolver
+	resolver *gqlresolvers.Resolver
 }
 
 func (s *GraphQLTestSuite) BeforeTest() {
@@ -153,13 +155,13 @@ func TestGraphQLTestSuite(t *testing.T) {
 		return next(ctx)
 	}}
 
-	var resolverService ResolverService
+	var resolverService gqlresolvers.ResolverService
 	resolverService.FetchUserInfo = oktaClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
 	searchClient, _ := opensearch.NewDefaultClient()
 
-	resolver := NewResolver(
+	resolver := gqlresolvers.NewResolver(
 		store,
 		resolverService,
 		&s3Client,

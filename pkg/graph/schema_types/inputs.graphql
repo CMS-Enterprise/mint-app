@@ -1,0 +1,505 @@
+"""
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+  modelName: String
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
+}
+
+"""
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
+"""
+input PlanCollaboratorCreateInput {
+  modelPlanID: UUID!
+  userName: String!
+  teamRole: TeamRole!
+}
+
+"""
+PlanDocumentInput
+"""
+input PlanDocumentInput {
+  modelPlanID: UUID!
+  fileData: Upload!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+"""
+PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]
+  modelType: ModelType
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+  status: TaskStatusInput
+}
+
+"""
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+"""
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  content: String!
+}
+
+"""
+PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
+  content: String
+  status: DiscussionStatus
+}
+
+"""
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+"""
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: String!
+  resolution: Boolean! = false
+}
+
+"""
+DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
+  content: String
+  resolution: Boolean
+}
+
+"""
+PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+general characteristics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]
+  keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]
+  waiversRequiredNote: String
+
+  status: TaskStatusInput
+}
+
+input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
+  #Page 1
+  beneficiaries: [BeneficiariesType!]
+  beneficiariesOther: String
+  beneficiariesNote: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+  #Page 3
+  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: String
+
+  status: TaskStatusInput
+}
+
+"""
+PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
+providers and participants object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
+  #Page 1
+  participants:                      [ParticipantsType!]
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
+
+  #Page 2
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
+  recruitmentMethod:            RecruitmentType
+  recruitmentOther:             String
+  recruitmentNote:              String
+  selectionMethod:              [ParticipantSelectionType!]
+  selectionOther:               String
+  selectionNote:                String
+
+  #Page 3
+  communicationMethod:   [ParticipantCommunicationType!]
+  communicationMethodOther:   String
+  communicationNote:     String
+  participantAssumeRisk: Boolean
+  riskType:              ParticipantRiskType
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
+
+  #Page 4
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
+  participantsIds:         [ParticipantsIDType!]
+  participantsIdsOther:    String
+  participantsIDSNote:     String
+
+  #Page 5
+  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
+  providerAddMethod:              [ProviderAddType!]
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
+  providerLeaveMethod:            [ProviderLeaveType!]
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
+
+  status: TaskStatusInput
+}
+
+input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:                   String
+  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
+  canParticipantsSelectBetweenPaymentMechanismsNote:        String
+  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
+
+  status: TaskStatusInput
+}
+
+"""
+PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
+ops, eval and learning object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
+
+  #Page 1
+  agencyOrStateHelp: [AgencyOrStateHelpType!]
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
+  stakeholders: [StakeholdersType!]
+  stakeholdersOther: String
+  stakeholdersNote: String
+  helpdeskUse: Boolean
+  helpdeskUseNote: String
+  contractorSupport: [ContractorSupportType!]
+  contractorSupportOther: String
+  contractorSupportHow: String
+  contractorSupportNote: String
+  iddocSupport: Boolean
+  iddocSupportNote: String
+  #Page 2
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+  #Page 3
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [MonitoringFileType!]
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+  #Page 4
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+  #Page 5
+  benchmarkForPerformance: BenchmarkForPerformanceType
+  benchmarkForPerformanceNote: String
+  computePerformanceScores: Boolean
+  computePerformanceScoresNote: String
+  riskAdjustPerformance: Boolean
+  riskAdjustFeedback: Boolean
+  riskAdjustPayments: Boolean
+  riskAdjustOther: Boolean
+  riskAdjustNote: String
+  appealPerformance: Boolean
+  appealFeedback: Boolean
+  appealPayments: Boolean
+  appealOther: Boolean
+  appealNote: String
+  #Page 6
+  evaluationApproaches: [EvaluationApproachType!]
+  evaluationApproachOther: String
+  evalutaionApproachNote: String
+  ccmInvolvment: [CcmInvolvmentType!]
+  ccmInvolvmentOther: String
+  ccmInvolvmentNote: String
+  dataNeededForMonitoring: [DataForMonitoringType!]
+  dataNeededForMonitoringOther: String
+  dataNeededForMonitoringNote: String
+  dataToSendParticicipants: [DataToSendParticipantsType!]
+  dataToSendParticicipantsOther: String
+  dataToSendParticicipantsNote: String
+  shareCclfData: Boolean
+  shareCclfDataNote: String
+  #Page 7
+  sendFilesBetweenCcw: Boolean
+  sendFilesBetweenCcwNote: String
+  appToSendFilesToKnown: Boolean
+  appToSendFilesToWhich: String
+  appToSendFilesToNote: String
+  useCcwForFileDistribiutionToParticipants: Boolean
+  useCcwForFileDistribiutionToParticipantsNote: String
+  developNewQualityMeasures: Boolean
+  developNewQualityMeasuresNote: String
+  qualityPerformanceImpactsPayment: Boolean
+  qualityPerformanceImpactsPaymentNote: String
+  #Page 8
+  dataSharingStarts: DataStartsType
+  dataSharingStartsOther: String
+  dataSharingFrequency: [DataFrequencyType!]
+  dataSharingFrequencyOther: String
+  dataSharingStartsNote: String
+  dataCollectionStarts: DataStartsType
+  dataCollectionStartsOther: String
+  dataCollectionFrequency: [DataFrequencyType!]
+  dataCollectionFrequencyOther: String
+  dataCollectionFrequencyNote: String
+  qualityReportingStarts: DataStartsType
+  qualityReportingStartsOther: String
+  qualityReportingStartsNote: String
+  #Page 9
+  modelLearningSystems: [ModelLearningSystemType!]
+  modelLearningSystemsOther: String
+  modelLearningSystemsNote: String
+  anticipatedChallenges: String
+
+  status: TaskStatusInput
+}
+
+input PlanCrTdlCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+}
+
+input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  title: String
+  note: String
+}
+
+input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
+  needed: Boolean
+  nameOther: String # Only valid for when solution type is null
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  otherHeader: String
+  status: OpSolutionStatus
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input SearchRequest {
+  query: Map!
+}

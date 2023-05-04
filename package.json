@@ -143,6 +143,7 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "glob": "^10.2.2",
     "graphql-schema-linter": "^3.0.1",
     "jest-canvas-mock": "^2.2.0",
     "jest-launchdarkly-mock": "^0.1.1",

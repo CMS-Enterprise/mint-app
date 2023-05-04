@@ -1,0 +1,28 @@
+"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
+  otherType: String
+  optionalNotes: String
+  downloadUrl: String
+  deletedAt: Time
+  numLinkedSolutions: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}

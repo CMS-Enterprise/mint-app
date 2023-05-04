@@ -1,0 +1,50 @@
+"""
+Plan Beneficiaries represents the the beneficiaries section of the task list
+"""
+type PlanBeneficiaries {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  beneficiaries: [BeneficiariesType!]!
+  beneficiariesOther: String
+  beneficiariesNote: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]!
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+
+  #Page 3
+  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}

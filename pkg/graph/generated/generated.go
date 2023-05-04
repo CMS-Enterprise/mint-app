@@ -6332,1386 +6332,42 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema.graphql", Input: `
+	{Name: "../schema.graphql", Input: `#import "./schema_types/scalars.graphql"
+#import "./schema_enums/enums.graphql"
+
+#import "./schema_types/launch_darkly_settings.graphql"
+#import "./schema_types/current_user.graphql"
+#import "./schema_types/model_plan.graphql"
+#import "./schema_types/operational_need.graphql"
+#import "./schema_types/possible_operational_need.graphql"
+#import "./schema_types/possible_operational_solution.graphql"
+#import "./schema_types/plan_collaborator.graphql"
+#import "./schema_types/existing_model.graphql"
+#import "./schema_types/task_list_section_lock_status_changed.graphql"
+#import "./schema_types/task_list_section_lock_status.graphql"
+#import "./schema_types/plan_document.graphql"
+#import "./schema_types/plan_basics.graphql"
+#import "./schema_types/user_info.graphql"
+#import "./schema_types/discussion_reply.graphql"
+#import "./schema_types/plan_general_characteristics.graphql"
+#import "./schema_types/plan_beneficiaries.graphql"
+#import "./schema_types/plan_participants_and_providers.graphql"
+#import "./schema_types/plan_payments.graphql"
+#import "./schema_types/plan_ops_eval_and_learning.graphql"
+#import "./schema_types/nda_info.graphql"
+#import "./schema_types/plan_favorite.graphql"
+#import "./schema_types/plan_crtdl.graphql"
+#import "./schema_types/prepare_for_clearance.graphql"
+#import "./schema_types/audit_change.graphql"
+#import "./schema_types/operational_solution.graphql"
+#import "./schema_types/plan_document_solution_link.graphql"
+#import "./schema_types/operational_solution_subtask.graphql"
+#import "./schema_types/change_table_record.graphql"
+#import "./schema_types/date_histogram_aggregation_bucket.graphql"
+#import "./schema_types/user_account.graphql"
+
+#import "./schema_types/inputs.graphql"
 
-"""
-The current user's Launch Darkly key
-"""
-type LaunchDarklySettings {
-  userKey: String!
-  signedHash: String!
-}
-
-"""
-The current user of the application
-"""
-type CurrentUser {
-  launchDarkly: LaunchDarklySettings!
-}
-"""
-UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
-"""
-scalar UUID
-"""
-Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
-"""
-scalar Time
-"""
-Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
-"""
-scalar Map
-
-enum SortDirection {
-  ASC
-  DESC
-}
-"""
-https://gqlgen.com/reference/file-upload/
-Represents a multipart file upload
-"""
-scalar Upload
-
-"""
-ModelPlan represent the data point for plans about a model. It is the central data type in the application
-"""
-type ModelPlan {
-  id: UUID!
-  modelName: String!
-  archived: Boolean!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-  basics: PlanBasics!
-  generalCharacteristics: PlanGeneralCharacteristics!
-  participantsAndProviders: PlanParticipantsAndProviders!
-  beneficiaries: PlanBeneficiaries!
-  opsEvalAndLearning: PlanOpsEvalAndLearning!
-  collaborators: [PlanCollaborator!]!
-  documents: [PlanDocument!]!
-  discussions: [PlanDiscussion!]!
-  payments: PlanPayments!
-  status: ModelStatus!
-  isFavorite: Boolean!
-  isCollaborator: Boolean!
-  crTdls: [PlanCrTdl!]!
-  prepareForClearance: PrepareForClearance!
-  nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: [OperationalNeed!]!
-}
-
-type OperationalNeed {
-    id: UUID!
-    modelPlanID: UUID!
-
-    needed: Boolean # if null, it has not been answered
-    solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
-
-    key: OperationalNeedKey
-    name: String
-    nameOther: String
-    section: TaskListSection
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-type PossibleOperationalNeed {
-    id: Int!
-    possibleSolutions: [PossibleOperationalSolution!]!
-    name: String!
-    key: OperationalNeedKey!
-    section: TaskListSection
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-type PossibleOperationalSolution {
-    id: Int!
-    name: String!
-    key: OperationalSolutionKey!
-    treatAsOther: Boolean!
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-"""
-ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input ModelPlanChanges @goModel(model: "map[string]interface{}") {
-  modelName: String
-  someNumbers: [Int!]
-  archived: Boolean
-  status: ModelStatus
-}
-
-"""
-PlanCollaborator represents a collaborator on a plan
-"""
-type PlanCollaborator {
-  id: UUID!
-  modelPlanID: UUID!
-  userID: UUID!
-  userAccount: UserAccount!
-  teamRole: TeamRole!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-"""
-ExistingModel represents a model that already exists outside of the scope of MINT
-"""
-type ExistingModel {
-  id: String
-  modelName: String
-  stage: String!
-  numberOfParticipants: String
-  category: String
-  authority: String
-  description: String
-  numberOfBeneficiariesImpacted: Int
-  numberOfPhysiciansImpacted: Int
-  dateBegan: Time
-  dateEnded: Time
-  states: String
-  keywords: String
-  url: String
-  displayModelSummary: Boolean
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-type TaskListSectionLockStatusChanged {
-  changeType: ChangeType!
-  lockStatus: TaskListSectionLockStatus!
-  actionType: ActionType!
-}
-
-type TaskListSectionLockStatus {
-  modelPlanID: UUID!
-  section: TaskListSection!
-  lockedByUserAccount: UserAccount!
-  isAssessment: Boolean!
-}
-
-"""
-PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
-"""
-input PlanCollaboratorCreateInput {
-  modelPlanID: UUID!
-  userName: String!
-  teamRole: TeamRole!
-}
-
-"""
-PlanDocument represents a document on a plan
-"""
-type PlanDocument {
-  id: UUID!
-  modelPlanID: UUID!
-  fileType: String!
-  bucket: String!
-  fileKey: String!
-  virusScanned: Boolean!
-  virusClean: Boolean!
-  restricted: Boolean!
-  fileName: String!
-  fileSize: Int!
-  documentType: DocumentType!
-  otherType: String
-  optionalNotes: String
-  downloadUrl: String
-  deletedAt: Time
-  numLinkedSolutions: Int!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-
-"""
-PlanDocumentInput
-"""
-input PlanDocumentInput {
-  modelPlanID: UUID!
-  fileData: Upload!
-  documentType: DocumentType!
-  restricted: Boolean!
-  otherTypeDescription: String
-  optionalNotes: String
-}
-
-"""
-Represents plan basics
-"""
-type PlanBasics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]!
-  cmsOther: String
-  cmmiGroups: [CMMIGroup!]!
-  modelType: ModelType
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
-  modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]
-  cmsOther: String
-  cmmiGroups: [CMMIGroup!]
-  modelType: ModelType
-  problem: String
-  goal: String
-  testInterventions: String
-  note: String
-
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-  phasedIn: Boolean
-  phasedInNote: String
-  status: TaskStatusInput
-}
-
-"""
-Represents a person response from the Okta API
-"""
-type UserInfo {
-  firstName: String!
-  lastName: String!
-  displayName: String!
-  email: String!
-  username: String!
-}
-
-"""
-PlanDiscussion represents plan discussion
-"""
-type PlanDiscussion  {
-	id:          UUID!
-	modelPlanID: UUID!
-	content: String
-	status: DiscussionStatus!
-  replies: [DiscussionReply!]!
-  isAssessment: Boolean!
-
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
-"""
-input PlanDiscussionCreateInput {
-  modelPlanID: UUID!
-  content: String!
-}
-
-"""
-PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
-  content: String
-  status: DiscussionStatus
-}
-
-"""
-DiscussionReply represents a discussion reply
-"""
-type DiscussionReply  {
-	id: UUID!
-	discussionID: UUID!
-	content: String
-	resolution: Boolean
-  isAssessment: Boolean!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
-"""
-input DiscussionReplyCreateInput {
-  discussionID: UUID!
-  content: String!
-  resolution: Boolean! = false
-}
-
-"""
-DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
-  content: String
-  resolution: Boolean
-}
-
-"""
-PlanGeneralCharacteristics represents a plan general characteristics object
-"""
-type PlanGeneralCharacteristics {
-  id: UUID!
-  modelPlanID: UUID!
-
-  # Page 1
-  isNewModel: Boolean
-  existingModel: String
-  resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]!
-  resemblesExistingModelHow: String
-  resemblesExistingModelNote: String
-  hasComponentsOrTracks: Boolean
-  hasComponentsOrTracksDiffer: String
-  hasComponentsOrTracksNote: String
-
-  # Page 2
-  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
-  alternativePaymentModelNote: String
-  keyCharacteristics: [KeyCharacteristic!]!
-  keyCharacteristicsOther: String
-  keyCharacteristicsNote: String
-  collectPlanBids: Boolean
-  collectPlanBidsNote: String
-  managePartCDEnrollment: Boolean
-  managePartCDEnrollmentNote: String
-  planContractUpdated: Boolean
-  planContractUpdatedNote: String
-
-  # Page 3
-  careCoordinationInvolved: Boolean
-  careCoordinationInvolvedDescription: String
-  careCoordinationInvolvedNote: String
-  additionalServicesInvolved: Boolean
-  additionalServicesInvolvedDescription: String
-  additionalServicesInvolvedNote: String
-  communityPartnersInvolved: Boolean
-  communityPartnersInvolvedDescription: String
-  communityPartnersInvolvedNote: String
-
-  # Page 4
-  geographiesTargeted: Boolean
-  geographiesTargetedTypes: [GeographyType!]!
-  geographiesTargetedTypesOther: String
-  geographiesTargetedAppliedTo: [GeographyApplication!]!
-  geographiesTargetedAppliedToOther: String
-  geographiesTargetedNote: String
-  participationOptions: Boolean
-  participationOptionsNote: String
-  agreementTypes: [AgreementType!]!
-  agreementTypesOther: String
-  multiplePatricipationAgreementsNeeded: Boolean
-  multiplePatricipationAgreementsNeededNote: String
-
-  # Page 5
-  rulemakingRequired: Boolean
-  rulemakingRequiredDescription: String
-  rulemakingRequiredNote: String
-  authorityAllowances: [AuthorityAllowance!]!
-  authorityAllowancesOther: String
-  authorityAllowancesNote: String
-  waiversRequired: Boolean
-  waiversRequiredTypes: [WaiverType!]!
-  waiversRequiredNote: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-"""
-PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
-general characteristics object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
-  # Page 1
-  isNewModel: Boolean
-  existingModel: String
-  resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]
-  resemblesExistingModelHow: String
-  resemblesExistingModelNote: String
-  hasComponentsOrTracks: Boolean
-  hasComponentsOrTracksDiffer: String
-  hasComponentsOrTracksNote: String
-
-  # Page 2
-  alternativePaymentModelTypes: [AlternativePaymentModelType!]
-  alternativePaymentModelNote: String
-  keyCharacteristics: [KeyCharacteristic!]
-  keyCharacteristicsOther: String
-  keyCharacteristicsNote: String
-  collectPlanBids: Boolean
-  collectPlanBidsNote: String
-  managePartCDEnrollment: Boolean
-  managePartCDEnrollmentNote: String
-  planContractUpdated: Boolean
-  planContractUpdatedNote: String
-
-  # Page 3
-  careCoordinationInvolved: Boolean
-  careCoordinationInvolvedDescription: String
-  careCoordinationInvolvedNote: String
-  additionalServicesInvolved: Boolean
-  additionalServicesInvolvedDescription: String
-  additionalServicesInvolvedNote: String
-  communityPartnersInvolved: Boolean
-  communityPartnersInvolvedDescription: String
-  communityPartnersInvolvedNote: String
-
-  # Page 4
-  geographiesTargeted: Boolean
-  geographiesTargetedTypes: [GeographyType!]
-  geographiesTargetedTypesOther: String
-  geographiesTargetedAppliedTo: [GeographyApplication!]
-  geographiesTargetedAppliedToOther: String
-  geographiesTargetedNote: String
-  participationOptions: Boolean
-  participationOptionsNote: String
-  agreementTypes: [AgreementType!]
-  agreementTypesOther: String
-  multiplePatricipationAgreementsNeeded: Boolean
-  multiplePatricipationAgreementsNeededNote: String
-
-  # Page 5
-  rulemakingRequired: Boolean
-  rulemakingRequiredDescription: String
-  rulemakingRequiredNote: String
-  authorityAllowances: [AuthorityAllowance!]
-  authorityAllowancesOther: String
-  authorityAllowancesNote: String
-  waiversRequired: Boolean
-  waiversRequiredTypes: [WaiverType!]
-  waiversRequiredNote: String
-
-  status: TaskStatusInput
-}
-
-"""
-Plan Beneficiaries represents the the beneficiaries section of the task list
-"""
-
-type PlanBeneficiaries {
-  id: UUID!
-  modelPlanID: UUID!
-  #Page 1
-  beneficiaries: [BeneficiariesType!]!
-  beneficiariesOther: String
-  beneficiariesNote: String
-  treatDualElligibleDifferent: TriStateAnswer
-  treatDualElligibleDifferentHow: String
-  treatDualElligibleDifferentNote: String
-  excludeCertainCharacteristics: TriStateAnswer
-  excludeCertainCharacteristicsCriteria: String
-  excludeCertainCharacteristicsNote: String
-  #Page 2
-  numberPeopleImpacted: Int
-  estimateConfidence: ConfidenceType
-  confidenceNote: String
-  beneficiarySelectionMethod: [SelectionMethodType!]!
-  beneficiarySelectionOther: String
-  beneficiarySelectionNote: String
-  #Page 3
-  beneficiarySelectionFrequency: FrequencyType
-  beneficiarySelectionFrequencyOther: String
-  beneficiarySelectionFrequencyNote: String
-  beneficiaryOverlap: OverlapType
-  beneficiaryOverlapNote: String
-  precedenceRules: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-}
-
-input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
-  #Page 1
-  beneficiaries: [BeneficiariesType!]
-  beneficiariesOther: String
-  beneficiariesNote: String
-  treatDualElligibleDifferent: TriStateAnswer
-  treatDualElligibleDifferentHow: String
-  treatDualElligibleDifferentNote: String
-  excludeCertainCharacteristics: TriStateAnswer
-  excludeCertainCharacteristicsCriteria: String
-  excludeCertainCharacteristicsNote: String
-  #Page 2
-  numberPeopleImpacted: Int
-  estimateConfidence: ConfidenceType
-  confidenceNote: String
-  beneficiarySelectionMethod: [SelectionMethodType!]
-  beneficiarySelectionOther: String
-  beneficiarySelectionNote: String
-  #Page 3
-  beneficiarySelectionFrequency: FrequencyType
-  beneficiarySelectionFrequencyOther: String
-  beneficiarySelectionFrequencyNote: String
-  beneficiaryOverlap: OverlapType
-  beneficiaryOverlapNote: String
-  precedenceRules: String
-
-  status: TaskStatusInput
-}
-
-"""
-PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
-"""
-type PlanParticipantsAndProviders {
-  id: UUID!
-  modelPlanID: UUID!
-
-  #Page 1
-  participants:                      [ParticipantsType!]!
-  medicareProviderType:              String
-  statesEngagement:                  String
-  participantsOther:                 String
-  participantsNote:                  String
-  participantsCurrentlyInModels:     Boolean
-  participantsCurrentlyInModelsNote: String
-  modelApplicationLevel:             String
-
-  #Page 2
-  expectedNumberOfParticipants: Int
-  estimateConfidence:           ConfidenceType
-  confidenceNote:               String
-  recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String
-  recruitmentNote:              String
-  selectionMethod:              [ParticipantSelectionType!]!
-  selectionOther:               String
-  selectionNote:                String
-
-  #Page 3
-  communicationMethod:   [ParticipantCommunicationType!]!
-  communicationMethodOther:   String
-  communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
-  riskOther:             String
-  riskNote:              String
-  willRiskChange:        Boolean
-  willRiskChangeNote:    String
-
-  #Page 4
-  coordinateWork:          Boolean
-  coordinateWorkNote:      String
-  gainsharePayments:       Boolean
-  gainsharePaymentsTrack: Boolean
-  gainsharePaymentsNote:   String
-  participantsIds:         [ParticipantsIDType!]!
-  participantsIdsOther:    String
-  participantsIDSNote:     String
-
-  #Page 5
-  providerAdditionFrequency:      FrequencyType
-  providerAdditionFrequencyOther: String
-  providerAdditionFrequencyNote:  String
-  providerAddMethod:              [ProviderAddType!]!
-  providerAddMethodOther:         String
-  providerAddMethodNote:          String
-  providerLeaveMethod:            [ProviderLeaveType!]!
-  providerLeaveMethodOther:       String
-  providerLeaveMethodNote:        String
-  providerOverlap:                OverlapType
-  providerOverlapHierarchy:       String
-  providerOverlapNote:            String
-
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status: TaskStatus!
-
-}
-
-"""
-PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
-providers and participants object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
-  #Page 1
-  participants:                      [ParticipantsType!]
-  medicareProviderType:              String
-  statesEngagement:                  String
-  participantsOther:                 String
-  participantsNote:                  String
-  participantsCurrentlyInModels:     Boolean
-  participantsCurrentlyInModelsNote: String
-  modelApplicationLevel:             String
-
-  #Page 2
-  expectedNumberOfParticipants: Int
-  estimateConfidence:           ConfidenceType
-  confidenceNote:               String
-  recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String
-  recruitmentNote:              String
-  selectionMethod:              [ParticipantSelectionType!]
-  selectionOther:               String
-  selectionNote:                String
-
-  #Page 3
-  communicationMethod:   [ParticipantCommunicationType!]
-  communicationMethodOther:   String
-  communicationNote:     String
-  participantAssumeRisk: Boolean
-  riskType:              ParticipantRiskType
-  riskOther:             String
-  riskNote:              String
-  willRiskChange:        Boolean
-  willRiskChangeNote:    String
-
-  #Page 4
-  coordinateWork:          Boolean
-  coordinateWorkNote:      String
-  gainsharePayments:       Boolean
-  gainsharePaymentsTrack: Boolean
-  gainsharePaymentsNote:   String
-  participantsIds:         [ParticipantsIDType!]
-  participantsIdsOther:    String
-  participantsIDSNote:     String
-
-  #Page 5
-  providerAdditionFrequency:      FrequencyType
-  providerAdditionFrequencyOther: String
-  providerAdditionFrequencyNote:  String
-  providerAddMethod:              [ProviderAddType!]
-  providerAddMethodOther:         String
-  providerAddMethodNote:          String
-  providerLeaveMethod:            [ProviderLeaveType!]
-  providerLeaveMethodOther:       String
-  providerLeaveMethodNote:        String
-  providerOverlap:                OverlapType
-  providerOverlapHierarchy:       String
-  providerOverlapNote:            String
-
-  status: TaskStatusInput
-}
-
-"""
-PlanPayments is the task list section that deals with information regarding Payments
-"""
-type PlanPayments {
-  id: UUID!
-  modelPlanID: UUID!
-
-  # Page 1
-  fundingSource:                      [FundingSource!]!
-  fundingSourceTrustFund:             String
-  fundingSourceOther:                 String
-  fundingSourceNote:                  String
-  fundingSourceR:                     [FundingSource!]!
-  fundingSourceRTrustFund:            String
-  fundingSourceROther:                String
-  fundingSourceRNote:                 String
-  payRecipients:                      [PayRecipient!]!
-  payRecipientsOtherSpecification:    String
-  payRecipientsNote:                  String
-  payType:                            [PayType!]!
-  payTypeNote:                        String
-
-  # Page 2
-  payClaims:                                      [ClaimsBasedPayType!]!
-  payClaimsOther:                                 String
-  payClaimsNote:                                  String
-  shouldAnyProvidersExcludedFFSSystems:           Boolean
-  shouldAnyProviderExcludedFFSSystemsNote:        String
-  changesMedicarePhysicianFeeSchedule:            Boolean
-  changesMedicarePhysicianFeeScheduleNote:        String
-  affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow:         String
-  affectsMedicareSecondaryPayerClaimsNote:        String
-  payModelDifferentiation:                        String
-
-  # Page 3
-  creatingDependenciesBetweenServices:     Boolean
-  creatingDependenciesBetweenServicesNote: String
-  needsClaimsDataCollection:               Boolean
-  needsClaimsDataCollectionNote:           String
-  providingThirdPartyFile:                 Boolean
-  isContractorAwareTestDataRequirements:   Boolean
-
-  # Page 4
-  beneficiaryCostSharingLevelAndHandling:          String
-  waiveBeneficiaryCostSharingForAnyServices:       Boolean
-  waiveBeneficiaryCostSharingServiceSpecification: String
-  waiverOnlyAppliesPartOfPayment:                  Boolean
-  waiveBeneficiaryCostSharingNote:                 String
-
-  # Page 5
-  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
-  nonClaimsPaymentOther:                           String
-  nonClaimsPaymentsNote:                           String
-  paymentCalculationOwner:                         String
-  numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNote:                   String
-  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
-  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
-  planningToUseInnovationPaymentContractor:        Boolean
-  planningToUseInnovationPaymentContractorNote:    String
-  fundingStructure:                                String
-
-  # Page 6
-  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
-  expectedCalculationComplexityLevelNote:            String
-  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
-  canParticipantsSelectBetweenPaymentMechanismsHow:  String
-  canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
-  anticipatedPaymentFrequencyOther:                  String
-  anticipatedPaymentFrequencyNote:                   String
-
-  # Page 7
-  willRecoverPayments:                               Boolean
-  willRecoverPaymentsNote:                           String
-  anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNote:  String
-  paymentStartDate:                                  Time
-  paymentStartDateNote:                              String
-
-  # Meta
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-
-  readyForReviewBy: UUID
-  readyForReviewByUserAccount: UserAccount
-  readyForReviewDts: Time
-  readyForClearanceBy: UUID
-  readyForClearanceByUserAccount: UserAccount
-  readyForClearanceDts: Time
-
-  status:      TaskStatus!
-}
-
-input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
-  # Page 1
-  fundingSource:                      [FundingSource!]
-  fundingSourceTrustFund:             String
-  fundingSourceOther:                 String
-  fundingSourceNote:                  String
-  fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFund:            String
-  fundingSourceROther:                String
-  fundingSourceRNote:                 String
-  payRecipients:                      [PayRecipient!]
-  payRecipientsOtherSpecification:    String
-  payRecipientsNote:                  String
-  payType:                            [PayType!]
-  payTypeNote:                        String
-
-  # Page 2
-  payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOther:                                 String
-  payClaimsNote:                                  String
-  shouldAnyProvidersExcludedFFSSystems:           Boolean
-  shouldAnyProviderExcludedFFSSystemsNote:        String
-  changesMedicarePhysicianFeeSchedule:            Boolean
-  changesMedicarePhysicianFeeScheduleNote:        String
-  affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow:         String
-  affectsMedicareSecondaryPayerClaimsNote:        String
-  payModelDifferentiation:                        String
-
-  # Page 3
-  creatingDependenciesBetweenServices:     Boolean
-  creatingDependenciesBetweenServicesNote: String
-  needsClaimsDataCollection:               Boolean
-  needsClaimsDataCollectionNote:           String
-  providingThirdPartyFile:                 Boolean
-  isContractorAwareTestDataRequirements:   Boolean
-
-  # Page 4
-  beneficiaryCostSharingLevelAndHandling:          String
-  waiveBeneficiaryCostSharingForAnyServices:       Boolean
-  waiveBeneficiaryCostSharingServiceSpecification: String
-  waiverOnlyAppliesPartOfPayment:                  Boolean
-  waiveBeneficiaryCostSharingNote:                 String
-
-  # Page 5
-  nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOther:                           String
-  nonClaimsPaymentsNote:                           String
-  paymentCalculationOwner:                         String
-  numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNote:                  String
-  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
-  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
-  planningToUseInnovationPaymentContractor:        Boolean
-  planningToUseInnovationPaymentContractorNote:    String
-  fundingStructure:                                String
-
-  # Page 6
-  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
-  expectedCalculationComplexityLevelNote:                   String
-  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
-  canParticipantsSelectBetweenPaymentMechanismsHow:         String
-  canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
-  anticipatedPaymentFrequencyOther:                         String
-  anticipatedPaymentFrequencyNote:                         String
-
-  # Page 7
-  willRecoverPayments:                               Boolean
-  willRecoverPaymentsNote:                          String
-  anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNote: String
-  paymentStartDate:                                  Time
-  paymentStartDateNote:                             String
-
-  status: TaskStatusInput
-}
-
-"""
-PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
-"""
-type PlanOpsEvalAndLearning {
-    id: UUID!
-    modelPlanID: UUID!
-
-    #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]!
-    agencyOrStateHelpOther: String
-    agencyOrStateHelpNote: String
-    stakeholders: [StakeholdersType!]!
-    stakeholdersOther: String
-    stakeholdersNote: String
-    helpdeskUse: Boolean
-    helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]!
-    contractorSupportOther: String
-    contractorSupportHow: String
-    contractorSupportNote: String
-    iddocSupport: Boolean
-    iddocSupportNote: String
-    #Page 2
-    technicalContactsIdentified: Boolean
-    technicalContactsIdentifiedDetail: String
-    technicalContactsIdentifiedNote: String
-    captureParticipantInfo: Boolean
-    captureParticipantInfoNote: String
-    icdOwner: String
-    draftIcdDueDate: Time
-    icdNote: String
-    #Page 3
-    uatNeeds: String
-    stcNeeds: String
-    testingTimelines: String
-    testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]!
-    dataMonitoringFileOther: String
-    dataResponseType: String
-    dataResponseFileFrequency: String
-    #Page 4
-    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-    eftSetUp: Boolean
-    unsolicitedAdjustmentsIncluded: Boolean
-    dataFlowDiagramsNeeded: Boolean
-    produceBenefitEnhancementFiles: Boolean
-    fileNamingConventions: String
-    dataMonitoringNote: String
-    #Page 5
-    benchmarkForPerformance: BenchmarkForPerformanceType
-    benchmarkForPerformanceNote: String
-    computePerformanceScores: Boolean
-    computePerformanceScoresNote: String
-    riskAdjustPerformance: Boolean
-    riskAdjustFeedback: Boolean
-    riskAdjustPayments: Boolean
-    riskAdjustOther: Boolean
-    riskAdjustNote: String
-    appealPerformance: Boolean
-    appealFeedback: Boolean
-    appealPayments: Boolean
-    appealOther: Boolean
-    appealNote: String
-    #Page 6
-    evaluationApproaches: [EvaluationApproachType!]!
-    evaluationApproachOther: String
-    evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]!
-    ccmInvolvmentOther: String
-    ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]!
-    dataNeededForMonitoringOther: String
-    dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]!
-    dataToSendParticicipantsOther: String
-    dataToSendParticicipantsNote: String
-    shareCclfData: Boolean
-    shareCclfDataNote: String
-    #Page 7
-    sendFilesBetweenCcw: Boolean
-    sendFilesBetweenCcwNote: String
-    appToSendFilesToKnown: Boolean
-    appToSendFilesToWhich: String
-    appToSendFilesToNote: String
-    useCcwForFileDistribiutionToParticipants: Boolean
-    useCcwForFileDistribiutionToParticipantsNote: String
-    developNewQualityMeasures: Boolean
-    developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
-    qualityPerformanceImpactsPaymentNote: String
-    #Page 8
-    dataSharingStarts: DataStartsType
-    dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]!
-    dataSharingFrequencyOther: String
-    dataSharingStartsNote: String
-    dataCollectionStarts: DataStartsType
-    dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]!
-    dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
-    qualityReportingStarts: DataStartsType
-    qualityReportingStartsOther: String
-    qualityReportingStartsNote: String
-    #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]!
-    modelLearningSystemsOther: String
-    modelLearningSystemsNote: String
-    anticipatedChallenges: String
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-
-    readyForReviewBy: UUID
-    readyForReviewByUserAccount: UserAccount
-    readyForReviewDts: Time
-    readyForClearanceBy: UUID
-    readyForClearanceByUserAccount: UserAccount
-    readyForClearanceDts: Time
-
-    status: TaskStatus!
-}
-
-"""
-PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
-ops, eval and learning object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
-
-    #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]
-    agencyOrStateHelpOther: String
-    agencyOrStateHelpNote: String
-    stakeholders: [StakeholdersType!]
-    stakeholdersOther: String
-    stakeholdersNote: String
-    helpdeskUse: Boolean
-    helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]
-    contractorSupportOther: String
-    contractorSupportHow: String
-    contractorSupportNote: String
-    iddocSupport: Boolean
-    iddocSupportNote: String
-    #Page 2
-    technicalContactsIdentified: Boolean
-    technicalContactsIdentifiedDetail: String
-    technicalContactsIdentifiedNote: String
-    captureParticipantInfo: Boolean
-    captureParticipantInfoNote: String
-    icdOwner: String
-    draftIcdDueDate: Time
-    icdNote: String
-    #Page 3
-    uatNeeds: String
-    stcNeeds: String
-    testingTimelines: String
-    testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]
-    dataMonitoringFileOther: String
-    dataResponseType: String
-    dataResponseFileFrequency: String
-    #Page 4
-    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-    eftSetUp: Boolean
-    unsolicitedAdjustmentsIncluded: Boolean
-    dataFlowDiagramsNeeded: Boolean
-    produceBenefitEnhancementFiles: Boolean
-    fileNamingConventions: String
-    dataMonitoringNote: String
-    #Page 5
-    benchmarkForPerformance: BenchmarkForPerformanceType
-    benchmarkForPerformanceNote: String
-    computePerformanceScores: Boolean
-    computePerformanceScoresNote: String
-    riskAdjustPerformance: Boolean
-    riskAdjustFeedback: Boolean
-    riskAdjustPayments: Boolean
-    riskAdjustOther: Boolean
-    riskAdjustNote: String
-    appealPerformance: Boolean
-    appealFeedback: Boolean
-    appealPayments: Boolean
-    appealOther: Boolean
-    appealNote: String
-    #Page 6
-    evaluationApproaches: [EvaluationApproachType!]
-    evaluationApproachOther: String
-    evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]
-    ccmInvolvmentOther: String
-    ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]
-    dataNeededForMonitoringOther: String
-    dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]
-    dataToSendParticicipantsOther: String
-    dataToSendParticicipantsNote: String
-    shareCclfData: Boolean
-    shareCclfDataNote: String
-    #Page 7
-    sendFilesBetweenCcw: Boolean
-    sendFilesBetweenCcwNote: String
-    appToSendFilesToKnown: Boolean
-    appToSendFilesToWhich: String
-    appToSendFilesToNote: String
-    useCcwForFileDistribiutionToParticipants: Boolean
-    useCcwForFileDistribiutionToParticipantsNote: String
-    developNewQualityMeasures: Boolean
-    developNewQualityMeasuresNote: String
-    qualityPerformanceImpactsPayment: Boolean
-    qualityPerformanceImpactsPaymentNote: String
-    #Page 8
-    dataSharingStarts: DataStartsType
-    dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
-    dataSharingFrequencyOther: String
-    dataSharingStartsNote: String
-    dataCollectionStarts: DataStartsType
-    dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
-    dataCollectionFrequencyOther: String
-    dataCollectionFrequencyNote: String
-    qualityReportingStarts: DataStartsType
-    qualityReportingStartsOther: String
-    qualityReportingStartsNote: String
-    #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]
-    modelLearningSystemsOther: String
-    modelLearningSystemsNote: String
-    anticipatedChallenges: String
-
-    status: TaskStatusInput
-}
-"""
-NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
-"""
-type NDAInfo {
-  agreed: Boolean!
-  agreedDts: Time
-}
-
-type PlanFavorite {
-    id: UUID!
-    modelPlanID: UUID!
-    userID: UUID!
-    userAccount: UserAccount!
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-
-}
-
-type PlanCrTdl {
-    id: UUID!
-    modelPlanID: UUID!
-
-    idNumber: String!
-    dateInitiated: Time!
-    title: String!
-    note: String
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-input PlanCrTdlCreateInput {
-    modelPlanID: UUID!
-
-    idNumber: String!
-    dateInitiated: Time!
-    title: String!
-    note: String
-}
-
-input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
-    idNumber: String
-    dateInitiated: Time
-    title: String
-    note: String
-}
-
-type PrepareForClearance {
-  status: PrepareForClearanceStatus!
-  latestClearanceDts: Time
-}
-
-type AuditChange {
-  id: Int!
-  primaryKey: UUID!
-  foreignKey: UUID
-  tableName: String!
-  action: String!
-  fields: Map!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-
-type OperationalSolution {
-    id: UUID!
-    operationalNeedID: UUID!
-
-    solutionType: Int
-    needed: Boolean # if null, it has not been selectd
-    name: String
-    key: OperationalSolutionKey
-    nameOther: String
-
-    pocName: String
-    pocEmail: String
-    mustStartDts: Time
-    mustFinishDts: Time
-    isOther: Boolean!
-    otherHeader: String
-    status: OpSolutionStatus!
-
-    documents: [PlanDocument!]!
-    operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
-
-    createdBy: UUID!
-    createdByUserAccount: UserAccount!
-    createdDts: Time!
-    modifiedBy: UUID
-    modifiedByUserAccount: UserAccount
-    modifiedDts: Time
-}
-
-input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-    needed: Boolean
-    nameOther: String # Only valid for when solution type is null
-
-    pocName: String
-    pocEmail: String
-    mustStartDts: Time
-    mustFinishDts: Time
-    otherHeader: String
-    status: OpSolutionStatus
-}
-
-type PlanDocumentSolutionLink {
-id: UUID!
-solutionID: UUID!
-documentID: UUID!
-
-createdBy: UUID!
-createdByUserAccount: UserAccount!
-createdDts: Time!
-modifiedBy: UUID
-modifiedByUserAccount: UserAccount
-modifiedDts: Time
-}
-
-input CreateOperationalSolutionSubtaskInput {
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-}
-
-input UpdateOperationalSolutionSubtaskInput {
-  id: UUID!
-  changes: UpdateOperationalSolutionSubtaskChangesInput!
-}
-
-input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-}
-
-type OperationalSolutionSubtask {
-  id: UUID!
-  solutionID: UUID!
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-type ChangeTableRecord {
-  guid: ID!
-  tableID: Int!
-  primaryKey: UUID!
-  foreignKey: UUID
-  action: String!
-  fields: Map
-  modifiedDts: Time
-  modifiedBy: UserAccount
-}
-
-input SearchRequest {
-  query: Map!
-}
-
-type DateHistogramAggregationBucket {
-  key: String!
-  docCount: Int!
-  maxModifiedDts: Time!
-  minModifiedDts: Time!
-}
 
 """
 Query definition for the schema
@@ -7766,12 +6422,6 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-enum ModelPlanFilter {
-  INCLUDE_ALL,
-  COLLAB_ONLY,
-  WITH_CR_TDLS,
 }
 
 """
@@ -7898,6 +6548,49 @@ type Subscription {
   @hasRole(role: MINT_USER)
 }
 
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
+
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+
+"""
+A user role associated with a job code
+"""
+enum Role {
+  """
+  A basic MINT user
+  """
+  MINT_USER
+
+  """
+  A MINT assessment team user
+  """
+  MINT_ASSESSMENT
+
+  """
+  A MINT MAC user
+  """
+  MINT_MAC
+}`, BuiltIn: false},
+	{Name: "../schema_enums/enums.graphql", Input: `#import "./ops_eval_and_learning.graphql"
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum ModelPlanFilter {
+  INCLUDE_ALL,
+  COLLAB_ONLY,
+  WITH_CR_TDLS,
+}
+
 enum ChangeType {
   ADDED
   UPDATED
@@ -7944,35 +6637,34 @@ enum TeamRole {
   QUALITY
 }
 
-enum ModelType
-{
+enum ModelType {
   VOLUNTARY
   MANDATORY
   TBD
 }
 
 enum ModelCategory {
-	ACCOUNTABLE_CARE
-	DEMONSTRATION
-	EPISODE_BASED_PAYMENT_INITIATIVES
-	INIT_MEDICAID_CHIP_POP
-	INIT__MEDICARE_MEDICAID_ENROLLEES
-	INIT_ACCEL_DEV_AND_TEST
-	INIT_SPEED_ADOPT_BEST_PRACTICE
-	PRIMARY_CARE_TRANSFORMATION
-	UNKNOWN
+  ACCOUNTABLE_CARE
+  DEMONSTRATION
+  EPISODE_BASED_PAYMENT_INITIATIVES
+  INIT_MEDICAID_CHIP_POP
+  INIT__MEDICARE_MEDICAID_ENROLLEES
+  INIT_ACCEL_DEV_AND_TEST
+  INIT_SPEED_ADOPT_BEST_PRACTICE
+  PRIMARY_CARE_TRANSFORMATION
+  UNKNOWN
 }
 
 enum ModelStatus {
-	PLAN_DRAFT
-	PLAN_COMPLETE
-	ICIP_COMPLETE
-	INTERNAL_CMMI_CLEARANCE
-	CMS_CLEARANCE
-	HHS_CLEARANCE
-	OMB_ASRF_CLEARANCE
-	CLEARED
-	ANNOUNCED
+  PLAN_DRAFT
+  PLAN_COMPLETE
+  ICIP_COMPLETE
+  INTERNAL_CMMI_CLEARANCE
+  CMS_CLEARANCE
+  HHS_CLEARANCE
+  OMB_ASRF_CLEARANCE
+  CLEARED
+  ANNOUNCED
   PAUSED
   CANCELED
 }
@@ -8069,6 +6761,7 @@ enum BeneficiariesType {
   OTHER
   NA
 }
+
 enum SelectionMethodType {
   HISTORICAL
   PROSPECTIVE
@@ -8078,17 +6771,20 @@ enum SelectionMethodType {
   OTHER
   NA
 }
+
 enum OverlapType {
   YES_NEED_POLICIES
   YES_NO_ISSUES
   NO
 }
+
 enum ConfidenceType {
   NOT_AT_ALL
   SLIGHTLY
   FAIRLY
   COMPLETELY
 }
+
 enum FrequencyType {
   ANNUALLY
   BIANNUALLY
@@ -8097,11 +6793,13 @@ enum FrequencyType {
   ROLLING
   OTHER
 }
+
 enum TriStateAnswer {
   YES
   NO
   TBD
 }
+
 enum ParticipantsType {
   MEDICARE_PROVIDERS
   ENTITIES
@@ -8126,6 +6824,7 @@ enum RecruitmentType {
   OTHER
   NA
 }
+
 enum ParticipantSelectionType {
   MODEL_TEAM_REVIEW_APPLICATIONS
   SUPPORT_FROM_CMMI
@@ -8136,12 +6835,14 @@ enum ParticipantSelectionType {
   OTHER
   NO_SELECTING_PARTICIPANTS
 }
+
 enum ParticipantCommunicationType {
   MASS_EMAIL
   IT_TOOL
   OTHER
   NO_COMMUNICATION
 }
+
 enum ParticipantRiskType {
   TWO_SIDED
   ONE_SIDED
@@ -8169,135 +6870,13 @@ enum ProviderAddType {
 
 enum ProviderLeaveType {
 
-VOLUNTARILY_WITHOUT_IMPLICATIONS
-AFTER_A_CERTAIN_WITH_IMPLICATIONS
-VARIES_BY_TYPE_OF_PROVIDER
-NOT_ALLOWED_TO_LEAVE
-OTHER
-NOT_APPLICABLE
+  VOLUNTARILY_WITHOUT_IMPLICATIONS
+  AFTER_A_CERTAIN_WITH_IMPLICATIONS
+  VARIES_BY_TYPE_OF_PROVIDER
+  NOT_ALLOWED_TO_LEAVE
+  OTHER
+  NOT_APPLICABLE
 }
-
-
-#Ops Eval and Learning types begin
-
-enum AgencyOrStateHelpType {
-    YES_STATE
-    YES_AGENCY_IDEAS
-    YES_AGENCY_IAA
-    NO
-    OTHER
-}
-
-enum StakeholdersType {
-    BENEFICIARIES
-    COMMUNITY_ORGANIZATIONS
-    PARTICIPANTS
-    PROFESSIONAL_ORGANIZATIONS
-    PROVIDERS
-    STATES
-    OTHER
-}
-
-
-enum ContractorSupportType {
-    ONE
-    MULTIPLE
-    NONE
-    OTHER
-}
-
-enum MonitoringFileType {
-    BENEFICIARY
-    PROVIDER
-    PART_A
-    PART_B
-    OTHER
-}
-
-enum EvaluationApproachType {
-    CONTROL_INTERVENTION
-    COMPARISON_MATCH
-    INTERRUPTED_TIME
-    NON_MEDICARE_DATA
-    OTHER
-}
-
-enum CcmInvolvmentType {
-    YES_EVALUATION
-    YES__IMPLEMENTATION
-    NO
-    OTHER
-}
-
-enum DataForMonitoringType {
-    SITE_VISITS
-    MEDICARE_CLAIMS
-    MEDICAID_CLAIMS
-    ENCOUNTER_DATA
-    NO_PAY_CLAIMS
-    QUALITY_CLAIMS_BASED_MEASURES
-    QUALITY_REPORTED_MEASURES
-    CLINICAL_DATA
-    NON_CLINICAL_DATA
-    NON_MEDICAL_DATA
-    OTHER
-    NOT_PLANNING_TO_COLLECT_DATA
-}
-
-enum DataToSendParticipantsType {
-    BASELINE_HISTORICAL_DATA
-    CLAIMS_LEVEL_DATA
-    BENEFICIARY_LEVEL_DATA
-    PARTICIPANT_LEVEL_DATA
-    PROVIDER_LEVEL_DATA
-    OTHER_MIPS_DATA
-    NOT_PLANNING_TO_SEND_DATA
-}
-
-enum DataFrequencyType {
-    ANNUALLY
-    BIANNUALLY
-    QUARTERLY
-    MONTHLY
-    SEMI_MONTHLY
-    WEEKLY
-    DAILY
-    OTHER
-    NOT_PLANNING_TO_DO_THIS
-}
-
-enum ModelLearningSystemType {
-    LEARNING_CONTRACTOR
-    IT_PLATFORM_CONNECT
-    PARTICIPANT_COLLABORATION
-    EDUCATE_BENEFICIARIES
-    OTHER
-    NO_LEARNING_SYSTEM
-}
-
-
-enum DataFullTimeOrIncrementalType {
-    FULL_TIME
-    INCREMENTAL
-}
-
-enum BenchmarkForPerformanceType {
-    YES_RECONCILE
-    YES_NO_RECONCILE
-    NO
-}
-
-enum DataStartsType {
-    DURING_APPLICATION_PERIOD
-    SHORTLY_BEFORE_THE_START_DATE
-    EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
-    LATER_IN_THE_FIRST_PERFORMANCE_YEAR
-    IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
-    AT_SOME_OTHER_POINT_IN_TIME
-    NOT_PLANNING_TO_DO_THIS
-    OTHER
-}
-#Ops Eval and Learning types end
 
 enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
@@ -8448,50 +7027,6 @@ enum OperationalSolutionSubtaskStatus {
   DONE
 }
 
-directive @hasRole(role: Role!) on FIELD_DEFINITION
-
-directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
-
-# https://gqlgen.com/config/#inline-config-with-directives
-directive @goModel(
-  model: String
-  models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-
-type UserAccount {
-	id: UUID!
-	username: String!
-	isEUAID: Boolean
-	commonName: String!
-	locale: String!
-	email: String!
-	givenName: String!
-	familyName: String!
-	zoneInfo: String!
-	hasLoggedIn: Boolean
-}
-
-
-"""
-A user role associated with a job code
-"""
-enum Role {
-  """
-  A basic MINT user
-  """
-  MINT_USER
-
-  """
-  A MINT assessment team user
-  """
-  MINT_ASSESSMENT
-
-  """
-  A MINT MAC user
-  """
-  MINT_MAC
-}
-
 enum ActionType {
   """
   A normal flow action
@@ -8504,6 +7039,1488 @@ enum ActionType {
   ADMIN
 }
 `, BuiltIn: false},
+	{Name: "../schema_enums/ops_eval_and_learning.graphql", Input: `#Ops Eval and Learning types begin
+enum AgencyOrStateHelpType {
+  YES_STATE
+  YES_AGENCY_IDEAS
+  YES_AGENCY_IAA
+  NO
+  OTHER
+}
+
+enum StakeholdersType {
+  BENEFICIARIES
+  COMMUNITY_ORGANIZATIONS
+  PARTICIPANTS
+  PROFESSIONAL_ORGANIZATIONS
+  PROVIDERS
+  STATES
+  OTHER
+}
+
+enum ContractorSupportType {
+  ONE
+  MULTIPLE
+  NONE
+  OTHER
+}
+
+enum MonitoringFileType {
+  BENEFICIARY
+  PROVIDER
+  PART_A
+  PART_B
+  OTHER
+}
+
+enum EvaluationApproachType {
+  CONTROL_INTERVENTION
+  COMPARISON_MATCH
+  INTERRUPTED_TIME
+  NON_MEDICARE_DATA
+  OTHER
+}
+
+enum CcmInvolvmentType {
+  YES_EVALUATION
+  YES__IMPLEMENTATION
+  NO
+  OTHER
+}
+
+enum DataForMonitoringType {
+  SITE_VISITS
+  MEDICARE_CLAIMS
+  MEDICAID_CLAIMS
+  ENCOUNTER_DATA
+  NO_PAY_CLAIMS
+  QUALITY_CLAIMS_BASED_MEASURES
+  QUALITY_REPORTED_MEASURES
+  CLINICAL_DATA
+  NON_CLINICAL_DATA
+  NON_MEDICAL_DATA
+  OTHER
+  NOT_PLANNING_TO_COLLECT_DATA
+}
+
+enum DataToSendParticipantsType {
+  BASELINE_HISTORICAL_DATA
+  CLAIMS_LEVEL_DATA
+  BENEFICIARY_LEVEL_DATA
+  PARTICIPANT_LEVEL_DATA
+  PROVIDER_LEVEL_DATA
+  OTHER_MIPS_DATA
+  NOT_PLANNING_TO_SEND_DATA
+}
+
+enum DataFrequencyType {
+  ANNUALLY
+  BIANNUALLY
+  QUARTERLY
+  MONTHLY
+  SEMI_MONTHLY
+  WEEKLY
+  DAILY
+  OTHER
+  NOT_PLANNING_TO_DO_THIS
+}
+
+enum ModelLearningSystemType {
+  LEARNING_CONTRACTOR
+  IT_PLATFORM_CONNECT
+  PARTICIPANT_COLLABORATION
+  EDUCATE_BENEFICIARIES
+  OTHER
+  NO_LEARNING_SYSTEM
+}
+
+enum DataFullTimeOrIncrementalType {
+  FULL_TIME
+  INCREMENTAL
+}
+
+enum BenchmarkForPerformanceType {
+  YES_RECONCILE
+  YES_NO_RECONCILE
+  NO
+}
+
+enum DataStartsType {
+  DURING_APPLICATION_PERIOD
+  SHORTLY_BEFORE_THE_START_DATE
+  EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
+  LATER_IN_THE_FIRST_PERFORMANCE_YEAR
+  IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
+  AT_SOME_OTHER_POINT_IN_TIME
+  NOT_PLANNING_TO_DO_THIS
+  OTHER
+}
+#Ops Eval and Learning types end
+`, BuiltIn: false},
+	{Name: "../schema_types/audit_change.graphql", Input: `type AuditChange {
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: String!
+  action: String!
+  fields: Map!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/change_table_record.graphql", Input: `type ChangeTableRecord {
+  guid: ID!
+  tableID: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  action: String!
+  fields: Map
+  modifiedDts: Time
+  modifiedBy: UserAccount
+}`, BuiltIn: false},
+	{Name: "../schema_types/current_user.graphql", Input: `"""
+The current user of the application
+"""
+type CurrentUser {
+  launchDarkly: LaunchDarklySettings!
+}`, BuiltIn: false},
+	{Name: "../schema_types/date_histogram_aggregation_bucket.graphql", Input: `type DateHistogramAggregationBucket {
+  key: String!
+  docCount: Int!
+  maxModifiedDts: Time!
+  minModifiedDts: Time!
+}`, BuiltIn: false},
+	{Name: "../schema_types/discussion_reply.graphql", Input: `"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply  {
+  id: UUID!
+  discussionID: UUID!
+  content: String
+  resolution: Boolean
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/existing_model.graphql", Input: `"""
+ExistingModel represents a model that already exists outside of the scope of MINT
+"""
+type ExistingModel {
+  id: String
+  modelName: String
+  stage: String!
+  numberOfParticipants: String
+  category: String
+  authority: String
+  description: String
+  numberOfBeneficiariesImpacted: Int
+  numberOfPhysiciansImpacted: Int
+  dateBegan: Time
+  dateEnded: Time
+  states: String
+  keywords: String
+  url: String
+  displayModelSummary: Boolean
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/inputs.graphql", Input: `"""
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+  modelName: String
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
+}
+
+"""
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
+"""
+input PlanCollaboratorCreateInput {
+  modelPlanID: UUID!
+  userName: String!
+  teamRole: TeamRole!
+}
+
+"""
+PlanDocumentInput
+"""
+input PlanDocumentInput {
+  modelPlanID: UUID!
+  fileData: Upload!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+"""
+PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]
+  modelType: ModelType
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+  status: TaskStatusInput
+}
+
+"""
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+"""
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  content: String!
+}
+
+"""
+PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
+  content: String
+  status: DiscussionStatus
+}
+
+"""
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+"""
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: String!
+  resolution: Boolean! = false
+}
+
+"""
+DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
+  content: String
+  resolution: Boolean
+}
+
+"""
+PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+general characteristics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]
+  keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]
+  waiversRequiredNote: String
+
+  status: TaskStatusInput
+}
+
+input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
+  #Page 1
+  beneficiaries: [BeneficiariesType!]
+  beneficiariesOther: String
+  beneficiariesNote: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+  #Page 3
+  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: String
+
+  status: TaskStatusInput
+}
+
+"""
+PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
+providers and participants object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
+  #Page 1
+  participants:                      [ParticipantsType!]
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
+
+  #Page 2
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
+  recruitmentMethod:            RecruitmentType
+  recruitmentOther:             String
+  recruitmentNote:              String
+  selectionMethod:              [ParticipantSelectionType!]
+  selectionOther:               String
+  selectionNote:                String
+
+  #Page 3
+  communicationMethod:   [ParticipantCommunicationType!]
+  communicationMethodOther:   String
+  communicationNote:     String
+  participantAssumeRisk: Boolean
+  riskType:              ParticipantRiskType
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
+
+  #Page 4
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
+  participantsIds:         [ParticipantsIDType!]
+  participantsIdsOther:    String
+  participantsIDSNote:     String
+
+  #Page 5
+  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
+  providerAddMethod:              [ProviderAddType!]
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
+  providerLeaveMethod:            [ProviderLeaveType!]
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
+
+  status: TaskStatusInput
+}
+
+input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:                   String
+  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
+  canParticipantsSelectBetweenPaymentMechanismsNote:        String
+  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
+
+  status: TaskStatusInput
+}
+
+"""
+PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
+ops, eval and learning object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
+
+  #Page 1
+  agencyOrStateHelp: [AgencyOrStateHelpType!]
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
+  stakeholders: [StakeholdersType!]
+  stakeholdersOther: String
+  stakeholdersNote: String
+  helpdeskUse: Boolean
+  helpdeskUseNote: String
+  contractorSupport: [ContractorSupportType!]
+  contractorSupportOther: String
+  contractorSupportHow: String
+  contractorSupportNote: String
+  iddocSupport: Boolean
+  iddocSupportNote: String
+  #Page 2
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+  #Page 3
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [MonitoringFileType!]
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+  #Page 4
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+  #Page 5
+  benchmarkForPerformance: BenchmarkForPerformanceType
+  benchmarkForPerformanceNote: String
+  computePerformanceScores: Boolean
+  computePerformanceScoresNote: String
+  riskAdjustPerformance: Boolean
+  riskAdjustFeedback: Boolean
+  riskAdjustPayments: Boolean
+  riskAdjustOther: Boolean
+  riskAdjustNote: String
+  appealPerformance: Boolean
+  appealFeedback: Boolean
+  appealPayments: Boolean
+  appealOther: Boolean
+  appealNote: String
+  #Page 6
+  evaluationApproaches: [EvaluationApproachType!]
+  evaluationApproachOther: String
+  evalutaionApproachNote: String
+  ccmInvolvment: [CcmInvolvmentType!]
+  ccmInvolvmentOther: String
+  ccmInvolvmentNote: String
+  dataNeededForMonitoring: [DataForMonitoringType!]
+  dataNeededForMonitoringOther: String
+  dataNeededForMonitoringNote: String
+  dataToSendParticicipants: [DataToSendParticipantsType!]
+  dataToSendParticicipantsOther: String
+  dataToSendParticicipantsNote: String
+  shareCclfData: Boolean
+  shareCclfDataNote: String
+  #Page 7
+  sendFilesBetweenCcw: Boolean
+  sendFilesBetweenCcwNote: String
+  appToSendFilesToKnown: Boolean
+  appToSendFilesToWhich: String
+  appToSendFilesToNote: String
+  useCcwForFileDistribiutionToParticipants: Boolean
+  useCcwForFileDistribiutionToParticipantsNote: String
+  developNewQualityMeasures: Boolean
+  developNewQualityMeasuresNote: String
+  qualityPerformanceImpactsPayment: Boolean
+  qualityPerformanceImpactsPaymentNote: String
+  #Page 8
+  dataSharingStarts: DataStartsType
+  dataSharingStartsOther: String
+  dataSharingFrequency: [DataFrequencyType!]
+  dataSharingFrequencyOther: String
+  dataSharingStartsNote: String
+  dataCollectionStarts: DataStartsType
+  dataCollectionStartsOther: String
+  dataCollectionFrequency: [DataFrequencyType!]
+  dataCollectionFrequencyOther: String
+  dataCollectionFrequencyNote: String
+  qualityReportingStarts: DataStartsType
+  qualityReportingStartsOther: String
+  qualityReportingStartsNote: String
+  #Page 9
+  modelLearningSystems: [ModelLearningSystemType!]
+  modelLearningSystemsOther: String
+  modelLearningSystemsNote: String
+  anticipatedChallenges: String
+
+  status: TaskStatusInput
+}
+
+input PlanCrTdlCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+}
+
+input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  title: String
+  note: String
+}
+
+input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
+  needed: Boolean
+  nameOther: String # Only valid for when solution type is null
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  otherHeader: String
+  status: OpSolutionStatus
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input SearchRequest {
+  query: Map!
+}`, BuiltIn: false},
+	{Name: "../schema_types/launch_darkly_settings.graphql", Input: `"""
+The current user's Launch Darkly key
+"""
+type LaunchDarklySettings {
+  userKey: String!
+  signedHash: String!
+}`, BuiltIn: false},
+	{Name: "../schema_types/model_plan.graphql", Input: `"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
+"""
+type ModelPlan {
+  id: UUID!
+  modelName: String!
+  archived: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  basics: PlanBasics!
+  generalCharacteristics: PlanGeneralCharacteristics!
+  participantsAndProviders: PlanParticipantsAndProviders!
+  beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
+  collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
+  status: ModelStatus!
+  isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crTdls: [PlanCrTdl!]!
+  prepareForClearance: PrepareForClearance!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
+  operationalNeeds: [OperationalNeed!]!
+}`, BuiltIn: false},
+	{Name: "../schema_types/nda_info.graphql", Input: `"""
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+"""
+type NDAInfo {
+  agreed: Boolean!
+  agreedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/operational_need.graphql", Input: `type OperationalNeed {
+  id: UUID!
+  modelPlanID: UUID!
+
+  needed: Boolean # if null, it has not been answered
+  solutions(includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+
+  key: OperationalNeedKey
+  name: String
+  nameOther: String
+  section: TaskListSection
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/operational_solution.graphql", Input: `type OperationalSolution {
+  id: UUID!
+  operationalNeedID: UUID!
+
+  solutionType: Int
+  needed: Boolean # if null, it has not been selectd
+  name: String
+  key: OperationalSolutionKey
+  nameOther: String
+
+  pocName: String
+  pocEmail: String
+  mustStartDts: Time
+  mustFinishDts: Time
+  isOther: Boolean!
+  otherHeader: String
+  status: OpSolutionStatus!
+
+  documents: [PlanDocument!]!
+  operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/operational_solution_subtask.graphql", Input: `type OperationalSolutionSubtask {
+  id: UUID!
+  solutionID: UUID!
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_basics.graphql", Input: `"""
+Represents plan basics
+"""
+type PlanBasics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]!
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]!
+  modelType: ModelType
+  problem: String
+  goal: String
+  testInterventions: String
+  note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_beneficiaries.graphql", Input: `"""
+Plan Beneficiaries represents the the beneficiaries section of the task list
+"""
+type PlanBeneficiaries {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  beneficiaries: [BeneficiariesType!]!
+  beneficiariesOther: String
+  beneficiariesNote: String
+  treatDualElligibleDifferent: TriStateAnswer
+  treatDualElligibleDifferentHow: String
+  treatDualElligibleDifferentNote: String
+  excludeCertainCharacteristics: TriStateAnswer
+  excludeCertainCharacteristicsCriteria: String
+  excludeCertainCharacteristicsNote: String
+
+  #Page 2
+  numberPeopleImpacted: Int
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  beneficiarySelectionMethod: [SelectionMethodType!]!
+  beneficiarySelectionOther: String
+  beneficiarySelectionNote: String
+
+  #Page 3
+  beneficiarySelectionFrequency: FrequencyType
+  beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
+  beneficiaryOverlap: OverlapType
+  beneficiaryOverlapNote: String
+  precedenceRules: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_collaborator.graphql", Input: `"""
+PlanCollaborator represents a collaborator on a plan
+"""
+type PlanCollaborator {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+  teamRole: TeamRole!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_crtdl.graphql", Input: `type PlanCrTdl {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_discussion.graphql", Input: `"""
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion  {
+  id:          UUID!
+  modelPlanID: UUID!
+  content: String
+  status: DiscussionStatus!
+  replies: [DiscussionReply!]!
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_document.graphql", Input: `"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
+  otherType: String
+  optionalNotes: String
+  downloadUrl: String
+  deletedAt: Time
+  numLinkedSolutions: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_document_solution_link.graphql", Input: `type PlanDocumentSolutionLink {
+  id: UUID!
+  solutionID: UUID!
+  documentID: UUID!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_favorite.graphql", Input: `type PlanFavorite {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_general_characteristics.graphql", Input: `"""
+PlanGeneralCharacteristics represents a plan general characteristics object
+"""
+type PlanGeneralCharacteristics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]!
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]!
+  keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContractUpdated: Boolean
+  planContractUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]!
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]!
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]!
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]!
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]!
+  waiversRequiredNote: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_ops_eval_and_learning.graphql", Input: `"""
+PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
+"""
+type PlanOpsEvalAndLearning {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  agencyOrStateHelp: [AgencyOrStateHelpType!]!
+  agencyOrStateHelpOther: String
+  agencyOrStateHelpNote: String
+  stakeholders: [StakeholdersType!]!
+  stakeholdersOther: String
+  stakeholdersNote: String
+  helpdeskUse: Boolean
+  helpdeskUseNote: String
+  contractorSupport: [ContractorSupportType!]!
+  contractorSupportOther: String
+  contractorSupportHow: String
+  contractorSupportNote: String
+  iddocSupport: Boolean
+  iddocSupportNote: String
+
+  #Page 2
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+
+  #Page 3
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [MonitoringFileType!]!
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+
+  #Page 4
+  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+
+  #Page 5
+  benchmarkForPerformance: BenchmarkForPerformanceType
+  benchmarkForPerformanceNote: String
+  computePerformanceScores: Boolean
+  computePerformanceScoresNote: String
+  riskAdjustPerformance: Boolean
+  riskAdjustFeedback: Boolean
+  riskAdjustPayments: Boolean
+  riskAdjustOther: Boolean
+  riskAdjustNote: String
+  appealPerformance: Boolean
+  appealFeedback: Boolean
+  appealPayments: Boolean
+  appealOther: Boolean
+  appealNote: String
+
+  #Page 6
+  evaluationApproaches: [EvaluationApproachType!]!
+  evaluationApproachOther: String
+  evalutaionApproachNote: String
+  ccmInvolvment: [CcmInvolvmentType!]!
+  ccmInvolvmentOther: String
+  ccmInvolvmentNote: String
+  dataNeededForMonitoring: [DataForMonitoringType!]!
+  dataNeededForMonitoringOther: String
+  dataNeededForMonitoringNote: String
+  dataToSendParticicipants: [DataToSendParticipantsType!]!
+  dataToSendParticicipantsOther: String
+  dataToSendParticicipantsNote: String
+  shareCclfData: Boolean
+  shareCclfDataNote: String
+
+  #Page 7
+  sendFilesBetweenCcw: Boolean
+  sendFilesBetweenCcwNote: String
+  appToSendFilesToKnown: Boolean
+  appToSendFilesToWhich: String
+  appToSendFilesToNote: String
+  useCcwForFileDistribiutionToParticipants: Boolean
+  useCcwForFileDistribiutionToParticipantsNote: String
+  developNewQualityMeasures: Boolean
+  developNewQualityMeasuresNote: String
+  qualityPerformanceImpactsPayment: Boolean
+  qualityPerformanceImpactsPaymentNote: String
+
+  #Page 8
+  dataSharingStarts: DataStartsType
+  dataSharingStartsOther: String
+  dataSharingFrequency: [DataFrequencyType!]!
+  dataSharingFrequencyOther: String
+  dataSharingStartsNote: String
+  dataCollectionStarts: DataStartsType
+  dataCollectionStartsOther: String
+  dataCollectionFrequency: [DataFrequencyType!]!
+  dataCollectionFrequencyOther: String
+  dataCollectionFrequencyNote: String
+  qualityReportingStarts: DataStartsType
+  qualityReportingStartsOther: String
+  qualityReportingStartsNote: String
+
+  #Page 9
+  modelLearningSystems: [ModelLearningSystemType!]!
+  modelLearningSystemsOther: String
+  modelLearningSystemsNote: String
+  anticipatedChallenges: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_participants_and_providers.graphql", Input: `"""
+PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
+"""
+type PlanParticipantsAndProviders {
+  id: UUID!
+  modelPlanID: UUID!
+
+  #Page 1
+  participants:                      [ParticipantsType!]!
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
+
+  #Page 2
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
+  recruitmentMethod:            RecruitmentType
+  recruitmentOther:             String
+  recruitmentNote:              String
+  selectionMethod:              [ParticipantSelectionType!]!
+  selectionOther:               String
+  selectionNote:                String
+
+  #Page 3
+  communicationMethod:   [ParticipantCommunicationType!]!
+  communicationMethodOther:   String
+  communicationNote:     String
+  participantAssumeRisk: Boolean
+  riskType:              ParticipantRiskType
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
+
+  #Page 4
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
+  participantsIds:         [ParticipantsIDType!]!
+  participantsIdsOther:    String
+  participantsIDSNote:     String
+
+  #Page 5
+  providerAdditionFrequency:      FrequencyType
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
+  providerAddMethod:              [ProviderAddType!]!
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
+  providerLeaveMethod:            [ProviderLeaveType!]!
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}`, BuiltIn: false},
+	{Name: "../schema_types/plan_payment.graphql", Input: `"""
+PlanPayments is the task list section that deals with information regarding Payments
+"""
+type PlanPayments {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  fundingSource:                      [FundingSource!]!
+  fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]!
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]!
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]!
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]!
+  payClaimsOther:                                 String
+  payClaimsNote:                                  String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
+  nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                   String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:            String
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String
+  canParticipantsSelectBetweenPaymentMechanismsNote: String
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
+  anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyNote:                   String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                           String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote:  String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                              String
+
+  # Meta
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status:      TaskStatus!
+}`, BuiltIn: false},
+	{Name: "../schema_types/possible_operational_need.graphql", Input: `type PossibleOperationalNeed {
+  id: Int!
+  possibleSolutions: [PossibleOperationalSolution!]!
+  name: String!
+  key: OperationalNeedKey!
+  section: TaskListSection
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/possible_operational_solution.graphql", Input: `type PossibleOperationalSolution {
+  id: Int!
+  name: String!
+  key: OperationalSolutionKey!
+  treatAsOther: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/prepare_for_clearance.graphql", Input: `type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}`, BuiltIn: false},
+	{Name: "../schema_types/scalars.graphql", Input: `"""
+UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
+"""
+scalar UUID
+
+"""
+Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
+"""
+scalar Time
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
+"""
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload`, BuiltIn: false},
+	{Name: "../schema_types/task_list_section_lock_status.graphql", Input: `type TaskListSectionLockStatus {
+  modelPlanID: UUID!
+  section: TaskListSection!
+  lockedByUserAccount: UserAccount!
+  isAssessment: Boolean!
+}`, BuiltIn: false},
+	{Name: "../schema_types/task_list_section_lock_status_changed.graphql", Input: `type TaskListSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: TaskListSectionLockStatus!
+  actionType: ActionType!
+}`, BuiltIn: false},
+	{Name: "../schema_types/user_account.graphql", Input: `type UserAccount {
+  id: UUID!
+  username: String!
+  isEUAID: Boolean
+  commonName: String!
+  locale: String!
+  email: String!
+  givenName: String!
+  familyName: String!
+  zoneInfo: String!
+  hasLoggedIn: Boolean
+}`, BuiltIn: false},
+	{Name: "../schema_types/user_info.graphql", Input: `"""
+Represents a person response from the Okta API
+"""
+type UserInfo {
+  firstName: String!
+  lastName: String!
+  displayName: String!
+  email: String!
+  username: String!
+}`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
