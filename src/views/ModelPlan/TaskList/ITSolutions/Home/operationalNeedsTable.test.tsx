@@ -48,6 +48,7 @@ const returnNeeds = (needed: boolean | null) => {
                     key: OperationalSolutionKey.SHARED_SYSTEMS,
                     mustStartDts: null,
                     mustFinishDts: null,
+                    operationalSolutionSubtasks: [],
                     needed: true,
                     nameOther: null,
                     pocEmail: null,
