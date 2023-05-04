@@ -3,9 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -15,7 +12,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -228,44 +225,24 @@ const AddCustomSolution = () => {
     }
   };
 
+  const breadcrumbs = [
+    { text: h('home'), url: '/' },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    {
+      text: t('addSolution'),
+      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+    },
+    {
+      text: operationalSolutionID
+        ? t('updateSolutionDetails')
+        : t('addSolutionDetails')
+    }
+  ];
+
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`}
-          >
-            <span>{t('addSolution')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {operationalSolutionID
-            ? t('updateSolutionDetails')
-            : t('addSolutionDetails')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs items={breadcrumbs} />
 
       {mutationError && (
         <Alert type="error" slim>
