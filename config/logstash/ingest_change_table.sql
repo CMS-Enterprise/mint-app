@@ -1,4 +1,4 @@
-WITH RECURSIVE model_plan_ids (id, model_plan_id) AS (
+WITH model_plan_ids (id, model_plan_id) AS (
     SELECT
         audit.change.id,
         COALESCE(
