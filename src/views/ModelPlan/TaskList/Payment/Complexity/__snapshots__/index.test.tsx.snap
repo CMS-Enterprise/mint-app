@@ -321,6 +321,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="anticipatedPaymentFrequency"
+              id="label-anticipatedPaymentFrequency"
             >
               How often do you anticipate making payments?
             </label>
@@ -359,6 +360,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-anticipatedPaymentFrequency"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"

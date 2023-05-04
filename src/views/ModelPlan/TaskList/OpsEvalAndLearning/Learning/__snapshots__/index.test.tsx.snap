@@ -295,6 +295,7 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
       </p>
       <textarea
+        aria-labelledby="label-ops-eval-and-learning-learning-anticipated-challenges hint-ops-eval-and-learning-learning-anticipated-challenges"
         class="height-card usa-textarea"
         data-testid="ops-eval-and-learning-learning-anticipated-challenges"
         id="ops-eval-and-learning-learning-anticipated-challenges"

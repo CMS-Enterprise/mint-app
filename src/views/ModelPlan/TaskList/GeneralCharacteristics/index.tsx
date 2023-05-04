@@ -369,6 +369,7 @@ export const CharacteristicsContent = () => {
                         <Label
                           htmlFor="plan-characteristics-resembles-which-model"
                           className="text-normal"
+                          id="label-plan-characteristics-resembles-which-model"
                         >
                           {t('modelResemblance')}
                         </Label>
@@ -382,6 +383,7 @@ export const CharacteristicsContent = () => {
                         <Field
                           as={MultiSelect}
                           id="plan-characteristics-resembles-which-model"
+                          ariaLabel="label-plan-characteristics-resembles-which-model"
                           name="resemblesExistingModelWhich"
                           options={modelPlanOptions}
                           selectedLabel={t('selectedModels')}

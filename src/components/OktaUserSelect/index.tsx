@@ -22,6 +22,7 @@ type OktaUserSelectProps = {
   className?: string;
   id: string;
   name: string;
+  ariaLabelledBy?: string;
   ariaDescribedBy?: string;
   value?: OktaUserType | null;
   onChange: (contact: OktaUserType | null) => void;
@@ -55,6 +56,23 @@ const Option = (props: OptionProps<OktaUserSelectOption, false>) => {
         'usa-combo-box__list-option--focused': isFocused
       })}
     />
+  );
+};
+
+const NoOptionsMessage = (props: any) => {
+  const { t } = useTranslation('general');
+  return (
+    <components.NoOptionsMessage {...props}>
+      <button
+        type="button"
+        id="no-results"
+        tabIndex={0}
+        className="usa-button--unstyled text-no-underline text-black"
+        aria-label={t('noResults')}
+      >
+        {t('noResults')}
+      </button>
+    </components.NoOptionsMessage>
   );
 };
 
@@ -134,13 +152,13 @@ export default function OktaUserSelect({
   className,
   id,
   name,
+  ariaLabelledBy,
   ariaDescribedBy,
   value,
   onChange,
   disabled,
   autoSearch
 }: OktaUserSelectProps) {
-  const { t } = useTranslation();
   // If autoSearch, set name as initial search term
   const [searchTerm, setSearchTerm] = useState<string | undefined>(
     value ? formatLabel(value) : undefined
@@ -274,8 +292,22 @@ export default function OktaUserSelect({
       isDisabled={disabled}
       aria-describedby={ariaDescribedBy}
       aria-disabled={disabled}
-      aria-label="Cedar-Users"
-      components={{ Input, IndicatorsContainer, ClearIndicator, Option, Menu }}
+      aria-labelledby={ariaLabelledBy}
+      // Conditional on menu open to override "No results" selection being tabbable/not closed on focus lost
+      // Menu is closed on user selection
+      menuIsOpen={
+        ((contacts.length === 0 && (searchTerm?.length || 0) > 2) ||
+          !!contacts.length) &&
+        !userSelected
+      }
+      components={{
+        Input,
+        IndicatorsContainer,
+        ClearIndicator,
+        Option,
+        Menu,
+        NoOptionsMessage
+      }}
       options={contacts.map((contact: OktaUserType) => ({
         label: `${contact.displayName}, ${contact.username}`,
         value: contact
@@ -306,7 +338,6 @@ export default function OktaUserSelect({
       }}
       defaultInputValue={searchTerm}
       inputValue={searchTerm}
-      noOptionsMessage={() => t('No results')}
       classNamePrefix="cedar-contact-select"
       instanceId={id}
       placeholder={false}

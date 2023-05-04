@@ -310,7 +310,10 @@ const PeopleImpact = () => {
                         error={!!flatErrors.beneficiarySelectionMethod}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="beneficiaries-chooseBeneficiaries">
+                        <Label
+                          htmlFor="beneficiaries-chooseBeneficiaries"
+                          id="label-beneficiaries-chooseBeneficiaries"
+                        >
                           {t('chooseBeneficiaries')}
                         </Label>
                         <FieldErrorMsg>
@@ -321,6 +324,7 @@ const PeopleImpact = () => {
                           as={MultiSelect}
                           id="beneficiaries-chooseBeneficiaries"
                           name="beneficiarySelectionMethod"
+                          ariaLabel="label-beneficiaries-chooseBeneficiaries"
                           options={mappedSelectionMethodType}
                           selectedLabel={t('selectedMethods')}
                           onChange={(value: string[] | []) => {

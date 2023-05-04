@@ -321,6 +321,7 @@ const DataSharing = () => {
                   <Label
                     htmlFor="ops-eval-and-learning-data-sharing-frequency"
                     className="maxw-none text-normal"
+                    id="label-ops-eval-and-learning-data-sharing-frequency"
                   >
                     {t('dataSharingHowOften')}
                   </Label>
@@ -332,6 +333,7 @@ const DataSharing = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-data-sharing-frequency"
                     name="dataSharingFrequency"
+                    ariaLabel="label-ops-eval-and-learning-data-sharing-frequency"
                     options={dataFrequencyOptions.map(key => ({
                       value: key,
                       label: translateDataFrequencyType(key)
@@ -436,6 +438,7 @@ const DataSharing = () => {
                 >
                   <Label
                     htmlFor="ops-eval-and-learning-data-collection-frequency"
+                    id="label-ops-eval-and-learning-data-collection-frequency"
                     className="maxw-none text-normal"
                   >
                     {t('dataCollectionHowOften')}
@@ -448,6 +451,7 @@ const DataSharing = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-data-collection-frequency"
                     name="dataCollectionFrequency"
+                    ariaLabel="label-ops-eval-and-learning-data-collection-frequency"
                     options={dataFrequencyOptions.map(key => ({
                       value: key,
                       label: translateDataFrequencyType(key)

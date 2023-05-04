@@ -83,6 +83,7 @@ const SolutionHelpCard = ({
 
             <UswdsReactLink
               className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+              aria-label={`${t('aboutSolutionAriaLabel')} ${solution.name}`}
               to={`/help-and-knowledge/operational-solutions${location.search}${
                 location.search ? '&' : '?'
               }solution=${solution.route}&section=about`}

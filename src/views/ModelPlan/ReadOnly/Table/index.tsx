@@ -9,7 +9,6 @@ import {
   useTable
 } from 'react-table';
 import {
-  Button,
   IconStar,
   IconStarOutline,
   Table as UswdsTable
@@ -63,29 +62,33 @@ const Table = ({
         disableGlobalFilter: true,
         Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
           return row.original.isFavorite ? (
-            <Button
+            <button
               onClick={() => updateFavorite(row.original.id, 'removeFavorite')}
               type="button"
+              role="checkbox"
               data-testid={`${row.original.modelName}-favorite`}
-              className="display-block"
-              unstyled
+              className="usa-button usa-button--unstyled display-block"
+              aria-label={`Click to unfavorite ${row.original.modelName} model plan`}
+              aria-checked="true"
             >
               <IconStar data-cy="favorited" size={3} />
-            </Button>
+            </button>
           ) : (
-            <Button
+            <button
               onClick={() => updateFavorite(row.original.id, 'addFavorite')}
               type="button"
+              role="checkbox"
               data-testid={`${row.original.modelName}-unfavorite`}
-              className="display-block"
-              unstyled
+              className="usa-button usa-button--unstyled display-block"
+              aria-label={`Click to favorite ${row.original.modelName} model plan`}
+              aria-checked="false"
             >
               <IconStarOutline
                 data-cy="unfavorited"
                 size={3}
                 className="text-gray-30"
               />
-            </Button>
+            </button>
           );
         }
       },
@@ -231,7 +234,7 @@ const Table = ({
         showNoResults={false}
       />
       <UswdsTable {...getTableProps()} fullWidth scrollable>
-        <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
+        <caption className="usa-sr-only">{f('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -316,6 +319,7 @@ const Table = ({
       {state.globalFilter && page.length === 0 && (
         <Alert
           type="warning"
+          aria-live="polite"
           heading={t('allModels.noResults.heading', {
             searchTerm: state.globalFilter
           })}

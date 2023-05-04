@@ -363,6 +363,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-label maxw-none"
         data-testid="label"
         for="ops-eval-and-learning-data-needed"
+        id="label-ops-eval-and-learning-data-needed"
       >
         What data do you need to monitor the model? Select all that apply.
       </label>
@@ -407,6 +408,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
                   aria-describedby="react-select-4-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-needed"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -492,6 +494,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-label maxw-none"
         data-testid="label"
         for="ops-eval-and-learning-data-to-send"
+        id="label-ops-eval-and-learning-data-to-send"
       >
         What data will you send to participants? Select all that apply.
       </label>
@@ -531,6 +534,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
                   aria-describedby="react-select-5-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-to-send"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"

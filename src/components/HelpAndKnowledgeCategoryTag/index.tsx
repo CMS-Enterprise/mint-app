@@ -21,7 +21,7 @@ const articleTypes: ArticleRouteProps[] = [
   }
 ];
 
-export default function HelpTag({
+export default function HelpAndKnowledgeCategoryTag({
   type,
   className
 }: { className?: string } & ArticleTypeProps) {
@@ -32,7 +32,10 @@ export default function HelpTag({
       to={`/help-and-knowledge/${articleType.route}`}
       className={`width-fit-content display-block ${className || ''}`}
     >
-      <Tag className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm">
+      <Tag
+        className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+        arialabel={t(`Articles under the ${t(`${type}`)} category`)}
+      >
         {t(`${type}`)}
       </Tag>
     </UswdsReactLink>

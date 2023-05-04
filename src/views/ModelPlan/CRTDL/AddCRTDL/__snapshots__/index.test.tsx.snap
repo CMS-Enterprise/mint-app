@@ -32,6 +32,7 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
         >
           All fields marked with 
           <span
+            aria-label="(Field required)"
             class="text-red margin-x-05"
           >
             *
@@ -64,6 +65,7 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                   >
                     ID number
                     <span
+                      aria-label="(Field required)"
                       class="text-red margin-x-05"
                     >
                       *
@@ -94,6 +96,7 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                   >
                     Date initiated
                     <span
+                      aria-label="(Field required)"
                       class="text-red margin-x-05"
                     >
                       *
@@ -184,12 +187,14 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                   >
                     CR or TDL title
                     <span
+                      aria-label="(Field required)"
                       class="text-red margin-x-05"
                     >
                       *
                     </span>
                   </label>
                   <textarea
+                    aria-labelledby="label-cr-tdl-title hint-cr-tdl-title"
                     class="maxw-none mint-textarea usa-textarea"
                     data-testid="cr-tdl-title"
                     id="cr-tdl-title"
