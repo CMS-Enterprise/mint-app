@@ -363,6 +363,7 @@ exports[`Model Plan Communication matches snapshot 1`] = `
             Please specify
           </label>
           <textarea
+            aria-labelledby="label-participants-and-providers-risk-type-other hint-participants-and-providers-risk-type-other"
             class="maxw-none mint-textarea usa-textarea"
             data-testid="participants-and-providers-risk-type-other"
             id="participants-and-providers-risk-type-other"

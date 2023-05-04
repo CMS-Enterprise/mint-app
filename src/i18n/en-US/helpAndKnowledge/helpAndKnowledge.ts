@@ -1611,6 +1611,7 @@ const helpAndKnowledge = {
   browseCategories: 'Browse solutions by category',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
+  aboutSolutionAriaLabel: 'Click to learn more about this solution:',
   pageInfo: '{{-pageStart}} of {{-totalPages}} articles',
   resultsInfo:
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',

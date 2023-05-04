@@ -38,6 +38,7 @@ exports[`MultiSelect matches the snapshot 1`] = `
               aria-describedby="react-select-2-placeholder"
               aria-expanded="false"
               aria-haspopup="true"
+              aria-labelledby="label-test-multiSelect"
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"

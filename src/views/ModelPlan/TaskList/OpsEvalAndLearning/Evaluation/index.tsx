@@ -421,6 +421,7 @@ const Evaluation = () => {
                 >
                   <Label
                     htmlFor="ops-eval-and-learning-data-needed"
+                    id="label-ops-eval-and-learning-data-needed"
                     className="maxw-none"
                   >
                     {t('dataNeeded')}
@@ -445,6 +446,7 @@ const Evaluation = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-data-needed"
                     name="dataNeededForMonitoring"
+                    ariaLabel="label-ops-eval-and-learning-data-needed"
                     options={mapMultiSelectOptions(
                       translateDataForMonitoringType,
                       DataForMonitoringType
@@ -491,6 +493,7 @@ const Evaluation = () => {
                 >
                   <Label
                     htmlFor="ops-eval-and-learning-data-to-send"
+                    id="label-ops-eval-and-learning-data-to-send"
                     className="maxw-none"
                   >
                     {t('dataToSend')}
@@ -513,6 +516,7 @@ const Evaluation = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-data-to-send"
                     name="dataToSendParticicipants"
+                    ariaLabel="label-ops-eval-and-learning-data-to-send"
                     options={mapMultiSelectOptions(
                       translateDataToSendParticipantsType,
                       DataToSendParticipantsType

@@ -259,6 +259,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="participants-and-providers-provider-add-method"
+        id="label-participants-and-providers-provider-add-method"
       >
         How will you decide to add providers? Select all that apply.
       </label>
@@ -302,6 +303,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
                   aria-autocomplete="list"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-participants-and-providers-provider-add-method"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -431,6 +433,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
           Please describe the other method for deciding which providers to add.
         </label>
         <textarea
+          aria-labelledby="label-participants-and-providers-provider-add-method-other hint-participants-and-providers-provider-add-method-other"
           class="height-15 usa-textarea"
           data-testid="participants-and-providers-provider-add-method-other"
           id="participants-and-providers-provider-add-method-other"

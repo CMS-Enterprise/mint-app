@@ -243,6 +243,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   Please specify
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-beneficiary-selection-frequency-other hint-beneficiaries-beneficiary-selection-frequency-other"
                   class="maxw-none mint-textarea usa-textarea"
                   id="beneficiaries-beneficiary-selection-frequency-other"
                   maxlength="5000"
@@ -399,6 +400,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)
             </p>
             <textarea
+              aria-labelledby="label-beneficiaries-precedence-rules hint-beneficiaries-precedence-rules"
               class="height-15 usa-textarea"
               data-testid="beneficiaries-precedence-rules"
               id="beneficiaries-precedence-rules"
