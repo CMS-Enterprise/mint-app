@@ -119,26 +119,45 @@ const SolutionCard = ({
               </h3>
             )}
 
-            <Grid
-              tablet={{ col: 6 }}
-              className={classNames({ 'margin-bottom-2': solution.name })}
-            >
-              <p className="text-bold margin-bottom-0">{t('contact')}</p>
-
-              <p className="margin-y-0">
-                {solutionMap?.pointsOfContact[0].name}
-              </p>
-
-              <Link
-                aria-label={h('contactInfo.sendAnEmail')}
-                className="line-height-body-5 display-flex flex-align-center"
-                href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
-                target="_blank"
+            {solutionMap?.pointsOfContact[0].name && (
+              <Grid
+                tablet={{ col: 6 }}
+                className={classNames({ 'margin-bottom-2': solution.name })}
               >
-                <div>${solutionMap?.pointsOfContact[0].email}</div>
-                <IconMailOutline className="margin-left-05 text-tbottom" />
-              </Link>
-            </Grid>
+                <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+                <p className="margin-y-0">
+                  {solutionMap?.pointsOfContact[0].name}
+                </p>
+
+                <Link
+                  aria-label={h('contactInfo.sendAnEmail')}
+                  className="line-height-body-5 display-flex flex-align-center"
+                  href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
+                  target="_blank"
+                >
+                  <div>${solutionMap?.pointsOfContact[0].email}</div>
+                  <IconMailOutline className="margin-left-05 text-tbottom" />
+                </Link>
+              </Grid>
+            )}
+
+            {solution.pocName && (
+              <>
+                <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+                <p className="margin-y-0">{solution.pocName}</p>
+
+                <Link
+                  aria-label={h('contactInfo.sendAnEmail')}
+                  className="line-height-body-5"
+                  href={`mailto:${solution.pocEmail}`}
+                  target="_blank"
+                >
+                  <div className="margin-bottom-2">{solution.pocEmail}</div>
+                </Link>
+              </>
+            )}
 
             {/* Show 'About Details' link if not updating solution details and not a custom solution */}
             {renderSolutionCardLinks && solution.name && !solution.otherHeader && (
