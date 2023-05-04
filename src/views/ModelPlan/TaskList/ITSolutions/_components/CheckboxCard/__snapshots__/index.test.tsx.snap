@@ -3,44 +3,47 @@
 exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="tablet:grid-col-6"
+    class="tablet:grid-col-6 display-flex"
     data-testid="grid"
   >
     <li
-      class="usa-card"
+      class="usa-card width-full"
       data-testid="Card"
     >
       <div
-        class="usa-card__container"
+        class="usa-card__container padding-3 flex-justify"
       >
         <div
-          class="solutions-checkbox__header padding-2"
+          class="solutions-checkbox__above-the-border"
         >
           <div
-            class="usa-checkbox"
-            data-testid="checkbox"
+            class="solutions-checkbox__header"
           >
-            <input
-              checked=""
-              class="usa-checkbox__input"
-              id="it-solutions-rmada"
-              name="solutions[0].needed"
-              testid="it-solutions-rmada"
-              type="checkbox"
-              value="true"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="it-solutions-rmada"
+            <div
+              class="usa-checkbox margin-y-0"
+              data-testid="checkbox"
             >
-              Select a solution
-            </label>
+              <input
+                checked=""
+                class="usa-checkbox__input"
+                id="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+                name="solutions[0].needed"
+                type="checkbox"
+                value="true"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
+              >
+                Select a solution
+              </label>
+            </div>
+            <h3
+              class="margin-y-2"
+            >
+              Research, Measurement, Assessment, Design, and Analysis (RMADA)
+            </h3>
           </div>
-          <h3
-            class="margin-y-2"
-          >
-            Research, Measurement, Assessment, Design, and Analysis (RMADA)
-          </h3>
           <div
             class="margin-bottom-2 solutions-checkbox__body-text"
           >

@@ -109,27 +109,20 @@ describe('The Model Plan IT solutions tracker', () => {
     // Submitting the custom solution
     cy.get('#submit-custom-solution').click();
 
-    cy.wait([
-      '@GetOperationalNeed',
-      '@GetOperationalNeedAnswer',
-      '@GetPossibleOperationalSolutions',
-      '@GetOperationalSolution'
-    ])
-      .then(verifyStatus)
-      .wait(250);
-
-    // Adding the custom solution
-    cy.get('#add-solution-details-button').click();
-
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
       .wait(250);
 
     // Adding a few other solutions
-    cy.get('#it-solutions-cbosc').as('cbosc').check({ force: true });
+    cy.get('[id^=it-solutions-cbosc').as('cbosc').check({ force: true });
     cy.get('@cbosc').should('be.checked');
 
-    cy.get('#it-solutions-contractor')
+    cy.get('[id^=it-solutions-contractor')
+      .as('contractor')
+      .check({ force: true });
+    cy.get('@contractor').should('be.checked');
+
+    cy.get('[id^=it-solutions-my-custom-solution')
       .check({ force: true })
       .should('be.checked');
 
@@ -201,7 +194,7 @@ describe('The Model Plan IT solutions tracker', () => {
     );
 
     // Removing a solution
-    cy.get('#it-solutions-contractor')
+    cy.get('[id^=it-solutions-contractor')
       .uncheck({ force: true })
       .should('not.be.checked');
 

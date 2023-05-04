@@ -17,6 +17,8 @@ export default gql`
         pocEmail
         needed
         nameOther
+        isOther
+        otherHeader
         mustStartDts
         mustFinishDts
         status

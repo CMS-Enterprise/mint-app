@@ -39,12 +39,23 @@ import {
   UpdateOperationalSolutionVariables
 } from 'queries/ITSolutions/types/UpdateOperationalSolution';
 import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import {
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { translateOperationalSolutionKey } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type SelectedOpertionalSolutionKeyType =
+  | OperationalSolutionKey.CONTRACTOR
+  | OperationalSolutionKey.CROSS_MODEL_CONTRACT
+  | OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS
+  | OperationalSolutionKey.INTERNAL_STAFF
+  | OperationalSolutionKey.OTHER_NEW_PROCESS;
 
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
@@ -56,10 +67,12 @@ type CustomOperationalSolutionFormType = Omit<
   | 'mustFinishDts'
   | 'mustStartDts'
   | 'operationalSolutionSubtasks'
+  | 'isOther'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {
   nameOther: '',
+  otherHeader: null,
   pocName: '',
   pocEmail: '',
   documents: [],
@@ -76,6 +89,7 @@ const clearFields = (
   if (removeDetails) {
     return {
       nameOther: customSolution.nameOther,
+      otherHeader: null,
       pocName: '',
       pocEmail: '',
       documents: [],
@@ -91,6 +105,12 @@ const AddCustomSolution = () => {
     operationalNeedID: string;
     operationalSolutionID?: string;
   }>();
+
+  const { state } = useLocation<{
+    selectedSolution?: SelectedOpertionalSolutionKeyType;
+  }>();
+
+  const selectedSolution = state?.selectedSolution;
 
   // Hash variable to trigger removal of pocName and pocEmail
   const removeDetails = useLocation().hash === '#remove-details';
@@ -142,7 +162,7 @@ const AddCustomSolution = () => {
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
   ) => {
-    const { nameOther, pocName, pocEmail } = formikValues;
+    const { nameOther, pocName, pocEmail, otherHeader } = formikValues;
 
     let updateMutation;
 
@@ -152,9 +172,14 @@ const AddCustomSolution = () => {
         updateMutation = await createSolution({
           variables: {
             operationalNeedID,
+            solutionType:
+              selectedSolution !== OperationalSolutionKey.OTHER_NEW_PROCESS
+                ? selectedSolution
+                : null,
             changes: {
               needed: customOperationalSolution.needed,
-              nameOther: nameOther || '',
+              nameOther: nameOther ?? null,
+              otherHeader: otherHeader ?? null,
               status: OpSolutionStatus.NOT_STARTED,
               pocEmail,
               pocName
@@ -168,7 +193,8 @@ const AddCustomSolution = () => {
             id: operationalSolutionID,
             changes: {
               needed: customOperationalSolution.needed,
-              nameOther: nameOther || '',
+              nameOther: !selectedSolution ? nameOther : null,
+              otherHeader: selectedSolution ? otherHeader : null,
               pocEmail,
               pocName
             }
@@ -184,9 +210,7 @@ const AddCustomSolution = () => {
 
       if (!operationalSolutionID) {
         history.push(
-          // If this block of code is hit, property createOperationalSolution will always exist - ts doesn't know this
-          // @ts-ignore
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.createOperationalSolution.id}`,
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
           { isCustomNeed: false }
         );
       } else {
@@ -311,36 +335,70 @@ const AddCustomSolution = () => {
                       )}
 
                       <Form
-                        className="margin-top-3"
                         data-testid="it-solutions-add-solution"
                         onSubmit={e => {
                           handleSubmit(e);
                         }}
                       >
+                        {selectedSolution && (
+                          <h3 className="margin-top-6 margin-bottom-0">
+                            {t('selectedSectionHeading')}{' '}
+                            {translateOperationalSolutionKey(selectedSolution)}
+                          </h3>
+                        )}
                         <Fieldset disabled={loading}>
-                          <FieldGroup
-                            scrollElement="nameOther"
-                            error={!!flatErrors.nameOther}
-                            className="margin-top-3"
-                          >
-                            <Label htmlFor="it-solution-custom-name-other">
-                              {t('solutionName')}
-                              <RequiredAsterisk />
-                            </Label>
-
-                            <FieldErrorMsg>
-                              {flatErrors.nameOther}
-                            </FieldErrorMsg>
-
-                            <Field
-                              as={TextInput}
+                          {selectedSolution ===
+                            OperationalSolutionKey.OTHER_NEW_PROCESS ||
+                          selectedSolution === null ? (
+                            <FieldGroup
+                              scrollElement="nameOther"
                               error={!!flatErrors.nameOther}
-                              id="it-solution-custom-name-other"
-                              data-testid="it-solution-custom-name-other"
-                              maxLength={50}
-                              name="nameOther"
-                            />
-                          </FieldGroup>
+                              className="margin-top-3"
+                            >
+                              <Label htmlFor="it-solution-custom-name-other">
+                                {t('solutionName')}
+                                <RequiredAsterisk />
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.nameOther}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors.nameOther}
+                                id="it-solution-custom-name-other"
+                                data-testid="it-solution-custom-name-other"
+                                maxLength={50}
+                                name="nameOther"
+                              />
+                            </FieldGroup>
+                          ) : (
+                            <FieldGroup
+                              scrollElement="otherHeader"
+                              error={!!flatErrors.otherHeader}
+                              className="margin-top-3"
+                            >
+                              <Label htmlFor="it-solution-other-header">
+                                {/* Other Header */}
+                                {t('solutionName')}
+                                <RequiredAsterisk />
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors.otherHeader}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors.otherHeader}
+                                id="it-solution-other-header"
+                                data-testid="it-solution-other-header"
+                                maxLength={50}
+                                name="otherHeader"
+                              />
+                            </FieldGroup>
+                          )}
 
                           <FieldGroup
                             scrollElement="pocName"
@@ -396,7 +454,13 @@ const AddCustomSolution = () => {
                               type="submit"
                               className="margin-bottom-1"
                               id="submit-custom-solution"
-                              disabled={!values.nameOther}
+                              disabled={
+                                selectedSolution ===
+                                  OperationalSolutionKey.OTHER_NEW_PROCESS ||
+                                selectedSolution === null
+                                  ? !values.nameOther
+                                  : !values.otherHeader
+                              }
                             >
                               {operationalSolutionID
                                 ? t('updateSolutionDetails')
