@@ -54,6 +54,7 @@ export const MINTDatePicker = ({
       >
         <Label
           htmlFor={id}
+          id={`label-${id}`}
           className={classNames('usa-legend margin-top-0', {
             'text-normal': !boldLabel
           })}
@@ -74,6 +75,7 @@ export const MINTDatePicker = ({
         <div className="position-relative">
           <Field
             as={DatePicker}
+            aria-labelledby={`label-${id} appointment-date-hint`}
             error={+!!error}
             id={id}
             maxLength={50}

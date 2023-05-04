@@ -69,11 +69,7 @@ export function findChangedSolution(
   );
 }
 
-type SelectSolutionsProps = {
-  update?: boolean;
-};
-
-const SelectSolutions = ({ update }: SelectSolutionsProps) => {
+const SelectSolutions = () => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID, operationalNeedID } = useParams<{
@@ -81,11 +77,11 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
     operationalNeedID: string;
   }>();
 
-  const {
-    state: { isCustomNeed }
-  } = useLocation<{
-    isCustomNeed?: boolean;
-  }>();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const isCustomNeed = params.get('isCustomNeed');
+  const update = params.get('update');
 
   const history = useHistory();
 
@@ -222,7 +218,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
       )}
 
       <Grid row gap>
-        <Grid tablet={{ col: 9 }}>
+        <Grid tablet={{ col: 12 }} desktop={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
             {update ? t('updateSolutions') : t('selectSolution')}
           </PageHeading>
@@ -236,7 +232,11 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
 
           <p className="line-height-body-4">{t('selectInfo')}</p>
 
-          <Grid tablet={{ col: 8 }} className="margin-bottom-4">
+          <Grid
+            tablet={{ col: 12 }}
+            desktop={{ col: 8 }}
+            className="margin-bottom-4"
+          >
             <NeedQuestionAndAnswer
               operationalNeedID={operationalNeedID}
               modelID={modelID}
@@ -250,7 +250,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
           )}
 
           <Grid row gap>
-            <Grid tablet={{ col: 10 }}>
+            <Grid tablet={{ col: 12 }} desktop={{ col: 10 }}>
               <Formik
                 initialValues={operationalNeed}
                 onSubmit={values => {
@@ -362,7 +362,7 @@ const SelectSolutions = ({ update }: SelectSolutionsProps) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+        <Grid tablet={{ col: 12 }} desktop={{ col: 3 }} className="padding-x-1">
           <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>
       </Grid>

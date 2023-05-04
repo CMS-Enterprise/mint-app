@@ -23,6 +23,9 @@ export default gql`
           needed
           nameOther
           key
+          operationalSolutionSubtasks {
+            id
+          }
           pocEmail
           pocName
           createdBy

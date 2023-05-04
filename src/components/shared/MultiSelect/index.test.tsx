@@ -17,6 +17,7 @@ describe('MultiSelect', () => {
       <MultiSelect
         id="test-multiSelect"
         name="testMultiSelect"
+        ariaLabel="label-test-multiSelect"
         onChange={() => null}
         options={options}
       />
@@ -29,6 +30,7 @@ describe('MultiSelect', () => {
       <MultiSelect
         id="test-multiSelect"
         name="testMultiSelect"
+        ariaLabel="label-test-multiSelect"
         onChange={() => null}
         options={options}
         initialValues={['red', 'blue']}
@@ -41,9 +43,12 @@ describe('MultiSelect', () => {
   it('updates input values when changing options and their associated tags', async () => {
     const { getByLabelText, getByTestId, queryByTestId } = render(
       <form data-testid="form">
-        <label htmlFor="colors">Colors</label>
+        <label htmlFor="colors" id="label-colors">
+          Colors
+        </label>
         <MultiSelect
           name="colors"
+          ariaLabel="label-colors"
           inputId="colors"
           onChange={() => null}
           options={options}

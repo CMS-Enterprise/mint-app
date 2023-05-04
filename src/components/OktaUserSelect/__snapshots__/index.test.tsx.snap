@@ -41,7 +41,6 @@ exports[`OktaUserSelect selects contact from dropdown 1`] = `
             aria-describedby="react-select-cedarContactSelect-placeholder"
             aria-expanded="true"
             aria-haspopup="true"
-            aria-label="Cedar-Users"
             aria-owns="react-select-cedarContactSelect-listbox"
             autocapitalize="none"
             autocomplete="off"

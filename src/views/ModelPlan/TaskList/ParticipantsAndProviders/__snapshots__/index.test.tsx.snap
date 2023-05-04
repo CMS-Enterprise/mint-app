@@ -117,6 +117,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="participants-and-providers-participants"
+              id="label-participants-and-providers-participants"
             >
               Who are the particpants? Select all that apply.
             </label>
@@ -155,6 +156,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-participants-and-providers-participants"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -359,6 +361,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Which type of medicare providers?
               </label>
               <textarea
+                aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
                 class="usa-textarea"
                 data-testid="participants-and-providers-medicare-type"
                 id="participants-and-providers-medicare-type"
@@ -379,6 +382,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Please describe how states will engage with your model.
               </label>
               <textarea
+                aria-labelledby="label-participants-and-providers-states-engagement hint-participants-and-providers-states-engagement"
                 class="usa-textarea"
                 data-testid="participants-and-providers-states-engagement"
                 id="participants-and-providers-states-engagement"
@@ -399,6 +403,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Please describe the other participants engaging with this model
               </label>
               <textarea
+                aria-labelledby="label-participants-and-providers-participants-other hint-participants-and-providers-participants-other"
                 class="usa-textarea"
                 data-testid="participants-and-providers-participants-other"
                 id="participants-and-providers-participants-other"
@@ -541,6 +546,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
             </p>
             <textarea
+              aria-labelledby="label-participants-and-providers-application-level hint-participants-and-providers-application-level"
               class="usa-textarea"
               id="participants-and-providers-application-level"
               name="modelApplicationLevel"

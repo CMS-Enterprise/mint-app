@@ -34,8 +34,9 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
               class="display-flex flex-wrap padding-top-05"
             >
               <a
-                aria-label="Category tag link"
+                aria-label="Articles under the Data reporting category"
                 class="usa-link display-block margin-right-05 margin-bottom-1"
+                data-testid="solutions-tag"
                 href="/help-and-knowledge/operational-solutions?category=data-reporting"
               >
                 <span
@@ -72,6 +73,7 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
               class="mint-divider"
             />
             <a
+              aria-label="Click to learn more about this solution: 4innovation"
               class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
               href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
             >

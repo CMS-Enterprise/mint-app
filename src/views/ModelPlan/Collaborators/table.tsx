@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
@@ -72,22 +72,27 @@ const CollaboratorsTable = ({
               <UswdsReactLink
                 className="margin-right-2"
                 to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}`}
+                aria-label={`${t('table.edit')} ${
+                  row.original.userAccount.commonName
+                }`}
               >
                 {t('table.edit')}
               </UswdsReactLink>
 
               {collaborators.length > 1 && (
-                <Button
-                  className="line-height-body-5 text-red"
+                <button
+                  className="usa-button usa-button--unstyled line-height-body-5 text-red"
                   type="button"
-                  unstyled
+                  aria-label={`${t('modal.remove')} ${
+                    row.original.userAccount.commonName
+                  }`}
                   onClick={() => {
                     setRemoveCollaborator(row.original);
                     setModalOpen(true);
                   }}
                 >
                   {t('modal.remove')}
-                </Button>
+                </button>
               )}
             </>
           );

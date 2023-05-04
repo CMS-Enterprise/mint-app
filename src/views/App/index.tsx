@@ -14,6 +14,7 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
+import usePrevLocation from 'hooks/usePrevious';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import Cookies from 'views/Cookies';
@@ -66,6 +67,7 @@ import './index.scss';
 
 const AppRoutes = () => {
   const location = useLocation();
+  const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
   // Track GA Pages
@@ -77,10 +79,15 @@ const AppRoutes = () => {
 
   // Scroll to top
   useLayoutEffect(() => {
-    if (shouldScroll(location.pathname + location.search)) {
+    if (
+      shouldScroll(
+        location.pathname + location.search,
+        (prevLocation?.pathname || '') + (prevLocation?.search || '')
+      )
+    ) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, prevLocation]);
 
   return (
     <Switch>

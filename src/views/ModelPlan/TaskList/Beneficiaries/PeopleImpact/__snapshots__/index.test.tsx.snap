@@ -252,10 +252,12 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-impact-confidence-note"
+                  id="label-beneficiaries-impact-confidence-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-impact-confidence-note hint-beneficiaries-impact-confidence-note"
                   class="usa-textarea"
                   data-testid="beneficiaries-impact-confidence-note"
                   id="beneficiaries-impact-confidence-note"
@@ -274,6 +276,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="beneficiaries-chooseBeneficiaries"
+              id="label-beneficiaries-chooseBeneficiaries"
             >
               How will you choose beneficiaries? Select all that apply.
             </label>
@@ -312,6 +315,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-beneficiaries-chooseBeneficiaries"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -493,10 +497,12 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-selection-note"
+                  id="label-beneficiaries-selection-note"
                 >
                   Notes
                 </label>
                 <textarea
+                  aria-labelledby="label-beneficiaries-selection-note hint-beneficiaries-selection-note"
                   class="usa-textarea"
                   data-testid="beneficiaries-selection-note"
                   id="beneficiaries-selection-note"

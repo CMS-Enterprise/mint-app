@@ -21,6 +21,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,6 +31,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import operationalNeedMap from 'data/operationalNeedMap';
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
   GetOperationalNeeds as GetOperationalNeedsType,
@@ -139,10 +141,7 @@ const OperationalNeedsTable = ({
             }
             const selectSolutionHref =
               row.original.key !== null
-                ? {
-                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`,
-                    state: { isCustomNeed: false }
-                  }
+                ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
                 : {
                     pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
                     state: { isCustomNeed: true }
@@ -171,7 +170,16 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.subtasks'),
-        accessor: 'subTasks'
+        accessor: 'operationalSolutionSubtasks',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          return value.length.toString();
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),
@@ -213,7 +221,21 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.section'),
-        accessor: 'section'
+        accessor: 'section',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          if (row.original.key && operationalNeedMap[row.original.key]) {
+            return i18next.t(
+              `${operationalNeedMap[row.original.key].section}:heading`
+            );
+          }
+          return '';
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),

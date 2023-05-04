@@ -47,14 +47,14 @@ const TableResults = ({
       <span>
         {rows === 0 ? (
           showNoResults && (
-            <div>
+            <div role="status" aria-live="polite">
               {t('tableAndPagination:results.noResults')}{' '}
               {/* Displays the search input even if there are no results */}
               {displayResult(globalFilter)}
             </div>
           )
         ) : (
-          <div>
+          <div role="status" aria-live="polite">
             <Trans i18nKey="tableAndPagination:results.results">
               indexZero {{ currentPage }} indexOne {{ pageRange }} indexTwo{' '}
               {{ rows }}
