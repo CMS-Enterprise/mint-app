@@ -85,6 +85,7 @@ const emptySolution = (
     needed: false,
     nameOther: null,
     key,
+    operationalSolutionSubtasks: [],
     pocEmail: null,
     pocName: null,
     createdBy: '',

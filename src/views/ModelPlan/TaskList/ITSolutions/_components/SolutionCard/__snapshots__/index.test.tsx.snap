@@ -20,7 +20,7 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
             class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
             style="word-break: break-word;"
           >
-            Internal staff
+            Shared Systems
           </h3>
           <div
             class="tablet:grid-col-6 margin-bottom-2"
@@ -34,16 +34,16 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
             <p
               class="margin-y-0"
             >
-              John Mint
+              Donna Schmidt
             </p>
             <a
               aria-label="Send an email"
               class="usa-link line-height-body-5 display-flex flex-align-center"
-              href="mailto:john.mint@oddball.io"
+              href="mailto:donna.schmidt@cms.hhs.gov"
               target="_blank"
             >
               <div>
-                john.mint@oddball.io
+                donna.schmidt@cms.hhs.gov
               </div>
               <svg
                 class="usa-icon margin-left-05 text-tbottom"
@@ -67,10 +67,9 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
           <div
             class="mint-divider"
           />
-          <button
-            class="usa-button display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-            data-testid="button"
-            type="button"
+          <a
+            class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/f92a8a35-86de-4e03-a81a-bd8bec2e30e3/solution-implementation-details?solution=shared-systems&section=about"
           >
             About this solution
             <svg
@@ -90,7 +89,7 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
                 d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
               />
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </li>
