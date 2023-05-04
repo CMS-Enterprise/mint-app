@@ -141,10 +141,7 @@ const OperationalNeedsTable = ({
             }
             const selectSolutionHref =
               row.original.key !== null
-                ? {
-                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`,
-                    state: { isCustomNeed: false }
-                  }
+                ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
                 : {
                     pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
                     state: { isCustomNeed: true }
@@ -173,7 +170,16 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.subtasks'),
-        accessor: 'subTasks'
+        accessor: 'operationalSolutionSubtasks',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          return value.length.toString();
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),

@@ -3,9 +3,9 @@ CheckboxCard component for selecting needed IT solutions
 Integrated with Formik
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -17,9 +17,16 @@ import {
 import classNames from 'classnames';
 import { Field } from 'formik';
 
+import UswdsReactLink from 'components/LinkWrapper';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 import { translateOperationalSolutionKey } from 'utils/modelPlan';
+import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import {
+  helpSolutions,
+  HelpSolutionType
+} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import './index.scss';
 
@@ -38,6 +45,7 @@ const CheckboxCard = ({
 }: CheckboxCardProps) => {
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: hk } = useTranslation('helpAndKnowledge');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -45,14 +53,26 @@ const CheckboxCard = ({
 
   const history = useHistory();
 
+  const location = useLocation();
+
+  const [initLocation] = useState<string>(location.pathname);
+
+  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
+    solution.key
+  );
+
   // If custom solution, nameOther becoming the identifier
   const id = solution?.nameOther
     ? `it-solutions-${solution?.nameOther?.toLowerCase().replaceAll(' ', '-')}`
     : `it-solutions-${solution?.key?.toLowerCase().replace('_', '-')}`;
 
-  // TODO: replace with real solution data once populated
-  const tempDescription: string =
-    'Short summary. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore aliqa...';
+  const solutionMap = findSolutionByKey(solution.key, helpSolutions);
+
+  const detailRoute = solutionMap?.route
+    ? `${initLocation}${location.search}${
+        location.search ? '&' : '?'
+      }solution=${solutionMap?.route || ''}&section=about`
+    : `${initLocation}${location.search}`;
 
   const treatAsOtherSolutions = [
     OperationalSolutionKey.CONTRACTOR,
@@ -106,18 +126,26 @@ const CheckboxCard = ({
     }
 
     return (
-      <Button
-        type="button"
-        className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
+      <UswdsReactLink
+        className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+        to={detailRoute}
       >
         {t('aboutSolution')}
         <IconArrowForward className="margin-left-1" />
-      </Button>
+      </UswdsReactLink>
     );
   };
 
   return (
     <Grid tablet={{ col: 6 }} className="display-flex">
+      {renderModal && selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+        />
+      )}
+
       <Card
         className={classNames('width-full', className)}
         containerProps={{ className: 'padding-3 flex-justify' }}
@@ -162,27 +190,49 @@ const CheckboxCard = ({
 
           {(!solution.isOther || isDefaultSolutionOptions) && (
             <div className="margin-bottom-2 solutions-checkbox__body-text">
-              {/* TODO: replace tempDescription with real data */}
-              {tempDescription}
-              {/* {solution?.description} */}
+              {solutionMap &&
+                hk(`solutions.${solutionMap.key}.about.description`)}
             </div>
           )}
 
-          {solution.pocName && (
-            <>
+          {solutionMap?.pointsOfContact[0].name ? (
+            <Grid
+              tablet={{ col: 12 }}
+              className={classNames({ 'margin-bottom-2': solution.name })}
+            >
+              <p className="text-bold margin-bottom-0">{t('contact')}</p>
+
+              <p className="margin-y-0">
+                {solutionMap?.pointsOfContact[0].name}
+              </p>
+
+              <Link
+                aria-label={h('contactInfo.sendAnEmail')}
+                className="line-height-body-5 display-flex flex-align-center"
+                href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
+                target="_blank"
+              >
+                <div>{solutionMap?.pointsOfContact[0].email}</div>
+              </Link>
+            </Grid>
+          ) : (
+            <Grid
+              tablet={{ col: 12 }}
+              className={classNames({ 'margin-bottom-2': solution.name })}
+            >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
               <p className="margin-y-0">{solution.pocName}</p>
 
               <Link
                 aria-label={h('contactInfo.sendAnEmail')}
-                className="line-height-body-5"
+                className="line-height-body-5 display-flex flex-align-center"
                 href={`mailto:${solution.pocEmail}`}
                 target="_blank"
               >
-                <div className="margin-bottom-2">{solution.pocEmail}</div>
+                <div>{solution.pocEmail}</div>
               </Link>
-            </>
+            </Grid>
           )}
         </div>
 
@@ -190,6 +240,14 @@ const CheckboxCard = ({
       </Card>
     </Grid>
   );
+};
+
+export const findSolutionByKey = (
+  key: OperationalSolutionKey | null,
+  solutions: HelpSolutionType[]
+): HelpSolutionType | undefined => {
+  if (!key) return undefined;
+  return [...solutions].find(solution => solution.enum === key);
 };
 
 export default CheckboxCard;

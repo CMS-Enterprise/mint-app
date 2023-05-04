@@ -48,6 +48,15 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
+interface LocationState {
+  state: {
+    isCustomNeed: boolean;
+    fromSolutionDetails: boolean;
+  };
+  isCustomNeed: boolean;
+  fromSolutionDetails: boolean;
+}
+
 const SolutionImplementation = ({
   isUpdatingStatus = false
 }: {
@@ -59,10 +68,7 @@ const SolutionImplementation = ({
     solutionId?: string | undefined;
   }>();
 
-  const { state } = useLocation<{
-    fromSolutionDetails?: boolean;
-    isCustomNeed?: boolean;
-  }>();
+  const { state } = useLocation<LocationState>();
 
   const fromSolutionDetails = state?.fromSolutionDetails;
   const isCustomNeed = state?.isCustomNeed;

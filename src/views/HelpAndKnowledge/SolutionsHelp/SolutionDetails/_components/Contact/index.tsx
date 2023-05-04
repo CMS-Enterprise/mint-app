@@ -6,7 +6,8 @@ import { IconArrowForward, IconLaunch, Link } from '@trussworks/react-uswds';
 import UswdsReactLink from 'components/LinkWrapper';
 import {
   ContactRoles,
-  SolutionContactType
+  SolutionContactType,
+  solutionHelpRoute
 } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { formatQueryParam } from '../../Modal';
@@ -65,7 +66,11 @@ export const Contact = ({ contact }: { contact: SolutionContactType }) => {
 
       {!isOnPointsOfContact && (
         <UswdsReactLink
-          to={formatQueryParam(paramValues, 'points-of-contact')}
+          to={formatQueryParam(
+            paramValues,
+            'points-of-contact',
+            solutionHelpRoute
+          )}
           className="display-flex flex-align-center"
         >
           {t('moreContacts')}
