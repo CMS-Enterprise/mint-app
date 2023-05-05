@@ -122,8 +122,7 @@ func (s *Seeder) SeedData() {
 		"clearanceStarts": time.Now(),
 		"highLevelNote":   "Some high level note",
 	})
-	s.existingModelLinkCreate(planWithBasics, &links[3].ID, nil)
-	s.existingModelLinkCreate(planWithBasics, &links[4].ID, nil)
+	s.existingModelLinkCreate(planWithBasics, []int{links[3].ID, links[4].ID}, nil)
 
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
@@ -137,7 +136,7 @@ func (s *Seeder) SeedData() {
 			TeamRole:    models.TeamRoleLeadership,
 		})
 
-	s.existingModelLinkCreate(planWithCollaborators, &links[4].ID, nil)
+	s.existingModelLinkCreate(planWithCollaborators, []int{links[4].ID}, nil)
 
 	// Seed a plan with CRs / TDLs
 	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
@@ -156,8 +155,7 @@ func (s *Seeder) SeedData() {
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
-	s.existingModelLinkCreate(planWithCrTDLs, nil, &planWithCollaborators.ID)
-	s.existingModelLinkCreate(planWithCrTDLs, nil, &planWithBasics.ID)
+	s.existingModelLinkCreate(planWithCrTDLs, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
 
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")

@@ -296,23 +296,22 @@ func (s *Seeder) operationalSolutionSubtasksCreate(
 // It will panic if an error occurs, rather than bubbling the error up
 func (s *Seeder) existingModelLinkCreate(
 	mp *models.ModelPlan,
-	existingModelID *int,
-	currentModelPlanID *uuid.UUID,
-) *models.ExistingModelLink {
+	existingModelIDs []int,
+	currentModelPlanIDs []uuid.UUID,
+) []*models.ExistingModelLink {
 
 	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
-
-	link, err := resolvers.ExistingModelLinkCreate(
+	links, err := resolvers.ExistingModelLinksUpdate(
 		s.Config.Logger,
 		s.Config.Store,
 		principal,
 		mp.ID,
-		existingModelID,
-		currentModelPlanID,
+		existingModelIDs,
+		currentModelPlanIDs,
 	)
 
 	if err != nil {
 		panic(err)
 	}
-	return link
+	return links
 }

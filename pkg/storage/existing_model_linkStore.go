@@ -7,23 +7,15 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
 )
-
-//go:embed SQL/existing_model_link/create.sql
-var existingModelLinkCreateSQL string
 
 //go:embed SQL/existing_model_link/merge.sql
 var existingModelLinkMergeSQL string
 
 //go:embed SQL/existing_model_link/get_by_id.sql
 var existingModelLinkGetByIDSQL string
-
-//go:embed SQL/existing_model_link/delete.sql
-var existingModelLinkDeleteSQL string
 
 //go:embed SQL/existing_model_link/get_by_model_plan_id_LOADER.sql
 var existingModelLinkGetByModelPlanIDLoaderSQL string
@@ -47,22 +39,6 @@ func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, para
 	}
 
 	return linkSlice, nil
-}
-
-// ExistingModelLinkCreate creates a new link for an existing model
-func (s *Store) ExistingModelLinkCreate(logger *zap.Logger, link *models.ExistingModelLink) (*models.ExistingModelLink, error) {
-	link.ID = utilityUUID.ValueOrNewUUID(link.ID)
-	statement, err := s.db.PrepareNamed(existingModelLinkCreateSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, link)
-	}
-	newlink := models.ExistingModelLink{}
-	err = statement.Get(&newlink, link)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, link)
-	}
-	return &newlink, nil
-
 }
 
 // ExistingModelLinksUpdate creates a new links that don't yet exist, deletes ones that are no longer provided,
@@ -112,34 +88,6 @@ func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 
 	err = statement.Get(&link, utilitySQL.CreateIDQueryMap(id))
 
-	if err != nil {
-		return nil, err
-	}
-	return &link, nil
-
-}
-
-// ExistingModelLinkDelete deletes an existing model link
-func (s *Store) ExistingModelLinkDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.ExistingModelLink, error) {
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
-	link := models.ExistingModelLink{}
-	err := setCurrentSessionUserVariable(tx, userID)
-	if err != nil {
-		return nil, err
-	}
-
-	statement, err := tx.PrepareNamed(existingModelLinkDeleteSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	err = statement.Get(&link, utilitySQL.CreateIDQueryMap(id))
-	if err != nil {
-		return nil, err
-	}
-
-	err = tx.Commit()
 	if err != nil {
 		return nil, err
 	}
