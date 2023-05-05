@@ -142,10 +142,7 @@ const OperationalNeedsTable = ({
             const selectSolutionHref =
               row.original.key !== null
                 ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
-                : {
-                    pathname: `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution`,
-                    state: { isCustomNeed: true }
-                  };
+                : `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution?isCustomNeed=true`;
             return (
               <UswdsReactLink
                 to={selectSolutionHref}
