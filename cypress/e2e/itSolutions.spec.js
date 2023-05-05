@@ -386,7 +386,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .then(verifyStatus)
       .wait(250);
 
-    cy.get('.usa-alert__text').contains(
+    cy.get('[data-testid="success-subtask-alert"]').contains(
       'Success! Your subtasks have been added.'
     );
 
