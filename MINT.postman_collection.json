@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a006d860-3a1b-4c9a-a54a-301aa132190e",
+		"_postman_id": "783f4b7c-c98a-4a64-bfaf-7f9f6b776c43",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1837,17 +1837,21 @@
 			"name": "ExistingModelLink",
 			"item": [
 				{
-					"name": "ExistingModelLinkCreate",
+					"name": "ExistingModelLinksUpdate",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let responseData = pm.response.json().data.createExistingModelLink",
+									"let responseData = pm.response.json().data.updateExistingModelLinks",
 									"",
-									"existingModelLinkID = responseData.id",
+									"",
+									"if (responseData.length>0){",
+									"existingModelLinkID = responseData[0].id",
 									"",
 									"pm.collectionVariables.set(\"existingModelLinkID\", existingModelLinkID);",
+									"}",
+									"",
 									""
 								],
 								"type": "text/javascript"
@@ -1860,44 +1864,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createExistingModelLink{\n  \n  createExistingModelLink(modelPlanID:\"{{modelPlanID}}\", existingModelID:100014, currentModelPlanID: null)\n  {\n      id\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ExistingModelLinkCreate (MODEL PLAN LINK)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.createExistingModelLink",
-									"",
-									"existingModelLinkID = responseData.id",
-									"",
-									"pm.collectionVariables.set(\"existingModelLinkID\", existingModelLinkID);",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation createExistingModelLink{\n  \n  createExistingModelLink(modelPlanID:\"{{modelPlanID}}\", existingModelID:null,\n   currentModelPlanID: \"{{modelPlanID}}\")\n  {\n      id\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
+								"query": "mutation updateExistingModelLinks{\n  \n  updateExistingModelLinks(modelPlanID:\"{{modelPlanID}}\", existingModelIDs:\n#   null\n  [100014,100015] \n  currentModelPlanIDs: \n  null,\n#   [\"{{modelPlanID}}\"  ]\n  )\n  {\n      id\n\n        currentModelPlan {\n            id\n            modelName\n        }\n        existingModel{\n            id\n            modelName\n        }\n\n  }\n  \n  \n}",
 								"variables": ""
 							}
 						},
@@ -1940,27 +1907,6 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    nameHistory\n    existingModelLinks{\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n    }\n  }\n  \n  \n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ExistingModelLinkDelete",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation deleteExistingModelLink{\n  \n  deleteExistingModelLink(id:\"{{existingModelLinkID}}\"){\n\n        currentModelPlan {\n            modelName\n        }\n        existingModel{\n            modelName\n        }\n\n  }\n  \n  \n}",
 								"variables": ""
 							}
 						},
