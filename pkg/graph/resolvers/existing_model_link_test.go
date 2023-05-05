@@ -5,8 +5,34 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
+
+func (suite *ResolverSuite) TestExistingModelLinksUpdate() {
+	modelToLink := suite.createModelPlan("The Linked model")
+	plan := suite.createModelPlan("Plan For Model Link")
+	existingModels, _ := ExistingModelCollectionGet(suite.testConfigs.Logger, suite.testConfigs.Store)
+
+	ids := lo.Map(existingModels, func(model *models.ExistingModel, _ int) int {
+		return model.ID
+	})
+
+	/* LINK ALL EXISTING MODELS AND ASSERT LENGTH MATCHES */
+	links, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, ids, nil)
+	suite.NoError(err)
+	suite.Len(links, len(ids))
+
+	/* Link the model plan, make sure other links were deleted, and that there is only the one link*/
+	links2, err := ExistingModelLinksUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, plan.ID, nil, []uuid.UUID{modelToLink.ID})
+	suite.NoError(err)
+	suite.Len(links2, 1)
+	suite.Equal(links2[0].ModelPlanID, plan.ID)
+	suite.Equal(links2[0].CurrentModelPlanID, &modelToLink.ID)
+
+}
 
 func (suite *ResolverSuite) ExistingModelLinkGetByID() {
 	plan1 := suite.createModelPlan("Plan For Link 1")
