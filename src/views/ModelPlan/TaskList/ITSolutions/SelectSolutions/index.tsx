@@ -170,12 +170,10 @@ const SelectSolutions = () => {
           showMessageOnNextPage(removedSolutions);
           history.push(
             `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
-              update ? 'update-status' : 'solution-implementation-details'
-            }`,
-            {
-              fromSolutionDetails: false,
-              isCustomNeed
-            }
+              update
+                ? 'update-status?isCustomNeed=true'
+                : 'solution-implementation-details?isCustomNeed=true'
+            }`
           );
         } else if (errors) {
           setMutationError(true);
@@ -318,8 +316,7 @@ const SelectSolutions = () => {
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
                             history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-                              { isCustomNeed }
+                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${isCustomNeed}`
                             );
                           }}
                         >

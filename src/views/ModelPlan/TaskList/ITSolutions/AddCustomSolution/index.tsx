@@ -186,8 +186,7 @@ const AddCustomSolution = () => {
         history.push(
           // If this block of code is hit, property createOperationalSolution will always exist - ts doesn't know this
           // @ts-ignore
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.createOperationalSolution.id}`,
-          { isCustomNeed: false }
+          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${updateMutation.data.createOperationalSolution.id}`
         );
       } else {
         showMessageOnNextPage(

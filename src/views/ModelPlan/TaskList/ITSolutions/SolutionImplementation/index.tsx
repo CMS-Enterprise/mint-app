@@ -48,15 +48,6 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-interface LocationState {
-  state: {
-    isCustomNeed: boolean;
-    fromSolutionDetails: boolean;
-  };
-  isCustomNeed: boolean;
-  fromSolutionDetails: boolean;
-}
-
 const SolutionImplementation = ({
   isUpdatingStatus = false
 }: {
@@ -68,10 +59,11 @@ const SolutionImplementation = ({
     solutionId?: string | undefined;
   }>();
 
-  const { state } = useLocation<LocationState>();
+  const location = useLocation();
 
-  const fromSolutionDetails = state?.fromSolutionDetails;
-  const isCustomNeed = state?.isCustomNeed;
+  const params = new URLSearchParams(location.search);
+  const fromSolutionDetails = params.get('fromSolutionDetails');
+  const isCustomNeed = params.get('isCustomNeed');
 
   const history = useHistory();
 
@@ -172,7 +164,7 @@ const SolutionImplementation = ({
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {words(isUpdatingStatus, isCustomNeed)}
+                  {words(isUpdatingStatus, !!isCustomNeed)}
                 </span>
               </Alert>
             );
