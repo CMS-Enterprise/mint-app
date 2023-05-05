@@ -83,7 +83,7 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 		"created_by":             userID,
 	}
 	linkSlice := []*models.ExistingModelLink{}
-	statement, err := s.db.PrepareNamed(existingModelLinkMergeSQL)
+	statement, err := tx.PrepareNamed(existingModelLinkMergeSQL)
 	if err != nil {
 		return nil, err //TODO: revisit error handling
 	}
