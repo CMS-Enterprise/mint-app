@@ -31,15 +31,14 @@ matchedLinks AS (
 existingToDelete AS (
 SELECT eml.id,
 	CASE
-	WHEN matchedLinks.model_plan_id IS NULL THEN TRUE
+	-- WHEN matchedLinks.model_plan_id IS NULL THEN TRUE
+	WHEN (exml.existing_model_id IS NULL AND cml.current_model_plan_id IS NULL) THEN TRUE --if both are null
 	ELSE FALSE
 	END AS toDelete
  FROM existing_model_links AS EML
-	LEFT JOIN matchedLinks  ON
-	(eml.model_plan_id = :model_plan_id AND 
-	 ((matchedLinks.existing_model_id = eml.existing_model_id AND eml.current_model_plan_id IS NULL) 
-	  OR (matchedLinks.current_model_plan_id = eml.current_model_plan_id AND eml.existing_model_id IS NULL))
-	 )
+ 	LEFT JOIN links AS cml ON EML.current_model_plan_id = cml.current_model_plan_id
+	LEFT JOIN links AS exml ON  EML.existing_model_id = exml.existing_model_id
+
 ),	
 /* insert new records as needed */
 inserted AS (
@@ -81,15 +80,28 @@ RETURNING
 	)
 /* return all links */
 
-/* TODO: This doesn't work in the same transaction... we need to either return the existing, and potentional do a union all with the inserted rows?*/ 
+/* TODO This doesn't work in the same transaction... we need to either return the existing, and potentional do a union all with the inserted rows?*/ 
 SELECT 
-id,
-model_plan_id,
-existing_model_id,
-current_model_plan_id,
-created_by,
-created_dts,
-modified_by,
-modified_dts
-FROM existing_model_link
-	WHERE model_plan_id = :model_plan_id
+eml.id,
+eml.model_plan_id,
+eml.existing_model_id,
+eml.current_model_plan_id,
+eml.created_by,
+eml.created_dts,
+eml.modified_by,
+eml.modified_dts
+FROM existing_model_link AS eml
+	WHERE eml.model_plan_id = :model_plan_id
+	AND eml.id NOT IN (SELECT ID from deletedRows)
+UNION 
+	SELECT
+	inserted.id,
+	inserted.model_plan_id,
+	inserted.existing_model_id,
+	inserted.current_model_plan_id,
+	inserted.created_by,
+	inserted.created_dts,
+	inserted.modified_by,
+	inserted.modified_dts
+	FROM inserted
+
