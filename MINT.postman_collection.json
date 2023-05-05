@@ -1736,6 +1736,27 @@
 					"response": []
 				},
 				{
+					"name": "SearchChangeDataByModelPlanDateRange",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchModelPlanChangesByDateRange($modelPlanID: UUID!, $startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\r\n  searchModelPlanChangesByDateRange(modelPlanID: $modelPlanID, startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\r\n        guid\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
+								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"startDate\": \"2023-04-19T00:00:00Z\",\r\n  \"endDate\": \"2024-04-20T23:59:59Z\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "SearchChangeTableWithFreeText",
 					"request": {
 						"method": "POST",
