@@ -45100,6 +45100,8 @@ func (ec *executionContext) fieldContext_Query_searchModelPlanChangesByDateRange
 				return ec.fieldContext_ChangeTableRecord_guid(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "tableName":
+				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
 				return ec.fieldContext_ChangeTableRecord_primaryKey(ctx, field)
 			case "foreignKey":
