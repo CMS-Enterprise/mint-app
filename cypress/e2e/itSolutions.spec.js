@@ -29,6 +29,7 @@ describe('The Model Plan IT solutions tracker', () => {
 
     cy.get('#ops-eval-and-learning-help-desk-use-true')
       .check({ force: true })
+      .check({ force: true })
       .should('be.checked');
 
     cy.contains('button', 'Save and return to task list').click();
@@ -87,7 +88,7 @@ describe('The Model Plan IT solutions tracker', () => {
     cy.get('#it-solutions-key').select('Other');
     cy.get('#it-solutions-key').contains('Other');
 
-    cy.get('#add-custom-solution-button').click();
+    cy.get('#add-custom-solution-button').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
@@ -107,7 +108,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('have.value', 'j.doe@oddball.io');
 
     // Submitting the custom solution
-    cy.get('#submit-custom-solution').click();
+    cy.get('#submit-custom-solution').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
@@ -126,7 +127,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.contains('button', 'Continue').click();
+    cy.contains('button', 'Continue').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
@@ -149,7 +150,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#submit-solutions').click();
+    cy.get('#submit-solutions').should('not.be.disabled').click();
 
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')
@@ -198,7 +199,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .uncheck({ force: true })
       .should('not.be.checked');
 
-    cy.contains('button', 'Continue').click();
+    cy.contains('button', 'Continue').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalNeedAnswer'])
       .then(verifyStatus)
@@ -208,7 +209,7 @@ describe('The Model Plan IT solutions tracker', () => {
       'Saving these selections will delete the Contractor solution page/s that is associated with this operational need.'
     );
 
-    cy.get('#submit-solutions').click();
+    cy.get('#submit-solutions').should('not.be.disabled').click();
 
     cy.wait('@GetOperationalNeeds')
       .its('response.statusCode')
@@ -231,7 +232,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('not.be.disabled');
 
     // Submit need
-    cy.get('#submit-custom-solution').click();
+    cy.get('#submit-custom-solution').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetPossibleOperationalSolutions'])
       .then(verifyStatus)
@@ -242,14 +243,14 @@ describe('The Model Plan IT solutions tracker', () => {
       .select('Cross-model contract')
       .should('have.value', 'CROSS_MODEL_CONTRACT');
 
-    cy.get('[data-testid="add-solution-details-button"]').click();
+    cy.get('button').contains('Add solution').should('not.be.disabled').click();
 
     cy.wait('@GetOperationalNeed')
       .its('response.statusCode')
       .should('eq', 200)
       .wait(250);
 
-    cy.get('button').contains('Continue').click();
+    cy.contains('button', 'Continue').should('not.be.disabled').click();
 
     cy.wait('@GetOperationalNeed')
       .its('response.statusCode')
@@ -282,7 +283,9 @@ describe('The Model Plan IT solutions tracker', () => {
       .then(verifyStatus)
       .wait(250);
 
-    cy.contains('button', 'Upload a document').click();
+    cy.contains('button', 'Upload a document')
+      .should('not.be.disabled')
+      .click();
 
     // select document
     cy.get('[data-testid="file-upload-input"]').attachFile('test.pdf');
@@ -297,10 +300,11 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('be.checked');
 
     // click upload button
-    cy.get('[data-testid="upload-document"]').click();
+    cy.get('[data-testid="upload-document"]').should('not.be.disabled').click();
 
-    cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
-      .then(verifyStatus)
+    cy.wait('@GetOperationalNeed')
+      .its('response.statusCode')
+      .should('eq', 200)
       .wait(250);
 
     cy.get('[data-testid="model-plan-documents-table"] tbody tr')
@@ -310,7 +314,7 @@ describe('The Model Plan IT solutions tracker', () => {
         cy.contains('test.pdf');
       });
 
-    cy.get('#link-documents').click();
+    cy.get('#link-documents').should('not.be.disabled').click();
 
     cy.wait([
       '@GetOperationalNeed',
@@ -343,7 +347,7 @@ describe('The Model Plan IT solutions tracker', () => {
     );
 
     // Adding Subtasks
-    cy.contains('button', 'Add subtasks').click();
+    cy.contains('button', 'Add subtasks').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
@@ -369,13 +373,13 @@ describe('The Model Plan IT solutions tracker', () => {
       cy.contains('label', 'Done').click();
     });
 
-    cy.get('#submit-subtasks').click();
+    cy.get('#submit-subtasks').should('not.be.disabled').click();
 
     cy.wait(['@GetOperationalNeed', '@GetOperationalSolution'])
       .then(verifyStatus)
       .wait(250);
 
-    cy.get('.usa-alert__text').contains(
+    cy.get('[data-testid="success-subtask-alert"]').contains(
       'Success! Your subtasks have been added.'
     );
 

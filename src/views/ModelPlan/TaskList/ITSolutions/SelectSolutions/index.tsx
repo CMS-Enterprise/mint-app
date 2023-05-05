@@ -17,6 +17,7 @@ import { Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
@@ -58,6 +59,15 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   needed: false,
   solutions: []
 };
+
+export function findChangedSolution(
+  solutions: GetOperationalNeedSolutionsType[],
+  solution: GetOperationalNeedSolutionsType
+): boolean {
+  return !!solutions.find(
+    sol => sol.id === solution.id && sol.needed !== solution.needed
+  );
+}
 
 const SelectSolutions = () => {
   const { t } = useTranslation('itSolutions');
@@ -122,7 +132,10 @@ const SelectSolutions = () => {
     await Promise.all(
       solutions.map(solution => {
         // if solution id is all zeros, it needs to be created
-        if (solution.id === '00000000-0000-0000-0000-000000000000') {
+        if (
+          solution.id === '00000000-0000-0000-0000-000000000000' &&
+          solution.needed
+        ) {
           return createSolution({
             variables: {
               operationalNeedID,
@@ -133,43 +146,35 @@ const SelectSolutions = () => {
             }
           });
         }
-
-        // Otherwise, set the NEEDED bool for solution
-        // Custom Solution will have a "nameOther", otherwise, it will be empty
-        return updateSolution({
-          variables: {
-            id: solution.id,
-            changes: {
-              needed: solution.needed || false,
-              nameOther: solution.nameOther || ''
+        if (
+          solution.id !== '00000000-0000-0000-0000-000000000000' &&
+          findChangedSolution(operationalNeed.solutions, solution)
+        ) {
+          // Otherwise, set the NEEDED bool for solution
+          return updateSolution({
+            variables: {
+              id: solution.id,
+              changes: {
+                needed: solution.needed || false
+              }
             }
-          }
-        });
+          });
+        }
+        return null;
       })
     )
-      .then(response => {
-        const errors = response?.find(result => result?.errors);
+      .then(responses => {
+        const errors = responses?.find(result => result?.errors);
 
-        if (response && !errors) {
-          if (
-            formikRef?.current?.values.solutions.find(
-              solution => solution.needed
-            ) ||
-            update
-          ) {
-            showMessageOnNextPage(removedSolutions);
-            history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
-                update ? 'update-status' : 'solution-implementation-details'
-              }`,
-              {
-                fromSolutionDetails: false,
-                isCustomNeed
-              }
-            );
-          } else {
-            history.push(`/models/${modelID}/task-list/it-solutions`);
-          }
+        if (responses && !errors) {
+          showMessageOnNextPage(removedSolutions);
+          history.push(
+            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
+              update
+                ? 'update-status?isCustomNeed=true'
+                : 'solution-implementation-details?isCustomNeed=true'
+            }`
+          );
         } else if (errors) {
           setMutationError(true);
         }
@@ -297,7 +302,9 @@ const SelectSolutions = () => {
                           {t('chooseCommonSolution')}
                         </legend>
 
-                        {!loading && (
+                        {loading ? (
+                          <PageLoading />
+                        ) : (
                           <CardGroup>
                             {commonSolutions.map(
                               (solution: GetOperationalNeedSolutionsType) => (
@@ -357,8 +364,7 @@ const SelectSolutions = () => {
                           className="usa-button usa-button--outline margin-top-2"
                           onClick={() => {
                             history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-                              { isCustomNeed }
+                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${isCustomNeed}`
                             );
                           }}
                         >

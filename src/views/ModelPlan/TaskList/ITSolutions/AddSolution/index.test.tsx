@@ -87,8 +87,7 @@ describe('IT Solutions AddSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
           }
         ]}
       >
@@ -118,8 +117,7 @@ describe('IT Solutions AddSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
           }
         ]}
       >
@@ -145,8 +143,7 @@ describe('IT Solutions AddSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${operationalSolutionID}`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution/${operationalSolutionID}`
           }
         ]}
       >
@@ -170,8 +167,7 @@ describe('IT Solutions AddSolution', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
           }
         ]}
       >
