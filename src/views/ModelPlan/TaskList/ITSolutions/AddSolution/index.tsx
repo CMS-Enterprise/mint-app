@@ -69,11 +69,10 @@ const AddSolution = () => {
 
   const history = useHistory();
 
-  const {
-    state: { isCustomNeed }
-  } = useLocation<{
-    isCustomNeed: boolean;
-  }>();
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const isCustomNeed = params.get('isCustomNeed');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -173,8 +172,7 @@ const AddSolution = () => {
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
-        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
-        { isCustomNeed }
+        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions?isCustomNeed=${isCustomNeed}`
       );
     } else if (!updateMutation || updateMutation.errors) {
       setMutationError(true);

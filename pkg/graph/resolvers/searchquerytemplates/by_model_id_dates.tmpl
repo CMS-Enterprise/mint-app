@@ -1,0 +1,21 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "model_plan_id.keyword": "{{.ModelPlanID}}"
+          }
+        },
+        {
+          "range": {
+            "modified_dts": {
+							"gte": "{{.StartDate}}",
+							"lte": "{{.EndDate}}"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
