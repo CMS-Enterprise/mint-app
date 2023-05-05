@@ -859,6 +859,13 @@ func (r *queryResolver) SearchChangeTableByDateRange(ctx context.Context, startD
 	return resolvers.SearchChangeTableByDateRange(logger, r.searchClient, startDate, endDate, limit, offset)
 }
 
+// SearchModelPlanChangesByDateRange is the resolver for the searchModelPlanChangesByDateRange field.
+func (r *queryResolver) SearchModelPlanChangesByDateRange(ctx context.Context, modelPlanID uuid.UUID, startDate time.Time, endDate time.Time, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchModelPlanChangesByDateRange(logger, r.searchClient, modelPlanID, startDate, endDate, limit, offset)
+}
+
 // SearchChangeTableByActor is the resolver for the searchChangeTableByActor field.
 func (r *queryResolver) SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	logger := appcontext.ZLogger(ctx)
