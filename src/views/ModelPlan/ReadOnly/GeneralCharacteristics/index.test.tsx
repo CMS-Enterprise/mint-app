@@ -21,7 +21,6 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
   isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
   resemblesExistingModel: true,
-  resemblesExistingModelWhich: [],
   resemblesExistingModelHow: null,
   resemblesExistingModelNote: 'THIS IS A NEW NOTE',
   hasComponentsOrTracks: false,
@@ -89,6 +88,7 @@ const mocks = [
       data: {
         modelPlan: {
           id: modelID,
+          existingModelLinks: [],
           generalCharacteristics: mockData
         }
       }

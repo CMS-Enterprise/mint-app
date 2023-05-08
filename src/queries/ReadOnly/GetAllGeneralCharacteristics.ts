@@ -4,6 +4,17 @@ export default gql`
   query GetAllGeneralCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
       id
+      existingModelLinks {
+        id
+        existingModel {
+          id
+          modelName
+        }
+        currentModelPlan {
+          id
+          modelName
+        }
+      }
       generalCharacteristics {
         id
         isNewModel
