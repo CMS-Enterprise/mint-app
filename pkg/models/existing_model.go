@@ -6,7 +6,7 @@ import (
 
 // ExistingModel represents an existing innovation model that is already in use
 type ExistingModel struct {
-	ID        string `json:"id" db:"id"`
+	ID        int    `json:"id" db:"id"`
 	ModelName string `json:"modelName" db:"model_name"`
 	Stage     string `json:"stage" db:"stage"`
 	createdByRelation
