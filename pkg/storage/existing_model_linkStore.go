@@ -23,7 +23,7 @@ var existingModelLinkGetByModelPlanIDLoaderSQL string
 
 // ExistingModelLinkGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModelLink, error) {
-	linkSlice := []*models.ExistingModelLink{}
+	var linkSlice []*models.ExistingModelLink
 
 	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDLoaderSQL)
 	if err != nil {
