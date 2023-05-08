@@ -338,7 +338,9 @@ const SelectSolutions = () => {
                             <legend className="text-bold margin-top-5 margin-bottom-2">
                               {t('chooseOtherSolution')}
                             </legend>
-                            {!loading && (
+                            {loading ? (
+                              <PageLoading />
+                            ) : (
                               <CardGroup>
                                 {otherSolutions.map(
                                   (
