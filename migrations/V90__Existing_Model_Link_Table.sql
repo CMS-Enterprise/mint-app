@@ -6,7 +6,7 @@ USING id::INT;
 
 CREATE TABLE existing_model_link (
     id UUID PRIMARY KEY NOT NULL,
-    model_plan_id UUID NOT NULL, --TODO: make this clear it is the source table
+    model_plan_id UUID NOT NULL,
     existing_model_id INT,
     current_model_plan_id UUID,
 
