@@ -12,6 +12,7 @@ import {
   Checkbox,
   Grid,
   IconArrowForward,
+  IconMailOutline,
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -220,18 +221,25 @@ const CheckboxCard = ({
               tablet={{ col: 12 }}
               className={classNames({ 'margin-bottom-2': solution.name })}
             >
-              <p className="text-bold margin-bottom-0">{t('contact')}</p>
+              {(solution.pocName || solution.pocEmail) && (
+                <p className="text-bold margin-bottom-0">{t('contact')}</p>
+              )}
 
-              <p className="margin-y-0">{solution.pocName}</p>
+              {solution.pocName && (
+                <p className="margin-y-0">{solution.pocName}</p>
+              )}
 
-              <Link
-                aria-label={h('contactInfo.sendAnEmail')}
-                className="line-height-body-5 display-flex flex-align-center"
-                href={`mailto:${solution.pocEmail}`}
-                target="_blank"
-              >
-                <div>{solution.pocEmail}</div>
-              </Link>
+              {solution.pocEmail && (
+                <Link
+                  aria-label={h('contactInfo.sendAnEmail')}
+                  className="line-height-body-5 display-flex flex-align-center"
+                  href={`mailto:${solution.pocEmail}`}
+                  target="_blank"
+                >
+                  <div>{solution.pocEmail}</div>
+                  <IconMailOutline className="margin-left-05 text-tbottom" />
+                </Link>
+              )}
             </Grid>
           )}
         </div>
