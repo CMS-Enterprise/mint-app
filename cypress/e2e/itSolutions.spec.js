@@ -243,7 +243,10 @@ describe('The Model Plan IT solutions tracker', () => {
       .select('Cross-model contract')
       .should('have.value', 'CROSS_MODEL_CONTRACT');
 
-    cy.get('button').contains('Add solution').should('not.be.disabled').click();
+    cy.get('button#add-solution-details-button')
+      .contains('Add solution')
+      .should('not.be.disabled')
+      .click();
 
     cy.wait('@GetOperationalNeed')
       .its('response.statusCode')
