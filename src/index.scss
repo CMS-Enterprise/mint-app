@@ -181,3 +181,7 @@ input[type="text"]:disabled {
   color: color('disabled-dark');
   border-color: color('disabled-dark');
 }
+
+.usa-legend {
+  font-weight: $theme-font-weight-bold;
+}

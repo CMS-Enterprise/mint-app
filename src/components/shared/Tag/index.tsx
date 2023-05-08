@@ -8,11 +8,13 @@ import './index.scss';
 
 interface TagProps {
   children: React.ReactNode;
+  arialabel?: string;
 }
 
 export const Tag = ({
   children,
   className,
+  arialabel,
   ...spanProps
 }: TagProps & JSX.IntrinsicElements['span']): React.ReactElement => {
   const style: React.CSSProperties = {};
@@ -25,6 +27,7 @@ export const Tag = ({
       className={tagClasses}
       style={{ ...style }}
       {...spanProps}
+      aria-label={arialabel}
     >
       {children}
     </span>

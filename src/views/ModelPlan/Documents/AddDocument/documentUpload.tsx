@@ -48,7 +48,7 @@ const DocumentUpload = ({
 
   const messageOnNextPage = (message: string, fileName: string) =>
     showMessageOnNextPage(
-      <Alert type="success" slim className="margin-y-4">
+      <Alert type="success" slim className="margin-y-4" aria-live="assertive">
         <span className="mandatory-fields-alert__text">
           {t(message, {
             documentName: fileName
@@ -217,6 +217,9 @@ const DocumentUpload = ({
                       accept=".pdf,.doc,.docx,.xls,.xlsx"
                       inputProps={{
                         'aria-expanded': !!values.file,
+                        'aria-label':
+                          values.file &&
+                          `${t('documentUpload')} ${t('ariaLabelChangeFile')}`,
                         'aria-controls': 'file-type'
                       }}
                     />

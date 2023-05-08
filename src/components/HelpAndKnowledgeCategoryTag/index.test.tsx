@@ -2,13 +2,13 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
-import HelpTag from './index';
+import HelpAndKnowledgeCategoryTag from './index';
 
-describe('HelpTag', () => {
+describe('HelpAndKnowledgeCategoryTag', () => {
   it('renders without errors', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter>
-        <HelpTag type="gettingStarted" />
+        <HelpAndKnowledgeCategoryTag type="gettingStarted" />
       </MemoryRouter>
     );
 

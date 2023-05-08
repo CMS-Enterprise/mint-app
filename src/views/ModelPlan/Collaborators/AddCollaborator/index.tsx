@@ -210,7 +210,10 @@ const Collaborators = () => {
                       scrollElement="userAccount.commonName"
                       error={!!flatErrors['userAccount.commonName']}
                     >
-                      <Label htmlFor="new-plan-model-name">
+                      <Label
+                        htmlFor="model-team-cedar-contact"
+                        id="label-model-team-cedar-contact"
+                      >
                         {t('teamMemberName')}
                       </Label>
                       <FieldErrorMsg>
@@ -229,6 +232,7 @@ const Collaborators = () => {
                       ) : (
                         <>
                           <Label
+                            id="hint-model-team-cedar-contact"
                             htmlFor="model-team-cedar-contact"
                             className="text-normal margin-top-1 margin-bottom-105 text-base"
                             hint
@@ -239,6 +243,8 @@ const Collaborators = () => {
                           <OktaUserSelect
                             id="model-team-cedar-contact"
                             name="model-team-cedar-contact"
+                            ariaLabelledBy="label-model-team-cedar-contact"
+                            ariaDescribedBy="hint-model-team-cedar-contact"
                             onChange={oktaUser => {
                               setFieldValue(
                                 'userAccount.commonName',

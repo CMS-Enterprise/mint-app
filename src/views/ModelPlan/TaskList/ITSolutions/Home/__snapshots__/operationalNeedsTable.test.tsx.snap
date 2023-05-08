@@ -60,7 +60,10 @@ exports[`IT Solutions Home matches snapshot 1`] = `
       data-testid="page-results"
     >
       <span>
-        <div>
+        <div
+          aria-live="polite"
+          role="status"
+        >
           Showing 1-1 of 1 results 
         </div>
       </span>
@@ -235,7 +238,9 @@ exports[`IT Solutions Home matches snapshot 1`] = `
               class=""
               role="cell"
               style="padding-left: 0px;"
-            />
+            >
+              Participants and Providers
+            </td>
             <td
               class=""
               role="cell"

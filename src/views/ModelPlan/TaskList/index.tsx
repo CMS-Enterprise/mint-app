@@ -314,6 +314,7 @@ const TaskList = () => {
                           </TaskListDescription>
                         </div>
                         <TaskListButton
+                          ariaLabel={t(`numberedList.${key}.heading`)}
                           path={t(`numberedList.${key}.path`)}
                           disabled={
                             !!getTaskListLockedStatus(key) &&

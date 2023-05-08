@@ -135,7 +135,8 @@ const MultiSelect = ({
   options,
   onChange,
   initialValues,
-  className
+  className,
+  ariaLabel
 }: {
   id?: string;
   inputId?: string;
@@ -145,6 +146,7 @@ const MultiSelect = ({
   onChange: (values: string[]) => void;
   initialValues?: string[];
   className?: string;
+  ariaLabel: string;
 }) => {
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues
@@ -246,6 +248,7 @@ const MultiSelect = ({
         controlShouldRenderValue={false}
         placeholder={`${selected.length} selected`}
         styles={customStyles}
+        aria-labelledby={ariaLabel}
       />
       {selected.length > 0 && (
         <div className="easi-multiselect--selected">

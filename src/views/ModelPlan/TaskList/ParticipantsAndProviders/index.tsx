@@ -214,7 +214,10 @@ export const ParticipantsAndProvidersContent = () => {
                         error={!!flatErrors.participants}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="participants-and-providers-participants">
+                        <Label
+                          htmlFor="participants-and-providers-participants"
+                          id="label-participants-and-providers-participants"
+                        >
                           {t('whoAreParticipants')}
                         </Label>
                         <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
@@ -222,6 +225,7 @@ export const ParticipantsAndProvidersContent = () => {
                         <Field
                           as={MultiSelect}
                           id="participants-and-providers-participants"
+                          ariaLabel="label-participants-and-providers-participants"
                           name="participants"
                           options={mapMultiSelectOptions(
                             translateParticipantsType,

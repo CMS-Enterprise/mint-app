@@ -27,6 +27,12 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+"""
+Any represents any GraphQL value.
+"""
+scalar Any
+
+
 enum SortDirection {
   ASC
   DESC
@@ -1372,13 +1378,28 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
+type ChangedFields {
+  changes: [Field!]!
+}
+
+type Field {
+  name: String!
+  value: FieldValue!
+}
+
+type FieldValue {
+  new: Any
+  old: Any
+}
+
 type ChangeTableRecord {
   guid: ID!
   tableID: Int!
+  tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
   action: String!
-  fields: Map
+  fields: ChangedFields!
   modifiedDts: Time
   modifiedBy: UserAccount
 }
@@ -1442,6 +1463,8 @@ type Query {
   searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchModelPlanChangesByDateRange(modelPlanID: UUID!, startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])

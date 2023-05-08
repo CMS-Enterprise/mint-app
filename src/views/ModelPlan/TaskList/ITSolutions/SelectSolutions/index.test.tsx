@@ -13,7 +13,7 @@ import {
   OpSolutionStatus
 } from 'types/graphql-global-types';
 
-import SelectSolutions from '.';
+import SelectSolutions, { findChangedSolution } from '.';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -66,8 +66,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
           }
         ]}
       >
@@ -109,13 +108,37 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     });
   });
 
+  it('returns changes solution boolean', async () => {
+    expect(
+      findChangedSolution(
+        operationalNeed.solutions,
+        operationalNeed.solutions[0]
+      )
+    ).toEqual(false);
+
+    expect(
+      findChangedSolution(operationalNeed.solutions, {
+        __typename: 'OperationalSolution',
+        id: '00000000-0000-0000-0000-000000000000',
+        name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+        pocEmail: '',
+        key: OperationalSolutionKey.RMADA,
+        mustStartDts: null,
+        mustFinishDts: null,
+        status: OpSolutionStatus.AT_RISK,
+        needed: true,
+        pocName: 'John Doe',
+        nameOther: null
+      })
+    ).toEqual(true);
+  });
+
   it('matches snapshot', async () => {
     const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`,
-            state: { isCustomNeed: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
           }
         ]}
       >

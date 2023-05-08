@@ -1,3 +1,5 @@
+import { solutionHelpRoute } from '../../solutionsMap';
+
 import { formatQueryParam } from '.';
 
 describe('solution help utils', () => {
@@ -8,6 +10,8 @@ describe('solution help utils', () => {
     const expectedQueryString =
       '/help-and-knowledge/operational-solutions?page=4&category=applications&section=about';
 
-    expect(formatQueryParam(paramValues, section)).toEqual(expectedQueryString);
+    expect(formatQueryParam(paramValues, section, solutionHelpRoute)).toEqual(
+      expectedQueryString
+    );
   });
 });

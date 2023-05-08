@@ -36,7 +36,8 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
             <label
               class="usa-label"
               data-testid="label"
-              for="new-plan-model-name"
+              for="model-team-cedar-contact"
+              id="label-model-team-cedar-contact"
             >
               Team member name
             </label>
@@ -44,6 +45,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
               class="usa-label text-normal margin-top-1 margin-bottom-105 text-base"
               data-testid="label"
               for="model-team-cedar-contact"
+              id="hint-model-team-cedar-contact"
             >
               Start typing the person’s name you want to add
               <span
@@ -83,7 +85,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
                       aria-describedby="react-select-model-team-cedar-contact-placeholder"
                       aria-expanded="false"
                       aria-haspopup="true"
-                      aria-label="Cedar-Users"
+                      aria-labelledby="label-model-team-cedar-contact"
                       autocapitalize="none"
                       autocomplete="off"
                       autocorrect="off"

@@ -297,7 +297,10 @@ const KeyCharacteristics = () => {
                   error={!!flatErrors.keyCharacteristics}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="plan-characteristics-key-characteristics">
+                  <Label
+                    htmlFor="plan-characteristics-key-characteristics"
+                    id="label-plan-characteristics-key-characteristics"
+                  >
                     {t('keyCharacteristics')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.keyCharacteristics}</FieldErrorMsg>
@@ -306,6 +309,7 @@ const KeyCharacteristics = () => {
                     as={MultiSelect}
                     id="plan-characteristics-key-characteristics"
                     name="keyCharacteristics"
+                    ariaLabel="label-plan-characteristics-key-characteristics"
                     role="combobox"
                     options={mapMultiSelectOptions(
                       translateKeyCharacteristics,

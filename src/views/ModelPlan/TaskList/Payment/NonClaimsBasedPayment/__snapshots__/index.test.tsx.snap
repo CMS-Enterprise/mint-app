@@ -124,6 +124,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="payment-nonclaims-payments"
+              id="label-payment-nonclaims-payments"
             >
               Select which non-claims-based payments will you pay.
             </label>
@@ -162,6 +163,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-payment-nonclaims-payments"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -593,6 +595,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               If possible, upload a copy of the allotment and allowance.
             </p>
             <textarea
+              aria-labelledby="label-payment-funding-structure hint-payment-funding-structure"
               class="height-15 usa-textarea"
               data-testid="payment-funding-structure"
               id="payment-funding-structure"

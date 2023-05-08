@@ -243,7 +243,10 @@ const ClaimsBasedPayment = () => {
                         error={!!flatErrors.payClaims}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="payment-pay-claims">
+                        <Label
+                          htmlFor="payment-pay-claims"
+                          id="label-payment-pay-claims"
+                        >
                           {t('selectClaims')}
                         </Label>
                         <p className="text-base margin-bottom-1 margin-top-05">
@@ -255,6 +258,7 @@ const ClaimsBasedPayment = () => {
                           as={MultiSelect}
                           id="payment-pay-claims"
                           name="payClaims"
+                          ariaLabel="label-payment-pay-claims"
                           options={mapMultiSelectOptions(
                             translateClaimsBasedPayType,
                             ClaimsBasedPayType
