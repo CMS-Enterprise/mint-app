@@ -6,7 +6,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
 import { GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
 
-import { CharacteristicsContent } from './index';
+import { CharacteristicsContent, separateLinksByType } from './index';
 
 const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
@@ -66,6 +66,22 @@ describe('Model Plan Characteristics', () => {
       expect(
         screen.getByTestId('plan-characteristics-tracks-differ-how')
       ).toHaveValue('Differ text');
+    });
+  });
+
+  it('separates model plans by eixsing/current type', () => {
+    const currentModelPlanIDs: any = [
+      { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+    ];
+    const existingModelIDs: any = [{ id: 100045 }, { id: 103222 }];
+    const linksForMutation = separateLinksByType(
+      [100045, 'ce3405a0-3399-4e3a-88d7-3cfc613d2905', 103222],
+      currentModelPlanIDs,
+      existingModelIDs
+    );
+    expect(linksForMutation).toEqual({
+      currentModelPlanIDs: ['ce3405a0-3399-4e3a-88d7-3cfc613d2905'],
+      existingModelIDs: [100045, 103222]
     });
   });
 

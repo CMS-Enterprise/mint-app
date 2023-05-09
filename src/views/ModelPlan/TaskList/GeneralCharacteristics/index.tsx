@@ -609,6 +609,8 @@ type SeparateLinksType = {
   currentModelPlanIDs: string[];
 };
 
+// Function to get a formatted object for the input payload of UpdateExistingModelLinks mutation
+// Separates all selected existingModelLinks values into a type of either draftModelPlans or existingModelPlans
 export const separateLinksByType = (
   existingLinks: (string | number)[],
   draftModelPlans: GetModelPlansModelPlanCollectionType[],
