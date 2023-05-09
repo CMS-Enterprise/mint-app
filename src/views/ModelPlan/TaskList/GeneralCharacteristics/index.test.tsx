@@ -14,7 +14,6 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
   isNewModel: false,
   existingModel: 'Second Plan',
   resemblesExistingModel: false,
-  resemblesExistingModelWhich: [],
   resemblesExistingModelHow: '',
   resemblesExistingModelNote: '',
   hasComponentsOrTracks: true,
@@ -33,6 +32,7 @@ const generalCharacteristicsMock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
+          existingModelLinks: [],
           generalCharacteristics: generalCharacteristicsMockData
         }
       }

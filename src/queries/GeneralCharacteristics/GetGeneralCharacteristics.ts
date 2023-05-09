@@ -5,6 +5,11 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      existingModelLinks {
+        id
+        existingModelID
+        currentModelPlanID
+      }
       generalCharacteristics {
         id
         isNewModel
