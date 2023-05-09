@@ -87,10 +87,9 @@ exports[`SolutionDetailsCard isUpdatingStatus variant 1`] = `
                 class="padding-3"
               >
                 <h3
-                  class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
-                  style="word-break: break-word;"
+                  class="margin-top-0 solutions-checkbox__header margin-bottom-2"
                 >
-                  Internal staff
+                  Shared Systems
                 </h3>
                 <div
                   class="tablet:grid-col-6 margin-bottom-2"
@@ -275,10 +274,9 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
                 class="padding-3"
               >
                 <h3
-                  class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
-                  style="word-break: break-word;"
+                  class="margin-top-0 solutions-checkbox__header margin-bottom-2"
                 >
-                  Internal staff
+                  Shared Systems
                 </h3>
                 <div
                   class="tablet:grid-col-6 margin-bottom-2"

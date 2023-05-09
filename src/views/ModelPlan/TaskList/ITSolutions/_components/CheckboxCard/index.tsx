@@ -169,7 +169,7 @@ const CheckboxCard = ({
               <>
                 {solution.otherHeader ? (
                   <>
-                    <h3 className="margin-top-2 margin-bottom-0">
+                    <h3 className="margin-top-2 margin-bottom-0 solutions-checkbox__header">
                       {solution.otherHeader}
                     </h3>
                     <h5 className="text-normal margin-top-0 margin-bottom-2">
@@ -177,7 +177,7 @@ const CheckboxCard = ({
                     </h5>
                   </>
                 ) : (
-                  <h3 className="margin-y-2">
+                  <h3 className="margin-y-2 solutions-checkbox__header">
                     {solution.nameOther || solution.name}
                   </h3>
                 )}
@@ -188,9 +188,22 @@ const CheckboxCard = ({
             {/* If solution is custom (aka solution key is null), then render its name/nameOther */}
             {(!solution.key ||
               !treatAsOtherSolutions.includes(solution.key)) && (
-              <h3 className="margin-y-2">
-                {solution.nameOther || solution.name}
-              </h3>
+              <>
+                <h3
+                  className={classNames(
+                    'margin-top-2 solutions-checkbox__header',
+                    {
+                      'margin-bottom-1': solutionMap?.acronym,
+                      'margin-bottom-2': !solutionMap?.acronym
+                    }
+                  )}
+                >
+                  {solution.nameOther || (solutionMap && solutionMap.name)}
+                </h3>
+                {solutionMap?.acronym && (
+                  <p className="margin-top-0">({solutionMap.acronym})</p>
+                )}
+              </>
             )}
           </div>
 

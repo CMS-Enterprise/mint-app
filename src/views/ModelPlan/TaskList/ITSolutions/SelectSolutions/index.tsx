@@ -81,9 +81,6 @@ const SelectSolutions = () => {
   const isDesktop = useCheckResponsiveScreen('desktop');
   const isXL = useCheckResponsiveScreen('xl');
 
-  console.log(isDesktop);
-  console.log(isXL);
-
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);

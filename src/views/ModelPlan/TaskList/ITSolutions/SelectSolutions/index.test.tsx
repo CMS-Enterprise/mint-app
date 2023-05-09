@@ -93,9 +93,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
@@ -103,9 +101,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
   });
@@ -122,7 +118,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       findChangedSolution(operationalNeed.solutions, {
         __typename: 'OperationalSolution',
         id: '00000000-0000-0000-0000-000000000000',
-        name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+        name: 'Research, Measurement, Assessment, Design, and Analysis',
         pocEmail: '',
         key: OperationalSolutionKey.RMADA,
         mustStartDts: null,
@@ -158,9 +154,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 

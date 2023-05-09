@@ -1,6 +1,7 @@
 .solutions-checkbox {
   &__header {
-    word-break: break-all;
+    word-break: break-word;
+    line-height: 26px !important;
 
     .usa-checkbox__label {
       margin-top: 0;

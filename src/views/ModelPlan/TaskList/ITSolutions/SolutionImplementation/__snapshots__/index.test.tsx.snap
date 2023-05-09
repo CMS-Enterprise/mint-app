@@ -168,11 +168,15 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                       class="padding-3"
                     >
                       <h3
-                        class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
-                        style="word-break: break-word;"
+                        class="margin-top-0 solutions-checkbox__header margin-bottom-1"
                       >
-                        Research, Measurement, Assessment, Design, and Analysis (RMADA)
+                        Research, Measurement, Assessment, Design, and Analysis
                       </h3>
+                      <p
+                        class="margin-top-0"
+                      >
+                        (RMADA)
+                      </p>
                       <div
                         class="tablet:grid-col-6 margin-bottom-2"
                         data-testid="grid"
