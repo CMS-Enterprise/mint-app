@@ -33,6 +33,8 @@ const operationalSolution = {
   pocName: 'John Doe',
   pocEmail: 'j.doe@oddball.io',
   nameOther: 'My custom solution',
+  isOther: false,
+  otherHeader: null,
   status: OpSolutionStatus.COMPLETED,
   documents: [
     {
@@ -47,6 +49,8 @@ const operationalSolution = {
       documentType: 'ICIP_DRAFT',
       createdDts: '2023-02-16T13:51:31.026147Z',
       numLinkedSolutions: 0,
+      isOther: false,
+      otherHeader: null,
       optionalNotes: null,
       otherType: null,
       __typename: 'PlanDocument'

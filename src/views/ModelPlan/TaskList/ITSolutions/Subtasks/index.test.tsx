@@ -38,6 +38,8 @@ const mockData = [
           pocName: 'John Doe',
           pocEmail: 'j.doe@oddball.io',
           nameOther: 'My custom solution',
+          isOther: true,
+          otherHeader: null,
           documents: [],
           status: OpSolutionStatus.COMPLETED,
           mustFinishDts: '2022-05-12T15:01:39.190679Z',
