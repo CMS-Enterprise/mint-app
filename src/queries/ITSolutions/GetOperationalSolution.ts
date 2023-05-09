@@ -11,6 +11,8 @@ export default gql`
       pocName
       pocEmail
       status
+      isOther
+      otherHeader
       mustFinishDts
       mustStartDts
       documents {

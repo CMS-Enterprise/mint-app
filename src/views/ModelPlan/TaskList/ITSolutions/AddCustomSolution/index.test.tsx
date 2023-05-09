@@ -25,28 +25,23 @@ const returnMockedData = (results: boolean) => {
       },
       result: {
         data: {
-          operationalSolution: results
-            ? {
-                __typename: 'OperationalSolution',
-                id: operationalSolutionID,
-                name: null,
-                key: null,
-                needed: true,
-                pocName: 'John Doe',
-                pocEmail: 'j.doe@oddball.io',
-                nameOther: 'My custom solution',
-                status: OpSolutionStatus.COMPLETED,
-                documents: [],
-                mustFinishDts: '2022-05-12T15:01:39.190679Z',
-                mustStartDts: '2022-05-12T15:01:39.190679Z',
-                operationalSolutionSubtasks: []
-              }
-            : {
-                nameOther: '',
-                pocName: '',
-                pocEmail: '',
-                needed: false
-              }
+          operationalSolution: {
+            __typename: 'OperationalSolution',
+            id: operationalSolutionID,
+            name: null,
+            key: null,
+            needed: true,
+            pocName: results ? 'John Doe' : '',
+            pocEmail: results ? 'j.doe@oddball.io' : '',
+            nameOther: 'My custom solution',
+            isOther: false,
+            otherHeader: null,
+            status: OpSolutionStatus.COMPLETED,
+            documents: [],
+            mustFinishDts: '2022-05-12T15:01:39.190679Z',
+            mustStartDts: '2022-05-12T15:01:39.190679Z',
+            operationalSolutionSubtasks: []
+          }
         }
       }
     }
@@ -58,7 +53,10 @@ describe('AddCustomSolution', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
+            state: { selectedSolution: null }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">
@@ -93,7 +91,10 @@ describe('AddCustomSolution', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
+            state: { selectedSolution: null }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
@@ -122,12 +123,15 @@ describe('AddCustomSolution', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}/#remove-details`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
+            state: { selectedSolution: null }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
           <MessageProvider>
-            <MockedProvider mocks={returnMockedData(true)} addTypename={false}>
+            <MockedProvider mocks={returnMockedData(false)} addTypename={false}>
               <AddCustomSolution />
             </MockedProvider>
           </MessageProvider>
@@ -151,7 +155,10 @@ describe('AddCustomSolution', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`,
+            state: { selectedSolution: null }
+          }
         ]}
       >
         <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution">

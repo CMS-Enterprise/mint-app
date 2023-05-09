@@ -262,6 +262,14 @@ const SelectSolutions = () => {
                 ) => {
                   const { errors, handleSubmit, values } = formikProps;
 
+                  const allTheSolutions = values.solutions;
+                  const commonSolutions = allTheSolutions.filter(
+                    solution => solution.nameOther === null
+                  );
+                  // otherSolutions are custom solutions
+                  const otherSolutions = allTheSolutions.filter(
+                    solution => solution.nameOther !== null
+                  );
                   const flatErrors = flattenErrors(errors);
 
                   return (
@@ -291,23 +299,65 @@ const SelectSolutions = () => {
                         }}
                       >
                         <legend className="text-bold margin-bottom-2">
-                          {t('chooseSolution')}
+                          {t('chooseCommonSolution')}
                         </legend>
 
                         {loading ? (
                           <PageLoading />
                         ) : (
                           <CardGroup>
-                            {values.solutions.map(
-                              (solution: any, index: number) => (
+                            {commonSolutions.map(
+                              (solution: GetOperationalNeedSolutionsType) => (
                                 <CheckboxCard
                                   solution={solution}
-                                  index={index}
-                                  key={solution.nameOther || solution.name}
+                                  index={allTheSolutions.findIndex(x =>
+                                    x.id ===
+                                    '00000000-0000-0000-0000-000000000000'
+                                      ? x.name === solution.name
+                                      : x.id === solution.id
+                                  )}
+                                  // Default Operational Solutions start with an id full of zeroes.
+                                  // if solution is default solution, then check name to find index
+                                  // otherwise, continue to use id to find index
+                                  key={`${
+                                    solution.nameOther
+                                      ?.toLowerCase()
+                                      .replaceAll(' ', '-') ||
+                                    solution.name
+                                      ?.toLowerCase()
+                                      .replaceAll(' ', '-')
+                                  }--${solution.id}`}
                                 />
                               )
                             )}
                           </CardGroup>
+                        )}
+
+                        {otherSolutions.length > 0 && (
+                          <>
+                            <legend className="text-bold margin-top-5 margin-bottom-2">
+                              {t('chooseOtherSolution')}
+                            </legend>
+                            {loading ? (
+                              <PageLoading />
+                            ) : (
+                              <CardGroup>
+                                {otherSolutions.map(
+                                  (
+                                    solution: GetOperationalNeedSolutionsType
+                                  ) => (
+                                    <CheckboxCard
+                                      solution={solution}
+                                      index={allTheSolutions.findIndex(
+                                        x => x.id === solution.id
+                                      )}
+                                      key={solution.nameOther || solution.name}
+                                    />
+                                  )
+                                )}
+                              </CardGroup>
+                            )}
+                          </>
                         )}
 
                         <Button
@@ -328,7 +378,7 @@ const SelectSolutions = () => {
                             type="submit"
                             className="margin-bottom-1"
                             disabled={
-                              values.solutions.filter(
+                              allTheSolutions.filter(
                                 solution => solution.needed
                               ).length === 0
                             }
