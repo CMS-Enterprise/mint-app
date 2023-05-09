@@ -94,7 +94,7 @@ const itSolutions = {
       'Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.',
     button: 'Add an operational need or IT solution'
   },
-  selectSolution: 'Select a solution',
+  selectSolution: 'Select this solution',
   updateSolutions: 'Update solution selections',
   updateSolutionsInfo:
     'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.',
