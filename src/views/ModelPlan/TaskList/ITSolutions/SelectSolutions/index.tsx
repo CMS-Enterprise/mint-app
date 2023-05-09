@@ -276,11 +276,11 @@ const SelectSolutions = () => {
 
               const allTheSolutions = values.solutions;
               const commonSolutions = allTheSolutions.filter(
-                solution => solution.nameOther === null
+                solution => solution.nameOther === null && !solution.isOther
               );
               // otherSolutions are custom solutions
               const otherSolutions = allTheSolutions.filter(
-                solution => solution.nameOther !== null
+                solution => solution.nameOther !== null || solution.isOther
               );
               const flatErrors = flattenErrors(errors);
 

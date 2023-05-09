@@ -201,7 +201,9 @@ const CheckboxCard = ({
                   {solution.nameOther || (solutionMap && solutionMap.name)}
                 </h3>
                 {solutionMap?.acronym && (
-                  <p className="margin-top-0">({solutionMap.acronym})</p>
+                  <h5 className="margin-top-0 margin-bottom-2 text-normal">
+                    ({solutionMap.acronym})
+                  </h5>
                 )}
               </>
             )}
