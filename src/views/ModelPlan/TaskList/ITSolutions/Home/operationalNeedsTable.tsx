@@ -418,6 +418,7 @@ const OperationalNeedsTable = ({
                         })}
                         style={{
                           paddingLeft: '0',
+                          maxWidth: i === 1 ? '275px' : 'auto',
                           borderBottom:
                             index === page.length - 1 ? 'none' : 'auto'
                         }}

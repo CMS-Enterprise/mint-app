@@ -1,5 +1,6 @@
 .model-plan-table {
-  th {
+  th, td {
     position: relative;
+    word-break: break-word;
   }
 }

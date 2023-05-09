@@ -49,6 +49,11 @@ export const filterNeedsFormatSolutions = (
         );
       }
     });
+  operationalSolutions.sort((a, b) => {
+    const aName = a.nameOther || a.name || '';
+    const bName = b.nameOther || b.name || '';
+    return bName.localeCompare(aName);
+  });
   return operationalSolutions;
 };
 
