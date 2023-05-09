@@ -131,9 +131,9 @@ export const CharacteristicsContent = () => {
 
   const existingModelLinks: (string | number)[] = useMemo(() => {
     return (
-      data?.modelPlan?.existingModelLinks
-        ?.map(link => link.existingModelID || link.currentModelPlanID || '')
-        .filter(link => link && link !== '') || []
+      data?.modelPlan.existingModelLinks?.map(
+        link => (link.existingModelID || link.currentModelPlanID)!
+      ) || []
     );
   }, [data?.modelPlan?.existingModelLinks]);
 

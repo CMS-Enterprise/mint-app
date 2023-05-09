@@ -46,9 +46,7 @@ const ReadOnlyGeneralCharacteristics = ({
     return (
       data?.modelPlan?.existingModelLinks?.map(
         link =>
-          link.currentModelPlan?.modelName ||
-          link.existingModel?.modelName ||
-          ''
+          (link.currentModelPlan?.modelName || link.existingModel?.modelName)!
       ) || []
     );
   }, [data?.modelPlan?.existingModelLinks]);
