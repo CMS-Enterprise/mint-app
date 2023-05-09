@@ -293,7 +293,10 @@ const OperationalNeedsTable = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
+        sortBy: useMemo(
+          () => [{ id: type === 'needs' ? 'needName' : 'name', asc: true }],
+          [type]
+        ),
         pageIndex: 0
       }
     },
