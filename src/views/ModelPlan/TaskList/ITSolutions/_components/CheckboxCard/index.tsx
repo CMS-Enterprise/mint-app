@@ -102,7 +102,7 @@ const CheckboxCard = ({
             )
           }
         >
-          {t('addDetails')}
+          {solution.otherHeader ? t('updateTheseDetails') : t('addDetails')}
           <IconArrowForward className="margin-left-1" />
         </Button>
       );
@@ -165,24 +165,29 @@ const CheckboxCard = ({
             />
 
             {/* If solution is one of the treatAsOther, then render the following  */}
-            {solution.key &&
-              treatAsOtherSolutions.includes(solution.key) &&
-              !isDefaultSolutionOptions && (
-                <>
-                  <h3 className="margin-top-2 margin-bottom-0">
-                    {solution.otherHeader}
+            {solution.key && treatAsOtherSolutions.includes(solution.key) && (
+              <>
+                {solution.otherHeader ? (
+                  <>
+                    <h3 className="margin-top-2 margin-bottom-0">
+                      {solution.otherHeader}
+                    </h3>
+                    <h5 className="text-normal margin-top-0 margin-bottom-2">
+                      {translateOperationalSolutionKey(solution.key)}
+                    </h5>
+                  </>
+                ) : (
+                  <h3 className="margin-y-2">
+                    {solution.nameOther || solution.name}
                   </h3>
-                  <h5 className="text-normal margin-top-0 margin-bottom-2">
-                    {translateOperationalSolutionKey(solution.key)}
-                  </h5>
-                </>
-              )}
+                )}
+              </>
+            )}
 
             {/* If solution key is not one of the treatAsOther, then render its name/nameOther */}
             {/* If solution is custom (aka solution key is null), then render its name/nameOther */}
             {(!solution.key ||
-              !treatAsOtherSolutions.includes(solution.key) ||
-              isDefaultSolutionOptions) && (
+              !treatAsOtherSolutions.includes(solution.key)) && (
               <h3 className="margin-y-2">
                 {solution.nameOther || solution.name}
               </h3>
@@ -219,7 +224,7 @@ const CheckboxCard = ({
           ) : (
             <Grid
               tablet={{ col: 12 }}
-              className={classNames({ 'margin-bottom-2': solution.name })}
+              className={classNames('margin-bottom-2')}
             >
               {(solution.pocName || solution.pocEmail) && (
                 <p className="text-bold margin-bottom-0">{t('contact')}</p>

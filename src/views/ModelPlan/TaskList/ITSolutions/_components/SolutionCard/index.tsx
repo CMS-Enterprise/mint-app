@@ -80,9 +80,6 @@ const SolutionCard = ({
     OperationalSolutionKey.INTERNAL_STAFF
   ];
 
-  const isDefaultSolutionOptions =
-    solution.name !== null && solution.pocEmail === null;
-
   return (
     <>
       {renderModal && selectedSolution && (
@@ -96,22 +93,27 @@ const SolutionCard = ({
       <CardGroup className="flex-column flex-no-wrap">
         <Card className={classNames('solution-card', { shadow }, className)}>
           <div className="padding-3">
-            {solution.key &&
-              treatAsOtherSolutions.includes(solution.key) &&
-              !isDefaultSolutionOptions && (
-                <>
-                  <h3 className="margin-y-0 solutions-checkbox__header">
-                    {solution.otherHeader}
+            {solution.key && treatAsOtherSolutions.includes(solution.key) && (
+              <>
+                {solution.otherHeader ? (
+                  <>
+                    <h3 className="margin-y-0 solutions-checkbox__header">
+                      {solution.otherHeader}
+                    </h3>
+                    <h5 className="text-normal margin-top-0 margin-bottom-2">
+                      {translateOperationalSolutionKey(solution.key)}
+                    </h5>
+                  </>
+                ) : (
+                  <h3 className="margin-y-2">
+                    {solution.nameOther || solution.name}
                   </h3>
-                  <h5 className="text-normal margin-top-0 margin-bottom-2">
-                    {translateOperationalSolutionKey(solution.key)}
-                  </h5>
-                </>
-              )}
+                )}
+              </>
+            )}
 
             {(!solution.key ||
-              !treatAsOtherSolutions.includes(solution.key) ||
-              isDefaultSolutionOptions) && (
+              !treatAsOtherSolutions.includes(solution.key)) && (
               <h3
                 className="margin-bottom-2 margin-top-0 solutions-checkbox__header"
                 style={{ wordBreak: 'break-word' }}
