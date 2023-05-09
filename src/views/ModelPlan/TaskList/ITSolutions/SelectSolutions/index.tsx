@@ -20,6 +20,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
@@ -76,6 +77,12 @@ const SelectSolutions = () => {
     modelID: string;
     operationalNeedID: string;
   }>();
+
+  const isDesktop = useCheckResponsiveScreen('desktop');
+  const isXL = useCheckResponsiveScreen('xl');
+
+  console.log(isDesktop);
+  console.log(isXL);
 
   const location = useLocation();
 
@@ -246,173 +253,174 @@ const SelectSolutions = () => {
               {t('updateSolutionsInfo')}
             </Alert>
           )}
+        </Grid>
 
-          <Grid row gap>
-            <Grid tablet={{ col: 12 }} desktop={{ col: 10 }}>
-              <Formik
-                initialValues={operationalNeed}
-                onSubmit={values => {
-                  handleFormSubmit(values);
-                }}
-                enableReinitialize
-                innerRef={formikRef}
-              >
-                {(
-                  formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
-                ) => {
-                  const { errors, handleSubmit, values } = formikProps;
+        {(isDesktop || isXL) && (
+          <Grid desktop={{ col: 3 }} className="padding-x-1">
+            <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
+          </Grid>
+        )}
+      </Grid>
 
-                  const allTheSolutions = values.solutions;
-                  const commonSolutions = allTheSolutions.filter(
-                    solution => solution.nameOther === null
-                  );
-                  // otherSolutions are custom solutions
-                  const otherSolutions = allTheSolutions.filter(
-                    solution => solution.nameOther !== null
-                  );
-                  const flatErrors = flattenErrors(errors);
+      <Grid row gap>
+        <Grid tablet={{ col: 12 }} desktop={{ col: 12 }}>
+          <Formik
+            initialValues={operationalNeed}
+            onSubmit={values => {
+              handleFormSubmit(values);
+            }}
+            enableReinitialize
+            innerRef={formikRef}
+          >
+            {(
+              formikProps: FormikProps<GetOperationalNeedOperationalNeedType>
+            ) => {
+              const { errors, handleSubmit, values } = formikProps;
 
-                  return (
-                    <>
-                      {Object.keys(errors).length > 0 && (
-                        <ErrorAlert
-                          testId="formik-validation-errors"
-                          classNames="margin-top-3"
-                          heading={h('checkAndFix')}
-                        >
-                          {Object.keys(flatErrors).map(key => {
-                            return (
-                              <ErrorAlertMessage
-                                key={`Error.${key}`}
-                                errorKey={key}
-                                message={flatErrors[key]}
-                              />
-                            );
-                          })}
-                        </ErrorAlert>
-                      )}
+              const allTheSolutions = values.solutions;
+              const commonSolutions = allTheSolutions.filter(
+                solution => solution.nameOther === null
+              );
+              // otherSolutions are custom solutions
+              const otherSolutions = allTheSolutions.filter(
+                solution => solution.nameOther !== null
+              );
+              const flatErrors = flattenErrors(errors);
 
-                      <Form
-                        className="margin-top-2"
-                        onSubmit={e => {
-                          handleSubmit(e);
-                        }}
-                      >
-                        <legend className="text-bold margin-bottom-2">
-                          {t('chooseCommonSolution')}
+              return (
+                <>
+                  {Object.keys(errors).length > 0 && (
+                    <ErrorAlert
+                      testId="formik-validation-errors"
+                      classNames="margin-top-3"
+                      heading={h('checkAndFix')}
+                    >
+                      {Object.keys(flatErrors).map(key => {
+                        return (
+                          <ErrorAlertMessage
+                            key={`Error.${key}`}
+                            errorKey={key}
+                            message={flatErrors[key]}
+                          />
+                        );
+                      })}
+                    </ErrorAlert>
+                  )}
+
+                  <Form
+                    className="margin-top-2"
+                    onSubmit={e => {
+                      handleSubmit(e);
+                    }}
+                  >
+                    <legend className="text-bold margin-bottom-2">
+                      {t('chooseCommonSolution')}
+                    </legend>
+
+                    {loading ? (
+                      <PageLoading />
+                    ) : (
+                      <CardGroup>
+                        {commonSolutions.map(
+                          (solution: GetOperationalNeedSolutionsType) => (
+                            <CheckboxCard
+                              solution={solution}
+                              index={allTheSolutions.findIndex(x =>
+                                x.id === '00000000-0000-0000-0000-000000000000'
+                                  ? x.name === solution.name
+                                  : x.id === solution.id
+                              )}
+                              // Default Operational Solutions start with an id full of zeroes.
+                              // if solution is default solution, then check name to find index
+                              // otherwise, continue to use id to find index
+                              key={`${
+                                solution.nameOther
+                                  ?.toLowerCase()
+                                  .replaceAll(' ', '-') ||
+                                solution.name
+                                  ?.toLowerCase()
+                                  .replaceAll(' ', '-')
+                              }--${solution.id}`}
+                            />
+                          )
+                        )}
+                      </CardGroup>
+                    )}
+
+                    {otherSolutions.length > 0 && (
+                      <>
+                        <legend className="text-bold margin-top-5 margin-bottom-2">
+                          {t('chooseOtherSolution')}
                         </legend>
-
                         {loading ? (
                           <PageLoading />
                         ) : (
                           <CardGroup>
-                            {commonSolutions.map(
+                            {otherSolutions.map(
                               (solution: GetOperationalNeedSolutionsType) => (
                                 <CheckboxCard
                                   solution={solution}
-                                  index={allTheSolutions.findIndex(x =>
-                                    x.id ===
-                                    '00000000-0000-0000-0000-000000000000'
-                                      ? x.name === solution.name
-                                      : x.id === solution.id
+                                  index={allTheSolutions.findIndex(
+                                    x => x.id === solution.id
                                   )}
-                                  // Default Operational Solutions start with an id full of zeroes.
-                                  // if solution is default solution, then check name to find index
-                                  // otherwise, continue to use id to find index
-                                  key={`${
-                                    solution.nameOther
-                                      ?.toLowerCase()
-                                      .replaceAll(' ', '-') ||
-                                    solution.name
-                                      ?.toLowerCase()
-                                      .replaceAll(' ', '-')
-                                  }--${solution.id}`}
+                                  key={solution.nameOther || solution.name}
                                 />
                               )
                             )}
                           </CardGroup>
                         )}
+                      </>
+                    )}
 
-                        {otherSolutions.length > 0 && (
-                          <>
-                            <legend className="text-bold margin-top-5 margin-bottom-2">
-                              {t('chooseOtherSolution')}
-                            </legend>
-                            {loading ? (
-                              <PageLoading />
-                            ) : (
-                              <CardGroup>
-                                {otherSolutions.map(
-                                  (
-                                    solution: GetOperationalNeedSolutionsType
-                                  ) => (
-                                    <CheckboxCard
-                                      solution={solution}
-                                      index={allTheSolutions.findIndex(
-                                        x => x.id === solution.id
-                                      )}
-                                      key={solution.nameOther || solution.name}
-                                    />
-                                  )
-                                )}
-                              </CardGroup>
-                            )}
-                          </>
-                        )}
+                    <Button
+                      type="button"
+                      id="add-solution-not-listed"
+                      className="usa-button usa-button--outline margin-top-2"
+                      onClick={() => {
+                        history.push(
+                          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${isCustomNeed}`
+                        );
+                      }}
+                    >
+                      {t('selectAnother')}
+                    </Button>
 
-                        <Button
-                          type="button"
-                          id="add-solution-not-listed"
-                          className="usa-button usa-button--outline margin-top-2"
-                          onClick={() => {
-                            history.push(
-                              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${isCustomNeed}`
-                            );
-                          }}
-                        >
-                          {t('selectAnother')}
-                        </Button>
-
-                        <div className="margin-top-6 margin-bottom-3">
-                          <Button
-                            type="submit"
-                            className="margin-bottom-1"
-                            disabled={
-                              allTheSolutions.filter(
-                                solution => solution.needed
-                              ).length === 0
-                            }
-                          >
-                            {t('continue')}
-                          </Button>
-                        </div>
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled display-flex flex-align-center"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        >
-                          <IconArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                          />
-                          {update ? t('dontUpdate') : t('dontAdd')}
-                        </Button>
-                      </Form>
-                    </>
-                  );
-                }}
-              </Formik>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid tablet={{ col: 12 }} desktop={{ col: 3 }} className="padding-x-1">
-          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="submit"
+                        className="margin-bottom-1"
+                        disabled={
+                          allTheSolutions.filter(solution => solution.needed)
+                            .length === 0
+                        }
+                      >
+                        {t('continue')}
+                      </Button>
+                    </div>
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled display-flex flex-align-center"
+                      onClick={() =>
+                        history.push(
+                          `/models/${modelID}/task-list/it-solutions`
+                        )
+                      }
+                    >
+                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      {update ? t('dontUpdate') : t('dontAdd')}
+                    </Button>
+                  </Form>
+                </>
+              );
+            }}
+          </Formik>
         </Grid>
       </Grid>
+      {!isDesktop && !isXL && (
+        <Grid desktop={{ col: 12 }} className="padding-x-1">
+          <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
+        </Grid>
+      )}
     </>
   );
 };

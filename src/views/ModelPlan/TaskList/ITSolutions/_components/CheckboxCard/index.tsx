@@ -138,7 +138,7 @@ const CheckboxCard = ({
   };
 
   return (
-    <Grid tablet={{ col: 6 }} className="display-flex">
+    <Grid tablet={{ col: 6 }} desktop={{ col: 4 }} className="display-flex">
       {renderModal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}

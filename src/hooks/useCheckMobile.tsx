@@ -25,9 +25,9 @@ const useCheckResponsiveScreen = (device: deviceProps) => {
     case 'mobile':
       return width <= mobile;
     case 'tablet':
-      return width <= tablet;
+      return width <= tablet && width >= mobile;
     case 'desktop':
-      return width <= desktop;
+      return width <= desktop && width >= tablet;
     case 'xl':
       return width > desktop;
     default:
