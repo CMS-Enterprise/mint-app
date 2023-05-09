@@ -267,9 +267,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('eq', 200)
       .wait(250);
 
-    cy.get('span').contains(
-      'Success! Your operational need “My custom need” and solution are added.'
-    );
+    cy.get('span').contains('Success! Solutions added for My custom need');
 
     // Link document
     // Click to view solution details view

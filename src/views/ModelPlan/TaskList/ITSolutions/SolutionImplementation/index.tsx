@@ -145,16 +145,20 @@ const SolutionImplementation = () => {
               updateStatus: boolean,
               customNeed: boolean | undefined
             ) => {
+              console.log(updateStatus, customNeed);
               if (updateStatus && !customNeed)
                 return t('successStatusUpdated', {
-                  operationalNeedName: operationalNeed.name
+                  operationalNeedName:
+                    operationalNeed.nameOther || operationalNeed.name
                 });
               if (!updateStatus && !customNeed)
                 return t('successSolutionAdded', {
-                  operationalNeedName: operationalNeed.name
+                  operationalNeedName:
+                    operationalNeed.nameOther || operationalNeed.name
                 });
               return t('successMessage.operationalNeedAndSolution', {
-                operationalNeedName: operationalNeed.nameOther
+                operationalNeedName:
+                  operationalNeed.nameOther || operationalNeed.name
               });
             };
 

@@ -216,7 +216,7 @@ const itSolutions = {
     onlyOperationalNeed:
       'Success! Your operational need “{{-operationalNeedName}}” is added.',
     operationalNeedAndSolution:
-      'Success! Your operational need “{{-operationalNeedName}}” and solution are added.',
+      'Success! Solutions added for {{-operationalNeedName}}',
     operationalNeedRemoval:
       'Success! {{-operationalNeedName}} has been removed.',
     operationalNeedUpdate: 'Success! Your operational need has been updated.'
