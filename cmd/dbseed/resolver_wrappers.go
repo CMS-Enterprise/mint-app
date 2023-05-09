@@ -291,3 +291,27 @@ func (s *Seeder) operationalSolutionSubtasksCreate(
 	}
 	return subtasks
 }
+
+// existingModelLinkCreate is a wrapper for resolvers.ExistingModelLinkCreate
+// It will panic if an error occurs, rather than bubbling the error up
+func (s *Seeder) existingModelLinkCreate(
+	mp *models.ModelPlan,
+	existingModelIDs []int,
+	currentModelPlanIDs []uuid.UUID,
+) []*models.ExistingModelLink {
+
+	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
+	links, err := resolvers.ExistingModelLinksUpdate(
+		s.Config.Logger,
+		s.Config.Store,
+		principal,
+		mp.ID,
+		existingModelIDs,
+		currentModelPlanIDs,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return links
+}

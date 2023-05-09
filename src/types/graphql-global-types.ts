@@ -725,7 +725,6 @@ export interface PlanGeneralCharacteristicsChanges {
   isNewModel?: boolean | null;
   existingModel?: string | null;
   resemblesExistingModel?: boolean | null;
-  resemblesExistingModelWhich?: string[] | null;
   resemblesExistingModelHow?: string | null;
   resemblesExistingModelNote?: string | null;
   hasComponentsOrTracks?: boolean | null;
