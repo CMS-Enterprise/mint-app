@@ -145,7 +145,6 @@ const SolutionImplementation = () => {
               updateStatus: boolean,
               customNeed: boolean | undefined
             ) => {
-              console.log(updateStatus, customNeed);
               if (updateStatus && !customNeed)
                 return t('successStatusUpdated', {
                   operationalNeedName:
@@ -370,11 +369,14 @@ const SolutionImplementation = () => {
                           </>
                         )}
 
-                        {message && (
+                        {message && Array.isArray(message) && (
                           <Alert type="warning" slim className="margin-top-6">
-                            {t('solutionRemoveWarning', {
-                              solutions: message
-                            })}
+                            {t('solutionRemoveWarning')}
+                            <ul className="padding-left-2 margin-y-1">
+                              {message.map(solution => (
+                                <li>{solution}</li>
+                              ))}
+                            </ul>
                           </Alert>
                         )}
 

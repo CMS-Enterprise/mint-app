@@ -127,7 +127,7 @@ const SelectSolutions = () => {
   ) => {
     const { solutions } = formikValues;
 
-    const removedSolutions: string = checkRemovedSolutions(
+    const removedSolutions: string[] = checkRemovedSolutions(
       operationalNeed,
       formikValues
     );
@@ -424,7 +424,7 @@ const SelectSolutions = () => {
 const checkRemovedSolutions = (
   operationalNeed: GetOperationalNeedOperationalNeedType,
   updatedNeed: GetOperationalNeedOperationalNeedType
-) => {
+): string[] => {
   const removedSolutions: string[] = [];
 
   updatedNeed.solutions.forEach(solution => {
@@ -444,7 +444,7 @@ const checkRemovedSolutions = (
     }
   });
 
-  return removedSolutions.join(',');
+  return removedSolutions;
 };
 
 export default SelectSolutions;

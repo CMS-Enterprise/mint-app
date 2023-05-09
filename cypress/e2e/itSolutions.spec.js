@@ -206,7 +206,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .wait(250);
 
     cy.get('[data-testid="alert"]').contains(
-      'Saving these selections will delete the Contractor solution page/s that is associated with this operational need.'
+      'Saving these selections will delete the following solution page(s) associated with this operational need:'
     );
 
     cy.get('#submit-solutions').should('not.be.disabled').click();
