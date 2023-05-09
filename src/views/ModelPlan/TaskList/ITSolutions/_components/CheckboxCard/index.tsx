@@ -149,7 +149,11 @@ const CheckboxCard = ({
 
       <Card
         className={classNames('width-full', className)}
-        containerProps={{ className: 'padding-3 flex-justify' }}
+        containerProps={{
+          className: classNames('padding-3 flex-justify', {
+            'solutions-checkbox__checked': !!solution.needed
+          })
+        }}
       >
         <div className="solutions-checkbox__above-the-border">
           <div className="solutions-checkbox__header">
