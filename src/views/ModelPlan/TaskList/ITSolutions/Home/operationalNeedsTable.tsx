@@ -276,6 +276,7 @@ const OperationalNeedsTable = ({
     setPageSize,
     page,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -309,6 +310,11 @@ const OperationalNeedsTable = ({
   if (loading) {
     return <PageLoading />;
   }
+
+  // Temp fix for `globalFilterCellText` to work with `page` rows
+  // The filter function requires all rows to be prepped so that
+  // `Column.Cell` is available during filtering
+  rows.map(row => prepareRow(row));
 
   if (error) {
     return (
@@ -384,7 +390,6 @@ const OperationalNeedsTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells

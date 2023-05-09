@@ -178,6 +178,7 @@ const Table = ({
     page,
     setGlobalFilter,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -212,6 +213,8 @@ const Table = ({
       </Alert>
     );
   }
+
+  rows.map(row => prepareRow(row));
 
   return (
     <div className="model-plan-table">
@@ -276,7 +279,6 @@ const Table = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells

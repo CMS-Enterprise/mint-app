@@ -384,6 +384,8 @@ const DraftModelPlansTable = ({
     return <Alert type="error">{t('fetchError')}</Alert>;
   }
 
+  rows.map(row => prepareRow(row));
+
   if (data.length === 0) {
     return (
       <Alert
@@ -468,7 +470,6 @@ const DraftModelPlansTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
