@@ -175,8 +175,8 @@ const SelectSolutions = () => {
           history.push(
             `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
               update
-                ? 'update-status?isCustomNeed=true'
-                : 'solution-implementation-details?isCustomNeed=true'
+                ? `solution-implementation-details?isCustomNeed=${!!isCustomNeed}&update-details=true`
+                : `solution-implementation-details?isCustomNeed=${!!isCustomNeed}`
             }`
           );
         } else if (errors) {

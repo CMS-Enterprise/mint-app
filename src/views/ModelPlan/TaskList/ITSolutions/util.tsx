@@ -114,7 +114,7 @@ export const returnActionLinks = (
     <>
       <UswdsReactLink
         to={{
-          pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status/${operationalNeed.id}`,
+          pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`,
           state: { fromSolutionDetails: false }
         }}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}

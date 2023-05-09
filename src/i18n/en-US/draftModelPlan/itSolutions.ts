@@ -161,6 +161,7 @@ const itSolutions = {
   updateSolutionsLink: 'Update solutions for this operational need',
   notSpecified: 'not specified',
   updateStatusAndTiming: 'Update status and timing',
+  updateDetails: 'Update solution implementation details',
   subtasks: {
     header: 'Subtasks',
     todo: 'To do',
