@@ -78,8 +78,7 @@ const SelectSolutions = () => {
     operationalNeedID: string;
   }>();
 
-  const isDesktop = useCheckResponsiveScreen('desktop');
-  const isXL = useCheckResponsiveScreen('xl');
+  const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 
   const location = useLocation();
 
@@ -252,7 +251,7 @@ const SelectSolutions = () => {
           )}
         </Grid>
 
-        {(isDesktop || isXL) && (
+        {isDesktop && (
           <Grid desktop={{ col: 3 }} className="padding-x-1">
             <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
           </Grid>
@@ -413,7 +412,7 @@ const SelectSolutions = () => {
           </Formik>
         </Grid>
       </Grid>
-      {!isDesktop && !isXL && (
+      {!isDesktop && (
         <Grid desktop={{ col: 12 }} className="padding-x-1">
           <ITSolutionsSidebar modelID={modelID} renderTextFor="solution" />
         </Grid>

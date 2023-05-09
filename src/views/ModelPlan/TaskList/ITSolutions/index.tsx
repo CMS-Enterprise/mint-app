@@ -67,13 +67,6 @@ const ITSolutions = () => {
               <SolutionImplementation />
             </Route>
 
-            {/* <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/update-status/:solutionId?"
-              exact
-            >
-              <SolutionImplementation isUpdatingStatus />
-            </Route> */}
-
             <Route
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
               exact

@@ -281,7 +281,7 @@ const SolutionImplementation = () => {
               : t('addImplementationDetailsInfo')}
           </p>
 
-          <Grid tablet={{ col: 8 }}>
+          <Grid tablet={{ col: 12 }} desktop={{ col: 8 }}>
             {/*
               Operational Solution ID is UNDEFINED if user is displaying ALL solutions to an Operational Need.
               Operational Solution ID is DEFINED if user is displaying an INDIVIDUAL solution to an Operational Need.
@@ -417,7 +417,8 @@ const SolutionImplementation = () => {
             </Formik>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+
+        <Grid desktop={{ col: 3 }} className="padding-x-1">
           <ITSolutionsSidebar
             modelID={modelID}
             renderTextFor={solutionId ? 'status' : 'solution'}
