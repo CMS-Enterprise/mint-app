@@ -291,7 +291,7 @@ const Learning = () => {
                                   values.modelLearningSystems.includes(
                                     type
                                   ) && (
-                                    <div className="margin-left-4 margin-top-neg-3">
+                                    <div className="margin-left-4">
                                       <Label
                                         htmlFor="ops-eval-and-learning-learning-systems-other"
                                         className="text-normal maxw-none"
