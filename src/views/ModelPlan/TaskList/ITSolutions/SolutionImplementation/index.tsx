@@ -374,7 +374,7 @@ const SolutionImplementation = () => {
                             {t('solutionRemoveWarning')}
                             <ul className="padding-left-2 margin-y-1">
                               {message.map(solution => (
-                                <li>{solution}</li>
+                                <li key={solution?.toString()}>{solution}</li>
                               ))}
                             </ul>
                           </Alert>

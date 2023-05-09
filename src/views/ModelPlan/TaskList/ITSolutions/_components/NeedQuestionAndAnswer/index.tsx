@@ -211,7 +211,7 @@ const NeedQuestionAndAnswer = ({
 
           <p
             className={classNames('margin-top-0 font-body-sm', {
-              'margin-bottom-0': expanded
+              'margin-bottom-1': expanded
             })}
           >
             {operationalNeed?.nameOther || operationalNeed?.name}
