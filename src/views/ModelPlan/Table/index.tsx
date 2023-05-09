@@ -337,6 +337,7 @@ const DraftModelPlansTable = ({
     page,
     setGlobalFilter,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
