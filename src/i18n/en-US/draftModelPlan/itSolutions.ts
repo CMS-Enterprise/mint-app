@@ -105,7 +105,8 @@ const itSolutions = {
   youAnswered: 'In the Model Plan, you answered:',
   changeAnswer: 'Want to change your answer? ',
   goToQuestion: 'Go to the question.',
-  chooseSolution: 'Choose from common solutions',
+  chooseCommonSolution: 'Choose from common solutions',
+  chooseOtherSolution: 'Other solutions',
   selectThisSolution: 'Select this solution',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
@@ -129,11 +130,13 @@ const itSolutions = {
   dontAddSolution: 'Don’t add and return to previous page',
   dontUpdateSolution: 'Don’t update and return to previous page',
   updateSolutionDetails: 'Update solution details',
-  solutionName: 'Please add a name for your solution',
+  solutionName: 'Please add a name for your solution or contractor',
   solutionPOC: 'Point of contact information',
   solutionPOCInfo: 'Point of contact',
   solutionEmailInfo: 'Email',
   otherSolution: 'Other',
+  selectedSectionHeading: 'Selected solution: ',
+  addDetails: 'Add Details',
   updateTheseDetails: 'Update these details',
   removeTheseDetails: 'Remove these details',
   addError:
@@ -220,6 +223,13 @@ const itSolutions = {
   errorMessage: {
     operationalNeedRemoval:
       'Sorry, we encountered a problem removing {{-operationalNeedName}}. Please try again.'
+  },
+  operationalSolutionKey: {
+    contractor: 'Contractor',
+    crossModelContract: 'Cross-model contract',
+    existingCmsDataAndProcess: 'Existing CMS data and process',
+    interalStaff: 'Internal staff',
+    otherNewProcess: 'Other'
   }
 };
 export default itSolutions;

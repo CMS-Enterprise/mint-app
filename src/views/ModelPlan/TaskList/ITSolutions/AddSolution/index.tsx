@@ -121,6 +121,14 @@ const AddSolution = () => {
     UpdateOperationalSolution
   );
 
+  const treatAsOtherSolutions = [
+    OperationalSolutionKey.CONTRACTOR,
+    OperationalSolutionKey.CROSS_MODEL_CONTRACT,
+    OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
+    OperationalSolutionKey.INTERNAL_STAFF,
+    OperationalSolutionKey.OTHER_NEW_PROCESS
+  ];
+
   const handleFormSubmit = async (
     formikValues: OperationalSolutionFormType
   ) => {
@@ -320,8 +328,9 @@ const AddSolution = () => {
                                 })}
                             </Field>
 
-                            {values.key ===
-                              OperationalSolutionKey.OTHER_NEW_PROCESS &&
+                            {treatAsOtherSolutions.includes(
+                              values.key as OperationalSolutionKey
+                            ) &&
                               !operationalSolutionID && (
                                 <Button
                                   type="button"
@@ -329,7 +338,8 @@ const AddSolution = () => {
                                   className="usa-button usa-button--outline margin-top-3"
                                   onClick={() => {
                                     history.push(
-                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`,
+                                      { selectedSolution: values.key }
                                     );
                                   }}
                                 >
