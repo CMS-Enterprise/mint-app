@@ -127,7 +127,6 @@ export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
-  resemblesExistingModelWhich: string[];
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   hasComponentsOrTracks: boolean | null;
