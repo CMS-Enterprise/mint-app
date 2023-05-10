@@ -5,7 +5,7 @@ type ReadOnlySectionProps = {
   copy?: string | null;
   heading: string;
   list?: boolean;
-  listItems?: string[];
+  listItems?: (string | number)[];
   listOtherItem?: string | null;
   notes?: string | null;
 };

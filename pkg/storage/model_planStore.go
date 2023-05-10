@@ -40,6 +40,30 @@ var modelPlanCollectionWithCRTDlSQL string
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
+//go:embed SQL/model_plan/get_by_id_LOADER.sql
+var modelPlanGetByIDLoaderSQL string
+
+// ModelPlanGetByModelPlanIDLOADER returns the model pland for a slice of ids
+func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
+	var planSlice []*models.ModelPlan
+
+	stmt, err := s.db.PrepareNamed(modelPlanGetByIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&planSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return planSlice, nil
+}
+
 // ModelPlanCreate creates a model plan
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 

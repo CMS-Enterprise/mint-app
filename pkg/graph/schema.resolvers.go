@@ -26,6 +26,23 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 	return obj.Fields.ToInterface()
 }
 
+// ExistingModel is the resolver for the existingModel field.
+func (r *existingModelLinkResolver) ExistingModel(ctx context.Context, obj *models.ExistingModelLink) (*models.ExistingModel, error) {
+	if obj.ExistingModelID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+
+	return resolvers.ExistingModelGetByIDLOADER(ctx, *obj.ExistingModelID) //TODO, implement loader, or this will be many queries
+}
+
+// CurrentModelPlan is the resolver for the currentModelPlan field.
+func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error) {
+	if obj.CurrentModelPlanID == nil { //Don't do a DB call if nil
+		return nil, nil
+	}
+	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -114,6 +131,11 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
 	return resolvers.OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// ExistingModelLinks is the resolver for the existingModelLinks field.
+func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.ModelPlan) ([]*models.ExistingModelLink, error) {
+	return resolvers.ExistingModelLinkGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -424,6 +446,13 @@ func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context,
 	return resolvers.OperationalSolutionSubtaskDelete(logger, r.store, principal, id)
 }
 
+// UpdateExistingModelLinks is the resolver for the updateExistingModelLinks field.
+func (r *mutationResolver) UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) ([]*models.ExistingModelLink, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return resolvers.ExistingModelLinksUpdate(logger, r.store, principal, modelPlanID, existingModelIDs, currentModelPlanIDs)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return resolvers.OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -502,11 +531,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
-}
-
-// ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
-func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error) {
-	return obj.ResemblesExistingModelWhich, nil
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
@@ -831,6 +855,13 @@ func (r *queryResolver) UserAccount(ctx context.Context, username string) (*auth
 	return resolvers.UserAccountGetByUsername(logger, r.store, username)
 }
 
+// ExistingModelLink is the resolver for the existingModelLink field.
+func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ExistingModelLinkGetByID(logger, r.store, principal, id)
+}
+
 // SearchChangeTable is the resolver for the searchChangeTable field.
 func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -904,6 +935,11 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
+// ExistingModelLink returns generated.ExistingModelLinkResolver implementation.
+func (r *Resolver) ExistingModelLink() generated.ExistingModelLinkResolver {
+	return &existingModelLinkResolver{r}
+}
+
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -966,6 +1002,7 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
+type existingModelLinkResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }

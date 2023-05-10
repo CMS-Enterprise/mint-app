@@ -2,16 +2,9 @@ import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
-import GetExistingModelPlans from 'queries/GetExistingModelPlans';
-import GetDraftModelPlans from 'queries/GetModelPlans';
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
-import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
-import {
-  GetModelPlans as GetDraftModelPlansType,
-  GetModelPlansVariables
-} from 'queries/types/GetModelPlans';
-import { KeyCharacteristic, ModelPlanFilter } from 'types/graphql-global-types';
+import { KeyCharacteristic } from 'types/graphql-global-types';
 import {
   translateAgreementTypes,
   translateAlternativePaymentTypes,
@@ -30,10 +23,6 @@ import { NotFoundPartial } from 'views/NotFound';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
-type ModelMapType = {
-  [key: string]: string;
-};
-
 const ReadOnlyGeneralCharacteristics = ({
   modelID,
   clearance
@@ -44,33 +33,6 @@ const ReadOnlyGeneralCharacteristics = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data: modelData } = useQuery<
-    GetDraftModelPlansType,
-    GetModelPlansVariables
-  >(GetDraftModelPlans, {
-    variables: {
-      filter: ModelPlanFilter.INCLUDE_ALL,
-      isMAC: false
-    }
-  });
-
-  const { data: existingModelData } = useQuery<ExistingModelPlanType>(
-    GetExistingModelPlans
-  );
-
-  // Combined MINT models with existing models from DB
-  const allModelPlans = useMemo(() => {
-    const combinedModels = [
-      ...(modelData?.modelPlanCollection || []),
-      ...(existingModelData?.existingModelCollection || [])
-    ].sort((a, b) => ((a.modelName || '') > (b.modelName || '') ? 1 : -1));
-    const modelMap: ModelMapType = {};
-    combinedModels.forEach(model => {
-      modelMap[model!.id! as string] = model!.modelName!;
-    });
-    return modelMap;
-  }, [modelData, existingModelData]);
-
   const { data, loading, error } = useQuery<GetAllGeneralCharacteristicsTypes>(
     GetAllGeneralCharacteristics,
     {
@@ -80,6 +42,15 @@ const ReadOnlyGeneralCharacteristics = ({
     }
   );
 
+  const mappedExistingModels: (string | number)[] = useMemo(() => {
+    return (
+      data?.modelPlan?.existingModelLinks?.map(
+        link =>
+          (link.currentModelPlan?.modelName || link.existingModel?.modelName)!
+      ) || []
+    );
+  }, [data?.modelPlan?.existingModelLinks]);
+
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
@@ -88,7 +59,6 @@ const ReadOnlyGeneralCharacteristics = ({
     isNewModel,
     existingModel,
     resemblesExistingModel,
-    resemblesExistingModelWhich,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     hasComponentsOrTracks,
@@ -137,13 +107,6 @@ const ReadOnlyGeneralCharacteristics = ({
     waiversRequiredNote,
     status
   } = data?.modelPlan?.generalCharacteristics || {};
-
-  // Convert 'resemblesExistingModelWhich' from and array of string 'id's to an array of model names
-  const mappedExistingModels =
-    allModelPlans &&
-    resemblesExistingModelWhich?.map(model => {
-      return allModelPlans[model as any] || model;
-    });
 
   return (
     <div
