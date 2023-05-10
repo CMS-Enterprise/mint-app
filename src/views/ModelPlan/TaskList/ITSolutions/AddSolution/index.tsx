@@ -185,11 +185,8 @@ const AddSolution = () => {
         });
       }
     } catch (e) {
-      console.log(e);
       setMutationError(true);
     }
-
-    console.log(updateMutation);
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
