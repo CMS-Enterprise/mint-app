@@ -13,6 +13,7 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
 import DeleteDocumentSolutionLinks from 'queries/ITSolutions/DeleteDocumentSolutionLink';
@@ -56,6 +57,8 @@ const LinkDocuments = () => {
 
   const { t } = useTranslation('documents');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -179,7 +182,7 @@ const LinkDocuments = () => {
       )}
 
       <Grid row gap>
-        <Grid tablet={{ col: 9 }}>
+        <Grid desktop={{ col: 9 }}>
           <Grid tablet={{ col: 11 }}>
             <PageHeading className="margin-top-4 margin-bottom-1">
               {t('linkDocumentsHeader')}
@@ -205,13 +208,16 @@ const LinkDocuments = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
-          <ITSolutionsSidebar
-            modelID={modelID}
-            renderTextFor="need"
-            helpfulLinks={false}
-          />
-        </Grid>
+
+        {isDesktop && (
+          <Grid desktop={{ col: 3 }} className="padding-x-1">
+            <ITSolutionsSidebar
+              modelID={modelID}
+              renderTextFor="need"
+              helpfulLinks={false}
+            />
+          </Grid>
+        )}
       </Grid>
 
       <h3 className="margin-top-8 margin-bottom-neg-1">
@@ -242,6 +248,16 @@ const LinkDocuments = () => {
           {t('dontLink')}
         </UswdsReactLink>
       </Grid>
+
+      {!isDesktop && (
+        <Grid desktop={{ col: 12 }} className="padding-x-1">
+          <ITSolutionsSidebar
+            modelID={modelID}
+            renderTextFor="need"
+            helpfulLinks={false}
+          />
+        </Grid>
+      )}
     </>
   );
 };

@@ -166,7 +166,7 @@ const AddOrUpdateOperationalNeed = () => {
       <Expire delay={45000}>{message}</Expire>
 
       <Grid row gap>
-        <Grid tablet={{ col: 9 }}>
+        <Grid desktop={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
             {isUpdating
               ? t('updateThisOpertationalNeed')
@@ -308,7 +308,7 @@ const AddOrUpdateOperationalNeed = () => {
             </Formik>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+        <Grid desktop={{ col: 3 }} className="padding-x-1">
           {/* to pass down remove operational need to sidebar */}
           <ITSolutionsSidebar
             modelID={modelID}
