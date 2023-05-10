@@ -1,5 +1,7 @@
 package main
 
+// go build -a -o bin/tSim ./cmd/temporalSimulator
+//  tSim addCol
 import (
 	"fmt"
 	"os"
@@ -29,7 +31,7 @@ func execute() {
 
 func init() {
 	rootCmd.AddCommand(addColumnCommand)
-	// rootCmd.AddCommand(testCmd)
+	rootCmd.AddCommand(removeColumnCommand)
 }
 
 func main() {
