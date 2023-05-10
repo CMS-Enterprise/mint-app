@@ -84,7 +84,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       const checkbox = getByRole('checkbox', {
-        name: /select a solution/i
+        name: /Select this solution/i
       });
       expect(checkbox).not.toBeChecked();
       userEvent.click(checkbox);

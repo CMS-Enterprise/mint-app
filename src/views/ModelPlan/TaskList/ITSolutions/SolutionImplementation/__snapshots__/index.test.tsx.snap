@@ -49,9 +49,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        <span>
-          Select a solution
-        </span>
+        <span />
       </li>
     </ol>
   </nav>
@@ -67,9 +65,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         aria-live="polite"
         class="mint-h1 margin-top-4 margin-bottom-2"
         tabindex="-1"
-      >
-        Add solution implementation details
-      </h1>
+      />
       <p
         class="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
@@ -82,7 +78,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
         Add additional information and update the implementation status of each selected solution. If you do not know this information you may add it at a later date.
       </p>
       <div
-        class="tablet:grid-col-8"
+        class="tablet:grid-col-12 desktop:grid-col-8"
         data-testid="grid"
       >
         <div
@@ -172,11 +168,11 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
                       >
                         Research, Measurement, Assessment, Design, and Analysis
                       </h3>
-                      <p
-                        class="margin-top-0"
+                      <h5
+                        class="margin-top-0 margin-bottom-2 text-normal"
                       >
                         (RMADA)
-                      </p>
+                      </h5>
                       <div
                         class="tablet:grid-col-6 margin-bottom-2"
                         data-testid="grid"
@@ -602,7 +598,7 @@ exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="tablet:grid-col-3 padding-x-1"
+      class="desktop:grid-col-3 padding-x-1"
       data-testid="grid"
     >
       <div

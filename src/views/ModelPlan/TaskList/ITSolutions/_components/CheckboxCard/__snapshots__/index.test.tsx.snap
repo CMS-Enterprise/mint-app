@@ -11,7 +11,7 @@ exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
       data-testid="Card"
     >
       <div
-        class="usa-card__container padding-3 flex-justify"
+        class="usa-card__container padding-3 flex-justify solutions-checkbox__checked"
       >
         <div
           class="solutions-checkbox__above-the-border"
@@ -35,7 +35,7 @@ exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
                 class="usa-checkbox__label"
                 for="it-solutions-rmada-00000000-0000-0000-0000-000000000000"
               >
-                Select a solution
+                Select this solution
               </label>
             </div>
             <h3
@@ -43,11 +43,11 @@ exports[`IT Solutions CheckboxCard matches snapshot 1`] = `
             >
               Research, Measurement, Assessment, Design, and Analysis
             </h3>
-            <p
-              class="margin-top-0"
+            <h5
+              class="margin-top-0 margin-bottom-2 text-normal"
             >
               (RMADA)
-            </p>
+            </h5>
           </div>
           <div
             class="margin-bottom-2 solutions-checkbox__body-text"

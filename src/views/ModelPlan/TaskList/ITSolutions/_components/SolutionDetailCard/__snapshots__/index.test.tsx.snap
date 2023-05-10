@@ -203,7 +203,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
             Operational need
           </p>
           <p
-            class="margin-top-0 font-body-sm margin-bottom-0"
+            class="margin-top-0 font-body-sm margin-bottom-1"
           >
             Obtain an application support contractor
           </p>
@@ -363,7 +363,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="desktop:grid-col-6"
+        class="tablet:grid-col-12"
         data-testid="grid"
       >
         <div
@@ -371,7 +371,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-6"
+            class="mobile:grid-col-6"
             data-testid="grid"
           >
             <p
@@ -386,7 +386,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="desktop:grid-col-6"
+            class="mobile:grid-col-6"
             data-testid="grid"
           >
             <p

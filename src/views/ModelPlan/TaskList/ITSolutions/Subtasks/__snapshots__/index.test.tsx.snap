@@ -94,7 +94,7 @@ exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
         Add important subtasks to stay organized throughout the implementation process.
       </p>
       <div
-        class="tablet:grid-col-8"
+        class="tablet:grid-col-12 desktop:grid-col-8"
         data-testid="grid"
       >
         <form
@@ -259,7 +259,7 @@ exports[`IT Solutions Add Subtasks matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="tablet:grid-col-3 padding-x-1"
+      class="desktop:grid-col-3 padding-x-1"
       data-testid="grid"
     >
       <div
@@ -403,7 +403,7 @@ exports[`IT Solutions Manage Subtasks matches snapshot 1`] = `
         Track the status of your subtasks throughout the implementation process to stay organized.
       </p>
       <div
-        class="tablet:grid-col-8"
+        class="tablet:grid-col-12 desktop:grid-col-8"
         data-testid="grid"
       >
         <div
@@ -790,7 +790,7 @@ exports[`IT Solutions Manage Subtasks matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="tablet:grid-col-3 padding-x-1"
+      class="desktop:grid-col-3 padding-x-1"
       data-testid="grid"
     >
       <div
