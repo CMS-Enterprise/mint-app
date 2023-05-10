@@ -94,9 +94,7 @@ describe('IT Solutions Util', () => {
     ).toEqual(
       <>
         <UswdsReactLink
-          to={{
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`
-          }}
+          to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
           className="margin-right-2"
         >
           {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
