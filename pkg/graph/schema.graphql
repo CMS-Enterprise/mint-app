@@ -1310,6 +1310,7 @@ type OperationalSolution {
     mustStartDts: Time
     mustFinishDts: Time
     isOther: Boolean!
+    isCommonSolution: Boolean!
     otherHeader: String
     status: OpSolutionStatus!
 

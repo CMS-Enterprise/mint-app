@@ -67,7 +67,10 @@ SELECT
     retVal.created_by,
     retVal.created_dts,
     retVal.modified_by,
-    retVal.modified_dts
+    retVal.modified_dts,
+    PNSL.id IS NOT NULL AS is_common_solution
 
 FROM retVal
-LEFT JOIN possible_operational_solution AS pos ON pos.id = retVal.solution_type;
+LEFT JOIN possible_operational_solution AS pos ON pos.id = retVal.solution_type
+LEFT JOIN operational_need ON operational_need.id = retVal.operational_need_id
+LEFT JOIN possible_need_solution_link AS PNSL ON PNSL.solution_type = pos.id AND PNSL.need_type = operational_need.need_type;

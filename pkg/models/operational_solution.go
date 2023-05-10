@@ -10,18 +10,19 @@ import (
 type OperationalSolution struct {
 	baseStruct
 	operationalNeedRelation
-	SolutionType  *int                    `json:"solutionType" db:"solution_type"`
-	Needed        *bool                   `json:"needed" db:"needed"` // Null means that it is not an actual record
-	Name          *string                 `json:"name" db:"sol_name"`
-	Key           *OperationalSolutionKey `json:"key" db:"sol_key"`
-	NameOther     *string                 `json:"nameOther" db:"name_other"`
-	PocName       *string                 `json:"pocName" db:"poc_name"`
-	PocEmail      *string                 `json:"pocEmail" db:"poc_email"`
-	MustStartDts  *time.Time              `json:"mustStartDts" db:"must_start_dts"`
-	MustFinishDts *time.Time              `json:"mustFinishDts" db:"must_finish_dts"`
-	IsOther       *bool                   `json:"isOther" db:"is_other"`
-	OtherHeader   *string                 `json:"otherHeader" db:"other_header"`
-	Status        OpSolutionStatus        `json:"status" db:"status"`
+	SolutionType     *int                    `json:"solutionType" db:"solution_type"`
+	Needed           *bool                   `json:"needed" db:"needed"` // Null means that it is not an actual record
+	Name             *string                 `json:"name" db:"sol_name"`
+	Key              *OperationalSolutionKey `json:"key" db:"sol_key"`
+	NameOther        *string                 `json:"nameOther" db:"name_other"`
+	PocName          *string                 `json:"pocName" db:"poc_name"`
+	PocEmail         *string                 `json:"pocEmail" db:"poc_email"`
+	MustStartDts     *time.Time              `json:"mustStartDts" db:"must_start_dts"`
+	MustFinishDts    *time.Time              `json:"mustFinishDts" db:"must_finish_dts"`
+	IsOther          *bool                   `json:"isOther" db:"is_other"`
+	IsCommonSolution *bool                   `json:"isCommonSolution" db:"is_common_solution"` //This is determined by the query, and not stored in the operational_solution table
+	OtherHeader      *string                 `json:"otherHeader" db:"other_header"`
+	Status           OpSolutionStatus        `json:"status" db:"status"`
 }
 
 // NewOperationalSolution creates a Operation Solution with the required fields

@@ -29,7 +29,8 @@ possibleSolution AS (
         COALESCE(OpNd.created_by, '00000000-0000-0000-0000-000000000000') AS created_by, -- This is UUID.NIL, the same as the UNKNOWN_USER account in the DB
         COALESCE(OpSol.created_dts, CURRENT_TIMESTAMP) AS created_dts,
         OpSol.modified_by,
-        OpSol.modified_dts
+        OpSol.modified_dts,
+        TRUE AS is_common_solution
     FROM QUERIED_IDS AS qID
     INNER JOIN operational_need AS OpNd ON OpNd.id = qID.operational_need_id
     INNER JOIN possible_need_solution_link AS PNSL ON PNSL.need_type = OpNd.need_type
@@ -61,11 +62,14 @@ resultSet AS (
         OpSol.created_by,
         OpSol.created_dts,
         OpSol.modified_by,
-        OpSol.modified_dts
+        OpSol.modified_dts,
+        PNSL.id IS NOT NULL AS is_common_solution
 
     FROM QUERIED_IDS AS qID
     INNER JOIN operational_solution AS OpSol ON OpSol.operational_need_id = qID.operational_need_id
     LEFT JOIN possible_operational_solution AS pOpSol ON OpSol.solution_type = pOpSol.id
+    LEFT JOIN operational_need ON operational_need.id = OpSol.operational_need_id
+    LEFT JOIN possible_need_solution_link AS PNSL ON PNSL.solution_type = pOpSol.id AND PNSL.need_type = operational_need.need_type
     WHERE (qID.include_not_needed = TRUE OR OpSol.needed = TRUE)
     ORDER BY solution_type ASC
 )

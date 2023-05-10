@@ -16,8 +16,11 @@ SELECT
     OpSol.created_by,
     OpSol.created_dts,
     OpSol.modified_by,
-    OpSol.modified_dts
+    OpSol.modified_dts,
+    PNSL.id IS NOT NULL AS is_common_solution
 FROM operational_solution AS OpSol
 LEFT JOIN possible_operational_solution AS pOpSol
     ON pOpSol.id = OpSol.solution_type
+LEFT JOIN operational_need ON operational_need.id = OpSol.operational_need_id
+LEFT JOIN possible_need_solution_link AS PNSL ON PNSL.solution_type = pOpSol.id AND PNSL.need_type = operational_need.need_type
 WHERE OpSol.id = :id;
