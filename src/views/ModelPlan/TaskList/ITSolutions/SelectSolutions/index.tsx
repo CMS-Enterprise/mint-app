@@ -356,8 +356,11 @@ const SelectSolutions = () => {
                               (solution: GetOperationalNeedSolutionsType) => (
                                 <CheckboxCard
                                   solution={solution}
-                                  index={allTheSolutions.findIndex(
-                                    x => x.id === solution.id
+                                  index={allTheSolutions.findIndex(x =>
+                                    x.id ===
+                                    '00000000-0000-0000-0000-000000000000'
+                                      ? x.name === solution.name
+                                      : x.id === solution.id
                                   )}
                                   key={solution.nameOther || solution.name}
                                 />
@@ -374,7 +377,7 @@ const SelectSolutions = () => {
                       className="usa-button usa-button--outline margin-top-2"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${isCustomNeed}`
+                          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
                         );
                       }}
                     >

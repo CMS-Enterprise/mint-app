@@ -86,13 +86,11 @@ describe('The Model Plan IT solutions tracker', () => {
 
     // Selecting other to adda custom solution
 
-    cy.get('#it-solutions-key').within(() => {
-      cy.get("input[type='text']").type('other{downArrow}{enter}');
-    });
+    cy.get('[data-testid="combo-box-input"]').type('other{enter}');
 
     cy.clickOutside();
 
-    cy.get('#it-solutions-key').contains('Other');
+    cy.get('[data-testid="combo-box-input"]').should('have.value', 'Other');
 
     cy.get('#add-custom-solution-button').should('not.be.disabled').click();
 
@@ -244,10 +242,16 @@ describe('The Model Plan IT solutions tracker', () => {
       .then(verifyStatus)
       .wait(250);
 
-    cy.get('#it-solutions-key')
-      .should('not.be.disabled')
-      .select('Cross-model contract')
-      .should('have.value', 'CROSS_MODEL_CONTRACT');
+    cy.get('[data-testid="combo-box-input"]').type(
+      'Cross-model contract{enter}'
+    );
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="combo-box-input"]').should(
+      'have.value',
+      'Cross-model contract'
+    );
 
     cy.get('button#add-solution-details-button')
       .contains('Add solution')
@@ -279,7 +283,7 @@ describe('The Model Plan IT solutions tracker', () => {
     // Click to view solution details view
     cy.get('[data-testid="needs-table"] tbody tr')
       .should('have.length', 3)
-      .eq(0)
+      .eq(2)
       .within(() => {
         cy.contains('My custom need');
         cy.contains('Cross-model contract');
