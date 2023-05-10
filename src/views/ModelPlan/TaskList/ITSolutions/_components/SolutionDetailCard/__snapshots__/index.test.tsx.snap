@@ -363,7 +363,7 @@ exports[`SolutionDetailsCard matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="tablet:grid-col-12"
+        class="desktop:grid-col-6"
         data-testid="grid"
       >
         <div
