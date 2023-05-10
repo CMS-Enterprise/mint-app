@@ -83,7 +83,7 @@ const SelectSolutions = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const isCustomNeed = params.get('isCustomNeed');
+  const isCustomNeed = params.get('isCustomNeed') === 'true';
   const update = params.get('update');
 
   const history = useHistory();

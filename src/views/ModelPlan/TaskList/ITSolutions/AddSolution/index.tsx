@@ -73,7 +73,7 @@ const AddSolution = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const isCustomNeed = params.get('isCustomNeed');
+  const isCustomNeed = params.get('isCustomNeed') === 'true';
 
   const { modelName } = useContext(ModelInfoContext);
 

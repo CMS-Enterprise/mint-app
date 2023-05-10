@@ -58,9 +58,9 @@ const SolutionImplementation = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const fromSolutionDetails = params.get('fromSolutionDetails');
-  const isCustomNeed = params.get('isCustomNeed');
-  const updateDetails = params.get('update-details');
+  const fromSolutionDetails = params.get('fromSolutionDetails') === 'true';
+  const isCustomNeed = params.get('isCustomNeed') === 'true';
+  const updateDetails = params.get('update-details') === 'true';
 
   const history = useHistory();
 
@@ -165,11 +165,7 @@ const SolutionImplementation = () => {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {words(
-                    !!solutionId,
-                    isCustomNeed === 'true',
-                    updateDetails === 'true'
-                  )}
+                  {words(!!solutionId, isCustomNeed, updateDetails)}
                 </span>
               </Alert>
             );

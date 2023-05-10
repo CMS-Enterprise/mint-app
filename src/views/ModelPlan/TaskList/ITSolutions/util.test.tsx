@@ -95,8 +95,7 @@ describe('IT Solutions Util', () => {
       <>
         <UswdsReactLink
           to={{
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`,
-            state: { fromSolutionDetails: false }
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`
           }}
           className="margin-right-2"
         >
