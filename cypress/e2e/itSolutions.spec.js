@@ -85,8 +85,12 @@ describe('The Model Plan IT solutions tracker', () => {
       .wait(250);
 
     // Selecting other to adda custom solution
-    cy.get('#it-solutions-key').select('Other');
-    cy.get('#it-solutions-key').contains('Other');
+
+    cy.get('[data-testid="combo-box-input"]').type('other{enter}');
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="combo-box-input"]').should('have.value', 'Other');
 
     cy.get('#add-custom-solution-button').should('not.be.disabled').click();
 
@@ -206,7 +210,7 @@ describe('The Model Plan IT solutions tracker', () => {
       .wait(250);
 
     cy.get('[data-testid="alert"]').contains(
-      'Saving these selections will delete the Contractor solution page/s that is associated with this operational need.'
+      'Saving these selections will delete the following solution page(s) associated with this operational need:'
     );
 
     cy.get('#submit-solutions').should('not.be.disabled').click();
@@ -238,10 +242,16 @@ describe('The Model Plan IT solutions tracker', () => {
       .then(verifyStatus)
       .wait(250);
 
-    cy.get('#it-solutions-key')
-      .should('not.be.disabled')
-      .select('Cross-model contract')
-      .should('have.value', 'CROSS_MODEL_CONTRACT');
+    cy.get('[data-testid="combo-box-input"]').type(
+      'Cross-model contract{enter}'
+    );
+
+    cy.clickOutside();
+
+    cy.get('[data-testid="combo-box-input"]').should(
+      'have.value',
+      'Cross-model contract'
+    );
 
     cy.get('button#add-solution-details-button')
       .contains('Add solution')
@@ -267,15 +277,13 @@ describe('The Model Plan IT solutions tracker', () => {
       .should('eq', 200)
       .wait(250);
 
-    cy.get('span').contains(
-      'Success! Your operational need “My custom need” and solution are added.'
-    );
+    cy.get('span').contains('Success! Solutions added for My custom need');
 
     // Link document
     // Click to view solution details view
     cy.get('[data-testid="needs-table"] tbody tr')
       .should('have.length', 3)
-      .eq(0)
+      .eq(2)
       .within(() => {
         cy.contains('My custom need');
         cy.contains('Cross-model contract');

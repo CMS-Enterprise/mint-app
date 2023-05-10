@@ -57,7 +57,7 @@ const ITSolutionsSidebar = ({
           <Button
             type="button"
             onClick={() =>
-              window.open('/help-and-knowledge/model-plan-overview', '_blank')
+              window.open('/help-and-knowledge/operational-solutions', '_blank')
             }
             className="usa-button usa-button--unstyled line-height-body-5"
           >

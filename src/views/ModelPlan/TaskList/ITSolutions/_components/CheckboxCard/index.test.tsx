@@ -49,7 +49,7 @@ describe('IT Solutions CheckboxCard', () => {
         </MemoryRouter>
       );
 
-      const checkbox = getByRole('checkbox', { name: /select a solution/i });
+      const checkbox = getByRole('checkbox', { name: /Select this solution/i });
 
       await waitFor(() => {
         expect(checkbox).toBeChecked();

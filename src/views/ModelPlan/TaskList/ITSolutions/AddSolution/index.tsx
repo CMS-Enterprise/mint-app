@@ -13,13 +13,13 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Dropdown,
+  ComboBox,
   Fieldset,
   Grid,
   IconArrowBack,
   Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -28,6 +28,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import Spinner from 'components/Spinner';
 import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
 import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
 import GetPossibleOperationalSolutions from 'queries/ITSolutions/GetPossibleOperationalSolutions';
@@ -72,7 +73,7 @@ const AddSolution = () => {
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const isCustomNeed = params.get('isCustomNeed');
+  const isCustomNeed = params.get('isCustomNeed') === 'true';
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -100,6 +101,15 @@ const AddSolution = () => {
     skip: !operationalSolutionID,
     fetchPolicy: 'no-cache'
   });
+
+  const solutionOptions = [...possibleOperationalSolutions]
+    .sort(sortPossibleOperationalNeeds)
+    .map(solution => {
+      return {
+        label: solution.name === 'Other new process' ? 'Other' : solution.name,
+        value: solution.key
+      };
+    });
 
   // If operationalSolutionID present in url, will contain queried data for custom solution
   const customOperationalSolution =
@@ -174,7 +184,7 @@ const AddSolution = () => {
           }
         });
       }
-    } catch {
+    } catch (e) {
       setMutationError(true);
     }
 
@@ -257,7 +267,12 @@ const AddSolution = () => {
                 innerRef={formikRef}
               >
                 {(formikProps: FormikProps<OperationalSolutionFormType>) => {
-                  const { errors, handleSubmit, values } = formikProps;
+                  const {
+                    errors,
+                    handleSubmit,
+                    values,
+                    setFieldValue
+                  } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
 
@@ -305,28 +320,36 @@ const AddSolution = () => {
 
                             <FieldErrorMsg>{flatErrors.key}</FieldErrorMsg>
 
-                            <Field
-                              as={Dropdown}
-                              id="it-solutions-key"
-                              name="key"
-                              value={values.key}
-                            >
-                              <option key="default-select" disabled value="" />
-                              {[...possibleOperationalSolutions]
-                                .sort(sortPossibleOperationalNeeds)
-                                .map(solution => {
-                                  return (
-                                    <option
-                                      key={solution.key}
-                                      value={solution.key || ''}
-                                    >
-                                      {solution.name === 'Other new process'
-                                        ? 'Other'
-                                        : solution.name}
-                                    </option>
+                            {loading ? (
+                              <Spinner />
+                            ) : (
+                              <ComboBox
+                                data-test-id="plan-characteristics-existing-model"
+                                id="it-solutions-key"
+                                name="key"
+                                inputProps={{
+                                  id: 'it-solutions-key',
+                                  name: 'key',
+                                  'aria-describedby': 'it-solutions-key'
+                                }}
+                                options={solutionOptions}
+                                defaultValue={
+                                  solutionOptions.find(
+                                    solution => solution.value === values.key
+                                  )?.label
+                                }
+                                onChange={solutionKey => {
+                                  const foundSolution = solutionOptions.find(
+                                    solution => solution.value === solutionKey
                                   );
-                                })}
-                            </Field>
+                                  if (foundSolution) {
+                                    setFieldValue('key', foundSolution.value);
+                                  } else {
+                                    setFieldValue('key', '');
+                                  }
+                                }}
+                              />
+                            )}
 
                             {treatAsOtherSolutions.includes(
                               values.key as OperationalSolutionKey

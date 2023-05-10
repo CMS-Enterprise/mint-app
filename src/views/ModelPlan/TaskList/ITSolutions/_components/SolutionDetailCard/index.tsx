@@ -12,6 +12,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { formatDateUtc } from 'utils/date';
 
@@ -40,6 +41,8 @@ const SolutionDetailCard = ({
 
   const history = useHistory();
 
+  const tablet = useCheckResponsiveScreen('tablet', 'smaller');
+
   return (
     <div className={classNames('bg-base-lightest', className)}>
       <NeedQuestionAndAnswer
@@ -61,7 +64,11 @@ const SolutionDetailCard = ({
             {t('solution')}
           </p>
           <SolutionCard solution={solution} shadow />
-          <div className="margin-y-1">
+          <div
+            className={classNames('margin-y-1', {
+              'margin-bottom-4': tablet
+            })}
+          >
             <UswdsReactLink
               to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions?update=true`}
               data-testid="update-solutions-link"
@@ -73,7 +80,7 @@ const SolutionDetailCard = ({
         {!isUpdatingStatus && (
           <Grid desktop={{ col: 6 }}>
             <Grid row gap className="margin-bottom-2">
-              <Grid desktop={{ col: 6 }}>
+              <Grid mobile={{ col: 6 }}>
                 <p className="margin-0 text-bold">{t('mustStartBy')}</p>
 
                 <p className="margin-y-1">
@@ -83,7 +90,7 @@ const SolutionDetailCard = ({
                 </p>
               </Grid>
 
-              <Grid desktop={{ col: 6 }}>
+              <Grid mobile={{ col: 6 }}>
                 <p className="margin-0 text-bold">{t('mustFinishBy')}</p>
 
                 <p className="margin-y-1">
@@ -93,6 +100,7 @@ const SolutionDetailCard = ({
                 </p>
               </Grid>
             </Grid>
+
             <Grid className="margin-bottom-3">
               <p className="margin-top-0 margin-bottom-1 text-bold">
                 {t('itSolutionsTable.status')}
@@ -107,10 +115,7 @@ const SolutionDetailCard = ({
                 className="usa-button usa-button--outline"
                 onClick={() => {
                   history.push({
-                    pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/update-status/${operationalSolutionID}`,
-                    state: {
-                      fromSolutionDetails: true
-                    }
+                    pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details/${operationalSolutionID}`
                   });
                 }}
               >
