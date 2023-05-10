@@ -9,13 +9,31 @@ import { AlternativePaymentModelType, KeyCharacteristic, GeographyType, Geograph
 // GraphQL query operation: GetAllGeneralCharacteristics
 // ====================================================
 
+export interface GetAllGeneralCharacteristics_modelPlan_existingModelLinks_existingModel {
+  __typename: "ExistingModel";
+  id: number | null;
+  modelName: string | null;
+}
+
+export interface GetAllGeneralCharacteristics_modelPlan_existingModelLinks_currentModelPlan {
+  __typename: "ModelPlan";
+  id: UUID;
+  modelName: string;
+}
+
+export interface GetAllGeneralCharacteristics_modelPlan_existingModelLinks {
+  __typename: "ExistingModelLink";
+  id: UUID | null;
+  existingModel: GetAllGeneralCharacteristics_modelPlan_existingModelLinks_existingModel | null;
+  currentModelPlan: GetAllGeneralCharacteristics_modelPlan_existingModelLinks_currentModelPlan | null;
+}
+
 export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
-  resemblesExistingModelWhich: string[];
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   hasComponentsOrTracks: boolean | null;
@@ -68,6 +86,7 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
 export interface GetAllGeneralCharacteristics_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  existingModelLinks: GetAllGeneralCharacteristics_modelPlan_existingModelLinks[];
   generalCharacteristics: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics;
 }
 

@@ -42,7 +42,9 @@ const solution: GetOperationalNeedSolutionsType = {
   needed: true,
   pocName: 'John Doe',
   pocEmail: '',
-  nameOther: null
+  nameOther: null,
+  isOther: false,
+  otherHeader: null
 };
 
 export const Default = () => (

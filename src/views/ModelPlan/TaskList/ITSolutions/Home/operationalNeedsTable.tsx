@@ -175,6 +175,9 @@ const OperationalNeedsTable = ({
           GetOperationalNeedsTableType,
           OperationalNeedsSolutionsStatus
         >): string => {
+          if (!row.original.name && !row.original.nameOther) {
+            return '';
+          }
           return value.length.toString();
         }
       },

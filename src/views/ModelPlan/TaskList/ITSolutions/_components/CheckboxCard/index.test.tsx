@@ -24,7 +24,9 @@ const solution = [
     needed: true,
     pocName: 'John Doe',
     pocEmail: '',
-    nameOther: null
+    nameOther: null,
+    isOther: false,
+    otherHeader: null
   }
 ];
 

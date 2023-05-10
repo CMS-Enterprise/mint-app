@@ -36,6 +36,8 @@ const operationalNeed: GetOperationalNeedType = {
       mustStartDts: null,
       mustFinishDts: null,
       status: OpSolutionStatus.AT_RISK,
+      isOther: false,
+      otherHeader: null,
       needed: null,
       pocName: 'John Doe',
       nameOther: null
@@ -125,6 +127,8 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
         key: OperationalSolutionKey.RMADA,
         mustStartDts: null,
         mustFinishDts: null,
+        isOther: false,
+        otherHeader: '',
         status: OpSolutionStatus.AT_RISK,
         needed: true,
         pocName: 'John Doe',

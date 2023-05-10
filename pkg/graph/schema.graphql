@@ -72,6 +72,7 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
+  existingModelLinks: [ExistingModelLink!]!
 }
 
 type OperationalNeed {
@@ -154,7 +155,7 @@ type PlanCollaborator {
 ExistingModel represents a model that already exists outside of the scope of MINT
 """
 type ExistingModel {
-  id: String
+  id: Int
   modelName: String
   stage: String!
   numberOfParticipants: String
@@ -169,6 +170,22 @@ type ExistingModel {
   keywords: String
   url: String
   displayModelSummary: Boolean
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type ExistingModelLink {
+  id: UUID
+  modelPlanID: UUID!
+  existingModelID: Int
+  existingModel: ExistingModel
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -419,7 +436,6 @@ type PlanGeneralCharacteristics {
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]!
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -503,7 +519,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -1439,6 +1454,8 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   userAccount(username: String!): UserAccount!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  existingModelLink(id: UUID!): ExistingModelLink!
+  @hasAnyRole(roles:[MINT_USER, MINT_MAC])
   searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
@@ -1576,6 +1593,9 @@ updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput
 @hasRole(role: MINT_USER)
 
 deleteOperationalSolutionSubtask(id: UUID!): Int!
+@hasRole(role: MINT_USER)
+
+updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 }
 

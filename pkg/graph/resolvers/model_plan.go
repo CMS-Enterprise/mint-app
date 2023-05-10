@@ -9,6 +9,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -210,6 +211,23 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	}
 
 	return plan, nil
+}
+
+// ModelPlanGetByIDLOADER implements resolver logic to get Model Plan by a model plan ID using a data loader
+func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
+	allLoaders := loaders.Loaders(ctx)
+	planLoader := allLoaders.ModelPlanLoader
+	key := loaders.NewKeyArgs()
+	key.Args["id"] = id
+
+	thunk := planLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*models.ModelPlan), nil
 }
 
 // ModelPlanGetSampleModel returns the sample model plan

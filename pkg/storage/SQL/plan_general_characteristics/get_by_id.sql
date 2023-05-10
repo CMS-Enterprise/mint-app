@@ -4,7 +4,6 @@ SELECT
     is_new_model,
     existing_model,
     resembles_existing_model,
-    resembles_existing_model_which,
     resembles_existing_model_how,
     resembles_existing_model_note,
     has_components_or_tracks,

@@ -27,6 +27,8 @@ const needQuestionAndAnswerMock = [
           name: 'Obtain an application support contractor',
           key: OperationalNeedKey.APP_SUPPORT_CON,
           nameOther: null,
+          isOther: false,
+          otherHeader: null,
           needed: true,
           solutions: [
             {
@@ -35,6 +37,8 @@ const needQuestionAndAnswerMock = [
               name:
                 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
               key: OperationalSolutionKey.RMADA,
+              isOther: false,
+              otherHeader: null,
               pocName: null,
               pocEmail: null,
               needed: null,

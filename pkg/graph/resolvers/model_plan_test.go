@@ -2,7 +2,11 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 
@@ -141,4 +145,32 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 	suite.NoError(err)
 	suite.EqualValues(modelNames, historyDesc)
 
+}
+
+func (suite *ResolverSuite) TestModelPlanDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Plan 1")
+	plan2 := suite.createModelPlan("Plan For Plan 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyModelPlanLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyModelPlanLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	plan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != plan.ID {
+		return fmt.Errorf("model Plan returned model plan ID %s, expected %s", plan.ID, modelPlanID)
+	}
+	return nil
 }
