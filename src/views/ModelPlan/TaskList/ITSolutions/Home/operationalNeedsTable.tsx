@@ -121,12 +121,18 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.solution'),
-        accessor: ({ name, nameOther }: any) => {
+        accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
             return t('itSolutionsTable.selectSolution');
           }
-          // Resturn custom name if exists, otherwise return standard solution name
-          return nameOther || name;
+          // Resturn custom name if exists, otherwise return standard solution name plus custom name if exists
+          let solutionName = nameOther || name;
+
+          if (otherHeader) {
+            solutionName = `${solutionName} (${otherHeader})`;
+          }
+
+          return solutionName;
         },
         Cell: ({
           row,
@@ -328,6 +334,16 @@ const OperationalNeedsTable = ({
           message={t('itSolutionsTable.error.body')}
         />
       </ErrorAlert>
+    );
+  }
+
+  if (readOnly && operationalNeeds.length === 0) {
+    return (
+      <Alert heading={t('itSolutionsTable.noNeedsReadonly')} type="info">
+        {readOnly
+          ? t('itSolutionsTable.noNeedsReadonlyEditInfo')
+          : t('itSolutionsTable.noNeedsReadonlyInfo')}
+      </Alert>
     );
   }
 

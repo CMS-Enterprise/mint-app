@@ -78,6 +78,7 @@ const emptySolution = (
     __typename: 'OperationalSolution',
     id: needID,
     status: OpSolutionStatus.NOT_STARTED,
+    otherHeader: '',
     needName,
     name: '',
     mustStartDts: null,

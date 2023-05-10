@@ -85,7 +85,13 @@ describe('The Model Plan IT solutions tracker', () => {
       .wait(250);
 
     // Selecting other to adda custom solution
-    cy.get('#it-solutions-key').select('Other');
+
+    cy.get('#it-solutions-key').within(() => {
+      cy.get("input[type='text']").type('other{downArrow}{enter}');
+    });
+
+    cy.clickOutside();
+
     cy.get('#it-solutions-key').contains('Other');
 
     cy.get('#add-custom-solution-button').should('not.be.disabled').click();

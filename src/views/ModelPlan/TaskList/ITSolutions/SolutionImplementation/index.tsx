@@ -369,16 +369,26 @@ const SolutionImplementation = () => {
                           </>
                         )}
 
-                        {message && Array.isArray(message) && (
-                          <Alert type="warning" slim className="margin-top-6">
-                            {t('solutionRemoveWarning')}
-                            <ul className="padding-left-2 margin-y-1">
+                        {message &&
+                          Array.isArray(message) &&
+                          message.length > 0 && (
+                            <Alert type="warning" slim className="margin-top-6">
+                              {t('solutionRemoveWarning')}
                               {message.map(solution => (
-                                <li key={solution?.toString()}>{solution}</li>
+                                // Adding <p> instead of an unordered list here because <p> exists natively in Truss' Alert
+                                // <ul> cannot exist as a descendant of <p>
+                                <p
+                                  key={solution?.toString()}
+                                  className="margin-y-1"
+                                >
+                                  &bull;{' '}
+                                  <span className="margin-left-1">
+                                    {solution}
+                                  </span>
+                                </p>
                               ))}
-                            </ul>
-                          </Alert>
-                        )}
+                            </Alert>
+                          )}
 
                         <div className="margin-top-6 margin-bottom-3">
                           {!solutionId && (

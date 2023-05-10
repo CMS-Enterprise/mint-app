@@ -23,6 +23,7 @@ export default gql`
           needed
           nameOther
           key
+          otherHeader
           operationalSolutionSubtasks {
             id
           }

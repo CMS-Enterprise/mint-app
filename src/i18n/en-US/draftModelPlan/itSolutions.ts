@@ -71,8 +71,13 @@ const itSolutions = {
       body: 'Failed to fetch Model Plan operational needs'
     },
     noNeeds: 'There aren’t any other operational needs.',
+    noNeedsReadonly:
+      'There aren’t any operational needs that require solutions yet.',
     noNeedsInfo:
-      'If you have additional operational needs you want to track, add an operational need or IT solution below.'
+      'If you have additional operational needs you want to track, add an operational need or IT solution below.',
+    noNeedsReadonlyInfo: 'Check back again later for updates.',
+    noNeedsReadonlyEditInfo:
+      'To determine the operational needs, fill out more of the Model Plan.'
   },
   status: {
     notAnswered: 'Not answered',
