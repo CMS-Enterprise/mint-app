@@ -143,9 +143,10 @@ const SolutionImplementation = () => {
           if (!dontAdd && !redirect) {
             const words = (
               updateStatus: boolean,
-              customNeed: boolean | undefined
+              customNeed: boolean | undefined,
+              update: boolean | null
             ) => {
-              if (updateStatus && !customNeed)
+              if ((!!updateStatus || update) && !customNeed)
                 return t('successStatusUpdated', {
                   operationalNeedName:
                     operationalNeed.nameOther || operationalNeed.name
@@ -164,7 +165,11 @@ const SolutionImplementation = () => {
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {words(!!solutionId, !!isCustomNeed)}
+                  {words(
+                    !!solutionId,
+                    isCustomNeed === 'true',
+                    updateDetails === 'true'
+                  )}
                 </span>
               </Alert>
             );
