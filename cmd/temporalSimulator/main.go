@@ -32,6 +32,7 @@ func execute() {
 func init() {
 	rootCmd.AddCommand(addColumnCommand)
 	rootCmd.AddCommand(removeColumnCommand)
+	rootCmd.AddCommand(alterEnumCommand)
 }
 
 func main() {

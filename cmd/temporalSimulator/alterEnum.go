@@ -9,11 +9,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-//go:embed SQL/removeColumnFromModelPlan.sql
-var removeColumnfromModelPlanSQL string
+//go:embed SQL/alterEnum.sql
+var alterEnumSQL string
 
-var removeColumnCommand = &cobra.Command{
-	Use:   "remCol",
+var alterEnumCommand = &cobra.Command{
+	Use:   "alterEnum",
 	Short: "Remove a Column from the MINT Model Plan table",
 	Long:  `Remove a Column from the MINT Model Plan table`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -25,21 +25,20 @@ var removeColumnCommand = &cobra.Command{
 			return
 		}
 
-		response, err := remColumn(config, db)
+		response, err := alterEnum(config, db)
 		if err != nil {
 			fmt.Print("error adding column: %w", err)
 		}
 
-		fmt.Print("Hooray! you called the remove column command. Message: %w", response)
-		//NOTE, that you can't update a model plan now, because the history table still has the column, which isn't nullable.
+		fmt.Print("Hooray! you called the alter enum command. Message: %w", response)
 
 	},
 }
 
-func remColumn(config *viper.Viper, db *sqlx.DB) (*string, error) {
+func alterEnum(config *viper.Viper, db *sqlx.DB) (*string, error) {
 
 	nilArg := map[string]interface{}{}
-	msg, err := executeProcedure(config, db, removeColumnfromModelPlanSQL, nilArg)
+	msg, err := executeProcedure(config, db, alterEnumSQL, nilArg)
 	if err != nil {
 		return msg, err
 	}

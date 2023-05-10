@@ -1,2 +1,2 @@
 ALTER TABLE model_plan
-DROP COLUMN STATUS ;
+DROP COLUMN archived;
