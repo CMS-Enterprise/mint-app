@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/storage"
 
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )

@@ -5,15 +5,18 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/jmoiron/sqlx"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/cmsgov/mint-app/pkg/appconfig"
 )
 
 //go:embed SQL/addColumnToModelPlan.sql
 var addColumnToModelPlanSQL string
+
+//go:embed SQL/addColumnToModelPlanHistory.sql
+var addColumnToModelPlanHistorySQL string
 
 var addColumnCommand = &cobra.Command{
 	Use:   "addCol",
@@ -22,13 +25,65 @@ var addColumnCommand = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()
-		fmt.Print("Hooray! you called the add column command")
+		db, err := NewDefaultDB(config)
+		if err != nil {
+			fmt.Print("error making DB %w", err)
+			return
+		}
+
+		response, err := addColumn(config, db)
+		if err != nil {
+			fmt.Print("error adding column: %w", err)
+		}
+
+		fmt.Print("Hooray! you called the add column command. Message: %w", response)
 
 	},
 }
 
-func addColumn(config *viper.Viper, s *storage.Store) (*string, error) {
+func addColumn(config *viper.Viper, db *sqlx.DB) (*string, error) {
 
+	nilArg := map[string]interface{}{}
+	msg, err := executeProcedure(config, db, addColumnToModelPlanSQL, nilArg)
+	if err != nil {
+		return msg, err
+	}
+
+	msg, err = executeProcedure(config, db, addColumnToModelPlanHistorySQL, nilArg)
+	if err != nil {
+		return msg, err
+	}
+
+	// statement, err := db.PrepareNamed(addColumnToModelPlanSQL)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("error preparing statement: %w", err)
+	// }
+	// _, err = statement.Exec(map[string]interface{}{})
+	// if err != nil {
+	// 	return nil, fmt.Errorf("error adding column to db: %w", err)
+	// }
+
+	return msg, nil
+
+}
+
+func executeProcedure(config *viper.Viper, db *sqlx.DB, query string, args map[string]interface{}) (*string, error) {
+
+	statement, err := db.PrepareNamed(query)
+	if err != nil {
+		return nil, fmt.Errorf("error preparing statement: %w", err)
+	}
+	_, err = statement.Exec(map[string]interface{}{})
+	if err != nil {
+		return nil, fmt.Errorf("error executing statement: %w", err)
+	}
+
+	msg := "success"
+	return &msg, nil
+
+}
+
+func NewDefaultDB(config *viper.Viper) (*sqlx.DB, error) {
 	dbConfig := DBConfig{
 		Host:           config.GetString(appconfig.DBHostConfigKey),
 		Port:           config.GetString(appconfig.DBPortConfigKey),
@@ -38,22 +93,7 @@ func addColumn(config *viper.Viper, s *storage.Store) (*string, error) {
 		SSLMode:        config.GetString(appconfig.DBSSLModeConfigKey),
 		MaxConnections: config.GetInt(appconfig.DBMaxConnections),
 	}
-
-	db, err := NewDB(dbConfig)
-	if err != nil {
-		return nil, fmt.Errorf("error making db: %w", err)
-	}
-
-	statement, err := db.PrepareNamed(addColumnToModelPlanSQL)
-	if err != nil {
-		return nil, fmt.Errorf("error preparing statement: %w", err)
-	}
-	_, err = statement.Exec(nil)
-	if err != nil {
-		return nil, fmt.Errorf("Error adding column to db: %w", err)
-	}
-
-	return nil, nil
+	return NewDB(dbConfig)
 
 }
 

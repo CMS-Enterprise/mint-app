@@ -122,6 +122,14 @@ func (s *Seeder) SeedData() {
 		"clearanceStarts": time.Now(),
 		"highLevelNote":   "Some high level note",
 	})
+
+	s.updatePlanBasics(planWithBasics, map[string]interface{}{
+		"modelType": models.MTMandatory,
+		"goal":      "Some new goal",
+	})
+	s.updateModelPlan(planWithBasics, map[string]interface{}{
+		"status": models.ModelStatusHhsClearance,
+	})
 	s.existingModelLinkCreate(planWithBasics, []int{links[3].ID, links[4].ID}, nil)
 
 	// Seed a plan with collaborators
@@ -239,4 +247,11 @@ func (s *Seeder) SeedData() {
 			},
 		},
 	)
+
+	badUpdatePlan := s.createModelPlan("Plan with a lot of empty updates", "MINT")
+	s.updateModelPlan(badUpdatePlan, map[string]interface{}{})
+	s.updateModelPlan(badUpdatePlan, map[string]interface{}{})
+	s.updateModelPlan(badUpdatePlan, map[string]interface{}{})
+	s.updateModelPlan(badUpdatePlan, map[string]interface{}{})
+
 }
