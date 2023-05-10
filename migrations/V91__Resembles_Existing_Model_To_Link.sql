@@ -27,6 +27,7 @@ SELECT
     matchedLinks.existing_model_id,
     matchedLinks.current_model_plan_id,
     matchedLinks.created_by
-FROM matchedLinks;
+FROM matchedLinks
+WHERE (matchedLinks.current_model_plan_id IS NOT NULL OR matchedLinks.existing_model_id IS NOT NULL);
 
 ALTER TABLE plan_general_characteristics DROP COLUMN resembles_existing_model_which;
