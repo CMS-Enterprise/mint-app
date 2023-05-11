@@ -30,7 +30,7 @@ possibleSolution AS (
         COALESCE(OpSol.created_dts, CURRENT_TIMESTAMP) AS created_dts,
         OpSol.modified_by,
         OpSol.modified_dts,
-        TRUE AS is_common_solution
+        TRUE AS is_common_solution -- Linked Possible Solutions are always a common solution
     FROM QUERIED_IDS AS qID
     INNER JOIN operational_need AS OpNd ON OpNd.id = qID.operational_need_id
     INNER JOIN possible_need_solution_link AS PNSL ON PNSL.need_type = OpNd.need_type
@@ -63,7 +63,7 @@ resultSet AS (
         OpSol.created_dts,
         OpSol.modified_by,
         OpSol.modified_dts,
-        PNSL.id IS NOT NULL AS is_common_solution
+        PNSL.id IS NOT NULL AS is_common_solution -- A Common Solution is a solution that is linked as a possible solution for an operational need
 
     FROM QUERIED_IDS AS qID
     INNER JOIN operational_solution AS OpSol ON OpSol.operational_need_id = qID.operational_need_id
