@@ -175,7 +175,7 @@ const AddCustomSolution = () => {
                 ? selectedSolution
                 : null,
             changes: {
-              needed: customOperationalSolution.needed,
+              needed: true,
               nameOther: nameOther ?? null,
               otherHeader: otherHeader ?? null,
               status: OpSolutionStatus.NOT_STARTED,
