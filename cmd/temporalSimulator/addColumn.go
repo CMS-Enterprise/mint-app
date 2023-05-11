@@ -41,7 +41,7 @@ var addColumnCommand = &cobra.Command{
 	},
 }
 
-func addColumn(config *viper.Viper, db *sqlx.DB) (*string, error) {
+func addColumn(config *viper.Viper, db *sqlx.DB) (string, error) {
 
 	nilArg := map[string]interface{}{}
 	msg, err := executeProcedure(config, db, addColumnToModelPlanSQL, nilArg)
@@ -54,35 +54,27 @@ func addColumn(config *viper.Viper, db *sqlx.DB) (*string, error) {
 		return msg, err
 	}
 
-	// statement, err := db.PrepareNamed(addColumnToModelPlanSQL)
-	// if err != nil {
-	// 	return nil, fmt.Errorf("error preparing statement: %w", err)
-	// }
-	// _, err = statement.Exec(map[string]interface{}{})
-	// if err != nil {
-	// 	return nil, fmt.Errorf("error adding column to db: %w", err)
-	// }
-
 	return msg, nil
 
 }
 
-func executeProcedure(config *viper.Viper, db *sqlx.DB, query string, args map[string]interface{}) (*string, error) {
+func executeProcedure(config *viper.Viper, db *sqlx.DB, query string, args map[string]interface{}) (string, error) {
 
 	statement, err := db.PrepareNamed(query)
 	if err != nil {
-		return nil, fmt.Errorf("error preparing statement: %w", err)
+		return "error", fmt.Errorf("error preparing statement: %w", err)
 	}
 	_, err = statement.Exec(map[string]interface{}{})
 	if err != nil {
-		return nil, fmt.Errorf("error executing statement: %w", err)
+		return "error", fmt.Errorf("error executing statement: %w", err)
 	}
 
 	msg := "success"
-	return &msg, nil
+	return msg, nil
 
 }
 
+// NewDefaultDB creates a sqlx.DB using the config keys stores in the Environment Variables.
 func NewDefaultDB(config *viper.Viper) (*sqlx.DB, error) {
 	dbConfig := DBConfig{
 		Host:           config.GetString(appconfig.DBHostConfigKey),
@@ -97,8 +89,8 @@ func NewDefaultDB(config *viper.Viper) (*sqlx.DB, error) {
 
 }
 
+// NewDB returns a sqlx.DB using a DBconfig to specify the parameters needed
 func NewDB(config DBConfig) (*sqlx.DB, error) {
-	// LifecycleIDs are generated based on Eastern Time
 
 	var db *sqlx.DB
 	var err error
@@ -106,7 +98,7 @@ func NewDB(config DBConfig) (*sqlx.DB, error) {
 		// Connect using the IAM DB package
 		sess := session.Must(session.NewSession())
 		db = newConnectionPoolWithIam(sess, config)
-		err := db.Ping()
+		err = db.Ping()
 		if err != nil {
 			return nil, err
 		}

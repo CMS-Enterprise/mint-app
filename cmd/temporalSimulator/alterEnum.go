@@ -30,12 +30,12 @@ var alterEnumCommand = &cobra.Command{
 			fmt.Print("error adding column: %w", err)
 		}
 
-		fmt.Print("Hooray! you called the alter enum command. Message: %w", response)
+		fmt.Printf("Hooray! you called the alter enum command. Message: %s", response)
 
 	},
 }
 
-func alterEnum(config *viper.Viper, db *sqlx.DB) (*string, error) {
+func alterEnum(config *viper.Viper, db *sqlx.DB) (string, error) {
 
 	nilArg := map[string]interface{}{}
 	msg, err := executeProcedure(config, db, alterEnumSQL, nilArg)
