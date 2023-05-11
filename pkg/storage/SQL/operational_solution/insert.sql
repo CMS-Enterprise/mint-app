@@ -68,7 +68,7 @@ SELECT
     retVal.created_dts,
     retVal.modified_by,
     retVal.modified_dts,
-    PNSL.id IS NOT NULL AS is_common_solution
+    PNSL.id IS NOT NULL AS is_common_solution -- A Common Solution is a solution that is linked as a possible solution for an operational need
 
 FROM retVal
 LEFT JOIN possible_operational_solution AS pos ON pos.id = retVal.solution_type
