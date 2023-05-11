@@ -14,8 +14,8 @@ var alterEnumSQL string
 
 var alterEnumCommand = &cobra.Command{
 	Use:   "alterEnum",
-	Short: "Remove a Column from the MINT Model Plan table",
-	Long:  `Remove a Column from the MINT Model Plan table`,
+	Short: "Adds a value to MODEL_PLAN_STATUS enum which is used in MINT Model Plan table",
+	Long:  `Adds a value to MODEL_PLAN_STATUS enum which is used in MINT Model Plan table`,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()
