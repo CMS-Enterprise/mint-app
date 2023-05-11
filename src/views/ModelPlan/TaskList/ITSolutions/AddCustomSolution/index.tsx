@@ -65,6 +65,7 @@ type CustomOperationalSolutionFormType = Omit<
   | 'mustStartDts'
   | 'operationalSolutionSubtasks'
   | 'isOther'
+  | 'isCommonSolution'
 >;
 
 const initialValues: CustomOperationalSolutionFormType = {

@@ -12,6 +12,7 @@ export default gql`
       pocEmail
       status
       isOther
+      isCommonSolution
       otherHeader
       mustFinishDts
       mustStartDts

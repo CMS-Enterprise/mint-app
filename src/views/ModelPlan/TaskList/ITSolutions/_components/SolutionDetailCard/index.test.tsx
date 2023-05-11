@@ -27,6 +27,7 @@ const solution: GetOperationalSolutionType = {
   pocEmail: 'john.mint@oddball.io',
   needed: true,
   isOther: false,
+  isCommonSolution: true,
   otherHeader: null,
   nameOther: null,
   status: OpSolutionStatus.IN_PROGRESS,

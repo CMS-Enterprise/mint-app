@@ -220,15 +220,13 @@ const SolutionImplementation = () => {
   const statusBreadcrumb = (): string => {
     if (updateDetails) return t('updateSolutions');
     if (solutionId) return t('updateStatus');
-    if (updateDetails) return t('selectSolution');
-    return '';
+    return t('selectSolution');
   };
 
   const statusText = (): string => {
     if (updateDetails) return t('updateDetails');
     if (solutionId) return t('updateStatus');
-    if (updateDetails) return t('selectSolution');
-    return '';
+    return t('selectSolution');
   };
 
   const breadcrumbs = [
