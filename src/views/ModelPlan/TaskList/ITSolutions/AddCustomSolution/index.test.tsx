@@ -35,6 +35,7 @@ const returnMockedData = (results: boolean) => {
             pocEmail: results ? 'j.doe@oddball.io' : '',
             nameOther: 'My custom solution',
             isOther: false,
+            isCommonSolution: true,
             otherHeader: null,
             status: OpSolutionStatus.COMPLETED,
             documents: [],
