@@ -238,7 +238,7 @@ const SolutionCard = ({
                       className="text-red"
                       to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
                         solution.id
-                      }?remove-details=true&selectedSolution=${
+                      }?selectedSolution=${
                         solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
                       }`}
                     >

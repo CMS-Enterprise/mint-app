@@ -70,26 +70,6 @@ const initialValues: CustomOperationalSolutionFormType = {
   needed: false
 };
 
-// Used to clear pocName and pocEmail on page load if redirected from remove detail link
-const clearFields = (
-  removeDetails: boolean,
-  customSolution:
-    | GetOperationalSolutionOperationalSolutionType
-    | CustomOperationalSolutionFormType
-) => {
-  if (removeDetails) {
-    return {
-      nameOther: customSolution.nameOther,
-      otherHeader: null,
-      pocName: '',
-      pocEmail: '',
-      documents: [],
-      needed: customSolution.needed
-    };
-  }
-  return customSolution;
-};
-
 const AddCustomSolution = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
@@ -105,9 +85,6 @@ const AddCustomSolution = () => {
   const selectedSolution = params.get(
     'selectedSolution'
   ) as OperationalSolutionKey;
-
-  // Query variable to trigger removal of pocName and pocEmail
-  const removeDetails = params.get('removeDetails') === 'true';
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -134,12 +111,7 @@ const AddCustomSolution = () => {
     skip: !operationalSolutionID
   });
 
-  // Returns either existing custom soluton data, empty custom solution, or
-  // details removed from existing custom soluton
-  const customOperationalSolution = clearFields(
-    removeDetails,
-    data?.operationalSolution || initialValues
-  );
+  const customOperationalSolution = data?.operationalSolution || initialValues;
 
   const [createSolution] = useMutation<
     CreateOperationalSolutionType,
