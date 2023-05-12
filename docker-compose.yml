@@ -179,15 +179,26 @@ services:
       discovery.seed_hosts: logstash
       LS_JAVA_OPTS: "-Xms1024m -Xmx1024m"
       xpack.monitoring.enabled: false
+      path.settings: "/usr/share/logstash/config"
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
         max-file: "3"
     volumes:
-      - ./config/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
-      - ./config/logstash/logstash.conf:/usr/share/logstash/logstash.config
-      - ./config/logstash/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
+        # Postgres JDBC Driver
+      - ./config/logstash/connectors/postgresql-42.6.0.jar:/usr/share/logstash/connectors/postgresql-42.6.0.jar
+
+        # Logstash Config
+      - ./config/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+
+        # Change Table
+      - ./config/logstash/pipeline/change_table/settings.conf:/usr/share/logstash/pipeline/change_table/settings.conf
+      - ./config/logstash/pipeline/change_table/ingest.sql:/usr/share/logstash/pipeline/change_table/ingest.sql
+
+        # Temporal Table
+      - ./config/logstash/pipeline/temporal_table/settings.conf:/usr/share/logstash/pipeline/temporal_table/settings.conf
+      - ./config/logstash/pipeline/temporal_table/ingest.sql:/usr/share/logstash/pipeline/temporal_table/ingest.sql
     ports:
       - "9600:9600"
     depends_on:
@@ -195,7 +206,7 @@ services:
     command: >
       bash -c "
         logstash-plugin install logstash-output-opensearch;
-        logstash -f /usr/share/logstash/logstash.config
+        logstash
       "
 
 volumes:
