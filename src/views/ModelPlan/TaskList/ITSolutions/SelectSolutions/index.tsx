@@ -196,7 +196,7 @@ const SelectSolutions = () => {
       text: t('solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
     },
-    { text: update ? t('updateStatus') : t('selectSolution') }
+    { text: update ? t('updateSolutions') : t('selectSolution') }
   ];
 
   if (error) {

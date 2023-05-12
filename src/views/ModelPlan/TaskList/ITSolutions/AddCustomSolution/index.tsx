@@ -14,6 +14,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -47,13 +48,6 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-type SelectedOpertionalSolutionKeyType =
-  | OperationalSolutionKey.CONTRACTOR
-  | OperationalSolutionKey.CROSS_MODEL_CONTRACT
-  | OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS
-  | OperationalSolutionKey.INTERNAL_STAFF
-  | OperationalSolutionKey.OTHER_NEW_PROCESS;
-
 type CustomOperationalSolutionFormType = Omit<
   GetOperationalSolutionOperationalSolutionType,
   | '__typename'
@@ -77,26 +71,6 @@ const initialValues: CustomOperationalSolutionFormType = {
   needed: false
 };
 
-// Used to clear pocName and pocEmail on page load if redirected from remove detail link
-const clearFields = (
-  removeDetails: boolean,
-  customSolution:
-    | GetOperationalSolutionOperationalSolutionType
-    | CustomOperationalSolutionFormType
-) => {
-  if (removeDetails) {
-    return {
-      nameOther: customSolution.nameOther,
-      otherHeader: null,
-      pocName: '',
-      pocEmail: '',
-      documents: [],
-      needed: customSolution.needed
-    };
-  }
-  return customSolution;
-};
-
 const AddCustomSolution = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
     modelID: string;
@@ -104,16 +78,14 @@ const AddCustomSolution = () => {
     operationalSolutionID?: string;
   }>();
 
-  const { state } = useLocation<{
-    selectedSolution?: SelectedOpertionalSolutionKeyType;
-  }>();
-
-  const selectedSolution = state?.selectedSolution;
-
-  // Hash variable to trigger removal of pocName and pocEmail
-  const removeDetails = useLocation().hash === '#remove-details';
-
   const history = useHistory();
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const selectedSolution = params.get(
+    'selectedSolution'
+  ) as OperationalSolutionKey;
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -140,12 +112,7 @@ const AddCustomSolution = () => {
     skip: !operationalSolutionID
   });
 
-  // Returns either existing custom soluton data, empty custom solution, or
-  // details removed from existing custom soluton
-  const customOperationalSolution = clearFields(
-    removeDetails,
-    data?.operationalSolution || initialValues
-  );
+  const customOperationalSolution = data?.operationalSolution || initialValues;
 
   const [createSolution] = useMutation<
     CreateOperationalSolutionType,
@@ -276,199 +243,209 @@ const AddCustomSolution = () => {
 
           <Grid gap>
             <Grid tablet={{ col: 8 }}>
-              <Formik
-                initialValues={customOperationalSolution}
-                onSubmit={values => {
-                  handleFormSubmit(values);
-                }}
-                enableReinitialize
-                innerRef={formikRef}
-              >
-                {(
-                  formikProps: FormikProps<CustomOperationalSolutionFormType>
-                ) => {
-                  const { errors, handleSubmit, values } = formikProps;
+              {loading ? (
+                <PageLoading />
+              ) : (
+                <Formik
+                  initialValues={customOperationalSolution}
+                  onSubmit={values => {
+                    handleFormSubmit(values);
+                  }}
+                  enableReinitialize
+                  innerRef={formikRef}
+                >
+                  {(
+                    formikProps: FormikProps<CustomOperationalSolutionFormType>
+                  ) => {
+                    const { errors, handleSubmit, values } = formikProps;
 
-                  const flatErrors = flattenErrors(errors);
-                  return (
-                    <>
-                      {Object.keys(errors).length > 0 && (
-                        <ErrorAlert
-                          testId="formik-validation-errors"
-                          classNames="margin-top-3"
-                          heading={h('checkAndFix')}
-                        >
-                          {Object.keys(flatErrors).map(key => {
-                            return (
-                              <ErrorAlertMessage
-                                key={`Error.${key}`}
-                                errorKey={key}
-                                message={flatErrors[key]}
-                              />
-                            );
-                          })}
-                        </ErrorAlert>
-                      )}
-
-                      <Form
-                        data-testid="it-solutions-add-solution"
-                        onSubmit={e => {
-                          handleSubmit(e);
-                        }}
-                      >
-                        {selectedSolution && (
-                          <h3 className="margin-top-6 margin-bottom-0">
-                            {t('selectedSectionHeading')}{' '}
-                            {translateOperationalSolutionKey(selectedSolution)}
-                          </h3>
+                    const flatErrors = flattenErrors(errors);
+                    return (
+                      <>
+                        {Object.keys(errors).length > 0 && (
+                          <ErrorAlert
+                            testId="formik-validation-errors"
+                            classNames="margin-top-3"
+                            heading={h('checkAndFix')}
+                          >
+                            {Object.keys(flatErrors).map(key => {
+                              return (
+                                <ErrorAlertMessage
+                                  key={`Error.${key}`}
+                                  errorKey={key}
+                                  message={flatErrors[key]}
+                                />
+                              );
+                            })}
+                          </ErrorAlert>
                         )}
-                        <Fieldset disabled={loading}>
-                          {selectedSolution ===
-                            OperationalSolutionKey.OTHER_NEW_PROCESS ||
-                          selectedSolution === null ? (
-                            <FieldGroup
-                              scrollElement="nameOther"
-                              error={!!flatErrors.nameOther}
-                              className="margin-top-3"
-                            >
-                              <Label htmlFor="it-solution-custom-name-other">
-                                {t('solutionName')}
-                                <RequiredAsterisk />
-                              </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.nameOther}
-                              </FieldErrorMsg>
-
-                              <Field
-                                as={TextInput}
-                                error={!!flatErrors.nameOther}
-                                id="it-solution-custom-name-other"
-                                data-testid="it-solution-custom-name-other"
-                                maxLength={50}
-                                name="nameOther"
-                                value={values.nameOther || ''}
-                              />
-                            </FieldGroup>
-                          ) : (
-                            <FieldGroup
-                              scrollElement="otherHeader"
-                              error={!!flatErrors.otherHeader}
-                              className="margin-top-3"
-                            >
-                              <Label htmlFor="it-solution-other-header">
-                                {/* Other Header */}
-                                {t('solutionName')}
-                                <RequiredAsterisk />
-                              </Label>
-
-                              <FieldErrorMsg>
-                                {flatErrors.otherHeader}
-                              </FieldErrorMsg>
-
-                              <Field
-                                as={TextInput}
-                                error={!!flatErrors.otherHeader}
-                                id="it-solution-other-header"
-                                data-testid="it-solution-other-header"
-                                maxLength={50}
-                                name="otherHeader"
-                                value={values.otherHeader || ''}
-                              />
-                            </FieldGroup>
+                        <Form
+                          data-testid="it-solutions-add-solution"
+                          onSubmit={e => {
+                            handleSubmit(e);
+                          }}
+                        >
+                          {selectedSolution && (
+                            <h3 className="margin-top-6 margin-bottom-0">
+                              {t('selectedSectionHeading')}{' '}
+                              {translateOperationalSolutionKey(
+                                selectedSolution
+                              )}
+                            </h3>
                           )}
+                          <Fieldset disabled={loading}>
+                            {selectedSolution ===
+                              OperationalSolutionKey.OTHER_NEW_PROCESS ||
+                            selectedSolution === null ? (
+                              <FieldGroup
+                                scrollElement="nameOther"
+                                error={!!flatErrors.nameOther}
+                                className="margin-top-3"
+                              >
+                                <Label htmlFor="it-solution-custom-name-other">
+                                  {t('solutionName')}
+                                  <RequiredAsterisk />
+                                </Label>
 
-                          <FieldGroup
-                            scrollElement="pocName"
-                            error={!!flatErrors.pocName}
-                            className="margin-top-3"
-                          >
-                            <Label htmlFor="it-solution-custom-poc-name">
-                              {t('solutionPOC')}
-                            </Label>
+                                <FieldErrorMsg>
+                                  {flatErrors.nameOther}
+                                </FieldErrorMsg>
 
-                            <p className="margin-bottom-1">
-                              {t('solutionPOCInfo')}
-                            </p>
+                                <Field
+                                  as={TextInput}
+                                  error={!!flatErrors.nameOther}
+                                  id="it-solution-custom-name-other"
+                                  data-testid="it-solution-custom-name-other"
+                                  maxLength={50}
+                                  name="nameOther"
+                                  value={values.nameOther || ''}
+                                />
+                              </FieldGroup>
+                            ) : (
+                              <FieldGroup
+                                scrollElement="otherHeader"
+                                error={!!flatErrors.otherHeader}
+                                className="margin-top-3"
+                              >
+                                <Label htmlFor="it-solution-other-header">
+                                  {/* Other Header */}
+                                  {t('solutionName')}
+                                  <RequiredAsterisk />
+                                </Label>
 
-                            <FieldErrorMsg>{flatErrors.pocName}</FieldErrorMsg>
+                                <FieldErrorMsg>
+                                  {flatErrors.otherHeader}
+                                </FieldErrorMsg>
 
-                            <Field
-                              as={TextInput}
+                                <Field
+                                  as={TextInput}
+                                  error={!!flatErrors.otherHeader}
+                                  id="it-solution-other-header"
+                                  data-testid="it-solution-other-header"
+                                  maxLength={50}
+                                  name="otherHeader"
+                                  value={values.otherHeader || ''}
+                                />
+                              </FieldGroup>
+                            )}
+
+                            <FieldGroup
+                              scrollElement="pocName"
                               error={!!flatErrors.pocName}
-                              id="it-solution-custom-poc-name"
-                              data-testid="it-solution-custom-poc-name"
-                              maxLength={50}
-                              name="pocName"
-                              value={values.pocName || ''}
-                            />
-                          </FieldGroup>
-
-                          <FieldGroup
-                            scrollElement="pocEmail"
-                            error={!!flatErrors.pocEmail}
-                            className="margin-top-3"
-                          >
-                            <Label
-                              htmlFor="it-solution-custom-poc-email"
-                              className="text-normal"
+                              className="margin-top-3"
                             >
-                              {t('solutionEmailInfo')}
-                            </Label>
+                              <Label htmlFor="it-solution-custom-poc-name">
+                                {t('solutionPOC')}
+                              </Label>
 
-                            <FieldErrorMsg>{flatErrors.pocEmail}</FieldErrorMsg>
+                              <p className="margin-bottom-1">
+                                {t('solutionPOCInfo')}
+                              </p>
 
-                            <Field
-                              as={TextInput}
+                              <FieldErrorMsg>
+                                {flatErrors.pocName}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors.pocName}
+                                id="it-solution-custom-poc-name"
+                                data-testid="it-solution-custom-poc-name"
+                                maxLength={50}
+                                name="pocName"
+                                value={values.pocName || ''}
+                              />
+                            </FieldGroup>
+
+                            <FieldGroup
+                              scrollElement="pocEmail"
                               error={!!flatErrors.pocEmail}
-                              id="it-solution-custom-poc-email"
-                              data-testid="it-solution-custom-poc-email"
-                              maxLength={50}
-                              name="pocEmail"
-                              value={values.pocEmail || ''}
-                            />
-                          </FieldGroup>
-
-                          <div className="margin-top-6 margin-bottom-3">
-                            <Button
-                              type="submit"
-                              className="margin-bottom-1"
-                              id="submit-custom-solution"
-                              disabled={
-                                selectedSolution ===
-                                  OperationalSolutionKey.OTHER_NEW_PROCESS ||
-                                selectedSolution === null
-                                  ? !values.nameOther
-                                  : !values.otherHeader
-                              }
+                              className="margin-top-3"
                             >
-                              {operationalSolutionID
-                                ? t('updateSolutionDetails')
-                                : t('addSolutionDetails')}
-                            </Button>
-                          </div>
+                              <Label
+                                htmlFor="it-solution-custom-poc-email"
+                                className="text-normal"
+                              >
+                                {t('solutionEmailInfo')}
+                              </Label>
 
-                          <Button
-                            type="button"
-                            className="usa-button usa-button--unstyled display-flex flex-align-center"
-                            onClick={() => {
-                              history.goBack();
-                            }}
-                          >
-                            <IconArrowBack
-                              className="margin-right-1"
-                              aria-hidden
-                            />
-                            {operationalSolutionID
-                              ? t('dontUpdateSolution')
-                              : t('dontAddSolution')}
-                          </Button>
-                        </Fieldset>
-                      </Form>
-                    </>
-                  );
-                }}
-              </Formik>
+                              <FieldErrorMsg>
+                                {flatErrors.pocEmail}
+                              </FieldErrorMsg>
+
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors.pocEmail}
+                                id="it-solution-custom-poc-email"
+                                data-testid="it-solution-custom-poc-email"
+                                maxLength={50}
+                                name="pocEmail"
+                                value={values.pocEmail || ''}
+                              />
+                            </FieldGroup>
+
+                            <div className="margin-top-6 margin-bottom-3">
+                              <Button
+                                type="submit"
+                                className="margin-bottom-1"
+                                id="submit-custom-solution"
+                                disabled={
+                                  selectedSolution ===
+                                    OperationalSolutionKey.OTHER_NEW_PROCESS ||
+                                  selectedSolution === null
+                                    ? !values.nameOther
+                                    : !values.otherHeader
+                                }
+                              >
+                                {operationalSolutionID
+                                  ? t('updateSolutionDetails')
+                                  : t('addSolutionDetails')}
+                              </Button>
+                            </div>
+
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--unstyled display-flex flex-align-center"
+                              onClick={() => {
+                                history.goBack();
+                              }}
+                            >
+                              <IconArrowBack
+                                className="margin-right-1"
+                                aria-hidden
+                              />
+                              {operationalSolutionID
+                                ? t('dontUpdateSolution')
+                                : t('dontAddSolution')}
+                            </Button>
+                          </Fieldset>
+                        </Form>
+                      </>
+                    );
+                  }}
+                </Formik>
+              )}
             </Grid>
           </Grid>
         </Grid>
