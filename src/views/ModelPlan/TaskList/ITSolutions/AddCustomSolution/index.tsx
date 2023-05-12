@@ -97,10 +97,17 @@ const AddCustomSolution = () => {
     operationalSolutionID?: string;
   }>();
 
-  // Hash variable to trigger removal of pocName and pocEmail
-  const removeDetails = useLocation().hash === '#remove-details';
-
   const history = useHistory();
+
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const selectedSolution = params.get(
+    'selectedSolution'
+  ) as OperationalSolutionKey;
+
+  // Query variable to trigger removal of pocName and pocEmail
+  const removeDetails = params.get('removeDetails') === 'true';
 
   const { t } = useTranslation('itSolutions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -126,8 +133,6 @@ const AddCustomSolution = () => {
     },
     skip: !operationalSolutionID
   });
-
-  const selectedSolution = data?.operationalSolution.key;
 
   // Returns either existing custom soluton data, empty custom solution, or
   // details removed from existing custom soluton

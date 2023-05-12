@@ -361,7 +361,7 @@ const AddSolution = () => {
                                   className="usa-button usa-button--outline margin-top-3"
                                   onClick={() => {
                                     history.push(
-                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
                                     );
                                   }}
                                 >
