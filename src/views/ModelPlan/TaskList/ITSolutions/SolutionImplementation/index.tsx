@@ -48,11 +48,7 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-const SolutionImplementation = ({
-  isUpdatingStatus = false
-}: {
-  isUpdatingStatus?: boolean;
-}) => {
+const SolutionImplementation = () => {
   const { modelID, operationalNeedID, solutionId } = useParams<{
     modelID: string;
     operationalNeedID: string;
@@ -62,8 +58,9 @@ const SolutionImplementation = ({
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
-  const fromSolutionDetails = params.get('fromSolutionDetails');
-  const isCustomNeed = params.get('isCustomNeed');
+  const fromSolutionDetails = params.get('fromSolutionDetails') === 'true';
+  const isCustomNeed = params.get('isCustomNeed') === 'true';
+  const updateDetails = params.get('update-details') === 'true';
 
   const history = useHistory();
 
@@ -146,25 +143,29 @@ const SolutionImplementation = ({
           if (!dontAdd && !redirect) {
             const words = (
               updateStatus: boolean,
-              customNeed: boolean | undefined
+              customNeed: boolean | undefined,
+              update: boolean | null
             ) => {
-              if (updateStatus && !customNeed)
+              if ((!!updateStatus || update) && !customNeed)
                 return t('successStatusUpdated', {
-                  operationalNeedName: operationalNeed.name
+                  operationalNeedName:
+                    operationalNeed.nameOther || operationalNeed.name
                 });
               if (!updateStatus && !customNeed)
                 return t('successSolutionAdded', {
-                  operationalNeedName: operationalNeed.name
+                  operationalNeedName:
+                    operationalNeed.nameOther || operationalNeed.name
                 });
               return t('successMessage.operationalNeedAndSolution', {
-                operationalNeedName: operationalNeed.nameOther
+                operationalNeedName:
+                  operationalNeed.nameOther || operationalNeed.name
               });
             };
 
             showMessageOnNextPage(
               <Alert type="success" slim className="margin-y-4">
                 <span className="mandatory-fields-alert__text">
-                  {words(isUpdatingStatus, !!isCustomNeed)}
+                  {words(!!solutionId, isCustomNeed, updateDetails)}
                 </span>
               </Alert>
             );
@@ -197,23 +198,37 @@ const SolutionImplementation = ({
   }
 
   const renderCancelCopy = () => {
-    if (isUpdatingStatus && fromSolutionDetails) {
+    if (!!solutionId && fromSolutionDetails) {
       return t('dontUpdateandReturnToSolutionDetails');
     }
-    if (isUpdatingStatus) {
+    if (solutionId) {
       return t('dontUpdateandReturnToTracker');
     }
     return t('dontAdd');
   };
 
   const handleCancelClick = (values: GetOperationalNeedOperationalNeedType) => {
-    if (isUpdatingStatus && fromSolutionDetails) {
+    if (!!solutionId && fromSolutionDetails) {
       return history.goBack();
     }
-    if (isUpdatingStatus) {
+    if (solutionId) {
       return history.push(`/models/${modelID}/task-list/it-solutions`);
     }
     return handleFormSubmit(values, null, true);
+  };
+
+  const statusBreadcrumb = (): string => {
+    if (updateDetails) return t('updateSolutions');
+    if (solutionId) return t('updateStatus');
+    if (updateDetails) return t('selectSolution');
+    return '';
+  };
+
+  const statusText = (): string => {
+    if (updateDetails) return t('updateDetails');
+    if (solutionId) return t('updateStatus');
+    if (updateDetails) return t('selectSolution');
+    return '';
   };
 
   const breadcrumbs = [
@@ -224,7 +239,7 @@ const SolutionImplementation = ({
       text: t('solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
     },
-    { text: isUpdatingStatus ? t('updateStatus') : t('selectSolution') }
+    { text: statusBreadcrumb() }
   ];
 
   const formikNeed = { ...operationalNeed };
@@ -239,7 +254,7 @@ const SolutionImplementation = ({
     <>
       <Breadcrumbs
         items={
-          fromSolutionDetails
+          fromSolutionDetails || updateDetails
             ? breadcrumbs
             : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
         }
@@ -254,9 +269,7 @@ const SolutionImplementation = ({
       <Grid row gap>
         <Grid tablet={{ col: 9 }}>
           <PageHeading className="margin-top-4 margin-bottom-2">
-            {isUpdatingStatus
-              ? t('updateStatus')
-              : t('addImplementationDetails')}
+            {statusText()}
           </PageHeading>
 
           <p
@@ -267,12 +280,12 @@ const SolutionImplementation = ({
           </p>
 
           <p className="line-height-body-4">
-            {isUpdatingStatus
+            {solutionId
               ? t('updateStatusInfo')
               : t('addImplementationDetailsInfo')}
           </p>
 
-          <Grid tablet={{ col: 8 }}>
+          <Grid tablet={{ col: 12 }} desktop={{ col: 8 }}>
             {/*
               Operational Solution ID is UNDEFINED if user is displaying ALL solutions to an Operational Need.
               Operational Solution ID is DEFINED if user is displaying an INDIVIDUAL solution to an Operational Need.
@@ -357,16 +370,29 @@ const SolutionImplementation = ({
                           </>
                         )}
 
-                        {message && (
-                          <Alert type="warning" slim className="margin-top-6">
-                            {t('solutionRemoveWarning', {
-                              solutions: message
-                            })}
-                          </Alert>
-                        )}
+                        {message &&
+                          Array.isArray(message) &&
+                          message.length > 0 && (
+                            <Alert type="warning" slim className="margin-top-6">
+                              {t('solutionRemoveWarning')}
+                              {message.map(solution => (
+                                // Adding <p> instead of an unordered list here because <p> exists natively in Truss' Alert
+                                // <ul> cannot exist as a descendant of <p>
+                                <p
+                                  key={solution?.toString()}
+                                  className="margin-y-1"
+                                >
+                                  &bull;{' '}
+                                  <span className="margin-left-1">
+                                    {solution}
+                                  </span>
+                                </p>
+                              ))}
+                            </Alert>
+                          )}
 
                         <div className="margin-top-6 margin-bottom-3">
-                          {!isUpdatingStatus && (
+                          {!solutionId && (
                             <Button
                               type="button"
                               className="usa-button usa-button--outline margin-bottom-1"
@@ -383,7 +409,7 @@ const SolutionImplementation = ({
                             id="submit-solutions"
                             onClick={() => setErrors({})}
                           >
-                            {isUpdatingStatus
+                            {solutionId
                               ? t('updateSolution')
                               : t('saveSolutions')}
                           </Button>
@@ -408,10 +434,11 @@ const SolutionImplementation = ({
             </Formik>
           </Grid>
         </Grid>
-        <Grid tablet={{ col: 3 }} className="padding-x-1">
+
+        <Grid desktop={{ col: 3 }} className="padding-x-1">
           <ITSolutionsSidebar
             modelID={modelID}
-            renderTextFor={isUpdatingStatus ? 'status' : 'solution'}
+            renderTextFor={solutionId ? 'status' : 'solution'}
           />
         </Grid>
       </Grid>

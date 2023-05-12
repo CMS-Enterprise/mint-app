@@ -35,6 +35,8 @@ const operationalNeed: GetOperationalNeedType = {
       key: OperationalSolutionKey.RMADA,
       mustStartDts: null,
       mustFinishDts: null,
+      isOther: false,
+      otherHeader: null,
       status: OpSolutionStatus.AT_RISK,
       needed: true,
       pocName: 'John Doe',
@@ -82,9 +84,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
@@ -126,9 +126,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 

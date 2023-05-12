@@ -2,7 +2,3 @@
   path.config: "/usr/share/logstash/pipeline/change_table/settings.conf"
   pipeline.workers: 3
   pipeline.ecs_compatibility: disabled
-- pipeline.id: temporal_table
-  path.config: "/usr/share/logstash/pipeline/temporal_table/settings.conf"
-  pipeline.workers: 3
-  pipeline.ecs_compatibility: disabled

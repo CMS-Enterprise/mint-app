@@ -78,6 +78,7 @@ const emptySolution = (
     __typename: 'OperationalSolution',
     id: needID,
     status: OpSolutionStatus.NOT_STARTED,
+    otherHeader: '',
     needName,
     name: '',
     mustStartDts: null,
@@ -113,10 +114,7 @@ export const returnActionLinks = (
   const solutionActionLinks = (
     <>
       <UswdsReactLink
-        to={{
-          pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/update-status/${operationalNeed.id}`,
-          state: { fromSolutionDetails: false }
-        }}
+        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
         {i18next.t('itSolutions:itSolutionsTable.updateStatus')}

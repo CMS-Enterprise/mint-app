@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// ExistingModelLink represents an a link between another current model, or a model from the existing model table.
+// ExistingModelLink represents a link between another current model, or an existing model from the existing model table.
 type ExistingModelLink struct {
 	ExistingModelID    *int       `json:"existingModelID" db:"existing_model_id"`
 	CurrentModelPlanID *uuid.UUID `json:"currentModelPlanID" db:"current_model_plan_id"`

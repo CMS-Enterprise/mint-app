@@ -15,7 +15,8 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 	changes := map[string]interface{}{
 		"managePartCDEnrollment": false, // NEED 1, MANAGE_CD
-		// "collectPlanBids":        true, // NEED 2, MANAGE_CD &&  3 UPDATE_CONTRACT
+		// "collectPlanBids":        true, // NEED 2, MANAGE_CD
+		// "planContractUpdated":        false, // NEED 3 UPDATE_CONTRACT
 	}
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -39,7 +40,8 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 	changes = map[string]interface{}{
 		"managePartCDEnrollment": true,  // NEED 1, MANAGE_CD
-		"collectPlanBids":        false, // NEED 2, MANAGE_CD &&  3 UPDATE_CONTRACT
+		"collectPlanBids":        false, // NEED 2, MANAGE_CD
+		"planContractUpdated":    false, // NEED 3 UPDATE_CONTRACT
 	}
 
 	updatedGeneralCharacteristics, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

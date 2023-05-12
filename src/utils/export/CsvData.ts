@@ -112,7 +112,7 @@ const csvFields = [
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
-  'generalCharacteristics.resemblesExistingModelWhich', // array
+  'generalCharacteristics.existingModelLinks', // array
   'generalCharacteristics.resemblesExistingModelHow',
   'generalCharacteristics.resemblesExistingModelNote',
   'generalCharacteristics.hasComponentsOrTracks',

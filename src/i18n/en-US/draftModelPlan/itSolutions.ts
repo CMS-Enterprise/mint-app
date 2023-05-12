@@ -71,8 +71,13 @@ const itSolutions = {
       body: 'Failed to fetch Model Plan operational needs'
     },
     noNeeds: 'There aren’t any other operational needs.',
+    noNeedsReadonly:
+      'There aren’t any operational needs that require solutions yet.',
     noNeedsInfo:
-      'If you have additional operational needs you want to track, add an operational need or IT solution below.'
+      'If you have additional operational needs you want to track, add an operational need or IT solution below.',
+    noNeedsReadonlyInfo: 'Check back again later for updates.',
+    noNeedsReadonlyEditInfo:
+      'To determine the operational needs, fill out more of the Model Plan.'
   },
   status: {
     notAnswered: 'Not answered',
@@ -94,7 +99,7 @@ const itSolutions = {
       'Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.',
     button: 'Add an operational need or IT solution'
   },
-  selectSolution: 'Select a solution',
+  selectSolution: 'Select this solution',
   updateSolutions: 'Update solution selections',
   updateSolutionsInfo:
     'Adding additional solutions will create new solution pages, and removing a selected solution will delete the corresponding solution page. Tread carefully.',
@@ -105,7 +110,8 @@ const itSolutions = {
   youAnswered: 'In the Model Plan, you answered:',
   changeAnswer: 'Want to change your answer? ',
   goToQuestion: 'Go to the question.',
-  chooseSolution: 'Choose from common solutions',
+  chooseCommonSolution: 'Choose from common solutions',
+  chooseOtherSolution: 'Other solutions',
   selectThisSolution: 'Select this solution',
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
@@ -129,11 +135,13 @@ const itSolutions = {
   dontAddSolution: 'Don’t add and return to previous page',
   dontUpdateSolution: 'Don’t update and return to previous page',
   updateSolutionDetails: 'Update solution details',
-  solutionName: 'Please add a name for your solution',
+  solutionName: 'Please add a name for your solution or contractor',
   solutionPOC: 'Point of contact information',
   solutionPOCInfo: 'Point of contact',
   solutionEmailInfo: 'Email',
   otherSolution: 'Other',
+  selectedSectionHeading: 'Selected solution: ',
+  addDetails: 'Add Details',
   updateTheseDetails: 'Update these details',
   removeTheseDetails: 'Remove these details',
   addError:
@@ -141,7 +149,7 @@ const itSolutions = {
   updateError:
     'There was an error updating your solution details. Please try again.',
   solutionRemoveWarning:
-    'Saving these selections will delete the {{-solutions}} solution page/s that is associated with this operational need.',
+    'Saving these selections will delete the following solution page(s) associated with this operational need:',
   successSolutionAdded: 'Success! Solutions added for {{-operationalNeedName}}',
   successSolutionUpdated: 'Success! Your solution details have been updated.',
   solution: 'Solution',
@@ -158,6 +166,7 @@ const itSolutions = {
   updateSolutionsLink: 'Update solutions for this operational need',
   notSpecified: 'not specified',
   updateStatusAndTiming: 'Update status and timing',
+  updateDetails: 'Update solution implementation details',
   subtasks: {
     header: 'Subtasks',
     todo: 'To do',
@@ -212,7 +221,7 @@ const itSolutions = {
     onlyOperationalNeed:
       'Success! Your operational need “{{-operationalNeedName}}” is added.',
     operationalNeedAndSolution:
-      'Success! Your operational need “{{-operationalNeedName}}” and solution are added.',
+      'Success! Solutions added for {{-operationalNeedName}}',
     operationalNeedRemoval:
       'Success! {{-operationalNeedName}} has been removed.',
     operationalNeedUpdate: 'Success! Your operational need has been updated.'
@@ -220,6 +229,13 @@ const itSolutions = {
   errorMessage: {
     operationalNeedRemoval:
       'Sorry, we encountered a problem removing {{-operationalNeedName}}. Please try again.'
+  },
+  operationalSolutionKey: {
+    contractor: 'Contractor',
+    crossModelContract: 'Cross-model contract',
+    existingCmsDataAndProcess: 'Existing CMS data and process',
+    interalStaff: 'Internal staff',
+    otherNewProcess: 'Other'
   }
 };
 export default itSolutions;

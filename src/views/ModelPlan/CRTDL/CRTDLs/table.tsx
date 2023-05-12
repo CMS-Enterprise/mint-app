@@ -178,8 +178,15 @@ const Table = ({
 
   const renderModal = () => {
     return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
           {t('removeCRTDLModal.header', {
             crtdl: crtdlToRemove.idNumber
           })}

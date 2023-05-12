@@ -46,6 +46,7 @@ const returnNeeds = (needed: boolean | null) => {
                     status: OpSolutionStatus.IN_PROGRESS,
                     name: 'Shared Systems',
                     key: OperationalSolutionKey.SHARED_SYSTEMS,
+                    otherHeader: '',
                     mustStartDts: null,
                     mustFinishDts: null,
                     operationalSolutionSubtasks: [],

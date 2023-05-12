@@ -36,6 +36,8 @@ const operationalNeed: GetOperationalNeedType = {
       mustStartDts: null,
       mustFinishDts: null,
       status: OpSolutionStatus.AT_RISK,
+      isOther: false,
+      otherHeader: null,
       needed: null,
       pocName: 'John Doe',
       nameOther: null
@@ -82,7 +84,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       const checkbox = getByRole('checkbox', {
-        name: /select a solution/i
+        name: /Select this solution/i
       });
       expect(checkbox).not.toBeChecked();
       userEvent.click(checkbox);
@@ -91,9 +93,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
@@ -101,9 +101,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
   });
@@ -120,11 +118,13 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
       findChangedSolution(operationalNeed.solutions, {
         __typename: 'OperationalSolution',
         id: '00000000-0000-0000-0000-000000000000',
-        name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+        name: 'Research, Measurement, Assessment, Design, and Analysis',
         pocEmail: '',
         key: OperationalSolutionKey.RMADA,
         mustStartDts: null,
         mustFinishDts: null,
+        isOther: false,
+        otherHeader: '',
         status: OpSolutionStatus.AT_RISK,
         needed: true,
         pocName: 'John Doe',
@@ -154,9 +154,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
