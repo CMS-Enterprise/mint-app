@@ -7,6 +7,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
 )
@@ -22,7 +23,7 @@ var existingModelLinkGetByModelPlanIDLoaderSQL string
 
 // ExistingModelLinkGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ExistingModelLink, error) {
-	linkSlice := []*models.ExistingModelLink{}
+	var linkSlice []*models.ExistingModelLink
 
 	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDLoaderSQL)
 	if err != nil {
@@ -35,6 +36,7 @@ func (s *Store) ExistingModelLinkGetByModelPlanIDLOADER(logger *zap.Logger, para
 	err = stmt.Select(&linkSlice, arg) //this returns more than one
 
 	if err != nil {
+		logger.Error("failed to get Model Links by modelPlanID", zap.Error(err))
 		return nil, err
 	}
 
@@ -49,7 +51,6 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 	if err != nil {
 		return nil, err
 	}
-	// existingIDs := convertToStringArray(existingModelIDs)
 	currentModelPlanIDsArray := convertToStringArray(currentModelPlanIDs)
 	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
 	arg := map[string]interface{}{
@@ -61,12 +62,14 @@ func (s *Store) ExistingModelLinksUpdate(logger *zap.Logger, userID uuid.UUID, m
 	linkSlice := []*models.ExistingModelLink{}
 	statement, err := tx.PrepareNamed(existingModelLinkMergeSQL)
 	if err != nil {
-		return nil, err //TODO: revisit error handling
+		logger.Error("failed to prepare Existing Model Links update query", zap.Error(err))
+		return nil, err
 	}
 
 	err = statement.Select(&linkSlice, arg)
 	if err != nil {
-		return nil, err //TODO: revisit error handling
+		logger.Error("failed to update Existing Model Links", zap.Error(err))
+		return nil, err
 	}
 
 	err = tx.Commit()
@@ -89,7 +92,7 @@ func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 	err = statement.Get(&link, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
-		return nil, err
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, id)
 	}
 	return &link, nil
 

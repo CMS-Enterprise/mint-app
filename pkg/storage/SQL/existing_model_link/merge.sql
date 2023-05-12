@@ -86,7 +86,6 @@ deletedRows AS (
 )
 /* return all links */
 
-/* TODO This doesn't work in the same transaction... we need to either return the existing, and potentional do a union all with the inserted rows?*/ 
 SELECT 
     eml.id,
     eml.model_plan_id,
