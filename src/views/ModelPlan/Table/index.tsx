@@ -337,6 +337,7 @@ const DraftModelPlansTable = ({
     page,
     setGlobalFilter,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -383,6 +384,8 @@ const DraftModelPlansTable = ({
   if (error) {
     return <Alert type="error">{t('fetchError')}</Alert>;
   }
+
+  rows.map(row => prepareRow(row));
 
   if (data.length === 0) {
     return (
@@ -468,7 +471,6 @@ const DraftModelPlansTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells

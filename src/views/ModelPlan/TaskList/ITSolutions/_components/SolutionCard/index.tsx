@@ -105,8 +105,17 @@ const SolutionCard = ({
                     </h5>
                   </>
                 ) : (
-                  <h3 className="margin-y-2">
-                    {solution.nameOther || solution.name}
+                  <h3
+                    className={classNames(
+                      'margin-top-0 solutions-checkbox__header',
+                      {
+                        'margin-bottom-1': solutionMap?.acronym,
+                        'margin-bottom-2': !solutionMap?.acronym
+                      }
+                    )}
+                  >
+                    {solution.nameOther ||
+                      (solutionMap ? solutionMap.name : solution.name)}
                   </h3>
                 )}
               </>
@@ -114,12 +123,25 @@ const SolutionCard = ({
 
             {(!solution.key ||
               !treatAsOtherSolutions.includes(solution.key)) && (
-              <h3
-                className="margin-bottom-2 margin-top-0 solutions-checkbox__header"
-                style={{ wordBreak: 'break-word' }}
-              >
-                {solution.nameOther || solution.name}
-              </h3>
+              <>
+                <h3
+                  className={classNames(
+                    'margin-top-0 solutions-checkbox__header',
+                    {
+                      'margin-bottom-1': solutionMap?.acronym,
+                      'margin-bottom-2': !solutionMap?.acronym
+                    }
+                  )}
+                >
+                  {solution.nameOther ||
+                    (solutionMap ? solutionMap.name : solution.name)}
+                </h3>
+                {solutionMap?.acronym && (
+                  <h5 className="margin-top-0 margin-bottom-2 text-normal">
+                    ({solutionMap.acronym})
+                  </h5>
+                )}
+              </>
             )}
 
             {solutionMap?.pointsOfContact[0].name ? (
@@ -169,22 +191,28 @@ const SolutionCard = ({
             )}
 
             {/* Show 'About Details' link if not updating solution details and not a custom solution */}
-            {renderSolutionCardLinks && solution.name && !solution.otherHeader && (
-              <>
-                <Divider />
+            {renderSolutionCardLinks &&
+              solution.name &&
+              !solution.otherHeader &&
+              !solution.isOther && (
+                <>
+                  <Divider />
 
-                <UswdsReactLink
-                  className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                  to={detailRoute}
-                >
-                  {t('aboutSolution')}
-                  <IconArrowForward className="margin-left-1" />
-                </UswdsReactLink>
-              </>
-            )}
+                  <UswdsReactLink
+                    className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    to={detailRoute}
+                  >
+                    {t('aboutSolution')}
+                    <IconArrowForward className="margin-left-1" />
+                  </UswdsReactLink>
+                </>
+              )}
 
             {/* Renders links to either update solution details or remove solution details */}
-            {(addingCustom || !solution.name || solution.otherHeader) && (
+            {(addingCustom ||
+              !solution.name ||
+              solution.otherHeader ||
+              solution.isOther) && (
               <>
                 {!addingCustom && <Divider className="margin-top-2" />}
                 <div

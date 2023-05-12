@@ -17,8 +17,7 @@ exports[`IT Solutions SolutionCard matches snapshot 1`] = `
           class="padding-3"
         >
           <h3
-            class="margin-bottom-2 margin-top-0 solutions-checkbox__header"
-            style="word-break: break-word;"
+            class="margin-top-0 solutions-checkbox__header margin-bottom-2"
           >
             Shared Systems
           </h3>

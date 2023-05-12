@@ -24,6 +24,7 @@ export interface GetOperationalNeeds_modelPlan_operationalNeeds_solutions {
   needed: boolean | null;
   nameOther: string | null;
   key: OperationalSolutionKey | null;
+  otherHeader: string | null;
   operationalSolutionSubtasks: GetOperationalNeeds_modelPlan_operationalNeeds_solutions_operationalSolutionSubtasks[];
   pocEmail: string | null;
   pocName: string | null;

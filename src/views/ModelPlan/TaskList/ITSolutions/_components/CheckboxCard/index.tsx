@@ -138,7 +138,7 @@ const CheckboxCard = ({
   };
 
   return (
-    <Grid tablet={{ col: 6 }} className="display-flex">
+    <Grid tablet={{ col: 6 }} desktop={{ col: 4 }} className="display-flex">
       {renderModal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
@@ -149,7 +149,11 @@ const CheckboxCard = ({
 
       <Card
         className={classNames('width-full', className)}
-        containerProps={{ className: 'padding-3 flex-justify' }}
+        containerProps={{
+          className: classNames('padding-3 flex-justify', {
+            'solutions-checkbox__checked': !!solution.needed
+          })
+        }}
       >
         <div className="solutions-checkbox__above-the-border">
           <div className="solutions-checkbox__header">
@@ -169,7 +173,7 @@ const CheckboxCard = ({
               <>
                 {solution.otherHeader ? (
                   <>
-                    <h3 className="margin-top-2 margin-bottom-0">
+                    <h3 className="margin-top-2 margin-bottom-0 solutions-checkbox__header">
                       {solution.otherHeader}
                     </h3>
                     <h5 className="text-normal margin-top-0 margin-bottom-2">
@@ -177,7 +181,7 @@ const CheckboxCard = ({
                     </h5>
                   </>
                 ) : (
-                  <h3 className="margin-y-2">
+                  <h3 className="margin-y-2 solutions-checkbox__header">
                     {solution.nameOther || solution.name}
                   </h3>
                 )}
@@ -188,9 +192,25 @@ const CheckboxCard = ({
             {/* If solution is custom (aka solution key is null), then render its name/nameOther */}
             {(!solution.key ||
               !treatAsOtherSolutions.includes(solution.key)) && (
-              <h3 className="margin-y-2">
-                {solution.nameOther || solution.name}
-              </h3>
+              <>
+                <h3
+                  className={classNames(
+                    'margin-top-2 solutions-checkbox__header',
+                    {
+                      'margin-bottom-1': solutionMap?.acronym,
+                      'margin-bottom-2': !solutionMap?.acronym
+                    }
+                  )}
+                >
+                  {solution.nameOther ||
+                    (solutionMap ? solutionMap.name : solution.name)}
+                </h3>
+                {solutionMap?.acronym && (
+                  <h5 className="margin-top-0 margin-bottom-2 text-normal">
+                    ({solutionMap.acronym})
+                  </h5>
+                )}
+              </>
             )}
           </div>
 
