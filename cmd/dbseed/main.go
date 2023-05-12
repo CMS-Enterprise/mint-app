@@ -122,6 +122,7 @@ func (s *Seeder) SeedData() {
 		"clearanceStarts": time.Now(),
 		"highLevelNote":   "Some high level note",
 	})
+	s.existingModelLinkCreate(planWithBasics, []int{links[3].ID, links[4].ID}, nil)
 
 	s.updatePlanBasics(planWithBasics, map[string]interface{}{
 		"modelType": models.MTMandatory,

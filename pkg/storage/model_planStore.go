@@ -45,7 +45,7 @@ var modelPlanGetByIDLoaderSQL string
 
 // ModelPlanGetByModelPlanIDLOADER returns the model pland for a slice of ids
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
-	var planSlice []*models.ModelPlan
+	planSlice := []*models.ModelPlan{}
 
 	stmt, err := s.db.PrepareNamed(modelPlanGetByIDLoaderSQL)
 	if err != nil {
