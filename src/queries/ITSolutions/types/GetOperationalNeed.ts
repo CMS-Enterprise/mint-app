@@ -19,6 +19,7 @@ export interface GetOperationalNeed_operationalNeed_solutions {
   needed: boolean | null;
   nameOther: string | null;
   isOther: boolean;
+  isCommonSolution: boolean;
   otherHeader: string | null;
   mustStartDts: Time | null;
   mustFinishDts: Time | null;

@@ -21,6 +21,7 @@ const solution = [
     mustStartDts: null,
     mustFinishDts: null,
     status: OpSolutionStatus.IN_PROGRESS,
+    isCommonSolution: true,
     needed: true,
     pocName: 'John Doe',
     pocEmail: '',

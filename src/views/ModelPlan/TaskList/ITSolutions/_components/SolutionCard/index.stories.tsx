@@ -34,6 +34,7 @@ const solution: SolutionCardType = {
   key: OperationalSolutionKey.SHARED_SYSTEMS,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',
+  isCommonSolution: true,
   needed: true,
   nameOther: null
 };
@@ -45,6 +46,7 @@ const customSolution: SolutionCardType = {
   nameOther: 'My Custom Solutuon',
   isOther: true,
   otherHeader: null,
+  isCommonSolution: true,
   key: null,
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',

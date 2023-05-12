@@ -18,6 +18,7 @@ export default gql`
         needed
         nameOther
         isOther
+        isCommonSolution
         otherHeader
         mustStartDts
         mustFinishDts

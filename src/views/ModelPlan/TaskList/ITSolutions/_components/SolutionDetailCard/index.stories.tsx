@@ -26,6 +26,7 @@ const solution: GetOperationalSolutionType = {
   needed: true,
   nameOther: null,
   isOther: false,
+  isCommonSolution: true,
   otherHeader: null,
   status: OpSolutionStatus.IN_PROGRESS,
   documents: [],

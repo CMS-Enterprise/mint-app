@@ -43,6 +43,7 @@ export interface GetOperationalSolution_operationalSolution {
   pocEmail: string | null;
   status: OpSolutionStatus;
   isOther: boolean;
+  isCommonSolution: boolean;
   otherHeader: string | null;
   mustFinishDts: Time | null;
   mustStartDts: Time | null;
