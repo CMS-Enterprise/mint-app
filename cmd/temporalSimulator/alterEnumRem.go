@@ -51,7 +51,7 @@ var alterEnumRemCommand = &cobra.Command{
 		if historyToStringFlag {
 			response1, err1 := alterEnumRemStringHistory(config, db)
 			if err != nil {
-				fmt.Print("error removing column from history: %w", err1)
+				fmt.Print("error converting column in history to string type: %w", err1)
 			}
 			response = response + response1
 
@@ -59,7 +59,7 @@ var alterEnumRemCommand = &cobra.Command{
 		if historyToExpandedEnumFlag {
 			response1, err2 := alterEnumRemExpandedHistory(config, db)
 			if err != nil {
-				fmt.Print("error removing column from history: %w", err2)
+				fmt.Print("error changing column in history to expanded type: %w", err2)
 			}
 			response = response + response1
 
@@ -68,7 +68,7 @@ var alterEnumRemCommand = &cobra.Command{
 		if remHistoryFlag {
 			response3, err3 := alterEnumRemHistory(config, db)
 			if err != nil {
-				fmt.Print("error removing column from history: %w", err3)
+				fmt.Print("error removing values from column in history: %w", err3)
 			}
 			response = response + response3
 
