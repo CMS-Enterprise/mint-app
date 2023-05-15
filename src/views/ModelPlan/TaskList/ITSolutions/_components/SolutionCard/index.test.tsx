@@ -17,6 +17,7 @@ const solution: SolutionCardType = {
   pocName: 'John Mint',
   pocEmail: 'john.mint@oddball.io',
   isOther: false,
+  isCommonSolution: true,
   otherHeader: null,
   needed: true,
   nameOther: null

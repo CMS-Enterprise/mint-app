@@ -14,6 +14,7 @@ import {
   IconArrowBack
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import { partition } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -195,7 +196,7 @@ const SelectSolutions = () => {
       text: t('solutionDetails'),
       url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
     },
-    { text: update ? t('updateStatus') : t('selectSolution') }
+    { text: update ? t('updateSolutions') : t('selectSolution') }
   ];
 
   if (error) {
@@ -274,13 +275,12 @@ const SelectSolutions = () => {
               const { errors, handleSubmit, values } = formikProps;
 
               const allTheSolutions = values.solutions;
-              const commonSolutions = allTheSolutions.filter(
-                solution => solution.nameOther === null && !solution.isOther
+
+              const [commonSolutions, otherSolutions] = partition(
+                allTheSolutions,
+                'isCommonSolution'
               );
-              // otherSolutions are custom solutions
-              const otherSolutions = allTheSolutions.filter(
-                solution => solution.nameOther !== null || solution.isOther
-              );
+
               const flatErrors = flattenErrors(errors);
 
               return (

@@ -221,10 +221,11 @@ const SolutionCard = ({
                 >
                   <UswdsReactLink
                     className="margin-right-2 display-flex flex-align-center"
-                    to={{
-                      pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}`,
-                      state: { selectedSolution: solution.key }
-                    }}
+                    to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
+                      solution.id
+                    }?selectedSolution=${
+                      solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
+                    }`}
                   >
                     {t('updateTheseDetails')}
                     {!addingCustom && (
@@ -235,7 +236,11 @@ const SolutionCard = ({
                   {addingCustom && (solution.pocName || solution.pocEmail) && (
                     <UswdsReactLink
                       className="text-red"
-                      to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}#remove-details`}
+                      to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
+                        solution.id
+                      }?selectedSolution=${
+                        solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
+                      }`}
                     >
                       {t('removeTheseDetails')}
                     </UswdsReactLink>

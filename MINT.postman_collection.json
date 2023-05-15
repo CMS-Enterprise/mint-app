@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a437b9e0-04f7-42ce-b174-3a5b100263c1",
+		"_postman_id": "32763e93-3738-4a6c-aac0-00904307f929",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -1354,7 +1354,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    solutionType:MARX,\n    changes: {\n      needed: true\n    #   nameOther: \"My special solution\"\n      otherHeader: \"The Happy Helper Team\"\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1390,7 +1390,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  createOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",\n    # solutionType:MARX,\n    changes: {\n      needed: true\n      nameOther: \"My special solution\"\n    #   otherHeader: \"The Happy Helper Team\"\n      pocName: \"Mr. Clean\"\n      pocEmail: \"cleanClean@cleaning.com\"\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    # needed\n\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    isOther\n    otherHeader\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1422,7 +1422,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"query": "mutation OperationalSolution{\n  \n  updateOperationalSolution(id:\"{{operationalSolutionID}}\"\n  ,changes: {\n    #   nameOther: \"My Change I guess\"\n      needed: false\n      pocName: \"The Sentient Ice Cream Cone\"\n      pocEmail: \"iceCreamKing@IceCreamStore.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    isCommonSolution\n    operationalNeedID\n    needed\n    name\n    key\n    nameOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
 								"variables": ""
 							}
 						},
@@ -1454,7 +1454,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
+								"query": "query operationalSolution ($id: UUID!) {\n    operationalSolution (id: $id) {\n        id\n        isCommonSolution\n        operationalNeedID\n        solutionType\n        needed\n        name\n        key\n        nameOther\n        pocName\n        pocEmail\n        mustStartDts\n        mustFinishDts\n        status\n        documents {\n            id\n            modelPlanID\n            fileType\n            bucket\n            fileKey\n            virusScanned\n            virusClean\n            restricted\n            fileName\n            fileSize\n            documentType\n            otherType\n            optionalNotes\n            downloadUrl\n            deletedAt\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        operationalSolutionSubtasks {\n            id\n            solutionID\n            name\n            status\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n        }\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }         \n    }\n}",
 								"variables": "{\r\n  \"id\": \"{{operationalSolutionID}}\"\r\n}"
 							}
 						},
@@ -1486,7 +1486,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
+								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\",,includeNotNeeded:true){\n        id\n        isCommonSolution\n\n        name\n        key\n        nameOther\n        pocEmail\n        pocName     \n        status\n        needed\n        mustStartDts\n        mustFinishDts\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n\n    \n  }\n}\n",
 								"variables": ""
 							}
 						},
