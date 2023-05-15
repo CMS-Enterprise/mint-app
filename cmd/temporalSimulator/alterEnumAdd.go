@@ -9,11 +9,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-//go:embed SQL/alterEnum.sql
-var alterEnumSQL string
+//go:embed SQL/alterEnumAdd.sql
+var alterEnumAddSQL string
 
-var alterEnumCommand = &cobra.Command{
-	Use:   "alterEnum",
+var alterEnumAddCommand = &cobra.Command{
+	Use:   "alterEnumAdd",
 	Short: "Adds a value to MODEL_PLAN_STATUS enum which is used in MINT Model Plan table",
 	Long:  `Adds a value to MODEL_PLAN_STATUS enum which is used in MINT Model Plan table`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -25,7 +25,7 @@ var alterEnumCommand = &cobra.Command{
 			return
 		}
 
-		response, err := alterEnum(config, db)
+		response, err := alterEnumAdd(config, db)
 		if err != nil {
 			fmt.Print("error adding column: %w", err)
 		}
@@ -35,10 +35,10 @@ var alterEnumCommand = &cobra.Command{
 	},
 }
 
-func alterEnum(config *viper.Viper, db *sqlx.DB) (string, error) {
+func alterEnumAdd(config *viper.Viper, db *sqlx.DB) (string, error) {
 
 	nilArg := map[string]interface{}{}
-	msg, err := executeProcedure(config, db, alterEnumSQL, nilArg)
+	msg, err := executeProcedure(config, db, alterEnumAddSQL, nilArg)
 	if err != nil {
 		return msg, err
 	}
