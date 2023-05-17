@@ -3,11 +3,12 @@ import React, {
   Fragment,
   SetStateAction,
   useContext,
+  useEffect,
   useState
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -29,11 +30,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
 import GetModelPlan from 'queries/GetModelPlan';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
@@ -53,7 +49,7 @@ import {
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -103,7 +99,13 @@ const taskListSectionMap: TaskListSectionMapType = {
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
+
   const { modelID } = useParams<{ modelID: string }>();
+
+  // Get discussionID from generated email link
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const discussionID = params.get('discussionID');
 
   const flags = useFlags();
 
@@ -112,7 +114,7 @@ const TaskList = () => {
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   // Used to conditonally render role specific text in task list
-  const userRole = isAssessment(groups) ? 'assessment' : 'team';
+  const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
@@ -140,20 +142,9 @@ const TaskList = () => {
     beneficiaries,
     payments,
     operationalNeeds = [],
-    prepareForClearance
+    prepareForClearance,
+    collaborators
   } = modelPlan;
-
-  const { data: collaboratorData } = useQuery<GetModelCollaborators>(
-    GetModelPlanCollaborators,
-    {
-      variables: {
-        id: modelID
-      }
-    }
-  );
-
-  const collaborators = (collaboratorData?.modelPlan?.collaborators ??
-    []) as GetCollaboratorsType[];
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]
@@ -182,6 +173,10 @@ const TaskList = () => {
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
     discussions
   );
+
+  useEffect(() => {
+    if (discussionID) setIsDiscussionOpen(true);
+  }, [discussionID]);
 
   const getTaskListLockedStatus = (
     section: string
@@ -244,7 +239,7 @@ const TaskList = () => {
                   isOpen={isDiscussionOpen}
                   closeModal={() => setIsDiscussionOpen(false)}
                 >
-                  <Discussions modelID={modelID} />
+                  <Discussions modelID={modelID} discussionID={discussionID} />
                 </DiscussionModalWrapper>
               )}
 
@@ -298,9 +293,9 @@ const TaskList = () => {
                         heading={t(`numberedList.${key}.heading`)}
                         lastUpdated={
                           taskListSections[key].modifiedDts &&
-                          formatDate(
+                          formatDateLocal(
                             taskListSections[key].modifiedDts!,
-                            'MM/d/yyyy'
+                            'MM/dd/yyyy'
                           )
                         }
                         status={taskListSections[key].status}
@@ -319,10 +314,12 @@ const TaskList = () => {
                           </TaskListDescription>
                         </div>
                         <TaskListButton
+                          ariaLabel={t(`numberedList.${key}.heading`)}
                           path={t(`numberedList.${key}.path`)}
                           disabled={
                             !!getTaskListLockedStatus(key) &&
-                            getTaskListLockedStatus(key)?.lockedBy !== euaId
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                              .username !== euaId
                           }
                           status={taskListSections[key].status}
                         />
@@ -331,11 +328,13 @@ const TaskList = () => {
                           isAssessment={
                             !!getTaskListLockedStatus(key)?.isAssessment
                           }
-                          collaborator={collaborators.find(
-                            collaborator =>
-                              collaborator.euaUserID ===
-                              getTaskListLockedStatus(key)?.lockedBy
-                          )}
+                          selfLocked={
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                              .username === euaId
+                          }
+                          lockedByUserAccount={
+                            getTaskListLockedStatus(key)?.lockedByUserAccount
+                          }
                         />
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (

@@ -21,12 +21,6 @@ const helpAndKnowledgeArticles: (ArticleProps & ArticleTypeProps)[] = [
     route: '/sample-model-plan',
     translation: 'sampleModelPlan',
     type: 'gettingStarted'
-  },
-  {
-    name: 'IT Implementation Placeholder',
-    route: '#',
-    translation: '',
-    type: 'itImplementation'
   }
 ];
 

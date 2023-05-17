@@ -8,6 +8,7 @@ export default gql`
       opsEvalAndLearning {
         id
         ccmInvolvment
+        dataNeededForMonitoring
         iddocSupport
         sendFilesBetweenCcw
         sendFilesBetweenCcwNote
@@ -20,6 +21,10 @@ export default gql`
         developNewQualityMeasuresNote
         qualityPerformanceImpactsPayment
         qualityPerformanceImpactsPaymentNote
+      }
+      operationalNeeds {
+        id
+        modifiedDts
       }
     }
   }

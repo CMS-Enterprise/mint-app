@@ -9,13 +9,11 @@ import {
   useTable
 } from 'react-table';
 import {
-  Button,
   IconStar,
   IconStarOutline,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
@@ -26,7 +24,8 @@ import {
   GetAllModelPlans_modelPlanCollection as AllModelPlansType,
   GetAllModelPlans_modelPlanCollection_crTdls as CRTDLType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
-import globalTableFilter from 'utils/globalTableFilter';
+import { formatDateUtc } from 'utils/date';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   translateModelCategory,
   translateModelPlanStatus
@@ -63,29 +62,33 @@ const Table = ({
         disableGlobalFilter: true,
         Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
           return row.original.isFavorite ? (
-            <Button
+            <button
               onClick={() => updateFavorite(row.original.id, 'removeFavorite')}
               type="button"
-              data-testid={row.original.id}
-              className="display-block"
-              unstyled
+              role="checkbox"
+              data-testid={`${row.original.modelName}-favorite`}
+              className="usa-button usa-button--unstyled display-block"
+              aria-label={`Click to unfavorite ${row.original.modelName} model plan`}
+              aria-checked="true"
             >
               <IconStar data-cy="favorited" size={3} />
-            </Button>
+            </button>
           ) : (
-            <Button
+            <button
               onClick={() => updateFavorite(row.original.id, 'addFavorite')}
               type="button"
-              data-testid={row.original.id}
-              className="display-block"
-              unstyled
+              role="checkbox"
+              data-testid={`${row.original.modelName}-unfavorite`}
+              className="usa-button usa-button--unstyled display-block"
+              aria-label={`Click to favorite ${row.original.modelName} model plan`}
+              aria-checked="false"
             >
               <IconStarOutline
                 data-cy="unfavorited"
                 size={3}
                 className="text-gray-30"
               />
-            </Button>
+            </button>
           );
         }
       },
@@ -131,11 +134,9 @@ const Table = ({
       },
       {
         Header: t('allModels.tableHeading.startDate'),
-        accessor: ({ basics: { applicationsStart } }: any) => {
-          if (applicationsStart) {
-            return DateTime.fromISO(applicationsStart).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+        accessor: ({ basics: { performancePeriodStarts } }: any) => {
+          if (performancePeriodStarts) {
+            return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
           }
           return null;
         },
@@ -177,6 +178,7 @@ const Table = ({
     page,
     setGlobalFilter,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -190,7 +192,7 @@ const Table = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
@@ -211,6 +213,8 @@ const Table = ({
       </Alert>
     );
   }
+
+  rows.map(row => prepareRow(row));
 
   return (
     <div className="model-plan-table">
@@ -233,7 +237,7 @@ const Table = ({
         showNoResults={false}
       />
       <UswdsTable {...getTableProps()} fullWidth scrollable>
-        <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
+        <caption className="usa-sr-only">{f('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -275,7 +279,6 @@ const Table = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
@@ -318,6 +321,7 @@ const Table = ({
       {state.globalFilter && page.length === 0 && (
         <Alert
           type="warning"
+          aria-live="polite"
           heading={t('allModels.noResults.heading', {
             searchTerm: state.globalFilter
           })}

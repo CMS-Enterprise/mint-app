@@ -94,7 +94,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="plan-characteristics-form"
   >
     <div
@@ -268,7 +268,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         data-testid="label"
         for="plan-characteristics-resembles-existing-model"
       >
-        Does your proposed track/model resemble any existing model?
+        Does your proposed track/model resemble any existing models?
       </label>
       <fieldset
         class="usa-fieldset"
@@ -360,7 +360,8 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
               How do the tracks differ?
             </label>
             <textarea
-              class="usa-textarea margin-top-0 height-15"
+              aria-labelledby="label-plan-characteristics-tracks-differ-how hint-plan-characteristics-tracks-differ-how"
+              class="margin-top-0 height-15 usa-textarea"
               data-testid="plan-characteristics-tracks-differ-how"
               id="plan-characteristics-tracks-differ-how"
               name="hasComponentsOrTracksDiffer"
@@ -388,6 +389,30 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           </label>
         </div>
       </fieldset>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <div
+          class="usa-form-group"
+        >
+          <label
+            class="usa-label"
+            for="plan-characteristics-has-component-or-tracks-note"
+            id="label-plan-characteristics-has-component-or-tracks-note"
+          >
+            Notes
+          </label>
+          <textarea
+            aria-labelledby="label-plan-characteristics-has-component-or-tracks-note hint-plan-characteristics-has-component-or-tracks-note"
+            class="usa-textarea"
+            data-testid="plan-characteristics-has-component-or-tracks-note"
+            id="plan-characteristics-has-component-or-tracks-note"
+            name="hasComponentsOrTracksNote"
+          >
+            Component note
+          </textarea>
+        </div>
+      </div>
     </div>
     <div
       class="margin-top-6 margin-bottom-3"

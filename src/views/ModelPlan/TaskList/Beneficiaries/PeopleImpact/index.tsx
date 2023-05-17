@@ -223,7 +223,7 @@ const PeopleImpact = () => {
                         </FieldErrorMsg>
                         <Field
                           as={RangeInput}
-                          className="maxw-none"
+                          className="maxw-none width-full"
                           error={flatErrors.numberPeopleImpacted}
                           id="expected-people-impacted"
                           name="numberPeopleImpacted"
@@ -279,7 +279,12 @@ const PeopleImpact = () => {
                           {flatErrors.participantsCurrentlyInModels}
                         </FieldErrorMsg>
                         <Fieldset>
-                          {Object.keys(ConfidenceType).map(key => (
+                          {[
+                            ConfidenceType.NOT_AT_ALL,
+                            ConfidenceType.SLIGHTLY,
+                            ConfidenceType.FAIRLY,
+                            ConfidenceType.COMPLETELY
+                          ].map(key => (
                             <Field
                               as={Radio}
                               key={key}
@@ -305,7 +310,10 @@ const PeopleImpact = () => {
                         error={!!flatErrors.beneficiarySelectionMethod}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="beneficiaries-chooseBeneficiaries">
+                        <Label
+                          htmlFor="beneficiaries-chooseBeneficiaries"
+                          id="label-beneficiaries-chooseBeneficiaries"
+                        >
                           {t('chooseBeneficiaries')}
                         </Label>
                         <FieldErrorMsg>
@@ -316,6 +324,7 @@ const PeopleImpact = () => {
                           as={MultiSelect}
                           id="beneficiaries-chooseBeneficiaries"
                           name="beneficiarySelectionMethod"
+                          ariaLabel="label-beneficiaries-chooseBeneficiaries"
                           options={mappedSelectionMethodType}
                           selectedLabel={t('selectedMethods')}
                           onChange={(value: string[] | []) => {
@@ -353,8 +362,8 @@ const PeopleImpact = () => {
                         )}
 
                         <AddNote
-                          id="beneficiaries-note"
-                          field="beneficiariesNote"
+                          id="beneficiaries-selection-note"
+                          field="beneficiarySelectionNote"
                         />
                       </FieldGroup>
 

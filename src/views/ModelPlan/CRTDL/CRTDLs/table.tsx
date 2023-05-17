@@ -4,7 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -19,7 +19,8 @@ import {
   GetCRTDLs as GetCRTDLsType,
   GetCRTDLs_modelPlan_crTdls as CDTRLType
 } from 'queries/CRTDL/types/GetCRTDLs';
-import globalTableFilter from 'utils/globalTableFilter';
+import { formatDateUtc } from 'utils/date';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -59,6 +60,8 @@ const CRTDLTable = ({
     }
   });
 
+  const flags = useFlags();
+
   const crtdls = (data?.modelPlan?.crTdls ?? []) as CDTRLType[];
 
   const modelName = data?.modelPlan.modelName;
@@ -66,7 +69,7 @@ const CRTDLTable = ({
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean =
-    !isHelpArticle && (isCollaborator || isAssessment(groups));
+    !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
   if (loading) {
     return <PageLoading />;
@@ -175,8 +178,15 @@ const Table = ({
 
   const renderModal = () => {
     return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
           {t('removeCRTDLModal.header', {
             crtdl: crtdlToRemove.idNumber
           })}
@@ -206,9 +216,7 @@ const Table = ({
         Header: t<string>('crtdlsTable.date'),
         accessor: ({ dateInitiated }: any) => {
           if (dateInitiated) {
-            return DateTime.fromISO(dateInitiated).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(dateInitiated, 'MM/dd/yyyy');
           }
           return null;
         }
@@ -281,7 +289,7 @@ const Table = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {

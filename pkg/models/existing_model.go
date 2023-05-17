@@ -6,9 +6,11 @@ import (
 
 // ExistingModel represents an existing innovation model that is already in use
 type ExistingModel struct {
-	ID        string `json:"id" db:"id"`
+	ID        int    `json:"id" db:"id"`
 	ModelName string `json:"modelName" db:"model_name"`
 	Stage     string `json:"stage" db:"stage"`
+	createdByRelation
+	modifiedByRelation
 
 	NumberOfParticipants          *string    `json:"numberOfParticipants" db:"number_of_participants"`
 	Category                      *string    `json:"category" db:"category"`
@@ -22,9 +24,4 @@ type ExistingModel struct {
 	Keywords                      *string    `json:"keywords" db:"keywords"`
 	URL                           *string    `json:"url" db:"url"`
 	DisplayModelSummary           *bool      `json:"displayModelSummary" db:"display_model_summary"`
-
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }

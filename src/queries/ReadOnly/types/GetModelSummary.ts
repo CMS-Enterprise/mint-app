@@ -12,7 +12,7 @@ import { ModelStatus, KeyCharacteristic, TeamRole } from "./../../../types/graph
 export interface GetModelSummary_modelPlan_basics {
   __typename: "PlanBasics";
   goal: string | null;
-  applicationsStart: Time | null;
+  performancePeriodStarts: Time | null;
 }
 
 export interface GetModelSummary_modelPlan_generalCharacteristics {
@@ -20,9 +20,17 @@ export interface GetModelSummary_modelPlan_generalCharacteristics {
   keyCharacteristics: KeyCharacteristic[];
 }
 
+export interface GetModelSummary_modelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetModelSummary_modelPlan_collaborators {
   __typename: "PlanCollaborator";
-  fullName: string;
+  userAccount: GetModelSummary_modelPlan_collaborators_userAccount;
   teamRole: TeamRole;
 }
 

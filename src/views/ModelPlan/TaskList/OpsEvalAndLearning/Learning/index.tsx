@@ -8,14 +8,13 @@ import {
   BreadcrumbLink,
   Button,
   IconArrowBack,
-  Label,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -44,7 +43,12 @@ import {
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Learning = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -54,7 +58,7 @@ const Learning = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     GetLearningFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -66,18 +70,20 @@ const Learning = () => {
   >(GetLearning, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     modelLearningSystems,
     modelLearningSystemsOther,
     modelLearningSystemsNote,
     anticipatedChallenges,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
@@ -88,7 +94,7 @@ const Learning = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
@@ -96,7 +102,7 @@ const Learning = () => {
   );
 
   const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
+    redirect?: 'back' | 'task-list' | 'next' | string
   ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
@@ -121,6 +127,8 @@ const Learning = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/payment`);
           } else if (redirect) {
             history.push(redirect);
           }
@@ -136,6 +144,7 @@ const Learning = () => {
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     modelLearningSystems: modelLearningSystems ?? [],
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
@@ -181,7 +190,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -217,93 +226,101 @@ const Learning = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-learning-form"
                 onSubmit={e => {
                   handleSubmit(e);
                 }}
               >
-                <FieldArray
-                  name="modelLearningSystems"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('learningSystem')}
-                      </legend>
+                <FieldGroup
+                  scrollElement="modelLearningSystems"
+                  error={!!flatErrors.modelLearningSystems}
+                >
+                  <FieldArray
+                    name="modelLearningSystems"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('learningSystem')}
+                        </legend>
 
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="ops-eval-and-learning-learning-systems-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="ops-eval-and-learning-learning-systems-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <FieldErrorMsg>
+                          {flatErrors.modelLearningSystems}
+                        </FieldErrorMsg>
+
+                        {Object.keys(ModelLearningSystemType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`ops-eval-and-learning-learning-systems-${type}`}
+                                  name="modelLearningSystems"
+                                  label={translateModelLearningSystemType(type)}
+                                  value={type}
+                                  checked={values?.modelLearningSystems.includes(
+                                    type as ModelLearningSystemType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.modelLearningSystems.indexOf(
+                                        e.target
+                                          .value as ModelLearningSystemType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === ModelLearningSystemType.OTHER &&
+                                  values.modelLearningSystems.includes(
+                                    type
+                                  ) && (
+                                    <div className="margin-left-4">
+                                      <Label
+                                        htmlFor="ops-eval-and-learning-learning-systems-other"
+                                        className="text-normal maxw-none"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.modelLearningSystemsOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="ops-eval-and-learning-learning-systems-other"
+                                        maxLength={5000}
+                                        name="modelLearningSystemsOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="ops-eval-and-learning-learning-systems-note"
+                          field="modelLearningSystemsNote"
                         />
-                      )}
-
-                      <FieldErrorMsg>
-                        {flatErrors.modelLearningSystems}
-                      </FieldErrorMsg>
-
-                      {Object.keys(ModelLearningSystemType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-learning-systems-${type}`}
-                                name="modelLearningSystems"
-                                label={translateModelLearningSystemType(type)}
-                                value={type}
-                                checked={values?.modelLearningSystems.includes(
-                                  type as ModelLearningSystemType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.modelLearningSystems.indexOf(
-                                      e.target.value as ModelLearningSystemType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === ModelLearningSystemType.OTHER &&
-                                values.modelLearningSystems.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-learning-systems-other"
-                                      className="text-normal maxw-none"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.modelLearningSystemsOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="ops-eval-and-learning-learning-systems-other"
-                                      maxLength={50}
-                                      name="modelLearningSystemsOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="ops-eval-and-learning-learning-systems-note"
-                        field="modelLearningSystemsNote"
-                      />
-                    </>
-                  )}
-                />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <FieldGroup
                   scrollElement="anticipatedChallenges"
@@ -328,15 +345,17 @@ const Learning = () => {
                   />
                 </FieldGroup>
 
-                <ReadyForReview
-                  id="ops-eval-and-learning-learning-status"
-                  field="status"
-                  sectionName={t('heading')}
-                  status={values.status}
-                  setFieldValue={setFieldValue}
-                  readyForReviewBy={readyForReviewBy}
-                  readyForReviewDts={readyForReviewDts}
-                />
+                {!loading && values.status && (
+                  <ReadyForReview
+                    id="ops-eval-and-learning-learning-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
@@ -380,11 +399,13 @@ const Learning = () => {
           currentPage={renderCurrentPage(
             9,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

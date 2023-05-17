@@ -9,6 +9,12 @@ import { FrequencyType, OverlapType, TaskStatus } from "./../../../types/graphql
 // GraphQL query operation: GetFrequency
 // ====================================================
 
+export interface GetFrequency_modelPlan_beneficiaries_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface GetFrequency_modelPlan_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
@@ -18,13 +24,14 @@ export interface GetFrequency_modelPlan_beneficiaries {
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewByUserAccount: GetFrequency_modelPlan_beneficiaries_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
 export interface GetFrequency_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

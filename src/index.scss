@@ -1,39 +1,68 @@
 // .scss settings
-@import './stylesheets/_settings.scss';
 
-// TODO: The commented lines are attempts to require Public Sans
-// through USWDS instead of using Google Fronts. Work in progress
-// @import '~uswds/src/stylesheets/settings/_settings-color.scss';
-// @import '~uswds/src/stylesheets/settings/_settings-components.scss';
-// @import '~uswds/src/stylesheets/settings/_settings-general.scss';
-// @import '~uswds/src/stylesheets/settings/_settings-spacing.scss';
-// @import '~uswds/src/stylesheets/settings/_settings-typography.scss';
-// @import '~uswds/src/stylesheets/settings/_settings-utilities.scss';
+// USWDS theme overrides
+@forward './stylesheets/_settings.scss';
 
-// @import '~uswds/src/stylesheets/core/_functions.scss';
-// @import '~uswds/src/stylesheets/core/_system-tokens.scss';
-// @import '~uswds/src/stylesheets/core/_variables.scss';
-// @import '~uswds/src/stylesheets/core/_properties.scss';
-// @import '~uswds/src/stylesheets/core/mixins/_all.scss';
+// USWDS typography/color theme used below
+@use 'uswds-core' as *;
+@use 'viewports' as *;
 
-// @import '~uswds/src/stylesheets/global/_font-face.scss';
-// @import '~uswds/src/stylesheets/lib/_normalize.scss';
+// USWDS all packages
+// @forward 'uswds';
 
-// @import '~uswds/src/stylesheets/utilities/palettes/_all.scss';
-// @import '~uswds/src/stylesheets/utilities/rules/_all.scss';
-// @import '~uswds/src/stylesheets/utilities/rules/_package.scss';
+// forward all used individual packages to reduce compile time
+@forward 'usa-accordion';
+@forward 'usa-alert';
+@forward 'usa-banner';
+@forward 'usa-breadcrumb';
+@forward 'usa-button';
+@forward 'usa-button-group';
+@forward 'usa-card';
+@forward 'usa-checkbox';
+@forward 'usa-checklist';
+@forward 'usa-combo-box';
+@forward 'usa-date-picker';
+@forward 'usa-date-range-picker';
+@forward 'usa-error-message';
+@forward 'usa-fieldset';
+@forward 'usa-file-input';
+@forward 'usa-footer';
+@forward 'usa-form';
+@forward 'usa-form-group';
+@forward 'usa-header';
+@forward 'usa-hint';
+@forward 'usa-icon';
+@forward 'usa-input';
+@forward 'usa-label';
+@forward 'usa-legend';
+@forward 'usa-link';
+@forward 'usa-list';
+@forward 'usa-media-block';
+@forward 'usa-modal';
+@forward 'usa-nav';
+@forward 'usa-pagination';
+@forward 'usa-process-list';
+@forward 'usa-radio';
+@forward 'usa-search';
+@forward 'usa-select';
+@forward 'usa-sidenav';
+@forward 'usa-summary-box';
+@forward 'usa-table';
+@forward 'usa-textarea';
+@forward 'usa-tooltip';
+@forward 'uswds-global';
+@forward 'uswds-utilities';
 
 // Vendor Styles
-@import '~font-awesome/css/font-awesome.min.css';
-@import '~@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-@import '~@trussworks/react-uswds/lib/index.css';
-@import 'uswds';
+@forward '../node_modules/font-awesome/css/font-awesome.min.css';
+@forward '../node_modules/@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
+@forward '../node_modules/@trussworks/react-uswds/lib/index.css';
 
 // Custom USWDS
-@import './stylesheets/custom.scss';
+@forward './stylesheets/custom.scss';
 
 // Print styles (used for PDF generation)
-@import './stylesheets/print.scss';
+@forward './stylesheets/print.scss';
 
 html,
 body,
@@ -49,6 +78,7 @@ body {
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: initial;
 }
 
 code {
@@ -93,6 +123,10 @@ button:disabled {
   cursor: default;
 }
 
+.fit-content {
+  width: fit-content !important;
+}
+
 .skipnav {
   top: 0;
   left: 0;
@@ -132,15 +166,22 @@ button:disabled {
     }
   }
 }
+
 .usa-summary-box__heading {
   margin-bottom: 0rem;
 }
 
-.usa-input, .usa-select {
-  max-width: none !important;
+@media screen and (min-width: $desktop) {
+  .usa-input, .usa-select, .usa-combo-box, .usa-date-picker__wrapper {
+    max-width: none !important;
+  }
 }
 
 input[type="text"]:disabled {
   color: color('disabled-dark');
   border-color: color('disabled-dark');
+}
+
+.usa-legend {
+  font-weight: $theme-font-weight-bold;
 }

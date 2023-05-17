@@ -10,7 +10,7 @@ import DatePickerWarning from '../DatePickerWarning';
 import FieldErrorMsg from '../FieldErrorMsg';
 import FieldGroup from '../FieldGroup';
 
-interface ITToolsFormComponentType {
+interface ITSolutionsFormComponentType {
   id: string;
   className?: string;
   fieldName: string;
@@ -23,6 +23,7 @@ interface ITToolsFormComponentType {
   formikValue: string | null;
   error: string;
   warning?: boolean;
+  half?: boolean;
 }
 
 export const MINTDatePicker = ({
@@ -37,8 +38,9 @@ export const MINTDatePicker = ({
   value,
   formikValue,
   error,
-  warning = true
-}: ITToolsFormComponentType) => {
+  warning = true,
+  half
+}: ITSolutionsFormComponentType) => {
   const { t: h } = useTranslation('draftModelPlan');
 
   return (
@@ -46,10 +48,13 @@ export const MINTDatePicker = ({
       <FieldGroup
         scrollElement={fieldName}
         error={!!error}
-        className={classNames(className)}
+        className={classNames(className, 'margin-right-4', {
+          'desktop:grid-col-6 padding-right-4': half
+        })}
       >
         <Label
           htmlFor={id}
+          id={`label-${id}`}
           className={classNames('usa-legend margin-top-0', {
             'text-normal': !boldLabel
           })}
@@ -67,9 +72,10 @@ export const MINTDatePicker = ({
           </div>
         )}
         <FieldErrorMsg>{error}</FieldErrorMsg>
-        <div className="width-card-lg position-relative">
+        <div className="position-relative">
           <Field
             as={DatePicker}
+            aria-labelledby={`label-${id} appointment-date-hint`}
             error={+!!error}
             id={id}
             maxLength={50}

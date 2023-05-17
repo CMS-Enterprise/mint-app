@@ -1,19 +1,14 @@
 package models
 
-import (
-	"time"
-)
-
 // PossibleOperationalSolution represents a possible solution to an Operational Need
 type PossibleOperationalSolution struct {
-	ID          int        `json:"id" db:"id"`
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
+	ID int `json:"id" db:"id"`
+	createdByRelation
+	modifiedByRelation
 
-	Name string                 `json:"name" db:"sol_name"`
-	Key  OperationalSolutionKey `json:"key" db:"sol_key"`
+	Name         string                 `json:"name" db:"sol_name"`
+	Key          OperationalSolutionKey `json:"key" db:"sol_key"`
+	TreatAsOther bool                   `json:"treatAsOther" db:"treat_as_other"`
 }
 
 // OperationalSolutionKey represents the types of OperationalSolutionKey types.
@@ -21,40 +16,40 @@ type OperationalSolutionKey string
 
 // These are the options for OperationalSolutionKey
 const (
-	OpSKMarx                      OperationalSolutionKey = "MARX"
-	OpSKHpms                      OperationalSolutionKey = "HPMS"
-	OpSKSalesforce                OperationalSolutionKey = "SALESFORCE"
-	OpSKGrantSolutions            OperationalSolutionKey = "GRANT_SOLUTIONS"
-	OpSKRfa                       OperationalSolutionKey = "RFA"
-	OpSKArs                       OperationalSolutionKey = "ARS"
-	OpSKRmada                     OperationalSolutionKey = "RMADA"
-	OpSKOutlookMailbox            OperationalSolutionKey = "OUTLOOK_MAILBOX"
-	OpSKGovdelivery               OperationalSolutionKey = "GOVDELIVERY"
-	OpSKSalesforcePortal          OperationalSolutionKey = "SALESFORCE_PORTAL"
-	OpSKMdm                       OperationalSolutionKey = "MDM"
-	OpSKCbosc                     OperationalSolutionKey = "CBOSC"
-	OpSKThroughAContractor        OperationalSolutionKey = "THROUGH_A_CONTRACTOR"
-	OpSKAcoOs                     OperationalSolutionKey = "ACO_OS"
-	OpSKAcoUI                     OperationalSolutionKey = "ACO_UI"
 	OpSKInnovation                OperationalSolutionKey = "INNOVATION"
-	OpSKIdr                       OperationalSolutionKey = "IDR"
-	OpSKCcw                       OperationalSolutionKey = "CCW"
-	OpSKMedicareAppealSystem      OperationalSolutionKey = "MEDICARE_APPEAL_SYSTEM"
-	OpSKIdos                      OperationalSolutionKey = "IDOS"
-	OpSKIsp                       OperationalSolutionKey = "ISP"
-	OpSKAnotherContractor         OperationalSolutionKey = "ANOTHER_CONTRACTOR"
-	OpSKExistingCmsDataAndProcess OperationalSolutionKey = "EXISTING_CMS_DATA_AND_PROCESS"
-	OpSKNewCmmiProcess            OperationalSolutionKey = "NEW_CMMI_PROCESS"
-	OpSKOtherNewProcess           OperationalSolutionKey = "OTHER_NEW_PROCESS"
-	OpSKInternalStaff             OperationalSolutionKey = "INTERNAL_STAFF"
-	OpSKCrossModelContract        OperationalSolutionKey = "CROSS_MODEL_CONTRACT"
-	OpSKConnect                   OperationalSolutionKey = "CONNECT"
-	OpSKOc                        OperationalSolutionKey = "OC"
-	OpSKSharedSystems             OperationalSolutionKey = "SHARED_SYSTEMS"
-	OpSKHiglas                    OperationalSolutionKey = "HIGLAS"
-	OpSKFfsCompetencyCenter       OperationalSolutionKey = "FFS_COMPETENCY_CENTER"
+	OpSKAcoOs                     OperationalSolutionKey = "ACO_OS"
 	OpSKApps                      OperationalSolutionKey = "APPS"
+	OpSKCdx                       OperationalSolutionKey = "CDX"
+	OpSKCcw                       OperationalSolutionKey = "CCW"
+	OpSKCmsBox                    OperationalSolutionKey = "CMS_BOX"
+	OpSKCmsQualtrics              OperationalSolutionKey = "CMS_QUALTRICS"
+	OpSKCbosc                     OperationalSolutionKey = "CBOSC"
+	OpSKContractor                OperationalSolutionKey = "CONTRACTOR"
+	OpSKCpiVetting                OperationalSolutionKey = "CPI_VETTING"
+	OpSKCrossModelContract        OperationalSolutionKey = "CROSS_MODEL_CONTRACT"
+	OpSKEft                       OperationalSolutionKey = "EFT"
+	OpSKExistingCmsDataAndProcess OperationalSolutionKey = "EXISTING_CMS_DATA_AND_PROCESS"
+	OpSKEdfr                      OperationalSolutionKey = "EDFR"
+	OpSKGovdelivery               OperationalSolutionKey = "GOVDELIVERY"
+	OpSKGs                        OperationalSolutionKey = "GS"
+	OpSKHdr                       OperationalSolutionKey = "HDR"
+	OpSKHpms                      OperationalSolutionKey = "HPMS"
+	OpSKHiglas                    OperationalSolutionKey = "HIGLAS"
 	OpSKIpc                       OperationalSolutionKey = "IPC"
-	OpSKMac                       OperationalSolutionKey = "MAC"
-	OpSKRmadaContractor           OperationalSolutionKey = "RMADA_CONTRACTOR"
+	OpSKIdr                       OperationalSolutionKey = "IDR"
+	OpSKInternalStaff             OperationalSolutionKey = "INTERNAL_STAFF"
+	OpSKLdg                       OperationalSolutionKey = "LDG"
+	OpSKLv                        OperationalSolutionKey = "LV"
+	OpSKMdm                       OperationalSolutionKey = "MDM"
+	OpSKMarx                      OperationalSolutionKey = "MARX"
+	OpSKOtherNewProcess           OperationalSolutionKey = "OTHER_NEW_PROCESS"
+	OpSKOutlookMailbox            OperationalSolutionKey = "OUTLOOK_MAILBOX"
+	OpSKQv                        OperationalSolutionKey = "QV"
+	OpSKRmada                     OperationalSolutionKey = "RMADA"
+	OpSKArs                       OperationalSolutionKey = "ARS"
+	OpSKConnect                   OperationalSolutionKey = "CONNECT"
+	OpSKLoi                       OperationalSolutionKey = "LOI"
+	OpSKPostPortal                OperationalSolutionKey = "POST_PORTAL"
+	OpSKRfa                       OperationalSolutionKey = "RFA"
+	OpSKSharedSystems             OperationalSolutionKey = "SHARED_SYSTEMS"
 )

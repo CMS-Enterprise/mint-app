@@ -10,7 +10,7 @@
 export interface DeletePlanFavorite_deletePlanFavorite {
   __typename: "PlanFavorite";
   modelPlanID: UUID;
-  userID: string;
+  userID: UUID;
 }
 
 export interface DeletePlanFavorite {

@@ -17,6 +17,7 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import DeleteModelPlanCollaborator from 'queries/Collaborators/DeleteModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
@@ -70,7 +71,7 @@ export const CollaboratorsContent = () => {
 
   const history = useHistory();
 
-  const { showMessageOnNextPage } = useMessage();
+  const { message, showMessageOnNextPage } = useMessage();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLastLead, setIsLastLead] = useState(false);
@@ -116,7 +117,7 @@ export const CollaboratorsContent = () => {
       .then(response => {
         if (!response?.errors) {
           setModalOpen(false);
-          if (collaborator.euaUserID === euaId) {
+          if (collaborator.userAccount.username === euaId) {
             showMessageOnNextPage(
               <SuccessRemovalMessage modelName={data?.modelPlan?.modelName} />
             );
@@ -137,13 +138,22 @@ export const CollaboratorsContent = () => {
   const RemoveCollaborator = () => {
     // i18n key for conditionally rendering text
     const selfOrCollaborator: string =
-      removeCollaborator?.euaUserID === euaId ? 'selfModal' : 'modal';
+      removeCollaborator?.userAccount.username === euaId
+        ? 'selfModal'
+        : 'modal';
 
     return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
           {t(`${selfOrCollaborator}.heading`, {
-            collaborator: removeCollaborator?.fullName
+            collaborator: removeCollaborator?.userAccount.commonName
           })}
         </PageHeading>
         <p>{t(`${selfOrCollaborator}.subheading`)}</p>
@@ -170,9 +180,12 @@ export const CollaboratorsContent = () => {
   return (
     <MainContent>
       {RemoveCollaborator()}
+
       <GridContainer>
         <Grid row gap>
           <Grid desktop={{ col: 12 }}>
+            {message && <Expire delay={45000}>{message}</Expire>}
+
             <BreadcrumbBar variant="wrap">
               <Breadcrumb>
                 <BreadcrumbLink asCustom={Link} to="/">

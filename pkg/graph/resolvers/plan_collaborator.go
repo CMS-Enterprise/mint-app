@@ -1,11 +1,15 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -20,15 +24,25 @@ import (
 //
 // A plan favorite is created for the collaborating user when the user is added as a collaborator
 func CreatePlanCollaborator(
+	ctx context.Context,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
-	checkAccess bool) (*models.PlanCollaborator, *models.PlanFavorite, error) {
-	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
-	err := BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
+	checkAccess bool,
+	getAccountInformation userhelpers.GetAccountInfoFunc) (*models.PlanCollaborator, *models.PlanFavorite, error) {
+
+	isMacUser := false
+	collabAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, input.UserName, false, isMacUser, getAccountInformation)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	collaborator := models.NewPlanCollaborator(principal.Account().ID, input.ModelPlanID, collabAccount.ID, input.TeamRole)
+	err = BaseStructPreCreate(logger, collaborator, principal, store, checkAccess)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -43,13 +57,13 @@ func CreatePlanCollaborator(
 		return nil, nil, err
 	}
 
-	planFavorite, err := PlanFavoriteCreate(logger, principal, input.EuaUserID, store, modelPlan.ID)
+	planFavorite, err := PlanFavoriteCreate(logger, principal, collabAccount.ID, store, modelPlan.ID)
 	if err != nil {
 		return retCollaborator, nil, err
 	}
 
 	if emailService != nil && emailTemplateService != nil {
-		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, input.Email, modelPlan)
+		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, addressBook, collabAccount.Email, modelPlan)
 		if err != nil {
 			return retCollaborator, planFavorite, err
 		}
@@ -61,6 +75,7 @@ func CreatePlanCollaborator(
 func sendCollaboratorAddedEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 ) error {
@@ -89,7 +104,7 @@ func sendCollaboratorAddedEmail(
 		return err
 	}
 
-	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
@@ -123,14 +138,25 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 	if err != nil {
 		return nil, err
 	}
-	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
+	retCollaborator, err := store.PlanCollaboratorDelete(logger, id, principal.Account().ID)
 	return retCollaborator, err
 }
 
-// FetchCollaboratorsByModelPlanID implements resolver logic to fetch a list of plan collaborators by a model plan ID
-func FetchCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCollaborator, error) {
-	collaborators, err := store.PlanCollaboratorsByModelPlanID(logger, modelPlanID)
-	return collaborators, err
+// PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader
+func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
+	allLoaders := loaders.Loaders(ctx)
+	collabLoader := allLoaders.PlanCollaboratorLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+
+	thunk := collabLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.([]*models.PlanCollaborator), nil
 }
 
 // FetchCollaboratorByID implements resolver logic to fetch a plan collaborator by ID
@@ -141,5 +167,5 @@ func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Stor
 
 // IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
 func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
-	return store.CheckIfCollaborator(logger, principal.ID(), modelPlanID)
+	return store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
 }

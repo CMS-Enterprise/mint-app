@@ -52,7 +52,7 @@ export const ErrorAlertMessage = ({
 }: ErrorAlertMessageProps) => (
   <button
     type="button"
-    className="usa-error-message usa-alert__text mint-error-alert__message"
+    className="usa-error-message usa-alert__text mint-error-alert__message text-left"
     onClick={() => {
       const fieldGroup = document.querySelector(`[data-scroll="${errorKey}"]`);
 

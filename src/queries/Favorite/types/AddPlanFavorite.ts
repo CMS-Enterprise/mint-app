@@ -10,7 +10,7 @@
 export interface AddPlanFavorite_addPlanFavorite {
   __typename: "PlanFavorite";
   modelPlanID: UUID;
-  userID: string;
+  userID: UUID;
 }
 
 export interface AddPlanFavorite {

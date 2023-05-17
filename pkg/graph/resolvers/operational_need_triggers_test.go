@@ -10,16 +10,17 @@ import (
 func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 	plan := suite.createModelPlan("plan for need")
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
 		"managePartCDEnrollment": false, // NEED 1, MANAGE_CD
-		// "collectPlanBids":        true, // NEED 2, MANAGE_CD &&  3 UPDATE_CONTRACT
+		// "collectPlanBids":        true, // NEED 2, MANAGE_CD
+		// "planContractUpdated":        false, // NEED 3 UPDATE_CONTRACT
 	}
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedGeneralCharacteristics.ModifiedBy)
 
 	opNeeds, err := OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NotNil(opNeeds)
@@ -39,12 +40,13 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 
 	changes = map[string]interface{}{
 		"managePartCDEnrollment": true,  // NEED 1, MANAGE_CD
-		"collectPlanBids":        false, // NEED 2, MANAGE_CD &&  3 UPDATE_CONTRACT
+		"collectPlanBids":        false, // NEED 2, MANAGE_CD
+		"planContractUpdated":    false, // NEED 3 UPDATE_CONTRACT
 	}
 
 	updatedGeneralCharacteristics, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedGeneralCharacteristics.ModifiedBy)
 
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -61,7 +63,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {
 func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 	plan := suite.createModelPlan("plan for complex need")
 
-	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(oelExisting)
 
@@ -94,7 +96,7 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
-	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals)
+	processPart = findOpNeed(opNeeds, models.OpNKProcessPartAppeals) // true for any {appeal_performance,appeal_feedback,appeal_payments,appeal_other}
 	suite.NotNil(processPart)
 	suite.True(*processPart.Needed)
 
@@ -137,7 +139,7 @@ func (suite *ResolverSuite) TestCompositeColumnNeedTrigger() {
 func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 	plan := suite.createModelPlan("plan for selection need")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -201,12 +203,12 @@ func (suite *ResolverSuite) TestSelectionTypeTrigger() {
 
 	opNeeds, err = OperationalNeedCollectionGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
-	colRevScoreApp := findOpNeed(opNeeds, models.OpNKColRevScoreApp)
-	suite.NotNil(colRevScoreApp)
-	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon)
+	revScoreApp := findOpNeed(opNeeds, models.OpNKRevScoreApp) // TRUE for {LOI,NOFO,APPLICATION_COLLECTION_TOOL} on column selection method
+	suite.NotNil(revScoreApp)
+	appSuppCont := findOpNeed(opNeeds, models.OpNKAppSupportCon) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
 	suite.NotNil(appSuppCont)
 
-	suite.True(*colRevScoreApp.Needed)
+	suite.True(*revScoreApp.Needed)
 	suite.True(*appSuppCont.Needed)
 
 }

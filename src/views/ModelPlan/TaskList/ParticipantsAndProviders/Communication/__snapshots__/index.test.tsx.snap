@@ -94,122 +94,127 @@ exports[`Model Plan Communication matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="participants-and-providers-communication-form"
   >
-    <legend
-      class="usa-label"
-    >
-      How will you communicate with participants?
-    </legend>
     <div
-      class="mint-checkbox usa-checkbox"
+      class="usa-form-group"
+      data-scroll="communicationMethod"
     >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-communication-method-IT_TOOL"
-        name="communicationMethod"
-        type="checkbox"
-        value="IT_TOOL"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-communication-method-IT_TOOL"
+      <legend
+        class="usa-label"
       >
-        Manage ongoing communications with participants using an IT tool
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-communication-method-MASS_EMAIL"
-        name="communicationMethod"
-        type="checkbox"
-        value="MASS_EMAIL"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-communication-method-MASS_EMAIL"
+        How will you communicate with participants?
+      </legend>
+      <div
+        class="mint-checkbox usa-checkbox"
       >
-        Send mass emails to new participants
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-communication-method-OTHER"
-        name="communicationMethod"
-        type="checkbox"
-        value="OTHER"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-communication-method-OTHER"
-      >
-        Other
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="participants-and-providers-communication-method-NO_COMMUNICATION"
-        name="communicationMethod"
-        type="checkbox"
-        value="NO_COMMUNICATION"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="participants-and-providers-communication-method-NO_COMMUNICATION"
-      >
-        We are not planning to communicate
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-communication-method-IT_TOOL"
+          name="communicationMethod"
+          type="checkbox"
+          value="IT_TOOL"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-communication-method-IT_TOOL"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
+          Manage ongoing communications with participants using an IT tool
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-communication-method-MASS_EMAIL"
+          name="communicationMethod"
+          type="checkbox"
+          value="MASS_EMAIL"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-communication-method-MASS_EMAIL"
+        >
+          Send mass emails to new participants
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-communication-method-OTHER"
+          name="communicationMethod"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-communication-method-OTHER"
+        >
+          Other
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="participants-and-providers-communication-method-NO_COMMUNICATION"
+          name="communicationMethod"
+          type="checkbox"
+          value="NO_COMMUNICATION"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="participants-and-providers-communication-method-NO_COMMUNICATION"
+        >
+          We are not planning to communicate
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
     </div>
     <div
       class="usa-form-group margin-y-4 margin-bottom-8"
@@ -357,14 +362,16 @@ exports[`Model Plan Communication matches snapshot 1`] = `
           >
             Please specify
           </label>
-          <input
-            class="usa-input maxw-none"
+          <textarea
+            aria-labelledby="label-participants-and-providers-risk-type-other hint-participants-and-providers-risk-type-other"
+            class="maxw-none mint-textarea usa-textarea"
             data-testid="participants-and-providers-risk-type-other"
             id="participants-and-providers-risk-type-other"
-            maxlength="50"
+            maxlength="5000"
             name="riskOther"
-            value="Programmatic Risk"
-          />
+          >
+            Programmatic Risk
+          </textarea>
         </div>
       </fieldset>
       <div

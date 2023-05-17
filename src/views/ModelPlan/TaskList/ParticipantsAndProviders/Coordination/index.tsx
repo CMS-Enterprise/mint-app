@@ -10,13 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -24,6 +24,8 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
 import {
   GetCoordination as GetCoordinationType,
@@ -69,11 +71,18 @@ export const Coordination = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
+    need => need.modifiedDts
+  );
+
+  // If redirected from IT Solutions, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: string) => {
     update({
       variables: {
         id,
@@ -95,6 +104,8 @@ export const Coordination = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -109,10 +120,10 @@ export const Coordination = () => {
     coordinateWork: coordinateWork ?? null,
     coordinateWorkNote: coordinateWorkNote ?? '',
     gainsharePayments: gainsharePayments ?? null,
-    gainsharePaymentsTrack: gainsharePaymentsTrack || null,
+    gainsharePaymentsTrack: gainsharePaymentsTrack ?? null,
     gainsharePaymentsNote: gainsharePaymentsNote ?? '',
     participantsIds: participantsIds ?? [],
-    participantsIdsOther: participantsIdsOther || '',
+    participantsIdsOther: participantsIdsOther ?? '',
     participantsIDSNote: participantsIDSNote ?? ''
   };
 
@@ -188,7 +199,7 @@ export const Coordination = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-coordination-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -313,77 +324,97 @@ export const Coordination = () => {
                   />
                 </FieldGroup>
 
-                <FieldArray
-                  name="participantsIds"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">{t('collectTINs')}</legend>
-                      <p className="text-base margin-0 line-height-body-3">
-                        {t('collectTINsInfo')}
-                      </p>
-                      <FieldErrorMsg>
-                        {flatErrors.participantsIds}
-                      </FieldErrorMsg>
+                <FieldGroup
+                  scrollElement="participantsIds"
+                  error={!!flatErrors.participantsIds}
+                >
+                  <FieldArray
+                    name="participantsIds"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('collectTINs')}
+                        </legend>
 
-                      {Object.keys(ParticipantsIDType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`participants-and-providers-participant-id-${type}`}
-                                name="participantsIds"
-                                label={translateParticipantIDType(type)}
-                                value={type}
-                                checked={values?.participantsIds.includes(
-                                  type as ParticipantsIDType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.participantsIds.indexOf(
-                                      e.target.value as ParticipantsIDType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === ('OTHER' as ParticipantsIDType) &&
-                                values.participantsIds.includes(type) && (
-                                  <div className="margin-left-4">
-                                    <Label
-                                      htmlFor="participants-and-providers-participant-id-other"
-                                      className="text-normal margin-top-1"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.participantsIdsOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="participants-and-providers-participant-id-other"
-                                      data-testid="participants-and-providers-participant-id-other"
-                                      maxLength={50}
-                                      name="participantsIdsOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="participants-and-providers-participant-id-note"
-                        field="participantsIDSNote"
-                      />
-                    </>
-                  )}
-                />
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="ops-eval-and-learning-data-needed-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+
+                        <p className="text-base margin-0 line-height-body-3">
+                          {t('collectTINsInfo')}
+                        </p>
+
+                        <FieldErrorMsg>
+                          {flatErrors.participantsIds}
+                        </FieldErrorMsg>
+
+                        {Object.keys(ParticipantsIDType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`participants-and-providers-participant-id-${type}`}
+                                  name="participantsIds"
+                                  label={translateParticipantIDType(type)}
+                                  value={type}
+                                  checked={values?.participantsIds.includes(
+                                    type as ParticipantsIDType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.participantsIds.indexOf(
+                                        e.target.value as ParticipantsIDType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === ('OTHER' as ParticipantsIDType) &&
+                                  values.participantsIds.includes(type) && (
+                                    <div className="margin-left-4">
+                                      <Label
+                                        htmlFor="participants-and-providers-participant-id-other"
+                                        className="text-normal margin-top-1"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.participantsIdsOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="participants-and-providers-participant-id-other"
+                                        data-testid="participants-and-providers-participant-id-other"
+                                        maxLength={5000}
+                                        name="participantsIdsOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="participants-and-providers-participant-id-note"
+                          field="participantsIDSNote"
+                        />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

@@ -17,6 +17,7 @@ export default gql`
         createdDts
         optionalNotes
         otherType
+        numLinkedSolutions
       }
     }
   }

@@ -1,8 +1,13 @@
+@use 'viewports' as *;
+
 .milestone-form {
-  .fieldGroup__wrapper {
-    display: flex;
-    grid-gap: units(3);
-    align-items: flex-end;
-    flex-wrap: wrap;
+  .datepicker__wrapper {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: units(3);
+
+    @media screen and (max-width: $desktop) {
+      grid-template-columns: 1fr;
+    }
   }
 }

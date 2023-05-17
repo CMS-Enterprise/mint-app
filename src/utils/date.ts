@@ -1,56 +1,22 @@
 import { DateTime } from 'luxon';
 
-export const parseAsDate = (date: string) =>
-  DateTime.fromISO(date, { zone: 'utc' });
-
-export const parseAsLocalTime = (date: string) => DateTime.fromISO(date);
-
-export const formatDateAndIgnoreTimezone = (date: string) =>
-  parseAsDate(date).toFormat('MMMM d yyyy');
-
-export const formatDate = (date: string | DateTime, format?: string) => {
-  const dateFormat = format || 'MMMM d, yyyy';
-  // ISO String
-  if (typeof date === 'string') {
-    return parseAsLocalTime(date).toFormat(dateFormat);
-  }
-
-  // luxon DateTime
-  if (date instanceof DateTime) {
-    return date.toFormat(dateFormat);
-  }
-
-  return '';
-};
-
-type ContractDate = {
-  day: string | null;
-  month: string | null;
-  year: string | null;
-};
-
-export const formatContractDate = (date: ContractDate): string => {
-  const { month, day, year } = date;
-
-  const parts = [month, day, year];
-  return parts
-    .filter((value: string | null) => value && value.length > 0)
-    .join('/');
-};
+type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy';
 
 /**
- * Returns the input parameter's fiscal year
- * FY 2021 : October 1 2020 - September 30 2021
- * FY 2022 : October 1 2021 - September 30 2022
- * @param date DateTime date object
+ * Output local timezoned dates from iso string.
+ * Typically used for dates generated with time, or server generated dates
+ * Dates may differ depending on local time zone
  */
-export const getFiscalYear = (date: DateTime): number => {
-  const { month, year } = date;
-  if (month >= 10) {
-    return year + 1;
-  }
-  return year;
-};
+export const formatDateLocal = (date: string, format: DateFormat) =>
+  DateTime.fromISO(date).toFormat(format);
+
+/**
+ * Output UTC timezoned dates from iso string.
+ * Typically used for dates from user input, where utc timezone needs to be set
+ * explicitly in order to match timezoneless dates within a iso string correctly.
+ */
+export const formatDateUtc = (date: string, format: DateFormat) =>
+  DateTime.fromISO(date, { zone: 'UTC' }).toFormat(format);
 
 export const getTimeElapsed = (discussionCreated: string) => {
   const now = DateTime.local();
@@ -63,13 +29,19 @@ export const getTimeElapsed = (discussionCreated: string) => {
   let dateString = '';
 
   Object.keys(timePassed).forEach(time => {
-    if (timePassed[time as keyof typeof getTimeElapsed] >= 1) {
-      const floatTime = timePassed[time as keyof typeof getTimeElapsed];
-      dateString += `${parseInt(floatTime, 10)} ${
-        timePassed[time as keyof typeof getTimeElapsed] >= 2
-          ? time
-          : time.slice(0, -1) // If singular, remove last letter 's's from time string
-      } `;
+    if (Math.abs(timePassed[time as keyof typeof getTimeElapsed]) >= 1) {
+      const floatTime = Math.round(
+        Math.abs(timePassed[time as keyof typeof getTimeElapsed])
+      );
+
+      // Only show parent most level of time, rather than all increments
+      if (dateString === '') {
+        dateString += `${floatTime} ${
+          timePassed[time as keyof typeof getTimeElapsed] !== 1
+            ? time
+            : time.slice(0, -1) // If singular, remove last letter 's's from time string
+        } `;
+      }
     }
   });
 

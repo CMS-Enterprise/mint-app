@@ -94,7 +94,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-data-sharing-form"
   >
     <div
@@ -129,14 +129,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           -Select-
         </option>
         <option
-          value="AT_SOME_OTHER_POINT_IN_TIME"
-        >
-          At some other point in time
-        </option>
-        <option
           value="DURING_APPLICATION_PERIOD"
         >
           During application period
+        </option>
+        <option
+          value="SHORTLY_BEFORE_THE_START_DATE"
+        >
+          Shortly before the start date
         </option>
         <option
           value="EARLY_IN_THE_FIRST_PERFORMANCE_YEAR"
@@ -144,24 +144,24 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Early in the first performance year
         </option>
         <option
-          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
-        >
-          In the subsequent performance year
-        </option>
-        <option
           value="LATER_IN_THE_FIRST_PERFORMANCE_YEAR"
         >
           Later in the first performance year
         </option>
         <option
+          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
+        >
+          In the subsequent performance year
+        </option>
+        <option
+          value="AT_SOME_OTHER_POINT_IN_TIME"
+        >
+          At some other point in time
+        </option>
+        <option
           value="NOT_PLANNING_TO_DO_THIS"
         >
           Not planning to do this
-        </option>
-        <option
-          value="SHORTLY_BEFORE_THE_START_DATE"
-        >
-          Shortly before the start date
         </option>
         <option
           value="OTHER"
@@ -178,14 +178,13 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         class="usa-label maxw-none text-normal"
         data-testid="label"
         for="ops-eval-and-learning-data-sharing-frequency"
+        id="label-ops-eval-and-learning-data-sharing-frequency"
       >
         How often do you anticipate sharing data?
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-data-sharing-frequency"
         >
           <span
@@ -205,7 +204,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-4-placeholder"
               >
                 0 selected
@@ -219,6 +218,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
                   aria-describedby="react-select-4-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-sharing-frequency"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -323,14 +323,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           -Select-
         </option>
         <option
-          value="AT_SOME_OTHER_POINT_IN_TIME"
-        >
-          At some other point in time
-        </option>
-        <option
           value="DURING_APPLICATION_PERIOD"
         >
           During application period
+        </option>
+        <option
+          value="SHORTLY_BEFORE_THE_START_DATE"
+        >
+          Shortly before the start date
         </option>
         <option
           value="EARLY_IN_THE_FIRST_PERFORMANCE_YEAR"
@@ -338,24 +338,24 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Early in the first performance year
         </option>
         <option
-          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
-        >
-          In the subsequent performance year
-        </option>
-        <option
           value="LATER_IN_THE_FIRST_PERFORMANCE_YEAR"
         >
           Later in the first performance year
         </option>
         <option
+          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
+        >
+          In the subsequent performance year
+        </option>
+        <option
+          value="AT_SOME_OTHER_POINT_IN_TIME"
+        >
+          At some other point in time
+        </option>
+        <option
           value="NOT_PLANNING_TO_DO_THIS"
         >
           Not planning to do this
-        </option>
-        <option
-          value="SHORTLY_BEFORE_THE_START_DATE"
-        >
-          Shortly before the start date
         </option>
         <option
           value="OTHER"
@@ -372,14 +372,13 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         class="usa-label maxw-none text-normal"
         data-testid="label"
         for="ops-eval-and-learning-data-collection-frequency"
+        id="label-ops-eval-and-learning-data-collection-frequency"
       >
         How often do you anticipate collecting data?
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-data-collection-frequency"
         >
           <span
@@ -399,7 +398,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-5-placeholder"
               >
                 0 selected
@@ -413,6 +412,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
                   aria-describedby="react-select-5-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-collection-frequency"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -514,14 +514,14 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           -Select-
         </option>
         <option
-          value="AT_SOME_OTHER_POINT_IN_TIME"
-        >
-          At some other point in time
-        </option>
-        <option
           value="DURING_APPLICATION_PERIOD"
         >
           During application period
+        </option>
+        <option
+          value="SHORTLY_BEFORE_THE_START_DATE"
+        >
+          Shortly before the start date
         </option>
         <option
           value="EARLY_IN_THE_FIRST_PERFORMANCE_YEAR"
@@ -529,24 +529,24 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
           Early in the first performance year
         </option>
         <option
-          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
-        >
-          In the subsequent performance year
-        </option>
-        <option
           value="LATER_IN_THE_FIRST_PERFORMANCE_YEAR"
         >
           Later in the first performance year
         </option>
         <option
+          value="IN_THE_SUBSEQUENT_PERFORMANCE_YEAR"
+        >
+          In the subsequent performance year
+        </option>
+        <option
+          value="AT_SOME_OTHER_POINT_IN_TIME"
+        >
+          At some other point in time
+        </option>
+        <option
           value="NOT_PLANNING_TO_DO_THIS"
         >
           Not planning to do this
-        </option>
-        <option
-          value="SHORTLY_BEFORE_THE_START_DATE"
-        >
-          Shortly before the start date
         </option>
         <option
           value="OTHER"
@@ -564,14 +564,16 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
         >
           Please specify
         </label>
-        <input
-          class="usa-input maxw-none"
+        <textarea
+          aria-labelledby="label-ops-eval-and-learning-data-reporting-starts-other hint-ops-eval-and-learning-data-reporting-starts-other"
+          class="maxw-none mint-textarea usa-textarea"
           data-testid="ops-eval-and-learning-data-reporting-starts-other"
           id="ops-eval-and-learning-data-reporting-starts-other"
-          maxlength="50"
+          maxlength="5000"
           name="qualityReportingStartsOther"
-          value="Other Value"
-        />
+        >
+          Other Value
+        </textarea>
       </div>
       <div
         class="margin-top-4 margin-bottom-8"

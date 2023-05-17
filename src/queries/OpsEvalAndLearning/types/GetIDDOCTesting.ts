@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, MonitoringFileType } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, MonitoringFileType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetIDDOCTesting
@@ -13,6 +13,7 @@ export interface GetIDDOCTesting_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  dataNeededForMonitoring: DataForMonitoringType[];
   iddocSupport: boolean | null;
   uatNeeds: string | null;
   stcNeeds: string | null;

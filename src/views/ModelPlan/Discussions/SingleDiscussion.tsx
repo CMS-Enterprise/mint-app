@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import AssessmentIcon from 'components/shared/AssessmentIcon';
 import IconInitial from 'components/shared/IconInitial';
 import {
-  GetModelPlanDiscussions_modelPlan_collaborators as CollaboratorsType,
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
@@ -18,7 +17,6 @@ type SingleDiscussionProps = {
   connected?: boolean;
   answerQuestion?: boolean;
   hasEditAccess?: boolean;
-  collaborators: CollaboratorsType[];
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
@@ -30,7 +28,6 @@ const SingleDiscussion = ({
   connected,
   answerQuestion,
   hasEditAccess,
-  collaborators,
   setDiscussionStatusMessage,
   setDiscussionType,
   setReply
@@ -39,26 +36,21 @@ const SingleDiscussion = ({
 
   return (
     <div className="mint-discussions__single-discussion">
-      <div className="display-flex">
+      <div className="display-flex flex-wrap flex-justify">
         {discussion.isAssessment ? (
           <div className="display-flex flex-align-center">
             <AssessmentIcon size={3} />{' '}
             <span>
-              {t('assessment')} | {discussion.createdBy}
+              {t('assessment')} | {discussion.createdByUserAccount.commonName}
             </span>
           </div>
         ) : (
           <IconInitial
-            user={
-              collaborators.find(
-                collaborator => collaborator.euaUserID === discussion.createdBy
-              )?.fullName || ''
-            }
+            user={discussion.createdByUserAccount.commonName}
             index={index}
-            className="margin-bottom-2"
           />
         )}
-        <span className="margin-left-2 margin-top-05 text-base">
+        <span className="margin-left-5 margin-top-05 text-base">
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
             : t('justNow')}

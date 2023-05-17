@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Accordion,
@@ -12,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -48,6 +50,7 @@ import './index.scss';
 
 export type DiscussionsProps = {
   modelID: string;
+  discussionID?: string | null;
   readOnly?: boolean;
   askAQuestion?: boolean;
 };
@@ -56,9 +59,22 @@ type DicussionFormPropTypes = {
   content: string;
 };
 
-const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
+const Discussions = ({
+  modelID,
+  discussionID,
+  askAQuestion,
+  readOnly
+}: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  // Used to replace query params after reply has been asnwered from linked email
+  const location = useLocation();
+  const history = useHistory();
+
+  const queryParams = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
 
   const { data, loading, error, refetch } = useQuery<
     GetModelPlanDiscussionsType,
@@ -69,13 +85,12 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     }
   });
 
-  // Used to map EUA ids to full name
-  const collaborators = data?.modelPlan?.collaborators || [];
+  const flags = useFlags();
 
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const hasEditAccess: boolean =
-    (isCollaborator || isAssessment(groups)) && !isMAC(groups);
+    (isCollaborator || isAssessment(groups, flags)) && !isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
@@ -98,9 +113,13 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     reply: createReply
   };
 
+  const [discussionReplyID, setDiscussionReplyID] = useState<
+    string | null | undefined
+  >(discussionID);
+
   const [discussionType, setDiscussionType] = useState<
     'question' | 'reply' | 'discussion'
-  >('question');
+  >(discussionReplyID ? 'reply' : 'question');
 
   const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
     'success'
@@ -110,7 +129,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
   // State used to control when the component is being rendered from a form page rather than the task-list
   const [initQuestion, setInitQuestion] = useState<boolean | undefined>(
-    askAQuestion
+    discussionReplyID ? true : askAQuestion
   );
 
   const [questionCount, setQuestionCount] = useState({
@@ -125,15 +144,43 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
     content: Yup.string().trim().required(`Please enter a ${discussionType}`)
   });
 
+  // Hook used to open reply form if discussionID present
+  useEffect(() => {
+    const discussionToReply = discussions.find(
+      dis => dis.id === discussionReplyID
+    );
+
+    if (discussionToReply && !loading) {
+      if (discussionToReply.replies.length === 0) {
+        setReply(discussionToReply);
+      } else {
+        setDiscussionReplyID(null);
+        queryParams.delete('discussionID');
+        history.replace({
+          search: queryParams.toString()
+        });
+        setInitQuestion(false);
+        setDiscussionStatus('error');
+        setDiscussionStatusMessage(
+          t('alreadyAnswered', {
+            question: discussionToReply.content
+          })
+        );
+      }
+    }
+  }, [discussionReplyID, discussions, loading, queryParams, history, t]);
+
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
-    if ((discussions?.length === 0 || initQuestion) && !readOnly) {
+    if (discussions?.length > 0 && discussionReplyID) {
+      setDiscussionType('reply');
+    } else if ((discussions?.length === 0 || initQuestion) && !readOnly) {
       setDiscussionType('question');
     } else {
       setDiscussionType('discussion');
     }
     setQuestionCount(getUnansweredQuestions(discussions));
-  }, [discussions, initQuestion, readOnly]);
+  }, [discussions, initQuestion, readOnly, discussionReplyID]);
 
   // Handles the default expanded render of accordions based on if there are more than zero questions
   const openStatus = (status: DiscussionStatus) => {
@@ -169,6 +216,11 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
       .then(response => {
         if (!response?.errors) {
           if (discussionType === 'reply' && reply?.id) {
+            setDiscussionReplyID(null);
+            queryParams.delete('discussionID');
+            history.replace({
+              search: queryParams.toString()
+            });
             handleUpdateDiscussion(reply.id);
           } else {
             refetch().then(() => {
@@ -229,7 +281,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
         {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
-          <Expire delay={3000} callback={setDiscussionStatusMessage}>
+          <Expire delay={45000} callback={setDiscussionStatusMessage}>
             <Alert className="margin-bottom-4" type={discussionStatus}>
               {discussionStatusMessage}
             </Alert>
@@ -239,18 +291,22 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
         {/* If renderType is reply, render the related question that is being answered */}
         {renderType === 'reply' && reply && (
           <div>
-            <div className="display-flex">
+            <div className="display-flex flex-wrap flex-justify">
               {reply.isAssessment ? (
                 <div className="display-flex flex-align-center">
                   <AssessmentIcon size={3} />{' '}
                   <span>
-                    {t('assessment')} | {reply.createdBy}
+                    {t('assessment')} | {reply.createdByUserAccount.commonName}
                   </span>
                 </div>
               ) : (
-                <IconInitial user={reply.createdBy} index={0} />
+                <IconInitial
+                  className="margin-bottom-1"
+                  user={reply.createdByUserAccount.commonName}
+                  index={0}
+                />
               )}
-              <span className="margin-left-2 margin-top-05 text-base">
+              <span className="margin-left-5 margin-top-05 text-base">
                 {getTimeElapsed(reply.createdDts)
                   ? getTimeElapsed(reply.createdDts) + t('ago')
                   : t('justNow')}
@@ -321,6 +377,14 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       type="button"
                       onClick={() => {
+                        if (discussionReplyID) {
+                          setDiscussionReplyID(null);
+                          queryParams.delete('discussionID');
+                          history.replace({
+                            search: queryParams.toString()
+                          });
+                          setInitQuestion(false);
+                        }
                         if (discussionType) {
                           setDiscussionStatusMessage('');
                           setDiscussionType('discussion');
@@ -384,13 +448,12 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
                     )}
                     status={DiscussionStatus[status]}
                     hasEditAccess={hasEditAccess}
-                    collaborators={collaborators}
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
                     setReply={setReply}
                   />
                 ),
-                expanded: openStatus(DiscussionStatus[status]),
+                expanded: true,
                 id: status,
                 headingLevel: 'h4'
               }
@@ -452,7 +515,7 @@ const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
 
         {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
-          <Expire delay={3000} callback={setDiscussionStatusMessage}>
+          <Expire delay={45000} callback={setDiscussionStatusMessage}>
             <Alert type={discussionStatus} className="margin-bottom-4">
               {discussionStatusMessage}
             </Alert>

@@ -1,10 +1,8 @@
 SELECT
     id,
     model_plan_id,
-    eua_user_id,
-    full_name,
+    user_id,
     team_role,
-    email,
     created_by,
     created_dts,
     modified_by,

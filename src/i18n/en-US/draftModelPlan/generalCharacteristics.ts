@@ -5,7 +5,7 @@ const generalCharacteristics = {
   isNewModel: 'Is this a new track of an existing model or a new model?',
   newModel: 'New model',
   newTrack: 'New track of an existing model',
-  resembleModel: 'Does your proposed track/model resemble any existing model?',
+  resembleModel: 'Does your proposed track/model resemble any existing models?',
   differentComponents: 'Are there different components/tracks?',
   whichExistingModel: 'Which existing model?',
   startTypeing: 'Start typing the name of the model',
@@ -38,7 +38,7 @@ const generalCharacteristics = {
     payment: 'Payment Model',
     population: 'Population-based Model',
     preventative: 'Preventative Model',
-    service: 'Serivce Delivery Model',
+    service: 'Service Delivery Model',
     shared: 'Shared Savings Model',
     other: 'Other'
   },

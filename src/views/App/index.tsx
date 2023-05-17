@@ -1,4 +1,5 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
+import ReactGA from 'react-ga4';
 import {
   BrowserRouter,
   Redirect,
@@ -13,6 +14,7 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
+import usePrevLocation from 'hooks/usePrevious';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import Cookies from 'views/Cookies';
@@ -37,7 +39,6 @@ import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'views/ModelPlan/TaskList/GeneralCharacteristics';
 import ITSolutions from 'views/ModelPlan/TaskList/ITSolutions';
-import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
@@ -47,9 +48,11 @@ import NDA from 'views/NDA';
 import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
+import RouterProvider from 'views/RouterContext';
 import Sandbox from 'views/Sandbox';
 import SubscriptionHandler from 'views/SubscriptionHandler';
 import SubscriptionWrapper from 'views/SubscriptionWrapper';
+import TaskListBannerAlert from 'views/TaskListBannerAlert';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
 import Unfollow from 'views/Unfollow';
@@ -64,14 +67,27 @@ import './index.scss';
 
 const AppRoutes = () => {
   const location = useLocation();
+  const prevLocation = usePrevLocation(location);
   const flags = useFlags();
+
+  // Track GA Pages
+  useEffect(() => {
+    if (location.pathname) {
+      ReactGA.send({ hitType: 'pageview', page: location.pathname });
+    }
+  }, [location.pathname]);
 
   // Scroll to top
   useLayoutEffect(() => {
-    if (shouldScroll(location.pathname)) {
+    if (
+      shouldScroll(
+        location.pathname + location.search,
+        (prevLocation?.pathname || '') + (prevLocation?.search || '')
+      )
+    ) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.search, prevLocation]);
 
   return (
     <Switch>
@@ -146,10 +162,6 @@ const AppRoutes = () => {
         path="/models/:modelID/task-list/payment"
         component={Payment}
       />
-      <SecureRoute
-        path="/models/:modelID/task-list/it-tools"
-        component={ITTools}
-      />
       {!flags.hideITLeadExperience && (
         <SecureRoute
           path="/models/:modelID/task-list/it-solutions"
@@ -216,33 +228,36 @@ const App = () => {
         Skip to main content
       </button>
       <BrowserRouter>
-        <AuthenticationWrapper>
-          <SubscriptionWrapper>
-            <SubscriptionHandler>
-              <MessageProvider>
-                <FlagsWrapper>
-                  <UserInfoWrapper>
-                    <NDAWrapper>
-                      <ModelAccessWrapper>
-                        <ModelInfoWrapper>
-                          <TimeOutWrapper>
-                            <NavContextProvider>
-                              <PageWrapper>
-                                <Header />
-                                <AppRoutes />
-                                <Footer />
-                              </PageWrapper>
-                            </NavContextProvider>
-                          </TimeOutWrapper>
-                        </ModelInfoWrapper>
-                      </ModelAccessWrapper>
-                    </NDAWrapper>
-                  </UserInfoWrapper>
-                </FlagsWrapper>
-              </MessageProvider>
-            </SubscriptionHandler>
-          </SubscriptionWrapper>
-        </AuthenticationWrapper>
+        <RouterProvider>
+          <AuthenticationWrapper>
+            <SubscriptionWrapper>
+              <SubscriptionHandler>
+                <MessageProvider>
+                  <FlagsWrapper>
+                    <UserInfoWrapper>
+                      <NDAWrapper>
+                        <ModelAccessWrapper>
+                          <ModelInfoWrapper>
+                            <TimeOutWrapper>
+                              <NavContextProvider>
+                                <PageWrapper>
+                                  <Header />
+                                  <TaskListBannerAlert />
+                                  <AppRoutes />
+                                  <Footer />
+                                </PageWrapper>
+                              </NavContextProvider>
+                            </TimeOutWrapper>
+                          </ModelInfoWrapper>
+                        </ModelAccessWrapper>
+                      </NDAWrapper>
+                    </UserInfoWrapper>
+                  </FlagsWrapper>
+                </MessageProvider>
+              </SubscriptionHandler>
+            </SubscriptionWrapper>
+          </AuthenticationWrapper>
+        </RouterProvider>
       </BrowserRouter>
     </>
   );

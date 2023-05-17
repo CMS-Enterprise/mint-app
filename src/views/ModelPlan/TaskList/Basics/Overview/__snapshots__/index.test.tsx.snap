@@ -159,11 +159,13 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         <label
           class="usa-label"
           for="ModelType-Problem"
+          id="label-ModelType-Problem"
         >
           Problem statement
         </label>
         <textarea
-          class="usa-textarea height-15"
+          aria-labelledby="label-ModelType-Problem hint-ModelType-Problem"
+          class="usa-textarea"
           id="ModelType-Problem"
           name="problem"
         />
@@ -175,16 +177,19 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         <label
           class="usa-label"
           for="ModelType-Goal"
+          id="label-ModelType-Goal"
         >
           Goal
         </label>
         <span
           class="usa-hint display-block text-normal"
+          id="hint-ModelType-Goal"
         >
           Please include the high level goal of the program and a description of the project.
         </span>
         <textarea
-          class="usa-textarea height-15"
+          aria-labelledby="label-ModelType-Goal hint-ModelType-Goal"
+          class="usa-textarea"
           id="ModelType-Goal"
           name="goal"
         />
@@ -196,11 +201,13 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         <label
           class="usa-label"
           for="ModelType-testInterventions"
+          id="label-ModelType-testInterventions"
         >
           Test Interventions
         </label>
         <textarea
-          class="usa-textarea height-15"
+          aria-labelledby="label-ModelType-testInterventions hint-ModelType-testInterventions"
+          class="usa-textarea"
           id="ModelType-testInterventions"
           name="testInterventions"
         />

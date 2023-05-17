@@ -3,18 +3,25 @@ package subscribers
 import (
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
+// OnTaskListSectionLockChangedUnsubscribedCallback is a callback that will be called when a TaskListSectionLockChangedSubscriber is unsubscribed
+type OnTaskListSectionLockChangedUnsubscribedCallback func(ps pubsub.PubSub, subscriber pubsub.Subscriber, modelPlanID uuid.UUID)
+
 // TaskListSectionLockChangedSubscriber is a Subscriber definition to receive TaskListSectionLockStatusChanged payloads
 type TaskListSectionLockChangedSubscriber struct {
-	ID        uuid.UUID
-	Principal string
-	Channel   chan *model.TaskListSectionLockStatusChanged
+	ID             uuid.UUID
+	Principal      authentication.Principal
+	Channel        chan *model.TaskListSectionLockStatusChanged
+	onUnsubscribed OnTaskListSectionLockChangedUnsubscribedCallback
 }
 
 // NewTaskListSectionLockChangedSubscriber is a constructor to create a new TaskListSectionLockChangedSubscriber
-func NewTaskListSectionLockChangedSubscriber(Principal string) (*TaskListSectionLockChangedSubscriber, error) {
+func NewTaskListSectionLockChangedSubscriber(Principal authentication.Principal) (*TaskListSectionLockChangedSubscriber, error) {
 	id, err := uuid.NewUUID()
 	if err != nil {
 		return nil, err
@@ -29,22 +36,34 @@ func NewTaskListSectionLockChangedSubscriber(Principal string) (*TaskListSection
 }
 
 // GetID returns this Subscriber's unique identifying token
-func (t TaskListSectionLockChangedSubscriber) GetID() string {
+func (t *TaskListSectionLockChangedSubscriber) GetID() string {
 	return t.ID.String()
 }
 
 // GetPrincipal returns this Subscriber's associated EUAID
-func (t TaskListSectionLockChangedSubscriber) GetPrincipal() string {
+func (t *TaskListSectionLockChangedSubscriber) GetPrincipal() authentication.Principal {
 	return t.Principal
 }
 
 // Notify will be called by the PubSub service when an event this Subscriber is registered for is dispatched
-func (t TaskListSectionLockChangedSubscriber) Notify(payload interface{}) {
+func (t *TaskListSectionLockChangedSubscriber) Notify(payload interface{}) {
 	typedPayload := payload.(model.TaskListSectionLockStatusChanged)
 	t.Channel <- &typedPayload
 }
 
+// NotifyUnsubscribed will be called by the PubSub service when this Subscriber is unsubscribed
+func (t *TaskListSectionLockChangedSubscriber) NotifyUnsubscribed(ps *pubsub.ServicePubSub, sessionID uuid.UUID) {
+	if t.onUnsubscribed != nil {
+		t.onUnsubscribed(ps, t, sessionID)
+	}
+}
+
 // GetChannel provides this Subscriber's feedback channel
-func (t TaskListSectionLockChangedSubscriber) GetChannel() <-chan *model.TaskListSectionLockStatusChanged {
+func (t *TaskListSectionLockChangedSubscriber) GetChannel() <-chan *model.TaskListSectionLockStatusChanged {
 	return t.Channel
+}
+
+// SetOnUnsubscribedCallback is an optional callback that will be called when this Subscriber is unsubscribed
+func (t *TaskListSectionLockChangedSubscriber) SetOnUnsubscribedCallback(onUnsubscribed OnTaskListSectionLockChangedUnsubscribedCallback) {
+	t.onUnsubscribed = onUnsubscribed
 }

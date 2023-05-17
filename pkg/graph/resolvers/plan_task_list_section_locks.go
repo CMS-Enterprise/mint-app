@@ -67,14 +67,8 @@ func (p PlanTaskListSectionLocksResolverImplementation) GetTaskListSectionLocks(
 }
 
 // SubscribeTaskListSectionLockChanges creates a Subscriber and registers it for the pubsubevents.TaskListSectionLocksChanged event
-func (p PlanTaskListSectionLocksResolverImplementation) SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	subscriber, err := subscribers.NewTaskListSectionLockChangedSubscriber(principal)
-	if err != nil {
-		return nil, err
-	}
-
+func (p PlanTaskListSectionLocksResolverImplementation) SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, subscriber *subscribers.TaskListSectionLockChangedSubscriber, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	ps.Subscribe(modelPlanID, pubsubevents.TaskListSectionLocksChanged, subscriber, onDisconnect)
-
 	return subscriber.GetChannel(), nil
 }
 
@@ -88,15 +82,15 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 	}
 
 	lockStatus, sectionWasLocked := modelLocks[section]
-	if sectionWasLocked && lockStatus.LockedBy != principal.ID() {
-		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedBy)
+	if sectionWasLocked && lockStatus.LockedByUserAccount.ID != principal.Account().ID {
+		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedByUserAccount.ID)
 	}
 
 	status := model.TaskListSectionLockStatus{
-		ModelPlanID:  modelPlanID,
-		Section:      section,
-		LockedBy:     principal.ID(),
-		IsAssessment: principal.AllowASSESSMENT(),
+		ModelPlanID:         modelPlanID,
+		Section:             section,
+		LockedByUserAccount: principal.Account(),
+		IsAssessment:        principal.AllowASSESSMENT(),
 	}
 
 	planTaskListSessionLocks.Lock()
@@ -117,14 +111,14 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 // UnlockTaskListSection will unlock the provided task list section on the provided model
 //
 //	This method will fail if the provided principal is not the person who locked the task list section
-func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
+func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, userID uuid.UUID, actionType model.ActionType) (bool, error) {
 	if !isSectionLocked(modelPlanID, section) {
 		return false, nil
 	}
 
 	status := planTaskListSessionLocks.modelSections[modelPlanID][section]
-	if !isUserAuthorizedToEditLock(status, principal) {
-		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
+	if !isUserAuthorizedToEditLock(status, userID) {
+		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, userID, status.LockedByUserAccount.ID)
 	}
 
 	deleteTaskListLockSection(ps, modelPlanID, section, status, actionType)
@@ -143,8 +137,8 @@ func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section 
 	})
 }
 
-func isUserAuthorizedToEditLock(status model.TaskListSectionLockStatus, principal string) bool {
-	return principal == status.LockedBy
+func isUserAuthorizedToEditLock(status model.TaskListSectionLockStatus, userID uuid.UUID) bool {
+	return userID == status.LockedByUserAccount.ID
 }
 
 // UnlockAllTaskListSections will unlock all task list sections on the provided model
@@ -175,38 +169,93 @@ func GetTaskListSectionLocks(modelPlanID uuid.UUID) ([]*model.TaskListSectionLoc
 	return NewPlanTaskListSectionLocksResolverImplementation().GetTaskListSectionLocks(modelPlanID)
 }
 
-// SubscribeTaskListSectionLockChanges is a convenience relay method to call the corresponding method on a resolver implementation
-func SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnect)
+// internalSubscribeToTaskListSectionLockChanges creates a new
+// subscriber and subscribes it to the pubsubevents.TaskListSectionLocksChanged
+// event. It returns the subscriber's channel and any error that occurred.
+func internalSubscribeToTaskListSectionLockChanges(
+	ps pubsub.PubSub,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	onDisconnect <-chan struct{},
+	onUnsubscribedCallback subscribers.OnTaskListSectionLockChangedUnsubscribedCallback,
+) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+	subscriber, err := subscribers.NewTaskListSectionLockChangedSubscriber(principal)
+	if err != nil {
+		return nil, err
+	}
+
+	subscriber.SetOnUnsubscribedCallback(onUnsubscribedCallback)
+
+	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(
+		ps,
+		modelPlanID,
+		subscriber,
+		onDisconnect,
+	)
 }
 
-// OnLockTaskListSectionContext maintains a webhook monitoring changes to task list sections. Once that webhook dies it will auto-unlock any section locked by that EUAID.
-func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	onDone := make(chan struct{})
+// getOwnedSections returns a list of task list sections owned by a specific principal
+func getOwnedSections(modelSectionLocks sectionMap, subscriber pubsub.Subscriber) []models.TaskListSection {
+	var ownedSections []models.TaskListSection
 
-	go func(ps pubsub.PubSub, modelPlanID uuid.UUID) {
-		r := <-onDisconnect
-
-		ownedSectionLocks := make(map[models.TaskListSection]bool)
-		modelSectionLocks := planTaskListSessionLocks.modelSections[modelPlanID]
-		for section, status := range modelSectionLocks {
-			if status.LockedBy == principal {
-				ownedSectionLocks[section] = true
-			}
+	for section, status := range modelSectionLocks {
+		if status.LockedByUserAccount.ID == subscriber.GetPrincipal().Account().ID {
+			ownedSections = append(ownedSections, section)
 		}
+	}
 
-		for section := range ownedSectionLocks {
-			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.ActionTypeNormal)
+	return ownedSections
+}
 
-			if err != nil {
-				fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
-			}
+// SubscribeTaskListSectionLockChanges is a convenience relay method to call the
+// corresponding method on a resolver implementation
+func SubscribeTaskListSectionLockChanges(
+	ps pubsub.PubSub,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	onDisconnect <-chan struct{},
+) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+	return internalSubscribeToTaskListSectionLockChanges(
+		ps,
+		modelPlanID,
+		principal,
+		onDisconnect,
+		nil,
+	)
+}
+
+// OnLockTaskListSectionContext maintains a webhook monitoring changes to task
+// list sections. Once that webhook dies it will auto-unlock any section locked
+// by that EUAID.
+func OnLockTaskListSectionContext(
+	ps pubsub.PubSub,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	onDisconnect <-chan struct{},
+) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+	return internalSubscribeToTaskListSectionLockChanges(
+		ps,
+		modelPlanID,
+		principal,
+		onDisconnect,
+		onLockTaskListSectionUnsubscribeComplete,
+	)
+}
+
+func onLockTaskListSectionUnsubscribeComplete(
+	ps pubsub.PubSub,
+	subscriber pubsub.Subscriber,
+	modelPlanID uuid.UUID,
+) {
+	ownedSectionLocks := getOwnedSections(planTaskListSessionLocks.modelSections[modelPlanID], subscriber)
+
+	for _, section := range ownedSectionLocks {
+		_, err := UnlockTaskListSection(ps, modelPlanID, section, subscriber.GetPrincipal().Account().ID, model.ActionTypeNormal)
+
+		if err != nil {
+			fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error()) //TODO: can we pass a reference to the logger to the pubsub?
 		}
-
-		onDone <- r
-	}(ps, modelPlanID)
-
-	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnect)
+	}
 }
 
 // LockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
@@ -215,8 +264,8 @@ func LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models
 }
 
 // UnlockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
-func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
-	return NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, principal, actionType)
+func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section models.TaskListSection, userID uuid.UUID, actionType model.ActionType) (bool, error) {
+	return NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, userID, actionType)
 }
 
 // UnlockAllTaskListSections is a convenience relay method to call the corresponding method on a resolver implementation

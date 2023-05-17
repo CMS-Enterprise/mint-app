@@ -1,3 +1,6 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
 .model-plan-read-only {
   .description-truncated {
     .description-definition {

@@ -2,13 +2,14 @@
  * Model Plan Collaborator Access Wrapper
  * Contol access to editor routes is user is not a collaborator on a model plan
  * Reroutes to readonly routes if not collaborator
- * MINT_ASSESSMENT_NONPROD role is granted edit access to everything
+ * MINT_ASSESSMENT_NONPROD and MINT_ASSESSMENT role is granted edit access to everything
  */
 
 import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import GetIsCollaborator from 'queries/Collaborators/GetIsCollaborator';
 import {
@@ -25,11 +26,12 @@ type ModelAccessWrapperProps = {
 const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   const { pathname } = useLocation();
   const history = useHistory();
+  const flags = useFlags();
 
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
-  // Get groups to check is user has MINT_ASSESSMENT_NONPROD role
+  // Get groups to check is user has MINT_ASSESSMENT_NONPROD or MINT_ASSESSMENT role
   // If so, has full access to both task-list and read-only
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -37,7 +39,10 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
   const editable: boolean =
     pathname.split('/')[3] === 'task-list' ||
+    pathname.split('/')[3] === 'documents' ||
     pathname.split('/')[3] === 'collaborators';
+
+  const helpArticle: boolean = pathname.split('/')[1] === 'help-and-knowledge';
 
   const { data, loading } = useQuery<
     GetIsCollaboratorType,
@@ -46,7 +51,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     variables: {
       id: modelID
     },
-    skip: !editable || isMAC(groups)
+    skip: !editable || isMAC(groups) || helpArticle
   });
 
   const isCollaborator: boolean = data?.modelPlan?.isCollaborator || false;
@@ -59,7 +64,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       modelID &&
       validModelID &&
       editable &&
-      !isAssessment(groups)
+      !isAssessment(groups, flags)
     ) {
       history.replace(`/models/${modelID}/read-only/model-basics`);
     }
@@ -71,7 +76,8 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     modelID,
     validModelID,
     editable,
-    groups
+    groups,
+    flags
   ]);
 
   return <>{children}</>;

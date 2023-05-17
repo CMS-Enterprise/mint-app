@@ -94,7 +94,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-form"
   >
     <legend
@@ -116,7 +116,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-checkbox__label"
         for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
       >
-        Yes, we will get support from another agenct through IAA
+        Yes, we will get support from another agency through Inter Agency Agreement (IAA)
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -239,14 +239,13 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="ops-eval-and-learning-stakeholders"
+        id="label-ops-eval-and-learning-stakeholders"
       >
         What stakeholders do you plan to communicate with?
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-stakeholders"
         >
           <span
@@ -266,7 +265,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-3-placeholder"
               >
                 0 selected
@@ -280,6 +279,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
                   aria-describedby="react-select-3-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-stakeholders"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -449,6 +449,26 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        id="ops-eval-and-learning-contractor-support-ONE"
+        name="contractorSupport"
+        type="checkbox"
+        value="ONE"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-contractor-support-ONE"
+      >
+        One contractor to support implementation
+      </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
         id="ops-eval-and-learning-contractor-support-MULTIPLE"
         name="contractorSupport"
         type="checkbox"
@@ -479,26 +499,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         for="ops-eval-and-learning-contractor-support-NONE"
       >
         Do not plan to use an implemenation contractor
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-contractor-support-ONE"
-        name="contractorSupport"
-        type="checkbox"
-        value="ONE"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-contractor-support-ONE"
-      >
-        One contractor to support implementation
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -541,7 +541,8 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         (implementation, data analysis, quality, etc.)
       </p>
       <textarea
-        class="usa-textarea height-card"
+        aria-labelledby="label-ops-eval-and-learning-contractor-support-how hint-ops-eval-and-learning-contractor-support-how"
+        class="height-card usa-textarea"
         data-testid="ops-eval-and-learning-contractor-support-how"
         id="ops-eval-and-learning-contractor-support-how"
         name="contractorSupportHow"

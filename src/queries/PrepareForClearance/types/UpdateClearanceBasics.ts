@@ -9,9 +9,15 @@ import { PlanBasicsChanges, TaskStatus } from "./../../../types/graphql-global-t
 // GraphQL mutation operation: UpdateClearanceBasics
 // ====================================================
 
+export interface UpdateClearanceBasics_updatePlanBasics_readyForClearanceByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface UpdateClearanceBasics_updatePlanBasics {
   __typename: "PlanBasics";
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: UpdateClearanceBasics_updatePlanBasics_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

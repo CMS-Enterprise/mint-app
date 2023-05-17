@@ -1,5 +1,6 @@
 import React, { ReactNode, ReactNodeArray } from 'react';
 import ReactModal from 'react-modal';
+import { IconClose } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import noScroll from 'no-scroll';
 
@@ -10,6 +11,7 @@ type ModalProps = {
   isOpen: boolean;
   className?: string;
   scroll?: boolean;
+  shouldCloseOnOverlayClick?: boolean;
   openModal?: () => void;
   closeModal: () => void;
 };
@@ -19,6 +21,7 @@ const Modal = ({
   isOpen,
   className,
   scroll,
+  shouldCloseOnOverlayClick = false,
   openModal,
   closeModal
 }: ModalProps) => {
@@ -38,7 +41,7 @@ const Modal = ({
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
-      shouldCloseOnOverlayClick={false}
+      shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}
     >
       <button
@@ -47,7 +50,7 @@ const Modal = ({
         aria-label="Close Modal"
         onClick={closeModal}
       >
-        <i className="fa fa-times" />
+        <IconClose />
       </button>
       <div className="mint-modal__body">{children}</div>
     </ReactModal>

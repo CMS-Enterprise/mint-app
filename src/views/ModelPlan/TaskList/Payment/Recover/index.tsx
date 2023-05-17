@@ -15,10 +15,11 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -45,6 +46,7 @@ import { NotFoundPartial } from 'views/NotFound';
 import { renderCurrentPage, renderTotalPages } from '..';
 
 const Recover = () => {
+  const flags = useFlags();
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -52,7 +54,7 @@ const Recover = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     RecoverFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -64,10 +66,11 @@ const Recover = () => {
   >(GetRecover, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const {
@@ -80,7 +83,7 @@ const Recover = () => {
     anticipateReconcilingPaymentsRetrospectivelyNote,
     paymentStartDate,
     paymentStartDateNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.payments || ({} as RecoverFormType);
@@ -91,9 +94,13 @@ const Recover = () => {
     need => need.modifiedDts
   );
 
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+  const handleFormSubmit = (
+    redirect?: 'back' | 'task-list' | 'next' | string
+  ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -115,6 +122,8 @@ const Recover = () => {
             history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/it-solutions`);
           } else if (redirect) {
             history.push(redirect);
           }
@@ -181,7 +190,7 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -243,7 +252,7 @@ const Recover = () => {
                       }}
                     >
                       <FieldGroup
-                        scrollElement="payment-recover-payment"
+                        scrollElement="willRecoverPayments"
                         error={!!flatErrors.willRecoverPayments}
                         className="margin-top-4"
                       >
@@ -255,7 +264,7 @@ const Recover = () => {
                         </Label>
 
                         {itSolutionsStarted && (
-                          <ITToolsWarning
+                          <ITSolutionsWarning
                             id="payment-recover-payment-warning"
                             onClick={() =>
                               handleFormSubmit(
@@ -360,15 +369,19 @@ const Recover = () => {
                         </>
                       )}
 
-                      <ReadyForReview
-                        id="payment-status"
-                        field="status"
-                        sectionName={t('heading')}
-                        status={values.status}
-                        setFieldValue={setFieldValue}
-                        readyForReviewBy={readyForReviewBy}
-                        readyForReviewDts={readyForReviewDts}
-                      />
+                      {!loading && values.status && (
+                        <ReadyForReview
+                          id="payment-status"
+                          field="status"
+                          sectionName={t('heading')}
+                          status={values.status}
+                          setFieldValue={setFieldValue}
+                          readyForReviewBy={
+                            readyForReviewByUserAccount?.commonName
+                          }
+                          readyForReviewDts={readyForReviewDts}
+                        />
+                      )}
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
@@ -380,9 +393,11 @@ const Recover = () => {
                         >
                           {h('back')}
                         </Button>
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {h('saveAndStartNext')}
-                        </Button>
+                        {!flags.hideITLeadExperience && (
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {t('continueToITSolutions')}
+                          </Button>
+                        )}
                       </div>
                       <Button
                         type="button"

@@ -47,6 +47,7 @@ exports[`RelatedArticle matches the snapshot 1`] = `
               href="/help-and-knowledge/getting-started"
             >
               <span
+                aria-label="Articles under the Getting started category"
                 class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
                 data-testid="tag"
               >
@@ -65,61 +66,13 @@ exports[`RelatedArticle matches the snapshot 1`] = `
               class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
               data-testid="CardFooter"
             >
-              <a
+              <button
+                aria-label="Read Sample Model Plan article"
                 class="usa-button usa-button--outline"
-                href="/"
+                type="button"
               >
                 Read
-              </a>
-            </div>
-          </div>
-        </li>
-        <li
-          class="usa-card desktop:grid-col-4 article article-card--isLink"
-          data-testid="article-card"
-        >
-          <div
-            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-          >
-            <header
-              class="usa-card__header padding-0"
-              data-testid="CardHeader"
-            >
-              <h3
-                class="line-height-body-4 margin-bottom-1"
-              >
-                title
-              </h3>
-            </header>
-            <a
-              class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/it-implementation"
-            >
-              <span
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                data-testid="tag"
-              >
-                IT implementation
-              </span>
-            </a>
-            <div
-              class="usa-card__body padding-x-0 article__body"
-              data-testid="CardBody"
-            >
-              <p>
-                description
-              </p>
-            </div>
-            <div
-              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-              data-testid="CardFooter"
-            >
-              <a
-                class="usa-button usa-button--outline"
-                href="/"
-              >
-                Read
-              </a>
+              </button>
             </div>
           </div>
         </li>

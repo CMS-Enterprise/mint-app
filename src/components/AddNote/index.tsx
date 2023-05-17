@@ -57,7 +57,6 @@ const AddNote = ({ field: fieldName, id, className }: AddNoteType) => {
         <FieldGroup>
           <Field
             as={TextAreaField}
-            className="height-15"
             id={id}
             data-testid={id}
             name={fieldName}

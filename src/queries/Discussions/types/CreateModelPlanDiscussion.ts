@@ -14,7 +14,7 @@ export interface CreateModelPlanDiscussion_createPlanDiscussion {
   id: UUID;
   content: string | null;
   status: DiscussionStatus;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
 }
 

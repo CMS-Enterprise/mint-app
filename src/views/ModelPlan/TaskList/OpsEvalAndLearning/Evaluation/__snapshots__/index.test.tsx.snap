@@ -94,148 +94,158 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-evaluation-form"
   >
-    <legend
-      class="usa-label"
-    >
-      What type of evaluation approach are you considering? Select all that apply.
-    </legend>
     <div
-      class="mint-checkbox usa-checkbox"
+      class="usa-form-group"
+      data-scroll="evaluationApproaches"
     >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-evaluation-approach-COMPARISON_MATCH"
-        name="evaluationApproaches"
-        type="checkbox"
-        value="COMPARISON_MATCH"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-evaluation-approach-COMPARISON_MATCH"
+      <legend
+        class="usa-label"
       >
-        Identify a comparison/match group
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-evaluation-approach-CONTROL_INTERVENTION"
-        name="evaluationApproaches"
-        type="checkbox"
-        value="CONTROL_INTERVENTION"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-evaluation-approach-CONTROL_INTERVENTION"
+        What type of evaluation approach are you considering? Select all that apply.
+      </legend>
+      <div
+        class="mint-checkbox usa-checkbox"
       >
-        Establish control and intervention groups
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-evaluation-approach-INTERRUPTED_TIME"
-        name="evaluationApproaches"
-        type="checkbox"
-        value="INTERRUPTED_TIME"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-evaluation-approach-INTERRUPTED_TIME"
-      >
-        Interrupted time series
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-evaluation-approach-NON_MEDICARE_DATA"
-        name="evaluationApproaches"
-        type="checkbox"
-        value="NON_MEDICARE_DATA"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-evaluation-approach-NON_MEDICARE_DATA"
-      >
-        Leverage non-Medicare data (such as Medicaid data, external data sets)
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-evaluation-approach-OTHER"
-        name="evaluationApproaches"
-        type="checkbox"
-        value="OTHER"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-evaluation-approach-OTHER"
-      >
-        Other
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-evaluation-approach-COMPARISON_MATCH"
+          name="evaluationApproaches"
+          type="checkbox"
+          value="COMPARISON_MATCH"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-evaluation-approach-COMPARISON_MATCH"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
+          Identify a comparison/match group
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-evaluation-approach-CONTROL_INTERVENTION"
+          name="evaluationApproaches"
+          type="checkbox"
+          value="CONTROL_INTERVENTION"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-evaluation-approach-CONTROL_INTERVENTION"
+        >
+          Establish control and intervention groups
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-evaluation-approach-INTERRUPTED_TIME"
+          name="evaluationApproaches"
+          type="checkbox"
+          value="INTERRUPTED_TIME"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-evaluation-approach-INTERRUPTED_TIME"
+        >
+          Interrupted time series
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-evaluation-approach-NON_MEDICARE_DATA"
+          name="evaluationApproaches"
+          type="checkbox"
+          value="NON_MEDICARE_DATA"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-evaluation-approach-NON_MEDICARE_DATA"
+        >
+          Leverage non-Medicare data (such as Medicaid data, external data sets)
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-evaluation-approach-OTHER"
+          name="evaluationApproaches"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-evaluation-approach-OTHER"
+        >
+          Other
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
     </div>
     <legend
       class="usa-label"
     >
       Is Chronic Conditions Warehouse (CCW) involved in the model?
     </legend>
+    <p
+      class="text-base margin-y-1"
+    >
+      If you select either yes option, there will be additional questions to answer.
+    </p>
     <div
       class="mint-checkbox usa-checkbox"
     >
@@ -353,6 +363,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-label maxw-none"
         data-testid="label"
         for="ops-eval-and-learning-data-needed"
+        id="label-ops-eval-and-learning-data-needed"
       >
         What data do you need to monitor the model? Select all that apply.
       </label>
@@ -361,11 +372,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.
       </p>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-data-needed"
         >
           <span
@@ -385,7 +394,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-4-placeholder"
               >
                 0 selected
@@ -399,6 +408,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
                   aria-describedby="react-select-4-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-needed"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -484,14 +494,13 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         class="usa-label maxw-none"
         data-testid="label"
         for="ops-eval-and-learning-data-to-send"
+        id="label-ops-eval-and-learning-data-to-send"
       >
         What data will you send to participants? Select all that apply.
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="ops-eval-and-learning-data-to-send"
         >
           <span
@@ -511,7 +520,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-5-placeholder"
               >
                 0 selected
@@ -525,6 +534,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
                   aria-describedby="react-select-5-placeholder"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-ops-eval-and-learning-data-to-send"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"

@@ -1,40 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-  ComboboxPopover
-} from '@reach/combobox';
 import { Button, Dropdown, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
-import useUserSearch from 'hooks/useCedarUsers';
+import useMessage from 'hooks/useMessage';
 import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
-import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
+import {
+  CreateModelPlanCollaborator as CreateCollaboratorsType,
+  CreateModelPlanCollaboratorVariables
+} from 'queries/Collaborators/types/CreateModelPlanCollaborator';
 import {
   GetModelCollaborator,
   GetModelCollaborator_planCollaboratorByID as CollaboratorFormType
 } from 'queries/Collaborators/types/GetModelCollaborator';
-import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
+import {
+  UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
+  UpdateModelPlanCollaboratorVariables
+} from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
 import UpdateModelPlanCollaborator from 'queries/Collaborators/UpdateModelPlanCollaborator';
 import flattenErrors from 'utils/flattenErrors';
 import { translateTeamRole } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
-
-import '@reach/combobox/styles.css';
 
 const Collaborators = () => {
   const { modelID } = useParams<{ modelID: string }>();
@@ -43,18 +42,19 @@ const Collaborators = () => {
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
 
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Custom hook for live searching users from CEDAR
-  const foundUsers = useUserSearch(searchTerm);
+  const { showMessageOnNextPage } = useMessage();
 
   const history = useHistory();
-  const [create] = useMutation<CreateCollaboratorsType>(
-    CreateModelPlanCollaborator
-  );
-  const [update] = useMutation<UpdateModelPlanCollaboratorType>(
-    UpdateModelPlanCollaborator
-  );
+
+  const [create, { loading }] = useMutation<
+    CreateCollaboratorsType,
+    CreateModelPlanCollaboratorVariables
+  >(CreateModelPlanCollaborator);
+
+  const [update, { loading: updateLoading }] = useMutation<
+    UpdateModelPlanCollaboratorType,
+    UpdateModelPlanCollaboratorVariables
+  >(UpdateModelPlanCollaborator);
 
   const { data } = useQuery<GetModelCollaborator>(GetModelPlanCollaborator, {
     variables: {
@@ -64,21 +64,38 @@ const Collaborators = () => {
   });
 
   const collaborator =
-    data?.planCollaboratorByID ?? ({} as CollaboratorFormType);
+    data?.planCollaboratorByID ?? ({ userAccount: {} } as CollaboratorFormType);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
-    const { fullName = '', teamRole = '', euaUserID = '', email = '' } =
-      formikValues || {};
+    const {
+      userAccount: { username, commonName },
+      teamRole
+    } = formikValues || { userAccount: { userName: null } };
 
     if (collaboratorId) {
       update({
         variables: {
           id: collaboratorId,
-          newRole: teamRole
+          newRole: teamRole!
         }
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {t('successUpdateMessage', {
+                    collaborator: commonName,
+                    role: translateTeamRole(teamRole!)
+                  })}
+                </Alert>
+              </>
+            );
             history.push(`/models/${modelID}/collaborators`);
           }
         })
@@ -89,21 +106,45 @@ const Collaborators = () => {
       create({
         variables: {
           input: {
-            fullName,
-            teamRole,
-            email,
-            euaUserID,
-            modelPlanID: modelID
+            modelPlanID: modelID,
+            userName: username!,
+            teamRole: teamRole!
           }
         }
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {t('successMessage', {
+                    collaborator: commonName,
+                    role: translateTeamRole(teamRole!)
+                  })}
+                </Alert>
+              </>
+            );
             history.push(`/models/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
-          formikRef?.current?.setErrors(errors);
+          const collaboratorExistingError = errors.graphQLErrors[0]?.message.includes(
+            'unique_collaborator_per_plan'
+          );
+          if (collaboratorExistingError) {
+            formikRef?.current?.setErrors({
+              userAccount: {
+                username: t('existingMember')
+              }
+            });
+          } else {
+            formikRef?.current?.setErrors(errors);
+          }
         });
     }
   };
@@ -135,7 +176,6 @@ const Collaborators = () => {
               const {
                 errors,
                 values,
-                setErrors,
                 setFieldValue,
                 handleSubmit
               } = formikProps;
@@ -159,6 +199,7 @@ const Collaborators = () => {
                       })}
                     </ErrorAlert>
                   )}
+
                   <Form
                     onSubmit={e => {
                       handleSubmit(e);
@@ -166,73 +207,56 @@ const Collaborators = () => {
                     }}
                   >
                     <FieldGroup
-                      scrollElement="fullName"
-                      error={!!flatErrors.fullName}
+                      scrollElement="userAccount.commonName"
+                      error={!!flatErrors['userAccount.commonName']}
                     >
                       <Label
-                        htmlFor="new-plan-model-name"
-                        className="margin-bottom-1"
+                        htmlFor="model-team-cedar-contact"
+                        id="label-model-team-cedar-contact"
                       >
                         {t('teamMemberName')}
                       </Label>
-                      <FieldErrorMsg>{flatErrors.fullName}</FieldErrorMsg>
+                      <FieldErrorMsg>
+                        {flatErrors['userAccount.commonName']}
+                      </FieldErrorMsg>
 
                       {collaboratorId ? (
                         <Field
                           as={TextInput}
                           disabled
-                          error={!!flatErrors.fullName}
+                          error={!!flatErrors['userAccount.commonName']}
+                          className="margin-top-1"
                           id="collaboration-full-name"
-                          name="fullName"
+                          name="userAccount.commonName"
                         />
                       ) : (
-                        <Combobox
-                          aria-label="Cedar-Users"
-                          onSelect={item => {
-                            const foundUser = foundUsers?.userObj[item];
-                            setFieldValue('fullName', foundUser?.commonName);
-                            setFieldValue('euaUserID', foundUser?.euaUserId);
-                            setFieldValue('email', foundUser?.email);
-                          }}
-                        >
-                          <ComboboxInput
-                            className="usa-select"
-                            selectOnClick
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setSearchTerm(e?.target?.value);
-                              if (values.fullName || values.euaUserID) {
-                                setFieldValue('fullName', '');
-                                setFieldValue('euaUserID', '');
-                              }
+                        <>
+                          <Label
+                            id="hint-model-team-cedar-contact"
+                            htmlFor="model-team-cedar-contact"
+                            className="text-normal margin-top-1 margin-bottom-105 text-base"
+                            hint
+                          >
+                            {t('startTyping')}
+                          </Label>
+
+                          <OktaUserSelect
+                            id="model-team-cedar-contact"
+                            name="model-team-cedar-contact"
+                            ariaLabelledBy="label-model-team-cedar-contact"
+                            ariaDescribedBy="hint-model-team-cedar-contact"
+                            onChange={oktaUser => {
+                              setFieldValue(
+                                'userAccount.commonName',
+                                oktaUser?.displayName
+                              );
+                              setFieldValue(
+                                'userAccount.username',
+                                oktaUser?.username
+                              );
                             }}
                           />
-                          {foundUsers?.formattedUsers && (
-                            <ComboboxPopover>
-                              {foundUsers.formattedUsers.length > 0 ? (
-                                <ComboboxList>
-                                  {foundUsers.formattedUsers.map(
-                                    (user, index) => {
-                                      const str = `${user.label}, ${user.value}`;
-                                      return (
-                                        <ComboboxOption
-                                          key={str}
-                                          index={index}
-                                          value={str}
-                                        />
-                                      );
-                                    }
-                                  )}
-                                </ComboboxList>
-                              ) : (
-                                <span className="display-block margin-1">
-                                  {h('noResults')}
-                                </span>
-                              )}
-                            </ComboboxPopover>
-                          )}
-                        </Combobox>
+                        </>
                       )}
                     </FieldGroup>
 
@@ -240,7 +264,7 @@ const Collaborators = () => {
                       scrollElement="teamRole"
                       error={!!flatErrors.teamRole}
                     >
-                      <Label htmlFor="IntakeForm-RequesterComponent">
+                      <Label htmlFor="collaborator-role">
                         {t('teamMemberRole')}
                       </Label>
                       <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>
@@ -285,13 +309,17 @@ const Collaborators = () => {
                     <div className="margin-y-4 display-block">
                       <Button
                         type="submit"
-                        disabled={!values.fullName || !values.teamRole}
-                        onClick={() => setErrors({})}
+                        disabled={
+                          !values.userAccount.commonName || !values.teamRole
+                        }
                       >
                         {!collaboratorId
                           ? t('addTeamMemberButton')
                           : t('updateTeamMember')}
                       </Button>
+                      {(loading || updateLoading) && (
+                        <Spinner className="margin-left-2" />
+                      )}
                     </div>
                   </Form>
                 </>

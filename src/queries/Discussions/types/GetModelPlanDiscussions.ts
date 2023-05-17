@@ -9,11 +9,14 @@ import { DiscussionStatus } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetModelPlanDiscussions
 // ====================================================
 
-export interface GetModelPlanDiscussions_modelPlan_collaborators {
-  __typename: "PlanCollaborator";
-  id: UUID;
-  euaUserID: string;
-  fullName: string;
+export interface GetModelPlanDiscussions_modelPlan_discussions_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
+}
+
+export interface GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUserAccount {
+  __typename: "UserAccount";
+  commonName: string;
 }
 
 export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
@@ -22,19 +25,21 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   discussionID: UUID;
   content: string | null;
   isAssessment: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
+  createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_replies_createdByUserAccount;
 }
 
 export interface GetModelPlanDiscussions_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   isAssessment: boolean;
+  createdByUserAccount: GetModelPlanDiscussions_modelPlan_discussions_createdByUserAccount;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];
 }
 
@@ -42,7 +47,6 @@ export interface GetModelPlanDiscussions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   isCollaborator: boolean;
-  collaborators: GetModelPlanDiscussions_modelPlan_collaborators[];
   discussions: GetModelPlanDiscussions_modelPlan_discussions[];
 }
 

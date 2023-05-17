@@ -16,9 +16,10 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -41,7 +42,12 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const Performance = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -64,6 +70,7 @@ const Performance = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     benchmarkForPerformance,
     benchmarkForPerformanceNote,
     computePerformanceScores,
@@ -86,7 +93,7 @@ const Performance = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
@@ -137,6 +144,7 @@ const Performance = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     benchmarkForPerformance: benchmarkForPerformance ?? null,
     benchmarkForPerformanceNote: benchmarkForPerformanceNote ?? '',
@@ -228,7 +236,7 @@ const Performance = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-performance-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -242,7 +250,7 @@ const Performance = () => {
                     {t('establishBenchmark')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-benchmark-performance-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -436,16 +444,23 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-appeals">
                     {t('participantAppeal')}
                   </Label>
+
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-appeal-performance-warning"
                       onClick={() =>
                         handleFormSubmit(
                           `/models/${modelID}/task-list/it-solutions`
                         )
                       }
+                      className="margin-top-2"
                     />
                   )}
+
+                  <Alert slim type="info">
+                    {t('appealsWarning')}
+                  </Alert>
+
                   <Label
                     htmlFor="ops-eval-and-learning-appeal-performance"
                     className="text-normal margin-top-2"
@@ -590,11 +605,13 @@ const Performance = () => {
           currentPage={renderCurrentPage(
             5,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

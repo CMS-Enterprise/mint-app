@@ -1,13 +1,34 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('The Model Plan Participants and Providers Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+    cy.intercept('POST', '/api/graph/query', req => {
+      aliasQuery(req, 'GetModelPlan');
+      aliasQuery(req, 'GetParticipantsAndProviders');
+      aliasQuery(req, 'GetParticipantOptions');
+      aliasQuery(req, 'GetCommunication');
+      aliasQuery(req, 'GetCoordination');
+      aliasQuery(req, 'GetProviderOptions');
+    });
   });
 
   it('completes a Model Plan Participants and Providers', () => {
     cy.clickPlanTableByName('Empty Plan');
 
+    cy.wait('@GetModelPlan')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
+
     // Clicks the Participants and Providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
+
+    cy.wait('@GetParticipantsAndProviders')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
@@ -67,7 +88,10 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/participant-options
 
-    cy.wait(500);
+    cy.wait('@GetParticipantOptions')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     cy.get('#participants-and-providers-expected-participants')
       .invoke('val', 2345)
@@ -75,6 +99,7 @@ describe('The Model Plan Participants and Providers Form', () => {
       .should('have.value', 2345);
 
     cy.get('#participants-and-providers-confidence-FAIRLY')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 
@@ -106,11 +131,15 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/communication
 
-    cy.wait(500);
+    cy.wait('@GetCommunication')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
-      .check({ force: true })
-      .should('be.checked');
+      .as('communication')
+      .check({ force: true });
+    cy.get('@communication').should('be.checked');
 
     cy.get('#participants-and-providers-risk')
       .check({ force: true })
@@ -132,7 +161,10 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/coordination
 
-    cy.wait(500);
+    cy.wait('@GetCoordination')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     cy.get('#participants-and-providers-coordniate-work')
       .check({ force: true })
@@ -158,9 +190,13 @@ describe('The Model Plan Participants and Providers Form', () => {
 
     // Page - /participants-and-providers/provider-options
 
-    cy.wait(500);
+    cy.wait('@GetProviderOptions')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     cy.get('#participants-and-providers-additional-frequency-OTHER')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 
@@ -209,14 +245,15 @@ describe('The Model Plan Participants and Providers Form', () => {
         'When overlap occurs, this model will be a secondary model'
       );
 
-    cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains('button', 'Save and return to task list').click();
+
+    cy.wait('@GetModelPlan')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
-
-    cy.get(
-      '[data-testid="task-list-intake-form-participantsAndProviders"]'
-    ).contains('In progress');
   });
 });

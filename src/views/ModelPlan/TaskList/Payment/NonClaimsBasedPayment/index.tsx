@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -69,7 +69,7 @@ const NonClaimsBasedPayment = () => {
     }
   });
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const {
@@ -77,6 +77,7 @@ const NonClaimsBasedPayment = () => {
     payType,
     payClaims,
     nonClaimsPayments,
+    nonClaimsPaymentsNote,
     nonClaimsPaymentOther,
     paymentCalculationOwner,
     numberPaymentsPerPayCycle,
@@ -150,6 +151,7 @@ const NonClaimsBasedPayment = () => {
     payType: payType ?? [],
     payClaims: payClaims ?? [],
     nonClaimsPayments: nonClaimsPayments ?? [],
+    nonClaimsPaymentsNote: nonClaimsPaymentsNote ?? '',
     nonClaimsPaymentOther: nonClaimsPaymentOther ?? '',
     paymentCalculationOwner: paymentCalculationOwner ?? '',
     numberPaymentsPerPayCycle: numberPaymentsPerPayCycle ?? '',
@@ -256,15 +258,18 @@ const NonClaimsBasedPayment = () => {
                       </PageHeading>
 
                       <FieldGroup
-                        scrollElement="payment-nonclaims-payments"
+                        scrollElement="nonClaimsPayments"
                         error={!!flatErrors.nonClaimsPayments}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="payment-nonclaims-payments">
+                        <Label
+                          htmlFor="payment-nonclaims-payments"
+                          id="label-payment-nonclaims-payments"
+                        >
                           {t('nonClaimsPayments')}
                         </Label>
                         {itSolutionsStarted && (
-                          <ITToolsWarning
+                          <ITSolutionsWarning
                             id="payment-nonclaims-payments-warning"
                             onClick={() =>
                               handleFormSubmit(
@@ -281,6 +286,7 @@ const NonClaimsBasedPayment = () => {
                           as={MultiSelect}
                           id="payment-nonclaims-payments"
                           name="payment-nonclaims-payments"
+                          ariaLabel="label-payment-nonclaims-payments"
                           options={mapMultiSelectOptions(
                             translateNonClaimsBasedPayType,
                             NonClaimsBasedPayType
@@ -317,6 +323,11 @@ const NonClaimsBasedPayment = () => {
                             />
                           </FieldGroup>
                         )}
+
+                        <AddNote
+                          id="payment-nonclaims-payments-note"
+                          field="nonClaimsPaymentsNote"
+                        />
                       </FieldGroup>
 
                       <FieldGroup

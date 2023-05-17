@@ -61,7 +61,9 @@ exports[`AddCustomSolution matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Add solution details
+        <span>
+          Add solution details
+        </span>
       </li>
     </ol>
   </nav>
@@ -96,40 +98,38 @@ exports[`AddCustomSolution matches snapshot 1`] = `
         data-testid="grid"
       >
         <div
-          class="padding-3 bg-base-lightest"
+          class="grid-container padding-3 bg-base-lightest maxw-none"
+          data-testid="gridContainer"
         >
-          <p
-            class="text-bold margin-y-1"
+          <div
+            class="grid-row"
+            data-testid="grid"
           >
-            Operational need
-          </p>
-          <p
-            class="margin-top-0 font-body-sm"
-          />
-          <button
-            class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3"
-            data-testid="toggle-need-answer"
-            type="button"
-          >
-            <svg
-              class="usa-icon margin-right-05 needs-question__rotate"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
+              <p
+                class="text-bold margin-y-1"
+              >
+                Operational need
+              </p>
+              <p
+                class="margin-top-0 font-body-sm"
               />
-              <path
-                d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
-              />
-            </svg>
-            Why is this a part of my operational needs?
-          </button>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <a
+                class="usa-link"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/update-need/"
+              >
+                Edit this operational need
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -142,7 +142,6 @@ exports[`AddCustomSolution matches snapshot 1`] = `
         >
           <form
             action="#"
-            class="margin-top-3"
             data-testid="it-solutions-add-solution"
           >
             <fieldset
@@ -158,8 +157,9 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                   data-testid="label"
                   for="it-solution-custom-name-other"
                 >
-                  Please add a name for your solution
+                  Please add a name for your solution or contractor
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
@@ -208,7 +208,7 @@ exports[`AddCustomSolution matches snapshot 1`] = `
                   data-testid="label"
                   for="it-solution-custom-poc-email"
                 >
-                  Email or other contact information
+                  Email
                 </label>
                 <input
                   class="usa-input"
@@ -312,7 +312,7 @@ exports[`AddCustomSolution matches snapshot 1`] = `
         class="margin-top-4"
       >
         <p
-          class="text-bold margin-bottom-0"
+          class="text-bold margin-bottom-2"
         >
           Helpful links
         </p>
@@ -321,9 +321,7 @@ exports[`AddCustomSolution matches snapshot 1`] = `
           data-testid="button"
           type="button"
         >
-          <p>
-            Available operational solutions (opens in a new tab)
-          </p>
+          Available operational solutions (opens in a new tab)
         </button>
       </div>
     </div>

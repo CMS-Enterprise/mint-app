@@ -21,10 +21,13 @@ const solution = [
     mustStartDts: null,
     mustFinishDts: null,
     status: OpSolutionStatus.IN_PROGRESS,
+    isCommonSolution: true,
     needed: true,
     pocName: 'John Doe',
     pocEmail: '',
-    nameOther: null
+    nameOther: null,
+    isOther: false,
+    otherHeader: null
   }
 ];
 
@@ -47,7 +50,7 @@ describe('IT Solutions CheckboxCard', () => {
         </MemoryRouter>
       );
 
-      const checkbox = getByRole('checkbox', { name: /select a solution/i });
+      const checkbox = getByRole('checkbox', { name: /Select this solution/i });
 
       await waitFor(() => {
         expect(checkbox).toBeChecked();

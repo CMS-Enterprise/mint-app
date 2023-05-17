@@ -2,7 +2,7 @@ package models
 
 import "github.com/google/uuid"
 
-// ISolutionRelation is an interface that represents models that are related to a model plan.
+// ISolutionRelation is an interface that represents models that are related to a solution.
 type ISolutionRelation interface {
 	GetSolutionID() uuid.UUID
 }
@@ -13,9 +13,9 @@ type solutionRelation struct {
 }
 
 // NewSolutionRelation returns a solution relation object
-func NewSolutionRelation(SolutionID uuid.UUID) solutionRelation {
+func NewSolutionRelation(solutionID uuid.UUID) solutionRelation {
 	return solutionRelation{
-		SolutionID: SolutionID,
+		SolutionID: solutionID,
 	}
 }
 

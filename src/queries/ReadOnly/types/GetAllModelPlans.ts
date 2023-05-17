@@ -11,14 +11,23 @@ import { ModelPlanFilter, ModelStatus, ModelCategory, TeamRole } from "./../../.
 
 export interface GetAllModelPlans_modelPlanCollection_basics {
   __typename: "PlanBasics";
-  applicationsStart: Time | null;
+  performancePeriodStarts: Time | null;
   modelCategory: ModelCategory | null;
   goal: string | null;
 }
 
+export interface GetAllModelPlans_modelPlanCollection_collaborators_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetAllModelPlans_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
-  fullName: string;
+  userAccount: GetAllModelPlans_modelPlanCollection_collaborators_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
 }
 

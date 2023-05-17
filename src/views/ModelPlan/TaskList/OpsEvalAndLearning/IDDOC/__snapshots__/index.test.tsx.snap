@@ -94,7 +94,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-iddoc-form"
   >
     <h3>
@@ -298,13 +298,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       />
     </div>
     <div
-      class="usa-form-group margin-top-6"
+      class="usa-form-group margin-top-6 margin-right-4"
       data-scroll="draftIcdDueDate"
     >
       <label
         class="usa-label usa-legend margin-top-0"
         data-testid="label"
         for="ops-eval-and-learning-icd-due-date"
+        id="label-ops-eval-and-learning-icd-due-date"
       >
         Draft ICD required by
       </label>
@@ -315,7 +316,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         mm/dd/yyyy
       </div>
       <div
-        class="width-card-lg position-relative"
+        class="position-relative"
       >
         <div
           class="usa-date-picker usa-date-picker--initialized"
@@ -323,6 +324,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         >
           <input
             aria-hidden="true"
+            aria-labelledby="label-ops-eval-and-learning-icd-due-date appointment-date-hint"
             class="usa-input usa-sr-only usa-date-picker__internal-input"
             data-testid="date-picker-internal-input"
             error="0"
@@ -338,6 +340,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
             tabindex="-1"
           >
             <input
+              aria-labelledby="label-ops-eval-and-learning-icd-due-date appointment-date-hint"
               class="usa-input usa-date-picker__external-input"
               data-testid="date-picker-external-input"
               error="0"

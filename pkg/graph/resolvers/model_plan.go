@@ -1,12 +1,18 @@
 package resolvers
 
 import (
+	"context"
 	"fmt"
-
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
@@ -17,9 +23,18 @@ import (
 // ModelPlanCreate implements resolver logic to create a model plan
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
-func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo, principal authentication.Principal) (*models.ModelPlan, error) {
-
-	plan := models.NewModelPlan(principal.ID(), modelName)
+func ModelPlanCreate(
+	ctx context.Context,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	modelName string,
+	store *storage.Store,
+	principal authentication.Principal,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
+) (*models.ModelPlan, error) {
+	plan := models.NewModelPlan(principal.Account().ID, modelName)
 
 	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 	if err != nil {
@@ -31,31 +46,33 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	if err != nil {
 		return nil, err
 	}
+	userAccount := principal.Account()
 
 	// Create an initial collaborator for the plan
 	_, _, err = CreatePlanCollaborator(
+		ctx,
 		logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: plan.ID,
-			EuaUserID:   principal.ID(),
-			FullName:    principalInfo.CommonName,
+			UserName:    *userAccount.Username,
 			TeamRole:    models.TeamRoleModelLead,
-			Email:       principalInfo.Email.String(),
 		},
 		principal,
 		store,
 		false,
+		getAccountInformation,
 	)
 	if err != nil {
 		return nil, err
 	}
 
-	baseTaskList := models.NewBaseTaskListSection(principalInfo.EuaUserID, createdPlan.ID) //make a taskList status, with status Ready
+	baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 	// Create a default plan basics object
-	basics := models.NewPlanBasics(baseTaskList)
+	basics := models.NewPlanBasics(baseTaskListUser)
 
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
@@ -63,21 +80,21 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create a default plan general characteristics object
-	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskList)
+	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
 	// Create a default Plan Beneficiares object
-	beneficiaries := models.NewPlanBeneficiaries(baseTaskList)
+	beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
 	//Create a default Plan Participants and Providers object
-	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskList)
+	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
@@ -85,7 +102,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskList)
+	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
@@ -93,27 +110,76 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	//Create default PlanPayments object
-	planPayments := models.NewPlanPayments(baseTaskList)
+	planPayments := models.NewPlanPayments(baseTaskListUser)
 
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
 		return nil, err
 	}
 
-	//Create default PlanITTools object
-	itTools := models.NewPlanITTools(baseTaskList)
-
-	_, err = store.PlanITToolsCreate(logger, itTools)
+	//Create default Operational Needs
+	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
-	//Create default Operational Needs
-	_, err = store.OperationalNeedInsertAllPossible(logger, createdPlan.ID, principal.ID())
-	if err != nil {
-		return nil, err
+
+	if emailService != nil && emailTemplateService != nil {
+		go func() {
+			sendEmailErr := sendModelPlanCreatedEmail(
+				ctx,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				addressBook.MINTTeamEmail,
+				createdPlan,
+			)
+			if sendEmailErr != nil {
+				logger.Error("failed to send model plan created email to dev team", zap.String(
+					"createdPlanID",
+					createdPlan.ID.String(),
+				), zap.Error(sendEmailErr))
+			}
+		}()
 	}
 
 	return createdPlan, err
+}
+
+func sendModelPlanCreatedEmail(
+	ctx context.Context,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	receiverEmail string,
+	modelPlan *models.ModelPlan,
+) error {
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelName:     modelPlan.ModelName,
+		ModelID:       modelPlan.GetModelPlanID().String(),
+		UserName:      modelPlan.CreatedByUserAccount(ctx).CommonName,
+	})
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
@@ -147,6 +213,23 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return plan, nil
 }
 
+// ModelPlanGetByIDLOADER implements resolver logic to get Model Plan by a model plan ID using a data loader
+func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
+	allLoaders := loaders.Loaders(ctx)
+	planLoader := allLoaders.ModelPlanLoader
+	key := loaders.NewKeyArgs()
+	key.Args["id"] = id
+
+	thunk := planLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*models.ModelPlan), nil
+}
+
 // ModelPlanGetSampleModel returns the sample model plan
 func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
 	plan, err := store.ModelPlanGetByName(logger, constants.SampleModelName)
@@ -165,7 +248,7 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 	case model.ModelPlanFilterIncludeAll:
 		modelPlans, err = store.ModelPlanCollection(logger, false)
 	case model.ModelPlanFilterCollabOnly:
-		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
+		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
 		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
 	default:

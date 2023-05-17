@@ -23,7 +23,7 @@ const basicMockData: GetAllBasicsTypes = {
   cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
   cmsOther: 'The Center for Awesomeness',
   cmmiGroups: [
-    CMMIGroup.STATE_INNOVATIONS_GROUP,
+    CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,
     CMMIGroup.POLICY_AND_PROGRAMS_GROUP
   ],
   modelType: ModelType.MANDATORY,

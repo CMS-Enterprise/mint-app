@@ -31,7 +31,11 @@ const providerOptionsMockData: GetProviderOptionsType = {
   providerOverlap: null,
   providerOverlapHierarchy: '',
   providerOverlapNote: '',
-  readyForReviewBy: 'ASDF',
+  readyForReviewByUserAccount: {
+    commonName: 'ASDF',
+    id: '000',
+    __typename: 'UserAccount'
+  },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
 };

@@ -1,6 +1,8 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 // PlanCollaborator represents a plan collaborator
 // FullName and Email are stored as a result from the initial CEDAR query that's made when we create the collaborator
@@ -8,19 +10,16 @@ import "github.com/google/uuid"
 type PlanCollaborator struct {
 	baseStruct
 	modelPlanRelation
-	EUAUserID string   `json:"euaUserId" db:"eua_user_id"`
-	FullName  string   `json:"fullName" db:"full_name"`
-	TeamRole  TeamRole `json:"teamRole" db:"team_role"`
-	Email     string   `json:"email" db:"email"`
+	userIDRelation
+	TeamRole TeamRole `json:"teamRole" db:"team_role"`
 }
 
 // NewPlanCollaborator returns a plan collaborator object
-func NewPlanCollaborator(createdBy string, modelPlanID uuid.UUID, euaUserID string, fullName string, teamRole TeamRole, email string) *PlanCollaborator {
+func NewPlanCollaborator(createdBy uuid.UUID, modelPlanID uuid.UUID, userID uuid.UUID, teamRole TeamRole) *PlanCollaborator {
 	return &PlanCollaborator{
-		EUAUserID:         euaUserID,
-		FullName:          fullName,
+		// UserID:              userID,
+		userIDRelation:    NewUserIDRelation(userID),
 		TeamRole:          teamRole,
-		Email:             email,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
 	}
@@ -37,4 +36,5 @@ const (
 	TeamRoleLearning   TeamRole = "LEARNING"
 	TeamRoleEvaluation TeamRole = "EVALUATION"
 	TeamRoleITLead     TeamRole = "IT_LEAD"
+	TeamRoleQuality    TeamRole = "QUALITY"
 )

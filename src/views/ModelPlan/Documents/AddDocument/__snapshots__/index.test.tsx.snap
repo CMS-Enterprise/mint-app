@@ -14,7 +14,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
       data-testid="gridContainer"
     >
       <div
-        class="desktop:grid-col-6"
+        class="desktop:grid-col-12"
         data-testid="grid"
       >
         <nav
@@ -28,7 +28,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -40,8 +40,8 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                class="usa-link usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
               >
                 <span>
                   Model Plan task list
@@ -52,7 +52,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
               >
                 <span>
@@ -64,10 +64,22 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Upload Document
+              <span>
+                Upload Document
+              </span>
             </li>
           </ol>
         </nav>
+      </div>
+    </div>
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
         <h1
           aria-live="polite"
           class="mint-h1 margin-top-4 margin-bottom-0"
@@ -79,6 +91,18 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
           class="margin-bottom-2 font-body-md line-height-body-4"
         >
           Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.
+        </p>
+        <p
+          class="margin-bottom-2 font-body-md line-height-body-4"
+        >
+          All fields marked with  
+          <span
+            aria-label="(Field required)"
+            class="text-red margin-x-05"
+          >
+            *
+          </span>
+            are required
         </p>
         <div>
           <div>
@@ -95,6 +119,22 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   for="FileUpload-File"
                 >
                   Document upload
+                  <span
+                    aria-label="(Field required)"
+                    class="text-red margin-x-05"
+                  >
+                    *
+                  </span>
+                </label>
+                <label
+                  class="usa-label text-normal text-base margin-y-1"
+                  data-testid="label"
+                  for="FileUpload-File"
+                >
+                  Select a PDF, DOC, DOCX, XLS, or XLSX
+                  <span
+                    class="usa-hint"
+                  />
                 </label>
                 <div
                   aria-disabled="false"
@@ -154,6 +194,12 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                     class="usa-label"
                   >
                     What type of document are you uploading?
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </legend>
                   <div
                     class="usa-radio"
@@ -252,6 +298,12 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   for="document-upload-restricted-yes"
                 >
                   Does this document contain cost information?
+                  <span
+                    aria-label="(Field required)"
+                    class="text-red margin-x-05"
+                  >
+                    *
+                  </span>
                 </label>
                 <p
                   class="margin-0 line-height-body-4"
@@ -313,7 +365,8 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   Optional notes about the document
                 </label>
                 <textarea
-                  class="usa-textarea model-plan-document__optional-notes height-10"
+                  aria-labelledby="label-ModelPlanDocument-optionalNotes hint-ModelPlanDocument-optionalNotes"
+                  class="model-plan-document__optional-notes height-10 usa-textarea"
                   id="ModelPlanDocument-optionalNotes"
                   maxlength="2000"
                   name="optionalNotes"
@@ -323,17 +376,21 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                 class="padding-top-2 margin-top-2"
               >
                 <div
-                  class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+                  class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
                   data-testid="mandatory-fields-alert"
                 >
                   <div
                     class="usa-alert__body"
                   >
-                    <span
-                      class="mandatory-fields-alert__text"
+                    <p
+                      class="usa-alert__text"
                     >
-                      To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
-                    </span>
+                      <span
+                        class="mandatory-fields-alert__text"
+                      >
+                        To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
+                      </span>
+                    </p>
                   </div>
                 </div>
                 <button
@@ -351,9 +408,10 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
         <div
           class="display-block"
         >
-          <a
-            class="usa-link display-inline-flex flex-align-center margin-y-3"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
+          <button
+            class="usa-button display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -374,7 +432,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
               />
             </svg>
             Don’t upload and return to previous page
-          </a>
+          </button>
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
+import { TeamRole } from 'types/graphql-global-types';
 import CsvExportLink from 'utils/export/CsvExportLink';
 
 const TaskListSideNav = ({
@@ -66,8 +67,15 @@ const TaskListSideNav = ({
 
   const renderModal = () => {
     return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-y-0">
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
           {t('withdraw_modal.header', {
             requestName: modelPlan.modelName
           })}
@@ -146,11 +154,19 @@ const TaskListSideNav = ({
           </div>
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              {collaborators.map((collaborator, index) => {
+              {[
+                ...collaborators.filter(
+                  collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD
+                ),
+                ...collaborators.filter(
+                  collaborator => collaborator.teamRole !== TeamRole.MODEL_LEAD
+                )
+              ].map((collaborator, index) => {
                 return (
                   <IconInitial
-                    key={collaborator.euaUserID}
-                    user={collaborator.fullName}
+                    className="margin-bottom-1"
+                    key={collaborator.userAccount.username}
+                    user={collaborator.userAccount.commonName}
                     index={index}
                   />
                 );

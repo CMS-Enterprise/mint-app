@@ -9,6 +9,12 @@ import { PayType, ClaimsBasedPayType, TaskStatus } from "./../../../types/graphq
 // GraphQL query operation: GetRecover
 // ====================================================
 
+export interface GetRecover_modelPlan_payments_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface GetRecover_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
@@ -20,13 +26,14 @@ export interface GetRecover_modelPlan_payments {
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewByUserAccount: GetRecover_modelPlan_payments_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 
 export interface GetRecover_modelPlan_operationalNeeds {
   __typename: "OperationalNeed";
+  id: UUID;
   modifiedDts: Time | null;
 }
 

@@ -17,9 +17,9 @@ type PlanCrTdl struct {
 }
 
 // NewPlanCrTdl returns a New PlanCrTdl
-func NewPlanCrTdl(createdBy string, modelPlanID uuid.UUID) *PlanCrTdl {
+func NewPlanCrTdl(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanCrTdl {
 	return &PlanCrTdl{
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }

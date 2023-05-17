@@ -8,7 +8,8 @@ INSERT INTO user_account
     email,
     given_name,
     family_name,
-    zone_info
+    zone_info,
+    has_logged_in
 )
 VALUES (
     :id,
@@ -19,7 +20,8 @@ VALUES (
     :email,
     :given_name,
     :family_name,
-    :zone_info
+    :zone_info,
+    :has_logged_in
 )
 RETURNING
 id,
@@ -30,4 +32,5 @@ locale,
 email,
 given_name,
 family_name,
-zone_info;
+zone_info,
+has_logged_in;

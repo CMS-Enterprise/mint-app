@@ -1,3 +1,6 @@
+@use 'viewports' as *;
+@use "uswds-core" as *;
+
 .model-plan-task-list {
   // Order numbers
   &__item:before {

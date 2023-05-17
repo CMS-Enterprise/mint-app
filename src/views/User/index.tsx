@@ -25,7 +25,7 @@ const UserInfo = () => {
             <li key={group}>{group}</li>
           ))}
         </ul>
-        <p>User is basic user: {`${user.isBasicUser(userGroups, flags)}`}</p>
+        <p>User is basic user: {`${user.isBasicUser(userGroups)}`}</p>
         <p>
           User is assessment user: {`${user.isAssessment(userGroups, flags)}`}
         </p>

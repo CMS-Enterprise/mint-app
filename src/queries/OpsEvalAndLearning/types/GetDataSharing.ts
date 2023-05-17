@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, DataStartsType, DataFrequencyType } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, DataStartsType, DataFrequencyType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetDataSharing
@@ -13,6 +13,7 @@ export interface GetDataSharing_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  dataNeededForMonitoring: DataForMonitoringType[];
   iddocSupport: boolean | null;
   dataSharingStarts: DataStartsType | null;
   dataSharingStartsOther: string | null;

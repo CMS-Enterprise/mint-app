@@ -117,14 +117,13 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="participants-and-providers-participants"
+              id="label-participants-and-providers-participants"
             >
               Who are the particpants? Select all that apply.
             </label>
-            <div
-              class="margin-top-1"
-            >
+            <div>
               <div
-                class="easi-multiselect usa-combo-box css-b62m3t-container"
+                class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
                 id="participants-and-providers-participants"
               >
                 <span
@@ -144,7 +143,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                     class=" css-319lph-ValueContainer"
                   >
                     <div
-                      class=" css-1hgum8q-placeholder"
+                      class=" css-14el2xx-placeholder"
                       id="react-select-3-placeholder"
                     >
                       3 selected
@@ -157,6 +156,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-participants-and-providers-participants"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -174,23 +174,31 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                   <div
                     class=" css-1hb7zxy-IndicatorsContainer"
                   >
-                    <div
-                      aria-hidden="true"
-                      class=" css-1232v1p-indicatorContainer"
+                    <button
+                      aria-label="Clear selection"
+                      class="usa-button--unstyled"
+                      id="clear-selection"
+                      tabindex="0"
+                      type="button"
                     >
-                      <svg
+                      <div
                         aria-hidden="true"
-                        class="css-tj5bde-Svg"
-                        focusable="false"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        width="20"
+                        class=" css-1e245h0-indicatorContainer"
                       >
-                        <path
-                          d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
-                        />
-                      </svg>
-                    </div>
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
                     <span
                       class=" css-1vtyy7d-indicatorSeparator"
                     />
@@ -241,12 +249,13 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 </h4>
                 <ul
                   class="usa-list--unstyled"
+                  id="participants-and-providers-participants-tags"
                 >
                   <li
                     class="margin-bottom-05 margin-right-05 display-inline-block"
                   >
                     <span
-                      class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                       data-testid="multiselect-tag--Medicare providers"
                       id="selected-MEDICARE_PROVIDERS"
                     >
@@ -276,7 +285,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                     class="margin-bottom-05 margin-right-05 display-inline-block"
                   >
                     <span
-                      class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                       data-testid="multiselect-tag--States"
                       id="selected-STATES"
                     >
@@ -306,7 +315,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                     class="margin-bottom-05 margin-right-05 display-inline-block"
                   >
                     <span
-                      class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                       data-testid="multiselect-tag--Other"
                       id="selected-OTHER"
                     >
@@ -352,7 +361,8 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Which type of medicare providers?
               </label>
               <textarea
-                class="usa-textarea height-15"
+                aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
+                class="usa-textarea"
                 data-testid="participants-and-providers-medicare-type"
                 id="participants-and-providers-medicare-type"
                 name="medicareProviderType"
@@ -372,7 +382,8 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Please describe how states will engage with your model.
               </label>
               <textarea
-                class="usa-textarea height-15"
+                aria-labelledby="label-participants-and-providers-states-engagement hint-participants-and-providers-states-engagement"
+                class="usa-textarea"
                 data-testid="participants-and-providers-states-engagement"
                 id="participants-and-providers-states-engagement"
                 name="statesEngagement"
@@ -392,7 +403,8 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
                 Please describe the other participants engaging with this model
               </label>
               <textarea
-                class="usa-textarea height-15"
+                aria-labelledby="label-participants-and-providers-participants-other hint-participants-and-providers-participants-other"
+                class="usa-textarea"
                 data-testid="participants-and-providers-participants-other"
                 id="participants-and-providers-participants-other"
                 name="participantsOther"
@@ -534,7 +546,8 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
             </p>
             <textarea
-              class="usa-textarea height-15"
+              aria-labelledby="label-participants-and-providers-application-level hint-participants-and-providers-application-level"
+              class="usa-textarea"
               id="participants-and-providers-application-level"
               name="modelApplicationLevel"
             >

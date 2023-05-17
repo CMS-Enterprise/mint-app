@@ -19,7 +19,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -43,6 +43,7 @@ import {
   AgencyOrStateHelpType,
   CcmInvolvmentType,
   ContractorSupportType,
+  DataForMonitoringType,
   StakeholdersType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -89,9 +90,26 @@ export const renderCurrentPage = (
 };
 
 // Checks to see is there is a checked 'Yes' answer within the ccmInvolvment array
-export const isCCWInvolvement = (ccmInvolvment: CcmInvolvmentType[]) => {
-  return ccmInvolvment.some(value =>
-    ['YES_EVALUATION', 'YES__IMPLEMENTATION'].includes(value)
+export const isCCWInvolvement = (
+  ccmInvolvment: CcmInvolvmentType[] | undefined
+) => {
+  return (ccmInvolvment || []).some(value =>
+    [
+      CcmInvolvmentType.YES_EVALUATION,
+      CcmInvolvmentType.YES__IMPLEMENTATION
+    ].includes(value)
+  );
+};
+
+// Checks to see is there is a checked 'Yes' answer within the ccmInvolvment array
+export const isQualityMeasures = (
+  dataNeededForMonitoring: DataForMonitoringType[] | undefined
+) => {
+  return (dataNeededForMonitoring || []).some(value =>
+    [
+      DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES,
+      DataForMonitoringType.QUALITY_REPORTED_MEASURES
+    ].includes(value)
   );
 };
 
@@ -116,6 +134,7 @@ export const OpsEvalAndLearningContent = () => {
   const {
     id,
     ccmInvolvment,
+    dataNeededForMonitoring,
     agencyOrStateHelp,
     agencyOrStateHelpOther,
     agencyOrStateHelpNote,
@@ -138,7 +157,7 @@ export const OpsEvalAndLearningContent = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
@@ -183,6 +202,7 @@ export const OpsEvalAndLearningContent = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     agencyOrStateHelp: agencyOrStateHelp ?? [],
     agencyOrStateHelpOther: agencyOrStateHelpOther ?? '',
     agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
@@ -272,7 +292,7 @@ export const OpsEvalAndLearningContent = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -331,10 +351,10 @@ export const OpsEvalAndLearningContent = () => {
                                       {flatErrors.agencyOrStateHelpOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-agency-or-state-help-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="agencyOrStateHelpOther"
                                     />
                                   </div>
@@ -355,7 +375,10 @@ export const OpsEvalAndLearningContent = () => {
                   error={!!flatErrors.stakeholders}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="ops-eval-and-learning-stakeholders">
+                  <Label
+                    htmlFor="ops-eval-and-learning-stakeholders"
+                    id="label-ops-eval-and-learning-stakeholders"
+                  >
                     {t('stakeholders')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
@@ -364,6 +387,7 @@ export const OpsEvalAndLearningContent = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-stakeholders"
                     name="stakeholders"
+                    ariaLabel="label-ops-eval-and-learning-stakeholders"
                     role="combobox"
                     options={mapMultiSelectOptions(
                       translateStakeholdersType,
@@ -410,7 +434,7 @@ export const OpsEvalAndLearningContent = () => {
                     {t('helpDesk')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-help-desk-use-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -454,59 +478,62 @@ export const OpsEvalAndLearningContent = () => {
                         {flatErrors.contractorSupport}
                       </FieldErrorMsg>
 
-                      {Object.keys(ContractorSupportType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-contractor-support-${type}`}
-                                name="contractorSupport"
-                                label={translateContractorSupportType(type)}
-                                value={type}
-                                checked={values?.contractorSupport.includes(
-                                  type as ContractorSupportType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.contractorSupport.indexOf(
-                                      e.target.value as ContractorSupportType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === 'OTHER' &&
-                                values.contractorSupport.includes(
-                                  ContractorSupportType.OTHER
-                                ) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-contractor-support-other"
-                                      className="text-normal"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.contractorSupportOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="ops-eval-and-learning-contractor-support-other"
-                                      maxLength={50}
-                                      name="contractorSupportOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
+                      {[
+                        ContractorSupportType.ONE,
+                        ContractorSupportType.MULTIPLE,
+                        ContractorSupportType.NONE,
+                        ContractorSupportType.OTHER
+                      ].map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`ops-eval-and-learning-contractor-support-${type}`}
+                              name="contractorSupport"
+                              label={translateContractorSupportType(type)}
+                              value={type}
+                              checked={values?.contractorSupport.includes(
+                                type as ContractorSupportType
+                              )}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(e.target.value);
+                                } else {
+                                  const idx = values.contractorSupport.indexOf(
+                                    e.target.value as ContractorSupportType
+                                  );
+                                  arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            {type === 'OTHER' &&
+                              values.contractorSupport.includes(
+                                ContractorSupportType.OTHER
+                              ) && (
+                                <div className="margin-left-4 margin-top-neg-3">
+                                  <Label
+                                    htmlFor="ops-eval-and-learning-contractor-support-other"
+                                    className="text-normal"
+                                  >
+                                    {h('pleaseSpecify')}
+                                  </Label>
+                                  <FieldErrorMsg>
+                                    {flatErrors.contractorSupportOther}
+                                  </FieldErrorMsg>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
+                                    id="ops-eval-and-learning-contractor-support-other"
+                                    maxLength={5000}
+                                    name="contractorSupportOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      })}
 
                       <FieldGroup
                         scrollElement="contractorSupportHow"
@@ -551,7 +578,7 @@ export const OpsEvalAndLearningContent = () => {
                     {t('iddocSupport')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="ops-eval-and-learning-iddoc-support-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -631,11 +658,13 @@ export const OpsEvalAndLearningContent = () => {
           currentPage={renderCurrentPage(
             1,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

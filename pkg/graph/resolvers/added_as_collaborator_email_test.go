@@ -1,12 +1,15 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
@@ -19,11 +22,10 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
-		EuaUserID:   "CLAB",
-		FullName:    "Clab O' Rater",
+		UserName:    "CLAB",
 		TeamRole:    models.TeamRoleLeadership,
-		Email:       "clab@rater.com",
 	}
+	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 
 	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
@@ -36,7 +38,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Eq([]string{expectedEmail}),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),
@@ -44,9 +46,12 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		).
 		AnyTimes()
 
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
-		DefaultSender: "unit-test-execution@mint.cms.gov",
 	}
 
 	mockEmailService.
@@ -56,13 +61,16 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		AnyTimes()
 
 	_, _, err := CreatePlanCollaborator(
+		context.Background(),
 		s.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
+		addressBook,
 		collaboratorInput,
 		s.testConfigs.Principal,
 		s.testConfigs.Store,
 		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
 	)
 	s.NoError(err)
 	mockController.Finish()

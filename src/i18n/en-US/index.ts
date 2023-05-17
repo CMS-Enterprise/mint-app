@@ -6,12 +6,12 @@ import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import generalCharacteristics from './draftModelPlan/generalCharacteristics';
 import itSolutions from './draftModelPlan/itSolutions';
-import itTools from './draftModelPlan/itTools';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
+import subtasks from './draftModelPlan/subtasks';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
@@ -26,6 +26,7 @@ import footer from './footer';
 import general from './general';
 import header from './header';
 import home from './home';
+import landing from './landing';
 import modelPlan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
 import nda from './nda';
@@ -52,7 +53,7 @@ const enUS = {
   helpAndKnowledge,
   home,
   itSolutions,
-  itTools,
+  landing,
   modelPlan,
   modelPlanOverview,
   modelPlanTaskList,
@@ -66,6 +67,7 @@ const enUS = {
   privacyPolicy,
   readOnlyModelPlan,
   sampleModelPlan,
+  subtasks,
   tableAndPagination,
   termsAndConditions
 };

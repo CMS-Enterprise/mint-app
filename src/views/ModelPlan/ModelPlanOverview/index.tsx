@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Alert,
   Button,
   Grid,
   GridContainer,
@@ -18,6 +17,7 @@ import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
@@ -133,7 +133,7 @@ const ModelPlan = () => {
             desktop={{ col: 12 }}
             className="padding-bottom-2 margin-bottom-4 border-bottom border-base-light"
           >
-            <div className="margin-bottom-1 font-heading-2xl text-bold">
+            <div className="margin-bottom-1 font-heading-xl text-bold">
               {t('following.heading')}
             </div>
             <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
@@ -145,7 +145,7 @@ const ModelPlan = () => {
 
         <Grid>
           <div
-            className="margin-bottom-1 font-heading-2xl text-bold"
+            className="margin-bottom-1 font-heading-xl text-bold"
             id="all-models"
           >
             {t('allModels.heading')}
@@ -154,7 +154,7 @@ const ModelPlan = () => {
             {t('allModels.subheading')}
           </p>
           {loading && <PageLoading />}
-          {error && <div>{JSON.stringify(error)}</div>}
+          {error && <Alert type="error">{h('fetchError')}</Alert>}
           {!loading && !error && (
             <Table
               data={modelPlans}

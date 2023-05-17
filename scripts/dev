@@ -120,7 +120,7 @@ end
 
 ### Tasks
 
-def up(frontend_included, *args, debug:false, wait:false)
+def up(frontend_included, *args, debug:false, wait:false, ci:false)
   conf=" "
   if debug
     conf =ENV["AIR_CONFIG_DEBUG"]
@@ -135,7 +135,7 @@ def up(frontend_included, *args, debug:false, wait:false)
 
   contribsys_docker_login
 
-  command = "docker-compose #{"--profile frontend" if frontend_included } up --build"
+  command = "docker compose #{"--profile frontend" if frontend_included } up #{"--build" if !ci}"
 
   if args.any?
     command = "#{command} #{args.join(' ')}"
@@ -162,6 +162,11 @@ end
 
 namespace :up do
   desc "Starts all services in the project in the foreground"
+
+  task :ci do
+    up(true, "-d", ci:true)
+  end
+
   task :watch do
     up(true)
   end
@@ -205,7 +210,7 @@ end
 
 desc "Stops all services in the project"
 task :down do
-  sh "docker-compose --profile frontend down"
+  sh "docker compose --profile frontend down"
 end
 
 desc "Restart the specified container"
@@ -223,17 +228,6 @@ task restart: :consume_args do |t, args|
   end
 
   Rake::Task["up"].invoke
-end
-
-desc "Run app and expose to other machines over Tailscale"
-task :tailscale do
-
-  puts "Running app on #{ENV["TAILSCALE_CLIENT_ADDRESS"]}"
-  environment = {
-    "COMPOSE_HTTP_TIMEOUT" => "120"
-  }
-  command = "docker-compose --profile frontend -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.tailscale.yml up"
-  sh(environment, command, verbose: true)
 end
 
 namespace :docker do
@@ -379,16 +373,22 @@ namespace :db do
     plan_participants_and_providers,
     plan_ops_eval_and_learning,
     plan_payments,
-    plan_it_tools,
     plan_favorite,
     plan_cr_tdl,
+    operational_solution_subtask,
     operational_solution,
     operational_need,
+    existing_model_link,
     model_plan,
-    user_account"
+    audit.change"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
+
+    #remove all non system accounts
+    systemAccounts =  "( 'UNKNOWN_USER','MINT_SYSTEM')"
+    `echo "DELETE FROM user_account WHERE username NOT IN #{systemAccounts}" | psql`
+
   end
 end
 

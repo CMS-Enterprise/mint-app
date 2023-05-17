@@ -3,14 +3,19 @@ package server
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -29,7 +34,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authorization"
-	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
@@ -51,7 +55,7 @@ import (
 //
 // This function requires the OktaMiddlewareFactory object because it, in some cases (as described above), needs to perform operations that decode JWTs, which is a responsibility of
 // some of the functions attached to that factory. A refactor to clean up this cross-package dependency was considered but determined to be too much effort. (Don't hurt me)
-func HandleLocalOrOktaWebSocketAuth(logger *zap.Logger, omf *okta.MiddlewareFactory) transport.WebsocketInitFunc {
+func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
 		authToken := initPayload["authToken"]
 		token, ok := authToken.(string)
@@ -61,9 +65,9 @@ func HandleLocalOrOktaWebSocketAuth(logger *zap.Logger, omf *okta.MiddlewareFact
 
 		localToken := strings.HasPrefix(token, "Local ")
 		if localToken {
-			return local.NewLocalWebSocketAuthenticationMiddleware(logger, omf.Store)(ctx, initPayload)
+			return local.NewLocalWebSocketAuthenticationMiddleware(omf.Store)(ctx, initPayload)
 		}
-		return omf.NewOktaWebSocketAuthenticationMiddleware(logger)(ctx, initPayload)
+		return omf.NewOktaWebSocketAuthenticationMiddleware()(ctx, initPayload)
 	}
 }
 
@@ -109,6 +113,13 @@ func (s *Server) routes(
 		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger, store)
 		s.router.Use(localAuthenticationMiddleware)
 	}
+	dataLoaders := loaders.NewDataLoaders(store)
+	dataLoaderMiddleware := loaders.NewDataLoaderMiddleware(dataLoaders)
+	s.router.Use(dataLoaderMiddleware)
+
+	userAccountServiceMiddleware := userhelpers.NewUserAccountServiceMiddleware(userhelpers.UserAccountGetByIDLOADER)
+
+	s.router.Use(userAccountServiceMiddleware)
 
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 
@@ -119,13 +130,30 @@ func (s *Server) routes(
 	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
-	var cedarLDAPClient cedarldap.Client
-	cedarLDAPClient = cedarldap.NewTranslatedClient(
-		s.Config.GetString(appconfig.CEDARAPIURL),
-		s.Config.GetString(appconfig.CEDARAPIKey),
-	)
-	if s.environment.Local() || s.environment.Testing() {
-		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
+	// Create Okta API Client
+	var oktaClient oktaapi.Client
+	var oktaClientErr error
+	if s.environment.Local() {
+		// Ensure Okta API Variables are set
+		oktaClient, oktaClientErr = local.NewOktaAPIClient()
+		if oktaClientErr != nil {
+			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+		}
+	} else {
+		// Ensure Okta API Variables are set
+		s.NewOktaAPIClientCheck()
+		oktaClient, oktaClientErr = oktaapi.NewClient(s.Config.GetString(appconfig.OKTAApiURL), s.Config.GetString(appconfig.OKTAAPIToken))
+		if oktaClientErr != nil {
+			s.logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+		}
+	}
+
+	// This is a bit of a hack... sorry...
+	// Okta API tokens expire every 30 days if unused. This call to the Okta API below is strictly to ensure that the token is used whenever we deploy or
+	// create a new instance of the app. This should probably be a cron job, but this is the quick fix that helps us not have to worry about this for the time being.
+	_, err = oktaClient.SearchByName(context.Background(), "MINT") // shouldn't return any results, but that's ok, we used the token
+	if err != nil {
+		s.logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
 	}
 
 	// set up Email Template Service
@@ -140,7 +168,11 @@ func (s *Server) routes(
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
-	emailServiceConfig.DefaultSender = s.Config.GetString(appconfig.EmailSenderKey)
+
+	addressBook := email.AddressBook{
+		DefaultSender: s.Config.GetString(appconfig.EmailSenderKey),
+		MINTTeamEmail: s.Config.GetString(appconfig.MINTTeamEmailKey),
+	}
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
@@ -177,18 +209,30 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
+	osConfig := opensearch.Config{
+		Addresses: []string{s.Config.GetString(appconfig.OpenSearchHostKey)},
+	}
+
+	osClient, err := opensearch.NewClient(osConfig)
+	if err != nil {
+		s.logger.Warn("failed to create an OpenSearch client", zap.Error(err))
+	}
+
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			FetchUserInfo:            cedarLDAPClient.FetchUserInfo,
-			SearchCommonNameContains: cedarLDAPClient.SearchCommonNameContains,
+			FetchUserInfo: oktaClient.FetchUserInfo,
+			SearchByName:  oktaClient.SearchByName,
 		},
 		&s3Client,
 		emailService,
 		emailTemplateService,
+		addressBook,
 		ldClient,
 		s.pubsub,
+		osClient,
 	)
+
 	gqlDirectives := generated.DirectiveRoot{
 		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 			hasRole, err := services.HasRole(ctx, role)
@@ -196,7 +240,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 
@@ -207,7 +251,7 @@ func (s *Server) routes(
 				return nil, err
 			}
 			if !hasRole {
-				return nil, errors.New("not authorized")
+				return nil, apperrors.New("not authorized", apperrors.InsufficientRoleError)
 			}
 			return next(ctx)
 		}}
@@ -223,7 +267,7 @@ func (s *Server) routes(
 			},
 			Subprotocols: []string{"graphql-transport-ws"},
 		},
-		InitFunc: HandleLocalOrOktaWebSocketAuth(s.logger, oktaMiddlewareFactory),
+		InitFunc: HandleLocalOrOktaWebSocketAuth(oktaMiddlewareFactory),
 	})
 	graphqlServer.AddTransport(transport.Options{})
 	graphqlServer.AddTransport(transport.GET{})
@@ -263,34 +307,36 @@ func (s *Server) routes(
 		Logger:               s.logger,
 		EmailService:         emailService,
 		EmailTemplateService: *emailTemplateService,
+		AddressBook:          addressBook,
 		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
 		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
+		s.logger.Debug("debugging routes")
 		// useful for debugging route issues
 		_ = s.router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
 			pathTemplate, err := route.GetPathTemplate()
 			if err == nil {
-				fmt.Println("ROUTE:", pathTemplate)
+				s.logger.Debug("ROUTE: ", zap.String("ROUTE", pathTemplate))
 			}
 			pathRegexp, err := route.GetPathRegexp()
 			if err == nil {
-				fmt.Println("Path regexp:", pathRegexp)
+				s.logger.Debug("Path regexp:", zap.String("Path regexp", pathRegexp))
 			}
 			queriesTemplates, err := route.GetQueriesTemplates()
 			if err == nil {
-				fmt.Println("Queries templates:", strings.Join(queriesTemplates, ","))
+				s.logger.Debug("Queries templates:", zap.String("Queries templates", strings.Join(queriesTemplates, ",")))
 			}
 			queriesRegexps, err := route.GetQueriesRegexp()
 			if err == nil {
-				fmt.Println("Queries regexps:", strings.Join(queriesRegexps, ","))
+				s.logger.Debug("Queries regexps:", zap.String("Queries regexps", strings.Join(queriesRegexps, ",")))
 			}
 			methods, err := route.GetMethods()
 			if err == nil {
-				fmt.Println("Methods:", strings.Join(methods, ","))
+				s.logger.Debug("Methods:", zap.String("Methods", strings.Join(methods, ",")))
 			}
-			fmt.Println()
+			s.logger.Debug("debugging routes end")
 			return nil
 		})
 	}

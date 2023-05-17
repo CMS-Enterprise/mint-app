@@ -79,8 +79,8 @@ const csvFields = [
   'beneficiaries.confidenceNote',
 
   // Collaborators
-  'collaborators.euaUserID',
-  'collaborators.fullName',
+  'collaborators.userAccount.username',
+  'collaborators.userAccount.commonName',
   'collaborators.teamRole',
 
   // Discussions
@@ -112,7 +112,7 @@ const csvFields = [
   'generalCharacteristics.isNewModel',
   'generalCharacteristics.existingModel',
   'generalCharacteristics.resemblesExistingModel',
-  'generalCharacteristics.resemblesExistingModelWhich', // array
+  'generalCharacteristics.existingModelLinks', // array
   'generalCharacteristics.resemblesExistingModelHow',
   'generalCharacteristics.resemblesExistingModelNote',
   'generalCharacteristics.hasComponentsOrTracks',
@@ -151,89 +151,6 @@ const csvFields = [
   'generalCharacteristics.agreementTypesOther',
   'generalCharacteristics.multiplePatricipationAgreementsNeeded',
   'generalCharacteristics.multiplePatricipationAgreementsNeededNote',
-
-  // IT Tools
-  'itTools.gcPartCD', // array
-  'itTools.gcPartCDOther',
-  'itTools.gcPartCDNote',
-  'itTools.gcCollectBids', // array
-  'itTools.gcCollectBidsOther',
-  'itTools.gcCollectBidsNote',
-  'itTools.gcUpdateContract', // array
-  'itTools.gcUpdateContractOther',
-  'itTools.gcUpdateContractNote',
-  'itTools.ppToAdvertise', // array
-  'itTools.ppToAdvertiseOther',
-  'itTools.ppToAdvertiseNote',
-  'itTools.ppCollectScoreReview', // array
-  'itTools.ppCollectScoreReviewOther',
-  'itTools.ppCollectScoreReviewNote',
-  'itTools.ppAppSupportContractor', // array
-  'itTools.ppAppSupportContractorOther',
-  'itTools.ppAppSupportContractorNote',
-  'itTools.ppCommunicateWithParticipant', // array
-  'itTools.ppCommunicateWithParticipantOther',
-  'itTools.ppCommunicateWithParticipantNote',
-  'itTools.ppManageProviderOverlap', // array
-  'itTools.ppManageProviderOverlapOther',
-  'itTools.ppManageProviderOverlapNote',
-  'itTools.bManageBeneficiaryOverlap', // array
-  'itTools.bManageBeneficiaryOverlapOther',
-  'itTools.bManageBeneficiaryOverlapNote',
-  'itTools.oelHelpdeskSupport', // array
-  'itTools.oelHelpdeskSupportOther',
-  'itTools.oelHelpdeskSupportNote',
-  'itTools.oelManageAco', // array
-  'itTools.oelManageAcoOther',
-  'itTools.oelManageAcoNote',
-  'itTools.oelPerformanceBenchmark', // array
-  'itTools.oelPerformanceBenchmarkOther',
-  'itTools.oelPerformanceBenchmarkNote',
-  'itTools.oelProcessAppeals', // array
-  'itTools.oelProcessAppealsOther',
-  'itTools.oelProcessAppealsNote',
-  'itTools.oelEvaluationContractor', // array
-  'itTools.oelEvaluationContractorOther',
-  'itTools.oelEvaluationContractorNote',
-  'itTools.oelCollectData', // array
-  'itTools.oelCollectDataOther',
-  'itTools.oelCollectDataNote',
-  'itTools.oelObtainData', // array
-  'itTools.oelObtainDataOther',
-  'itTools.oelObtainDataNote',
-  'itTools.oelClaimsBasedMeasures', // array
-  'itTools.oelClaimsBasedMeasuresOther',
-  'itTools.oelClaimsBasedMeasuresNote',
-  'itTools.oelQualityScores', // array
-  'itTools.oelQualityScoresOther',
-  'itTools.oelQualityScoresNote',
-  'itTools.oelSendReports', // array
-  'itTools.oelSendReportsOther',
-  'itTools.oelSendReportsNote',
-  'itTools.oelLearningContractor', // array
-  'itTools.oelLearningContractorOther',
-  'itTools.oelLearningContractorNote',
-  'itTools.oelParticipantCollaboration', // array
-  'itTools.oelParticipantCollaborationOther',
-  'itTools.oelParticipantCollaborationNote',
-  'itTools.oelEducateBeneficiaries', // array
-  'itTools.oelEducateBeneficiariesOther',
-  'itTools.oelEducateBeneficiariesNote',
-  'itTools.pMakeClaimsPayments', // array
-  'itTools.pMakeClaimsPaymentsOther',
-  'itTools.pMakeClaimsPaymentsNote',
-  'itTools.pInformFfs', // array
-  'itTools.pInformFfsOther',
-  'itTools.pInformFfsNote',
-  'itTools.pNonClaimsBasedPayments', // array
-  'itTools.pNonClaimsBasedPaymentsOther',
-  'itTools.pNonClaimsBasedPaymentsNote',
-  'itTools.pSharedSavingsPlan', // array
-  'itTools.pSharedSavingsPlanOther',
-  'itTools.pSharedSavingsPlanNote',
-  'itTools.pRecoverPayments', // array
-  'itTools.pRecoverPaymentsOther',
-  'itTools.pRecoverPaymentsNote',
 
   // Ops and Eval Learning
   'opsEvalAndLearning.ccmInvolvment', // array
@@ -465,33 +382,6 @@ const fieldsToUnwind = [
   'generalCharacteristics.geographiesTargetedTypes',
   'generalCharacteristics.geographiesTargetedAppliedTo',
   'generalCharacteristics.agreementTypes',
-  'itTools.gcPartCD',
-  'itTools.gcCollectBids',
-  'itTools.gcUpdateContract',
-  'itTools.ppToAdvertise',
-  'itTools.ppCollectScoreReview',
-  'itTools.ppAppSupportContractor',
-  'itTools.ppCommunicateWithParticipant',
-  'itTools.ppManageProviderOverlap',
-  'itTools.bManageBeneficiaryOverlap',
-  'itTools.oelHelpdeskSupport',
-  'itTools.oelManageAco',
-  'itTools.oelPerformanceBenchmark',
-  'itTools.oelProcessAppeals',
-  'itTools.oelEvaluationContractor',
-  'itTools.oelCollectData',
-  'itTools.oelObtainData',
-  'itTools.oelClaimsBasedMeasures',
-  'itTools.oelQualityScores',
-  'itTools.oelSendReports',
-  'itTools.oelLearningContractor',
-  'itTools.oelParticipantCollaboration',
-  'itTools.oelEducateBeneficiaries',
-  'itTools.pMakeClaimsPayments',
-  'itTools.pInformFfs',
-  'itTools.pNonClaimsBasedPayments',
-  'itTools.pSharedSavingsPlan',
-  'itTools.pRecoverPayments',
   'opsEvalAndLearning.agencyOrStateHelp',
   'opsEvalAndLearning.ccmInvolvment',
   'opsEvalAndLearning.contractorSupport',

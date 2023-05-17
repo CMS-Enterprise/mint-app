@@ -84,40 +84,38 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
         data-testid="grid"
       >
         <div
-          class="padding-3 bg-base-lightest"
+          class="grid-container padding-3 bg-base-lightest maxw-none"
+          data-testid="gridContainer"
         >
-          <p
-            class="text-bold margin-y-1"
+          <div
+            class="grid-row"
+            data-testid="grid"
           >
-            Operational need
-          </p>
-          <p
-            class="margin-top-0 font-body-sm"
-          />
-          <button
-            class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3"
-            data-testid="toggle-need-answer"
-            type="button"
-          >
-            <svg
-              class="usa-icon margin-right-05 needs-question__rotate"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
+              <p
+                class="text-bold margin-y-1"
+              >
+                Operational need
+              </p>
+              <p
+                class="margin-top-0 font-body-sm"
               />
-              <path
-                d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
-              />
-            </svg>
-            Why is this a part of my operational needs?
-          </button>
+            </div>
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <a
+                class="usa-link"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/update-need/"
+              >
+                Edit this operational need
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -136,10 +134,9 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
             <fieldset
               class="usa-fieldset"
               data-testid="fieldset"
-              disabled=""
             >
               <div
-                class="usa-form-group"
+                class="usa-form-group margin-top-0"
                 data-scroll="key"
               >
                 <label
@@ -149,6 +146,7 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
                 >
                   How will you solve this?
                   <span
+                    aria-label="(Field required)"
                     class="text-red margin-x-05"
                   >
                     *
@@ -159,17 +157,167 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
                 >
                   Select an operational solution or select "Other" if you’ll solve this a different way.
                 </p>
-                <select
-                  class="usa-select"
-                  data-testid="dropdown"
-                  id="it-solutions-key"
-                  name="key"
+                <div
+                  class="usa-combo-box"
+                  data-enhanced="true"
+                  data-testid="combo-box"
                 >
-                  <option
-                    disabled=""
+                  <select
+                    aria-hidden="true"
+                    class="usa-select usa-sr-only usa-combo-box__select"
+                    data-testid="combo-box-select"
+                    name="key"
+                    tabindex="-1"
+                  >
+                    <option
+                      value="HPMS"
+                    >
+                      Health Plan Management System (HPMS)
+                    </option>
+                    <option
+                      value="MARX"
+                    >
+                      Medicare Advantage Prescription Drug System (MARx)
+                    </option>
+                    <option
+                      value="OTHER_NEW_PROCESS"
+                    >
+                      Other
+                    </option>
+                    <option
+                      value="SALESFORCE"
+                    >
+                      Salesforce
+                    </option>
+                  </select>
+                  <input
+                    aria-activedescendant=""
+                    aria-autocomplete="list"
+                    aria-describedby="it-solutions-key--assistiveHint"
+                    aria-expanded="false"
+                    aria-owns="it-solutions-key--list"
+                    autocapitalize="off"
+                    autocomplete="off"
+                    class="usa-combo-box__input"
+                    data-testid="combo-box-input"
+                    id="it-solutions-key"
+                    name="key"
+                    role="combobox"
+                    type="text"
                     value=""
                   />
-                </select>
+                  <span
+                    class="usa-combo-box__clear-input__wrapper"
+                    tabindex="-1"
+                  >
+                    <button
+                      aria-label="Clear the select contents"
+                      class="usa-combo-box__clear-input"
+                      data-testid="combo-box-clear-button"
+                      hidden=""
+                      type="button"
+                    >
+                       
+                    </button>
+                  </span>
+                  <span
+                    class="usa-combo-box__input-button-separator"
+                  >
+                     
+                  </span>
+                  <span
+                    class="usa-combo-box__toggle-list__wrapper"
+                    tabindex="-1"
+                  >
+                    <button
+                      aria-label="Toggle the dropdown list"
+                      class="usa-combo-box__toggle-list"
+                      data-testid="combo-box-toggle"
+                      tabindex="-1"
+                      type="button"
+                    >
+                       
+                    </button>
+                  </span>
+                  <ul
+                    class="usa-combo-box__list"
+                    data-testid="combo-box-option-list"
+                    hidden=""
+                    id="it-solutions-key--list"
+                    role="listbox"
+                    tabindex="-1"
+                  >
+                    <li
+                      aria-posinset="1"
+                      aria-selected="false"
+                      aria-setsize="4"
+                      class="usa-combo-box__list-option"
+                      data-testid="combo-box-option-HPMS"
+                      data-value="HPMS"
+                      id="it-solutions-key--list--option-0"
+                      role="option"
+                      tabindex="-1"
+                      value="HPMS"
+                    >
+                      Health Plan Management System (HPMS)
+                    </li>
+                    <li
+                      aria-posinset="2"
+                      aria-selected="false"
+                      aria-setsize="4"
+                      class="usa-combo-box__list-option"
+                      data-testid="combo-box-option-MARX"
+                      data-value="MARX"
+                      id="it-solutions-key--list--option-1"
+                      role="option"
+                      tabindex="-1"
+                      value="MARX"
+                    >
+                      Medicare Advantage Prescription Drug System (MARx)
+                    </li>
+                    <li
+                      aria-posinset="3"
+                      aria-selected="false"
+                      aria-setsize="4"
+                      class="usa-combo-box__list-option"
+                      data-testid="combo-box-option-OTHER_NEW_PROCESS"
+                      data-value="OTHER_NEW_PROCESS"
+                      id="it-solutions-key--list--option-2"
+                      role="option"
+                      tabindex="-1"
+                      value="OTHER_NEW_PROCESS"
+                    >
+                      Other
+                    </li>
+                    <li
+                      aria-posinset="4"
+                      aria-selected="false"
+                      aria-setsize="4"
+                      class="usa-combo-box__list-option"
+                      data-testid="combo-box-option-SALESFORCE"
+                      data-value="SALESFORCE"
+                      id="it-solutions-key--list--option-3"
+                      role="option"
+                      tabindex="-1"
+                      value="SALESFORCE"
+                    >
+                      Salesforce
+                    </li>
+                  </ul>
+                  <div
+                    class="usa-combo-box__status usa-sr-only"
+                    role="status"
+                  />
+                  <span
+                    class="usa-sr-only"
+                    data-testid="combo-box-assistive-hint"
+                    id="it-solutions-key--assistiveHint"
+                  >
+                    When autocomplete results are available use up and down arrows to review
+           and enter to select. Touch device users, explore by touch or with swipe
+           gestures.
+                  </span>
+                </div>
               </div>
               <div
                 class="margin-top-6 margin-bottom-3"
@@ -264,7 +412,7 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
         class="margin-top-4"
       >
         <p
-          class="text-bold margin-bottom-0"
+          class="text-bold margin-bottom-2"
         >
           Helpful links
         </p>
@@ -273,9 +421,7 @@ exports[`IT Solutions AddSolution matches snapshot 1`] = `
           data-testid="button"
           type="button"
         >
-          <p>
-            Available operational solutions (opens in a new tab)
-          </p>
+          Available operational solutions (opens in a new tab)
         </button>
       </div>
     </div>

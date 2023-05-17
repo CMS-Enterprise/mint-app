@@ -1,3 +1,5 @@
+@use 'viewports' as *;
+
 .mint-modal {
   &__overlay {
     position: fixed;
@@ -46,4 +48,9 @@
   &__body {
     padding: 0 2rem 2rem;
   }
+}
+
+.confirmation-modal {
+  font-size: 1rem;
+  width: 480px;
 }

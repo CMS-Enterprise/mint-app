@@ -48,3 +48,6 @@ __debug_bin
 
 # devlocal cert, keys
 devlocal-https.*
+
+# sensitive
+/cmd/backfill/data/sensitive

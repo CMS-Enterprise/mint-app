@@ -24,6 +24,7 @@ import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetIDDOC from 'queries/OpsEvalAndLearning/GetIDDOC';
 import {
   GetIDDOC as GetIDDOCType,
@@ -36,7 +37,12 @@ import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const IDDOC = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -59,6 +65,7 @@ const IDDOC = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     technicalContactsIdentified,
     technicalContactsIdentifiedDetail,
     technicalContactsIdentifiedNote,
@@ -107,6 +114,7 @@ const IDDOC = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     technicalContactsIdentified: technicalContactsIdentified ?? null,
     technicalContactsIdentifiedDetail: technicalContactsIdentifiedDetail ?? '',
@@ -209,7 +217,7 @@ const IDDOC = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-iddoc-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -255,9 +263,10 @@ const IDDOC = () => {
                                 {flatErrors.technicalContactsIdentifiedDetail}
                               </FieldErrorMsg>
                               <Field
-                                as={TextInput}
+                                as={TextAreaField}
                                 id="ops-eval-and-learning-technical-contacts-identified-detail"
-                                maxLength={50}
+                                maxLength={5000}
+                                className="mint-textarea"
                                 name="technicalContactsIdentifiedDetail"
                               />
                             </div>
@@ -405,11 +414,13 @@ const IDDOC = () => {
           currentPage={renderCurrentPage(
             2,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

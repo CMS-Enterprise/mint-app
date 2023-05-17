@@ -14,7 +14,7 @@ function useScrollElement(dataFetched: boolean) {
         `[data-scroll="${location?.state?.scrollElement}"]`
       );
       if (fieldGroup) {
-        fieldGroup.scrollIntoView();
+        fieldGroup.scrollIntoView({ behavior: 'smooth' });
       }
     }, 0);
   }, [location?.state?.scrollElement, dataFetched]);

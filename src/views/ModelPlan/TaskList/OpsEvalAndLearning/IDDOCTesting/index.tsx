@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -18,6 +17,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -38,7 +38,12 @@ import { dirtyInput } from 'utils/formDiff';
 import { sortOtherEnum, translateMonitoringFileType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const IDDOCTesting = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -61,6 +66,7 @@ const IDDOCTesting = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     uatNeeds,
     stcNeeds,
     testingTimelines,
@@ -111,6 +117,7 @@ const IDDOCTesting = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     uatNeeds: uatNeeds ?? '',
     stcNeeds: stcNeeds ?? '',
@@ -190,7 +197,7 @@ const IDDOCTesting = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-iddoc-testing-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -324,10 +331,10 @@ const IDDOCTesting = () => {
                                       {flatErrors.dataMonitoringFileOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
-                                      className="maxw-none"
+                                      as={TextAreaField}
+                                      className="maxw-none mint-textarea"
                                       id="ops-eval-and-learning-data-monitoring-file-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="dataMonitoringFileOther"
                                     />
                                   </div>
@@ -419,11 +426,13 @@ const IDDOCTesting = () => {
           currentPage={renderCurrentPage(
             3,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

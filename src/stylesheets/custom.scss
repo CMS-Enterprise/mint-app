@@ -1,3 +1,6 @@
+@use 'colors' as *;
+@use 'viewports' as *;
+
 // Custom USWDS Button
 .mint-button {
   &__save {
@@ -23,9 +26,15 @@
 
 // Textarea
 .usa-textarea {
-  height: 300px;
-  max-width: 830px;
+  height: 7.5rem;
+  max-width: 100%;
   width: 100%;
+}
+
+.mint-textarea {
+  min-height: 2.5rem !important;
+  resize: both !important;
+  height: 2.5rem;
 }
 
 // The default font for this project should be Public Sans
@@ -45,6 +54,11 @@
   margin-right: .25rem;
 }
 
+.usa-alert .usa-alert__body {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 .usa-alert.mint-inline-alert {
   background-color: white;
   background-size: 1.6rem;
@@ -55,7 +69,7 @@
     background: #585c62;
   }
   .usa-alert__body {
-    padding-left: 2.8rem;
+    padding-left: 2.8rem;    
   }
   .usa-alert__text:only-child {
     margin-bottom: 0;
@@ -69,4 +83,39 @@
 
 .width-fit-content {
   width: fit-content;
+}
+
+.usa-date-picker__calendar {
+  font-size: 14px !important;
+}
+
+.mint-cool-vivid {
+  color: $mint-cool-vivid !important;
+}
+
+.bg-mint-cool-vivid {
+  background-color: $mint-cool-vivid !important
+}
+
+.mint-cool-5 {
+  color: $mint-cool-5 !important;
+}
+
+.bg-mint-cool-5 {
+  background-color: $mint-cool-5 !important
+}
+
+.mint-cool-20 {
+  color: $mint-cool-5 !important;
+}
+
+.bg-mint-cool-20 {
+  background-color: $mint-cool-20 !important
+}
+
+@media screen and (min-width: 15rem) {
+  .mobile\:grid-col-6 {
+    flex: 0 1 auto;
+      width: 50%;
+  }
 }

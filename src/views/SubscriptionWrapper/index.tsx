@@ -131,6 +131,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
             // Formatting lock object to mirror prev updateQuery param
             const formattedSubscriptionContext = {
+              ...prev,
               taskListSectionLocks: updatedSubscriptionContext,
               loading: false
             };

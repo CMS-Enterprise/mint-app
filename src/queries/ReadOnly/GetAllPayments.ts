@@ -41,6 +41,7 @@ export default gql`
         waiverOnlyAppliesPartOfPayment
         waiveBeneficiaryCostSharingNote
         nonClaimsPayments
+        nonClaimsPaymentsNote
         nonClaimsPaymentOther
         paymentCalculationOwner
         numberPaymentsPerPayCycle

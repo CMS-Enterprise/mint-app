@@ -5,7 +5,7 @@ import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
 
-type DocumentStatusType = 'success' | 'error';
+export type DocumentStatusType = 'success' | 'error';
 
 const ReadOnlyDocuments = ({
   modelID,
@@ -31,7 +31,7 @@ const ReadOnlyDocuments = ({
       </div>
 
       {documentMessage && (
-        <Expire delay={4000}>
+        <Expire delay={45000}>
           <Alert
             type={documentStatus}
             slim

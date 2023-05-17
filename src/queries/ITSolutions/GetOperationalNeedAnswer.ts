@@ -11,10 +11,12 @@ export default gql`
     $managePartCDEnrollment: Boolean!
     $collectPlanBids: Boolean!
     $planContractUpdated: Boolean!
+    $agreementTypes: Boolean!
     $recruitmentMethod: Boolean!
     $selectionMethod: Boolean!
     $communicationMethod: Boolean!
     $providerOverlap: Boolean!
+    $participantsIds: Boolean!
     $beneficiaryOverlap: Boolean!
     $helpdeskUse: Boolean!
     $iddocSupport: Boolean!
@@ -27,6 +29,7 @@ export default gql`
     $dataNeededForMonitoring: Boolean!
     $dataToSendParticicipants: Boolean!
     $modelLearningSystems: Boolean!
+    $developNewQualityMeasures: Boolean!
     $payType: Boolean!
     $shouldAnyProvidersExcludedFFSSystems: Boolean!
     $nonClaimsPayments: Boolean!
@@ -39,12 +42,14 @@ export default gql`
         managePartCDEnrollment @include(if: $managePartCDEnrollment)
         collectPlanBids @include(if: $collectPlanBids)
         planContractUpdated @include(if: $planContractUpdated)
+        agreementTypes @include(if: $agreementTypes)
       }
       participantsAndProviders @include(if: $participantsAndProviders) {
         recruitmentMethod @include(if: $recruitmentMethod)
         selectionMethod @include(if: $selectionMethod)
         communicationMethod @include(if: $communicationMethod)
         providerOverlap @include(if: $providerOverlap)
+        participantsIds @include(if: $participantsIds)
       }
       beneficiaries @include(if: $beneficiaries) {
         beneficiaryOverlap @include(if: $beneficiaryOverlap)
@@ -61,6 +66,7 @@ export default gql`
         dataNeededForMonitoring @include(if: $dataNeededForMonitoring)
         dataToSendParticicipants @include(if: $dataToSendParticicipants)
         modelLearningSystems @include(if: $modelLearningSystems)
+        developNewQualityMeasures @include(if: $developNewQualityMeasures)
       }
       payments @include(if: $payments) {
         payType @include(if: $payType)

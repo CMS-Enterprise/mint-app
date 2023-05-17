@@ -111,7 +111,9 @@ const BeneficiaryIdentification = () => {
     .sort(sortOtherEnum)
     .map(key => ({
       value: key,
-      label: translateBeneficiariesType(key)
+      label: translateBeneficiariesType(key),
+      subLabel:
+        key === BeneficiariesType.DISEASE_SPECIFIC ? t('diseaseSubLabel') : null
     }));
 
   const initialValues: BeneficiaryIdentificationFormType = {
@@ -217,7 +219,10 @@ const BeneficiaryIdentification = () => {
                         error={!!flatErrors.beneficiaries}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="beneficiaries-beneficiaries">
+                        <Label
+                          htmlFor="beneficiaries-beneficiaries"
+                          id="label-beneficiaries-beneficiaries"
+                        >
                           {t('beneficiaries')}
                         </Label>
                         <FieldErrorMsg>
@@ -228,6 +233,7 @@ const BeneficiaryIdentification = () => {
                           as={MultiSelect}
                           id="beneficiaries-beneficiaries"
                           name="beneficiaries"
+                          ariaLabel="label-beneficiaries-beneficiaries"
                           options={mappedBeneficiariesType}
                           selectedLabel={t('selectedGroup')}
                           onChange={(value: string[] | []) => {

@@ -21,8 +21,29 @@ var planParticipantsAndProvidersUpdateSQL string
 //go:embed SQL/plan_participants_and_providers/get_by_id.sql
 var planParticipantsAndProvidersGetByIDSQL string
 
-//go:embed SQL/plan_participants_and_providers/get_by_model_plan_id.sql
-var planParticipantsAndProvidersGetByModelPlanIDSQL string
+//go:embed SQL/plan_participants_and_providers/get_by_model_plan_id_LOADER.sql
+var planParticipantsAndProvidersGetByModelPlanIDLoaderSQL string
+
+// PlanParticipantsAndProvidersGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanParticipantsAndProviders, error) {
+	pAndPSlice := []*models.PlanParticipantsAndProviders{}
+
+	stmt, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&pAndPSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return pAndPSlice, nil
+}
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
 func (s *Store) PlanParticipantsAndProvidersCreate(logger *zap.Logger, gc *models.PlanParticipantsAndProviders) (*models.PlanParticipantsAndProviders, error) {
@@ -68,28 +89,6 @@ func (s *Store) PlanParticipantsAndProvidersGetByID(logger *zap.Logger, id uuid.
 	}
 
 	err = statement.Get(&gc, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &gc, nil
-}
-
-// PlanParticipantsAndProvidersGetByModelPlanID returns the providers_and_participants for a given model plan id
-func (s *Store) PlanParticipantsAndProvidersGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanParticipantsAndProviders, error) {
-	gc := models.PlanParticipantsAndProviders{}
-
-	statement, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	err = statement.Get(&gc, arg)
 
 	if err != nil {
 		return nil, err

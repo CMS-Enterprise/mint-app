@@ -15,11 +15,15 @@ export default gql`
         anticipateReconcilingPaymentsRetrospectivelyNote
         paymentStartDate
         paymentStartDateNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
         readyForReviewDts
         status
       }
       operationalNeeds {
+        id
         modifiedDts
       }
     }

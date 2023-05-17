@@ -1,8 +1,10 @@
 package models
 
-// UserInfo is the model for personal details of a user
+// UserInfo is the model for the details of a user from the Okta API
 type UserInfo struct {
-	CommonName string
-	Email      EmailAddress
-	EuaUserID  string
+	FirstName   string
+	LastName    string
+	DisplayName string
+	Email       string
+	Username    string
 }

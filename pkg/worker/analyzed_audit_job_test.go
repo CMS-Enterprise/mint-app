@@ -6,6 +6,7 @@ import (
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -37,24 +38,30 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 
 	// Add collaborator. Only model leads should be added
 	modelLead := suite.createPlanCollaborator(plan, "MINT", "New Model Lead", "MODEL_LEAD", "test@email.com")
+	modelLeadAccount, err := suite.testConfigs.Store.UserAccountGetByID(modelLead.UserID)
+
+	suite.NoError(err)
 	collaborator := suite.createPlanCollaborator(plan, "COLB", "New Colaborator", "MODEL_TEAM", "test@email.com")
+	collaboratorAccount, err := suite.testConfigs.Store.UserAccountGetByID(collaborator.UserID)
+
+	suite.NoError(err)
 
 	// Add Discussion
 	suite.createPlanDiscussion(plan, "Test Comment")
 
 	// Add sections
 	// plan_basic
-	basics, _ := resolvers.PlanBasicsGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	basics, _ := resolvers.PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_general_characteristic
-	genChar, _ := resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	genChar, _ := resolvers.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_participants_and_provider
-	participant, _ := resolvers.PlanParticipantsAndProvidersGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	participant, _ := resolvers.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_beneficiaries
-	beneficiary, _ := resolvers.PlanBeneficiariesGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	beneficiary, _ := resolvers.PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_ops_eval_and_learning
-	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanID(worker.Logger, plan.ID, worker.Store)
+	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_payments
-	payment, _ := resolvers.PlanPaymentsReadByModelPlan(worker.Logger, worker.Store, plan.ID)
+	payment, _ := resolvers.PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	// Update sections for ReadyForClearance
 	clearanceChanges := map[string]interface{}{
@@ -99,9 +106,14 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	// CrTdl Activity
 	suite.True(analyzedAudit.Changes.CrTdls.Activity)
 
-	// Plan Collaborators. Only model leads should be added.
-	suite.True(lo.Contains(analyzedAudit.Changes.ModelLeads.Added, modelLead.FullName))
-	suite.False((lo.Contains(analyzedAudit.Changes.ModelLeads.Added, collaborator.FullName)))
+	// Plan Collaborators. Only model leads should be added. Will be 2, one for the added account, one for the principal
+	suite.Len(analyzedAudit.Changes.ModelLeads.Added, 2)
+	leadIDs := []uuid.UUID{}
+	for _, lead := range analyzedAudit.Changes.ModelLeads.Added {
+		leadIDs = append(leadIDs, lead.ID)
+	}
+	suite.Contains(leadIDs, modelLeadAccount.ID)
+	suite.NotContains(leadIDs, collaboratorAccount.ID)
 
 	// Discussions Activity
 	suite.True(analyzedAudit.Changes.PlanDiscussions.Activity)
@@ -125,16 +137,16 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
 
 	// Dont create if there are no changes
-	mp := models.NewModelPlan("TEST", "NO CHANGES")
+	mp := models.NewModelPlan(suite.testConfigs.Principal.UserAccount.ID, "NO CHANGES")
 
 	noChangeMp, err := suite.testConfigs.Store.ModelPlanCreate(suite.testConfigs.Logger, mp)
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
-	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().AddDate(0, 0, 1).Format("2006-01-02"), plan.ID.String())
+	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), noChangeMp.ID.String())
 	suite.NoError(err)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC().AddDate(0, 0, 1))
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC())
 	suite.Error(err)
 }
 

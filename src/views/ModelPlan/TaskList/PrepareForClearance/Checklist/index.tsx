@@ -33,22 +33,28 @@ import {
 } from 'queries/PrepareForClearance/types/GetClearanceStatuses';
 import { UpdatePrepareForClearanceVariables } from 'queries/PrepareForClearance/types/UpdatePrepareForClearance';
 import UpdatePrepareForClearance from 'queries/PrepareForClearance/UpdatePrepareForClearance';
-import { TaskStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
+import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 // Initial form values and types for each task-list clearance checkbox
 interface ClearanceFormValues {
   id: string;
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: { commonName: string } | null;
   readyForClearanceDts: string | null;
   status: TaskStatus;
 }
 
 const initialClearanceFormValues = {
   id: '',
-  readyForClearanceBy: null,
+  readyForClearanceByUserAccount: {
+    id: '',
+    commonName: ''
+  },
   readyForClearanceDts: null,
   status: TaskStatus.READY
 };
@@ -159,7 +165,12 @@ const PrepareForClearanceCheckList = ({
       });
   };
 
-  if ((!loading && error) || (!loading && !modelPlan)) {
+  if (
+    (!loading && error) ||
+    (!loading && !modelPlan) ||
+    (data as GetClearanceStatusesType)?.modelPlan?.prepareForClearance
+      ?.status === PrepareForClearanceStatus.CANNOT_START
+  ) {
     return <NotFoundPartial />;
   }
 
@@ -257,19 +268,19 @@ const PrepareForClearanceCheckList = ({
                             section as keyof ClearanceStatusesModelPlanFormType
                           ]?.status;
 
-                        const readyForClearanceBy =
+                        const readyForClearanceByUserAccount =
                           values[
                             section as keyof ClearanceStatusesModelPlanFormType
-                          ]?.readyForClearanceBy;
+                          ]?.readyForClearanceByUserAccount;
 
                         const readyForClearanceDts =
                           values[
                             section as keyof ClearanceStatusesModelPlanFormType
                           ]?.readyForClearanceDts;
 
-                        // Bypass/don't render itTools or prepareForClearance task list sections
+                        // Bypass/don't render itSolutions or prepareForClearance task list sections
                         if (
-                          section === 'itTools' ||
+                          section === 'itSolutions' ||
                           section === 'prepareForClearance'
                         )
                           return null;
@@ -302,12 +313,15 @@ const PrepareForClearanceCheckList = ({
                             />
 
                             {/* Label to render who marked readyForClearance and when */}
-                            {readyForClearanceBy && (
-                              <SectionClearanceLabel
-                                readyForClearanceBy={readyForClearanceBy!}
-                                readyForClearanceDts={readyForClearanceDts!}
-                              />
-                            )}
+                            {readyForClearanceByUserAccount &&
+                              readyForClearanceDts && (
+                                <SectionClearanceLabel
+                                  commonName={
+                                    readyForClearanceByUserAccount.commonName
+                                  }
+                                  readyForClearanceDts={readyForClearanceDts}
+                                />
+                              )}
 
                             <Grid tablet={{ col: 8 }}>
                               {/* Need to pass in section ID to update readyForClearance state on next route */}
@@ -363,25 +377,26 @@ const PrepareForClearanceCheckList = ({
 
 type SectionClearanceLabelProps = {
   className?: string;
-  readyForClearanceBy: string;
+  commonName: string;
   readyForClearanceDts: string;
 };
 
 // Label to render who marked readyForClearance and when
 export const SectionClearanceLabel = ({
   className,
-  readyForClearanceBy,
+  commonName,
   readyForClearanceDts
 }: SectionClearanceLabelProps): JSX.Element => {
   const { t } = useTranslation('prepareForClearance');
+
   return (
     <p
       data-testid="clearance-label"
       className={classNames(className, 'margin-left-4 text-base margin-y-0')}
     >
       {t('markedAsReady', {
-        readyForClearanceBy,
-        readyForClearanceDts: formatDate(readyForClearanceDts, 'MM/d/yyyy')
+        name: commonName,
+        date: formatDateUtc(readyForClearanceDts, 'MM/dd/yyyy')
       })}
     </p>
   );

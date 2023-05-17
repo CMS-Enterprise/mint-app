@@ -72,7 +72,7 @@ exports[`Model Plan CR and TDL page matches snapshot 1`] = `
         <p
           class="margin-bottom-2 font-body-md line-height-body-4"
         >
-          Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the Model Assessment team at 
+          Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at 
           <a
             class="usa-link"
             href="[email]@cms.hhs.gov"
@@ -130,7 +130,7 @@ exports[`Model Plan CR and TDL page matches snapshot 1`] = `
               There is a problem
             </h3>
             <button
-              class="usa-error-message usa-alert__text mint-error-alert__message"
+              class="usa-error-message usa-alert__text mint-error-alert__message text-left"
               type="button"
             >
               Failed to fetch Model Plan CRs and TDLs

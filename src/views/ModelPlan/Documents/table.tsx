@@ -1,10 +1,16 @@
-import React, { useMemo, useState } from 'react';
+import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
+import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -18,8 +24,10 @@ import {
   GetModelPlanDocuments_modelPlan_documents as DocumentType,
   GetModelPlanDocumentsVariables
 } from 'queries/Documents/types/GetModelPlanDocuments';
+import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'queries/ITSolutions/types/GetOperationalSolution';
+import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
-import globalTableFilter from 'utils/globalTableFilter';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import { translateDocumentType } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
@@ -29,12 +37,17 @@ import {
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
 
+import './index.scss';
+
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
   isHelpArticle?: boolean;
+  linkedDocs?: string[];
+  setLinkedDocs?: Dispatch<SetStateAction<string[]>>;
+  className?: string;
 };
 
 type DocumentStatusType = 'success' | 'error';
@@ -44,7 +57,10 @@ const PlanDocumentsTable = ({
   modelID,
   setDocumentMessage,
   setDocumentStatus,
-  isHelpArticle
+  isHelpArticle,
+  linkedDocs,
+  setLinkedDocs,
+  className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
   const { error, loading, data, refetch: refetchDocuments } = useQuery<
@@ -53,14 +69,17 @@ const PlanDocumentsTable = ({
   >(GetModelPlanDocuments, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: setLinkedDocs ? 'network-only' : 'cache-and-network'
   });
+
+  const flags = useFlags();
 
   const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean =
-    !isHelpArticle && (isCollaborator || isAssessment(groups));
+    !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
   if (loading) {
     return <PageLoading />;
@@ -82,34 +101,59 @@ const PlanDocumentsTable = ({
   }
 
   return (
-    <Table
-      data={documents}
-      hiddenColumns={hiddenColumns}
-      refetch={refetchDocuments}
-      setDocumentMessage={setDocumentMessage}
-      setDocumentStatus={setDocumentStatus}
-      hasEditAccess={hasEditAccess}
-    />
+    <div className={classNames(className)}>
+      <Table
+        data={documents}
+        hiddenColumns={hiddenColumns}
+        refetch={refetchDocuments}
+        setDocumentMessage={setDocumentMessage}
+        setDocumentStatus={setDocumentStatus}
+        hasEditAccess={hasEditAccess}
+        linkedDocs={linkedDocs}
+        setLinkedDocs={setLinkedDocs}
+      />
+    </div>
   );
 };
 
 export default PlanDocumentsTable;
 
+const findDocIDAndRemoveOrInsert = (
+  id: string,
+  linkedDocs: string[]
+): string[] => {
+  const linkedDocsCopy = [...linkedDocs];
+  const index = linkedDocs.indexOf(id);
+  if (index > -1) {
+    // Removed from list of docs if already exists
+    linkedDocsCopy.splice(index, 1);
+  } else {
+    linkedDocsCopy.push(id); // Add to list of linked docs
+  }
+  return linkedDocsCopy;
+};
+
 type TableProps = {
-  data: DocumentType[];
+  data: DocumentType[] | SolutionDocumentType[];
   hiddenColumns?: string[];
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
+  linkedDocs?: string[]; // If displaying from LinkedDocuments view
+  setLinkedDocs?: Dispatch<SetStateAction<string[]>>; // If displaying from LinkedDocuments view
+  handleDocumentUnlink?: (fileToUnlink: string) => void; // Mutation to unlink a document from directly in table
   hasEditAccess?: boolean;
 };
 
-const Table = ({
+export const Table = ({
   data,
   hiddenColumns,
   refetch,
   setDocumentMessage,
   setDocumentStatus,
+  linkedDocs,
+  setLinkedDocs,
+  handleDocumentUnlink,
   hasEditAccess
 }: TableProps) => {
   const { t } = useTranslation('documents');
@@ -158,29 +202,6 @@ const Table = ({
     };
   }, [mutate, refetch, t, setDocumentMessage, setDocumentStatus]);
 
-  const renderModal = () => {
-    return (
-      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-        <PageHeading headingLevel="h2" className="margin-top-0">
-          {t('removeDocumentModal.header', {
-            documentName: fileToRemove.fileName
-          })}
-        </PageHeading>
-        <p>{t('removeDocumentModal.warning')}</p>
-        <Button
-          type="button"
-          className="margin-right-4"
-          onClick={() => handleDelete(fileToRemove)}
-        >
-          {t('removeDocumentModal.confirm')}
-        </Button>
-        <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-          {t('removeDocumentModal.cancel')}
-        </Button>
-      </Modal>
-    );
-  };
-
   const handleDownload = useMemo(() => {
     return (file: DocumentType) => {
       if (!file.fileName || !file.fileType) return;
@@ -199,11 +220,134 @@ const Table = ({
     };
   }, [setDocumentMessage, setDocumentStatus]);
 
+  const renderModal = () => {
+    return (
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-0"
+        >
+          {t('removeDocumentModal.header', {
+            documentName: fileToRemove.fileName
+          })}
+        </PageHeading>
+
+        {((fileToRemove.numLinkedSolutions > 0 && !handleDocumentUnlink) ||
+          (fileToRemove.numLinkedSolutions > 1 && handleDocumentUnlink)) && (
+          <Alert type="warning">
+            {handleDocumentUnlink
+              ? t('removeDocumentModal.linkDocsWarning2', {
+                  numLinkedSolutions: fileToRemove.numLinkedSolutions - 1,
+                  plural: fileToRemove.numLinkedSolutions - 1 > 1 ? 's' : ''
+                })
+              : t('removeDocumentModal.linkDocsWarning', {
+                  numLinkedSolutions: fileToRemove.numLinkedSolutions,
+                  plural: fileToRemove.numLinkedSolutions > 1 ? 's' : ''
+                })}
+          </Alert>
+        )}
+
+        {handleDocumentUnlink && (
+          <>
+            <p>
+              <span className="text-bold">
+                {t('removeDocumentModal.removing')}
+              </span>
+              {fileToRemove.numLinkedSolutions > 1
+                ? t('removeDocumentModal.warningRemoveSolution')
+                : t('removeDocumentModal.warningRemoveSolution2')}
+            </p>
+            <p>
+              <span className="text-bold">
+                {t('removeDocumentModal.unlinking')}
+              </span>
+              {t('removeDocumentModal.warningUnlinkSolution')}
+            </p>
+          </>
+        )}
+
+        {!handleDocumentUnlink && (
+          <>
+            <p>
+              {fileToRemove.numLinkedSolutions > 0
+                ? t('removeDocumentModal.warning2')
+                : t('removeDocumentModal.warning')}
+            </p>
+          </>
+        )}
+
+        <Button
+          type="button"
+          className="bg-red"
+          onClick={() => {
+            handleDelete(fileToRemove);
+            setModalOpen(false);
+          }}
+        >
+          {handleDocumentUnlink
+            ? t('removeDocumentModal.confirmSolutionRemove')
+            : t('removeDocumentModal.confirm')}
+        </Button>
+
+        {handleDocumentUnlink && (
+          <Button
+            type="button"
+            onClick={() => {
+              handleDocumentUnlink(fileToRemove.id);
+              setModalOpen(false);
+            }}
+          >
+            {t('removeDocumentModal.unlink')}
+          </Button>
+        )}
+
+        <Button
+          type="button"
+          className="margin-left-2"
+          unstyled
+          onClick={() => setModalOpen(false)}
+        >
+          {handleDocumentUnlink
+            ? t('removeDocumentModal.cancel')
+            : t('removeDocumentModal.keepDocument')}
+        </Button>
+      </Modal>
+    );
+  };
+
   const columns = useMemo(() => {
-    return [
+    const documentColumns = [
       {
-        Header: t('documentTable.name'),
-        accessor: 'fileName'
+        Header: () => {
+          return t('documentTable.name');
+        },
+        accessor: 'fileName',
+        Cell: ({ row, value }: any) => {
+          if (linkedDocs) {
+            return (
+              <Checkbox
+                id={`link-document-${row.original.id}`}
+                data-testid={`link-document-${row.original.id}`}
+                onChange={() => {
+                  const updatedDocs = findDocIDAndRemoveOrInsert(
+                    row.original.id,
+                    linkedDocs
+                  );
+                  if (setLinkedDocs) setLinkedDocs(updatedDocs);
+                }}
+                label={value}
+                name={`link-document-${row.original.id}`}
+                onBlur={() => null}
+                checked={linkedDocs.includes(row.original.id)}
+              />
+            );
+          }
+          return value;
+        }
       },
       {
         Header: t('documentTable.type'),
@@ -223,7 +367,7 @@ const Table = ({
         Header: t('documentTable.uploadDate'),
         accessor: 'createdDts',
         Cell: ({ value }: any) => {
-          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_SHORT);
+          return formatDateLocal(value, 'MM/dd/yyyy');
         }
       },
       {
@@ -248,7 +392,7 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                {hasEditAccess && (
+                {hasEditAccess && !linkedDocs && (
                   <Button
                     type="button"
                     unstyled
@@ -271,7 +415,9 @@ const Table = ({
         }
       }
     ];
-  }, [t, handleDownload, hasEditAccess]);
+
+    return documentColumns;
+  }, [t, handleDownload, hasEditAccess, linkedDocs, setLinkedDocs]);
 
   const {
     getTableProps,
@@ -291,7 +437,7 @@ const Table = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
@@ -358,9 +504,7 @@ const Table = ({
                           {...cell.getCellProps()}
                           scope="row"
                           style={{
-                            paddingLeft: '0',
-                            borderBottom:
-                              index === page.length - 1 ? 'none' : 'auto'
+                            paddingLeft: '0'
                           }}
                         >
                           {cell.render('Cell')}
@@ -371,9 +515,7 @@ const Table = ({
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          paddingLeft: '0',
-                          borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                          paddingLeft: '0'
                         }}
                       >
                         {cell.render('Cell')}
@@ -394,7 +536,11 @@ const Table = ({
       </div>
 
       {data.length === 0 && (
-        <p data-testid="no-documents">{t('documentTable.noDocuments')}</p>
+        <p data-testid="no-documents">
+          {handleDocumentUnlink
+            ? t('noLinkedDocs')
+            : t('documentTable.noDocuments')}
+        </p>
       )}
     </div>
   );

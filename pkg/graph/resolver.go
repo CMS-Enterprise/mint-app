@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -31,8 +33,10 @@ type Resolver struct {
 	s3Client             *upload.S3Client
 	emailService         oddmail.EmailService
 	emailTemplateService email.TemplateService
+	addressBook          email.AddressBook
 	ldClient             *ldclient.LDClient
 	pubsub               pubsub.PubSub
+	searchClient         *opensearch.Client
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -41,7 +45,7 @@ type ResolverService struct {
 	CreateActionExtendLifecycleID func(context.Context, uuid.UUID, *time.Time, *string, string, *string) error
 	IssueLifecycleID              func(context.Context) error
 	FetchUserInfo                 func(context.Context, string) (*models.UserInfo, error)
-	SearchCommonNameContains      func(context.Context, string) ([]*models.UserInfo, error)
+	SearchByName                  func(context.Context, string) ([]*models.UserInfo, error)
 }
 
 // NewResolver constructs a resolver
@@ -51,10 +55,20 @@ func NewResolver(
 	s3Client *upload.S3Client,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
+	osClient *opensearch.Client,
 ) *Resolver {
-	return &Resolver{store: store, service: service, s3Client: s3Client,
-		emailService: emailService, emailTemplateService: emailTemplateService,
-		ldClient: ldClient, pubsub: pubsub}
+	return &Resolver{
+		store:                store,
+		service:              service,
+		s3Client:             s3Client,
+		emailService:         emailService,
+		emailTemplateService: emailTemplateService,
+		addressBook:          addressBook,
+		ldClient:             ldClient,
+		pubsub:               pubsub,
+		searchClient:         osClient,
+	}
 }

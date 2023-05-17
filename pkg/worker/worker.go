@@ -16,6 +16,7 @@ type Worker struct {
 	Logger               *zap.Logger
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl
+	AddressBook          email.AddressBook
 	Connections          int
 	ProcessJobs          bool
 }
@@ -55,6 +56,7 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailBatchJob", w.DigestEmailBatchJob)
 	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
+	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
 
 	err := mgr.Run()
 	if err != nil {

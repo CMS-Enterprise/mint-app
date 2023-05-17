@@ -94,7 +94,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="plan-characteristics-key-characteristics-form"
   >
     <div
@@ -107,17 +107,21 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         What type of Alternative Payment Model (APM) do you think the model could be?
       </legend>
       <div
-        class="usa-alert usa-alert--info usa-alert--slim"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
         data-testid="mandatory-fields-alert"
       >
         <div
           class="usa-alert__body"
         >
-          <span
-            class="mandatory-fields-alert__text"
+          <p
+            class="usa-alert__text"
           >
-            In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
-          </span>
+            <span
+              class="mandatory-fields-alert__text"
+            >
+              In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+            </span>
+          </p>
         </div>
       </div>
       <fieldset
@@ -243,14 +247,13 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="plan-characteristics-key-characteristics"
+        id="label-plan-characteristics-key-characteristics"
       >
         What are the model key characteristics? Select all that apply.
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="plan-characteristics-key-characteristics"
         >
           <span
@@ -270,7 +273,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-3-placeholder"
               >
                 1 selected
@@ -283,6 +286,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
                   aria-autocomplete="list"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-plan-characteristics-key-characteristics"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -300,23 +304,31 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
             <div
               class=" css-1hb7zxy-IndicatorsContainer"
             >
-              <div
-                aria-hidden="true"
-                class=" css-1232v1p-indicatorContainer"
+              <button
+                aria-label="Clear selection"
+                class="usa-button--unstyled"
+                id="clear-selection"
+                tabindex="0"
+                type="button"
               >
-                <svg
+                <div
                   aria-hidden="true"
-                  class="css-tj5bde-Svg"
-                  focusable="false"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  width="20"
+                  class=" css-1e245h0-indicatorContainer"
                 >
-                  <path
-                    d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    aria-hidden="true"
+                    class="css-tj5bde-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                    />
+                  </svg>
+                </div>
+              </button>
               <span
                 class=" css-1vtyy7d-indicatorSeparator"
               />
@@ -357,12 +369,13 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           </h4>
           <ul
             class="usa-list--unstyled"
+            id="plan-characteristics-key-characteristics-tags"
           >
             <li
               class="margin-bottom-05 margin-right-05 display-inline-block"
             >
               <span
-                class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                 data-testid="multiselect-tag--Other"
                 id="selected-OTHER"
               >
@@ -433,7 +446,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         Key characteristic specific questions
       </label>
       <p
-        class="text-base margin-y-1 margin-top-3"
+        class="margin-y-1 margin-top-3"
       >
         Please describe the other key characteristics
       </p>

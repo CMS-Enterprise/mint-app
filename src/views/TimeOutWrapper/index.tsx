@@ -131,9 +131,13 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
 
   return (
     <>
-      <Modal isOpen={idleTimer.isPrompted()} closeModal={handleModalExit}>
+      <Modal
+        isOpen={idleTimer.isPrompted()}
+        closeModal={handleModalExit}
+        className="confirmation-modal"
+      >
         <h3
-          className="margin-top-0"
+          className="margin-top-neg-2 margin-bottom-1"
           role="timer"
           aria-live={timeRemainingArr[1] === 'minute' ? 'polite' : 'off'}
           aria-atomic="true"

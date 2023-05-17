@@ -1,3 +1,6 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
 .team-groupings--section-wrapper {
   border-bottom: 1px solid color($theme-color-base-light);
 

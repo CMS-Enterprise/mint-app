@@ -6,21 +6,6 @@ on:
       env:
         required: true
         type: string
-    secrets:
-      AWS_ROLE_TO_ASSUME:
-        required: true
-      SLACK_WEBHOOK_URL:
-        required: true
-      LD_CLIENT_ID:
-        required: true
-      OKTA_CLIENT_ID:
-        required: true
-      OKTA_SERVER_ID:
-        required: true
-      STATIC_S3_BUCKET:
-        required: true
-      ECR_REGISTRY:
-        required: true
 
 env:
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -54,6 +39,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
+      - name: Backup the database
+        if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
+        run: |
+          ./scripts/rds-snapshot-app-db.sh
       - name: Clean the database
         if: contains(inputs.env, 'dev')
         env:
@@ -77,11 +66,18 @@ jobs:
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/run_ecs_task.sh
-      # - name: Backup the database
-      #   if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
-      #   run: |
-      #     ./scripts/rds-snapshot-app-db
-      - name: Deploy ECS service
+      - name: Deploy Faktory ECS service
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: mint-faktory
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          TASK_FAMILY: "mint-faktory-${{ inputs.env }}"
+          ECS_CLUSTER: "${{ inputs.env }}-mint-faktory"
+          SERVICE_NAME: mint-faktory
+        run: |
+          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
+          ./scripts/deploy_ecs_service.sh
+      - name: Deploy MINT ECS service
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-backend
@@ -89,10 +85,15 @@ jobs:
           TASK_FAMILY: "mint-app-${{ inputs.env }}"
           ECS_CLUSTER: "${{ inputs.env }}-mint-app"
           SERVICE_NAME: mint-app
-          APP_ENV: ${{ inputs.env }}
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/deploy_ecs_service.sh
+      - name: Wait for /healthcheck to return new version
+        env:
+          APP_ENV: ${{ inputs.env }}
+          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+        run: |
+          ./scripts/healthcheck "$NEW_IMAGE_TAG"
       - name: Build static assets and release to S3
         env:
           APP_ENV: ${{ inputs.env }}
@@ -102,6 +103,9 @@ jobs:
           STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
         run: |
           ./scripts/release_static
+      - name: Invalidate CloudFront cache 
+        run: |
+          ./scripts/invalidate_cloudfront_cache.sh
       - name: Announce failure
         if: ${{ failure() }}
         run: |

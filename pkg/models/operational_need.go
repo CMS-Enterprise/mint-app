@@ -16,7 +16,7 @@ type OperationalNeed struct {
 }
 
 // NewOperationalNeed creatd an Operational Need with the required fields
-func NewOperationalNeed(createdBy string, modelPlanID uuid.UUID) *OperationalNeed {
+func NewOperationalNeed(createdBy uuid.UUID, modelPlanID uuid.UUID) *OperationalNeed {
 
 	return &OperationalNeed{
 		baseStruct:        NewBaseStruct(createdBy),

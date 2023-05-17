@@ -85,9 +85,13 @@ export default gql`
       }
       collaborators {
         id
-        fullName
-        euaUserID
-        email
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
+        userID
         teamRole
         modelPlanID
         createdDts
@@ -109,7 +113,6 @@ export default gql`
         isNewModel
         existingModel
         resemblesExistingModel
-        resemblesExistingModelWhich
         resemblesExistingModelHow
         resemblesExistingModelNote
         hasComponentsOrTracks
@@ -147,90 +150,6 @@ export default gql`
         agreementTypesOther
         multiplePatricipationAgreementsNeeded
         multiplePatricipationAgreementsNeededNote
-      }
-      itTools {
-        id
-        gcPartCD
-        gcPartCDOther
-        gcPartCDNote
-        gcCollectBids
-        gcCollectBidsOther
-        gcCollectBidsNote
-        gcUpdateContract
-        gcUpdateContractOther
-        gcUpdateContractNote
-        ppToAdvertise
-        ppToAdvertiseOther
-        ppToAdvertiseNote
-        ppCollectScoreReview
-        ppCollectScoreReviewOther
-        ppCollectScoreReviewNote
-        ppAppSupportContractor
-        ppAppSupportContractorOther
-        ppAppSupportContractorNote
-        ppCommunicateWithParticipant
-        ppCommunicateWithParticipantOther
-        ppCommunicateWithParticipantNote
-        ppManageProviderOverlap
-        ppManageProviderOverlapOther
-        ppManageProviderOverlapNote
-        bManageBeneficiaryOverlap
-        bManageBeneficiaryOverlapOther
-        bManageBeneficiaryOverlapNote
-        oelHelpdeskSupport
-        oelHelpdeskSupportOther
-        oelHelpdeskSupportNote
-        oelManageAco
-        oelManageAcoOther
-        oelManageAcoNote
-        oelPerformanceBenchmark
-        oelPerformanceBenchmarkOther
-        oelPerformanceBenchmarkNote
-        oelProcessAppeals
-        oelProcessAppealsOther
-        oelProcessAppealsNote
-        oelEvaluationContractor
-        oelEvaluationContractorOther
-        oelEvaluationContractorNote
-        oelCollectData
-        oelCollectDataOther
-        oelCollectDataNote
-        oelObtainData
-        oelObtainDataOther
-        oelObtainDataNote
-        oelClaimsBasedMeasures
-        oelClaimsBasedMeasuresOther
-        oelClaimsBasedMeasuresNote
-        oelQualityScores
-        oelQualityScoresOther
-        oelQualityScoresNote
-        oelSendReports
-        oelSendReportsOther
-        oelSendReportsNote
-        oelLearningContractor
-        oelLearningContractorOther
-        oelLearningContractorNote
-        oelParticipantCollaboration
-        oelParticipantCollaborationOther
-        oelParticipantCollaborationNote
-        oelEducateBeneficiaries
-        oelEducateBeneficiariesOther
-        oelEducateBeneficiariesNote
-        pMakeClaimsPayments
-        pMakeClaimsPaymentsOther
-        pMakeClaimsPaymentsNote
-        pInformFfs
-        pInformFfsOther
-        pInformFfsNote
-        pNonClaimsBasedPayments
-        pNonClaimsBasedPaymentsOther
-        pNonClaimsBasedPaymentsNote
-        pSharedSavingsPlan
-        pSharedSavingsPlanOther
-        pSharedSavingsPlanNote
-        pRecoverPayments
-        pRecoverPaymentsOther
-        pRecoverPaymentsNote
       }
       opsEvalAndLearning {
         id

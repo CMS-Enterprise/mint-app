@@ -9,34 +9,35 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-
-	"go.uber.org/zap"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/99designs/gqlgen/graphql"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
-	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 // createModelPlan is a wrapper for resolvers.ModelPlanCreate
 // It will panic if an error occurs, rather than bubbling the error up
-func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string, euaID string) *models.ModelPlan {
-	localLDAP := local.NewCedarLdapClient(logger)
-	userInfo, err := localLDAP.FetchUserInfo(context.TODO(), euaID)
-	if err != nil {
-		panic(err)
-	}
-	princ := &authentication.ApplicationPrincipal{
-		Username:          userInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
-	plan, err := resolvers.ModelPlanCreate(logger, modelName, store, userInfo, princ)
+func (s *Seeder) createModelPlan(
+	modelName string,
+	euaID string,
+) *models.ModelPlan {
+
+	princ := s.getTestPrincipalByUsername(euaID)
+	plan, err := resolvers.ModelPlanCreate(
+		context.Background(),
+		s.Config.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		modelName,
+		s.Config.Store,
+		princ,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
+	)
 	if err != nil {
 		panic(err)
 	}
@@ -46,13 +47,9 @@ func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string,
 // updateModelPlan is a wrapper for resolvers.ModelPlanUpdate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the model plan with the principal value of the Model Plan's "createdBy"
-func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
-	updated, err := resolvers.ModelPlanUpdate(logger, mp.ID, changes, princ, store)
+func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+	updated, err := resolvers.ModelPlanUpdate(s.Config.Logger, mp.ID, changes, princ, s.Config.Store)
 	if err != nil {
 		panic(err)
 	}
@@ -62,50 +59,53 @@ func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelP
 // updatePlanBasics is a wrapper for resolvers.PlanBasicsGetByModelPlanID and resolvers.UpdatePlanBasics
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
-func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+func (s *Seeder) updatePlanBasics(mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	basics, err := resolvers.PlanBasicsGetByModelPlanID(logger, mp.ID, store)
+	basics, err := resolvers.PlanBasicsGetByModelPlanIDLOADER(s.Config.Context, mp.ID)
 	if err != nil {
 		panic(err)
 	}
 
-	updated, err := resolvers.UpdatePlanBasics(logger, basics.ID, changes, princ, store)
+	updated, err := resolvers.UpdatePlanBasics(s.Config.Logger, basics.ID, changes, princ, s.Config.Store)
 	if err != nil {
 		panic(err)
 	}
 	return updated
 }
 
+func stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
+	return &models.UserInfo{
+		Username:    username,
+		FirstName:   username,
+		LastName:    "Doe",
+		DisplayName: username + " Doe",
+		Email:       username + ".doe@local.fake",
+	}, nil
+}
+
 // addPlanCollaborator is a wrapper for resolvers.CreatePlanCollaborator
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
-func addPlanCollaborator(
-	store *storage.Store,
+func (s *Seeder) addPlanCollaborator(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
-	logger *zap.Logger,
 	mp *models.ModelPlan,
 	input *model.PlanCollaboratorCreateInput,
 ) *models.PlanCollaborator {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
-		logger,
+		context.Background(),
+		s.Config.Logger,
 		emailService,
 		emailTemplateService,
+		email.AddressBook{},
 		input,
 		princ,
-		store,
+		s.Config.Store,
 		true,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
 	)
 	if err != nil {
 		panic(err)
@@ -116,14 +116,10 @@ func addPlanCollaborator(
 // crTdlCreate is a wrapper for resolvers.PlanCrTdlCreate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
-func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+func (s *Seeder) addCrTdl(mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	collaborator, err := resolvers.PlanCrTdlCreate(logger, input, princ, store)
+	collaborator, err := resolvers.PlanCrTdlCreate(s.Config.Logger, input, princ, s.Config.Store)
 	if err != nil {
 		panic(err)
 	}
@@ -133,12 +129,8 @@ func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, in
 // planDocumentCreate is a wrapper for resolvers.PlanDocumentCreate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the document with the principal value of the Model Plan's "createdBy"
-func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *upload.S3Client, mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, restricted bool, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
-	princ := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+func (s *Seeder) planDocumentCreate(mp *models.ModelPlan, fileName string, filePath string, contentType string, docType models.DocumentType, restricted bool, otherTypeDescription *string, optionalNotes *string, scanned bool, virusFound bool) *models.PlanDocument {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
 	path, err := filepath.Abs(filePath)
 	if err != nil {
@@ -166,7 +158,7 @@ func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *uplo
 		OtherTypeDescription: otherTypeDescription,
 		OptionalNotes:        optionalNotes,
 	}
-	document, err := resolvers.PlanDocumentCreate(logger, &input, princ, store, s3Client)
+	document, err := resolvers.PlanDocumentCreate(s.Config.Logger, &input, princ, s.Config.Store, s.Config.S3Client)
 	if err != nil {
 		panic(err)
 	}
@@ -176,7 +168,7 @@ func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *uplo
 		if virusFound {
 			scanStatus = "INFECTED"
 		}
-		err := s3Client.SetTagValueForKey(document.FileKey, "av-status", scanStatus)
+		err := s.Config.S3Client.SetTagValueForKey(document.FileKey, "av-status", scanStatus)
 		if err != nil {
 			panic(err)
 		}
@@ -187,8 +179,8 @@ func planDocumentCreate(store *storage.Store, logger *zap.Logger, s3Client *uplo
 
 // getOperationalNeedsByModelPlanID is a wrapper for resolvers.PossibleOperationalNeedCollectionGet
 // It will panic if an error occurs, rather than bubbling the error up
-func getOperationalNeedsByModelPlanID(logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) []*models.OperationalNeed {
-	operationalNeeds, err := resolvers.OperationalNeedCollectionGetByModelPlanID(logger, modelPlanID, store)
+func (s *Seeder) getOperationalNeedsByModelPlanID(modelPlanID uuid.UUID) []*models.OperationalNeed {
+	operationalNeeds, err := resolvers.OperationalNeedCollectionGetByModelPlanID(s.Config.Logger, modelPlanID, s.Config.Store)
 	if err != nil {
 		panic(err)
 	}
@@ -196,28 +188,24 @@ func getOperationalNeedsByModelPlanID(logger *zap.Logger, store *storage.Store, 
 	return operationalNeeds
 }
 
-// addOperationalSolution is a wrapper for resolvers.OperationalSolutionInsertOrUpdate
+// addOperationalSolution is a wrapper for resolvers.OperationalSolutionCreate
 // It will panic if an error occurs, rather than bubbling the error up
-func addOperationalSolution(
-	store *storage.Store,
-	logger *zap.Logger,
+func (s *Seeder) addOperationalSolution(
+
 	mp *models.ModelPlan,
 	operationalNeedID uuid.UUID,
 	changes map[string]interface{},
 ) *models.OperationalSolution {
-	principal := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
+	solType := models.OpSKMarx
 
-	operationalSolution, err := resolvers.OperationalSolutionInsertOrUpdate(
-		logger,
+	operationalSolution, err := resolvers.OperationalSolutionCreate(
+		s.Config.Logger,
 		operationalNeedID,
-		"FFS_COMPETENCY_CENTER",
+		&solType,
 		changes,
 		principal,
-		store,
+		s.Config.Store,
 	)
 
 	if err != nil {
@@ -228,23 +216,18 @@ func addOperationalSolution(
 
 // addPlanDocumentSolutionLinks is a wrapper for resolvers.PlanDocumentSolutionLinksCreate
 // It will panic if an error occurs, rather than bubbling the error up
-func addPlanDocumentSolutionLinks(
-	logger *zap.Logger,
-	store *storage.Store,
+func (s *Seeder) addPlanDocumentSolutionLinks(
+
 	mp *models.ModelPlan,
 	solutionID uuid.UUID,
 	documentIDs []uuid.UUID,
 ) []*models.PlanDocumentSolutionLink {
 
-	principal := &authentication.ApplicationPrincipal{
-		Username:          mp.CreatedBy,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
 
 	planDocumentSolutionLinks, err := resolvers.PlanDocumentSolutionLinksCreate(
-		logger,
-		store,
+		s.Config.Logger,
+		s.Config.Store,
 		solutionID,
 		documentIDs,
 		principal,
@@ -254,4 +237,81 @@ func addPlanDocumentSolutionLinks(
 		panic(err)
 	}
 	return planDocumentSolutionLinks
+}
+
+func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
+
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+
+	princ := &authentication.ApplicationPrincipal{
+		Username:          userName,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+		JobCodeMAC:        false,
+		UserAccount:       userAccount,
+	}
+	return princ
+
+}
+
+func (s *Seeder) getTestPrincipalByUUID(userID uuid.UUID) *authentication.ApplicationPrincipal {
+
+	userAccount, _ := userhelpers.UserAccountGetByIDLOADER(s.Config.Context, userID)
+	princ := &authentication.ApplicationPrincipal{
+		Username:          *userAccount.Username,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+		JobCodeMAC:        false,
+		UserAccount:       userAccount,
+	}
+	return princ
+
+}
+
+// operationalSolutionSubtasksCreate is a wrapper for resolvers.OperationalSolutionSubtasksCreate
+// It will panic if an error occurs, rather than bubbling the error up
+func (s *Seeder) operationalSolutionSubtasksCreate(
+	mp *models.ModelPlan,
+	solutionID uuid.UUID,
+	inputs []*model.CreateOperationalSolutionSubtaskInput,
+) []*models.OperationalSolutionSubtask {
+
+	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	subtasks, err := resolvers.OperationalSolutionSubtasksCreate(
+		s.Config.Logger,
+		s.Config.Store,
+		inputs,
+		solutionID,
+		principal,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return subtasks
+}
+
+// existingModelLinkCreate is a wrapper for resolvers.ExistingModelLinkCreate
+// It will panic if an error occurs, rather than bubbling the error up
+func (s *Seeder) existingModelLinkCreate(
+	mp *models.ModelPlan,
+	existingModelIDs []int,
+	currentModelPlanIDs []uuid.UUID,
+) []*models.ExistingModelLink {
+
+	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
+	links, err := resolvers.ExistingModelLinksUpdate(
+		s.Config.Logger,
+		s.Config.Store,
+		principal,
+		mp.ID,
+		existingModelIDs,
+		currentModelPlanIDs,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return links
 }

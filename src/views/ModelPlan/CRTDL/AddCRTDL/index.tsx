@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -17,10 +17,14 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import TextAreaField from 'components/shared/TextAreaField';
+import useMessage from 'hooks/useMessage';
 import CreateCRTDL from 'queries/CRTDL/CreateCRTDL';
 import GetCRTDL from 'queries/CRTDL/GetCRTDL';
 import {
@@ -40,6 +44,7 @@ import {
 import UpdateCRTDL from 'queries/CRTDL/UpdateCRTDL';
 import flattenErrors from 'utils/flattenErrors';
 import CRTDLValidationSchema from 'validations/crtdl';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 interface CRTDLInputType extends CreateCRTDLFormType, UpdateCRTDLIDType {}
 
@@ -58,6 +63,11 @@ const AddCRTDL = () => {
   const { crtdlID } = useParams<{ crtdlID: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('crtdl');
+
+  const { modelName } = useContext(ModelInfoContext);
+
+  const { showMessageOnNextPage } = useMessage();
+
   const formikRef = useRef<FormikProps<CRTDLInputType>>(null);
 
   const history = useHistory();
@@ -95,11 +105,22 @@ const AddCRTDL = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            if (readOnly) {
-              history.push(`/models/${modelID}/read-only/crs-and-tdl`);
-            } else {
-              history.push(`/models/${modelID}/task-list/`);
-            }
+            showMessageOnNextPage(
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  {t('successUpdate', {
+                    crtdl: changes.idNumber,
+                    modelName
+                  })}
+                </span>
+              </Alert>
+            );
+            history.push(`/models/${modelID}/cr-and-tdl`);
           }
         })
         .catch(errors => {
@@ -116,6 +137,21 @@ const AddCRTDL = () => {
       })
         .then(response => {
           if (!response?.errors) {
+            showMessageOnNextPage(
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  {t('successAdd', {
+                    crtdl: changes.idNumber,
+                    modelName
+                  })}
+                </span>
+              </Alert>
+            );
             history.push(`/models/${modelID}/cr-and-tdl`);
           }
         })
@@ -135,6 +171,12 @@ const AddCRTDL = () => {
           <div className="margin-bottom-2 line-height-body-4">
             {!crtdlID ? t('createDescription') : t('updateDescription')}
           </div>
+
+          <p className="margin-bottom-0">
+            {t('required1')}
+            <RequiredAsterisk />
+            {t('required2')}
+          </p>
 
           {error && (
             <ErrorAlert
@@ -218,6 +260,7 @@ const AddCRTDL = () => {
                           >
                             <Label htmlFor="cr-tdl-id-number">
                               {t('idNumber')}
+                              <RequiredAsterisk />
                             </Label>
                             <div className="usa-hint margin-top-1">
                               {t('idNumberInfo')}
@@ -242,6 +285,7 @@ const AddCRTDL = () => {
                                 className="text-bold"
                               >
                                 {t('dateInitiated')}
+                                <RequiredAsterisk />
                               </Label>
                               <div className="usa-hint margin-top-1">
                                 {h('datePlaceholder')}
@@ -275,15 +319,19 @@ const AddCRTDL = () => {
                             scrollElement="title"
                             error={!!flatErrors.title}
                           >
-                            <Label htmlFor="cr-tdl-title">{t('title')}</Label>
+                            <Label htmlFor="cr-tdl-title">
+                              {t('title')}
+                              <RequiredAsterisk />
+                            </Label>
 
                             <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
                             <Field
-                              as={TextInput}
+                              as={TextAreaField}
                               error={!!flatErrors.title}
+                              className="maxw-none mint-textarea"
                               id="cr-tdl-title"
                               data-testid="cr-tdl-title"
-                              maxLength={50}
+                              maxLength={5000}
                               name="title"
                             />
                           </FieldGroup>

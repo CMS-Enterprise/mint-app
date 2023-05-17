@@ -47,7 +47,7 @@ const modelPlanTaskList = {
     basics: {
       heading: 'Model basics',
       team:
-        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
+        'Start filling out as much of the basic model information as you know and reach out to the MINT Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'basics'
@@ -55,7 +55,7 @@ const modelPlanTaskList = {
     generalCharacteristics: {
       heading: 'General characteristics',
       team:
-        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
+        'Start filling out as much of the general model characteristics as you know and reach out to the MINT Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'characteristics'
@@ -63,7 +63,7 @@ const modelPlanTaskList = {
     participantsAndProviders: {
       heading: 'Participants and providers',
       team:
-        'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.',
+        'Start filling out as much of the model participant information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'participants-and-providers'
@@ -71,7 +71,7 @@ const modelPlanTaskList = {
     beneficiaries: {
       heading: 'Beneficiaries',
       team:
-        'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.',
+        'Start filling out as much of the beneficiary information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'beneficiaries'
@@ -79,7 +79,7 @@ const modelPlanTaskList = {
     opsEvalAndLearning: {
       heading: 'Operations, evaluation, and learning',
       team:
-        'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.',
+        'Start filling out as much of the model operation information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'ops-eval-and-learning'
@@ -87,7 +87,7 @@ const modelPlanTaskList = {
     payments: {
       heading: 'Payment',
       team:
-        'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.',
+        'Start filling out as much of the payment information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
@@ -97,7 +97,7 @@ const modelPlanTaskList = {
       team:
         'Choose the IT solutions your model model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
       team2:
-        'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the Assessment Team understand how best to help you.',
+        'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'it-solutions'
@@ -131,9 +131,11 @@ const modelPlanTaskList = {
   },
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
-  locked: ' is editing this section. You may access it when they’re done.',
+  locked:
+    '{{-teamMember}} is editing this section. You may access it when they’re done.',
+  selfLocked: 'You are editing this section.',
   assessmentLocked:
-    'The Assessment Team is editing this section. You may access it when they’re done.',
+    'The MINT Team | {{-assessmentUser}} is editing this section. You may access it when they’re done.',
   lockedHeading:
     'Someone is currently editing the Model Plan section you’re trying to access.',
   lockedSubheading: 'Please try again later.',
@@ -142,7 +144,7 @@ const modelPlanTaskList = {
     basics: 'Model basics',
     beneficiaries: 'Beneficiaries',
     characteristics: 'General characteristics',
-    'it-tools': 'IT tools',
+    'it-solutions': 'IT solutions tracker',
     'ops-eval-and-learning': 'Operation, evaluation, and learning',
     'participants-and-providers': 'Participants and providers',
     payment: 'payment'

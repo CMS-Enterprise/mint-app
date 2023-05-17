@@ -27,6 +27,18 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
         >
           Update this Change Request (CR) or Technical Direction Letters (TDL) that is associated with your model.
         </div>
+        <p
+          class="margin-bottom-0"
+        >
+          All fields marked with 
+          <span
+            aria-label="(Field required)"
+            class="text-red margin-x-05"
+          >
+            *
+          </span>
+           are required.
+        </p>
         <form
           action="#"
         >
@@ -52,6 +64,12 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                     for="cr-tdl-id-number"
                   >
                     ID number
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </label>
                   <div
                     class="usa-hint margin-top-1"
@@ -77,6 +95,12 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                     for="cr-tdl-date-initiated"
                   >
                     Date initiated
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </label>
                   <div
                     class="usa-hint margin-top-1"
@@ -162,15 +186,23 @@ exports[`Model Plan Add CR and TDL page matches snapshot 1`] = `
                     for="cr-tdl-title"
                   >
                     CR or TDL title
+                    <span
+                      aria-label="(Field required)"
+                      class="text-red margin-x-05"
+                    >
+                      *
+                    </span>
                   </label>
-                  <input
-                    class="usa-input"
+                  <textarea
+                    aria-labelledby="label-cr-tdl-title hint-cr-tdl-title"
+                    class="maxw-none mint-textarea usa-textarea"
                     data-testid="cr-tdl-title"
                     id="cr-tdl-title"
-                    maxlength="50"
+                    maxlength="5000"
                     name="title"
-                    value="My CR"
-                  />
+                  >
+                    My CR
+                  </textarea>
                 </div>
                 <div
                   class="mint-divider margin-y-4"

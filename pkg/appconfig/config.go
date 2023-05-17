@@ -136,6 +136,9 @@ const GRTEmailKey = "GRT_EMAIL"
 // AccessibilityTeamEmailKey is the key for the receiving email for the 508 team
 const AccessibilityTeamEmailKey = "ACCESSIBILITY_TEAM_EMAIL"
 
+// MINTTeamEmailKey is the key for the receiving email for the MINT team
+const MINTTeamEmailKey = "MINT_TEAM_EMAIL"
+
 // EmailHostKey is the key for getting the email service's host
 const EmailHostKey = "EMAIL_HOST"
 
@@ -181,6 +184,12 @@ const CEDARAPIURL = "CEDAR_API_URL"
 // CEDARAPIKey is the key for accessing CEDAR
 const CEDARAPIKey = "CEDAR_API_KEY" // #nosec G101 false positive - not the actual API key itself
 
+// OKTAApiURL is the key for the Okta API url
+const OKTAApiURL = "OKTA_API_URL"
+
+// OKTAAPIToken is the key for the Okta API token
+const OKTAAPIToken = "OKTA_API_TOKEN" // #nosec G101 false positive - not the actual API key itself
+
 // LDKey is the key for accessing LaunchDarkly
 const LDKey = "LD_SDK_KEY"
 
@@ -213,6 +222,9 @@ const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
 
 // FaktoryConnections number of connections for a manager
 const FaktoryConnections = "FAKTORY_CONNECTIONS"
+
+// OpenSearchHostKey is the key for the OpenSearch host environment variable
+const OpenSearchHostKey = "OPENSEARCH_HOST"
 
 // FlagSourceOption represents an environment
 type FlagSourceOption string

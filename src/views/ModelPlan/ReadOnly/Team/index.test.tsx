@@ -12,24 +12,34 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const mockData = [
   {
-    __typename: 'PlanCollaborator',
-    id: '1',
-    fullName: 'Luke Skywalker',
-    euaUserID: '123',
-    email: 'luke@skywalker.com',
-    teamRole: TeamRole.MODEL_LEAD,
+    id: '123',
+    userID: 'LUKE',
+    userAccount: {
+      __typename: 'UserAccount',
+      id: '890',
+      email: 'luke@skywalker.com',
+      username: '123',
+      commonName: 'Luke Skywalker'
+    },
     modelPlanID: modelID,
-    createdDts: '2022-06-03T19:32:24.412662Z'
+    teamRole: TeamRole.MODEL_LEAD,
+    createdDts: '2022-06-03T19:32:24.412662Z',
+    __typename: 'PlanCollaborator'
   },
   {
-    __typename: 'PlanCollaborator',
-    id: '2',
-    fullName: 'Boba Fett',
-    euaUserID: '321',
-    email: 'boba@fett.com',
-    teamRole: TeamRole.LEADERSHIP,
+    id: '456',
+    userID: 'BOBA',
+    userAccount: {
+      __typename: 'UserAccount',
+      id: '891',
+      email: 'boba@fett.com',
+      username: '321',
+      commonName: 'Boba Fett'
+    },
     modelPlanID: modelID,
-    createdDts: '2022-06-03T19:32:24.412662Z'
+    teamRole: TeamRole.LEADERSHIP,
+    createdDts: '2022-06-03T19:32:24.412662Z',
+    __typename: 'PlanCollaborator'
   }
 ];
 

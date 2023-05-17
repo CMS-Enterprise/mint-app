@@ -37,7 +37,12 @@ import { dirtyInput } from 'utils/formDiff';
 import { translateDataFullTimeOrIncrementalType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
 
 const IDDOCMonitoring = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -60,6 +65,7 @@ const IDDOCMonitoring = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     dataFullTimeOrIncremental,
     eftSetUp,
     unsolicitedAdjustmentsIncluded,
@@ -109,6 +115,7 @@ const IDDOCMonitoring = () => {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     iddocSupport: iddocSupport ?? null,
     dataFullTimeOrIncremental: dataFullTimeOrIncremental ?? null,
     eftSetUp: eftSetUp ?? null,
@@ -193,7 +200,7 @@ const IDDOCMonitoring = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-iddoc-monitoring-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -414,11 +421,13 @@ const IDDOCMonitoring = () => {
           currentPage={renderCurrentPage(
             4,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

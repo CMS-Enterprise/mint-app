@@ -10,14 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -28,6 +27,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
 import {
   GetProviderOptions as GetProviderOptionsType,
@@ -63,7 +63,7 @@ export const ProviderOptions = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     ProviderOptionsFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -75,7 +75,8 @@ export const ProviderOptions = () => {
   >(GetProviderOptions, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const {
@@ -92,7 +93,7 @@ export const ProviderOptions = () => {
     providerOverlap,
     providerOverlapHierarchy,
     providerOverlapNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } =
@@ -105,11 +106,15 @@ export const ProviderOptions = () => {
     need => need.modifiedDts
   );
 
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
   );
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list' | string) => {
+  const handleFormSubmit = (
+    redirect?: 'back' | 'task-list' | 'next' | string
+  ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -133,6 +138,8 @@ export const ProviderOptions = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/beneficiaries`);
           } else if (redirect) {
             history.push(redirect);
           }
@@ -149,10 +156,10 @@ export const ProviderOptions = () => {
     providerAdditionFrequency: providerAdditionFrequency ?? null,
     providerAdditionFrequencyOther: providerAdditionFrequencyOther ?? '',
     providerAdditionFrequencyNote: providerAdditionFrequencyNote ?? '',
-    providerAddMethod: providerAddMethod || [],
+    providerAddMethod: providerAddMethod ?? [],
     providerAddMethodOther: providerAddMethodOther ?? '',
     providerAddMethodNote: providerAddMethodNote ?? '',
-    providerLeaveMethod: providerLeaveMethod || [],
+    providerLeaveMethod: providerLeaveMethod ?? [],
     providerLeaveMethodOther: providerLeaveMethodOther ?? '',
     providerLeaveMethodNote: providerLeaveMethodNote ?? '',
     providerOverlap: providerOverlap ?? null,
@@ -199,7 +206,7 @@ export const ProviderOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -233,7 +240,7 @@ export const ProviderOptions = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-providers-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -283,10 +290,10 @@ export const ProviderOptions = () => {
                                   {flatErrors.providerAdditionFrequencyOther}
                                 </FieldErrorMsg>
                                 <Field
-                                  as={TextInput}
-                                  className="maxw-none"
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
                                   id="participants-and-providers-additional-frequency-other"
-                                  maxLength={50}
+                                  maxLength={5000}
                                   name="providerAdditionFrequencyOther"
                                 />
                               </div>
@@ -305,7 +312,10 @@ export const ProviderOptions = () => {
                   error={!!flatErrors.providerAddMethod}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="participants-and-providers-provider-add-method">
+                  <Label
+                    htmlFor="participants-and-providers-provider-add-method"
+                    id="label-participants-and-providers-provider-add-method"
+                  >
                     {t('decideProviders')}
                   </Label>
                   <p className="text-base margin-0 line-height-body-3">
@@ -317,6 +327,7 @@ export const ProviderOptions = () => {
                     as={MultiSelect}
                     id="participants-and-providers-provider-add-method"
                     name="providerAddMethod"
+                    ariaLabel="label-participants-and-providers-provider-add-method"
                     options={mapMultiSelectOptions(
                       translateProviderAddType,
                       ProviderAddType
@@ -375,57 +386,62 @@ export const ProviderOptions = () => {
                         {flatErrors.providerLeaveMethod}
                       </FieldErrorMsg>
 
-                      {Object.keys(ProviderLeaveType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`participants-and-providers-leave-method-${type}`}
-                                name="providerLeaveMethod"
-                                label={translateProviderLeaveType(type)}
-                                value={type}
-                                checked={values?.providerLeaveMethod.includes(
-                                  type as ProviderLeaveType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.providerLeaveMethod.indexOf(
-                                      e.target.value as ProviderLeaveType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === ('OTHER' as ProviderLeaveType) &&
-                                values.providerLeaveMethod.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="participants-and-providers-leave-method-other"
-                                      className="text-normal"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.providerLeaveMethodOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="participants-and-providers-leave-method-other"
-                                      maxLength={50}
-                                      name="providerLeaveMethodOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
+                      {[
+                        ProviderLeaveType.VARIES_BY_TYPE_OF_PROVIDER,
+                        ProviderLeaveType.NOT_ALLOWED_TO_LEAVE,
+                        ProviderLeaveType.AFTER_A_CERTAIN_WITH_IMPLICATIONS,
+                        ProviderLeaveType.VOLUNTARILY_WITHOUT_IMPLICATIONS,
+                        ProviderLeaveType.OTHER,
+                        ProviderLeaveType.NOT_APPLICABLE
+                      ].map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`participants-and-providers-leave-method-${type}`}
+                              name="providerLeaveMethod"
+                              label={translateProviderLeaveType(type)}
+                              value={type}
+                              checked={values?.providerLeaveMethod.includes(
+                                type as ProviderLeaveType
+                              )}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(e.target.value);
+                                } else {
+                                  const idx = values.providerLeaveMethod.indexOf(
+                                    e.target.value as ProviderLeaveType
+                                  );
+                                  arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            {type === ('OTHER' as ProviderLeaveType) &&
+                              values.providerLeaveMethod.includes(type) && (
+                                <div className="margin-left-4 margin-top-neg-3">
+                                  <Label
+                                    htmlFor="participants-and-providers-leave-method-other"
+                                    className="text-normal"
+                                  >
+                                    {h('pleaseSpecify')}
+                                  </Label>
+                                  <FieldErrorMsg>
+                                    {flatErrors.providerLeaveMethodOther}
+                                  </FieldErrorMsg>
+                                  <Field
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
+                                    id="participants-and-providers-leave-method-other"
+                                    maxLength={5000}
+                                    name="providerLeaveMethodOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      })}
                       <AddNote
                         id="participants-and-providers-leave-method-note"
                         field="providerLeaveMethodNote"
@@ -444,7 +460,7 @@ export const ProviderOptions = () => {
                   </Label>
 
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="participants-and-providers-provider-overlap-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -456,7 +472,6 @@ export const ProviderOptions = () => {
 
                   <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
 
-                  <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
                   <Fieldset>
                     {Object.keys(OverlapType)
                       .sort(sortOtherEnum)
@@ -506,15 +521,17 @@ export const ProviderOptions = () => {
                   />
                 </FieldGroup>
 
-                <ReadyForReview
-                  id="participants-and-providers-provider-status"
-                  field="status"
-                  sectionName={t('heading')}
-                  status={values.status}
-                  setFieldValue={setFieldValue}
-                  readyForReviewBy={readyForReviewBy}
-                  readyForReviewDts={readyForReviewDts}
-                />
+                {!loading && values.status && (
+                  <ReadyForReview
+                    id="participants-and-providers-provider-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -14,56 +14,14 @@ import {
   GetOperationalNeedVariables
 } from 'queries/ITSolutions/types/GetOperationalNeed';
 import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
-import {
-  translateAppealsQuestionType,
-  translateBenchmarkForPerformanceType,
-  translateBoolean,
-  translateCommunicationType,
-  translateDataForMonitoringType,
-  translateDataToSendParticipantsType,
-  translateEvaluationApproachType,
-  translateModelLearningSystemType,
-  translateNonClaimsBasedPayType,
-  translateOverlapType,
-  translateParticipantSelectiontType,
-  translatePayType,
-  translateRecruitmentType
-} from 'utils/modelPlan';
+import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
+
+import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
+import SolutionCard from '../SolutionCard';
+
+import InfoToggle from './_component/InfoToggle';
 
 import './index.scss';
-
-type NeedQuestionAndAnswerProps = {
-  className?: string;
-  operationalNeedID: string;
-  modelID: string;
-};
-
-// Type definition for operational needs dependent on multiple questions/translations
-type MultiPartType = {
-  question: string;
-  answer: boolean | string;
-};
-
-type NeedMapType = {
-  [key: string]: (type: any) => string;
-};
-
-// Collection of translations needed for operational needs questions/answers
-const needsTranslations: NeedMapType = {
-  translateBoolean,
-  translateRecruitmentType,
-  translateParticipantSelectiontType,
-  translateCommunicationType,
-  translateBenchmarkForPerformanceType,
-  translateEvaluationApproachType,
-  translateDataForMonitoringType,
-  translateDataToSendParticipantsType,
-  translateModelLearningSystemType,
-  translatePayType,
-  translateNonClaimsBasedPayType,
-  translateAppealsQuestionType,
-  translateOverlapType
-};
 
 // Function to format operational need answers for both single and multipart answers
 const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {
@@ -115,15 +73,27 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
+type NeedQuestionAndAnswerProps = {
+  className?: string;
+  operationalNeedID: string;
+  modelID: string;
+  expanded?: boolean;
+  solution?: GetOperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
+  isRenderingOnSolutionsDetails?: boolean;
+  renderSolutionCardLinks?: boolean;
+};
+
 const NeedQuestionAndAnswer = ({
   className,
   operationalNeedID,
-  modelID
+  modelID,
+  expanded,
+  solution,
+  isRenderingOnSolutionsDetails = false,
+  renderSolutionCardLinks = true
 }: NeedQuestionAndAnswerProps) => {
   const { t } = useTranslation('itSolutions');
-
-  // Toggle the collapsed state of operational need question/answer
-  const [infoToggle, setInfoToggle] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch operational need answer to question
   const { data: need } = useQuery<
@@ -131,7 +101,8 @@ const NeedQuestionAndAnswer = ({
     GetOperationalNeedVariables
   >(GetOperationalNeed, {
     variables: {
-      id: operationalNeedID
+      id: operationalNeedID,
+      includeNotNeeded: false
     }
   });
 
@@ -154,10 +125,12 @@ const NeedQuestionAndAnswer = ({
       managePartCDEnrollment: fieldName === 'managePartCDEnrollment',
       collectPlanBids: fieldName === 'collectPlanBids',
       planContractUpdated: fieldName === 'planContractUpdated',
+      agreementTypes: fieldName === 'agreementTypes',
       recruitmentMethod: fieldName === 'recruitmentMethod',
       selectionMethod: fieldName === 'selectionMethod',
       communicationMethod: fieldName === 'communicationMethod',
       providerOverlap: fieldName === 'providerOverlap',
+      participantsIds: fieldName === 'participantsIds',
       beneficiaryOverlap: fieldName === 'beneficiaryOverlap',
       helpdeskUse: fieldName === 'helpdeskUse',
       iddocSupport: fieldName === 'iddocSupport',
@@ -170,6 +143,7 @@ const NeedQuestionAndAnswer = ({
       dataNeededForMonitoring: fieldName === 'dataNeededForMonitoring',
       dataToSendParticicipants: fieldName === 'dataToSendParticicipants',
       modelLearningSystems: fieldName === 'modelLearningSystems',
+      developNewQualityMeasures: fieldName === 'developNewQualityMeasures',
       payType: fieldName === 'payType',
       shouldAnyProvidersExcludedFFSSystems:
         fieldName === 'shouldAnyProvidersExcludedFFSSystems',
@@ -188,78 +162,87 @@ const NeedQuestionAndAnswer = ({
     return formatOperationalNeedAnswers(needConfig, data);
   }, [needConfig, data]);
 
-  return (
-    <div className={classNames('padding-3 bg-base-lightest', className)}>
-      <p className="text-bold margin-y-1">{t('operationalNeed')}</p>
-
-      <p className="margin-top-0 font-body-sm">
-        {operationalNeed?.nameOther || operationalNeed?.name}
-      </p>
-
-      <button
-        type="button"
-        data-testid="toggle-need-answer"
-        onClick={() => setInfoToggle(!infoToggle)}
-        className={classNames(
-          'usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3',
-          {
-            'text-bold': infoToggle
-          }
-        )}
-      >
-        {infoToggle ? (
-          <IconExpandMore className="margin-right-05" />
-        ) : (
-          <IconExpandLess className="margin-right-05 needs-question__rotate" />
-        )}
-        {t('whyNeed')}
-      </button>
-
-      {infoToggle && (
-        <div className="margin-left-neg-2px padding-1">
-          <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
-            <p className="text-bold margin-top-0">{t('youAnswered')}</p>
-
-            <p data-testid="need-question">{t(needConfig?.question)}</p>
-
-            {data && needConfig && (
-              <ul className="padding-left-4">
-                {!needConfig.multiPart &&
-                  answers.map((answer: string | boolean) => (
-                    <li
-                      className="margin-y-1"
-                      key={answer.toString()}
-                      data-testid={answer.toString()}
-                    >
-                      {needsTranslations[needConfig.answer](answer)}
-                    </li>
-                  ))}
-
-                {needConfig.multiPart &&
-                  needConfig.multiPartQuestion &&
-                  answers.map((answer: MultiPartType) => (
-                    <li className="margin-y-1" key={answer.question}>
-                      {needsTranslations[needConfig.multiPartQuestion!](
-                        answer.question
-                      )}{' '}
-                      - {needsTranslations[needConfig.answer](answer.answer)}
-                    </li>
-                  ))}
-              </ul>
-            )}
-
-            <p className="margin-bottom-0">
-              {t('changeAnswer')}
-              <UswdsReactLink
-                to={`/models/${modelID}/task-list/${needConfig?.route}`}
-              >
-                {t('goToQuestion')}
-              </UswdsReactLink>
-            </p>
+  const renderLinks = () => {
+    if (isRenderingOnSolutionsDetails) {
+      return (
+        <>
+          <OperationalNeedRemovalModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            modelID={modelID}
+            id={operationalNeed.id}
+            nameOther={operationalNeed.nameOther ?? ''}
+          />
+          <UswdsReactLink
+            to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+          >
+            {t('updateThisOpertationalNeed')}
+          </UswdsReactLink>
+          <div className="margin-top-1">
+            <Button
+              type="button"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+              className="usa-button usa-button--unstyled line-height-body-5 text-red"
+            >
+              {t('removeNeed')}
+            </Button>
           </div>
-        </div>
-      )}
-    </div>
+        </>
+      );
+    }
+    return (
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+      >
+        {t('editNeed')}
+      </UswdsReactLink>
+    );
+  };
+
+  return (
+    <GridContainer
+      className={classNames('padding-3 bg-base-lightest maxw-none', className)}
+    >
+      <Grid row>
+        <Grid desktop={{ col: expanded ? 6 : 12 }}>
+          <p className="text-bold margin-y-1">{t('operationalNeed')}</p>
+
+          <p
+            className={classNames('margin-top-0 font-body-sm', {
+              'margin-bottom-1': expanded
+            })}
+          >
+            {operationalNeed?.nameOther || operationalNeed?.name}
+          </p>
+        </Grid>
+
+        <Grid desktop={{ col: expanded ? 6 : 12 }}>
+          {needConfig ? (
+            <InfoToggle
+              needConfig={needConfig}
+              data={data}
+              answers={answers}
+              modelID={modelID}
+            />
+          ) : (
+            renderLinks()
+          )}
+
+          {/* Renders a solution card if solution data present */}
+          {solution && (
+            <div>
+              <p className="text-bold margin-top-4">{t('solution')}</p>
+              <SolutionCard
+                solution={solution}
+                renderSolutionCardLinks={renderSolutionCardLinks}
+              />
+            </div>
+          )}
+        </Grid>
+      </Grid>
+    </GridContainer>
   );
 };
 

@@ -4,7 +4,6 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Alert,
   Button,
   Grid,
   GridContainer,
@@ -20,6 +19,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import {
   DescriptionDefinition,
@@ -36,7 +36,7 @@ import {
   GetModelSummary_modelPlan_crTdls as CRTDLsTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
@@ -61,7 +61,7 @@ import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
-type subComponentProps = {
+export type subComponentProps = {
   route: string;
   helpRoute: string;
   component: React.ReactNode;
@@ -179,10 +179,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const hasEditAccess: boolean =
     !isHelpArticle &&
     !isMAC(groups) &&
-    (isCollaborator || isAssessment(groups));
+    (isCollaborator || isAssessment(groups, flags));
 
-  const formattedApplicationStartDate =
-    basics?.applicationsStart && formatDate(basics?.applicationsStart);
+  const formattedPerformanceStartDate =
+    basics?.performancePeriodStarts &&
+    formatDateLocal(basics?.performancePeriodStarts, 'MMMM d, yyyy');
 
   const formattedKeyCharacteristics = generalCharacteristics?.keyCharacteristics.map(
     (item, index) => {
@@ -197,7 +198,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const formattedModelLeads = collaborators
     ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
     .map((collaborator, index) => {
-      return `${collaborator.fullName}${
+      return `${collaborator.userAccount.commonName}${
         index ===
         collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
           ? ''
@@ -421,7 +422,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedApplicationStartDate ?? t('noAnswer.tBD')}
+                  term={formattedPerformanceStartDate ?? t('noAnswer.tBD')}
                 />
               </Grid>
               <Grid

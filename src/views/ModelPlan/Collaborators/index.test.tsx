@@ -8,6 +8,8 @@ import configureMockStore from 'redux-mock-store';
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
+import { GetModelCollaborators_modelPlan as GetModelPlanCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { TeamRole } from 'types/graphql-global-types';
 
 import { CollaboratorsContent } from './index';
 
@@ -20,6 +22,29 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
+const mockCollaborator: GetModelPlanCollaboratorsType = {
+  __typename: 'ModelPlan',
+  id: '123',
+  modelName: 'My Model',
+  collaborators: [
+    {
+      __typename: 'PlanCollaborator',
+      userID: '123',
+      id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',
+      modelPlanID: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+      userAccount: {
+        id: '890',
+        __typename: 'UserAccount',
+        email: '',
+        username: 'ABCD',
+        commonName: 'John Doe'
+      },
+      teamRole: TeamRole.MODEL_LEAD,
+      createdDts: '2022-10-22T00:00:00Z'
+    }
+  ]
+};
+
 describe('Collaborator/Team Member page w/table', () => {
   const mocks = [
     {
@@ -29,21 +54,7 @@ describe('Collaborator/Team Member page w/table', () => {
       },
       result: {
         data: {
-          modelPlan: {
-            id: '123',
-            modelName: 'My Model',
-            collaborators: [
-              {
-                id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',
-                modelPlanID: 'f11eb129-2c80-4080-9440-439cbe1a286f',
-                euaUserID: 'ABCD',
-                email: 'jdoe@gmail.com',
-                fullName: 'John Doe',
-                teamRole: 'MODEL_LEAD',
-                createdDts: '2022-10-22T00:00:00Z'
-              }
-            ]
-          }
+          modelPlan: mockCollaborator
         }
       }
     }

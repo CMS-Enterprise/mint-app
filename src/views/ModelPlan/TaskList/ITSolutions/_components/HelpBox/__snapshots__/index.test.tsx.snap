@@ -15,13 +15,13 @@ exports[`IT Solutions HelpBox matches snapshot 1`] = `
     >
       Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.
     </p>
-    <button
-      class="usa-button usa-button usa-button--outline text-white border-white border-2px bg-transparent"
-      data-testid="button"
-      type="button"
+    <a
+      class="usa-button usa-button--outline text-white border-white border-2px bg-transparent"
+      data-testid="add-new-operational-need"
+      href="//add-an-operational-need"
     >
       Add an operational need or IT solution
-    </button>
+    </a>
   </div>
 </DocumentFragment>
 `;

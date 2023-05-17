@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -90,7 +90,7 @@ export const ParticipantOptions = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
@@ -140,7 +140,7 @@ export const ParticipantOptions = () => {
     recruitmentMethod: recruitmentMethod ?? null,
     recruitmentOther: recruitmentOther ?? '',
     recruitmentNote: recruitmentNote ?? '',
-    selectionMethod: selectionMethod || [],
+    selectionMethod: selectionMethod ?? [],
     selectionOther: selectionOther ?? '',
     selectionNote: selectionNote ?? ''
   };
@@ -218,7 +218,7 @@ export const ParticipantOptions = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-options-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -239,7 +239,7 @@ export const ParticipantOptions = () => {
                   </FieldErrorMsg>
                   <Field
                     as={RangeInput}
-                    className="maxw-none"
+                    className="maxw-none width-full"
                     error={flatErrors.expectedNumberOfParticipants}
                     id="participants-and-providers-expected-participants"
                     data-testid="participants-and-providers-expected-participants"
@@ -293,7 +293,12 @@ export const ParticipantOptions = () => {
                     {flatErrors.participantsCurrentlyInModels}
                   </FieldErrorMsg>
                   <Fieldset>
-                    {Object.keys(ConfidenceType).map(key => (
+                    {[
+                      ConfidenceType.NOT_AT_ALL,
+                      ConfidenceType.SLIGHTLY,
+                      ConfidenceType.FAIRLY,
+                      ConfidenceType.COMPLETELY
+                    ].map(key => (
                       <Field
                         as={Radio}
                         key={key}
@@ -322,7 +327,7 @@ export const ParticipantOptions = () => {
                     {t('recruitParticipants')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="participants-and-providers-recruitment-method-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -348,31 +353,32 @@ export const ParticipantOptions = () => {
                               setFieldValue('recruitmentMethod', key);
                             }}
                           />
-                          {key === 'RFA' && (
+                          {key === RecruitmentType.NOFO && (
                             <p className="text-base margin-bottom-neg-05 margin-left-4 margin-top-1 line-height-body-3">
                               {t('recruitOptions.recruitInfo')}
                             </p>
                           )}
-                          {key === 'OTHER' && values.recruitmentMethod === key && (
-                            <div className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor="participants-and-providers-recruitment-other"
-                                className="text-normal"
-                              >
-                                {h('pleaseSpecify')}
-                              </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.recruitmentOther}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextInput}
-                                className="maxw-none"
-                                id="participants-and-providers-recruitment-other"
-                                maxLength={50}
-                                name="recruitmentOther"
-                              />
-                            </div>
-                          )}
+                          {key === RecruitmentType.OTHER &&
+                            values.recruitmentMethod === key && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Label
+                                  htmlFor="participants-and-providers-recruitment-other"
+                                  className="text-normal"
+                                >
+                                  {h('pleaseSpecify')}
+                                </Label>
+                                <FieldErrorMsg>
+                                  {flatErrors.recruitmentOther}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextAreaField}
+                                  className="maxw-none mint-textarea"
+                                  id="participants-and-providers-recruitment-other"
+                                  maxLength={5000}
+                                  name="recruitmentOther"
+                                />
+                              </div>
+                            )}
                         </Fragment>
                       ))}
                   </Fieldset>
@@ -387,11 +393,14 @@ export const ParticipantOptions = () => {
                   error={!!flatErrors.selectionMethod}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="participants-and-providers-selection-method">
+                  <Label
+                    htmlFor="participants-and-providers-selection-method"
+                    id="label-participants-and-providers-selection-method"
+                  >
                     {t('howWillYouSelect')}
                   </Label>
                   {itSolutionsStarted && (
-                    <ITToolsWarning
+                    <ITSolutionsWarning
                       id="participants-and-providers-selection-method-warning"
                       onClick={() =>
                         handleFormSubmit(
@@ -405,6 +414,7 @@ export const ParticipantOptions = () => {
                     as={MultiSelect}
                     id="participants-and-providers-selection-method"
                     name="selectionMethod"
+                    arialabel="label-participants-and-providers-selection-method"
                     options={mapMultiSelectOptions(
                       translateParticipantSelectiontType,
                       ParticipantSelectionType

@@ -5,11 +5,6 @@ export default gql`
     modelPlan(id: $id) {
       id
       isCollaborator
-      collaborators {
-        id
-        euaUserID
-        fullName
-      }
       discussions {
         id
         content
@@ -17,6 +12,9 @@ export default gql`
         createdDts
         status
         isAssessment
+        createdByUserAccount {
+          commonName
+        }
         replies {
           id
           discussionID
@@ -25,6 +23,9 @@ export default gql`
           createdBy
           createdDts
           resolution
+          createdByUserAccount {
+            commonName
+          }
         }
       }
     }

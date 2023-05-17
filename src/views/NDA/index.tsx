@@ -3,20 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import {
-  Alert,
-  Button,
-  Checkbox,
-  Grid,
-  GridContainer
-} from '@trussworks/react-uswds';
+import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import Alert from 'components/shared/Alert';
 import UpdateNDA from 'queries/NDA/UpdateNDA';
 import { setUser } from 'reducers/authReducer';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 
 type NDAType = {
   agreed: boolean;
@@ -62,9 +57,15 @@ const NDA = () => {
 
           {acceptedNDA?.agreed && acceptedNDA?.agreedDts ? (
             <div data-testid="accepted-nda">
-              <Alert type="success" slim className="margin-y-3" id="nda-alert">
+              <Alert
+                type="success"
+                slim
+                className="margin-y-3"
+                id="nda-alert"
+                isClosable={false}
+              >
                 {t('accepted')}
-                {formatDate(acceptedNDA?.agreedDts, 'MM/d/yyyy')}
+                {formatDateLocal(acceptedNDA?.agreedDts, 'MM/dd/yyyy')}
               </Alert>
               <UswdsReactLink
                 to="/"

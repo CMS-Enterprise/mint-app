@@ -97,17 +97,21 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+          class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
           data-testid="mandatory-fields-alert"
         >
           <div
             class="usa-alert__body"
           >
-            <span
-              class="mandatory-fields-alert__text"
+            <p
+              class="usa-alert__text"
             >
-              All fields are mandatory
-            </span>
+              <span
+                class="mandatory-fields-alert__text"
+              >
+                All fields are mandatory
+              </span>
+            </p>
           </div>
         </div>
         <div
@@ -220,150 +224,156 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                   class="usa-form-group margin-top-4"
                   data-scroll="cmsCenters"
                 >
-                  <legend
-                    class="usa-label"
+                  <fieldset
+                    class="usa-fieldset"
+                    data-testid="fieldset"
                   >
-                    CMS component
-                  </legend>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                    <legend
+                      class="usa-legend"
                     >
-                      Center for Clinical Standards and Quality (CCSQ)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CENTER_FOR_MEDICARE"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                      CMS component
+                    </legend>
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      Center for Medicare (CM)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CENTER_FOR_PROGRAM_INTEGRITY"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      >
+                        Center for Clinical Standards and Quality (CCSQ)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      Center for Program Integrity (CPI)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-CMMI"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="CMMI"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-CMMI"
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_MEDICARE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                      >
+                        Center for Medicare (CM)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      CMMI
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CENTER_FOR_PROGRAM_INTEGRITY"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                      >
+                        Center for Program Integrity (CPI)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      Federal Coordinated Health Care
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      id="new-plan-cmsCenters-OTHER"
-                      name="basics.cmsCenters"
-                      type="checkbox"
-                      value="OTHER"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmsCenters-OTHER"
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-CMMI"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="CMMI"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-CMMI"
+                      >
+                        CMMI
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      Other
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                  <div
-                    class="usa-form-group margin-top-4"
-                  >
-                    <label
-                      class="usa-label"
-                      data-testid="label"
-                      for="plan-basics-cmsCategory--Other"
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      >
+                        Federal Coordinated Health Care
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="mint-checkbox usa-checkbox"
                     >
-                      Please specify
-                    </label>
-                    <input
-                      class="usa-input"
-                      data-testid="textInput"
-                      id="plan-basics-cmsCategory--Other"
-                      maxlength="50"
-                      name="basics.cmsOther"
-                      value="The Center for Awesomeness "
-                    />
-                  </div>
+                      <input
+                        class="usa-checkbox__input"
+                        id="new-plan-cmsCenters-OTHER"
+                        name="basics.cmsCenters"
+                        type="checkbox"
+                        value="OTHER"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="new-plan-cmsCenters-OTHER"
+                      >
+                        Other
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      />
+                    </div>
+                    <div
+                      class="usa-form-group margin-top-4"
+                    >
+                      <label
+                        class="usa-label"
+                        data-testid="label"
+                        for="plan-basics-cmsCategory--Other"
+                      >
+                        Please specify
+                      </label>
+                      <textarea
+                        aria-labelledby="label-plan-basics-cmsCategory--Other hint-plan-basics-cmsCategory--Other"
+                        class="mint-textarea usa-textarea"
+                        id="plan-basics-cmsCategory--Other"
+                        maxlength="5000"
+                        name="basics.cmsOther"
+                      >
+                        The Center for Awesomeness 
+                      </textarea>
+                    </div>
+                  </fieldset>
                 </div>
                 <div
                   class="usa-form-group margin-top-4"
@@ -428,27 +438,6 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     <input
                       class="usa-checkbox__input"
                       disabled=""
-                      id="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                      name="basics.cmmiGroups"
-                      type="checkbox"
-                      value="PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="new-plan-cmmiGroup-PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-                    >
-                      Preventative and Population Health Care Models Group (PPHCMG)
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
-                    />
-                  </div>
-                  <div
-                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      disabled=""
                       id="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
                       name="basics.cmmiGroups"
                       type="checkbox"
@@ -470,16 +459,37 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     <input
                       class="usa-checkbox__input"
                       disabled=""
-                      id="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
+                      id="new-plan-cmmiGroup-STATE_AND_POPULATION_HEALTH_GROUP"
                       name="basics.cmmiGroups"
                       type="checkbox"
-                      value="STATE_INNOVATIONS_GROUP"
+                      value="STATE_AND_POPULATION_HEALTH_GROUP"
                     />
                     <label
                       class="usa-checkbox__label"
-                      for="new-plan-cmmiGroup-STATE_INNOVATIONS_GROUP"
+                      for="new-plan-cmmiGroup-STATE_AND_POPULATION_HEALTH_GROUP"
                     >
-                      State Innovations Group (SIG)
+                      State and Population Health Group (SPHG)
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="new-plan-cmmiGroup-TBD"
+                      name="basics.cmmiGroups"
+                      type="checkbox"
+                      value="TBD"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="new-plan-cmmiGroup-TBD"
+                    >
+                      To be determined
                     </label>
                     <p
                       class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"

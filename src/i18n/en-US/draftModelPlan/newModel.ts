@@ -30,6 +30,7 @@ const newModel = {
   teamInfo:
     'Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
   searchTeamInfo: 'Search for a team member to add to your model team.',
+  startTyping: 'Start typing the person’s name you want to add',
   teamMemberName: 'Team member name',
   teamMemberRole: 'Team member role',
   searchMemberInfo:
@@ -38,10 +39,15 @@ const newModel = {
   dontUpdateTeamMember:
     'Don’t edit a team member and return to the previous page',
   addAnotherMember: 'Add another team member',
+  existingMember:
+    'This person is already a member of your model team. Please select a different person to add to your team.',
+  successMessage: 'Success! {{-collaborator}} has been added as {{-role}}.',
+  successUpdateMessage:
+    'Success! {{-collaborator}} has been updated as {{-role}}.',
   modal: {
     heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:
-      'This team member will not be able to accesss this model plan after they have been removed.',
+      '​​This team member will not be able to edit this Model Plan after they have been removed.',
     confirm: 'Yes, remove team member',
     no: 'No, keep team member',
     remove: 'Remove'
@@ -49,14 +55,14 @@ const newModel = {
   selfModal: {
     heading: 'Are you sure you want to remove yourself?',
     subheading:
-      'You will not be able to access this Model Plan after you have been removed.',
+      'You will not be able to edit this Model Plan after you have been removed.',
     confirm: 'Remove yourself',
     no: 'Keep yourself'
   },
   success: {
     heading: 'Success! You have removed yourself from {{-modelName}}.',
     message:
-      'If you need to access the Model Plan in the future, please contact a member of the model team or the Model Assessment Team.'
+      'If you need to edit the Model Plan in the future, please contact a member of the model team or the MINT Team.'
   }
 };
 

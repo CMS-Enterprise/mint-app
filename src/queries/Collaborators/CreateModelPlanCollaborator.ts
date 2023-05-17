@@ -3,10 +3,13 @@ import { gql } from '@apollo/client';
 export default gql`
   mutation CreateModelPlanCollaborator($input: PlanCollaboratorCreateInput!) {
     createPlanCollaborator(input: $input) {
-      fullName
       teamRole
-      email
-      euaUserID
+      userAccount {
+        id
+        commonName
+        email
+      }
+      userID
       modelPlanID
     }
   }

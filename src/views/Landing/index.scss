@@ -1,0 +1,156 @@
+@use 'colors' as *;
+@use 'viewports' as *;
+
+$card-shadow: 0px 1rem 2rem rgba(0, 0, 0, 0.1);
+$card-radius: 6px;
+
+.landing {
+    word-break: break-word;
+    
+    &__heading {
+        font-size: 80px;
+        font-weight: 400;
+
+        @media screen and (max-width: $tablet) {
+            font-size: 70px;
+        }
+    }
+
+    &__heading-underline {
+        background: url("data:image/svg+xml;charset=utf8,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='1px' height='1px' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='1' height='1' fill='rgb(0, 132, 128)' /%3E%3C/svg%3E") no-repeat 100% 100%;
+        background-size: 100% 17%;
+        background-position: bottom 10px right 0px;
+    }
+
+    &__description {
+        font-size: 40px;
+    }
+
+    &__footer {
+        border-top: 1px solid $mint-cool-20
+    }
+
+    &__content {
+        line-height: 35px !important;
+        font-size: 22px !important;
+    }
+
+    &__table {
+        border-spacing: 0;
+        text-align: left;
+        line-height: 23px;
+        box-shadow: $card-shadow;
+        width: 100%;
+        border-radius: $card-radius; 
+    }
+
+    &__discussions {
+        box-shadow: $card-shadow;
+        border-radius: $card-radius;
+    }
+
+    &__subHeading {
+        font-size: 26px;
+    }
+
+    &__email {
+        box-shadow: $card-shadow;
+    }
+
+    &__email-label {
+        font-size: 14px;
+    }
+
+    &__email-icon-contain {
+        width: 5rem;
+        height: 5rem;
+        border-radius: .75rem;
+        background: rgb(6,138,235);
+        background: linear-gradient(180deg, rgba(6,138,235,1) 35%, rgba(1,98,166,1) 100%);
+        margin-right: -2rem;
+        top: 14.5rem;
+
+        @media screen and (max-width: $mobile) {
+            top: 17rem;
+        }
+    }
+
+    &__email-icon {
+        fill: white !important;
+        height: 3.5rem !important;
+        width: 3.5rem !important;
+    }
+
+    &__contain {
+        max-width: 70rem !important;
+
+        @media screen and (max-width: $desktop) {
+            max-width: 75rem !important;
+        }
+    }
+
+    &__section-1 {
+        padding-right: 3.5rem !important;
+
+        @media screen and (max-width: $desktop) {
+            padding-left: 4rem !important;
+            padding-right: 4rem !important;
+        }
+
+        @media screen and (max-width: $tablet) {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+
+    &__row-2 {
+        @media screen and (max-width: $desktop) {
+            flex-direction: column-reverse !important;
+        }
+    }
+
+    &__section-3 {
+        padding-right: 3.5rem !important;
+
+        @media screen and (max-width: $desktop) {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+
+    &__section-4 {
+        padding-right: 5rem !important;
+
+        @media screen and (max-width: $desktop) {
+            padding-left: 4rem !important;
+            padding-right: 4rem !important;
+        }
+
+        @media screen and (max-width: $tablet) {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+
+    &__section-5 {
+        @media screen and (min-width: $xl) {
+            padding-left: 4rem !important;
+            padding-right: 8rem !important;
+        }
+
+        @media screen and (max-width: $xl) {
+            padding-left: 0rem !important;
+            padding-right: 8rem !important;
+        }
+
+        @media screen and (max-width: $desktop) {
+            padding-left: 8rem !important;
+            padding-right: 10rem !important;
+        }
+
+        @media screen and (max-width: $tablet) {
+            padding-left: 2rem !important;
+            padding-right: 5rem !important;
+        }
+    }
+}

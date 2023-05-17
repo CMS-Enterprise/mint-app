@@ -40,8 +40,10 @@ const discussions = {
       'There are no questions yet. When a question is asked, it will appear here.'
   },
   ariaLabel: 'Discussion Center Modal',
-  assessment: 'Model Assessment Team',
-  viewMoreQuestions: 'View more questions'
+  assessment: 'MINT Team',
+  viewMoreQuestions: 'View more questions',
+  alreadyAnswered:
+    '“{{-question}}” has already been answered. You can view it in the answered questions below.'
 };
 
 export default discussions;

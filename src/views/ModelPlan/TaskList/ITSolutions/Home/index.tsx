@@ -49,7 +49,7 @@ const ITSolutionsHome = () => {
         <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
 
-      <Expire delay={4000}>{message}</Expire>
+      <Expire delay={45000}>{message}</Expire>
 
       <PageHeading className="margin-top-4 margin-bottom-2">
         {t('heading')}
@@ -75,7 +75,7 @@ const ITSolutionsHome = () => {
           <li>{t('summaryBox.listItem.three')}</li>
         </ul>
 
-        <ImplementationStatuses slim />
+        <ImplementationStatuses />
       </SummaryBox>
 
       <AskAQuestion modelID={modelID} />

@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,12 +20,11 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
 import modelStatus from 'constants/enums/modelPlanStatuses';
-import GetModelPlan from 'queries/GetModelPlan';
-import { GetModelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
+import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 type StatusFormProps = {
   status: ModelStatus | undefined;
@@ -42,13 +41,7 @@ const Status = () => {
     status: Yup.string().required('Enter a role for this team member')
   });
 
-  const { data } = useQuery<GetModelPlanType>(GetModelPlan, {
-    variables: {
-      id: modelID
-    }
-  });
-
-  const { status } = data?.modelPlan || {};
+  const { status } = useContext(ModelInfoContext);
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 

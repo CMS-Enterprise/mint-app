@@ -46,7 +46,6 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - ESLINT_NO_DEV_ERRORS=true
       - PORT=3005
-    entrypoint: ['yarn', 'start']
     volumes:
       - .:/app
       - /app/node_modules
@@ -58,12 +57,13 @@ services:
       - '9966:9966'
     volumes:
       - ./tmp/minio:/data
-  prince:
-    image: lambci/lambda:go1.x
-    ports:
-      - 9006:9001
-    environment:
-      - DOCKER_LAMBDA_STAY_OPEN=1
-      - LICENSE_KEY
-    volumes:
-      - ./../mint-infra-modules/lambda/prince/build:/var/task:ro,delegated
+  # prince:
+  #   image: lambci/lambda:go1.x
+  #   platform: linux/amd64
+  #   ports:
+  #     - 9006:9001
+  #   environment:
+  #     - DOCKER_LAMBDA_STAY_OPEN=1
+  #     - LICENSE_KEY
+  #   volumes:
+  #     - ./../mint-infra-modules/lambda/prince/build:/var/task:ro,delegated

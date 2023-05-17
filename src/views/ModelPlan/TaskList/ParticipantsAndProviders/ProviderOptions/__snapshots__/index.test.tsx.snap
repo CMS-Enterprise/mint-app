@@ -94,7 +94,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="participants-and-providers-providers-form"
   >
     <div
@@ -259,6 +259,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="participants-and-providers-provider-add-method"
+        id="label-participants-and-providers-provider-add-method"
       >
         How will you decide to add providers? Select all that apply.
       </label>
@@ -267,11 +268,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         Please include details on decision points, timing, and implications of adding them to the model in an additional note.
       </p>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="participants-and-providers-provider-add-method"
         >
           <span
@@ -291,7 +290,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-3-placeholder"
               >
                 1 selected
@@ -304,6 +303,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
                   aria-autocomplete="list"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  aria-labelledby="label-participants-and-providers-provider-add-method"
                   autocapitalize="none"
                   autocomplete="off"
                   autocorrect="off"
@@ -321,23 +321,31 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             <div
               class=" css-1hb7zxy-IndicatorsContainer"
             >
-              <div
-                aria-hidden="true"
-                class=" css-1232v1p-indicatorContainer"
+              <button
+                aria-label="Clear selection"
+                class="usa-button--unstyled"
+                id="clear-selection"
+                tabindex="0"
+                type="button"
               >
-                <svg
+                <div
                   aria-hidden="true"
-                  class="css-tj5bde-Svg"
-                  focusable="false"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  width="20"
+                  class=" css-1e245h0-indicatorContainer"
                 >
-                  <path
-                    d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    aria-hidden="true"
+                    class="css-tj5bde-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                    />
+                  </svg>
+                </div>
+              </button>
               <span
                 class=" css-1vtyy7d-indicatorSeparator"
               />
@@ -378,12 +386,13 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
           </h4>
           <ul
             class="usa-list--unstyled"
+            id="participants-and-providers-provider-add-method-tags"
           >
             <li
               class="margin-bottom-05 margin-right-05 display-inline-block"
             >
               <span
-                class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                 data-testid="multiselect-tag--Other"
                 id="selected-OTHER"
               >
@@ -424,7 +433,8 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
           Please describe the other method for deciding which providers to add.
         </label>
         <textarea
-          class="usa-textarea height-15"
+          aria-labelledby="label-participants-and-providers-provider-add-method-other hint-participants-and-providers-provider-add-method-other"
+          class="height-15 usa-textarea"
           data-testid="participants-and-providers-provider-add-method-other"
           id="participants-and-providers-provider-add-method-other"
           name="providerAddMethodOther"
@@ -477,16 +487,16 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+        id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
         name="providerLeaveMethod"
         type="checkbox"
-        value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+        value="VARIES_BY_TYPE_OF_PROVIDER"
       />
       <label
         class="usa-checkbox__label"
-        for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
+        for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
       >
-        They can leave after a certain date but there are implications
+        It varies by type of provider
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -517,16 +527,16 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+        id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
         name="providerLeaveMethod"
         type="checkbox"
-        value="VARIES_BY_TYPE_OF_PROVIDER"
+        value="AFTER_A_CERTAIN_WITH_IMPLICATIONS"
       />
       <label
         class="usa-checkbox__label"
-        for="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
+        for="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
       >
-        It varies by type of provider
+        They can leave after a certain date but there are implications
       </label>
       <p
         class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"

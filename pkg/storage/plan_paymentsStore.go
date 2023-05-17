@@ -22,8 +22,29 @@ var planPaymentsUpdateSQL string
 //go:embed SQL/plan_payments/get_by_id.sql
 var planPaymentsGetByIDSQL string
 
-//go:embed SQL/plan_payments/get_by_model_plan_id.sql
-var planPaymentsGetByModelPlanIDSQL string
+//go:embed SQL/plan_payments/get_by_model_plan_id_LOADER.sql
+var planPaymentsGetByModelPlanIDLoaderSQL string
+
+// PlanPaymentsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanPayments, error) {
+	paySlice := []*models.PlanPayments{}
+
+	stmt, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&paySlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return paySlice, nil
+}
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
 func (s *Store) PlanPaymentsCreate(
@@ -59,26 +80,6 @@ func (s *Store) PlanPaymentsRead(
 	}
 
 	err = statement.Get(&modelInstance, utilitySQL.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &modelInstance, nil
-}
-
-// PlanPaymentsReadByModelPlan finds a plan payments model by model plan association
-func (s *Store) PlanPaymentsReadByModelPlan(
-	_ *zap.Logger,
-	modelPlanID uuid.UUID) (*models.PlanPayments, error) {
-	modelInstance := models.PlanPayments{}
-
-	statement, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	err = statement.Get(&modelInstance, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 
 	if err != nil {
 		return nil, err

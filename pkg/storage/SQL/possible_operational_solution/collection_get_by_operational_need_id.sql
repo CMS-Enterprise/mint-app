@@ -2,6 +2,7 @@ SELECT
     POS.id,
     POS.sol_name,
     POS.sol_key,
+    POS.treat_as_other,
     POS.created_by,
     POS.created_dts,
     POS.modified_by,

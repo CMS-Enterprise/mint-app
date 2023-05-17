@@ -6,7 +6,8 @@ const modelPlan = {
     evaluation: 'Evaluation',
     learning: 'Learning',
     modelTeam: 'Model Team',
-    itLead: 'IT Lead'
+    itLead: 'IT Lead',
+    quality: 'Quality'
   },
   planStatuses: {
     planDraft: 'Draft model plan',
@@ -17,7 +18,9 @@ const modelPlan = {
     hhsClearance: 'HHS clearance',
     ombASRFClearance: 'OMB/ASRF clearance',
     cleared: 'Cleared',
-    announced: 'Announced'
+    announced: 'Announced',
+    paused: 'Paused',
+    canceled: 'Canceled'
   },
   status: {
     heading: 'Update status',

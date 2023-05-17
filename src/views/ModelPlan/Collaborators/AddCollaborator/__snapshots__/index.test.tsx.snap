@@ -31,29 +31,104 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
         >
           <div
             class="usa-form-group"
-            data-scroll="fullName"
+            data-scroll="userAccount.commonName"
           >
             <label
-              class="usa-label margin-bottom-1"
+              class="usa-label"
               data-testid="label"
-              for="new-plan-model-name"
+              for="model-team-cedar-contact"
+              id="label-model-team-cedar-contact"
             >
               Team member name
             </label>
-            <div
-              data-reach-combobox=""
-              data-state="idle"
+            <label
+              class="usa-label text-normal margin-top-1 margin-bottom-105 text-base"
+              data-testid="label"
+              for="model-team-cedar-contact"
+              id="hint-model-team-cedar-contact"
             >
+              Start typing the person’s name you want to add
+              <span
+                class="usa-hint"
+              />
+            </label>
+            <div
+              class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
+              id="model-team-cedar-contact"
+            >
+              <span
+                class="css-1f43avz-a11yText-A11yText"
+                id="react-select-model-team-cedar-contact-live-region"
+              />
+              <span
+                aria-atomic="false"
+                aria-live="polite"
+                aria-relevant="additions text"
+                class="css-1f43avz-a11yText-A11yText"
+              />
+              <div
+                class="cedar-contact-select__control css-1b5q38d-control"
+              >
+                <div
+                  class="cedar-contact-select__value-container css-319lph-ValueContainer"
+                >
+                  <div
+                    class="cedar-contact-select__placeholder css-14el2xx-placeholder"
+                    id="react-select-model-team-cedar-contact-placeholder"
+                  />
+                  <div
+                    class="cedar-contact-select__input-container css-6j8wv5-Input"
+                    data-value=""
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-describedby="react-select-model-team-cedar-contact-placeholder"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-labelledby="label-model-team-cedar-contact"
+                      autocapitalize="none"
+                      autocomplete="off"
+                      autocorrect="off"
+                      class="cedar-contact-select__input"
+                      data-testid="cedar-contact-select"
+                      id="react-select-model-team-cedar-contact-input"
+                      role="combobox"
+                      spellcheck="false"
+                      style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                      tabindex="0"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
+                >
+                  <span
+                    class="cedar-contact-select__indicator-separator css-1okebmr-indicatorSeparator"
+                  />
+                  <div
+                    aria-hidden="true"
+                    class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1e245h0-indicatorContainer"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="css-tj5bde-Svg"
+                      focusable="false"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      width="20"
+                    >
+                      <path
+                        d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
               <input
-                aria-autocomplete="both"
-                aria-controls="listbox--1"
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                aria-label="Cedar-Users"
-                class="usa-select"
-                data-reach-combobox-input=""
-                data-state="idle"
-                role="combobox"
+                name="model-team-cedar-contact"
+                type="hidden"
                 value=""
               />
             </div>
@@ -65,7 +140,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
             <label
               class="usa-label"
               data-testid="label"
-              for="IntakeForm-RequesterComponent"
+              for="collaborator-role"
             >
               Team member role
             </label>
@@ -111,20 +186,29 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
               >
                 Model Team
               </option>
+              <option
+                value="QUALITY"
+              >
+                Quality
+              </option>
             </select>
           </div>
           <div
-            class="usa-alert usa-alert--info usa-alert--slim margin-y-4"
+            class="usa-alert usa-alert--info usa-alert--slim flex margin-y-4"
             data-testid="mandatory-fields-alert"
           >
             <div
               class="usa-alert__body"
             >
-              <span
-                class="mandatory-fields-alert__text"
+              <p
+                class="usa-alert__text"
               >
-                This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
-              </span>
+                <span
+                  class="mandatory-fields-alert__text"
+                >
+                  This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
+                </span>
+              </p>
             </div>
           </div>
           <div

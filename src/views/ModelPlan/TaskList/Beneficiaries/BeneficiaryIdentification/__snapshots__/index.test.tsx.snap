@@ -117,14 +117,13 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               class="usa-label"
               data-testid="label"
               for="beneficiaries-beneficiaries"
+              id="label-beneficiaries-beneficiaries"
             >
               Who are the beneficiaries of this model? Select all that apply.
             </label>
-            <div
-              class="margin-top-1"
-            >
+            <div>
               <div
-                class="easi-multiselect usa-combo-box css-b62m3t-container"
+                class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
                 id="beneficiaries-beneficiaries"
               >
                 <span
@@ -144,7 +143,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                     class=" css-319lph-ValueContainer"
                   >
                     <div
-                      class=" css-1hgum8q-placeholder"
+                      class=" css-14el2xx-placeholder"
                       id="react-select-3-placeholder"
                     >
                       2 selected
@@ -157,6 +156,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-beneficiaries-beneficiaries"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -174,23 +174,31 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   <div
                     class=" css-1hb7zxy-IndicatorsContainer"
                   >
-                    <div
-                      aria-hidden="true"
-                      class=" css-1232v1p-indicatorContainer"
+                    <button
+                      aria-label="Clear selection"
+                      class="usa-button--unstyled"
+                      id="clear-selection"
+                      tabindex="0"
+                      type="button"
                     >
-                      <svg
+                      <div
                         aria-hidden="true"
-                        class="css-tj5bde-Svg"
-                        focusable="false"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        width="20"
+                        class=" css-1e245h0-indicatorContainer"
                       >
-                        <path
-                          d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
-                        />
-                      </svg>
-                    </div>
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
                     <span
                       class=" css-1vtyy7d-indicatorSeparator"
                     />
@@ -236,12 +244,13 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 </h4>
                 <ul
                   class="usa-list--unstyled"
+                  id="beneficiaries-beneficiaries-tags"
                 >
                   <li
                     class="margin-bottom-05 margin-right-05 display-inline-block"
                   >
                     <span
-                      class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                       data-testid="multiselect-tag--Medicaid"
                       id="selected-MEDICAID"
                     >
@@ -271,7 +280,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                     class="margin-bottom-05 margin-right-05 display-inline-block"
                   >
                     <span
-                      class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                       data-testid="multiselect-tag--Other"
                       id="selected-OTHER"
                     >
@@ -329,11 +338,13 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-note"
+                  id="label-beneficiaries-note"
                 >
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  aria-labelledby="label-beneficiaries-note hint-beneficiaries-note"
+                  class="usa-textarea"
                   data-testid="beneficiaries-note"
                   id="beneficiaries-note"
                   name="beneficiariesNote"
@@ -352,7 +363,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               data-testid="label"
               for="beneficiaries-dual-eligibility"
             >
-              Should dual-eligible beneficiaries be treated differently than non-dually eligibles?
+              Should dually-eligible beneficiaries be treated differently than non-dually eligibles?
             </label>
             <fieldset
               class="usa-fieldset"
@@ -388,7 +399,8 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   How so?
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  aria-labelledby="label-beneficiaries-dual-eligibility-how hint-beneficiaries-dual-eligibility-how"
+                  class="height-15 usa-textarea"
                   data-testid="beneficiaries-dual-eligibility-how"
                   id="beneficiaries-dual-eligibility-how"
                   name="treatDualElligibleDifferentHow"
@@ -442,11 +454,13 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-dual-eligibility-note"
+                  id="label-beneficiaries-dual-eligibility-note"
                 >
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  aria-labelledby="label-beneficiaries-dual-eligibility-note hint-beneficiaries-dual-eligibility-note"
+                  class="usa-textarea"
                   data-testid="beneficiaries-dual-eligibility-note"
                   id="beneficiaries-dual-eligibility-note"
                   name="treatDualElligibleDifferentNote"
@@ -501,7 +515,8 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   What are the exclusionary criteria?
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  aria-labelledby="label-beneficiaries-exclude-criteria hint-beneficiaries-exclude-criteria"
+                  class="height-15 usa-textarea"
                   data-testid="beneficiaries-exclude-criteria"
                   id="beneficiaries-exclude-criteria"
                   name="excludeCertainCharacteristicsCriteria"
@@ -555,11 +570,13 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <label
                   class="usa-label"
                   for="beneficiaries-exclude-note"
+                  id="label-beneficiaries-exclude-note"
                 >
                   Notes
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  aria-labelledby="label-beneficiaries-exclude-note hint-beneficiaries-exclude-note"
+                  class="usa-textarea"
                   data-testid="beneficiaries-exclude-note"
                   id="beneficiaries-exclude-note"
                   name="excludeCertainCharacteristicsNote"

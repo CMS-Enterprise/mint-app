@@ -9,8 +9,7 @@ import {
   Button,
   Dropdown,
   IconArrowBack,
-  Label,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -23,6 +22,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetDataSharing from 'queries/OpsEvalAndLearning/GetDataSharing';
 import {
   GetDataSharing as GetDataSharingType,
@@ -35,14 +35,40 @@ import { DataFrequencyType, DataStartsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import {
-  mapMultiSelectOptions,
-  sortOtherEnum,
   translateDataFrequencyType,
   translateDataStartsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+import {
+  isCCWInvolvement,
+  isQualityMeasures,
+  renderCurrentPage,
+  renderTotalPages
+} from '..';
+
+const dataSharingOptions: DataStartsType[] = [
+  DataStartsType.DURING_APPLICATION_PERIOD,
+  DataStartsType.SHORTLY_BEFORE_THE_START_DATE,
+  DataStartsType.EARLY_IN_THE_FIRST_PERFORMANCE_YEAR,
+  DataStartsType.LATER_IN_THE_FIRST_PERFORMANCE_YEAR,
+  DataStartsType.IN_THE_SUBSEQUENT_PERFORMANCE_YEAR,
+  DataStartsType.AT_SOME_OTHER_POINT_IN_TIME,
+  DataStartsType.NOT_PLANNING_TO_DO_THIS,
+  DataStartsType.OTHER
+];
+
+const dataFrequencyOptions: DataFrequencyType[] = [
+  DataFrequencyType.ANNUALLY,
+  DataFrequencyType.BIANNUALLY,
+  DataFrequencyType.QUARTERLY,
+  DataFrequencyType.MONTHLY,
+  DataFrequencyType.SEMI_MONTHLY,
+  DataFrequencyType.WEEKLY,
+  DataFrequencyType.DAILY,
+  DataFrequencyType.OTHER,
+  DataFrequencyType.NOT_PLANNING_TO_DO_THIS
+];
 
 const DataSharing = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -65,6 +91,7 @@ const DataSharing = () => {
     id,
     iddocSupport,
     ccmInvolvment,
+    dataNeededForMonitoring,
     dataSharingStarts,
     dataSharingStartsOther,
     dataSharingFrequency,
@@ -104,7 +131,10 @@ const DataSharing = () => {
             );
           } else if (redirect === 'back') {
             if (
-              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment || [])
+              isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
+              isQualityMeasures(
+                formikRef?.current?.values.dataNeededForMonitoring
+              )
             ) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
@@ -129,6 +159,7 @@ const DataSharing = () => {
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     dataSharingStarts: dataSharingStarts ?? null,
     dataSharingStartsOther: dataSharingStartsOther ?? '',
     dataSharingFrequency: dataSharingFrequency ?? [],
@@ -218,7 +249,7 @@ const DataSharing = () => {
               )}
 
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-data-sharing-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -251,15 +282,13 @@ const DataSharing = () => {
                     <option key="default-select" disabled value="">
                       {`-${h('select')}-`}
                     </option>
-                    {Object.keys(DataStartsType)
-                      .sort(sortOtherEnum)
-                      .map(type => {
-                        return (
-                          <option key={type} value={type || ''}>
-                            {translateDataStartsType(type)}
-                          </option>
-                        );
-                      })}
+                    {dataSharingOptions.map(type => {
+                      return (
+                        <option key={type} value={type || ''}>
+                          {translateDataStartsType(type)}
+                        </option>
+                      );
+                    })}
                   </Field>
 
                   {values.dataSharingStarts === 'OTHER' && (
@@ -274,10 +303,10 @@ const DataSharing = () => {
                         {flatErrors.dataSharingStartsOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        className="maxw-none"
+                        as={TextAreaField}
+                        className="maxw-none mint-textarea"
                         id="ops-eval-and-learning-data-sharing-starts-other"
-                        maxLength={50}
+                        maxLength={5000}
                         name="dataSharingStartsOther"
                       />
                     </div>
@@ -292,6 +321,7 @@ const DataSharing = () => {
                   <Label
                     htmlFor="ops-eval-and-learning-data-sharing-frequency"
                     className="maxw-none text-normal"
+                    id="label-ops-eval-and-learning-data-sharing-frequency"
                   >
                     {t('dataSharingHowOften')}
                   </Label>
@@ -303,10 +333,11 @@ const DataSharing = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-data-sharing-frequency"
                     name="dataSharingFrequency"
-                    options={mapMultiSelectOptions(
-                      translateDataFrequencyType,
-                      DataFrequencyType
-                    )}
+                    ariaLabel="label-ops-eval-and-learning-data-sharing-frequency"
+                    options={dataFrequencyOptions.map(key => ({
+                      value: key,
+                      label: translateDataFrequencyType(key)
+                    }))}
                     selectedLabel={t('dataSharingHowOftenSeleted')}
                     onChange={(value: string[] | []) => {
                       setFieldValue('dataSharingFrequency', value);
@@ -327,8 +358,9 @@ const DataSharing = () => {
                         {flatErrors.dataSharingFrequencyOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        maxLength={50}
+                        as={TextAreaField}
+                        maxLength={5000}
+                        className="mint-textarea"
                         error={flatErrors.dataSharingFrequencyOther}
                         id="ops-eval-and-learning-data-sharing-frequency-other"
                         name="dataSharingFrequencyOther"
@@ -368,15 +400,13 @@ const DataSharing = () => {
                     <option key="default-select" disabled value="">
                       {`-${h('select')}-`}
                     </option>
-                    {Object.keys(DataStartsType)
-                      .sort(sortOtherEnum)
-                      .map(type => {
-                        return (
-                          <option key={type} value={type || ''}>
-                            {translateDataStartsType(type)}
-                          </option>
-                        );
-                      })}
+                    {dataSharingOptions.map(type => {
+                      return (
+                        <option key={type} value={type || ''}>
+                          {translateDataStartsType(type)}
+                        </option>
+                      );
+                    })}
                   </Field>
 
                   {values.dataCollectionStarts === 'OTHER' && (
@@ -391,10 +421,10 @@ const DataSharing = () => {
                         {flatErrors.dataCollectionStartsOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        className="maxw-none"
+                        as={TextAreaField}
+                        className="maxw-none mint-textarea"
                         id="ops-eval-and-learning-data-collection-starts-other"
-                        maxLength={50}
+                        maxLength={5000}
                         name="dataCollectionStartsOther"
                       />
                     </div>
@@ -408,6 +438,7 @@ const DataSharing = () => {
                 >
                   <Label
                     htmlFor="ops-eval-and-learning-data-collection-frequency"
+                    id="label-ops-eval-and-learning-data-collection-frequency"
                     className="maxw-none text-normal"
                   >
                     {t('dataCollectionHowOften')}
@@ -420,10 +451,11 @@ const DataSharing = () => {
                     as={MultiSelect}
                     id="ops-eval-and-learning-data-collection-frequency"
                     name="dataCollectionFrequency"
-                    options={mapMultiSelectOptions(
-                      translateDataFrequencyType,
-                      DataFrequencyType
-                    )}
+                    ariaLabel="label-ops-eval-and-learning-data-collection-frequency"
+                    options={dataFrequencyOptions.map(key => ({
+                      value: key,
+                      label: translateDataFrequencyType(key)
+                    }))}
                     selectedLabel={t('dataSharingHowOftenSeleted')}
                     onChange={(value: string[] | []) => {
                       setFieldValue('dataCollectionFrequency', value);
@@ -444,8 +476,9 @@ const DataSharing = () => {
                         {flatErrors.dataCollectionFrequencyOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        maxLength={50}
+                        as={TextAreaField}
+                        maxLength={5000}
+                        className="mint-textarea"
                         error={flatErrors.dataCollectionFrequencyOther}
                         id="ops-eval-and-learning-data-collection-frequency-other"
                         name="dataCollectionFrequencyOther"
@@ -484,15 +517,13 @@ const DataSharing = () => {
                     <option key="default-select" disabled value="">
                       {`-${h('select')}-`}
                     </option>
-                    {Object.keys(DataStartsType)
-                      .sort(sortOtherEnum)
-                      .map(type => {
-                        return (
-                          <option key={type} value={type || ''}>
-                            {translateDataStartsType(type)}
-                          </option>
-                        );
-                      })}
+                    {dataSharingOptions.map(type => {
+                      return (
+                        <option key={type} value={type || ''}>
+                          {translateDataStartsType(type)}
+                        </option>
+                      );
+                    })}
                   </Field>
 
                   {values.qualityReportingStarts === 'OTHER' && (
@@ -507,11 +538,11 @@ const DataSharing = () => {
                         {flatErrors.qualityReportingStartsOther}
                       </FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        className="maxw-none"
+                        as={TextAreaField}
+                        className="maxw-none mint-textarea"
                         id="ops-eval-and-learning-data-reporting-starts-other"
                         data-testid="ops-eval-and-learning-data-reporting-starts-other"
-                        maxLength={50}
+                        maxLength={5000}
                         name="qualityReportingStartsOther"
                       />
                     </div>
@@ -565,11 +596,13 @@ const DataSharing = () => {
           currentPage={renderCurrentPage(
             8,
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           totalPages={renderTotalPages(
             iddocSupport,
-            isCCWInvolvement(ccmInvolvment)
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
           )}
           className="margin-y-6"
         />

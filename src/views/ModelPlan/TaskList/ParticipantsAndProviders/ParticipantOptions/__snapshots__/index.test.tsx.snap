@@ -94,7 +94,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="participants-and-providers-options-form"
   >
     <div
@@ -117,7 +117,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         aria-valuemax="10000"
         aria-valuemin="0"
         aria-valuenow="5000"
-        class="usa-range maxw-none"
+        class="usa-range maxw-none width-full"
         data-testid="participants-and-providers-expected-participants"
         id="participants-and-providers-expected-participants"
         max="10000"
@@ -169,42 +169,6 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="participants-and-providers-confidence-COMPLETELY"
-            name="estimateConfidence"
-            type="radio"
-            value="COMPLETELY"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-confidence-COMPLETELY"
-          >
-            Completely confident
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
-            id="participants-and-providers-confidence-FAIRLY"
-            name="estimateConfidence"
-            type="radio"
-            value="FAIRLY"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-confidence-FAIRLY"
-          >
-            Fairly confident
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
             id="participants-and-providers-confidence-NOT_AT_ALL"
             name="estimateConfidence"
             type="radio"
@@ -233,6 +197,42 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
             for="participants-and-providers-confidence-SLIGHTLY"
           >
             Slightly confident
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="participants-and-providers-confidence-FAIRLY"
+            name="estimateConfidence"
+            type="radio"
+            value="FAIRLY"
+          />
+          <label
+            class="usa-radio__label"
+            for="participants-and-providers-confidence-FAIRLY"
+          >
+            Fairly confident
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="participants-and-providers-confidence-COMPLETELY"
+            name="estimateConfidence"
+            type="radio"
+            value="COMPLETELY"
+          />
+          <label
+            class="usa-radio__label"
+            for="participants-and-providers-confidence-COMPLETELY"
+          >
+            Completely confident
           </label>
         </div>
       </fieldset>
@@ -335,6 +335,11 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
             NOFO (Notice of funding opportunity for grants/cooperative agreements)
           </label>
         </div>
+        <p
+          class="text-base margin-bottom-neg-05 margin-left-4 margin-top-1 line-height-body-3"
+        >
+          CMMI writes, Office of General Council (OGC) reviews and approves
+        </p>
         <div
           class="usa-radio"
           data-testid="radio"
@@ -410,14 +415,13 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         class="usa-label"
         data-testid="label"
         for="participants-and-providers-selection-method"
+        id="label-participants-and-providers-selection-method"
       >
         How will you select participants? Select all that appy.
       </label>
-      <div
-        class="margin-top-1"
-      >
+      <div>
         <div
-          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
           id="participants-and-providers-selection-method"
         >
           <span
@@ -437,7 +441,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
               class=" css-319lph-ValueContainer"
             >
               <div
-                class=" css-1hgum8q-placeholder"
+                class=" css-14el2xx-placeholder"
                 id="react-select-3-placeholder"
               >
                 0 selected

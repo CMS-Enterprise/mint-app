@@ -9,12 +9,18 @@ import { PlanCollaboratorCreateInput, TeamRole } from "./../../../types/graphql-
 // GraphQL mutation operation: CreateModelPlanCollaborator
 // ====================================================
 
+export interface CreateModelPlanCollaborator_createPlanCollaborator_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+}
+
 export interface CreateModelPlanCollaborator_createPlanCollaborator {
   __typename: "PlanCollaborator";
-  fullName: string;
   teamRole: TeamRole;
-  email: string;
-  euaUserID: string;
+  userAccount: CreateModelPlanCollaborator_createPlanCollaborator_userAccount;
+  userID: UUID;
   modelPlanID: UUID;
 }
 

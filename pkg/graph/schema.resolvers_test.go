@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/opensearch-project/opensearch-go/v2"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -144,17 +146,31 @@ func TestGraphQLTestSuite(t *testing.T) {
 	emailTemplateService, err := email.NewTemplateServiceImpl()
 	assert.NoError(t, err)
 
-	cedarLdapClient := local.NewCedarLdapClient(logger)
+	oktaClient, err := local.NewOktaAPIClient()
+	assert.NoError(t, err)
 
 	directives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 		return next(ctx)
 	}}
 
 	var resolverService ResolverService
-	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
+	resolverService.FetchUserInfo = oktaClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
-	resolver := NewResolver(store, resolverService, &s3Client, *emailService, emailTemplateService, ldClient, ps)
+	searchClient, _ := opensearch.NewDefaultClient()
+
+	resolver := NewResolver(
+		store,
+		resolverService,
+		&s3Client,
+		*emailService,
+		emailTemplateService,
+		email.AddressBook{},
+		ldClient,
+		ps,
+		searchClient,
+	)
+
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 

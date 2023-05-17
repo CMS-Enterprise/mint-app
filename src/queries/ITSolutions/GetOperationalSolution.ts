@@ -10,6 +10,31 @@ export default gql`
       nameOther
       pocName
       pocEmail
+      status
+      isOther
+      isCommonSolution
+      otherHeader
+      mustFinishDts
+      mustStartDts
+      documents {
+        id
+        virusScanned
+        virusClean
+        fileName
+        fileType
+        downloadUrl
+        restricted
+        documentType
+        createdDts
+        optionalNotes
+        otherType
+        numLinkedSolutions
+      }
+      operationalSolutionSubtasks {
+        id
+        name
+        status
+      }
     }
   }
 `;

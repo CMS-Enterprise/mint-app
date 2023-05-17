@@ -9,6 +9,12 @@ import { AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/gra
 // GraphQL query operation: GetAuthority
 // ====================================================
 
+export interface GetAuthority_modelPlan_generalCharacteristics_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface GetAuthority_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
@@ -21,7 +27,7 @@ export interface GetAuthority_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewByUserAccount: GetAuthority_modelPlan_generalCharacteristics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }

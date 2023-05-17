@@ -62,7 +62,8 @@ const formatSolutionsFromNeed = (
       return {
         ...solution,
         needName: need.nameOther || need.name,
-        needKey: need.key
+        needKey: need.key,
+        needID: need.id
       };
     });
 };
@@ -77,6 +78,7 @@ const emptySolution = (
     __typename: 'OperationalSolution',
     id: needID,
     status: OpSolutionStatus.NOT_STARTED,
+    otherHeader: '',
     needName,
     name: '',
     mustStartDts: null,
@@ -84,6 +86,7 @@ const emptySolution = (
     needed: false,
     nameOther: null,
     key,
+    operationalSolutionSubtasks: [],
     pocEmail: null,
     pocName: null,
     createdBy: '',
@@ -94,6 +97,7 @@ const emptySolution = (
 // Used to type as solution with a need key
 interface SolutionAsNeed extends GetOperationalNeedsOperationalNeedsType {
   needKey?: string;
+  needID: string;
 }
 
 // Returns operational need/solutions table action links according to status
@@ -103,7 +107,6 @@ export const returnActionLinks = (
   modelID: string,
   readOnly?: boolean
 ): JSX.Element => {
-  /* eslint no-underscore-dangle: 0 */
   const operationalNeedKey = operationalNeed.key || operationalNeed.needKey;
 
   const operationalNeedObj = operationalNeedMap[operationalNeedKey || 'NONE'];
@@ -111,18 +114,35 @@ export const returnActionLinks = (
   const solutionActionLinks = (
     <>
       <UswdsReactLink
-        to="/"
+        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
         {i18next.t('itSolutions:itSolutionsTable.updateStatus')}
       </UswdsReactLink>
-      <UswdsReactLink to="/">
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+      >
         {i18next.t('itSolutions:itSolutionsTable.viewDetails')}
       </UswdsReactLink>
     </>
   );
 
-  // If row is a predefined operational solution and not an operational need/custom solution, return solutionActionLinks
+  // Custom Need without a defined solution, render `Update operational need`
+  if (
+    !operationalNeed.nameOther &&
+    !operationalNeed.key &&
+    !operationalNeed.needKey
+  ) {
+    return (
+      <UswdsReactLink
+        to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+      >
+        {i18next.t('itSolutions:itSolutionsTable.updateNeed')}
+      </UswdsReactLink>
+    );
+  }
+
+  // if row is a predefined operational solution and not an operational need/custom solution, return solutionActionLinks
   if (!operationalNeedObj) {
     return solutionActionLinks;
   }
@@ -136,9 +156,15 @@ export const returnActionLinks = (
     case OpSolutionStatus.ONBOARDING:
       return solutionActionLinks;
     case OpSolutionStatus.NOT_STARTED:
+      if (operationalNeed.nameOther) {
+        return solutionActionLinks;
+      }
       return (
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+          to={{
+            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            state: { scrollElement: operationalNeedObj.fieldName.toString() }
+          }}
         >
           {i18next.t('itSolutions:itSolutionsTable.changePlanAnswer')}
         </UswdsReactLink>
@@ -146,7 +172,10 @@ export const returnActionLinks = (
     case OperationalNeedStatus.NOT_NEEDED:
       return operationalNeedObj ? (
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+          to={{
+            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            state: { scrollElement: operationalNeedObj.fieldName.toString() }
+          }}
         >
           {i18next.t('itSolutions:itSolutionsTable.changeAnswer')}
         </UswdsReactLink>
@@ -156,7 +185,15 @@ export const returnActionLinks = (
     case OperationalNeedStatus.NOT_ANSWERED:
       return operationalNeedObj ? (
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/${operationalNeedObj.route}`}
+          to={{
+            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            state: {
+              scrollElement:
+                typeof operationalNeedObj.fieldName !== 'string'
+                  ? operationalNeedObj.fieldName[0]
+                  : operationalNeedObj.fieldName
+            }
+          }}
         >
           {i18next.t('itSolutions:itSolutionsTable.answer')}
         </UswdsReactLink>

@@ -1,5 +1,5 @@
 const home = {
-  title: 'Welcome to MINT',
+  title: 'Welcome to Model Innovation Tool (MINT)',
   subheading:
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
   signIn: 'Sign in to start',
@@ -21,6 +21,8 @@ const home = {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models'
   },
+  yourModels: 'You have been added as a team member to the model plans below.',
+  fetchError: 'There was an error fetching models plans.  Please try again.',
   downloadAllCSV: 'Download all plans as CSV',
   downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
@@ -28,7 +30,7 @@ const home = {
       heading: 'My model plans'
     },
     admin: {
-      heading: 'Model plans'
+      heading: 'All model plans'
     },
     mac: {
       heading: 'Upcoming models',
@@ -39,9 +41,9 @@ const home = {
       }
     },
     empty: {
-      heading: 'You don’t have any draft model plans yet',
+      heading: 'You haven’t been added to any Model Plans yet.',
       body:
-        'Start a new plan by clicking the button above. Once you start one, it will appear in this section.'
+        'Once you create one or are added as a team member to an existing plan, it will appear here.'
     },
     caption:
       'Below is a list of governance requests that are in draft or submitted.',

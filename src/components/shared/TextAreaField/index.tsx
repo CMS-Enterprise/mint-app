@@ -29,23 +29,21 @@ const TextAreaField = ({
   value,
   ...props
 }: TextAreaFieldProps) => {
-  const textAreaClasses = classnames(
-    'usa-textarea',
-    {
-      'usa-input--error': error
-    },
-    className
-  );
+  const textAreaClasses = classnames(className, 'usa-textarea', {
+    'usa-input--error': error
+  });
   return (
     <>
       {label && (
-        <label className="usa-label" htmlFor={id}>
+        <label className="usa-label" htmlFor={id} id={`label-${id}`}>
           {label}
         </label>
       )}
 
       {hint && (
-        <span className="usa-hint display-block text-normal">{hint}</span>
+        <span className="usa-hint display-block text-normal" id={`hint-${id}`}>
+          {hint}
+        </span>
       )}
 
       {error && <FieldErrorMsg>{error}</FieldErrorMsg>}
@@ -58,6 +56,7 @@ const TextAreaField = ({
         onBlur={onBlur}
         value={value}
         maxLength={maxLength}
+        aria-labelledby={`label-${id} hint-${id}`}
         {...props}
       />
     </>

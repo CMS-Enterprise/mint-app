@@ -1,6 +1,8 @@
+@use 'viewports' as *;
+
 .participants-and-providers {
     &__info {
-        @media screen and (max-width: $tablet) {
+        @media screen and (max-width: $desktop) {
             flex-direction: column-reverse;
         }
     }

@@ -76,7 +76,7 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(logger *zap.Logger, ta
 }
 
 // AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns changes based on foreign key and date from the database.
-func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap.Logger, primaryKey uuid.UUID, foreignKey uuid.UUID, date time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
+func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap.Logger, primaryKey uuid.UUID, foreignKey uuid.UUID, dayToAnalyze time.Time, sortDir models.SortDirection) ([]*models.AuditChange, error) {
 	auditChanges := []*models.AuditChange{}
 	orderedQuery := auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate
 	orderClause := "" //default to ASCENDING
@@ -95,8 +95,8 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger *zap
 	arg := map[string]interface{}{
 		"primary_key": primaryKey,
 		"foreign_key": foreignKey,
-		"start_date":  date.Format("2006-01-02"),
-		"end_date":    date.AddDate(0, 0, 1).Format("2006-01-02"),
+		"start_date":  dayToAnalyze.Format("2006-01-02"),
+		"end_date":    dayToAnalyze.AddDate(0, 0, 1).Format("2006-01-02"),
 	}
 
 	err = stmt.Select(&auditChanges, arg)

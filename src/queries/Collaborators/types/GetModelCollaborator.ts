@@ -9,12 +9,19 @@ import { TeamRole } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetModelCollaborator
 // ====================================================
 
+export interface GetModelCollaborator_planCollaboratorByID_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetModelCollaborator_planCollaboratorByID {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
-  euaUserID: string;
-  email: string;
+  userAccount: GetModelCollaborator_planCollaboratorByID_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
 }
 

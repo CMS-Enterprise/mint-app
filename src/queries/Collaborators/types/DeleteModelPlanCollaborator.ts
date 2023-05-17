@@ -9,12 +9,20 @@ import { TeamRole } from "./../../../types/graphql-global-types";
 // GraphQL mutation operation: DeleteModelPlanCollaborator
 // ====================================================
 
+export interface DeleteModelPlanCollaborator_deletePlanCollaborator_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface DeleteModelPlanCollaborator_deletePlanCollaborator {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
   teamRole: TeamRole;
-  euaUserID: string;
+  userAccount: DeleteModelPlanCollaborator_deletePlanCollaborator_userAccount;
+  userID: UUID;
   modelPlanID: UUID;
 }
 

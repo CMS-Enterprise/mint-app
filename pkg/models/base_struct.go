@@ -1,38 +1,40 @@
 package models
 
 import (
-	"time"
-
 	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // IBaseStruct is an interface that all models must implement
 type IBaseStruct interface {
-	GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
+	SetModifiedBy(principal authentication.Principal) error
 }
 
 // baseStruct represents the shared data in common betwen all models
 type baseStruct struct {
-	ID          uuid.UUID  `json:"id" db:"id"`
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
+	ID uuid.UUID `json:"id" db:"id"`
+	createdByRelation
+	modifiedByRelation
 }
 
 // NewBaseStruct returns a base struct object
-func NewBaseStruct(createdBy string) baseStruct {
+func NewBaseStruct(createdBy uuid.UUID) baseStruct {
 	return baseStruct{
-		CreatedBy: createdBy,
+		createdByRelation: createdByRelation{
+			CreatedBy: createdBy,
+		},
 	}
 }
+func (b *baseStruct) SetModifiedBy(principal authentication.Principal) error {
 
-// GetBaseStruct returns the Base Struct
-func (b *baseStruct) GetBaseStruct() *baseStruct {
-	return b
+	userID := principal.Account().ID
+
+	b.ModifiedBy = &userID
+	return nil
 }
 
 // GetID returns the ID property for a PlanBasics struct
@@ -40,12 +42,23 @@ func (b baseStruct) GetID() uuid.UUID {
 	return b.ID
 }
 
-// GetModifiedBy returns the ModifiedBy property for a PlanBasics struct
+// GetModifiedBy returns the ModifiedBy property for an IBaseStruct
 func (b baseStruct) GetModifiedBy() *string {
-	return b.ModifiedBy
+
+	if b.ModifiedBy == nil {
+		return nil
+	}
+
+	if *b.ModifiedBy == uuid.Nil {
+		return nil
+	}
+
+	retString := b.ModifiedBy.String()
+	return &retString
+
 }
 
 // GetCreatedBy implements the CreatedBy property
 func (b baseStruct) GetCreatedBy() string {
-	return b.CreatedBy
+	return b.CreatedBy.String()
 }

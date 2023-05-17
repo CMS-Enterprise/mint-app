@@ -21,8 +21,8 @@ var planBasicsUpdateSQL string
 //go:embed SQL/plan_basics/get_by_id.sql
 var planBasicsGetByIDSQL string
 
-//go:embed SQL/plan_basics/get_by_model_plan_id.sql
-var planBasicsGetByModelPlanIDSQL string
+//go:embed SQL/plan_basics/get_by_model_plan_id_LOADER.sql
+var planBasicsGetByModelPlanIDLoaderSQL string
 
 // PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
@@ -76,24 +76,23 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 	return &plan, nil
 }
 
-// PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
-func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{}
+// PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
+func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.PlanBasics, error) {
+	basicSlice := []*models.PlanBasics{} //TOOD use new data loader query instead.
 
-	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDSQL)
+	stmt, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDLoaderSQL)
 	if err != nil {
 		return nil, err
 	}
-
 	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
+		"paramTableJSON": paramTableJSON,
 	}
 
-	err = statement.Get(&plan, arg)
+	err = stmt.Select(&basicSlice, arg) //this returns more than one
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &plan, nil
+	return basicSlice, nil
 }

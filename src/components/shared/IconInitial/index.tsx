@@ -19,10 +19,7 @@ export const arrayOfColors: string[] = [
 const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
   return (
     <li
-      className={classNames(
-        'display-flex flex-align-center margin-bottom-1',
-        className
-      )}
+      className={classNames('display-flex flex-align-center', className)}
       key={user}
     >
       <div

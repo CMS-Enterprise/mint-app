@@ -1,0 +1,15 @@
+{
+	"query": {
+		"multi_match": {
+			"query": "{{.Actor}}",
+			"fuzziness": "AUTO",
+			"prefix_length": 1,
+			"fields": [
+				"modified_by.common_name",
+				"modified_by.username",
+				"modified_by.given_name",
+				"modified_by.family_name"
+			]
+		}
+	}
+}

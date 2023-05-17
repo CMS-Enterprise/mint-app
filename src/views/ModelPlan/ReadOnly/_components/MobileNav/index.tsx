@@ -17,16 +17,21 @@ interface MobileNavProps {
   subComponents: subComponentsProps;
   subinfo: SubpageKey;
   isHelpArticle: boolean | undefined;
+  solutionDetailRoute?: string;
 }
 
 const MobileNav = ({
   subComponents,
   subinfo,
-  isHelpArticle
+  isHelpArticle,
+  solutionDetailRoute
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: hk } = useTranslation('helpAndKnowledge');
+
   const isMobile = useCheckResponsiveScreen('tablet');
+
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -35,6 +40,8 @@ const MobileNav = ({
       setIsAccordionOpen(false);
     }
   }, [isMobile]);
+
+  const translationKey = solutionDetailRoute ? hk : t;
 
   return (
     <div className="read-only-model-plan__subNav-accordion">
@@ -47,7 +54,9 @@ const MobileNav = ({
         aria-expanded={isAccordionOpen}
         aria-controls="read-only-model-plan__subNav"
       >
-        <h3 className="padding-left-1">{t(`navigation.${subinfo}`)}</h3>
+        <h3 className="padding-left-1">
+          {translationKey(`navigation.${subinfo}`)}
+        </h3>
         {!isAccordionOpen ? (
           <IconExpandMore size={3} />
         ) : (
@@ -61,12 +70,7 @@ const MobileNav = ({
         >
           <ul className="read-only-model-plan__subNav__list subNav">
             {Object.keys(subComponents).map((key: string) => (
-              <li
-                key={key}
-                className={
-                  key === 'it-tools' ? 'subNav__item--group-border' : ''
-                }
-              >
+              <li key={key} className="">
                 <NavLink
                   to={
                     !isHelpArticle
@@ -77,14 +81,17 @@ const MobileNav = ({
                   className={key === subinfo ? 'subNav--current' : ''}
                   onClick={() => setIsAccordionOpen(!isAccordionOpen)}
                 >
-                  {t(`navigation.${key}`)}
+                  {translationKey(`navigation.${key}`)}
                 </NavLink>
               </li>
             ))}
             <li className="subNav__item--back-to-all-models">
-              <NavLink to="/models" className="display-flex flex-align-center">
+              <NavLink
+                to={solutionDetailRoute || '/models'}
+                className="display-flex flex-align-center"
+              >
                 <IconArrowBack className="margin-right-1" />
-                {h('back')}
+                {solutionDetailRoute ? hk('backToSolutions') : h('back')}
               </NavLink>
             </li>
           </ul>

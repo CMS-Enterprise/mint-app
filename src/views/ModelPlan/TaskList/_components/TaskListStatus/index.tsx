@@ -5,7 +5,7 @@ import { Grid, IconEdit } from '@trussworks/react-uswds';
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
 import { ModelStatus } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 
 type TaskListStatusProps = {
@@ -53,7 +53,7 @@ const TaskListStatus = ({
           {!!modifiedDts && (
             <p className="margin-y-0 text-normal">
               {h('lastUpdate')}
-              {formatDate(modifiedDts, 'M/d/yyyy')}
+              {formatDateLocal(modifiedDts, 'MM/dd/yyyy')}
             </p>
           )}
 

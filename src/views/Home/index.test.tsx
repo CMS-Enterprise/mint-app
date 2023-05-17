@@ -15,6 +15,20 @@ import Table from 'views/ModelPlan/Table';
 
 import Home from './index';
 
+jest.mock('@okta/okta-react', () => ({
+  useOktaAuth: () => {
+    return {
+      authState: {
+        isAuthenticated: true
+      },
+      oktaAuth: {
+        getUser: async () => {},
+        logout: async () => {}
+      }
+    };
+  }
+}));
+
 const defaultFlags: Flags = {
   hideITLeadExperience: false
 } as Flags;
@@ -49,7 +63,6 @@ describe('The home page', () => {
           );
           component.update();
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
-          expect(component.find('hr').exists()).toBeTruthy();
           expect(component.find(Table).exists()).toBeTruthy();
           expect(component.text()).toContain('My model plans');
         });
@@ -83,9 +96,9 @@ describe('The home page', () => {
           );
           component.update();
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
-          expect(component.find('hr').exists()).toBeTruthy();
           expect(component.find(Table).exists()).toBeTruthy();
-          expect(component.text()).toContain('Model plans');
+          const header = component.find('h2').at(1).text();
+          expect(header).toContain('All model plans');
         });
       });
     });

@@ -4,9 +4,13 @@ export default gql`
   query GetModelCollaborator($id: UUID!) {
     planCollaboratorByID(id: $id) {
       id
-      fullName
-      euaUserID
-      email
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+      userID
       teamRole
     }
   }

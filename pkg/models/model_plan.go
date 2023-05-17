@@ -11,7 +11,7 @@ type ModelPlan struct {
 }
 
 // NewModelPlan returns a new unarchived model plan with a default status of ModelStatusPlanDraft
-func NewModelPlan(createdBy string, modelName string) *ModelPlan {
+func NewModelPlan(createdBy uuid.UUID, modelName string) *ModelPlan {
 	return &ModelPlan{
 		ModelName:  modelName,
 		baseStruct: NewBaseStruct(createdBy),

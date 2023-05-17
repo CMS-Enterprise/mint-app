@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
+import { KeyCharacteristic } from 'types/graphql-global-types';
 import {
   translateAgreementTypes,
   translateAlternativePaymentTypes,
@@ -41,6 +42,15 @@ const ReadOnlyGeneralCharacteristics = ({
     }
   );
 
+  const mappedExistingModels: (string | number)[] = useMemo(() => {
+    return (
+      data?.modelPlan?.existingModelLinks?.map(
+        link =>
+          (link.currentModelPlan?.modelName || link.existingModel?.modelName)!
+      ) || []
+    );
+  }, [data?.modelPlan?.existingModelLinks]);
+
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
@@ -49,7 +59,6 @@ const ReadOnlyGeneralCharacteristics = ({
     isNewModel,
     existingModel,
     resemblesExistingModel,
-    resemblesExistingModelWhich,
     resemblesExistingModelHow,
     resemblesExistingModelNote,
     hasComponentsOrTracks,
@@ -140,7 +149,7 @@ const ReadOnlyGeneralCharacteristics = ({
         <ReadOnlySection
           heading={t('modelResemblance')}
           list
-          listItems={resemblesExistingModelWhich}
+          listItems={mappedExistingModels}
         />
 
         <ReadOnlySection
@@ -154,16 +163,13 @@ const ReadOnlyGeneralCharacteristics = ({
           copy={translateBooleanOrNull(hasComponentsOrTracks)}
         />
 
-        <ReadOnlySection
-          heading={t('differentComponents')}
-          copy={translateBooleanOrNull(hasComponentsOrTracks)}
-        />
-
-        <ReadOnlySection
-          heading={t('tracksDiffer')}
-          copy={hasComponentsOrTracksDiffer}
-          notes={hasComponentsOrTracksNote}
-        />
+        {hasComponentsOrTracksNote && (
+          <ReadOnlySection
+            heading={t('tracksDiffer')}
+            copy={hasComponentsOrTracksDiffer}
+            notes={hasComponentsOrTracksNote}
+          />
+        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
@@ -184,23 +190,28 @@ const ReadOnlyGeneralCharacteristics = ({
           notes={keyCharacteristicsNote}
         />
 
-        <ReadOnlySection
-          heading={t('reviewPlanBids')}
-          copy={translateBooleanOrNull(collectPlanBids)}
-          notes={collectPlanBidsNote}
-        />
+        {(keyCharacteristics?.includes(KeyCharacteristic.PART_C) ||
+          keyCharacteristics?.includes(KeyCharacteristic.PART_D)) && (
+          <>
+            <ReadOnlySection
+              heading={t('reviewPlanBids')}
+              copy={translateBooleanOrNull(collectPlanBids)}
+              notes={collectPlanBidsNote}
+            />
 
-        <ReadOnlySection
-          heading={t('manageEnrollment')}
-          copy={translateBooleanOrNull(managePartCDEnrollment)}
-          notes={managePartCDEnrollmentNote}
-        />
+            <ReadOnlySection
+              heading={t('manageEnrollment')}
+              copy={translateBooleanOrNull(managePartCDEnrollment)}
+              notes={managePartCDEnrollmentNote}
+            />
 
-        <ReadOnlySection
-          heading={t('updatedContract')}
-          copy={translateBooleanOrNull(planContractUpdated)}
-          notes={planContractUpdatedNote}
-        />
+            <ReadOnlySection
+              heading={t('updatedContract')}
+              copy={translateBooleanOrNull(planContractUpdated)}
+              notes={planContractUpdatedNote}
+            />
+          </>
+        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">

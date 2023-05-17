@@ -22,12 +22,16 @@ scalar UUID
 Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
-
-
 """
 Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
+
+"""
+Any represents any GraphQL value.
+"""
+scalar Any
+
 
 enum SortDirection {
   ASC
@@ -46,9 +50,11 @@ type ModelPlan {
   id: UUID!
   modelName: String!
   archived: Boolean!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
   basics: PlanBasics!
   generalCharacteristics: PlanGeneralCharacteristics!
@@ -59,7 +65,6 @@ type ModelPlan {
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
-  itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
   isCollaborator: Boolean!
@@ -67,6 +72,7 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
+  existingModelLinks: [ExistingModelLink!]!
 }
 
 type OperationalNeed {
@@ -81,9 +87,11 @@ type OperationalNeed {
     nameOther: String
     section: TaskListSection
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -94,19 +102,24 @@ type PossibleOperationalNeed {
     key: OperationalNeedKey!
     section: TaskListSection
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 type PossibleOperationalSolution {
     id: Int!
     name: String!
     key: OperationalSolutionKey!
+    treatAsOther: Boolean!
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -128,20 +141,21 @@ PlanCollaborator represents a collaborator on a plan
 type PlanCollaborator {
   id: UUID!
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userID: UUID!
+  userAccount: UserAccount!
   teamRole: TeamRole!
-  email: String!
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 """
 ExistingModel represents a model that already exists outside of the scope of MINT
 """
 type ExistingModel {
-  id: String
+  id: Int
   modelName: String
   stage: String!
   numberOfParticipants: String
@@ -156,9 +170,28 @@ type ExistingModel {
   keywords: String
   url: String
   displayModelSummary: Boolean
-  createdBy: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type ExistingModelLink {
+  id: UUID
+  modelPlanID: UUID!
+  existingModelID: Int
+  existingModel: ExistingModel
+  currentModelPlanID: UUID
+  currentModelPlan: ModelPlan
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -171,7 +204,7 @@ type TaskListSectionLockStatusChanged {
 type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
-  lockedBy: String!
+  lockedByUserAccount: UserAccount!
   isAssessment: Boolean!
 }
 
@@ -180,10 +213,8 @@ PlanCollaboratorCreateInput represents the data required to create a collaborato
 """
 input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
-  euaUserID: String!
-  fullName: String!
+  userName: String!
   teamRole: TeamRole!
-  email: String!
 }
 
 """
@@ -205,9 +236,13 @@ type PlanDocument {
   optionalNotes: String
   downloadUrl: String
   deletedAt: Time
-  createdBy: String!
+  numLinkedSolutions: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -255,14 +290,20 @@ type PlanBasics {
   phasedIn: Boolean
   phasedInNote: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+
   status: TaskStatus!
 }
 
@@ -299,12 +340,14 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-Represents a person response from CEDAR LDAP
+Represents a person response from the Okta API
 """
 type UserInfo {
-  commonName: String!
+  firstName: String!
+  lastName: String!
+  displayName: String!
   email: String!
-  euaUserId: String!
+  username: String!
 }
 
 """
@@ -318,9 +361,12 @@ type PlanDiscussion  {
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
 
-  createdBy: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -352,10 +398,12 @@ type DiscussionReply  {
 	resolution: Boolean
   isAssessment: Boolean!
 
-	createdBy: String!
-	createdDts: Time!
-	modifiedBy: String
-	modifiedDts: Time
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 """
@@ -388,7 +436,6 @@ type PlanGeneralCharacteristics {
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]!
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -444,14 +491,20 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+
   status: TaskStatus!
 }
 
@@ -466,7 +519,6 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   isNewModel: Boolean
   existingModel: String
   resemblesExistingModel: Boolean
-  resemblesExistingModelWhich: [String!]
   resemblesExistingModelHow: String
   resemblesExistingModelNote: String
   hasComponentsOrTracks: Boolean
@@ -557,14 +609,20 @@ type PlanBeneficiaries {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+
   status: TaskStatus!
 }
 
@@ -661,14 +719,20 @@ type PlanParticipantsAndProviders {
   providerOverlapNote:            String
 
 
-  createdBy: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
   createdDts: Time!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+
   status: TaskStatus!
 
 }
@@ -792,6 +856,7 @@ type PlanPayments {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]!
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                   String
@@ -820,14 +885,21 @@ type PlanPayments {
   paymentStartDateNote:                              String
 
   # Meta
-  createdBy:   String!
-  createdDts:  Time!
-  modifiedBy:  String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  readyForReviewBy: String
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
   readyForReviewDts: Time
-  readyForClearanceBy: String
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
   readyForClearanceDts: Time
+
   status:      TaskStatus!
 }
 
@@ -878,6 +950,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
   nonClaimsPaymentOther:                           String
+  nonClaimsPaymentsNote:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNote:                  String
@@ -908,212 +981,6 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   status: TaskStatusInput
 }
 
-""""
-PlanITTools is the task list section that deals with information regarding IT Tools
-"""
-type PlanITTools {
-  id: UUID!
-  modelPlanID: UUID!
-
-  #Page 1
-  gcPartCD: [GcPartCDType!]!
-  gcPartCDOther: String
-  gcPartCDNote: String
-  gcCollectBids: [GcCollectBidsType!]!
-  gcCollectBidsOther: String
-  gcCollectBidsNote: String
-  gcUpdateContract: [GcUpdateContractType!]!
-  gcUpdateContractOther: String
-  gcUpdateContractNote: String
-  #Page 2
-  ppToAdvertise: [PpToAdvertiseType!]!
-  ppToAdvertiseOther: String
-  ppToAdvertiseNote: String
-  ppCollectScoreReview: [PpCollectScoreReviewType!]!
-  ppCollectScoreReviewOther: String
-  ppCollectScoreReviewNote: String
-  ppAppSupportContractor: [PpAppSupportContractorType!]!
-  ppAppSupportContractorOther: String
-  ppAppSupportContractorNote: String
-  #Page 3
-  ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]!
-  ppCommunicateWithParticipantOther: String
-  ppCommunicateWithParticipantNote: String
-  ppManageProviderOverlap: [PpManageProviderOverlapType!]!
-  ppManageProviderOverlapOther: String
-  ppManageProviderOverlapNote: String
-  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!]!
-  bManageBeneficiaryOverlapOther: String
-  bManageBeneficiaryOverlapNote: String
-  #Page 4
-  oelHelpdeskSupport: [OelHelpdeskSupportType!]!
-  oelHelpdeskSupportOther: String
-  oelHelpdeskSupportNote: String
-  oelManageAco: [OelManageAcoType!]!
-  oelManageAcoOther: String
-  oelManageAcoNote: String
-  #Page 5
-  oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]!
-  oelPerformanceBenchmarkOther: String
-  oelPerformanceBenchmarkNote: String
-  oelProcessAppeals: [OelProcessAppealsType!]!
-  oelProcessAppealsOther: String
-  oelProcessAppealsNote: String
-  oelEvaluationContractor: [OelEvaluationContractorType!]!
-  oelEvaluationContractorOther: String
-  oelEvaluationContractorNote: String
-  #Page 6
-  oelCollectData: [OelCollectDataType!]!
-  oelCollectDataOther: String
-  oelCollectDataNote: String
-  oelObtainData: [OelObtainDataType!]!
-  oelObtainDataOther: String
-  oelObtainDataNote: String
-  oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]!
-  oelClaimsBasedMeasuresOther: String
-  oelClaimsBasedMeasuresNote: String
-  #Page 7
-  oelQualityScores: [OelQualityScoresType!]!
-  oelQualityScoresOther: String
-  oelQualityScoresNote: String
-  oelSendReports: [OelSendReportsType!]!
-  oelSendReportsOther: String
-  oelSendReportsNote: String
-  oelLearningContractor: [OelLearningContractorType!]!
-  oelLearningContractorOther: String
-  oelLearningContractorNote: String
-  #Page 8
-  oelParticipantCollaboration: [OelParticipantCollaborationType!]!
-  oelParticipantCollaborationOther: String
-  oelParticipantCollaborationNote: String
-  oelEducateBeneficiaries: [OelEducateBeneficiariesType!]!
-  oelEducateBeneficiariesOther: String
-  oelEducateBeneficiariesNote: String
-  pMakeClaimsPayments: [PMakeClaimsPaymentsType!]!
-  pMakeClaimsPaymentsOther: String
-  pMakeClaimsPaymentsNote: String
-  #Page 9
-  pInformFfs: [PInformFfsType!]!
-  pInformFfsOther: String
-  pInformFfsNote: String
-  pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]!
-  pNonClaimsBasedPaymentsOther: String
-  pNonClaimsBasedPaymentsNote: String
-  pSharedSavingsPlan: [PSharedSavingsPlanType!]!
-  pSharedSavingsPlanOther: String
-  pSharedSavingsPlanNote: String
-  #Page 10
-  pRecoverPayments: [PRecoverPaymentsType!]!
-  pRecoverPaymentsOther: String
-  pRecoverPaymentsNote: String
-
-  createdBy: String!
-  createdDts: Time!
-  modifiedBy: String
-  modifiedDts: Time
-  readyForReviewBy: String
-  readyForReviewDts: Time
-  status: TaskStatus!
-}
-
-
-input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
-
-  #Page 1
-  gcPartCD: [GcPartCDType!]
-  gcPartCDOther: String
-  gcPartCDNote: String
-  gcCollectBids: [GcCollectBidsType!]
-  gcCollectBidsOther: String
-  gcCollectBidsNote: String
-  gcUpdateContract: [GcUpdateContractType!]
-  gcUpdateContractOther: String
-  gcUpdateContractNote: String
-  #Page 2
-  ppToAdvertise: [PpToAdvertiseType!]
-  ppToAdvertiseOther: String
-  ppToAdvertiseNote: String
-  ppCollectScoreReview: [PpCollectScoreReviewType!]
-  ppCollectScoreReviewOther: String
-  ppCollectScoreReviewNote: String
-  ppAppSupportContractor: [PpAppSupportContractorType!]
-  ppAppSupportContractorOther: String
-  ppAppSupportContractorNote: String
-  #Page 3
-  ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
-  ppCommunicateWithParticipantOther: String
-  ppCommunicateWithParticipantNote: String
-  ppManageProviderOverlap: [PpManageProviderOverlapType!]
-  ppManageProviderOverlapOther: String
-  ppManageProviderOverlapNote: String
-  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!]
-  bManageBeneficiaryOverlapOther: String
-  bManageBeneficiaryOverlapNote: String
-  #Page 4
-  oelHelpdeskSupport: [OelHelpdeskSupportType!]
-  oelHelpdeskSupportOther: String
-  oelHelpdeskSupportNote: String
-  oelManageAco: [OelManageAcoType!]
-  oelManageAcoOther: String
-  oelManageAcoNote: String
-  #Page 5
-  oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]
-  oelPerformanceBenchmarkOther: String
-  oelPerformanceBenchmarkNote: String
-  oelProcessAppeals: [OelProcessAppealsType!]
-  oelProcessAppealsOther: String
-  oelProcessAppealsNote: String
-  oelEvaluationContractor: [OelEvaluationContractorType!]
-  oelEvaluationContractorOther: String
-  oelEvaluationContractorNote: String
-  #Page 6
-  oelCollectData: [OelCollectDataType!]
-  oelCollectDataOther: String
-  oelCollectDataNote: String
-  oelObtainData: [OelObtainDataType!]
-  oelObtainDataOther: String
-  oelObtainDataNote: String
-  oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]
-  oelClaimsBasedMeasuresOther: String
-  oelClaimsBasedMeasuresNote: String
-  #Page 7
-  oelQualityScores: [OelQualityScoresType!]
-  oelQualityScoresOther: String
-  oelQualityScoresNote: String
-  oelSendReports: [OelSendReportsType!]
-  oelSendReportsOther: String
-  oelSendReportsNote: String
-  oelLearningContractor: [OelLearningContractorType!]
-  oelLearningContractorOther: String
-  oelLearningContractorNote: String
-  #Page 8
-  oelParticipantCollaboration: [OelParticipantCollaborationType!]
-  oelParticipantCollaborationOther: String
-  oelParticipantCollaborationNote: String
-  oelEducateBeneficiaries: [OelEducateBeneficiariesType!]
-  oelEducateBeneficiariesOther: String
-  oelEducateBeneficiariesNote: String
-  pMakeClaimsPayments: [PMakeClaimsPaymentsType!]
-  pMakeClaimsPaymentsOther: String
-  pMakeClaimsPaymentsNote: String
-  #Page 9
-  pInformFfs: [PInformFfsType!]
-  pInformFfsOther: String
-  pInformFfsNote: String
-  pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]
-  pNonClaimsBasedPaymentsOther: String
-  pNonClaimsBasedPaymentsNote: String
-  pSharedSavingsPlan: [PSharedSavingsPlanType!]
-  pSharedSavingsPlanOther: String
-  pSharedSavingsPlanNote: String
-  #Page 10
-  pRecoverPayments: [PRecoverPaymentsType!]
-  pRecoverPaymentsOther: String
-  pRecoverPaymentsNote: String
-
-  status: TaskStatusInput
-
-}
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
 """
@@ -1224,16 +1091,20 @@ type PlanOpsEvalAndLearning {
     modelLearningSystemsNote: String
     anticipatedChallenges: String
 
-
-
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
-    readyForReviewBy: String
+
+    readyForReviewBy: UUID
+    readyForReviewByUserAccount: UserAccount
     readyForReviewDts: Time
-    readyForClearanceBy: String
+    readyForClearanceBy: UUID
+    readyForClearanceByUserAccount: UserAccount
     readyForClearanceDts: Time
+
     status: TaskStatus!
 }
 
@@ -1361,11 +1232,14 @@ type NDAInfo {
 type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
-    userID: String!
+    userID: UUID!
+    userAccount: UserAccount!
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 
 }
@@ -1379,9 +1253,11 @@ type PlanCrTdl {
     title: String!
     note: String
 
-    createdBy: String!
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
@@ -1413,7 +1289,8 @@ type AuditChange {
   tableName: String!
   action: String!
   fields: Map!
-  modifiedBy: String
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -1432,21 +1309,31 @@ type OperationalSolution {
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    isOther: Boolean!
+    isCommonSolution: Boolean!
+    otherHeader: String
     status: OpSolutionStatus!
-    documents: [PlanDocument!]!
 
-    createdBy: String!
+    documents: [PlanDocument!]!
+    operationalSolutionSubtasks: [OperationalSolutionSubtask!]!
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
     createdDts: Time!
-    modifiedBy: String
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
     modifiedDts: Time
 }
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
     needed: Boolean
+    nameOther: String # Only valid for when solution type is null
+
     pocName: String
     pocEmail: String
     mustStartDts: Time
     mustFinishDts: Time
+    otherHeader: String
     status: OpSolutionStatus
 }
 
@@ -1454,10 +1341,79 @@ type PlanDocumentSolutionLink {
 id: UUID!
 solutionID: UUID!
 documentID: UUID!
-createdBy: String!
+
+createdBy: UUID!
+createdByUserAccount: UserAccount!
 createdDts: Time!
-modifiedBy: String
+modifiedBy: UUID
+modifiedByUserAccount: UserAccount
 modifiedDts: Time
+}
+
+input CreateOperationalSolutionSubtaskInput {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+input UpdateOperationalSolutionSubtaskInput {
+  id: UUID!
+  changes: UpdateOperationalSolutionSubtaskChangesInput!
+}
+
+input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+}
+
+type OperationalSolutionSubtask {
+  id: UUID!
+  solutionID: UUID!
+  name: String!
+  status: OperationalSolutionSubtaskStatus!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type ChangedFields {
+  changes: [Field!]!
+}
+
+type Field {
+  name: String!
+  value: FieldValue!
+}
+
+type FieldValue {
+  new: Any
+  old: Any
+}
+
+type ChangeTableRecord {
+  guid: ID!
+  tableID: Int!
+  tableName: String!
+  primaryKey: UUID!
+  foreignKey: UUID
+  action: String!
+  fields: ChangedFields!
+  modifiedDts: Time
+  modifiedBy: UserAccount
+}
+
+input SearchRequest {
+  query: Map!
+}
+
+type DateHistogramAggregationBucket {
+  key: String!
+  docCount: Int!
+  maxModifiedDts: Time!
+  minModifiedDts: Time!
 }
 
 """
@@ -1466,29 +1422,63 @@ Query definition for the schema
 type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planDocument(id: UUID!): PlanDocument!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelCollection: [ExistingModel!]!
-  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   planPayments(id: UUID!): PlanPayments!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   ndaInfo: NDAInfo!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   crTdl(id: UUID!): PlanCrTdl!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalSolution(id: UUID!): OperationalSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   operationalNeed(id: UUID!): OperationalNeed!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   possibleOperationalNeeds: [PossibleOperationalNeed!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  userAccount(username: String!): UserAccount!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  existingModelLink(id: UUID!): ExistingModelLink!
+  @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+  searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByModelPlanID(modelPlanID: UUID!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByDateRange(startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchModelPlanChangesByDateRange(modelPlanID: UUID!, startDate: Time!, endDate: Time!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByActor(actor: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 enum ModelPlanFilter {
   INCLUDE_ALL,
   COLLAB_ONLY,
   WITH_CR_TDLS,
-
-
 }
 
 """
@@ -1520,9 +1510,6 @@ updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBene
 @hasRole(role: MINT_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-@hasRole(role: MINT_USER)
-
-updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
 @hasRole(role: MINT_USER)
 
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
@@ -1588,19 +1575,28 @@ addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! nee
 updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution!
+createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution!
-@hasRole(role: MINT_USER)
-
-updateCustomOperationalSolutionByID(id: UUID!, customSolutionType: String changes: OperationalSolutionChanges!): OperationalSolution!
+updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
 @hasRole(role: MINT_USER)
 
 createPlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): [PlanDocumentSolutionLink!]
 @hasRole(role: MINT_USER)
 
-removePlanDocumentSolutionLink(id: UUID!): Boolean!
+removePlanDocumentSolutionLinks(solutionID: UUID!, documentIDs: [UUID!]!): Boolean!
+@hasRole(role: MINT_USER)
+
+createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
+
+updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
+@hasRole(role: MINT_USER)
+
+deleteOperationalSolutionSubtask(id: UUID!): Int!
+@hasRole(role: MINT_USER)
+
+updateExistingModelLinks(modelPlanID: UUID!, existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): [ExistingModelLink!]!
 @hasRole(role: MINT_USER)
 }
 
@@ -1645,7 +1641,6 @@ enum TaskListSection {
   BENEFICIARIES,
   OPERATIONS_EVALUATION_AND_LEARNING,
   PAYMENT,
-  IT_TOOLS,
   PREPARE_FOR_CLEARANCE
 }
 
@@ -1656,6 +1651,7 @@ enum TeamRole {
   LEARNING
   EVALUATION
   IT_LEAD
+  QUALITY
 }
 
 enum ModelType
@@ -1687,6 +1683,8 @@ enum ModelStatus {
 	OMB_ASRF_CLEARANCE
 	CLEARED
 	ANNOUNCED
+  PAUSED
+  CANCELED
 }
 
 enum CMSCenter {
@@ -1701,9 +1699,9 @@ enum CMSCenter {
 enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP
   POLICY_AND_PROGRAMS_GROUP
-  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
   SEAMLESS_CARE_MODELS_GROUP
-  STATE_INNOVATIONS_GROUP
+  STATE_AND_POPULATION_HEALTH_GROUP
+  TBD
 }
 
 enum DiscussionStatus {
@@ -1889,148 +1887,6 @@ OTHER
 NOT_APPLICABLE
 }
 
-#IT TOOLS ENUMS
-
-enum GcPartCDType {
-    MARX
-    OTHER
-}
-enum GcCollectBidsType {
-    HPMS
-    OTHER
-}
-enum GcUpdateContractType {
-
-    HPMS
-    OTHER
-}
-enum PpToAdvertiseType {
-    SALESFORCE
-    GRANT_SOLUTIONS
-    OTHER
-}
-enum PpCollectScoreReviewType {
-    RFA
-    ARS
-    GRANT_SOLUTIONS
-    OTHER
-}
-enum PpAppSupportContractorType {
-    RMDA
-    OTHER
-}
-enum PpCommunicateWithParticipantType {
-    OUTLOOK_MAILBOX
-    GOV_DELIVERY
-    SALESFORCE_PORTAL
-    OTHER
-}
-enum PpManageProviderOverlapType {
-    MDM
-    OTHER
-    NA
-}
-enum BManageBeneficiaryOverlapType {
-    MDM
-    OTHER
-    NA
-}
-enum OelHelpdeskSupportType {
-    CBOSC
-    CONTRACTOR
-    OTHER
-}
-enum OelManageAcoType {
-    ACO_OS
-    ACO_UI
-    INNOVATION
-    OTHER
-}
-enum OelPerformanceBenchmarkType {
-    IDR
-    CCW
-    OTHER
-}
-enum OelProcessAppealsType {
-    MEDICARE_APPEAL_SYSTEM
-    OTHER
-}
-enum OelEvaluationContractorType {
-    RMDA
-    OTHER
-}
-enum OelCollectDataType {
-    IDR
-    CCW
-    IDOS
-    ISP
-    CONTRACTOR
-    OTHER
-}
-enum OelObtainDataType {
-    CCW
-    IDOS
-    ISP
-    OTHER
-}
-enum OelClaimsBasedMeasuresType {
-    IDR
-    CCW
-    OTHER
-}
-enum OelQualityScoresType {
-    EXISTING_DATA_AND_PROCESS
-    NEW_DATA_AND_CMMI_PROCESS
-    OTHER
-    NONE
-}
-enum OelSendReportsType {
-    IDOS
-    RMADA
-    INTERNAL_STAFF
-    OTHER
-}
-enum OelLearningContractorType {
-    RMADA
-    CROSS_MODEL_CONTRACT
-    OTHER
-}
-enum OelParticipantCollaborationType {
-    CONNECT
-    OTHER
-}
-enum OelEducateBeneficiariesType {
-    OC
-    OTHER
-}
-enum PMakeClaimsPaymentsType {
-    SHARED_SYSTEMS
-    HIGLAS
-    OTHER
-}
-enum PInformFfsType {
-    FFS_COMPETENCY_CENTER
-    OTHER
-}
-enum PNonClaimsBasedPaymentsType {
-    APPS
-    HIGLAS
-    IPC
-    MAC
-    OTHER
-}
-enum PSharedSavingsPlanType {
-    RMADA
-    OTHER
-}
-enum PRecoverPaymentsType {
-    APPS
-    IPC
-    MAC
-    OTHER
-}
-
-#end IT TOOLS ENUMS
 
 #Ops Eval and Learning types begin
 
@@ -2227,8 +2083,8 @@ enum OperationalNeedKey{
   MANAGE_CD
   REV_COL_BIDS
   UPDATE_CONTRACT
-  ADVERTISE_MODEL
-  COL_REV_SCORE_APP
+  RECRUIT_PARTICIPANTS
+  REV_SCORE_APP
   APP_SUPPORT_CON
   COMM_W_PART
   MANAGE_PROV_OVERLAP
@@ -2251,46 +2107,57 @@ enum OperationalNeedKey{
   MAKE_NON_CLAIMS_BASED_PAYMENTS
   COMPUTE_SHARED_SAVINGS_PAYMENT
   RECOVER_PAYMENTS
+  SIGN_PARTICIPATION_AGREEMENTS
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
+  IT_PLATFORM_FOR_LEARNING
 }
 
 enum OperationalSolutionKey{
-  MARX
-  HPMS
-  SALESFORCE
-  GRANT_SOLUTIONS
-  RFA
-  ARS
-  RMADA
-  OUTLOOK_MAILBOX
-  GOVDELIVERY
-  SALESFORCE_PORTAL
-  MDM
-  CBOSC
-  THROUGH_A_CONTRACTOR
-  ACO_OS
-  ACO_UI
   INNOVATION
-  IDR
-  CCW
-  MEDICARE_APPEAL_SYSTEM
-  IDOS
-  ISP
-  ANOTHER_CONTRACTOR
-  EXISTING_CMS_DATA_AND_PROCESS
-  NEW_CMMI_PROCESS
-  OTHER_NEW_PROCESS
-  INTERNAL_STAFF
-  CROSS_MODEL_CONTRACT
-  CONNECT
-  OC
-  SHARED_SYSTEMS
-  HIGLAS
-  FFS_COMPETENCY_CENTER
+  ACO_OS
   APPS
+  CDX
+  CCW
+  CMS_BOX
+  CMS_QUALTRICS
+  CBOSC
+  CONTRACTOR
+  CPI_VETTING
+  CROSS_MODEL_CONTRACT
+  EFT
+  EXISTING_CMS_DATA_AND_PROCESS
+  EDFR
+  GOVDELIVERY
+  GS
+  HDR
+  HPMS
+  HIGLAS
   IPC
-  MAC
-  RMADA_CONTRACTOR
+  IDR
+  INTERNAL_STAFF
+  LDG
+  LV
+  MDM
+  MARX
+  OTHER_NEW_PROCESS
+  OUTLOOK_MAILBOX
+  QV
+  RMADA
+  ARS
+  CONNECT
+  LOI
+  POST_PORTAL
+  RFA
+  SHARED_SYSTEMS
 }
+
+enum OperationalSolutionSubtaskStatus {
+  TODO,
+  IN_PROGRESS,
+  DONE
+}
+
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
@@ -2300,6 +2167,20 @@ directive @goModel(
   model: String
   models: [String!]
 ) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+type UserAccount {
+	id: UUID!
+	username: String!
+	isEUAID: Boolean
+	commonName: String!
+	locale: String!
+	email: String!
+	givenName: String!
+	familyName: String!
+	zoneInfo: String!
+	hasLoggedIn: Boolean
+}
+
 
 """
 A user role associated with a job code

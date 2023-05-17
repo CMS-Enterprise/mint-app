@@ -15,6 +15,7 @@ export interface GetNonClaimsBasedPayment_modelPlan_payments {
   payType: PayType[];
   payClaims: ClaimsBasedPayType[];
   nonClaimsPayments: NonClaimsBasedPayType[];
+  nonClaimsPaymentsNote: string | null;
   nonClaimsPaymentOther: string | null;
   paymentCalculationOwner: string | null;
   numberPaymentsPerPayCycle: string | null;

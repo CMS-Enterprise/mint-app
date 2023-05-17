@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { formatDateLocal } from 'utils/date';
 import { translateTeamRole } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
@@ -33,13 +33,18 @@ const CollaboratorsTable = ({
   const { t } = useTranslation('newModel');
 
   const columns: any = useMemo(() => {
-    // TODO: Import collaborator types
     return [
       {
         Header: t('table.name'),
-        accessor: 'fullName',
+        accessor: 'userAccount.commonName',
         Cell: ({ row, value }: any) => {
-          return <IconInitial user={value} index={row.index} />;
+          return (
+            <IconInitial
+              className="margin-bottom-1"
+              user={value}
+              index={row.index}
+            />
+          );
         }
       },
       {
@@ -53,7 +58,7 @@ const CollaboratorsTable = ({
         Header: t('table.dateAdded'),
         accessor: 'createdDts',
         Cell: ({ value }: any) => {
-          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_FULL);
+          return formatDateLocal(value, 'MMMM d, yyyy');
         }
       },
       {
@@ -67,22 +72,27 @@ const CollaboratorsTable = ({
               <UswdsReactLink
                 className="margin-right-2"
                 to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}`}
+                aria-label={`${t('table.edit')} ${
+                  row.original.userAccount.commonName
+                }`}
               >
                 {t('table.edit')}
               </UswdsReactLink>
 
               {collaborators.length > 1 && (
-                <Button
-                  className="line-height-body-5 text-red"
+                <button
+                  className="usa-button usa-button--unstyled line-height-body-5 text-red"
                   type="button"
-                  unstyled
+                  aria-label={`${t('modal.remove')} ${
+                    row.original.userAccount.commonName
+                  }`}
                   onClick={() => {
                     setRemoveCollaborator(row.original);
                     setModalOpen(true);
                   }}
                 >
                   {t('modal.remove')}
-                </Button>
+                </button>
               )}
             </>
           );
@@ -119,7 +129,10 @@ const CollaboratorsTable = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'fullName', asc: true }], []),
+        sortBy: useMemo(
+          () => [{ id: 'userAccount.commonName', asc: true }],
+          []
+        ),
         pageIndex: 0
       }
     },

@@ -28,8 +28,8 @@ var modelPlanGetByIDSQL string
 //go:embed SQL/model_plan/get_by_name.sql
 var modelPlanGetByNameSQL string
 
-//go:embed SQL/model_plan/collection.sql
-var modelPlanCollectionSQL string
+//go:embed SQL/model_plan/collection_where_archived.sql
+var modelPlanCollectionWhereArchivedSQL string
 
 //go:embed SQL/model_plan/collection_by_collaborator.sql
 var modelPlanCollectionByCollaboratorSQL string
@@ -40,12 +40,32 @@ var modelPlanCollectionWithCRTDlSQL string
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
-//go:embed SQL/model_plan/collection_where_favorited.sql
-var modelPlansFavorited string
+//go:embed SQL/model_plan/get_by_id_LOADER.sql
+var modelPlanGetByIDLoaderSQL string
+
+// ModelPlanGetByModelPlanIDLOADER returns the model pland for a slice of ids
+func (s *Store) ModelPlanGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
+	var planSlice []*models.ModelPlan
+
+	stmt, err := s.db.PrepareNamed(modelPlanGetByIDLoaderSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	err = stmt.Select(&planSlice, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+
+	return planSlice, nil
+}
 
 // ModelPlanCreate creates a model plan
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
-	// func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
@@ -54,7 +74,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy),
+			zap.String("user", plan.CreatedBy.String()),
 		)
 		return nil, err
 	}
@@ -67,7 +87,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.CreatedBy),
+			zap.String("user", plan.CreatedBy.String()),
 		)
 		return nil, err
 
@@ -84,7 +104,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
-			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
+			zap.String("user", models.UUIDValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, err
 	}
@@ -94,7 +114,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
-			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
+			zap.String("user", models.UUIDValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
@@ -165,9 +185,9 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 
 // ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
 func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-	modelPlans := []*models.ModelPlan{}
+	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionSQL)
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereArchivedSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -192,8 +212,8 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 	return modelPlans, nil
 }
 
-// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the euaID supplied is a collaborator.
-func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, euaID string) ([]*models.ModelPlan, error) {
+// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the user_accountID supplied is a collaborator.
+func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, userID uuid.UUID) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
@@ -202,7 +222,7 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived
 	}
 	arg := map[string]interface{}{
 		"archived": archived,
-		"euaID":    euaID,
+		"user_id":  userID,
 	}
 
 	err = stmt.Select(&modelPlans, arg)
@@ -264,33 +284,4 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 
 	return sqlResult, nil
-}
-
-// ModelPlanFavoritedCollection returns a collection of all model plans that are favorited
-func (s *Store) ModelPlanFavoritedCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-	modelPlans := []*models.ModelPlan{}
-
-	stmt, err := s.db.PrepareNamed(modelPlansFavorited)
-	if err != nil {
-		return nil, err
-	}
-	arg := map[string]interface{}{
-		"archived": archived,
-	}
-
-	err = stmt.Select(&modelPlans, arg)
-
-	if err != nil {
-		logger.Error(
-			"Failed to fetch model plans",
-			zap.Error(err),
-		)
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     models.ModelPlan{},
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return modelPlans, nil
 }

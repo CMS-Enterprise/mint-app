@@ -5,7 +5,7 @@ type ReadOnlySectionProps = {
   copy?: string | null;
   heading: string;
   list?: boolean;
-  listItems?: string[];
+  listItems?: (string | number)[];
   listOtherItem?: string | null;
   notes?: string | null;
 };
@@ -27,7 +27,7 @@ const ReadOnlySection = ({
   const renderCopyOrList = () => {
     if (!list || listItems.length === 0) {
       return (
-        <p className="margin-y-0 font-body-md line-height-sans-4">
+        <p className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
           {copy || <em className="text-base">{t('na')}</em>}
         </p>
       );
@@ -52,12 +52,17 @@ const ReadOnlySection = ({
     );
   };
 
+  // If no notes are written, do not render
+  if (heading === t('notes') && !copy) {
+    return null;
+  }
+
   return (
     <>
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
-        <p className="text-bold margin-y-0 font-body-sm line-height-sans-4">
+        <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
           {heading}
         </p>
         {renderCopyOrList()}

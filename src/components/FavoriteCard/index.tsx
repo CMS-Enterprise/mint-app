@@ -14,7 +14,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
 import { GetAllModelPlans_modelPlanCollection as ModelPlanType } from 'queries/ReadOnly/types/GetAllModelPlans';
 import { TeamRole } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateUtc } from 'utils/date';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 
@@ -97,16 +97,16 @@ const FavoriteCard = ({
                 )
                 .map((collaborator, index) =>
                   index === collaborators.length - 1
-                    ? collaborator.fullName
-                    : `${collaborator.fullName}, `
+                    ? collaborator.userAccount.commonName
+                    : `${collaborator.userAccount.commonName}, `
                 )}
             </p>
           </Grid>
           <Grid desktop={{ col: 4 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.startDate`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
-              {basics.applicationsStart ? (
-                formatDate(basics.applicationsStart)
+              {basics.performancePeriodStarts ? (
+                formatDateUtc(basics.performancePeriodStarts, 'MMMM d, yyyy')
               ) : (
                 <i>{t('favorite.toBeDetermined')}</i>
               )}

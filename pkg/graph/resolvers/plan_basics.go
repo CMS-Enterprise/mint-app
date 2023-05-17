@@ -1,12 +1,15 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // UpdatePlanBasics implements resolver logic to update a plan basics object
@@ -26,12 +29,20 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 	return retBasics, err
 }
 
-// PlanBasicsGetByModelPlanID implements resolver logic to get plan basics by a model plan ID
-func PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
-	plan, err := store.PlanBasicsGetByModelPlanID(logger, modelPlanID)
+// PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
+func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
+	allLoaders := loaders.Loaders(ctx)
+	basicsLoader := allLoaders.BasicsLoader
+	key := loaders.NewKeyArgs()
+	key.Args["model_plan_id"] = modelPlanID
+
+	//TODO do we need to write a new interface to convert our types to what we need?
+	thunk := basicsLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
 	if err != nil {
 		return nil, err
 	}
 
-	return plan, nil
+	return result.(*models.PlanBasics), nil
 }

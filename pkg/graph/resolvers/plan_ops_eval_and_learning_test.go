@@ -9,7 +9,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 
 	plan := suite.createModelPlan("Plan for Ops Eval and Learning")
 
-	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -121,12 +121,12 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 // TestPlanOpsEvalAndLearningGetByModelPlanID tests PlanOpsEvalAndLearningGetByModelPlanID
 func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan for Ops Eval and Learning")
-	oel, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	oel, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, oel.ModelPlanID)
 	suite.EqualValues(models.TaskReady, oel.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, oel.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, oel.CreatedBy)
 	suite.Nil(oel.ModifiedBy)
 
 	//Assert these fields are nil upon creation

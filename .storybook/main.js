@@ -8,6 +8,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-controls',
+    "storybook-addon-apollo-client",
   ],
   webpackFinal: (config) => {
     config.resolve.modules = [
@@ -27,8 +28,7 @@ module.exports = {
           options: {
             resources: [
               path.resolve(__dirname, '../src/stylesheets/_colors.scss'),
-              path.resolve(__dirname, '../src/stylesheets/_variables.module.scss'),
-              path.resolve(__dirname, '../src/stylesheets/_uswdsUtilities.scss')
+              path.resolve(__dirname, '../src/stylesheets/_viewports.scss')
             ]
           }
         }

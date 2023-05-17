@@ -10,10 +10,20 @@ import './index.scss';
 interface SideNavProps {
   subComponents: subComponentsProps;
   isHelpArticle: boolean | undefined;
+  solutionNavigation?: boolean;
+  paramActive?: boolean;
 }
 
-const SideNav = ({ subComponents, isHelpArticle }: SideNavProps) => {
+const SideNav = ({
+  subComponents,
+  isHelpArticle,
+  solutionNavigation,
+  paramActive
+}: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
+  const { t: h } = useTranslation('helpAndKnowledge');
+
+  const translationKey = solutionNavigation ? h : t;
 
   // Mapping of all sub navigation links
   const subNavigationLinks: React.ReactNode[] = Object.keys(subComponents).map(
@@ -25,10 +35,17 @@ const SideNav = ({ subComponents, isHelpArticle }: SideNavProps) => {
             : subComponents[key].helpRoute
         }
         key={key}
+        isActive={(_, location) => {
+          const params = new URLSearchParams(location.search);
+          const section = params.get('section');
+          return paramActive
+            ? section === key
+            : location.pathname.split('/')[4] === key;
+        }}
         activeClassName="usa-current"
         className={key === 'it-solutions' ? 'nav-group-border' : ''}
       >
-        {t(`navigation.${key}`)}
+        {translationKey(`navigation.${key}`)}
       </NavLink>
     )
   );

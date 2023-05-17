@@ -9,6 +9,12 @@ import { TaskStatus } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetMilestones
 // ====================================================
 
+export interface GetMilestones_modelPlan_basics_readyForReviewByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface GetMilestones_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
@@ -24,7 +30,7 @@ export interface GetMilestones_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewByUserAccount: GetMilestones_modelPlan_basics_readyForReviewByUserAccount | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }

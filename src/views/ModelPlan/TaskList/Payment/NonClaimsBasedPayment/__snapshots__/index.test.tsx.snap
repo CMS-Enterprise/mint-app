@@ -118,20 +118,19 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
           </h3>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-nonclaims-payments"
+            data-scroll="nonClaimsPayments"
           >
             <label
               class="usa-label"
               data-testid="label"
               for="payment-nonclaims-payments"
+              id="label-payment-nonclaims-payments"
             >
               Select which non-claims-based payments will you pay.
             </label>
-            <div
-              class="margin-top-1"
-            >
+            <div>
               <div
-                class="easi-multiselect usa-combo-box css-b62m3t-container"
+                class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
                 id="payment-nonclaims-payments"
               >
                 <span
@@ -151,7 +150,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                     class=" css-319lph-ValueContainer"
                   >
                     <div
-                      class=" css-1hgum8q-placeholder"
+                      class=" css-14el2xx-placeholder"
                       id="react-select-3-placeholder"
                     >
                       1 selected
@@ -164,6 +163,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                         aria-autocomplete="list"
                         aria-expanded="false"
                         aria-haspopup="true"
+                        aria-labelledby="label-payment-nonclaims-payments"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
@@ -181,23 +181,31 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                   <div
                     class=" css-1hb7zxy-IndicatorsContainer"
                   >
-                    <div
-                      aria-hidden="true"
-                      class=" css-1232v1p-indicatorContainer"
+                    <button
+                      aria-label="Clear selection"
+                      class="usa-button--unstyled"
+                      id="clear-selection"
+                      tabindex="0"
+                      type="button"
                     >
-                      <svg
+                      <div
                         aria-hidden="true"
-                        class="css-tj5bde-Svg"
-                        focusable="false"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        width="20"
+                        class=" css-1e245h0-indicatorContainer"
                       >
-                        <path
-                          d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
-                        />
-                      </svg>
-                    </div>
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
                     <span
                       class=" css-1vtyy7d-indicatorSeparator"
                     />
@@ -238,12 +246,13 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                 </h4>
                 <ul
                   class="usa-list--unstyled"
+                  id="payment-nonclaims-payments-tags"
                 >
                   <li
                     class="margin-bottom-05 margin-right-05 display-inline-block"
                   >
                     <span
-                      class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
                       data-testid="multiselect-tag--Other"
                       id="selected-OTHER"
                     >
@@ -281,7 +290,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                 data-testid="label"
                 for="nonClaimsPaymentOther"
               >
-                Please describe the other claims-based payments you will pay.
+                Please describe the other payment frequency.
               </label>
               <input
                 class="usa-input"
@@ -291,6 +300,35 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
                 type="text"
                 value="Lorem Ipsum"
               />
+            </div>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
             </div>
           </div>
           <div
@@ -376,7 +414,7 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               data-testid="label"
               for="payment-nonclaims-shared-involvement"
             >
-              Will the shared systems be invovled for additional payment of claims?
+              Will the Shared Systems be involved for additional payment of claims?
             </label>
             <fieldset
               class="usa-fieldset"
@@ -557,7 +595,8 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               If possible, upload a copy of the allotment and allowance.
             </p>
             <textarea
-              class="usa-textarea height-15"
+              aria-labelledby="label-payment-funding-structure hint-payment-funding-structure"
+              class="height-15 usa-textarea"
               data-testid="payment-funding-structure"
               id="payment-funding-structure"
               name="fundingStructure"

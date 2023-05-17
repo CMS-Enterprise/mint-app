@@ -1,6 +1,9 @@
 package models
 
-import "github.com/lib/pq"
+import (
+	"github.com/google/uuid"
+	"github.com/lib/pq"
+)
 
 // StringPointer returns a pointer to a string input
 func StringPointer(st string) *string {
@@ -21,6 +24,14 @@ func IntPointer(val int) *int {
 func ValueOrEmpty(st *string) string {
 	if st != nil {
 		return *st
+	}
+	return ""
+}
+
+// UUIDValueOrEmpty returns a string if the input is not nil, otherwise returns an empty string
+func UUIDValueOrEmpty(uuid *uuid.UUID) string {
+	if uuid != nil {
+		return uuid.String()
 	}
 	return ""
 }

@@ -128,7 +128,8 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
               What is the intended level of beneficiary cost-sharing and how will it be handled?
             </label>
             <textarea
-              class="usa-textarea height-15"
+              aria-labelledby="label-payment-beneficiary-cost-sharing hint-payment-beneficiary-cost-sharing"
+              class="height-15 usa-textarea"
               data-testid="payment-beneficiary-cost-sharing"
               id="payment-beneficiary-cost-sharing"
               name="beneficiaryCostSharingLevelAndHandling"
@@ -181,7 +182,8 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                   Please specify which services.
                 </label>
                 <textarea
-                  class="usa-textarea height-15"
+                  aria-labelledby="label-payment-waive-any-service-specification hint-payment-waive-any-service-specification"
+                  class="height-15 usa-textarea"
                   data-testid="payment-waive-any-service-specification"
                   id="payment-waive-any-service-specification"
                   name="waiveBeneficiaryCostSharingServiceSpecification"

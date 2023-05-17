@@ -24,6 +24,7 @@ This application has the following main components:
 - [Docker Compose files and usage](./docs/docker_compose.md)
 - [Deployment Process](./docs/operations/deployment_process.md)
 - [Interacting with CEDAR](./docs/cedar.md) - CEDAR is a CMS system whose API we interact with; this includes instructions on how to connect to it
+- [Background Worker (Faktory)](./docs/faktory.md) - Faktory is our background job server and processor.
 
 
 ## Repository Structure

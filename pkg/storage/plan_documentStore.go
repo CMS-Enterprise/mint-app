@@ -41,7 +41,7 @@ var planDocumentGetBySolutionIDNotRestrictedSQL string
 //go:embed SQL/plan_document/delete_by_id.sql
 var planDocumentDeleteByIDSQL string
 
-//go:embed SQL/plan_document_solution/links_delete_by_document_id.sql
+//go:embed SQL/plan_document_solution_link/delete_by_document_id.sql
 var planDocumentSolutionLinksDeleteByDocumentIDSQL string
 
 // PlanDocumentCreate creates a plan document
@@ -257,9 +257,13 @@ func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument
 }
 
 // PlanDocumentDelete deletes a plan document object by id
-func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
+func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
+	err := setCurrentSessionUserVariable(tx, userID)
+	if err != nil {
+		return nil, err
+	}
 
 	statement, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
 	if err != nil {

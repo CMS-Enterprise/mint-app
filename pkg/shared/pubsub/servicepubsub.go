@@ -48,7 +48,14 @@ func (ps *ServicePubSub) Unsubscribe(sessionID uuid.UUID, eventType EventType, s
 		return
 	}
 
+	subscriber, wasSubscriberMapFound := subscriberMap[subscriberID]
+	if !wasSubscriberMapFound {
+		return
+	}
+
 	ps.deleteSubscriber(subscriberMap, subscriberID)
+
+	subscriber.NotifyUnsubscribed(ps, sessionID)
 
 	if len(subscriberMap) == 0 {
 		delete(session, eventType)

@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import Divider from 'components/shared/Divider';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import {
-  GetModelPlanDiscussions_modelPlan_collaborators as CollaboratorsType,
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
@@ -18,7 +17,6 @@ import SingleDiscussion from './SingleDiscussion';
 type FormatDiscussionProps = {
   discussionsContent: DiscussionType[];
   status: DiscussionStatus;
-  collaborators: CollaboratorsType[];
   hasEditAccess?: boolean;
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
@@ -29,7 +27,6 @@ const FormatDiscussion = ({
   discussionsContent,
   status,
   hasEditAccess,
-  collaborators,
   setDiscussionStatusMessage,
   setDiscussionType,
   setReply
@@ -67,7 +64,6 @@ const FormatDiscussion = ({
                       index={index}
                       connected={replyIndex !== discussion.replies.length}
                       hasEditAccess={hasEditAccess}
-                      collaborators={collaborators}
                       setDiscussionStatusMessage={setDiscussionStatusMessage}
                       setDiscussionType={setDiscussionType}
                       setReply={setReply}
@@ -83,7 +79,6 @@ const FormatDiscussion = ({
                 connected={false}
                 answerQuestion
                 hasEditAccess={hasEditAccess}
-                collaborators={collaborators}
                 setDiscussionStatusMessage={setDiscussionStatusMessage}
                 setDiscussionType={setDiscussionType}
                 setReply={setReply}

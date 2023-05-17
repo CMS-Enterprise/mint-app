@@ -9,9 +9,15 @@ import { PlanBeneficiariesChanges, TaskStatus } from "./../../../types/graphql-g
 // GraphQL mutation operation: UpdateClearanceBeneficiaries
 // ====================================================
 
+export interface UpdateClearanceBeneficiaries_updatePlanBeneficiaries_readyForClearanceByUserAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+}
+
 export interface UpdateClearanceBeneficiaries_updatePlanBeneficiaries {
   __typename: "PlanBeneficiaries";
-  readyForClearanceBy: string | null;
+  readyForClearanceByUserAccount: UpdateClearanceBeneficiaries_updatePlanBeneficiaries_readyForClearanceByUserAccount | null;
   readyForClearanceDts: Time | null;
   status: TaskStatus;
 }

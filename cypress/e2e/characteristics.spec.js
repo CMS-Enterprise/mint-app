@@ -1,6 +1,16 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('The Model Plan General Characteristics Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+
+    cy.intercept('POST', '/api/graph/query', req => {
+      aliasQuery(req, 'GetGeneralCharacteristics');
+      aliasQuery(req, 'GetKeyCharacteristics');
+      aliasQuery(req, 'GetInvolvements');
+      aliasQuery(req, 'GetTargetsAndOptions');
+      aliasQuery(req, 'GetAuthority');
+    });
   });
 
   it('completes a Model Plan Characteristics', () => {
@@ -16,6 +26,12 @@ describe('The Model Plan General Characteristics Form', () => {
     });
 
     // Page - /characteristics
+
+    cy.wait('@GetGeneralCharacteristics')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(100);
+
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#plan-characteristics-is-new-model-no')
@@ -23,6 +39,8 @@ describe('The Model Plan General Characteristics Form', () => {
       .should('be.checked');
 
     cy.get('#plan-characteristics-existing-model')
+      .should('be.visible')
+      .click()
       .type('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 
@@ -31,14 +49,8 @@ describe('The Model Plan General Characteristics Form', () => {
       .should('be.checked');
 
     cy.get('#plan-characteristics-resembles-which-model').within(() => {
-      cy.get("input[type='text']")
-        .type('advance payment')
-        .should('have.value', 'advance payment');
+      cy.get("input[type='text']").type('advance payment{downArrow}{enter}');
     });
-
-    cy.get('[data-testid="option-1"]')
-      .check({ force: true })
-      .should('be.checked');
 
     cy.get('[data-testid="multiselect-tag--Advance Payment ACO Model"]')
       .first()
@@ -62,18 +74,18 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
-    cy.wait(500);
-
-    cy.get('#plan-characteristics-alternative-payment')
-      .check({ force: true })
-      .should('be.checked');
+    cy.wait('@GetKeyCharacteristics')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#plan-characteristics-alternative-payment-MIPS')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 
     cy.get('[data-testid="mandatory-fields-alert"]').contains(
-      'In order to be considered by QPP (and to be MIPS or Advanced APM), you will need to collect TINS and NPIs for provider.'
+      'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.'
     );
 
     cy.get('#plan-characteristics-key-characteristics').within(() => {
@@ -96,9 +108,13 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/involvements
 
-    cy.wait(500);
+    cy.wait('@GetInvolvements')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#plan-characteristics-care-coordination-involved')
+      .check({ force: true })
       .check({ force: true })
       .should('be.checked');
 
@@ -132,7 +148,10 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/targets-and-options
 
-    cy.wait(500);
+    cy.wait('@GetTargetsAndOptions')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#plan-characteristics-geographies-targeted')
       .check({ force: true })
@@ -170,7 +189,10 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/authority
 
-    cy.wait(500);
+    cy.wait('@GetAuthority')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(100);
 
     cy.get('#plan-characteristics-rulemaking-required')
       .check({ force: true })
@@ -199,11 +221,11 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.contains('button', 'Save and start next Model Plan section').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list$/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/participants-and-providers$/
+      );
     });
 
-    cy.get(
-      '[data-testid="task-list-intake-form-generalCharacteristics"]'
-    ).contains('In progress');
+    cy.get('h1.mint-h1').contains('Participants and Providers');
   });
 });

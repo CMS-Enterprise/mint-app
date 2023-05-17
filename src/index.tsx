@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactGA from 'react-ga4';
 import { Provider } from 'react-redux';
 import {
   ApolloClient,
@@ -28,6 +29,14 @@ import store from './store';
 import './index.scss';
 
 const apiHost = new URL(process.env.REACT_APP_API_ADDRESS || '').host;
+
+ReactGA.initialize([
+  {
+    trackingId: 'G-45PX7VBWQK',
+    gaOptions: {}, // optional
+    gtagOptions: {} // optional
+  }
+]);
 
 /**
  * Extract auth token from local storage and return a header
@@ -78,6 +87,7 @@ const [protocol, gqlAddressWithoutProtocol] = (process.env
 const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecting over HTTPs
 const wsLink = new WebSocketLink(
   new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
+    reconnect: true,
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
     }
@@ -107,6 +117,9 @@ const client = new ApolloClient({
     typePolicies: {
       OperationalSolution: {
         keyFields: ['key', 'nameOther', 'id']
+      },
+      TaskListSectionLockStatus: {
+        keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
       }
     }
   }),

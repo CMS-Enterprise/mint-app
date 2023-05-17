@@ -34,8 +34,8 @@ const returnNeeds = (needed: boolean | null) => {
                 __typename: 'OperationalNeed',
                 id: '123',
                 modelPlanID: modelID,
-                name: 'Advertise the model',
-                key: OperationalNeedKey.ADVERTISE_MODEL,
+                name: 'Recruit participants',
+                key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
                 nameOther: null,
                 needed,
                 modifiedDts: '2022-05-12T15:01:39.190679Z',
@@ -44,10 +44,12 @@ const returnNeeds = (needed: boolean | null) => {
                     __typename: 'OperationalSolution',
                     id: 3,
                     status: OpSolutionStatus.IN_PROGRESS,
-                    name: 'Salesforce',
-                    key: OperationalSolutionKey.SALESFORCE,
+                    name: 'Shared Systems',
+                    key: OperationalSolutionKey.SHARED_SYSTEMS,
+                    otherHeader: '',
                     mustStartDts: null,
                     mustFinishDts: null,
+                    operationalSolutionSubtasks: [],
                     needed: true,
                     nameOther: null,
                     pocEmail: null,
@@ -87,7 +89,7 @@ describe('IT Solutions Home', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Advertise the model')).toBeInTheDocument();
+      expect(getByText('Recruit participants')).toBeInTheDocument();
     });
   });
 
@@ -109,8 +111,8 @@ describe('IT Solutions Home', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Advertise the model')).toBeInTheDocument();
-      expect(getByText('Salesforce')).toBeInTheDocument();
+      expect(getByText('Recruit participants')).toBeInTheDocument();
+      expect(getByText('Shared Systems')).toBeInTheDocument();
     });
   });
 
@@ -132,7 +134,7 @@ describe('IT Solutions Home', () => {
     );
 
     await waitFor(() => {
-      expect(getByText('Advertise the model')).toBeInTheDocument();
+      expect(getByText('Recruit participants')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

@@ -10,6 +10,7 @@ export default gql`
         payType
         payClaims
         nonClaimsPayments
+        nonClaimsPaymentsNote
         nonClaimsPaymentOther
         paymentCalculationOwner
         numberPaymentsPerPayCycle

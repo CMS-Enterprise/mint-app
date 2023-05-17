@@ -35,6 +35,9 @@ const operationalNeed: GetOperationalNeedType = {
       key: OperationalSolutionKey.RMADA,
       mustStartDts: null,
       mustFinishDts: null,
+      isOther: false,
+      isCommonSolution: true,
+      otherHeader: null,
       status: OpSolutionStatus.AT_RISK,
       needed: true,
       pocName: 'John Doe',
@@ -65,7 +68,9 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { getByText, getAllByTestId, getByRole } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          }
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -80,9 +85,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 
@@ -107,7 +110,9 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
     const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          {
+            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          }
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -122,9 +127,7 @@ describe('IT Solutions NeedQuestionAndAnswer', () => {
 
     await waitFor(() => {
       expect(
-        getByText(
-          'Research, Measurement, Assessment, Design, and Analysis (RMADA)'
-        )
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
       ).toBeInTheDocument();
     });
 

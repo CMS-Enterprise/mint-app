@@ -30,7 +30,7 @@ type PlanDocument struct {
 }
 
 // NewPlanDocument returns a new Plan Document
-func NewPlanDocument(createdBy string, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, restricted bool, otherTypeDescription zero.String, optionalNotes zero.String) *PlanDocument {
+func NewPlanDocument(createdBy uuid.UUID, modelPlanID uuid.UUID, fileType string, bucket string, fileKey string, fileName string, fileSize int, documentType DocumentType, restricted bool, otherTypeDescription zero.String, optionalNotes zero.String) *PlanDocument {
 	return &PlanDocument{
 		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
 		baseStruct:           NewBaseStruct(createdBy),

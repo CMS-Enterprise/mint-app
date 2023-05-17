@@ -38,8 +38,8 @@ func (suite *ResolverSuite) TestGetTaskListSectionLocksWithLockedSections() {
 	assert.Len(suite.T(), resultsFilled, 2)
 	assert.Contains(suite.T(), sections, (*resultsFilled[0]).Section)
 	assert.Contains(suite.T(), sections, (*resultsFilled[1]).Section)
-	assert.Equal(suite.T(), "TEST", (*resultsFilled[0]).LockedBy)
-	assert.Equal(suite.T(), "TEST", (*resultsFilled[1]).LockedBy)
+	assert.Equal(suite.T(), suite.testConfigs.Principal.Account().ID, (*resultsFilled[0]).LockedByUserAccount.ID)
+	assert.Equal(suite.T(), suite.testConfigs.Principal.Account().ID, (*resultsFilled[1]).LockedByUserAccount.ID)
 }
 
 func (suite *ResolverSuite) TestLockTaskListSection() {

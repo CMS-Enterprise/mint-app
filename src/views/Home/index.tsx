@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -10,13 +11,13 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
+import Divider from 'components/shared/Divider';
 import JOB_CODES from 'constants/jobCodes';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
+import Landing from 'views/Landing';
 import DraftModelPlansTable from 'views/ModelPlan/Table';
-
-import WelcomeText from './WelcomeText';
 
 import './index.scss';
 
@@ -26,10 +27,16 @@ const Home = () => {
   const isUserSet = useSelector((state: AppState) => state.auth.isUserSet);
   const flags = useFlags();
 
+  const [tableHidden, hideTable] = useState<boolean>(false);
+
   const { message } = useMessage();
 
+  const { authState } = useOktaAuth();
+  const { pathname } = useLocation();
+  const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
+
   const headingType = (groups: typeof JOB_CODES) => {
-    if (isAssessment(groups)) {
+    if (isAssessment(groups, flags)) {
       return t('requestsTable.admin.heading');
     }
     if (isMAC(userGroups)) {
@@ -47,10 +54,14 @@ const Home = () => {
             {message}
 
             <Grid>
-              <PageHeading>{t('title')}</PageHeading>
-              <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
+              <PageHeading className="margin-bottom-1">
+                {t('title')}
+              </PageHeading>
+
+              <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3">
                 {t('subheading')}
               </p>
+
               {!isMAC(userGroups) && (
                 <SummaryBox
                   heading=""
@@ -59,6 +70,7 @@ const Home = () => {
                   <p className="margin-0 margin-bottom-1">
                     {t('newModelSummaryBox.copy')}
                   </p>
+
                   <UswdsReactLink
                     className={classnames('usa-button', {
                       'usa-button--outline': isAssessment(userGroups, flags)
@@ -70,14 +82,46 @@ const Home = () => {
                   </UswdsReactLink>
                 </SummaryBox>
               )}
-              <hr className="home__hr margin-top-4" aria-hidden />
-              <div className="mint-header__basic">
-                <h2 className="margin-top-4">{headingType(userGroups)}</h2>
-              </div>
-              <DraftModelPlansTable
-                isAssessment={isAssessment(userGroups, flags)}
-                isMAC={isMAC(userGroups, flags)}
-              />
+
+              {!isMAC(userGroups) && !tableHidden && (
+                <>
+                  <Divider className="margin-top-6" />
+                  <div className="mint-header__basic">
+                    <h2 className="margin-top-4 margin-bottom-1">
+                      {t('requestsTable.basic.heading')}
+                    </h2>
+                  </div>
+                  <p className="margin-top-0 margin-bottom-2">
+                    {t('yourModels')}
+                  </p>
+                </>
+              )}
+
+              {!isMAC(userGroups) && (
+                <DraftModelPlansTable
+                  userModels
+                  isAssessment={isAssessment(userGroups, flags)}
+                  isMAC={isMAC(userGroups)}
+                  hideTable={hideTable}
+                  tableHidden={tableHidden}
+                />
+              )}
+
+              {(isAssessment(userGroups, flags) || isMAC(userGroups)) && (
+                <>
+                  <Divider className="margin-top-6" />
+
+                  <div className="mint-header__basic">
+                    <h2 className="margin-top-4">{headingType(userGroups)}</h2>
+                  </div>
+                  <DraftModelPlansTable
+                    userModels={false}
+                    isAssessment={isAssessment(userGroups, flags)}
+                    isMAC={isMAC(userGroups)}
+                  />
+                </>
+              )}
+
               <SummaryBox
                 heading=""
                 className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-6"
@@ -85,6 +129,7 @@ const Home = () => {
                 <p className="margin-0 margin-bottom-1">
                   {t('allModels.copy')}
                 </p>
+
                 <UswdsReactLink
                   className="usa-button usa-button--outline"
                   variant="unstyled"
@@ -98,14 +143,7 @@ const Home = () => {
         </>
       );
     }
-    return (
-      <>
-        <NDABanner />
-        <GridContainer>
-          <WelcomeText />
-        </GridContainer>
-      </>
-    );
+    return <>{isLanding ? <Landing /> : <NDABanner />}</>;
   };
 
   return <MainContent>{renderView()}</MainContent>;

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CcmInvolvmentType, BenchmarkForPerformanceType } from "./../../../types/graphql-global-types";
+import { CcmInvolvmentType, DataForMonitoringType, BenchmarkForPerformanceType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetPerformance
@@ -13,6 +13,7 @@ export interface GetPerformance_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
+  dataNeededForMonitoring: DataForMonitoringType[];
   iddocSupport: boolean | null;
   benchmarkForPerformance: BenchmarkForPerformanceType | null;
   benchmarkForPerformanceNote: string | null;

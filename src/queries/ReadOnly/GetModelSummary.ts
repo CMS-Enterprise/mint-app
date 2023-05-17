@@ -10,14 +10,19 @@ export default gql`
       isFavorite
       basics {
         goal
-        applicationsStart
+        performancePeriodStarts
       }
       generalCharacteristics {
         keyCharacteristics
       }
       isCollaborator
       collaborators {
-        fullName
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
         teamRole
       }
       crTdls {

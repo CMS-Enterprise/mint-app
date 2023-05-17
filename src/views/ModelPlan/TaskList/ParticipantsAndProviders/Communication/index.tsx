@@ -10,14 +10,13 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -25,6 +24,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import useScrollElement from 'hooks/useScrollElement';
 import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
 import {
@@ -84,7 +84,7 @@ export const Communication = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
@@ -132,10 +132,10 @@ export const Communication = () => {
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
     participantAssumeRisk: participantAssumeRisk ?? null,
-    riskType: riskType || null,
+    riskType: riskType ?? null,
     riskOther: riskOther ?? '',
     riskNote: riskNote ?? '',
-    willRiskChange: willRiskChange || null,
+    willRiskChange: willRiskChange ?? null,
     willRiskChangeNote: willRiskChangeNote ?? ''
   };
 
@@ -211,94 +211,99 @@ export const Communication = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-communication-form"
                 onSubmit={e => {
                   handleSubmit(e);
                 }}
               >
-                <FieldArray
-                  name="communicationMethod"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">
-                        {t('participantCommunication')}
-                      </legend>
-                      {itSolutionsStarted && (
-                        <ITToolsWarning
-                          id="participants-and-providers-communication-method-warning"
-                          onClick={() =>
-                            handleFormSubmit(
-                              `/models/${modelID}/task-list/it-solutions`
-                            )
-                          }
-                        />
-                      )}
-                      <FieldErrorMsg>
-                        {flatErrors.communicationMethod}
-                      </FieldErrorMsg>
+                <FieldGroup
+                  scrollElement="communicationMethod"
+                  error={!!flatErrors.communicationMethod}
+                >
+                  <FieldArray
+                    name="communicationMethod"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('participantCommunication')}
+                        </legend>
+                        {itSolutionsStarted && (
+                          <ITSolutionsWarning
+                            id="participants-and-providers-communication-method-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                `/models/${modelID}/task-list/it-solutions`
+                              )
+                            }
+                          />
+                        )}
+                        <FieldErrorMsg>
+                          {flatErrors.communicationMethod}
+                        </FieldErrorMsg>
 
-                      {Object.keys(ParticipantCommunicationType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`participants-and-providers-communication-method-${type}`}
-                                name="communicationMethod"
-                                label={translateCommunicationType(type)}
-                                value={type}
-                                checked={values?.communicationMethod.includes(
-                                  type as ParticipantCommunicationType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.communicationMethod.indexOf(
-                                      e.target
-                                        .value as ParticipantCommunicationType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === 'OTHER' &&
-                                values.communicationMethod.includes(
-                                  'OTHER' as ParticipantCommunicationType
-                                ) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="participants-and-providers-communication-method-other"
-                                      className="text-normal"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.communicationMethodOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="participants-and-providers-communication-method-other"
-                                      maxLength={50}
-                                      name="communicationMethodOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      <AddNote
-                        id="participants-and-providers-communication-method-note"
-                        field="communicationNote"
-                      />
-                    </>
-                  )}
-                />
+                        {Object.keys(ParticipantCommunicationType)
+                          .sort(sortOtherEnum)
+                          .map(type => {
+                            return (
+                              <Fragment key={type}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`participants-and-providers-communication-method-${type}`}
+                                  name="communicationMethod"
+                                  label={translateCommunicationType(type)}
+                                  value={type}
+                                  checked={values?.communicationMethod.includes(
+                                    type as ParticipantCommunicationType
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.communicationMethod.indexOf(
+                                        e.target
+                                          .value as ParticipantCommunicationType
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                                {type === 'OTHER' &&
+                                  values.communicationMethod.includes(
+                                    'OTHER' as ParticipantCommunicationType
+                                  ) && (
+                                    <div className="margin-left-4 margin-top-neg-3">
+                                      <Label
+                                        htmlFor="participants-and-providers-communication-method-other"
+                                        className="text-normal"
+                                      >
+                                        {h('pleaseSpecify')}
+                                      </Label>
+                                      <FieldErrorMsg>
+                                        {flatErrors.communicationMethodOther}
+                                      </FieldErrorMsg>
+                                      <Field
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
+                                        id="participants-and-providers-communication-method-other"
+                                        maxLength={5000}
+                                        name="communicationMethodOther"
+                                      />
+                                    </div>
+                                  )}
+                              </Fragment>
+                            );
+                          })}
+                        <AddNote
+                          id="participants-and-providers-communication-method-note"
+                          field="communicationNote"
+                        />
+                      </>
+                    )}
+                  />
+                </FieldGroup>
 
                 <FieldGroup
                   scrollElement="participantAssumeRisk"
@@ -373,11 +378,11 @@ export const Communication = () => {
                                     {flatErrors.riskOther}
                                   </FieldErrorMsg>
                                   <Field
-                                    as={TextInput}
-                                    className="maxw-none"
+                                    as={TextAreaField}
+                                    className="maxw-none mint-textarea"
                                     id="participants-and-providers-risk-type-other"
                                     data-testid="participants-and-providers-risk-type-other"
-                                    maxLength={50}
+                                    maxLength={5000}
                                     name="riskOther"
                                   />
                                 </div>

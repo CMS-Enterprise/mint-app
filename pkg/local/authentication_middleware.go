@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -74,14 +73,24 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if parseErr := json.Unmarshal([]byte(devUserConfigJSON), &config); parseErr != nil {
 		return nil, errors.New("could not parse local auth JSON")
 	}
-	princ := &authentication.ApplicationPrincipal{
-		Username:          strings.ToUpper(config.EUA),
-		JobCodeUSER:       swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD"),
-		JobCodeASSESSMENT: swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD"),
-		JobCodeMAC:        swag.ContainsStrings(config.JobCodes, "MINT MAC Users"),
+	// Pull job codes from config
+	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
+	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
+	jcMAC := swag.ContainsStrings(config.JobCodes, "MINT MAC Users")
+
+	// Always set assessment users to have base user permissions
+	if jcAssessment {
+		jcUser = true
 	}
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(store, princ.ID(), true, "", "", princ.JobCodeMAC)
+	princ := &authentication.ApplicationPrincipal{
+		Username:          strings.ToUpper(config.EUA),
+		JobCodeUSER:       jcUser,
+		JobCodeASSESSMENT: jcAssessment,
+		JobCodeMAC:        jcMAC,
+	}
+
+	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
 	if err != nil {
 		return nil, err
 	}
@@ -92,11 +101,10 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 
 // NewLocalWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
 // the websocket connection payload to authenticate a local user.
-func NewLocalWebSocketAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) transport.WebsocketInitFunc {
+func NewLocalWebSocketAuthenticationMiddleware(store *storage.Store) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+		logger := appcontext.ZLogger(ctx)
 		// Get the token from payload
-		all := initPayload
-		fmt.Println("ALL OF EM BABY", all)
 		any := initPayload["authToken"]
 		token, ok := any.(string)
 		if !ok || token == "" {

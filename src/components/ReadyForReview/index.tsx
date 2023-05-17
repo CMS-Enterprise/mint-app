@@ -6,7 +6,7 @@ import { Field } from 'formik';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
 import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 
 type ReadyForReviewType = {
   id: string;
@@ -14,7 +14,7 @@ type ReadyForReviewType = {
   sectionName: string;
   status: TaskStatus;
   setFieldValue: (field: string, value: any) => void;
-  readyForReviewBy: string | null;
+  readyForReviewBy: string | null | undefined;
   readyForReviewDts: string | null;
 };
 
@@ -28,9 +28,12 @@ const ReadyForReview = ({
   readyForReviewDts
 }: ReadyForReviewType) => {
   const { t } = useTranslation('draftModelPlan');
+
   // Status state is checked before rendering
   // This is so that when user unclicks the "Ready for review" checkbox, it will not cause the `markedReady` copy to disappear
-  const [persistentCopy] = useState(status === TaskStatus.READY_FOR_REVIEW);
+  const [persistentCopy] = useState<boolean>(
+    status === TaskStatus.READY_FOR_REVIEW
+  );
 
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
@@ -56,9 +59,9 @@ const ReadyForReview = ({
         {persistentCopy && readyForReviewBy && readyForReviewDts && (
           <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
             {t('markedReady', {
-              reviewer: `${readyForReviewBy}`
+              reviewer: readyForReviewBy
             })}
-            {formatDate(readyForReviewDts, 'M/d/yyyy')}
+            {formatDateLocal(readyForReviewDts, 'MM/dd/yyyy')}
           </p>
         )}
       </SummaryBox>

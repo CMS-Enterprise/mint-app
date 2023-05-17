@@ -215,3 +215,13 @@ cedarldap
 translated_client.go
 routes.go
 inlining
+Performant
+serializable
+OpenSearch
+OpenSearch-Dashboards
+Logstash
+audit.change_table
+Elasticsearch
+Debezium
+StateTrace
+performant

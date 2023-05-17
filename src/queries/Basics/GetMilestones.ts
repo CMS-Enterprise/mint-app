@@ -19,7 +19,10 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
-        readyForReviewBy
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
         readyForReviewDts
         status
       }

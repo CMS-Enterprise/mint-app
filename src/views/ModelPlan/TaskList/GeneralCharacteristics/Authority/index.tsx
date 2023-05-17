@@ -10,8 +10,7 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -40,7 +39,8 @@ import { dirtyInput } from 'utils/formDiff';
 import {
   sortOtherEnum,
   translateAuthorityAllowance,
-  translateWaiverTypes
+  translateWaiverTypes,
+  translateWaiverTypesLabel
 } from 'utils/modelPlan';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
@@ -53,7 +53,7 @@ const Authority = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     AuthorityFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -65,7 +65,8 @@ const Authority = () => {
   >(GetAuthority, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -81,7 +82,7 @@ const Authority = () => {
     waiversRequired,
     waiversRequiredTypes,
     waiversRequiredNote,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
@@ -90,7 +91,7 @@ const Authority = () => {
     UpdatePlanGeneralCharacteristics
   );
 
-  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
+  const handleFormSubmit = (redirect?: 'back' | 'task-list' | 'next') => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -114,6 +115,10 @@ const Authority = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'next') {
+            history.push(
+              `/models/${modelID}/task-list/participants-and-providers`
+            );
           }
         }
       })
@@ -175,7 +180,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit('task-list');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -209,7 +214,7 @@ const Authority = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-authority-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -340,9 +345,10 @@ const Authority = () => {
                                       {flatErrors.authorityAllowancesOther}
                                     </FieldErrorMsg>
                                     <Field
-                                      as={TextInput}
+                                      as={TextAreaField}
+                                      className="mint-textarea"
                                       id="plan-characteristics-authority-allowance-other"
-                                      maxLength={50}
+                                      maxLength={5000}
                                       name="authorityAllowancesOther"
                                     />
                                   </FieldGroup>
@@ -414,6 +420,7 @@ const Authority = () => {
                                 id={`plan-characteristics-waiver-types-${type}`}
                                 name="waiversRequiredTypes"
                                 label={translateWaiverTypes(type)}
+                                subLabel={translateWaiverTypesLabel(type)}
                                 value={type}
                                 checked={values.waiversRequiredTypes.includes(
                                   type as WaiverType
@@ -444,15 +451,17 @@ const Authority = () => {
                   field="waiversRequiredNote"
                 />
 
-                <ReadyForReview
-                  id="characteristics-status"
-                  field="status"
-                  sectionName={t('heading')}
-                  status={values.status}
-                  setFieldValue={setFieldValue}
-                  readyForReviewBy={readyForReviewBy}
-                  readyForReviewDts={readyForReviewDts}
-                />
+                {!loading && values.status && (
+                  <ReadyForReview
+                    id="characteristics-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

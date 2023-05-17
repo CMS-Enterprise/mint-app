@@ -5,7 +5,10 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
 import { GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityType } from 'queries/OpsEvalAndLearning/types/GetCCWAndQuality';
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  DataForMonitoringType
+} from 'types/graphql-global-types';
 
 import CCWAndQuality from '.';
 
@@ -13,6 +16,9 @@ const ccwAndQualityMockData: GetCCWAndQualityType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  dataNeededForMonitoring: [
+    DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
+  ],
   iddocSupport: true,
   sendFilesBetweenCcw: null,
   sendFilesBetweenCcwNote: '',
@@ -38,6 +44,13 @@ const ccwAndQualityMock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
+          operationalNeeds: [
+            {
+              id: '780c990e-91f5-48a2-869a-59420940a533',
+              modifiedDts: '2024-05-12T15:01:39.190679Z',
+              __typename: 'OperationalNeed'
+            }
+          ],
           opsEvalAndLearning: ccwAndQualityMockData
         }
       }

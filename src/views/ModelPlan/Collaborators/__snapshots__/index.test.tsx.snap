@@ -71,17 +71,20 @@ exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
             Add team member
           </a>
           <div
-            class="usa-alert usa-alert--info"
+            class="usa-alert usa-alert--info flex"
             data-testid="alert"
           >
             <div
               class="usa-alert__body"
             >
-              <h3
+              <h4
                 class="usa-alert__heading"
               >
                 No associated team members
-              </h3>
+              </h4>
+              <p
+                class="usa-alert__text"
+              />
             </div>
           </div>
           <div

@@ -70,8 +70,7 @@ const payments = {
       'Payments for services not covered through Traditional Medicare',
     other: 'Other'
   },
-  selectClaimsOther:
-    'Please describe the other claims-based payments you will pay.',
+  selectClaimsOther: 'Please describe the other payment frequency.',
   excludedFromPayment:
     'Should any model providers be excluded from existing Fee-for-Service payment systems?',
   howSo: 'How so?',
@@ -221,7 +220,7 @@ const payments = {
   numberPaymentsPerPayCycleSubcopy:
     'This only applies if you are making non-claims-based payments',
   sharedSystemsInvolvedAdditionalClaimPayment:
-    'Will the shared systems be invovled for additional payment of claims?',
+    'Will the Shared Systems be involved for additional payment of claims?',
   planningToUseInnovationPaymentContractor:
     'Are you planning to use the Innovation Payment Contractor?',
   planningToUseInnovationPaymentContractorSubcopy:
@@ -260,7 +259,8 @@ const payments = {
   paymentStartDate: 'When will payments start? (Enter an approximate date)',
   paymentStartDateQuestion: 'When will payments start?',
   paymentStartDateSubcopy:
-    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.'
+    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
+  continueToITSolutions: 'Continue to IT solutions and implementation status'
 };
 
 export default payments;

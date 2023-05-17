@@ -94,162 +94,189 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
   </div>
   <form
     action="#"
-    class="tablet:grid-col-6 margin-top-6"
+    class="desktop:grid-col-6 margin-top-6"
     data-testid="ops-eval-and-learning-learning-form"
   >
-    <legend
-      class="usa-label"
-    >
-      Will the model have a learning strategy?
-    </legend>
     <div
-      class="mint-checkbox usa-checkbox"
+      class="usa-form-group"
+      data-scroll="modelLearningSystems"
     >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
-        name="modelLearningSystems"
-        type="checkbox"
-        value="EDUCATE_BENEFICIARIES"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+      <legend
+        class="usa-label"
       >
-        We plan to educate beneficiaries
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
-        name="modelLearningSystems"
-        type="checkbox"
-        value="IT_PLATFORM_CONNECT"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+        Will the model have a learning strategy?
+      </legend>
+      <div
+        class="usa-alert usa-alert--warning flex it-solutions-warning"
+        data-testid="alert"
       >
-        We plan to use an IT platform (Connect)
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
-        name="modelLearningSystems"
-        type="checkbox"
-        value="LEARNING_CONTRACTOR"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
-      >
-        We plan to have a learning contractor (cross-model or individual)
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
-        name="modelLearningSystems"
-        type="checkbox"
-        value="PARTICIPANT_COLLABORATION"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
-      >
-        We plan to enable participant-to-participant collaboration
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-learning-systems-OTHER"
-        name="modelLearningSystems"
-        type="checkbox"
-        value="OTHER"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-learning-systems-OTHER"
-      >
-        Other
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="mint-checkbox usa-checkbox"
-    >
-      <input
-        class="usa-checkbox__input"
-        id="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
-        name="modelLearningSystems"
-        type="checkbox"
-        value="NO_LEARNING_SYSTEM"
-      />
-      <label
-        class="usa-checkbox__label"
-        for="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
-      >
-        No, we will not have a learning strategy
-      </label>
-      <p
-        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-      />
-    </div>
-    <div
-      class="margin-top-4 margin-bottom-8"
-    >
-      <button
-        class="usa-button usa-button usa-button--unstyled"
-        data-testid="add-note-toggle"
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          class="usa-icon margin-right-1"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="usa-alert__body"
         >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-          />
-        </svg>
-        Add an additional note
-      </button>
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-learning-systems-warning"
+              type="button"
+            >
+              Go to IT solutions tracker.
+            </button>
+          </p>
+        </div>
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+          name="modelLearningSystems"
+          type="checkbox"
+          value="EDUCATE_BENEFICIARIES"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+        >
+          We plan to educate beneficiaries
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+          name="modelLearningSystems"
+          type="checkbox"
+          value="IT_PLATFORM_CONNECT"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+        >
+          We plan to use an IT platform (Connect)
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
+          name="modelLearningSystems"
+          type="checkbox"
+          value="LEARNING_CONTRACTOR"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
+        >
+          We plan to have a learning contractor (cross-model or individual)
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
+          name="modelLearningSystems"
+          type="checkbox"
+          value="PARTICIPANT_COLLABORATION"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
+        >
+          We plan to enable participant-to-participant collaboration
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-learning-systems-OTHER"
+          name="modelLearningSystems"
+          type="checkbox"
+          value="OTHER"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-learning-systems-OTHER"
+        >
+          Other
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="mint-checkbox usa-checkbox"
+      >
+        <input
+          class="usa-checkbox__input"
+          id="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
+          name="modelLearningSystems"
+          type="checkbox"
+          value="NO_LEARNING_SYSTEM"
+        />
+        <label
+          class="usa-checkbox__label"
+          for="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
+        >
+          No, we will not have a learning strategy
+        </label>
+        <p
+          class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+        />
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
     </div>
     <div
       class="usa-form-group"
@@ -268,7 +295,8 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
         Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
       </p>
       <textarea
-        class="usa-textarea height-card"
+        aria-labelledby="label-ops-eval-and-learning-learning-anticipated-challenges hint-ops-eval-and-learning-learning-anticipated-challenges"
+        class="height-card usa-textarea"
         data-testid="ops-eval-and-learning-learning-anticipated-challenges"
         id="ops-eval-and-learning-learning-anticipated-challenges"
         name="anticipatedChallenges"

@@ -3,7 +3,9 @@ import i18next from 'i18next';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import {
   ComplexityCalculationLevelType,
-  DocumentType
+  DocumentType,
+  OperationalSolutionKey,
+  OperationalSolutionSubtaskStatus
 } from 'types/graphql-global-types';
 
 /**
@@ -72,6 +74,8 @@ export const translateTeamRole = (teamRole: string) => {
       return i18next.t('modelPlan:teamRoles.modelLead');
     case 'MODEL_TEAM':
       return i18next.t('modelPlan:teamRoles.modelTeam');
+    case 'QUALITY':
+      return i18next.t('modelPlan:teamRoles.quality');
     default:
       return '';
   }
@@ -120,17 +124,17 @@ export const translateModelCategory = (category: string) => {
 export const translateCmsCenter = (category: string) => {
   switch (category) {
     case 'CMMI':
-      return 'CMMI';
+      return i18next.t('basics:cmsComponents.cmmi');
     case 'CENTER_FOR_MEDICARE':
-      return 'Center for Medicare (CM)';
+      return i18next.t('basics:cmsComponents.cm');
     case 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE':
-      return 'Federal Coordinated Health Care';
+      return i18next.t('basics:cmsComponents.federalCoordinateHealthCare');
     case 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY':
-      return 'Center for Clinical Standards and Quality (CCSQ)';
+      return i18next.t('basics:cmsComponents.ccsq');
     case 'CENTER_FOR_PROGRAM_INTEGRITY':
-      return 'Center for Program Integrity (CPI)';
+      return i18next.t('basics:cmsComponents.cpi');
     case 'OTHER':
-      return 'Other';
+      return i18next.t('basics:cmsComponents.other');
     default:
       return '';
   }
@@ -139,15 +143,15 @@ export const translateCmsCenter = (category: string) => {
 export const translateCmmiGroups = (category: string) => {
   switch (category) {
     case 'PATIENT_CARE_MODELS_GROUP':
-      return 'Patient Care Models Group (PCMG)';
+      return i18next.t('basics:cmmiGroups.pcmg');
     case 'POLICY_AND_PROGRAMS_GROUP':
-      return 'Policy and Programs Group (PPG)';
-    case 'PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP':
-      return 'Preventative and Population Health Care Models Group (PPHCMG)';
+      return i18next.t('basics:cmmiGroups.ppg');
     case 'SEAMLESS_CARE_MODELS_GROUP':
-      return 'Seamless Care Models Group (SCMG)';
-    case 'STATE_INNOVATIONS_GROUP':
-      return 'State Innovations Group (SIG)';
+      return i18next.t('basics:cmmiGroups.scmg');
+    case 'STATE_AND_POPULATION_HEALTH_GROUP':
+      return i18next.t('basics:cmmiGroups.sphg');
+    case 'TBD':
+      return i18next.t('basics:cmmiGroups.tbd');
     default:
       return '';
   }
@@ -173,6 +177,10 @@ export const translateModelPlanStatus = (status: string) => {
       return i18next.t('modelPlan:planStatuses.cleared');
     case 'ANNOUNCED':
       return i18next.t('modelPlan:planStatuses.announced');
+    case 'PAUSED':
+      return i18next.t('modelPlan:planStatuses.paused');
+    case 'CANCELED':
+      return i18next.t('modelPlan:planStatuses.canceled');
     default:
       return '';
   }
@@ -274,6 +282,19 @@ export const translateWaiverTypes = (type: string) => {
       return i18next.t('generalCharacteristics:programPayment');
     case 'MEDICAID':
       return i18next.t('generalCharacteristics:medicaid');
+    default:
+      return '';
+  }
+};
+
+export const translateWaiverTypesLabel = (type: string) => {
+  switch (type) {
+    case 'FRAUD_ABUSE':
+      return i18next.t('generalCharacteristics:fraudAndAbuseNote');
+    case 'PROGRAM_PAYMENT':
+      return i18next.t('generalCharacteristics:programPaymentNote');
+    case 'MEDICAID':
+      return i18next.t('generalCharacteristics:medicaidNote');
     default:
       return '';
   }
@@ -665,6 +686,40 @@ export const translateFrequencyType = (type: string) => {
       return i18next.t('participantsAndProviders:frequencyOptions.rolling');
     case 'OTHER':
       return i18next.t('participantsAndProviders:frequencyOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateSubtasks = (status: string) => {
+  switch (status) {
+    case OperationalSolutionSubtaskStatus.TODO:
+      return i18next.t('itSolutions:subtasks.todo');
+    case OperationalSolutionSubtaskStatus.IN_PROGRESS:
+      return i18next.t('itSolutions:subtasks.inProgress');
+    case OperationalSolutionSubtaskStatus.DONE:
+      return i18next.t('itSolutions:subtasks.done');
+    default:
+      return '';
+  }
+};
+
+export const translateOperationalSolutionKey = (
+  key: OperationalSolutionKey
+) => {
+  switch (key) {
+    case OperationalSolutionKey.CONTRACTOR:
+      return i18next.t('itSolutions:operationalSolutionKey.contractor');
+    case OperationalSolutionKey.CROSS_MODEL_CONTRACT:
+      return i18next.t('itSolutions:operationalSolutionKey.crossModelContract');
+    case OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS:
+      return i18next.t(
+        'itSolutions:operationalSolutionKey.existingCmsDataAndProcess'
+      );
+    case OperationalSolutionKey.INTERNAL_STAFF:
+      return i18next.t('itSolutions:operationalSolutionKey.interalStaff');
+    case OperationalSolutionKey.OTHER_NEW_PROCESS:
+      return i18next.t('itSolutions:operationalSolutionKey.otherNewProcess');
     default:
       return '';
   }
@@ -1125,386 +1180,6 @@ export const translateModelLearningSystemType = (type: string) => {
       return i18next.t(
         'operationsEvaluationAndLearning:learningSystemOptions.no'
       );
-    default:
-      return '';
-  }
-};
-
-export const translateGcPartCDType = (type: string) => {
-  switch (type) {
-    case 'MARX':
-      return i18next.t('itTools:partCDTypes.marx');
-    case 'OTHER':
-      return i18next.t('itTools:partCDTypes.other');
-    default:
-      return '';
-  }
-};
-
-export const translateGcCollectBidsType = (type: string) => {
-  switch (type) {
-    case 'HPMS':
-      return i18next.t('itTools:collectBidsTypes.hpms');
-    case 'OTHER':
-      return i18next.t('itTools:collectBidsTypes.other');
-    default:
-      return '';
-  }
-};
-
-export const translateGcUpdateContractType = (type: string) => {
-  switch (type) {
-    case 'HPMS':
-      return i18next.t('itTools:updateContractTypes.hpms');
-    case 'OTHER':
-      return i18next.t('itTools:updateContractTypes.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePpToAdvertiseType = (type: string) => {
-  switch (type) {
-    case 'SALESFORCE':
-      return i18next.t('itTools:ppToAdvertiseOptions.salesforce');
-    case 'GRANT_SOLUTIONS':
-      return i18next.t('itTools:ppToAdvertiseOptions.grantSolutions');
-    case 'OTHER':
-      return i18next.t('itTools:ppToAdvertiseOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePpCollectScoreReviewType = (type: string) => {
-  switch (type) {
-    case 'RFA':
-      return i18next.t('itTools:ppCollectScoreReviewOptions.rfa');
-    case 'ARS':
-      return i18next.t('itTools:ppCollectScoreReviewOptions.ars');
-    case 'GRANT_SOLUTIONS':
-      return i18next.t('itTools:ppCollectScoreReviewOptions.grant');
-    case 'OTHER':
-      return i18next.t('itTools:ppCollectScoreReviewOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePpAppSupportContractorType = (type: string) => {
-  switch (type) {
-    case 'RMDA':
-      return i18next.t('itTools:ppAppSupportContractorOptions.rmda');
-    case 'OTHER':
-      return i18next.t('itTools:ppAppSupportContractorOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePpCommunicateWithParticipantType = (type: string) => {
-  switch (type) {
-    case 'OUTLOOK_MAILBOX':
-      return i18next.t('itTools:ppCommunicateWithParticipantOptions.outlook');
-    case 'GOV_DELIVERY':
-      return i18next.t(
-        'itTools:ppCommunicateWithParticipantOptions.govDelivery'
-      );
-    case 'SALESFORCE_PORTAL':
-      return i18next.t(
-        'itTools:ppCommunicateWithParticipantOptions.salesforce'
-      );
-    case 'OTHER':
-      return i18next.t('itTools:ppCommunicateWithParticipantOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePpManageProviderOverlapType = (type: string) => {
-  switch (type) {
-    case 'MDM':
-      return i18next.t('itTools:ppManageProviderOverlapOptions.mdm');
-    case 'OTHER':
-      return i18next.t('itTools:ppManageProviderOverlapOptions.other');
-    case 'NA':
-      return i18next.t('itTools:ppManageProviderOverlapOptions.na');
-    default:
-      return '';
-  }
-};
-
-export const translateBManageBeneficiaryOverlapType = (type: string) => {
-  switch (type) {
-    case 'MDM':
-      return i18next.t('itTools:bManageBeneficiaryOverlapOptions.mdm');
-    case 'OTHER':
-      return i18next.t('itTools:bManageBeneficiaryOverlapOptions.other');
-    case 'NA':
-      return i18next.t('itTools:bManageBeneficiaryOverlapOptions.na');
-    default:
-      return '';
-  }
-};
-
-export const translateOelHelpdeskSupportType = (type: string) => {
-  switch (type) {
-    case 'CBOSC':
-      return i18next.t('itTools:oelHelpdeskSupportOptions.cbosc');
-    case 'CONTRACTOR':
-      return i18next.t('itTools:oelHelpdeskSupportOptions.contractor');
-    case 'OTHER':
-      return i18next.t('itTools:oelHelpdeskSupportOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelManageAcoType = (type: string) => {
-  switch (type) {
-    case 'ACO_OS':
-      return i18next.t('itTools:oelManageAcoOptions.acoOS');
-    case 'ACO_UI':
-      return i18next.t('itTools:oelManageAcoOptions.acoUI');
-    case 'INNOVATION':
-      return i18next.t('itTools:oelManageAcoOptions.innovation');
-    case 'OTHER':
-      return i18next.t('itTools:oelManageAcoOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelManageAcoSubinfoType = (type: string) => {
-  switch (type) {
-    case 'ACO_OS':
-      return i18next.t('itTools:oelManageAcoSubinfoOptions.acoOS');
-    case 'ACO_UI':
-      return i18next.t('itTools:oelManageAcoSubinfoOptions.acoUI');
-    case 'INNOVATION':
-      return i18next.t('itTools:oelManageAcoSubinfoOptions.innovation');
-    case 'OTHER':
-      return i18next.t('itTools:oelManageAcoSubinfoOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelPerformanceBenchmarkType = (type: string) => {
-  switch (type) {
-    case 'IDR':
-      return i18next.t('itTools:oelPerformanceBenchmarkOptions.idr');
-    case 'CCW':
-      return i18next.t('itTools:oelPerformanceBenchmarkOptions.ccw');
-    case 'OTHER':
-      return i18next.t('itTools:oelPerformanceBenchmarkOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelProcessAppealsType = (type: string) => {
-  switch (type) {
-    case 'MEDICARE_APPEAL_SYSTEM':
-      return i18next.t('itTools:oelProcessAppealsOptions.medicare');
-    case 'OTHER':
-      return i18next.t('itTools:oelProcessAppealsOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelEvaluationContractorType = (type: string) => {
-  switch (type) {
-    case 'RMDA':
-      return i18next.t('itTools:oelEvaluationContractorOptions.rmda');
-    case 'OTHER':
-      return i18next.t('itTools:oelEvaluationContractorOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelCollectDataType = (type: string) => {
-  switch (type) {
-    case 'IDR':
-      return i18next.t('itTools:oelCollectDataOptions.idr');
-    case 'CCW':
-      return i18next.t('itTools:oelCollectDataOptions.ccw');
-    case 'IDOS':
-      return i18next.t('itTools:oelCollectDataOptions.idos');
-    case 'ISP':
-      return i18next.t('itTools:oelCollectDataOptions.isp');
-    case 'CONTRACTOR':
-      return i18next.t('itTools:oelCollectDataOptions.contractor');
-    case 'OTHER':
-      return i18next.t('itTools:oelCollectDataOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelObtainDataType = (type: string) => {
-  switch (type) {
-    case 'CCW':
-      return i18next.t('itTools:oelObtainDataOptions.ccw');
-    case 'IDOS':
-      return i18next.t('itTools:oelObtainDataOptions.idos');
-    case 'ISP':
-      return i18next.t('itTools:oelObtainDataOptions.isp');
-    case 'OTHER':
-      return i18next.t('itTools:oelObtainDataOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelClaimsBasedMeasuresType = (type: string) => {
-  switch (type) {
-    case 'IDR':
-      return i18next.t('itTools:oelClaimsBasedMeasuresOptions.idr');
-    case 'CCW':
-      return i18next.t('itTools:oelClaimsBasedMeasuresOptions.ccw');
-    case 'OTHER':
-      return i18next.t('itTools:oelClaimsBasedMeasuresOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translateOelQualityScoresType = (type: string) => {
-  switch (type) {
-    case 'EXISTING_DATA_AND_PROCESS':
-      return i18next.t('itTools:oelQualityScoresOptions.existing');
-    case 'NEW_DATA_AND_CMMI_PROCESS':
-      return i18next.t('itTools:oelQualityScoresOptions.new');
-    case 'OTHER':
-      return i18next.t('itTools:oelQualityScoresOptions.other');
-    case 'NONE':
-      return i18next.t('itTools:oelQualityScoresOptions.none');
-    default:
-      return '';
-  }
-};
-
-export const translateOelSendReportsType = (type: string) => {
-  switch (type) {
-    case 'IDOS':
-      return i18next.t('itTools:oelSendReportsOptions.idos');
-    case 'RMADA':
-      return i18next.t('itTools:oelSendReportsOptions.rmda');
-    case 'INTERNAL_STAFF':
-      return i18next.t('itTools:oelSendReportsOptions.internal');
-    case 'OTHER':
-      return i18next.t('itTools:oelSendReportsOptions.other');
-
-    default:
-      return '';
-  }
-};
-
-export const translateOelLearningContractorType = (type: string) => {
-  switch (type) {
-    case 'RMADA':
-      return i18next.t('itTools:oelLearningContractorOptions.rmda');
-    case 'CROSS_MODEL_CONTRACT':
-      return i18next.t('itTools:oelLearningContractorOptions.crossModel');
-    case 'OTHER':
-      return i18next.t('itTools:oelLearningContractorOptions.other');
-
-    default:
-      return '';
-  }
-};
-
-export const translateOelParticipantCollaborationType = (type: string) => {
-  switch (type) {
-    case 'CONNECT':
-      return i18next.t('itTools:oelParticipantCollaborationOptions.connect');
-    case 'OTHER':
-      return i18next.t('itTools:oelParticipantCollaborationOptions.other');
-
-    default:
-      return '';
-  }
-};
-
-export const translateOelEducateBeneficiariesType = (type: string) => {
-  switch (type) {
-    case 'OC':
-      return i18next.t('itTools:oelEducateBeneficiariesOptions.oc');
-    case 'OTHER':
-      return i18next.t('itTools:oelEducateBeneficiariesOptions.other');
-
-    default:
-      return '';
-  }
-};
-
-export const translatePMakeClaimsPaymentsType = (type: string) => {
-  switch (type) {
-    case 'SHARED_SYSTEMS':
-      return i18next.t('itTools:pMakeClaimsPaymentsOptions.sharedSystems');
-    case 'HIGLAS':
-      return i18next.t('itTools:pMakeClaimsPaymentsOptions.higlas');
-    case 'OTHER':
-      return i18next.t('itTools:pMakeClaimsPaymentsOptions.other');
-
-    default:
-      return '';
-  }
-};
-
-export const translatePInformFfsType = (type: string) => {
-  switch (type) {
-    case 'FFS_COMPETENCY_CENTER':
-      return i18next.t('itTools:pInformFfsOptions.ffsCompetencyCenter');
-    case 'OTHER':
-      return i18next.t('itTools:pInformFfsOptions.other');
-
-    default:
-      return '';
-  }
-};
-
-export const translatePNonClaimsBasedPaymentsType = (type: string) => {
-  switch (type) {
-    case 'APPS':
-      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.apps');
-    case 'HIGLAS':
-      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.higlas');
-    case 'IPC':
-      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.ipc');
-    case 'MAC':
-      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.mac');
-    case 'OTHER':
-      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePSharedSavingsPlanType = (type: string) => {
-  switch (type) {
-    case 'RMADA':
-      return i18next.t('itTools:pSharedSavingsPlanOptions.rmada');
-    case 'OTHER':
-      return i18next.t('itTools:pSharedSavingsPlanOptions.other');
-    default:
-      return '';
-  }
-};
-
-export const translatePRecoverPaymentsType = (type: string) => {
-  switch (type) {
-    case 'APPS':
-      return i18next.t('itTools:pRecoverPaymentsOptions.apps');
-    case 'IPC':
-      return i18next.t('itTools:pRecoverPaymentsOptions.ipc');
-    case 'MAC':
-      return i18next.t('itTools:pRecoverPaymentsOptions.mac');
-    case 'OTHER':
-      return i18next.t('itTools:pRecoverPaymentsOptions.other');
     default:
       return '';
   }

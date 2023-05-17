@@ -1,0 +1,1034 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation Solution Help Card Group matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container margin-top-4"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap-2 margin-bottom-2"
+      data-testid="grid"
+    >
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    4innovation
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    4i
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Data reporting category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=data-reporting"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data reporting
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for CMS Innovation Center to onboard, support, and manage a variety of models and their participants to improve the quality of care and reduce service costs. The 4i platform is built using a modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      4i/ACO-OS Team
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: 4innovation"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    Accountable Care Organization - Operational System
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    ACO-OS
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Data reporting category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=data-reporting"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data reporting
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    The Accountable Care Organization – Operational System (ACO-OS) is the system of record for 4 CMMI models (VT APM, ACO REACH, KCC, PCF) and the Medicare Shared Savings Program in CM. The system stores and exchanges ACO/entity demographic, provider, claim, and beneficiary data with ACOs/entities and CMS systems such as Master Data Management (MDM), Enterprise Data Lake (EDL), and Fee-for-Service (FFS) Shared System Maintainers (SSMs). The ACO-OS generates and shares the claims data each month for over 14,000,000 Medicare beneficiaries. The claims data and reports generated by ACO-OS are shared through the Data Hub feature in the 4i platform for CMMI models and ACO-Management System (ACO-MS) for Medicare Shared Savings Program.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      4i/ACO-OS Team
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: Accountable Care Organization - Operational System"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    Automated Plan Payment System
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    APPS
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Medicare Advantage and Part D category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Medicare Advantage and Part D
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      Aliza Kim
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: Automated Plan Payment System"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=automated-plan-payment-system&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    Centralized Data Exchange
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    CDX
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Data exchange category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data exchange
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
+
+CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
+
+The business function of CDX is a centralized data exchange to enable interoperability and provide center-wide data collection capabilities across CMMI. The exchange solution supports sending the right data, at the right time, sending the right amount, and referencing the right participants.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      Yolanda Villanova
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: Centralized Data Exchange"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    Chronic Conditions Warehouse
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    CCW
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Databases and data management category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=database-and-data-management"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Databases and data management
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
+
+This system is used by health services researchers studying ways to improve the quality and reduce the cost of care provided to chronically ill Medicare beneficiaries.
+
+CCW data files may be requested for any predefined chronic condition cohorts, or users may request a customized cohort(s) specific to research focus areas.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      Cheryl Brown
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: Chronic Conditions Warehouse"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=chronic-conditions-warehouse&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    CMS Box
+                  </h3>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Data exchange category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data exchange
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. 
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      MINT Team
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: CMS Box"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=cms-box&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    CMS Qualtrics
+                  </h3>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Applications category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=applications"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Applications
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      MINT Team
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: CMS Qualtrics"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=cms-qualtrics&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    Consolidated Business Operations Support Center
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    CBOSC
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Help desks category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=help-desks"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Help desks
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    The Consolidated Business Operations Support Center (CBOSC) contract provides IT and programmatic help desk inquiry support, help desk operations and Business Operations support for the Innovation Center Models, the Alternative Payment Model (APM) track of the Quality Payment Program (QPP) and CM. CBOSC manages intake, resolution and escalation of all inquiries related to Innovations and Shared Savings Program Business Operations centrally. Support is provided through Pre-Implementation, Post-Implementation, Operation, Reporting, and Information Support phases as models test innovative payment and service delivery models to reduce program expenditures while preserving or enhancing the quality of care furnished to individuals.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      Richard Speights
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: Consolidated Business Operations Support Center"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=consolidated-business-operations-support-center&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
+                    CPI Vetting
+                  </h3>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Data exchange category"
+                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        data-testid="tag"
+                      >
+                        Data exchange
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
+
+They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
+
+CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      MINT Team
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: CPI Vetting"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=cpi-vetting&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <ul
+      aria-label="Pagination"
+      class="mint-pagination usa-pagination usa-pagination__list"
+      role="navigation"
+    >
+      <li
+        class="previous pagination__link--disabled"
+      >
+        <a
+          aria-disabled="true"
+          aria-label="Previous page"
+          class="display-none "
+          rel="prev"
+          role="button"
+          tabindex="-1"
+        >
+          &lt; Previous
+        </a>
+      </li>
+      <li
+        class="usa-pagination__item usa-current"
+      >
+        <a
+          aria-current="page"
+          aria-label="Page 1 is your current page"
+          class="usa-pagination__button usa-current"
+          rel="canonical"
+          role="button"
+          tabindex="-1"
+        >
+          1
+        </a>
+      </li>
+      <li
+        class="usa-pagination__item"
+      >
+        <a
+          aria-label="Page 2"
+          class="usa-pagination__button"
+          rel="next"
+          role="button"
+          tabindex="0"
+        >
+          2
+        </a>
+      </li>
+      <li
+        class="usa-pagination__item"
+      >
+        <a
+          aria-label="Page 3"
+          class="usa-pagination__button"
+          role="button"
+          tabindex="0"
+        >
+          3
+        </a>
+      </li>
+      <li
+        class="usa-pagination__item"
+      >
+        <a
+          aria-label="Page 4"
+          class="usa-pagination__button"
+          role="button"
+          tabindex="0"
+        >
+          4
+        </a>
+      </li>
+      <li
+        class="next"
+      >
+        <a
+          aria-disabled="false"
+          aria-label="Next page"
+          class="usa-pagination__link usa-pagination__previous-page next-page"
+          rel="next"
+          role="button"
+          tabindex="0"
+        >
+          Next &gt;
+        </a>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

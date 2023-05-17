@@ -3,85 +3,56 @@
 exports[`IT Solutions NeedQuestionAndAnswer matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="padding-3 bg-base-lightest"
+    class="grid-container padding-3 bg-base-lightest maxw-none"
+    data-testid="gridContainer"
   >
-    <p
-      class="text-bold margin-y-1"
-    >
-      Operational need
-    </p>
-    <p
-      class="margin-top-0 font-body-sm"
-    >
-      Obtain an application support contractor
-    </p>
-    <button
-      class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3 text-bold"
-      data-testid="toggle-need-answer"
-      type="button"
-    >
-      <svg
-        class="usa-icon margin-right-05"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-        />
-      </svg>
-      Why is this a part of my operational needs?
-    </button>
     <div
-      class="margin-left-neg-2px padding-1"
+      class="grid-row"
+      data-testid="grid"
     >
       <div
-        class="border-left-05 border-base-dark padding-left-2 padding-y-1"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
         <p
-          class="text-bold margin-top-0"
+          class="text-bold margin-y-1"
         >
-          In the Model Plan, you answered:
+          Operational need
         </p>
         <p
-          data-testid="need-question"
+          class="margin-top-0 font-body-sm"
         >
-          How will you select participants? Select all that appy.
+          Obtain an application support contractor
         </p>
-        <ul
-          class="padding-left-4"
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-1"
+          data-testid="toggle-need-answer"
+          type="button"
         >
-          <li
-            class="margin-y-1"
-            data-testid="APPLICATION_REVIEW_AND_SCORING_TOOL"
+          <svg
+            class="usa-icon margin-right-05 needs-question__rotate"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Use an Application Review and Scoring tool
-          </li>
-          <li
-            class="margin-y-1"
-            data-testid="APPLICATION_SUPPORT_CONTRACTOR"
-          >
-            Get an application support contractor
-          </li>
-        </ul>
-        <p
-          class="margin-bottom-0"
-        >
-          Want to change your answer? 
-          <a
-            class="usa-link"
-            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options"
-          >
-            Go to the question.
-          </a>
-        </p>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+            />
+          </svg>
+          Why is this a part of my operational needs?
+        </button>
       </div>
     </div>
   </div>

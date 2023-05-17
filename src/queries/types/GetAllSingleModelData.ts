@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, GcPartCDType, GcCollectBidsType, GcUpdateContractType, PpToAdvertiseType, PpCollectScoreReviewType, PpAppSupportContractorType, PpCommunicateWithParticipantType, PpManageProviderOverlapType, BManageBeneficiaryOverlapType, OelHelpdeskSupportType, OelManageAcoType, OelPerformanceBenchmarkType, OelProcessAppealsType, OelEvaluationContractorType, OelCollectDataType, OelObtainDataType, OelClaimsBasedMeasuresType, OelQualityScoresType, OelSendReportsType, OelLearningContractorType, OelParticipantCollaborationType, OelEducateBeneficiariesType, PMakeClaimsPaymentsType, PInformFfsType, PNonClaimsBasedPaymentsType, PSharedSavingsPlanType, PRecoverPaymentsType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAllSingleModelData
@@ -33,11 +33,11 @@ export interface GetAllSingleModelData_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   status: TaskStatus;
 }
@@ -60,7 +60,7 @@ export interface GetAllSingleModelData_modelPlan_beneficiaries {
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   numberPeopleImpacted: number | null;
@@ -76,7 +76,7 @@ export interface GetAllSingleModelData_modelPlan_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   resolution: boolean | null;
 }
@@ -85,18 +85,25 @@ export interface GetAllSingleModelData_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
   status: DiscussionStatus;
   replies: GetAllSingleModelData_modelPlan_discussions_replies[];
 }
 
+export interface GetAllSingleModelData_modelPlan_collaborators_userAccount {
+  __typename: "UserAccount";
+  id: UUID;
+  commonName: string;
+  email: string;
+  username: string;
+}
+
 export interface GetAllSingleModelData_modelPlan_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
-  fullName: string;
-  euaUserID: string;
-  email: string;
+  userAccount: GetAllSingleModelData_modelPlan_collaborators_userAccount;
+  userID: UUID;
   teamRole: TeamRole;
   modelPlanID: UUID;
   createdDts: Time;
@@ -114,13 +121,12 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
-  resemblesExistingModelWhich: string[];
   resemblesExistingModelHow: string | null;
   resemblesExistingModelNote: string | null;
   hasComponentsOrTracks: boolean | null;
@@ -158,92 +164,6 @@ export interface GetAllSingleModelData_modelPlan_generalCharacteristics {
   agreementTypesOther: string | null;
   multiplePatricipationAgreementsNeeded: boolean | null;
   multiplePatricipationAgreementsNeededNote: string | null;
-}
-
-export interface GetAllSingleModelData_modelPlan_itTools {
-  __typename: "PlanITTools";
-  id: UUID;
-  gcPartCD: GcPartCDType[];
-  gcPartCDOther: string | null;
-  gcPartCDNote: string | null;
-  gcCollectBids: GcCollectBidsType[];
-  gcCollectBidsOther: string | null;
-  gcCollectBidsNote: string | null;
-  gcUpdateContract: GcUpdateContractType[];
-  gcUpdateContractOther: string | null;
-  gcUpdateContractNote: string | null;
-  ppToAdvertise: PpToAdvertiseType[];
-  ppToAdvertiseOther: string | null;
-  ppToAdvertiseNote: string | null;
-  ppCollectScoreReview: PpCollectScoreReviewType[];
-  ppCollectScoreReviewOther: string | null;
-  ppCollectScoreReviewNote: string | null;
-  ppAppSupportContractor: PpAppSupportContractorType[];
-  ppAppSupportContractorOther: string | null;
-  ppAppSupportContractorNote: string | null;
-  ppCommunicateWithParticipant: PpCommunicateWithParticipantType[];
-  ppCommunicateWithParticipantOther: string | null;
-  ppCommunicateWithParticipantNote: string | null;
-  ppManageProviderOverlap: PpManageProviderOverlapType[];
-  ppManageProviderOverlapOther: string | null;
-  ppManageProviderOverlapNote: string | null;
-  bManageBeneficiaryOverlap: BManageBeneficiaryOverlapType[];
-  bManageBeneficiaryOverlapOther: string | null;
-  bManageBeneficiaryOverlapNote: string | null;
-  oelHelpdeskSupport: OelHelpdeskSupportType[];
-  oelHelpdeskSupportOther: string | null;
-  oelHelpdeskSupportNote: string | null;
-  oelManageAco: OelManageAcoType[];
-  oelManageAcoOther: string | null;
-  oelManageAcoNote: string | null;
-  oelPerformanceBenchmark: OelPerformanceBenchmarkType[];
-  oelPerformanceBenchmarkOther: string | null;
-  oelPerformanceBenchmarkNote: string | null;
-  oelProcessAppeals: OelProcessAppealsType[];
-  oelProcessAppealsOther: string | null;
-  oelProcessAppealsNote: string | null;
-  oelEvaluationContractor: OelEvaluationContractorType[];
-  oelEvaluationContractorOther: string | null;
-  oelEvaluationContractorNote: string | null;
-  oelCollectData: OelCollectDataType[];
-  oelCollectDataOther: string | null;
-  oelCollectDataNote: string | null;
-  oelObtainData: OelObtainDataType[];
-  oelObtainDataOther: string | null;
-  oelObtainDataNote: string | null;
-  oelClaimsBasedMeasures: OelClaimsBasedMeasuresType[];
-  oelClaimsBasedMeasuresOther: string | null;
-  oelClaimsBasedMeasuresNote: string | null;
-  oelQualityScores: OelQualityScoresType[];
-  oelQualityScoresOther: string | null;
-  oelQualityScoresNote: string | null;
-  oelSendReports: OelSendReportsType[];
-  oelSendReportsOther: string | null;
-  oelSendReportsNote: string | null;
-  oelLearningContractor: OelLearningContractorType[];
-  oelLearningContractorOther: string | null;
-  oelLearningContractorNote: string | null;
-  oelParticipantCollaboration: OelParticipantCollaborationType[];
-  oelParticipantCollaborationOther: string | null;
-  oelParticipantCollaborationNote: string | null;
-  oelEducateBeneficiaries: OelEducateBeneficiariesType[];
-  oelEducateBeneficiariesOther: string | null;
-  oelEducateBeneficiariesNote: string | null;
-  pMakeClaimsPayments: PMakeClaimsPaymentsType[];
-  pMakeClaimsPaymentsOther: string | null;
-  pMakeClaimsPaymentsNote: string | null;
-  pInformFfs: PInformFfsType[];
-  pInformFfsOther: string | null;
-  pInformFfsNote: string | null;
-  pNonClaimsBasedPayments: PNonClaimsBasedPaymentsType[];
-  pNonClaimsBasedPaymentsOther: string | null;
-  pNonClaimsBasedPaymentsNote: string | null;
-  pSharedSavingsPlan: PSharedSavingsPlanType[];
-  pSharedSavingsPlanOther: string | null;
-  pSharedSavingsPlanNote: string | null;
-  pRecoverPayments: PRecoverPaymentsType[];
-  pRecoverPaymentsOther: string | null;
-  pRecoverPaymentsNote: string | null;
 }
 
 export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
@@ -315,7 +235,7 @@ export interface GetAllSingleModelData_modelPlan_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
   agencyOrStateHelp: AgencyOrStateHelpType[];
@@ -396,7 +316,7 @@ export interface GetAllSingleModelData_modelPlan_participantsAndProviders {
   providerOverlap: OverlapType | null;
   providerOverlapHierarchy: string | null;
   providerOverlapNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
@@ -463,7 +383,7 @@ export interface GetAllSingleModelData_modelPlan_payments {
   anticipateReconcilingPaymentsRetrospectivelyNote: string | null;
   paymentStartDate: Time | null;
   paymentStartDateNote: string | null;
-  readyForReviewBy: string | null;
+  readyForReviewBy: UUID | null;
   readyForReviewDts: Time | null;
   status: TaskStatus;
 }
@@ -473,16 +393,15 @@ export interface GetAllSingleModelData_modelPlan {
   id: UUID;
   modelName: string;
   archived: boolean;
-  createdBy: string;
+  createdBy: UUID;
   createdDts: Time;
-  modifiedBy: string | null;
+  modifiedBy: UUID | null;
   modifiedDts: Time | null;
   basics: GetAllSingleModelData_modelPlan_basics;
   beneficiaries: GetAllSingleModelData_modelPlan_beneficiaries;
   discussions: GetAllSingleModelData_modelPlan_discussions[];
   collaborators: GetAllSingleModelData_modelPlan_collaborators[];
   generalCharacteristics: GetAllSingleModelData_modelPlan_generalCharacteristics;
-  itTools: GetAllSingleModelData_modelPlan_itTools;
   opsEvalAndLearning: GetAllSingleModelData_modelPlan_opsEvalAndLearning;
   participantsAndProviders: GetAllSingleModelData_modelPlan_participantsAndProviders;
   payments: GetAllSingleModelData_modelPlan_payments;

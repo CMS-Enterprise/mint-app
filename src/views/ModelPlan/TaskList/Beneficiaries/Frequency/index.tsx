@@ -12,14 +12,13 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -28,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import getFrequency from 'queries/Beneficiaries/getFrequency';
 import {
   GetFrequency as BeneficiaryFrequencyType,
@@ -55,7 +55,7 @@ const Frequency = () => {
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
     FrequencyFormType,
-    'readyForReviewBy' | 'readyForReviewDts'
+    'readyForReviewByUserAccount' | 'readyForReviewDts'
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
@@ -67,7 +67,8 @@ const Frequency = () => {
   >(getFrequency, {
     variables: {
       id: modelID
-    }
+    },
+    fetchPolicy: 'network-only'
   });
 
   const {
@@ -78,7 +79,7 @@ const Frequency = () => {
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
-    readyForReviewBy,
+    readyForReviewByUserAccount,
     readyForReviewDts,
     status
   } = data?.modelPlan?.beneficiaries || ({} as FrequencyFormType);
@@ -89,11 +90,15 @@ const Frequency = () => {
     need => need.modifiedDts
   );
 
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdateModelPlanBeneficiariesVariables>(
     UpdateModelPlanBeneficiaries
   );
 
-  const handleFormSubmit = (redirect?: 'task-list' | 'back' | string) => {
+  const handleFormSubmit = (
+    redirect?: 'back' | 'task-list' | 'next' | string
+  ) => {
     const dirtyInputs = dirtyInput(
       formikRef?.current?.initialValues,
       formikRef?.current?.values
@@ -117,6 +122,8 @@ const Frequency = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
           } else if (redirect) {
             history.push(redirect);
           }
@@ -180,7 +187,7 @@ const Frequency = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('task-list');
+          handleFormSubmit('next');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -270,10 +277,10 @@ const Frequency = () => {
                                         }
                                       </FieldErrorMsg>
                                       <Field
-                                        as={TextInput}
-                                        className="maxw-none"
+                                        as={TextAreaField}
+                                        className="maxw-none mint-textarea"
                                         id="beneficiaries-beneficiary-selection-frequency-other"
-                                        maxLength={50}
+                                        maxLength={5000}
                                         name="beneficiarySelectionFrequencyOther"
                                       />
                                     </div>
@@ -296,7 +303,7 @@ const Frequency = () => {
                         </Label>
 
                         {itSolutionsStarted && (
-                          <ITToolsWarning
+                          <ITSolutionsWarning
                             id="beneficiaries-overlap-warning"
                             onClick={() =>
                               handleFormSubmit(
@@ -360,15 +367,19 @@ const Frequency = () => {
                         />
                       </FieldGroup>
 
-                      <ReadyForReview
-                        id="beneficiaries-status"
-                        field="status"
-                        sectionName={t('heading')}
-                        status={values.status}
-                        setFieldValue={setFieldValue}
-                        readyForReviewBy={readyForReviewBy}
-                        readyForReviewDts={readyForReviewDts}
-                      />
+                      {!loading && values.status && (
+                        <ReadyForReview
+                          id="beneficiaries-status"
+                          field="status"
+                          sectionName={t('heading')}
+                          status={values.status}
+                          setFieldValue={setFieldValue}
+                          readyForReviewBy={
+                            readyForReviewByUserAccount?.commonName
+                          }
+                          readyForReviewDts={readyForReviewDts}
+                        />
+                      )}
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button

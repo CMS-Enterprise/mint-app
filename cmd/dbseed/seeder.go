@@ -1,0 +1,51 @@
+package main
+
+import (
+	"context"
+
+	"github.com/spf13/viper"
+	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
+)
+
+// Seeder  is a struct which wraps configurations needed to seed data in the database
+type Seeder struct {
+	Config SeederConfig
+}
+
+func newSeeder(config SeederConfig) *Seeder {
+	return &Seeder{
+		Config: config,
+	}
+}
+
+func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
+	store, logger, s3Client, _, _ := getResolverDependencies(viperConfig)
+
+	dataLoaders := loaders.NewDataLoaders(store)
+	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	ctx = appcontext.WithLogger(ctx, logger)
+	ctx = appcontext.WithUserAccountService(ctx, userhelpers.UserAccountGetByIDLOADER)
+
+	seederConfig := SeederConfig{
+		Store:    store,
+		Logger:   logger,
+		S3Client: s3Client,
+		Context:  ctx,
+	}
+	return newSeeder(seederConfig)
+
+}
+
+// SeederConfig represents configuration a Seeder uses to seed data in the db
+type SeederConfig struct {
+	Store    *storage.Store
+	Logger   *zap.Logger
+	S3Client *upload.S3Client
+	Context  context.Context
+}

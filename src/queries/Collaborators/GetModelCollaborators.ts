@@ -7,9 +7,13 @@ export default gql`
       modelName
       collaborators {
         id
-        fullName
-        euaUserID
-        email
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
+        userID
         teamRole
         modelPlanID
         createdDts

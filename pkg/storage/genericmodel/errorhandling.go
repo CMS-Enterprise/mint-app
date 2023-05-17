@@ -23,6 +23,7 @@ func HandleModelCreationError(logger *zap.Logger, err error, model models.IBaseS
 func logModelUpdateError(logger *zap.Logger, err error, model models.IBaseStruct) {
 	logger.Error(
 		fmt.Sprintf("Failed to update %T due to error: %T", model, err),
+		zap.Error(err),
 		zap.String("id", model.GetID().String()),
 		zap.String("user", models.ValueOrEmpty(model.GetModifiedBy())),
 	)

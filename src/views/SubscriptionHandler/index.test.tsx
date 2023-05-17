@@ -8,14 +8,24 @@ const locks: LockSectionType[] = [
     __typename: 'TaskListSectionLockStatus',
     modelPlanID: '123',
     section: TaskListSection.BENEFICIARIES,
-    lockedBy: 'MINT',
+    lockedByUserAccount: {
+      id: '00000001-0001-0001-0001-000000000001',
+      username: 'MINT',
+      commonName: 'MINT Doe',
+      __typename: 'UserAccount'
+    },
     isAssessment: true
   },
   {
     __typename: 'TaskListSectionLockStatus',
     modelPlanID: '123',
     section: TaskListSection.PAYMENT,
-    lockedBy: 'ABCD',
+    lockedByUserAccount: {
+      id: '00000001-0001-0001-0001-000000000001',
+      username: 'MINT',
+      commonName: 'MINT Doe',
+      __typename: 'UserAccount'
+    },
     isAssessment: false
   }
 ];
@@ -34,7 +44,7 @@ describe('SubscriptionHandler functions', () => {
   });
 
   it('finds an unlocked section', () => {
-    const route: TaskListSection = TaskListSection.IT_TOOLS;
+    const route: TaskListSection = TaskListSection.BASICS;
 
     const expectedValue: LockStatus = LockStatus.UNLOCKED;
 

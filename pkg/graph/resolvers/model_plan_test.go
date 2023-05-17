@@ -1,22 +1,39 @@
 package resolvers
 
 import (
+	"context"
+	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/google/uuid"
+	"golang.org/x/sync/errgroup"
+
+	"github.com/cmsgov/mint-app/pkg/email"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
+	result, err := ModelPlanCreate(
+		context.Background(),
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planName,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(planName, result.ModelName)
 	suite.EqualValues(false, result.Archived)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, result.CreatedBy)
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
 	suite.EqualValues(models.ModelStatusPlanDraft, result.Status)
@@ -38,10 +55,10 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.EqualValues(changes["archived"], result.Archived)
 
 	suite.EqualValues(changes["status"], result.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, result.CreatedBy)
 	suite.NotNil(result.ModifiedBy)
 	suite.NotNil(result.ModifiedDts)
-	suite.EqualValues(suite.testConfigs.Principal.Username, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {
@@ -61,16 +78,13 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 
 	// Create a plan that has CLAB as a collaborator (along with TEST)
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
-	suite.createPlanCollaborator(planWithCollab, "CLAB", "Clab Rater", models.TeamRoleEvaluation, "clab.rater@gmail.com")
+	suite.createPlanCollaborator(planWithCollab, "CLAB", models.TeamRoleEvaluation)
 
 	suite.createPlanCrTdl(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good CRTDL", "This is a test")
 
 	// Get plan collection as CLAB
-	clabPrincipal := &authentication.ApplicationPrincipal{
-		Username:          "CLAB",
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
+	clabPrincipal := getTestPrincipal(suite.testConfigs.Store, "CLAB")
+	clabPrincipal.JobCodeASSESSMENT = false
 
 	// Assert that CLAB only sees 1 model plan with collab only filter
 	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
@@ -113,7 +127,7 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 		changes := map[string]interface{}{
 			"modelName": modelNames[i],
 		}
-		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, GetDefaultTestConfigs().Principal, suite.testConfigs.Store)
+		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 		suite.NoError(err)
 	}
 
@@ -131,4 +145,32 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 	suite.NoError(err)
 	suite.EqualValues(modelNames, historyDesc)
 
+}
+
+func (suite *ResolverSuite) TestModelPlanDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Plan 1")
+	plan2 := suite.createModelPlan("Plan For Plan 2")
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyModelPlanLoader(ctx, plan1.ID)
+	})
+	g.Go(func() error {
+		return verifyModelPlanLoader(ctx, plan2.ID)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+
+}
+func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
+
+	plan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if modelPlanID != plan.ID {
+		return fmt.Errorf("model Plan returned model plan ID %s, expected %s", plan.ID, modelPlanID)
+	}
+	return nil
 }

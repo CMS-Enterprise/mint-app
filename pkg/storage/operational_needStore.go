@@ -14,6 +14,9 @@ import (
 //go:embed SQL/operational_need/collection_get_by_model_plan_id.sql
 var operationalNeedCollectionByModelPlanIDSQL string
 
+//go:embed SQL/operational_need/collection_get_by_model_plan_id_LOADER.sql
+var operationalNeedCollectionByModelPlanIDLOADERSQL string
+
 //go:embed SQL/operational_need/get_by_model_plan_id_and_type.sql
 var operationalNeedGetByModelPlanIDAndTypeSQL string
 
@@ -49,6 +52,26 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 		"model_plan_id": modelPlanID,
 	}
 
+	err = stmt.Select(&needs, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return needs, nil
+}
+
+// OperationalNeedCollectionGetByModelPlanIDLOADER returns OperationalNeeds utilizing a Data Loader
+func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) ([]*models.OperationalNeed, error) {
+	needs := []*models.OperationalNeed{}
+
+	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDLOADERSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
 	err = stmt.Select(&needs, arg) //this returns more than one
 
 	if err != nil {
@@ -185,7 +208,7 @@ func (s *Store) OperationalNeedUpdateByID(logger *zap.Logger, need *models.Opera
 }
 
 // OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
-func (s *Store) OperationalNeedInsertAllPossible(logger *zap.Logger, modelPlanID uuid.UUID, createdBy string) ([]*models.OperationalNeed, error) {
+func (s *Store) OperationalNeedInsertAllPossible(logger *zap.Logger, modelPlanID uuid.UUID, createdBy uuid.UUID) ([]*models.OperationalNeed, error) {
 
 	needs := []*models.OperationalNeed{}
 	statement, err := s.db.PrepareNamed(operationalNeedInsertAllPossibleSQL)

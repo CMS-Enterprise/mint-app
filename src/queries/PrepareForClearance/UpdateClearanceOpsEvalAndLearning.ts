@@ -6,7 +6,10 @@ export default gql`
     $changes: PlanOpsEvalAndLearningChanges!
   ) {
     updatePlanOpsEvalAndLearning(id: $id, changes: $changes) {
-      readyForClearanceBy
+      readyForClearanceByUserAccount {
+        id
+        commonName
+      }
       readyForClearanceDts
       status
     }

@@ -19,22 +19,22 @@ const basics = {
     unknown: 'Unknown'
   },
   cmsComponent: 'CMS component',
-  cmsComponents: [
-    'CMMI',
-    'Center for Medicare (CM)',
-    'Federal Coordinated Health Care',
-    'Center for Clinical Standards and Quality (CCSQ)',
-    'Center for Program Integrity (CPI)',
-    'Other'
-  ],
+  cmsComponents: {
+    cmmi: 'CMMI',
+    cm: 'Center for Medicare (CM)',
+    federalCoordinateHealthCare: 'Federal Coordinated Health Care',
+    ccsq: 'Center for Clinical Standards and Quality (CCSQ)',
+    cpi: 'Center for Program Integrity (CPI)',
+    other: 'Other'
+  },
   cmmiGroup: 'CMMI Group',
-  cmmiGroups: [
-    'Patient Care Models Group (PCMG)',
-    'Policy and Programs Group (PPG)',
-    'Preventative and Population Health Care Models Group (PPHCMG)',
-    'Seamless Care Models Group (SCMG)',
-    'State Innovations Group (SIG)'
-  ],
+  cmmiGroups: {
+    pcmg: 'Patient Care Models Group (PCMG)',
+    ppg: 'Policy and Programs Group (PPG)',
+    scmg: 'Seamless Care Models Group (SCMG)',
+    sphg: 'State and Population Health Group (SPHG)',
+    tbd: 'To be determined'
+  },
   cmmiGroupInfo:
     'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
   modelType: 'Model Type',
@@ -60,7 +60,9 @@ const basics = {
   perforamncePeriod: 'Performance period',
   performanceStartDate: 'Performance start date',
   performanceEndDate: 'Performance end date',
-  demonstrationPerformance: 'Demonstration or model period of performance',
+  demonstrationPerformance: 'Performance period',
+  demonstrationPerformanceInfo:
+    'When the model will be active beginning with the go-live date',
   modelWrapUp: 'Model wrap-up end date',
   notes: 'Notes',
   tightTimeline:
@@ -68,7 +70,9 @@ const basics = {
   tightTimelineInfo:
     'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
   na: 'No answer entered',
-  otherNotSpecificed: 'Other not specified'
+  otherNotSpecificed: 'Other not specified',
+  milestonesInfo:
+    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
 };
 
 export default basics;

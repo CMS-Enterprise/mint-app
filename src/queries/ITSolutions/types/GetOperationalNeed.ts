@@ -18,6 +18,9 @@ export interface GetOperationalNeed_operationalNeed_solutions {
   pocEmail: string | null;
   needed: boolean | null;
   nameOther: string | null;
+  isOther: boolean;
+  isCommonSolution: boolean;
+  otherHeader: string | null;
   mustStartDts: Time | null;
   mustFinishDts: Time | null;
   status: OpSolutionStatus;

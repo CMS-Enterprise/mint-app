@@ -1,10 +1,10 @@
 import React, { Fragment, ReactEventHandler, useState } from 'react';
 
-import JOB_CODES from 'constants/jobCodes';
+import { NONPROD_JOB_CODES } from 'constants/jobCodes';
 import { localAuthStorageKey } from 'constants/localAuth';
 
 const DevLogin = () => {
-  const availableJobCodes: any = JOB_CODES.reduce(
+  const availableJobCodes: any = NONPROD_JOB_CODES.reduce(
     (codes: any, code: any) => ({ ...codes, [code]: false }),
     {}
   );

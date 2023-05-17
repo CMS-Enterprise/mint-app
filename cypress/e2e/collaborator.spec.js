@@ -5,7 +5,7 @@ describe('The Collaborator/Team Member Form', () => {
 
   it('adds a collaborator to model plan', () => {
     cy.clickPlanTableByName('Empty Plan');
-    // cy.wait(1000);
+
     cy.contains('a', 'Edit team').click();
 
     cy.contains('h1', 'Add model team members');
@@ -19,15 +19,16 @@ describe('The Collaborator/Team Member Form', () => {
       });
 
       cy.get('tbody').within(() => {
-        cy.contains('th', 'mint Doe');
+        cy.contains('th', 'MINT Doe');
         cy.contains('td', 'Model Lead');
       });
     });
 
     cy.contains('a', 'Add team member').click();
 
-    cy.get('input')
-      .type('Jerry{downArrow}{enter}')
+    cy.get('#react-select-model-team-cedar-contact-input')
+      .click()
+      .type('Jerry{enter}', { delay: 500 })
       .should('have.value', 'Jerry Seinfeld, SF13');
 
     cy.contains('button', 'Add team member').should('be.disabled');
@@ -42,19 +43,15 @@ describe('The Collaborator/Team Member Form', () => {
         cy.contains('td', 'Evaluation');
       });
     });
-  });
 
-  it('edits a collaborator', () => {
+    // Edits a collaborator
     cy.clickPlanTableByName('Plan With Collaborators');
 
     cy.contains('a', 'Edit team').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Betty Alpha')
-          .siblings()
-          .contains('a', 'Edit')
-          .click();
+        cy.contains('th', 'BTAL Doe').siblings().contains('a', 'Edit').click();
       });
     });
 
@@ -66,19 +63,18 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Betty Alpha').siblings('td').contains('Model Team');
+        cy.contains('th', 'BTAL Doe').siblings('td').contains('Model Team');
       });
     });
-  });
 
-  it('removes a collaborator', () => {
+    // Removes a collaborator
     cy.clickPlanTableByName('Plan With Collaborators');
 
     cy.contains('a', 'Edit team').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Betty Alpha')
+        cy.contains('th', 'BTAL Doe')
           .siblings()
           .contains('button', 'Remove')
           .click();
@@ -89,14 +85,14 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Betty Alpha').should('not.exist');
+        cy.contains('th', 'BTAL Doe').should('not.exist');
       });
     });
-  });
-});
 
-describe('The Collaborator Access Control', () => {
-  it('attempts to enter a model plan where not a collaborator', () => {
+    // The Collaborator Access Control
+    // attempts to enter a model plan where not a collaborator
+    cy.get('[data-testid="signout-link"]').click();
+
     cy.localLogin({ name: 'ABCD', role: 'MINT_USER_NONPROD' });
 
     cy.visit('/models');

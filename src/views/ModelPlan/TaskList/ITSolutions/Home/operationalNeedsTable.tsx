@@ -19,27 +19,27 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import {
-  Alert,
-  IconArrowForward,
-  Table as UswdsTable
-} from '@trussworks/react-uswds';
+import { IconArrowForward, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { DateTime } from 'luxon';
+import i18next from 'i18next';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import operationalNeedMap from 'data/operationalNeedMap';
 import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
   GetOperationalNeeds as GetOperationalNeedsType,
   GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
   GetOperationalNeedsVariables
 } from 'queries/ITSolutions/types/GetOperationalNeeds';
-import globalTableFilter from 'utils/globalTableFilter';
+import { formatDateUtc } from 'utils/date';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -58,9 +58,10 @@ import {
   returnActionText
 } from '../util';
 
-interface GetOperationalNeedsTableType
+export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
   status: OperationalNeedsSolutionsStatus;
+  needID: string;
 }
 
 type OperationalNeedsTableProps = {
@@ -87,6 +88,8 @@ const OperationalNeedsTable = ({
     }
   });
 
+  const flags = useFlags();
+
   // Memoized function to return/filter possible needs and needed solutions
   const operationalNeeds = useMemo(() => {
     const needData = data?.modelPlan?.operationalNeeds
@@ -102,7 +105,13 @@ const OperationalNeedsTable = ({
 
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
-  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
+
+  const hiddenTableColumns = [...(hiddenColumns || [])];
+
+  if (!hasEditAccess) {
+    hiddenTableColumns.push('Actions');
+  }
 
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
@@ -112,12 +121,18 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.solution'),
-        accessor: ({ name, nameOther }: any) => {
+        accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
             return t('itSolutionsTable.selectSolution');
           }
-          // Resturn custom name if exists, otherwise return standard solution name
-          return nameOther || name;
+          // Resturn custom name if exists, otherwise return standard solution name plus custom name if exists
+          let solutionName = nameOther || name;
+
+          if (otherHeader) {
+            solutionName = `${solutionName} (${otherHeader})`;
+          }
+
+          return solutionName;
         },
         Cell: ({
           row,
@@ -130,9 +145,13 @@ const OperationalNeedsTable = ({
             if (!hasEditAccess) {
               return <span>{t('itSolutionsTable.noSolutionSelected')}</span>;
             }
+            const selectSolutionHref =
+              row.original.key !== null
+                ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
+                : `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution?isCustomNeed=true`;
             return (
               <UswdsReactLink
-                to={`/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`}
+                to={selectSolutionHref}
                 className="display-flex flex-align-center"
               >
                 {value}
@@ -147,16 +166,26 @@ const OperationalNeedsTable = ({
         Header: t<string>('itSolutionsTable.finishBy'),
         accessor: ({ mustFinishDts }: any) => {
           if (mustFinishDts) {
-            return DateTime.fromISO(mustFinishDts).toLocaleString(
-              DateTime.DATE_SHORT
-            );
+            return formatDateUtc(mustFinishDts, 'MM/dd/yyyy');
           }
           return null;
         }
       },
       {
         Header: t<string>('itSolutionsTable.subtasks'),
-        accessor: 'subTasks'
+        accessor: 'operationalSolutionSubtasks',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          if (!row.original.name && !row.original.nameOther) {
+            return '';
+          }
+          return value.length.toString();
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),
@@ -198,7 +227,21 @@ const OperationalNeedsTable = ({
       },
       {
         Header: t<string>('itSolutionsTable.section'),
-        accessor: 'section'
+        accessor: 'section',
+        Cell: ({
+          row,
+          value
+        }: CellProps<
+          GetOperationalNeedsTableType,
+          OperationalNeedsSolutionsStatus
+        >): string => {
+          if (row.original.key && operationalNeedMap[row.original.key]) {
+            return i18next.t(
+              `${operationalNeedMap[row.original.key].section}:heading`
+            );
+          }
+          return '';
+        }
       },
       {
         Header: t<string>('itSolutionsTable.status'),
@@ -239,6 +282,7 @@ const OperationalNeedsTable = ({
     setPageSize,
     page,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -252,13 +296,15 @@ const OperationalNeedsTable = ({
           );
         }
       },
-      globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
-        pageIndex: 0,
-        hiddenColumns: hasEditAccess ? [] : ['Actions']
+        sortBy: useMemo(
+          () => [{ id: type === 'needs' ? 'needName' : 'name', asc: true }],
+          [type]
+        ),
+        pageIndex: 0
       }
     },
     useFilters,
@@ -270,6 +316,11 @@ const OperationalNeedsTable = ({
   if (loading) {
     return <PageLoading />;
   }
+
+  // Temp fix for `globalFilterCellText` to work with `page` rows
+  // The filter function requires all rows to be prepped so that
+  // `Column.Cell` is available during filtering
+  rows.map(row => prepareRow(row));
 
   if (error) {
     return (
@@ -283,6 +334,16 @@ const OperationalNeedsTable = ({
           message={t('itSolutionsTable.error.body')}
         />
       </ErrorAlert>
+    );
+  }
+
+  if (readOnly && operationalNeeds.length === 0) {
+    return (
+      <Alert heading={t('itSolutionsTable.noNeedsReadonly')} type="info">
+        {readOnly
+          ? t('itSolutionsTable.noNeedsReadonlyEditInfo')
+          : t('itSolutionsTable.noNeedsReadonlyInfo')}
+      </Alert>
     );
   }
 
@@ -311,8 +372,11 @@ const OperationalNeedsTable = ({
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers
-                // @ts-ignore
-                .filter(column => !hiddenColumns?.includes(column.Header))
+                .filter(
+                  column =>
+                    // @ts-ignore
+                    !hiddenTableColumns?.includes(column.Header)
+                )
                 .map((column, index) => (
                   <th
                     {...column.getHeaderProps()}
@@ -342,14 +406,14 @@ const OperationalNeedsTable = ({
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
-            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells
-                  .filter(cell => {
-                    // @ts-ignore
-                    return !hiddenColumns?.includes(cell.column.Header);
-                  })
+                  .filter(
+                    cell =>
+                      // @ts-ignore
+                      !hiddenTableColumns?.includes(cell.column.Header)
+                  )
                   .map((cell, i) => {
                     if (i === 0) {
                       return (
@@ -378,6 +442,7 @@ const OperationalNeedsTable = ({
                         })}
                         style={{
                           paddingLeft: '0',
+                          maxWidth: i === 1 ? '275px' : 'auto',
                           borderBottom:
                             index === page.length - 1 ? 'none' : 'auto'
                         }}

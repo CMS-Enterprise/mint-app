@@ -13,6 +13,7 @@ const dataSharingMockData: GetDataSharingType = {
   __typename: 'PlanOpsEvalAndLearning',
   id: '123',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  dataNeededForMonitoring: [],
   iddocSupport: true,
   dataSharingStarts: null,
   dataSharingStartsOther: '',

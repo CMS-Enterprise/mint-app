@@ -40,12 +40,17 @@ import UpdateClearanceCharacteristics from 'queries/PrepareForClearance/UpdateCl
 import UpdateClearanceOpsEvalAndLearning from 'queries/PrepareForClearance/UpdateClearanceOpsEvalAndLearning';
 import UpdateClearanceParticipantsAndProviders from 'queries/PrepareForClearance/UpdateClearanceParticipantsAndProviders';
 import UpdateClearancePayments from 'queries/PrepareForClearance/UpdateClearancePayments';
-import { TaskStatus } from 'types/graphql-global-types';
+import {
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'types/graphql-global-types';
 import ReadOnlyBeneficiaries from 'views/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
+import ReadOnlyOpsEvalAndLearning from 'views/ModelPlan/ReadOnly/OpsEvalAndLearning';
 import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyPayments from 'views/ModelPlan/ReadOnly/Payments';
+import { NotFoundPartial } from 'views/NotFound';
 import {
   findLockedSection,
   LockStatus,
@@ -97,7 +102,7 @@ const renderReviewTaskSection = (
     case 'beneficiaries':
       return <ReadOnlyBeneficiaries modelID={modelID} clearance />;
     case 'ops-eval-and-learning':
-      return <ReadOnlyModelBasics modelID={modelID} clearance />;
+      return <ReadOnlyOpsEvalAndLearning modelID={modelID} clearance />;
     case 'payment':
       return <ReadOnlyPayments modelID={modelID} clearance />;
     default:
@@ -112,7 +117,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const { t } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
-  const { t: i } = useTranslation('itTools');
+  const { t: i } = useTranslation('itSolutions');
   const history = useHistory();
 
   // Subscription locks context for task list
@@ -137,6 +142,10 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   });
 
   const modelPlanSection = routeMap[section];
+
+  const cannotStart: boolean =
+    data?.modelPlan?.prepareForClearance.status ===
+    PrepareForClearanceStatus.CANNOT_START;
 
   const readyForClearance: boolean =
     data?.modelPlan?.[
@@ -204,14 +213,14 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const renderModal = (locked: boolean) => {
     return (
       <Modal
-        className="radius-lg"
+        className="confirmation-modal"
         isOpen={isModalOpen}
         scroll
         closeModal={() => setModalOpen(false)}
       >
         <PageHeading
-          headingLevel="h2"
-          className="margin-top-0 margin-bottom-0"
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
           data-testid="clearance-modal-header"
         >
           {!locked ? p('modal.heading') : i('modal.heading')}
@@ -236,6 +245,10 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       </Modal>
     );
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan) || cannotStart) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <MainContent data-testid="clearance-review">

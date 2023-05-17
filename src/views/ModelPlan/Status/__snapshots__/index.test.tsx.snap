@@ -93,6 +93,11 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
                 Announced
               </option>
               <option
+                value="CANCELED"
+              >
+                Canceled
+              </option>
+              <option
                 value="CLEARED"
               >
                 Cleared
@@ -121,6 +126,11 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
                 value="OMB_ASRF_CLEARANCE"
               >
                 OMB/ASRF clearance
+              </option>
+              <option
+                value="PAUSED"
+              >
+                Paused
               </option>
               <option
                 value="PLAN_COMPLETE"

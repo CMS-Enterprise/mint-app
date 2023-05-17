@@ -17,7 +17,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToolsWarning';
+import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -89,7 +89,7 @@ const KeyCharacteristics = () => {
     need => need.modifiedDts
   );
 
-  // If redirected from IT Tools, scrolls to the relevant question
+  // If redirected from IT Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
@@ -216,7 +216,7 @@ const KeyCharacteristics = () => {
                 </ErrorAlert>
               )}
               <Form
-                className="tablet:grid-col-6 margin-top-6"
+                className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-key-characteristics-form"
                 onSubmit={e => {
                   handleSubmit(e);
@@ -297,7 +297,10 @@ const KeyCharacteristics = () => {
                   error={!!flatErrors.keyCharacteristics}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="plan-characteristics-key-characteristics">
+                  <Label
+                    htmlFor="plan-characteristics-key-characteristics"
+                    id="label-plan-characteristics-key-characteristics"
+                  >
                     {t('keyCharacteristics')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.keyCharacteristics}</FieldErrorMsg>
@@ -306,6 +309,7 @@ const KeyCharacteristics = () => {
                     as={MultiSelect}
                     id="plan-characteristics-key-characteristics"
                     name="keyCharacteristics"
+                    ariaLabel="label-plan-characteristics-key-characteristics"
                     role="combobox"
                     options={mapMultiSelectOptions(
                       translateKeyCharacteristics,
@@ -325,7 +329,7 @@ const KeyCharacteristics = () => {
                 />
 
                 {values.keyCharacteristics.includes(
-                  'OTHER' as KeyCharacteristic
+                  KeyCharacteristic.OTHER
                 ) && (
                   <FieldGroup
                     scrollElement="keyCharacteristicsOther"
@@ -335,7 +339,7 @@ const KeyCharacteristics = () => {
                     <Label htmlFor="plan-characteristics-key-other">
                       {t('specificQuestions')}
                     </Label>
-                    <p className="text-base margin-y-1 margin-top-3">
+                    <p className="margin-y-1 margin-top-3">
                       {t('pleaseDescribe')}
                     </p>
                     <FieldErrorMsg>
@@ -371,7 +375,7 @@ const KeyCharacteristics = () => {
                         {t('reviewPlanBids')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-collect-bids-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -427,7 +431,7 @@ const KeyCharacteristics = () => {
                         {t('manageEnrollment')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-manage-enrollment-warning"
                           onClick={() =>
                             handleFormSubmit(
@@ -483,7 +487,7 @@ const KeyCharacteristics = () => {
                         {t('updatedContract')}
                       </Label>
                       {itSolutionsStarted && (
-                        <ITToolsWarning
+                        <ITSolutionsWarning
                           id="plan-characteristics-contact-updated-warning"
                           onClick={() =>
                             handleFormSubmit(

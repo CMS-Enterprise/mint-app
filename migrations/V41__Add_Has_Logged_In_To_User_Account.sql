@@ -1,0 +1,2 @@
+ALTER TABLE user_account
+ADD COLUMN has_logged_in BOOLEAN NOT NULL DEFAULT FALSE;

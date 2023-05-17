@@ -2,8 +2,11 @@ package worker
 
 import (
 	"bytes"
+	"context"
 	"testing"
 	"time"
+
+	"github.com/cmsgov/mint-app/pkg/email"
 
 	"github.com/99designs/gqlgen/graphql"
 	faktory "github.com/contribsys/faktory/client"
@@ -14,6 +17,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // WorkerSuite is the testify suite for the worker package
@@ -22,10 +26,25 @@ type WorkerSuite struct {
 	testConfigs *TestConfigs
 }
 
+func (suite *WorkerSuite) stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
+	return &models.UserInfo{
+		Username:    username,
+		FirstName:   username,
+		LastName:    "Doe",
+		DisplayName: username + " Doe",
+		Email:       username + ".doe@local.fake",
+	}, nil
+}
+
 // SetupTest clears the database between each test
 func (suite *WorkerSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
 	assert.NoError(suite.T(), err)
+
+	//GET USER ACCOUNT EACH TIME!
+	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
+	suite.testConfigs.Principal = princ
+
 	// Flush faktory after each test
 	client, err := faktory.Open()
 	assert.NoError(suite.T(), err)
@@ -34,7 +53,17 @@ func (suite *WorkerSuite) SetupTest() {
 }
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := resolvers.ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
+	mp, err := resolvers.ModelPlanCreate(
+		context.Background(),
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planName,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
 	suite.NoError(err)
 	return mp
 }
@@ -44,28 +73,38 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 		ModelPlanID: mp.ID,
 		Content:     content,
 	}
-	pd, err := resolvers.CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	pd, err := resolvers.CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return pd
 }
 
-func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
+func (suite *WorkerSuite) createPlanCollaborator(mp *models.ModelPlan, userName string, fullName string, teamRole models.TeamRole, emailAddress string) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
-		EuaUserID:   EUAUserID,
-		FullName:    fullName,
+		UserName:    userName,
 		TeamRole:    teamRole,
-		Email:       emailAddress,
 	}
 
 	collaborator, _, err := resolvers.CreatePlanCollaborator(
+		context.Background(),
 		suite.testConfigs.Logger,
 		nil,
 		nil,
+		email.AddressBook{},
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.NoError(err)
 	return collaborator
@@ -110,7 +149,7 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 	updatedSections []string,
 	reviewSections []string,
 	clearanceSections []string,
-	addedLeads []string, discussionActivity bool) *models.AnalyzedAuditChange {
+	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
 		ModelPlan: &models.AnalyzedModelPlan{
@@ -140,7 +179,8 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 }
 
 func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
-	newAnalyzedAudit, err := models.NewAnalyzedAudit("TEST", mp.ID, mp.ModelName, date, changes)
+	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 
 	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditCreate(suite.testConfigs.Logger, newAnalyzedAudit)
