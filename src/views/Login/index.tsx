@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Trans } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
+import { Alert, Link } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 import OktaSignInWidget from 'components/shared/OktaSignInWidget';
@@ -9,6 +11,8 @@ import { isLocalAuthEnabled } from 'utils/auth';
 import DevLogin from 'views/AuthenticationWrapper/DevLogin';
 
 const Login = () => {
+  const [error, setError] = useState(false);
+
   let defaultAuth = false;
   const { oktaAuth, authState } = useOktaAuth();
   const history = useHistory();
@@ -59,7 +63,20 @@ const Login = () => {
           </button>
         </div>
       )}
-      <OktaSignInWidget onSuccess={onSuccess} onError={() => {}} />
+      {error && (
+        <Alert type="error">
+          <Trans i18nKey="general:oktaErrorMessage.noPermission">
+            indexZero
+            <Link href="mailto:MINTTeam@cms.hhs.gov">email</Link>
+            indexTwo
+          </Trans>
+        </Alert>
+      )}
+      <OktaSignInWidget
+        onSuccess={onSuccess}
+        onError={() => {}}
+        setError={setError}
+      />
     </MainContent>
   );
 };
