@@ -25,6 +25,9 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
   GetModelPlanDiscussionsVariables
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+// import Discussions from 'views/ModelPlan/Discussions';
+import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
+import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import { DiscussionStatus } from 'types/graphql-global-types';
 import { getUnansweredQuestions } from 'utils/modelPlan';
@@ -33,7 +36,6 @@ import DiscussionModalWrapper from 'views/ModelPlan/Discussions/DiscussionModalW
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import QuestionAndReply from './_components/QuestionAndReply';
-// import Discussions from 'views/ModelPlan/Discussions';
 
 const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('discussions');
@@ -53,6 +55,9 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
   );
   const [createReply] = useMutation<CreateModelPlanReplyType>(
     CreateModelPlanReply
+  );
+  const [updateDiscussion] = useMutation<UpdateModelPlanDiscussionType>(
+    UpdateModelPlanDiscussion
   );
   const createDiscussionMethods = {
     question: createQuestion,
@@ -80,7 +85,7 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
     'question' | 'reply' | 'discussion'
   >('question');
   // State and setter used for containing the related question when replying
-  const [setReply] = useState<DiscussionType | ReplyType | null>(null);
+  const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
   // Handles the default expanded render of accordions based on if there are more than zero questions
   const openStatus = (status: DiscussionStatus) => {
@@ -107,12 +112,12 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
         modelPlanID: modelID,
         content: formikValues.content
       };
-      // } else if (discussionType === 'reply' && reply) {
-      //   payload = {
-      //     discussionID: reply.id,
-      //     content: formikValues.content,
-      //     resolution: true
-      //   };
+    } else if (discussionType === 'reply' && reply) {
+      payload = {
+        discussionID: reply.id,
+        content: formikValues.content,
+        resolution: true
+      };
     } else {
       return; // Currently we have no mutations when discussions is displayed
     }
@@ -124,19 +129,9 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
     })
       .then(response => {
         if (!response?.errors) {
-          // if (discussionType === 'reply' && reply?.id) {
-          //   setDiscussionReplyID(null);
-          //   queryParams.delete('discussionID');
-          //   history.replace({
-          //     search: queryParams.toString()
-          //   });
-          //   handleUpdateDiscussion(reply.id);
-          // } else {
-          //   refetch().then(() => {
-          //     setInitQuestion(false);
-          //     setDiscussionType('discussion');
-          //   });
-          // }
+          if (discussionType === 'reply' && reply?.id) {
+            handleUpdateDiscussion(reply.id);
+          }
 
           setIsDiscussionOpen(false);
           setDiscussionStatus('success');
@@ -151,6 +146,31 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
         setDiscussionStatusMessage(
           discussionType === 'question' ? t('error') : t('errorAnswer')
         );
+      });
+  };
+
+  const handleUpdateDiscussion = (id: string) => {
+    updateDiscussion({
+      variables: {
+        id,
+        changes: {
+          status: 'ANSWERED' // For now any question that has a reply will bw considered "ANSWERED"
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          setIsDiscussionOpen(false);
+          setDiscussionStatus('success');
+          setDiscussionStatusMessage(
+            discussionType === 'question' ? t('success') : t('successAnswer')
+          );
+          refetch();
+        }
+      })
+      .catch(() => {
+        setDiscussionStatus('error');
+        setDiscussionStatusMessage(t('error'));
       });
   };
 
@@ -195,6 +215,7 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
                     setDiscussionStatusMessage={setDiscussionStatusMessage}
                     setDiscussionType={setDiscussionType}
                     setReply={setReply}
+                    setIsDiscussionOpen={setIsDiscussionOpen}
                   />
                 ),
                 expanded: true,
@@ -245,6 +266,7 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
               renderType={discussionType}
               closeModal={() => setIsDiscussionOpen(false)}
               handleCreateDiscussion={handleCreateDiscussion}
+              reply={reply}
             />
           )}
         </DiscussionModalWrapper>
