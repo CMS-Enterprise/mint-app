@@ -391,22 +391,19 @@ const Discussions = ({
       return renderDiscussions();
     }
     // If discussionType === "question" or "reply"
-    if (!readOnly) {
-      return (
-        <QuestionAndReply
-          renderType={discussionType}
-          handleCreateDiscussion={handleCreateDiscussion}
-          reply={reply}
-          discussionReplyID={discussionReplyID}
-          setDiscussionReplyID={setDiscussionReplyID}
-          queryParams={queryParams}
-          setInitQuestion={setInitQuestion}
-          setDiscussionStatusMessage={setDiscussionStatusMessage}
-          setDiscussionType={setDiscussionType}
-        />
-      );
-    }
-    return <></>;
+    return (
+      <QuestionAndReply
+        renderType={discussionType}
+        handleCreateDiscussion={handleCreateDiscussion}
+        reply={reply}
+        discussionReplyID={discussionReplyID}
+        setDiscussionReplyID={setDiscussionReplyID}
+        queryParams={queryParams}
+        setInitQuestion={setInitQuestion}
+        setDiscussionStatusMessage={setDiscussionStatusMessage}
+        setDiscussionType={setDiscussionType}
+      />
+    );
   };
 
   return (
