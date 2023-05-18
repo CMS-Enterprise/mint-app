@@ -69,7 +69,7 @@ const SingleDiscussion = ({
         <p className="margin-y-0 padding-y-1">{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
           {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-          {hasEditAccess && answerQuestion && setIsDiscussionOpen ? (
+          {hasEditAccess && answerQuestion && (
             <>
               <IconAnnouncement className="text-primary margin-right-1" />
               <Button
@@ -77,23 +77,9 @@ const SingleDiscussion = ({
                 unstyled
                 role="button"
                 onClick={() => {
-                  setIsDiscussionOpen(true);
-                  setDiscussionStatusMessage('');
-                  setDiscussionType('reply');
-                  setReply(discussion);
-                }}
-              >
-                {t('answer')}
-              </Button>
-            </>
-          ) : (
-            <>
-              <IconAnnouncement className="text-primary margin-right-1" />
-              <Button
-                type="button"
-                unstyled
-                role="button"
-                onClick={() => {
+                  if (setIsDiscussionOpen) {
+                    setIsDiscussionOpen(true);
+                  }
                   setDiscussionStatusMessage('');
                   setDiscussionType('reply');
                   setReply(discussion);
