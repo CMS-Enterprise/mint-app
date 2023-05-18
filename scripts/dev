@@ -380,7 +380,32 @@ namespace :db do
     operational_need,
     existing_model_link,
     model_plan,
-    audit.change"
+    audit.change,
+
+    analyzed_audit_history,
+    discussion_reply_history,
+    existing_model_history,
+    model_plan_history,
+    nda_agreement_history,
+    operational_need_history,
+    operational_solution_history,
+    operational_solution_subtask_history,
+    plan_basics_history,
+    plan_beneficiaries_history,
+    plan_collaborator_history,
+    plan_cr_tdl_history,
+    plan_discussion_history,
+    plan_document_history,
+    plan_document_solution_link_history,
+    plan_favorite_history,
+    plan_general_characteristics_history,
+    plan_ops_eval_and_learning_history,
+    plan_participants_and_providers_history,
+    plan_payments_history,
+    possible_need_solution_link_history,
+    possible_operational_need_history,
+    possible_operational_solution_history,
+    user_account_history"
 
     puts "Cleaning database..."
     `echo "TRUNCATE #{tableList}" | psql`
