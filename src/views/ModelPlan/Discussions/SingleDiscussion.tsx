@@ -20,6 +20,7 @@ type SingleDiscussionProps = {
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
+  setIsDiscussionOpen?: (value: boolean) => void;
 };
 
 const SingleDiscussion = ({
@@ -30,7 +31,8 @@ const SingleDiscussion = ({
   hasEditAccess,
   setDiscussionStatusMessage,
   setDiscussionType,
-  setReply
+  setReply,
+  setIsDiscussionOpen
 }: SingleDiscussionProps) => {
   const { t } = useTranslation('discussions');
 
@@ -67,7 +69,24 @@ const SingleDiscussion = ({
         <p className="margin-y-0 padding-y-1">{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
           {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-          {hasEditAccess && answerQuestion && (
+          {hasEditAccess && answerQuestion && setIsDiscussionOpen ? (
+            <>
+              <IconAnnouncement className="text-primary margin-right-1" />
+              <Button
+                type="button"
+                unstyled
+                role="button"
+                onClick={() => {
+                  setIsDiscussionOpen(true);
+                  setDiscussionStatusMessage('');
+                  setDiscussionType('reply');
+                  setReply(discussion);
+                }}
+              >
+                {t('answer')}
+              </Button>
+            </>
+          ) : (
             <>
               <IconAnnouncement className="text-primary margin-right-1" />
               <Button

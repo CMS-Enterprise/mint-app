@@ -4,21 +4,30 @@ import { Button, Label, Textarea } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import PageHeading from 'components/PageHeading';
+import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import IconInitial from 'components/shared/IconInitial';
+import {
+  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
+  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
+} from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 
 type QuestionAndReplyProps = {
   renderType: 'question' | 'reply';
   closeModal: () => void;
   handleCreateDiscussion: (formikValues: { content: string }) => void;
+  reply?: DiscussionType | ReplyType | null;
 };
 
 const QuestionAndReply = ({
   renderType,
   closeModal,
-  handleCreateDiscussion
+  handleCreateDiscussion,
+  reply
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
@@ -34,7 +43,7 @@ const QuestionAndReply = ({
       </p>
 
       {/* If renderType is reply, render the related question that is being answered */}
-      {/* {renderType === 'reply' && reply && (
+      {renderType === 'reply' && reply && (
         <div>
           <div className="display-flex flex-wrap flex-justify">
             {reply.isAssessment ? (
@@ -61,7 +70,7 @@ const QuestionAndReply = ({
             <p>{reply.content}</p>
           </div>
         </div>
-      )} */}
+      )}
 
       <Formik
         initialValues={{ content: '' }}
@@ -121,20 +130,7 @@ const QuestionAndReply = ({
                     className="usa-button usa-button--outline margin-bottom-1"
                     type="button"
                     onClick={() => {
-                      // TODO: Cancel button
                       closeModal();
-                      // if (discussionReplyID) {
-                      //   setDiscussionReplyID(null);
-                      //   queryParams.delete('discussionID');
-                      //   history.replace({
-                      //     search: queryParams.toString()
-                      //   });
-                      //   setInitQuestion(false);
-                      // }
-                      // if (discussionType) {
-                      //   setDiscussionStatusMessage('');
-                      //   setDiscussionType('discussion');
-                      // }
                     }}
                   >
                     {h('cancel')}
