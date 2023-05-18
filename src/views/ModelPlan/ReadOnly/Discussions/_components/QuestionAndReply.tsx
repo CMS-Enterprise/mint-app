@@ -1,7 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { Button, Label, Textarea } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
 import AssessmentIcon from 'components/shared/AssessmentIcon';
@@ -18,19 +20,37 @@ import flattenErrors from 'utils/flattenErrors';
 
 type QuestionAndReplyProps = {
   renderType: 'question' | 'reply';
-  closeModal: () => void;
+  closeModal?: () => void;
   handleCreateDiscussion: (formikValues: { content: string }) => void;
   reply?: DiscussionType | ReplyType | null;
+  discussionReplyID?: string | null | undefined;
+  setDiscussionReplyID?: (value: string | null | undefined) => void;
+  queryParams?: URLSearchParams;
+  setInitQuestion?: (value: boolean) => void;
+  setDiscussionStatusMessage?: (value: string) => void;
+  setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
 };
 
 const QuestionAndReply = ({
   renderType,
   closeModal,
   handleCreateDiscussion,
-  reply
+  reply,
+  discussionReplyID,
+  setDiscussionReplyID,
+  queryParams,
+  setInitQuestion,
+  setDiscussionStatusMessage,
+  setDiscussionType
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
+
+  const history = useHistory();
+
+  const validationSchema = Yup.object().shape({
+    content: Yup.string().trim().required(`Please enter a ${renderType}`)
+  });
 
   return (
     <>
@@ -75,6 +95,7 @@ const QuestionAndReply = ({
       <Formik
         initialValues={{ content: '' }}
         onSubmit={handleCreateDiscussion}
+        validationSchema={validationSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
@@ -130,7 +151,30 @@ const QuestionAndReply = ({
                     className="usa-button usa-button--outline margin-bottom-1"
                     type="button"
                     onClick={() => {
-                      closeModal();
+                      if (closeModal) {
+                        closeModal();
+                      }
+                      if (
+                        discussionReplyID &&
+                        setDiscussionReplyID &&
+                        queryParams &&
+                        setInitQuestion
+                      ) {
+                        setDiscussionReplyID(null);
+                        queryParams.delete('discussionID');
+                        history.replace({
+                          search: queryParams.toString()
+                        });
+                        setInitQuestion(false);
+                      }
+                      if (
+                        renderType &&
+                        setDiscussionStatusMessage &&
+                        setDiscussionType
+                      ) {
+                        setDiscussionStatusMessage('');
+                        setDiscussionType('discussion');
+                      }
                     }}
                   >
                     {h('cancel')}
