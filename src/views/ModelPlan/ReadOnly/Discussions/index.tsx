@@ -25,7 +25,6 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType,
   GetModelPlanDiscussionsVariables
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
-// import Discussions from 'views/ModelPlan/Discussions';
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
@@ -288,7 +287,6 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
                 type="button"
                 unstyled
                 onClick={() => {
-                  // TODO: Opens Modal here
                   setIsDiscussionOpen(true);
                   // setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
                   // setDiscussionStatusMessage(''); // Clearing status before asking a new question
