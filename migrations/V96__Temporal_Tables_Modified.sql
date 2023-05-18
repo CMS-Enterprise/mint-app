@@ -16,6 +16,17 @@ DECLARE
   pg_version integer;
   newVersion record;
   oldVersion record;
+
+  table_id int;
+  excluded_cols text[] = ARRAY[]::text[];
+  insert_cols text[] = ARRAY[]::text[];
+  pkey_f TEXT;
+  fkey_f TEXT;
+  created_by_f TEXT;
+  modified_by_f TEXT;
+  table_uses_user_id boolean;
+
+  diff_cols text[] = ARRAY[]::text[];
 BEGIN
 
   IF TG_WHEN != 'BEFORE' OR TG_LEVEL != 'ROW' THEN
@@ -33,6 +44,27 @@ BEGIN
     MESSAGE = 'wrong number of parameters for function "versioning"',
     HINT = 'expected 3 or 4 parameters but got ' || TG_NARGS;
   END IF;
+
+    SELECT 
+    id,
+    ignored_fields,
+    insert_fields,
+    created_by_field,
+    modified_by_field,
+    pkey_field,
+    fkey_field,
+    uses_user_id
+    INTO
+    table_id,
+    excluded_cols,
+    insert_cols,
+    created_by_f,
+    modified_by_f,
+    pkey_f,
+    fkey_f,
+    table_uses_user_id
+    FROM audit.table_config
+    WHERE schema =TG_TABLE_SCHEMA::text AND name = TG_TABLE_NAME::text;
 
   sys_period := TG_ARGV[0];
   history_table := TG_ARGV[1];
@@ -160,11 +192,13 @@ BEGIN
       ON history.attname = main.attname
       AND history.attname != sys_period;
     -- skip version if it would be identical to the previous version
-    IF ignore_unchanged_values AND TG_OP = 'UPDATE' AND array_length(commonColumns, 1) > 0 THEN
-      EXECUTE 'SELECT ROW($1.' || array_to_string(commonColumns , ', $1.') || ')'
+
+    diff_cols = ARRAY( SELECT unnest(commonColumns) EXCEPT SELECT unnest(excluded_cols));  -- Remove the excluded cols from the commonColumns for the purpose of calculating a difference
+    IF ignore_unchanged_values AND TG_OP = 'UPDATE' AND array_length(diff_cols, 1) > 0 THEN --TODO use this spot to specify if there are any columns that we need to ignore here as well
+      EXECUTE 'SELECT ROW($1.' || array_to_string(diff_cols , ', $1.') || ')'
         USING NEW
         INTO newVersion;
-      EXECUTE 'SELECT ROW($1.' || array_to_string(commonColumns , ', $1.') || ')'
+      EXECUTE 'SELECT ROW($1.' || array_to_string(diff_cols , ', $1.') || ')'
         USING OLD
         INTO oldVersion;
       IF newVersion IS NOT DISTINCT FROM oldVersion THEN
@@ -180,7 +214,7 @@ BEGIN
       ') VALUES ($1.' ||
       array_to_string(commonColumns, ',$1.') ||
       ',tstzrange($2, $3, ''[)''))')
-       USING OLD, range_lower, time_stamp_to_use;
+       USING OLD, range_lower, time_stamp_to_use; --TODO modify this if desired to insert the NEW value, and update the time frame of the old record if it exists?
   END IF;
 
   IF TG_OP = 'UPDATE' OR TG_OP = 'INSERT' THEN
