@@ -19,29 +19,29 @@ import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 
 type QuestionAndReplyProps = {
-  renderType: 'question' | 'reply';
   closeModal?: () => void;
-  handleCreateDiscussion: (formikValues: { content: string }) => void;
-  reply?: DiscussionType | ReplyType | null;
   discussionReplyID?: string | null | undefined;
-  setDiscussionReplyID?: (value: string | null | undefined) => void;
+  handleCreateDiscussion: (formikValues: { content: string }) => void;
   queryParams?: URLSearchParams;
-  setInitQuestion?: (value: boolean) => void;
+  renderType: 'question' | 'reply';
+  reply?: DiscussionType | ReplyType | null;
+  setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionStatusMessage?: (value: string) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
+  setInitQuestion?: (value: boolean) => void;
 };
 
 const QuestionAndReply = ({
-  renderType,
   closeModal,
-  handleCreateDiscussion,
-  reply,
   discussionReplyID,
-  setDiscussionReplyID,
+  handleCreateDiscussion,
   queryParams,
-  setInitQuestion,
+  renderType,
+  reply,
+  setDiscussionReplyID,
   setDiscussionStatusMessage,
-  setDiscussionType
+  setDiscussionType,
+  setInitQuestion
 }: QuestionAndReplyProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
