@@ -2,14 +2,14 @@
 
 ## Background
 
-Temporal tables are database tables that keep track of changes to data over time. They are commonly used in Microsoft SQL Server to maintain an audit trail of data changes. While PostgreSQL does not have native support for temporal tables, the same behavior can be replicated by using triggers to capture changes and store historical data in separate tables. As compared to a generic implementation, a temporal table utilizes a typed record that shows the state of a row at any given instant in time, instead of just saying what was changes.
+Temporal tables are database tables that keep track of changes to data over time. They are commonly used in Microsoft SQL Server to maintain an audit trail of data changes. While PostgreSQL does not have native support for temporal tables, the same behavior can be replicated by using triggers to capture changes and store historical data in separate tables. As compared to a generic implementation, a temporal table utilizes a typed record that shows the state of a row at any given instant in time, instead of just saying what was changed.
 
 ### Postgres implementation
-As a starting point this [repositories](https://github.com/nearform/temporal_tables/blob/master/package.json) work was used.
+As a starting point this [repositories](https://github.com/nearform/temporal_tables/blob/master/package.json) trigger was used.
 
 This implementation works fairly well, but does have some features that could be changed to have a more specific implementation for our needs.
 
-It works be creating a history table that corresponds to every record that is desired to be audited. The versioning trigger is a called before the update of a row, and it inserts the values of the row into the table. It has a date range column that it updates to show for what time period the record was the listed value. With this implementation, the most up to date record is always the record that is in the main table, not the history table.
+It works by creating a history table that corresponds to every record that is desired to be audited. The versioning trigger is a called before the update of a row, and it inserts the values of the row into the table. It has a date range column that it updates to show for what time period the record was the listed value. With this implementation, the most up to date record is always the record that is in the main table, not the history table.
 
 The trigger also has functionality to only create a record if the data was actually changed. In practice, this doesn't work for our implementation as meta data columns like `modified_by` and `modified_dts` can be changed without changing any other actual data. This effectively results in multiple empty historic entries. 
 
@@ -21,7 +21,7 @@ The solution natively handles data changes in a variety of ways.
     2. If the column should be audited, it must be added to the history table as well as the main table.
 
 
-#### Column Subtraction
+#### Column Removal
     1. If a column is removed from the main table and not the history table, you will retain all of the historic data.
     2. You can also remove the column from both the main and the historic table, but you will loose all historic data in that column.
 
