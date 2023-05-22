@@ -8230,6 +8230,8 @@ enum ModelStatus {
 	ANNOUNCED
   PAUSED
   CANCELED
+  ACTIVE
+  ENDED
 }
 
 enum CMSCenter {
