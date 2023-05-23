@@ -1,0 +1,597 @@
+GoModel,GQLModel,TableName,EmbeddedStruct,GoField,DataType,GQLField,DBField
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct,ID,uuid.UUID,id,id
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,null,ModelName,string,modelName,model_name
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,time.Time,wall,uint64,,
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,time.Time,ext,int64,,
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,time.Time,loc,*time.Location,,
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.AnalyzedAuditChange,ModelPlan,*models.AnalyzedModelPlan,"modelPlan,omitempty",
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.AnalyzedAuditChange,Documents,*models.AnalyzedDocuments,"documents,omitempty",
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.AnalyzedAuditChange,CrTdls,*models.AnalyzedCrTdls,"crTdls,omitempty",
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.AnalyzedAuditChange,PlanSections,*models.AnalyzedPlanSections,"planSections,omitempty",
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.AnalyzedAuditChange,ModelLeads,*models.AnalyzedModelLeads,"modelLeads,omitempty",
+AnalyzedAudit,AnalyzedAudit,analyzed_audit,models.AnalyzedAuditChange,PlanDiscussions,*models.AnalyzedPlanDiscussions,"planDiscussion,omitempty",
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct,ID,uuid.UUID,id,id
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+DiscussionReply,DiscussionReply,discussion_reply,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+DiscussionReply,DiscussionReply,discussion_reply,models.discussionRelation,DiscussionID,uuid.UUID,discussionID,discussion_id
+DiscussionReply,DiscussionReply,discussion_reply,null,Content,string,content,content
+DiscussionReply,DiscussionReply,discussion_reply,null,Resolution,bool,resolution,resolution
+DiscussionReply,DiscussionReply,discussion_reply,null,IsAssessment,bool,isAssessment,is_assessment
+ExistingModel,ExistingModel,existing_model,null,ID,int,id,id
+ExistingModel,ExistingModel,existing_model,null,ModelName,string,modelName,model_name
+ExistingModel,ExistingModel,existing_model,null,Stage,string,stage,stage
+ExistingModel,ExistingModel,existing_model,models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+ExistingModel,ExistingModel,existing_model,models.createdByRelation | time.Time,wall,uint64,,
+ExistingModel,ExistingModel,existing_model,models.createdByRelation | time.Time,ext,int64,,
+ExistingModel,ExistingModel,existing_model,models.createdByRelation | time.Time,loc,*time.Location,,
+ExistingModel,ExistingModel,existing_model,models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+ExistingModel,ExistingModel,existing_model,models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+ExistingModel,ExistingModel,existing_model,null,NumberOfParticipants,*string,numberOfParticipants,number_of_participants
+ExistingModel,ExistingModel,existing_model,null,Category,*string,category,category
+ExistingModel,ExistingModel,existing_model,null,Authority,*string,authority,authority
+ExistingModel,ExistingModel,existing_model,null,Description,*string,description,description
+ExistingModel,ExistingModel,existing_model,null,NumberOfBeneficiariesImpacted,*int,numberOfBeneficiariesImpacted,number_of_beneficiaries_impacted
+ExistingModel,ExistingModel,existing_model,null,NumberOfPhysiciansImpacted,*int,numberOfPhysiciansImpacted,number_of_physicians_impacted
+ExistingModel,ExistingModel,existing_model,null,DateBegan,*time.Time,dateBegan,date_began
+ExistingModel,ExistingModel,existing_model,null,DateEnded,*time.Time,dateEnded,date_ended
+ExistingModel,ExistingModel,existing_model,null,States,*string,states,states
+ExistingModel,ExistingModel,existing_model,null,Keywords,*string,keywords,keywords
+ExistingModel,ExistingModel,existing_model,null,URL,*string,url,url
+ExistingModel,ExistingModel,existing_model,null,DisplayModelSummary,*bool,displayModelSummary,display_model_summary
+ExistingModelLink,ExistingModelLink,existing_model_link,null,ExistingModelID,*int,existingModelID,existing_model_id
+ExistingModelLink,ExistingModelLink,existing_model_link,null,CurrentModelPlanID,*uuid.UUID,currentModelPlanID,current_model_plan_id
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct,ID,uuid.UUID,id,id
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+ExistingModelLink,ExistingModelLink,existing_model_link,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+ExistingModelLink,ExistingModelLink,existing_model_link,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+ModelPlan,ModelPlan,model_plan,models.baseStruct,ID,uuid.UUID,id,id
+ModelPlan,ModelPlan,model_plan,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+ModelPlan,ModelPlan,model_plan,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+ModelPlan,ModelPlan,model_plan,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+ModelPlan,ModelPlan,model_plan,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+ModelPlan,ModelPlan,model_plan,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+ModelPlan,ModelPlan,model_plan,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+ModelPlan,ModelPlan,model_plan,null,ModelName,string,modelName,model_name
+ModelPlan,ModelPlan,model_plan,null,Archived,bool,archived,archived
+ModelPlan,ModelPlan,model_plan,null,Status,models.ModelStatus,status,status
+NdaAgreement,NdaAgreement,nda_agreement,null,UserID,uuid.UUID,userID,user_id
+NdaAgreement,NdaAgreement,nda_agreement,null,Agreed,bool,agreed,agreed
+NdaAgreement,NdaAgreement,nda_agreement,null,AgreedDts,*time.Time,agreedDts,agreed_dts
+NdaAgreement,NdaAgreement,nda_agreement,null,ID,uuid.UUID,id,id
+NdaAgreement,NdaAgreement,nda_agreement,null,CreatedBy,uuid.UUID,createdBy,created_by
+NdaAgreement,NdaAgreement,nda_agreement,time.Time,wall,uint64,,
+NdaAgreement,NdaAgreement,nda_agreement,time.Time,ext,int64,,
+NdaAgreement,NdaAgreement,nda_agreement,time.Time,loc,*time.Location,,
+NdaAgreement,NdaAgreement,nda_agreement,null,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+NdaAgreement,NdaAgreement,nda_agreement,null,ModifiedDts,*time.Time,modifiedDts,modified_dts
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct,ID,uuid.UUID,id,id
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+OperationalNeed,OperationalNeed,operational_need,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+OperationalNeed,OperationalNeed,operational_need,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+OperationalNeed,OperationalNeed,operational_need,null,NeedType,*int,needType,need_type
+OperationalNeed,OperationalNeed,operational_need,null,Name,*string,name,need_name
+OperationalNeed,OperationalNeed,operational_need,null,Key,*models.OperationalNeedKey,key,need_key
+OperationalNeed,OperationalNeed,operational_need,null,Section,*models.TaskListSection,section,section
+OperationalNeed,OperationalNeed,operational_need,null,NameOther,*string,nameOther,name_other
+OperationalNeed,OperationalNeed,operational_need,null,Needed,*bool,needed,needed
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct,ID,uuid.UUID,id,id
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+OperationalSolution,OperationalSolution,operational_solution,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+OperationalSolution,OperationalSolution,operational_solution,models.operationalNeedRelation,OperationalNeedID,uuid.UUID,operationalNeedID,operational_need_id
+OperationalSolution,OperationalSolution,operational_solution,null,SolutionType,*int,solutionType,solution_type
+OperationalSolution,OperationalSolution,operational_solution,null,Needed,*bool,needed,needed
+OperationalSolution,OperationalSolution,operational_solution,null,Name,*string,name,sol_name
+OperationalSolution,OperationalSolution,operational_solution,null,Key,*models.OperationalSolutionKey,key,sol_key
+OperationalSolution,OperationalSolution,operational_solution,null,NameOther,*string,nameOther,name_other
+OperationalSolution,OperationalSolution,operational_solution,null,PocName,*string,pocName,poc_name
+OperationalSolution,OperationalSolution,operational_solution,null,PocEmail,*string,pocEmail,poc_email
+OperationalSolution,OperationalSolution,operational_solution,null,MustStartDts,*time.Time,mustStartDts,must_start_dts
+OperationalSolution,OperationalSolution,operational_solution,null,MustFinishDts,*time.Time,mustFinishDts,must_finish_dts
+OperationalSolution,OperationalSolution,operational_solution,null,IsOther,*bool,isOther,is_other
+OperationalSolution,OperationalSolution,operational_solution,null,IsCommonSolution,*bool,isCommonSolution,is_common_solution
+OperationalSolution,OperationalSolution,operational_solution,null,OtherHeader,*string,otherHeader,other_header
+OperationalSolution,OperationalSolution,operational_solution,null,Status,models.OpSolutionStatus,status,status
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct,ID,uuid.UUID,id,id
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,models.solutionRelation,SolutionID,uuid.UUID,SolutionID,solution_id
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,null,Name,string,name,
+OperationalSolutionSubtask,OperationalSolutionSubtask,operational_solution_subtask,null,Status,models.OperationalSolutionSubtaskStatus,status,
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct,ID,uuid.UUID,id,id
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection | models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection,ReadyForReviewBy,*uuid.UUID,readyForReviewBy,ready_for_review_by
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection,ReadyForReviewDts,*time.Time,readyForReviewDts,ready_for_review_dts
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection,ReadyForClearanceBy,*uuid.UUID,readyForClearanceBy,ready_for_clearance_by
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection,ReadyForClearanceDts,*time.Time,readyForClearanceDts,ready_for_clearance_dts
+PlanBasics,PlanBasics,plan_basics,models.baseTaskListSection,Status,models.TaskStatus,status,status
+PlanBasics,PlanBasics,plan_basics,null,ModelCategory,*models.ModelCategory,modelCategory,model_category
+PlanBasics,PlanBasics,plan_basics,null,CMSCenters,pq.StringArray,cmsCenters,cms_centers
+PlanBasics,PlanBasics,plan_basics,null,CMSOther,*string,cmsOther,cms_other
+PlanBasics,PlanBasics,plan_basics,null,CMMIGroups,pq.StringArray,cmmiGroups,cmmi_groups
+PlanBasics,PlanBasics,plan_basics,null,ModelType,*models.ModelType,modelType,model_type
+PlanBasics,PlanBasics,plan_basics,null,Problem,*string,problem,problem
+PlanBasics,PlanBasics,plan_basics,null,Goal,*string,goal,goal
+PlanBasics,PlanBasics,plan_basics,null,TestInterventions,*string,testInterventions,test_interventions
+PlanBasics,PlanBasics,plan_basics,null,Note,*string,note,note
+PlanBasics,PlanBasics,plan_basics,null,CompleteICIP,*time.Time,completeICIP,complete_icip
+PlanBasics,PlanBasics,plan_basics,null,ClearanceStarts,*time.Time,clearanceStarts,clearance_starts
+PlanBasics,PlanBasics,plan_basics,null,ClearanceEnds,*time.Time,clearanceEnds,clearance_ends
+PlanBasics,PlanBasics,plan_basics,null,Announced,*time.Time,announced,announced
+PlanBasics,PlanBasics,plan_basics,null,ApplicationsStart,*time.Time,applicationsStart,applications_starts
+PlanBasics,PlanBasics,plan_basics,null,ApplicationsEnd,*time.Time,applicationsEnd,applications_ends
+PlanBasics,PlanBasics,plan_basics,null,PerformancePeriodStarts,*time.Time,performancePeriodStarts,performance_period_starts
+PlanBasics,PlanBasics,plan_basics,null,PerformancePeriodEnds,*time.Time,performancePeriodEnds,performance_period_ends
+PlanBasics,PlanBasics,plan_basics,null,WrapUpEnds,*time.Time,wrapUpEnds,wrap_up_ends
+PlanBasics,PlanBasics,plan_basics,null,HighLevelNote,*string,highLevelNote,high_level_note
+PlanBasics,PlanBasics,plan_basics,null,PhasedIn,*bool,phasedIn,phased_in
+PlanBasics,PlanBasics,plan_basics,null,PhasedInNote,*string,phasedInNote,phased_in_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct,ID,uuid.UUID,id,id
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection | models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection,ReadyForReviewBy,*uuid.UUID,readyForReviewBy,ready_for_review_by
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection,ReadyForReviewDts,*time.Time,readyForReviewDts,ready_for_review_dts
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection,ReadyForClearanceBy,*uuid.UUID,readyForClearanceBy,ready_for_clearance_by
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection,ReadyForClearanceDts,*time.Time,readyForClearanceDts,ready_for_clearance_dts
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,models.baseTaskListSection,Status,models.TaskStatus,status,status
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,Beneficiaries,pq.StringArray,beneficiaries,beneficiaries
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiariesOther,*string,beneficiariesOther,beneficiaries_other
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiariesNote,*string,beneficiariesNote,beneficiaries_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,TreatDualElligibleDifferent,*models.TriStateAnswer,treatDualElligibleDifferent,treat_dual_elligible_different
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,TreatDualElligibleDifferentHow,*string,treatDualElligibleDifferentHow,treat_dual_elligible_different_how
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,TreatDualElligibleDifferentNote,*string,treatDualElligibleDifferentNote,treat_dual_elligible_different_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,ExcludeCertainCharacteristics,*models.TriStateAnswer,excludeCertainCharacteristics,exclude_certain_characteristics
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,ExcludeCertainCharacteristicsCriteria,*string,excludeCertainCharacteristicsCriteria,exclude_certain_characteristics_criteria
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,ExcludeCertainCharacteristicsNote,*string,excludeCertainCharacteristicsNote,exclude_certain_characteristics_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,NumberPeopleImpacted,*int,numberPeopleImpacted,number_people_impacted
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,EstimateConfidence,*models.ConfidenceType,estimateConfidence,estimate_confidence
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,ConfidenceNote,*string,confidenceNote,confidence_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiarySelectionMethod,pq.StringArray,beneficiarySelectionMethod,beneficiary_selection_method
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiarySelectionOther,*string,beneficiarySelectionOther,beneficiary_selection_other
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiarySelectionNote,*string,beneficiarySelectionNote,beneficiary_selection_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiarySelectionFrequency,*models.FrequencyType,beneficiarySelectionFrequency,beneficiary_selection_frequency
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiarySelectionFrequencyOther,*string,beneficiarySelectionFrequencyOther,beneficiary_selection_frequency_other
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiarySelectionFrequencyNote,*string,beneficiarySelectionFrequencyNote,beneficiary_selection_frequency_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiaryOverlap,*models.OverlapType,beneficiaryOverlap,beneficiary_overlap
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,BeneficiaryOverlapNote,*string,beneficiaryOverlapNote,beneficiary_overlap_note
+PlanBeneficiaries,PlanBeneficiaries,plan_beneficiaries,null,PrecedenceRules,*string,precedenceRules,precedence_rules
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct,ID,uuid.UUID,id,id
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanCollaborator,PlanCollaborator,plan_collaborator,models.userIDRelation,UserID,uuid.UUID,userId,user_id
+PlanCollaborator,PlanCollaborator,plan_collaborator,null,TeamRole,models.TeamRole,teamRole,team_role
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct,ID,uuid.UUID,id,id
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,null,IDNumber,string,idNumber,id_number
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,null,DateInitiated,*time.Time,dateInitiated,date_initiated
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,null,Title,string,title,title
+PlanCrTdl,PlanCrTdl,plan_cr_tdl,null,Note,*string,note,note
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct,ID,uuid.UUID,id,id
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanDiscussion,PlanDiscussion,plan_discussion,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanDiscussion,PlanDiscussion,plan_discussion,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanDiscussion,PlanDiscussion,plan_discussion,null,Content,string,content,content
+PlanDiscussion,PlanDiscussion,plan_discussion,null,Status,models.DiscussionStatus,status,status
+PlanDiscussion,PlanDiscussion,plan_discussion,null,IsAssessment,bool,isAssessment,is_assessment
+PlanDocument,PlanDocument,plan_document,models.baseStruct,ID,uuid.UUID,id,id
+PlanDocument,PlanDocument,plan_document,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanDocument,PlanDocument,plan_document,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanDocument,PlanDocument,plan_document,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanDocument,PlanDocument,plan_document,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanDocument,PlanDocument,plan_document,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanDocument,PlanDocument,plan_document,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanDocument,PlanDocument,plan_document,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanDocument,PlanDocument,plan_document,null,FileType,string,fileType,file_type
+PlanDocument,PlanDocument,plan_document,null,Bucket,string,bucket,bucket
+PlanDocument,PlanDocument,plan_document,null,FileKey,string,fileKey,file_key
+PlanDocument,PlanDocument,plan_document,null,VirusScanned,bool,virusScanned,virus_scanned
+PlanDocument,PlanDocument,plan_document,null,VirusClean,bool,virusClean,virus_clean
+PlanDocument,PlanDocument,plan_document,null,FileName,string,fileName,file_name
+PlanDocument,PlanDocument,plan_document,null,FileSize,int,fileSize,file_size
+PlanDocument,PlanDocument,plan_document,null,Restricted,bool,restricted,restricted
+PlanDocument,PlanDocument,plan_document,null,DocumentType,models.DocumentType,documentType,document_type
+PlanDocument,PlanDocument,plan_document,zero.String | sql.NullString,String,string,,
+PlanDocument,PlanDocument,plan_document,zero.String | sql.NullString,Valid,bool,,
+PlanDocument,PlanDocument,plan_document,zero.String | sql.NullString,String,string,,
+PlanDocument,PlanDocument,plan_document,zero.String | sql.NullString,Valid,bool,,
+PlanDocument,PlanDocument,plan_document,null,DeletedAt,*time.Time,deletedAt,deleted_at
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct,ID,uuid.UUID,id,id
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,models.solutionRelation,SolutionID,uuid.UUID,SolutionID,solution_id
+PlanDocumentSolutionLink,PlanDocumentSolutionLink,plan_document_solution_link,null,DocumentID,uuid.UUID,documentID,document_id
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct,ID,uuid.UUID,id,id
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanFavorite,PlanFavorite,plan_favorite,models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanFavorite,PlanFavorite,plan_favorite,models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanFavorite,PlanFavorite,plan_favorite,models.userIDRelation,UserID,uuid.UUID,userId,user_id
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct,ID,uuid.UUID,id,id
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection | models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection,ReadyForReviewBy,*uuid.UUID,readyForReviewBy,ready_for_review_by
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection,ReadyForReviewDts,*time.Time,readyForReviewDts,ready_for_review_dts
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection,ReadyForClearanceBy,*uuid.UUID,readyForClearanceBy,ready_for_clearance_by
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection,ReadyForClearanceDts,*time.Time,readyForClearanceDts,ready_for_clearance_dts
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,models.baseTaskListSection,Status,models.TaskStatus,status,status
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,IsNewModel,*bool,isNewModel,is_new_model
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ExistingModel,*string,existingModel,existing_model
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ResemblesExistingModel,*bool,resemblesExistingModel,resembles_existing_model
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ResemblesExistingModelHow,*string,resemblesExistingModelHow,resembles_existing_model_how
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ResemblesExistingModelNote,*string,resemblesExistingModelNote,resembles_existing_model_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,HasComponentsOrTracks,*bool,hasComponentsOrTracks,has_components_or_tracks
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,HasComponentsOrTracksDiffer,*string,hasComponentsOrTracksDiffer,has_components_or_tracks_differ
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,HasComponentsOrTracksNote,*string,hasComponentsOrTracksNote,has_components_or_tracks_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AlternativePaymentModelTypes,pq.StringArray,alternativePaymentModelTypes,alternative_payment_model_types
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AlternativePaymentModelNote,*string,alternativePaymentModelNote,alternative_payment_model_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,KeyCharacteristics,pq.StringArray,keyCharacteristics,key_characteristics
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,KeyCharacteristicsOther,*string,keyCharacteristicsOther,key_characteristics_other
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,KeyCharacteristicsNote,*string,keyCharacteristicsNote,key_characteristics_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CollectPlanBids,*bool,collectPlanBids,collect_plan_bids
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CollectPlanBidsNote,*string,collectPlanBidsNote,collect_plan_bids_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ManagePartCDEnrollment,*bool,managePartCDEnrollment,manage_part_c_d_enrollment
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ManagePartCDEnrollmentNote,*string,managePartCDEnrollmentNote,manage_part_c_d_enrollment_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,PlanContractUpdated,*bool,planContractUpdated,plan_contract_updated
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,PlanContractUpdatedNote,*string,planContractUpdatedNote,plan_contract_updated_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CareCoordinationInvolved,*bool,careCoordinationInvolved,care_coordination_involved
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CareCoordinationInvolvedDescription,*string,careCoordinationInvolvedDescription,care_coordination_involved_description
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CareCoordinationInvolvedNote,*string,careCoordinationInvolvedNote,care_coordination_involved_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AdditionalServicesInvolved,*bool,additionalServicesInvolved,additional_services_involved
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AdditionalServicesInvolvedDescription,*string,additionalServicesInvolvedDescription,additional_services_involved_description
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AdditionalServicesInvolvedNote,*string,additionalServicesInvolvedNote,additional_services_involved_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CommunityPartnersInvolved,*bool,communityPartnersInvolved,community_partners_involved
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CommunityPartnersInvolvedDescription,*string,communityPartnersInvolvedDescription,community_partners_involved_description
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,CommunityPartnersInvolvedNote,*string,communityPartnersInvolvedNote,community_partners_involved_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,GeographiesTargeted,*bool,geographiesTargeted,geographies_targeted
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,GeographiesTargetedTypes,pq.StringArray,geographiesTargetedTypes,geographies_targeted_types
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,GeographiesTargetedTypesOther,*string,geographiesTargetedTypesOther,geographies_targeted_types_other
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,GeographiesTargetedAppliedTo,pq.StringArray,geographiesTargetedAppliedTo,geographies_targeted_applied_to
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,GeographiesTargetedAppliedToOther,*string,geographiesTargetedAppliedToOther,geographies_targeted_applied_to_other
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,GeographiesTargetedNote,*string,geographiesTargetedNote,geographies_targeted_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ParticipationOptions,*bool,participationOptions,participation_options
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,ParticipationOptionsNote,*string,participationOptionsNote,participation_options_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AgreementTypes,pq.StringArray,agreementTypes,agreement_types
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AgreementTypesOther,*string,agreementTypesOther,agreement_types_other
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,MultiplePatricipationAgreementsNeeded,*bool,multiplePatricipationAgreementsNeeded,multiple_patricipation_agreements_needed
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,MultiplePatricipationAgreementsNeededNote,*string,multiplePatricipationAgreementsNeededNote,multiple_patricipation_agreements_needed_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,RulemakingRequired,*bool,rulemakingRequired,rulemaking_required
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,RulemakingRequiredDescription,*string,rulemakingRequiredDescription,rulemaking_required_description
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,RulemakingRequiredNote,*string,rulemakingRequiredNote,rulemaking_required_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AuthorityAllowances,pq.StringArray,authorityAllowances,authority_allowances
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AuthorityAllowancesOther,*string,authorityAllowancesOther,authority_allowances_other
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,AuthorityAllowancesNote,*string,authorityAllowancesNote,authority_allowances_note
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,WaiversRequired,*bool,waiversRequired,waivers_required
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,WaiversRequiredTypes,pq.StringArray,waiversRequiredTypes,waivers_required_types
+PlanGeneralCharacteristics,PlanGeneralCharacteristics,plan_general_characteristics,null,WaiversRequiredNote,*string,waiversRequiredNote,waivers_required_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct,ID,uuid.UUID,id,id
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection | models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection,ReadyForReviewBy,*uuid.UUID,readyForReviewBy,ready_for_review_by
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection,ReadyForReviewDts,*time.Time,readyForReviewDts,ready_for_review_dts
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection,ReadyForClearanceBy,*uuid.UUID,readyForClearanceBy,ready_for_clearance_by
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection,ReadyForClearanceDts,*time.Time,readyForClearanceDts,ready_for_clearance_dts
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,models.baseTaskListSection,Status,models.TaskStatus,status,status
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AgencyOrStateHelp,pq.StringArray,agencyOrStateHelp,agency_or_state_help
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AgencyOrStateHelpOther,*string,agencyOrStateHelpOther,agency_or_state_help_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AgencyOrStateHelpNote,*string,agencyOrStateHelpNote,agency_or_state_help_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,Stakeholders,pq.StringArray,stakeholders,stakeholders
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,StakeholdersOther,*string,stakeholdersOther,stakeholders_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,StakeholdersNote,*string,stakeholdersNote,stakeholders_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,HelpdeskUse,*bool,helpdeskUse,helpdesk_use
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,HelpdeskUseNote,*string,helpdeskUseNote,helpdesk_use_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ContractorSupport,pq.StringArray,contractorSupport,contractor_support
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ContractorSupportOther,*string,contractorSupportOther,contractor_support_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ContractorSupportHow,*string,contractorSupportHow,contractor_support_how
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ContractorSupportNote,*string,contractorSupportNote,contractor_support_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,IddocSupport,*bool,iddocSupport,iddoc_support
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,IddocSupportNote,*string,iddocSupportNote,iddoc_support_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,TechnicalContactsIdentified,*bool,technicalContactsIdentified,technical_contacts_identified
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,TechnicalContactsIdentifiedDetail,*string,technicalContactsIdentifiedDetail,technical_contacts_identified_detail
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,TechnicalContactsIdentifiedNote,*string,technicalContactsIdentifiedNote,technical_contacts_identified_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,CaptureParticipantInfo,*bool,captureParticipantInfo,capture_participant_info
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,CaptureParticipantInfoNote,*string,captureParticipantInfoNote,capture_participant_info_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,IcdOwner,*string,icdOwner,icd_owner
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DraftIcdDueDate,*time.Time,draftIcdDueDate,draft_icd_due_date
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,IcdNote,*string,icdNote,icd_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,UatNeeds,*string,uatNeeds,uat_needs
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,StcNeeds,*string,stcNeeds,stc_needs
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,TestingTimelines,*string,testingTimelines,testing_timelines
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,TestingNote,*string,testingNote,testing_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataMonitoringFileTypes,pq.StringArray,dataMonitoringFileTypes,data_monitoring_file_types
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataMonitoringFileOther,*string,dataMonitoringFileOther,data_monitoring_file_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataResponseType,*string,dataResponseType,data_response_type
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataResponseFileFrequency,*string,dataResponseFileFrequency,data_response_file_frequency
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataFullTimeOrIncremental,*models.DataFullTimeOrIncrementalType,dataFullTimeOrIncremental,data_full_time_or_incremental
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,EftSetUp,*bool,eftSetUp,eft_set_up
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,UnsolicitedAdjustmentsIncluded,*bool,unsolicitedAdjustmentsIncluded,unsolicited_adjustments_included
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataFlowDiagramsNeeded,*bool,dataFlowDiagramsNeeded,data_flow_diagrams_needed
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ProduceBenefitEnhancementFiles,*bool,produceBenefitEnhancementFiles,produce_benefit_enhancement_files
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,FileNamingConventions,*string,fileNamingConventions,file_naming_conventions
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataMonitoringNote,*string,dataMonitoringNote,data_monitoring_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,BenchmarkForPerformance,*models.BenchmarkForPerformanceType,benchmarkForPerformance,benchmark_for_performance
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,BenchmarkForPerformanceNote,*string,benchmarkForPerformanceNote,benchmark_for_performance_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ComputePerformanceScores,*bool,computePerformanceScores,compute_performance_scores
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ComputePerformanceScoresNote,*string,computePerformanceScoresNote,compute_performance_scores_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,RiskAdjustPerformance,*bool,riskAdjustPerformance,risk_adjust_performance
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,RiskAdjustFeedback,*bool,riskAdjustFeedback,risk_adjust_feedback
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,RiskAdjustPayments,*bool,riskAdjustPayments,risk_adjust_payments
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,RiskAdjustOther,*bool,riskAdjustOther,risk_adjust_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,RiskAdjustNote,*string,riskAdjustNote,risk_adjust_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppealPerformance,*bool,appealPerformance,appeal_performance
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppealFeedback,*bool,appealFeedback,appeal_feedback
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppealPayments,*bool,appealPayments,appeal_payments
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppealOther,*bool,appealOther,appeal_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppealNote,*string,appealNote,appeal_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,EvaluationApproaches,pq.StringArray,evaluationApproaches,evaluation_approaches
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,EvaluationApproachOther,*string,evaluationApproachOther,evaluation_approach_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,EvalutaionApproachNote,*string,evalutaionApproachNote,evalutaion_approach_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,CcmInvolvment,pq.StringArray,ccmInvolvment,ccm_involvment
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,CcmInvolvmentOther,*string,ccmInvolvmentOther,ccm_involvment_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,CcmInvolvmentNote,*string,ccmInvolvmentNote,ccm_involvment_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataNeededForMonitoring,pq.StringArray,dataNeededForMonitoring,data_needed_for_monitoring
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataNeededForMonitoringOther,*string,dataNeededForMonitoringOther,data_needed_for_monitoring_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataNeededForMonitoringNote,*string,dataNeededForMonitoringNote,data_needed_for_monitoring_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataToSendParticicipants,pq.StringArray,dataToSendParticicipants,data_to_send_particicipants
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataToSendParticicipantsOther,*string,dataToSendParticicipantsOther,data_to_send_particicipants_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataToSendParticicipantsNote,*string,dataToSendParticicipantsNote,data_to_send_particicipants_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ShareCclfData,*bool,shareCclfData,share_cclf_data
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ShareCclfDataNote,*string,shareCclfDataNote,share_cclf_data_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,SendFilesBetweenCcw,*bool,sendFilesBetweenCcw,send_files_between_ccw
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,SendFilesBetweenCcwNote,*string,sendFilesBetweenCcwNote,send_files_between_ccw_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppToSendFilesToKnown,*bool,appToSendFilesToKnown,app_to_send_files_to_known
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppToSendFilesToWhich,*string,appToSendFilesToWhich,app_to_send_files_to_which
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AppToSendFilesToNote,*string,appToSendFilesToNote,app_to_send_files_to_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,UseCcwForFileDistribiutionToParticipants,*bool,useCcwForFileDistribiutionToParticipants,use_ccw_for_file_distribiution_to_participants
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,UseCcwForFileDistribiutionToParticipantsNote,*string,useCcwForFileDistribiutionToParticipantsNote,use_ccw_for_file_distribiution_to_participants_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DevelopNewQualityMeasures,*bool,developNewQualityMeasures,develop_new_quality_measures
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DevelopNewQualityMeasuresNote,*string,developNewQualityMeasuresNote,develop_new_quality_measures_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,QualityPerformanceImpactsPayment,*bool,qualityPerformanceImpactsPayment,quality_performance_impacts_payment
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,QualityPerformanceImpactsPaymentNote,*string,qualityPerformanceImpactsPaymentNote,quality_performance_impacts_payment_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataSharingStarts,*models.DataStartsType,dataSharingStarts,data_sharing_starts
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataSharingStartsOther,*string,dataSharingStartsOther,data_sharing_starts_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataSharingFrequency,pq.StringArray,dataSharingFrequency,data_sharing_frequency
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataSharingFrequencyOther,*string,dataSharingFrequencyOther,data_sharing_frequency_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataSharingStartsNote,*string,dataSharingStartsNote,data_sharing_starts_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataCollectionStarts,*models.DataStartsType,dataCollectionStarts,data_collection_starts
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataCollectionStartsOther,*string,dataCollectionStartsOther,data_collection_starts_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataCollectionFrequency,pq.StringArray,dataCollectionFrequency,data_collection_frequency
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataCollectionFrequencyOther,*string,dataCollectionFrequencyOther,data_collection_frequency_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,DataCollectionFrequencyNote,*string,dataCollectionFrequencyNote,data_collection_frequency_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,QualityReportingStarts,*models.DataStartsType,qualityReportingStarts,quality_reporting_starts
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,QualityReportingStartsOther,*string,qualityReportingStartsOther,quality_reporting_starts_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,QualityReportingStartsNote,*string,qualityReportingStartsNote,quality_reporting_starts_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ModelLearningSystems,pq.StringArray,modelLearningSystems,model_learning_systems
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ModelLearningSystemsOther,*string,modelLearningSystemsOther,model_learning_systems_other
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,ModelLearningSystemsNote,*string,modelLearningSystemsNote,model_learning_systems_note
+PlanOpsEvalAndLearning,PlanOpsEvalAndLearning,plan_ops_eval_and_learning,null,AnticipatedChallenges,*string,anticipatedChallenges,anticipated_challenges
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct,ID,uuid.UUID,id,id
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection | models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection,ReadyForReviewBy,*uuid.UUID,readyForReviewBy,ready_for_review_by
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection,ReadyForReviewDts,*time.Time,readyForReviewDts,ready_for_review_dts
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection,ReadyForClearanceBy,*uuid.UUID,readyForClearanceBy,ready_for_clearance_by
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection,ReadyForClearanceDts,*time.Time,readyForClearanceDts,ready_for_clearance_dts
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,models.baseTaskListSection,Status,models.TaskStatus,status,status
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,Participants,pq.StringArray,participants,participants
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,MedicareProviderType,*string,medicareProviderType,medicare_provider_type
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,StatesEngagement,*string,statesEngagement,states_engagement
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsOther,*string,participantsOther,participants_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsNote,*string,participantsNote,participants_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsCurrentlyInModels,*bool,participantsCurrentlyInModels,participants_currently_in_models
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsCurrentlyInModelsNote,*string,participantsCurrentlyInModelsNote,participants_currently_in_models_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ModelApplicationLevel,*string,modelApplicationLevel,model_application_level
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ExpectedNumberOfParticipants,*int,expectedNumberOfParticipants,expected_number_of_participants
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,EstimateConfidence,*models.ConfidenceType,estimateConfidence,estimate_confidence
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ConfidenceNote,*string,confidenceNote,confidence_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,RecruitmentMethod,*models.RecruitmentType,recruitmentMethod,recruitment_method
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,RecruitmentOther,*string,recruitmentOther,recruitment_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,RecruitmentNote,*string,recruitmentNote,recruitment_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,SelectionMethod,pq.StringArray,selectionMethod,selection_method
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,SelectionOther,*string,selectionOther,selection_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,SelectionNote,*string,selectionNote,selection_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,CommunicationMethod,pq.StringArray,communicationMethod,communication_method
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,CommunicationMethodOther,*string,communicationMethodOther,communication_method_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,CommunicationNote,*string,communicationNote,communication_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantAssumeRisk,*bool,participantAssumeRisk,participant_assume_risk
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,RiskType,*models.ParticipantRiskType,riskType,risk_type
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,RiskOther,*string,riskOther,risk_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,RiskNote,*string,riskNote,risk_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,WillRiskChange,*bool,willRiskChange,will_risk_change
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,WillRiskChangeNote,*string,willRiskChangeNote,will_risk_change_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,CoordinateWork,*bool,coordinateWork,coordinate_work
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,CoordinateWorkNote,*string,coordinateWorkNote,coordinate_work_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,GainsharePayments,*bool,gainsharePayments,gainshare_payments
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,GainsharePaymentsTrack,*bool,gainsharePaymentsTrack,gainshare_payments_track
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,GainsharePaymentsNote,*string,gainsharePaymentsNote,gainshare_payments_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsIds,pq.StringArray,participantsIds,participants_ids
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsIdsOther,*string,participantsIdsOther,participants_ids_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ParticipantsIDSNote,*string,participantsIDSNote,participants_ids_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderAdditionFrequency,*models.FrequencyType,providerAdditionFrequency,provider_addition_frequency
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderAdditionFrequencyOther,*string,providerAdditionFrequencyOther,provider_addition_frequency_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderAdditionFrequencyNote,*string,providerAdditionFrequencyNote,provider_addition_frequency_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderAddMethod,pq.StringArray,providerAddMethod,provider_add_method
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderAddMethodOther,*string,providerAddMethodOther,provider_add_method_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderAddMethodNote,*string,providerAddMethodNote,provider_add_method_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderLeaveMethod,pq.StringArray,providerLeaveMethod,provider_leave_method
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderLeaveMethodOther,*string,providerLeaveMethodOther,provider_leave_method_other
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderLeaveMethodNote,*string,providerLeaveMethodNote,provider_leave_method_note
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderOverlap,*models.OverlapType,providerOverlap,provider_overlap
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderOverlapHierarchy,*string,providerOverlapHierarchy,provider_overlap_hierarchy
+PlanParticipantsAndProviders,PlanParticipantsAndProviders,plan_participants_and_providers,null,ProviderOverlapNote,*string,providerOverlapNote,provider_overlap_note
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct,ID,uuid.UUID,id,id
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct | models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,wall,uint64,,
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,ext,int64,,
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct | models.createdByRelation | time.Time,loc,*time.Location,,
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.baseStruct | models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection | models.modelPlanRelation,ModelPlanID,uuid.UUID,modelPlanID,model_plan_id
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection,ReadyForReviewBy,*uuid.UUID,readyForReviewBy,ready_for_review_by
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection,ReadyForReviewDts,*time.Time,readyForReviewDts,ready_for_review_dts
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection,ReadyForClearanceBy,*uuid.UUID,readyForClearanceBy,ready_for_clearance_by
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection,ReadyForClearanceDts,*time.Time,readyForClearanceDts,ready_for_clearance_dts
+PlanPayments,PlanPayments,plan_payments,models.baseTaskListSection,Status,models.TaskStatus,status,status
+PlanPayments,PlanPayments,plan_payments,null,FundingSource,pq.StringArray,fundingSource,funding_source
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceTrustFund,*string,fundingSourceTrustFund,funding_source_trust_fund
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceOther,*string,fundingSourceOther,funding_source_other
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceNote,*string,fundingSourceNote,funding_source_note
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceR,pq.StringArray,fundingSourceR,funding_source_r
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceRTrustFund,*string,fundingSourceRTrustFund,funding_source_r_trust_fund
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceROther,*string,fundingSourceROther,funding_source_r_other
+PlanPayments,PlanPayments,plan_payments,null,FundingSourceRNote,*string,fundingSourceRNote,funding_source_r_note
+PlanPayments,PlanPayments,plan_payments,null,PayRecipients,pq.StringArray,payRecipients,pay_recipients
+PlanPayments,PlanPayments,plan_payments,null,PayRecipientsOtherSpecification,*string,payRecipientsOtherSpecification,pay_recipients_other_specification
+PlanPayments,PlanPayments,plan_payments,null,PayRecipientsNote,*string,payRecipientsNote,pay_recipients_note
+PlanPayments,PlanPayments,plan_payments,null,PayType,pq.StringArray,payType,pay_type
+PlanPayments,PlanPayments,plan_payments,null,PayTypeNote,*string,payTypeNote,pay_type_note
+PlanPayments,PlanPayments,plan_payments,null,PayClaims,pq.StringArray,payClaims,pay_claims
+PlanPayments,PlanPayments,plan_payments,null,PayClaimsOther,*string,payClaimsOther,pay_claims_other
+PlanPayments,PlanPayments,plan_payments,null,PayClaimsNote,*string,payClaimsNote,pay_claims_note
+PlanPayments,PlanPayments,plan_payments,null,ShouldAnyProvidersExcludedFFSSystems,*bool,shouldAnyProvidersExcludedFFSSystems,should_any_providers_excluded_ffs_systems
+PlanPayments,PlanPayments,plan_payments,null,ShouldAnyProviderExcludedFFSSystemsNote,*string,shouldAnyProviderExcludedFFSSystemsNote,should_any_providers_excluded_ffs_systems_note
+PlanPayments,PlanPayments,plan_payments,null,ChangesMedicarePhysicianFeeSchedule,*bool,changesMedicarePhysicianFeeSchedule,changes_medicare_physician_fee_schedule
+PlanPayments,PlanPayments,plan_payments,null,ChangesMedicarePhysicianFeeScheduleNote,*string,changesMedicarePhysicianFeeScheduleNote,changes_medicare_physician_fee_schedule_note
+PlanPayments,PlanPayments,plan_payments,null,AffectsMedicareSecondaryPayerClaims,*bool,affectsMedicareSecondaryPayerClaims,affects_medicare_secondary_payer_claims
+PlanPayments,PlanPayments,plan_payments,null,AffectsMedicareSecondaryPayerClaimsHow,*string,affectsMedicareSecondaryPayerClaimsHow,affects_medicare_secondary_payer_claims_how
+PlanPayments,PlanPayments,plan_payments,null,AffectsMedicareSecondaryPayerClaimsNote,*string,affectsMedicareSecondaryPayerClaimsNote,affects_medicare_secondary_payer_claims_note
+PlanPayments,PlanPayments,plan_payments,null,PayModelDifferentiation,*string,payModelDifferentiation,pay_model_differentiation
+PlanPayments,PlanPayments,plan_payments,null,CreatingDependenciesBetweenServices,*bool,creatingDependenciesBetweenServices,creating_dependencies_between_services
+PlanPayments,PlanPayments,plan_payments,null,CreatingDependenciesBetweenServicesNote,*string,creatingDependenciesBetweenServicesNote,creating_dependencies_between_services_note
+PlanPayments,PlanPayments,plan_payments,null,NeedsClaimsDataCollection,*bool,needsClaimsDataCollection,needs_claims_data_collection
+PlanPayments,PlanPayments,plan_payments,null,NeedsClaimsDataCollectionNote,*string,needsClaimsDataCollectionNote,needs_claims_data_collection_note
+PlanPayments,PlanPayments,plan_payments,null,ProvidingThirdPartyFile,*bool,providingThirdPartyFile,providing_third_party_file
+PlanPayments,PlanPayments,plan_payments,null,IsContractorAwareTestDataRequirements,*bool,isContractorAwareTestDataRequirements,is_contractor_aware_test_data_requirements
+PlanPayments,PlanPayments,plan_payments,null,BeneficiaryCostSharingLevelAndHandling,*string,beneficiaryCostSharingLevelAndHandling,beneficiary_cost_sharing_level_and_handling
+PlanPayments,PlanPayments,plan_payments,null,WaiveBeneficiaryCostSharingForAnyServices,*bool,waiveBeneficiaryCostSharingForAnyServices,waive_beneficiary_cost_sharing_for_any_services
+PlanPayments,PlanPayments,plan_payments,null,WaiveBeneficiaryCostSharingServiceSpecification,*string,waiveBeneficiaryCostSharingServiceSpecification,waive_beneficiary_cost_sharing_service_specification
+PlanPayments,PlanPayments,plan_payments,null,WaiverOnlyAppliesPartOfPayment,*bool,waiverOnlyAppliesPartOfPayment,waiver_only_applies_part_of_payment
+PlanPayments,PlanPayments,plan_payments,null,WaiveBeneficiaryCostSharingNote,*string,waiveBeneficiaryCostSharingNote,waive_beneficiary_cost_sharing_note
+PlanPayments,PlanPayments,plan_payments,null,NonClaimsPayments,pq.StringArray,nonClaimsPayments,non_claims_payments
+PlanPayments,PlanPayments,plan_payments,null,NonClaimsPaymentsOther,*string,nonClaimsPaymentOther,non_claims_payments_other
+PlanPayments,PlanPayments,plan_payments,null,NonClaimsPaymentsNote,*string,nonClaimsPaymentsNote,non_claims_payments_note
+PlanPayments,PlanPayments,plan_payments,null,PaymentCalculationOwner,*string,paymentCalculationOwner,payment_calculation_owner
+PlanPayments,PlanPayments,plan_payments,null,NumberPaymentsPerPayCycle,*string,numberPaymentsPerPayCycle,number_payments_per_pay_cycle
+PlanPayments,PlanPayments,plan_payments,null,NumberPaymentsPerPayCycleNote,*string,numberPaymentsPerPayCycleNote,number_payments_per_pay_cycle_note
+PlanPayments,PlanPayments,plan_payments,null,SharedSystemsInvolvedAdditionalClaimPayment,*bool,sharedSystemsInvolvedAdditionalClaimPayment,shared_systems_involved_additional_claim_payment
+PlanPayments,PlanPayments,plan_payments,null,SharedSystemsInvolvedAdditionalClaimPaymentNote,*string,sharedSystemsInvolvedAdditionalClaimPaymentNote,shared_systems_involved_additional_claim_payment_note
+PlanPayments,PlanPayments,plan_payments,null,PlanningToUseInnovationPaymentContractor,*bool,planningToUseInnovationPaymentContractor,planning_to_use_innovation_payment_contractor
+PlanPayments,PlanPayments,plan_payments,null,PlanningToUseInnovationPaymentContractorNote,*string,planningToUseInnovationPaymentContractorNote,planning_to_use_innovation_payment_contractor_note
+PlanPayments,PlanPayments,plan_payments,null,FundingStructure,*string,fundingStructure,funding_structure
+PlanPayments,PlanPayments,plan_payments,null,ExpectedCalculationComplexityLevel,*models.ComplexityCalculationLevelType,expectedCalculationComplexityLevel,expected_calculation_complexity_level
+PlanPayments,PlanPayments,plan_payments,null,ExpectedCalculationComplexityLevelNote,*string,expectedCalculationComplexityLevelNote,expected_calculation_complexity_level_note
+PlanPayments,PlanPayments,plan_payments,null,CanParticipantsSelectBetweenPaymentMechanisms,*bool,canParticipantsSelectBetweenPaymentMechanisms,can_participants_select_between_payment_mechanisms
+PlanPayments,PlanPayments,plan_payments,null,CanParticipantsSelectBetweenPaymentMechanismsHow,*string,canParticipantsSelectBetweenPaymentMechanismsHow,can_participants_select_between_payment_mechanisms_how
+PlanPayments,PlanPayments,plan_payments,null,CanParticipantsSelectBetweenPaymentMechanismsNote,*string,canParticipantsSelectBetweenPaymentMechanismsNote,can_participants_select_between_payment_mechanisms_note
+PlanPayments,PlanPayments,plan_payments,null,AnticipatedPaymentFrequency,pq.StringArray,anticipatedPaymentFrequency,anticipated_payment_frequency
+PlanPayments,PlanPayments,plan_payments,null,AnticipatedPaymentFrequencyOther,*string,anticipatedPaymentFrequencyOther,anticipated_payment_frequency_other
+PlanPayments,PlanPayments,plan_payments,null,AnticipatedPaymentFrequencyNote,*string,anticipatedPaymentFrequencyNote,anticipated_payment_frequency_note
+PlanPayments,PlanPayments,plan_payments,null,WillRecoverPayments,*bool,willRecoverPayments,will_recover_payments
+PlanPayments,PlanPayments,plan_payments,null,WillRecoverPaymentsNote,*string,willRecoverPaymentsNote,will_recover_payments_note
+PlanPayments,PlanPayments,plan_payments,null,AnticipateReconcilingPaymentsRetrospectively,*bool,anticipateReconcilingPaymentsRetrospectively,anticipate_reconciling_payments_retrospectively
+PlanPayments,PlanPayments,plan_payments,null,AnticipateReconcilingPaymentsRetrospectivelyNote,*string,anticipateReconcilingPaymentsRetrospectivelyNote,anticipate_reconciling_payments_retrospectively_note
+PlanPayments,PlanPayments,plan_payments,null,PaymentStartDate,*time.Time,paymentStartDate,payment_start_date
+PlanPayments,PlanPayments,plan_payments,null,PaymentStartDateNote,*string,paymentStartDateNote,payment_start_date_note
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,null,ID,int,id,id
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,models.createdByRelation | time.Time,wall,uint64,,
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,models.createdByRelation | time.Time,ext,int64,,
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,models.createdByRelation | time.Time,loc,*time.Location,,
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,null,Name,string,name,need_name
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,null,Key,models.OperationalNeedKey,key,need_key
+PossibleOperationalNeed,PossibleOperationalNeed,possible_operational_need,null,Section,models.TaskListSection,section,section
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,null,ID,int,id,id
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,models.createdByRelation,CreatedBy,uuid.UUID,createdBy,created_by
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,models.createdByRelation | time.Time,wall,uint64,,
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,models.createdByRelation | time.Time,ext,int64,,
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,models.createdByRelation | time.Time,loc,*time.Location,,
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,models.modifiedByRelation,ModifiedBy,*uuid.UUID,modifiedBy,modified_by
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,models.modifiedByRelation,ModifiedDts,*time.Time,modifiedDts,modified_dts
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,null,Name,string,name,sol_name
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,null,Key,models.OperationalSolutionKey,key,sol_key
+PossibleOperationalSolution,PossibleOperationalSolution,possible_operational_solution,null,TreatAsOther,bool,treatAsOther,treat_as_other
+UserAccount,UserAccount,user_account,null,ID,uuid.UUID,id,id
+UserAccount,UserAccount,user_account,null,Username,*string,username,username
+UserAccount,UserAccount,user_account,null,IsEUAID,bool,isEUAID,is_euaid
+UserAccount,UserAccount,user_account,null,CommonName,string,commonName,common_name
+UserAccount,UserAccount,user_account,null,Locale,string,locale,locale
+UserAccount,UserAccount,user_account,null,Email,string,email,email
+UserAccount,UserAccount,user_account,null,GivenName,string,given_name,given_name
+UserAccount,UserAccount,user_account,null,FamilyName,string,family_name,family_name
+UserAccount,UserAccount,user_account,null,ZoneInfo,string,zoneinfo,zone_info
+UserAccount,UserAccount,user_account,null,HasLoggedIn,bool,hasLoggedIn,has_logged_in
