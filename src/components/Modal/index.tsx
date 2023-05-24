@@ -12,6 +12,7 @@ type ModalProps = {
   className?: string;
   scroll?: boolean;
   shouldCloseOnOverlayClick?: boolean;
+  modalHeading?: string;
   openModal?: () => void;
   closeModal: () => void;
 };
@@ -22,6 +23,7 @@ const Modal = ({
   className,
   scroll,
   shouldCloseOnOverlayClick = false,
+  modalHeading,
   openModal,
   closeModal
 }: ModalProps) => {
@@ -44,14 +46,24 @@ const Modal = ({
       shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}
     >
-      <button
-        type="button"
-        className="mint-modal__x-button"
-        aria-label="Close Modal"
-        onClick={closeModal}
+      <div
+        className={`mint-modal__top-section display-flex text-base ${
+          modalHeading ? 'border-bottom-1px border-base-lighter' : ''
+        }`}
       >
-        <IconClose />
-      </button>
+        <h4 className="margin-0 padding-left-4 padding-top-2">
+          {modalHeading}
+        </h4>
+        <button
+          type="button"
+          className="mint-modal__x-button text-base"
+          aria-label="Close Modal"
+          onClick={closeModal}
+        >
+          <IconClose />
+        </button>
+      </div>
+
       <div className="mint-modal__body">{children}</div>
     </ReactModal>
   );
