@@ -17,8 +17,9 @@ const generalReadOnly = {
     moreTeamMembers: 'More team members'
   },
   filterView: {
-    text: 'Are you part of a group that only cares about some of these fields?',
-    button: 'Filter view'
+    question:
+      'Are you part of a group that only cares about some of these fields?',
+    text: 'Filter view'
   }
 };
 
