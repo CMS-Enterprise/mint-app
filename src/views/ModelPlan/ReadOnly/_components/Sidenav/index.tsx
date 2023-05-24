@@ -60,10 +60,10 @@ const SideNav = ({
     >
       <div className="bg-base-lightest padding-2 margin-bottom-4">
         <p className="margin-top-0 text-bold line-height-sans-5">
-          {g('filterView.text')}
+          {g('filterView.question')}
         </p>
         <Button type="button" onClick={openFilterModal}>
-          {g('filterView.button')}
+          {g('filterView.text')}
         </Button>
       </div>
       <TrussSideNav items={subNavigationLinks} />
