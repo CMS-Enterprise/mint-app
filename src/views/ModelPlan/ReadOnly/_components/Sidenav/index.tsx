@@ -12,13 +12,15 @@ interface SideNavProps {
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
+  openFilterModal?: () => void;
 }
 
 const SideNav = ({
   subComponents,
   isHelpArticle,
   solutionNavigation,
-  paramActive
+  paramActive,
+  openFilterModal
 }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('helpAndKnowledge');
@@ -60,7 +62,9 @@ const SideNav = ({
         <p className="margin-top-0 text-bold line-height-sans-5">
           {g('filterView.text')}
         </p>
-        <Button type="button">{g('filterView.button')}</Button>
+        <Button type="button" onClick={openFilterModal}>
+          {g('filterView.button')}
+        </Button>
       </div>
       <TrussSideNav items={subNavigationLinks} />
     </div>
