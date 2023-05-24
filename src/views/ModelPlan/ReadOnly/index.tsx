@@ -123,13 +123,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   const descriptionRef = React.createRef<HTMLElement>();
-  const [
-    isDescriptionExpandable,
-    setIsDescriptionExpandable
-  ] = useState<boolean>(false);
-  const [descriptionExpanded, setDescriptionExpanded] = useState<boolean>(
-    false
-  );
+  const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
 
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
