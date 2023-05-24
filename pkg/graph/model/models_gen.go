@@ -79,6 +79,11 @@ type PrepareForClearance struct {
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
 }
 
+type SearchFilter struct {
+	Type  SearchFilterType `json:"type"`
+	Value interface{}      `json:"value"`
+}
+
 type TaskListSectionLockStatus struct {
 	ModelPlanID         uuid.UUID                   `json:"modelPlanID"`
 	Section             models.TaskListSection      `json:"section"`
@@ -1556,6 +1561,70 @@ func (e *Role) UnmarshalGQL(v interface{}) error {
 }
 
 func (e Role) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SearchFilterType string
+
+const (
+	// Filter search results to include changes on or after the specified date
+	SearchFilterTypeChangedAfter SearchFilterType = "CHANGED_AFTER"
+	// Filter search results to include changes on or before the specified date
+	SearchFilterTypeChangedBefore SearchFilterType = "CHANGED_BEFORE"
+	// Filter search results to include changes made by the specified actor
+	SearchFilterTypeChangedByActor SearchFilterType = "CHANGED_BY_ACTOR"
+	// Filter search results to include changes made to the specified object
+	SearchFilterTypeModelPlanSection SearchFilterType = "MODEL_PLAN_SECTION"
+	// Filter search results to include changes made to the specified model plan by ID
+	SearchFilterTypeModelPlanID SearchFilterType = "MODEL_PLAN_ID"
+	// Filter search results to include model plans with the specified status
+	SearchFilterTypeModelPlanStatus SearchFilterType = "MODEL_PLAN_STATUS"
+	// Filter results with a free text search
+	SearchFilterTypeFreeText SearchFilterType = "FREE_TEXT"
+	// Filter results by table id
+	SearchFilterTypeTableID SearchFilterType = "TABLE_ID"
+	// Filter results by table name
+	SearchFilterTypeTableName SearchFilterType = "TABLE_NAME"
+)
+
+var AllSearchFilterType = []SearchFilterType{
+	SearchFilterTypeChangedAfter,
+	SearchFilterTypeChangedBefore,
+	SearchFilterTypeChangedByActor,
+	SearchFilterTypeModelPlanSection,
+	SearchFilterTypeModelPlanID,
+	SearchFilterTypeModelPlanStatus,
+	SearchFilterTypeFreeText,
+	SearchFilterTypeTableID,
+	SearchFilterTypeTableName,
+}
+
+func (e SearchFilterType) IsValid() bool {
+	switch e {
+	case SearchFilterTypeChangedAfter, SearchFilterTypeChangedBefore, SearchFilterTypeChangedByActor, SearchFilterTypeModelPlanSection, SearchFilterTypeModelPlanID, SearchFilterTypeModelPlanStatus, SearchFilterTypeFreeText, SearchFilterTypeTableID, SearchFilterTypeTableName:
+		return true
+	}
+	return false
+}
+
+func (e SearchFilterType) String() string {
+	return string(e)
+}
+
+func (e *SearchFilterType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SearchFilterType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SearchFilterType", str)
+	}
+	return nil
+}
+
+func (e SearchFilterType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

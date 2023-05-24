@@ -862,6 +862,13 @@ func (r *queryResolver) ExistingModelLink(ctx context.Context, id uuid.UUID) (*m
 	return resolvers.ExistingModelLinkGetByID(logger, r.store, principal, id)
 }
 
+// SearchChanges is the resolver for the searchChanges field.
+func (r *queryResolver) SearchChanges(ctx context.Context, filters []*model.SearchFilter, limit int, offset int) ([]*models.ChangeTableRecord, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.SearchChangesWithFilters(logger, r.searchClient, filters, limit, offset)
+}
+
 // SearchChangeTable is the resolver for the searchChangeTable field.
 func (r *queryResolver) SearchChangeTable(ctx context.Context, request models.SearchRequest, limit int, offset int) ([]*models.ChangeTableRecord, error) {
 	logger := appcontext.ZLogger(ctx)

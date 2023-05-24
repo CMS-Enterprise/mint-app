@@ -11,6 +11,10 @@ import (
 	"time"
 
 	"github.com/opensearch-project/opensearch-go/v2"
+
+	"github.com/cmsgov/mint-app/pkg/factories"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+
 	"github.com/opensearch-project/opensearch-go/v2/opensearchapi"
 
 	"github.com/google/uuid"
@@ -274,6 +278,86 @@ func SearchChangeTable(
 	}
 
 	return searchChangeTableBase(logger, searchClient, queryReader, limit, offset, sortBy)
+}
+
+// Search functions for change table
+func searchChanges(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	queryReader io.Reader,
+	limit int,
+	offset int,
+	sortBy string,
+) ([]*models.ChangeTableRecord, error) {
+	res, err := performSearch(searchClient, queryReader, limit, offset, sortBy)
+	if err != nil {
+		return nil, err
+	}
+	defer func(Body io.ReadCloser) {
+		err2 := Body.Close()
+		if err2 != nil {
+			logger.Error("Error closing response body", zap.Error(err2))
+		}
+	}(res.Body)
+
+	if res.IsError() {
+		return nil, handleSearchError(res, logger)
+	}
+
+	r, err := parseSearchResponseBody(res, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	changeTableRecords, err := extractChangeTableRecords(r, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	return changeTableRecords, nil
+}
+
+// SearchChangesWithFilters searches the change table for records matching the given query and filters
+func SearchChangesWithFilters(
+	logger *zap.Logger,
+	searchClient *opensearch.Client,
+	searchFilters []*model.SearchFilter,
+	limit int,
+	offset int,
+) ([]*models.ChangeTableRecord, error) {
+	// Initialize a new QueryBuilder with the provided searchFilters
+	qb, err := factories.NewMINTQueryBuilder()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, searchFilter := range searchFilters {
+		err2 := qb.AddFilter(string(searchFilter.Type), searchFilter.Value)
+		if err2 != nil {
+			return nil, err
+		}
+	}
+
+	// Build the query
+	query := qb.Build().Size(uint64(limit)).From(uint64(offset))
+
+	// Convert the query to a map
+	queryMap := query.Map()
+
+	// Marshal the map to a JSON string
+	queryJSON, err := json.Marshal(queryMap)
+	if err != nil {
+		return nil, err
+	}
+
+	// Debug print the query
+	logger.Debug("Search query", zap.String("query", string(queryJSON)))
+	print(string(queryJSON))
+
+	// Convert the JSON string to a reader
+	queryReader := strings.NewReader(string(queryJSON))
+
+	return searchChanges(logger, searchClient, queryReader, limit, offset, "modified_dts:desc")
 }
 
 // SearchChangeTableWithFreeText searches for change table records in search using a free-text search

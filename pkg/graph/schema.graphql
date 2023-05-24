@@ -1416,6 +1416,11 @@ type DateHistogramAggregationBucket {
   minModifiedDts: Time!
 }
 
+input SearchFilter {
+  type: SearchFilterType!
+  value: Any!
+}
+
 """
 Query definition for the schema
 """
@@ -1457,6 +1462,8 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelLink(id: UUID!): ExistingModelLink!
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+  searchChanges(filters: [SearchFilter!], limit: Int!, offset: Int!): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
@@ -2212,4 +2219,51 @@ enum ActionType {
   An administrative action
   """
   ADMIN
+}
+
+enum SearchFilterType {
+  """
+  Filter search results to include changes on or after the specified date
+  """
+  CHANGED_AFTER
+
+  """
+  Filter search results to include changes on or before the specified date
+  """
+  CHANGED_BEFORE
+
+  """
+  Filter search results to include changes made by the specified actor
+  """
+  CHANGED_BY_ACTOR
+
+  """
+  Filter search results to include changes made to the specified object
+  """
+  MODEL_PLAN_SECTION
+
+  """
+  Filter search results to include changes made to the specified model plan by ID
+  """
+  MODEL_PLAN_ID
+
+  """
+  Filter search results to include model plans with the specified status
+  """
+  MODEL_PLAN_STATUS
+
+  """
+  Filter results with a free text search
+  """
+  FREE_TEXT
+
+  """
+  Filter results by table id
+  """
+  TABLE_ID
+
+  """
+  Filter results by table name
+  """
+  TABLE_NAME
 }
