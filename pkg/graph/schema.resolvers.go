@@ -138,6 +138,12 @@ func (r *modelPlanResolver) ExistingModelLinks(ctx context.Context, obj *models.
 	return resolvers.ExistingModelLinkGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
+// OneWeekFromNow is the resolver for the oneWeekFromNow field.
+func (r *mutationResolver) OneWeekFromNow(ctx context.Context, date models.Date) (*models.Date, error) {
+	oneWeek := date.AddDate(0, 0, 7)
+	return models.NewDate(oneWeek), nil
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -721,6 +727,12 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
+}
+
+// WhatDateIsIt is the resolver for the whatDateIsIt field.
+func (r *queryResolver) WhatDateIsIt(ctx context.Context) (*models.Date, error) {
+	rightNow := time.Now()
+	return models.NewDate(rightNow), nil
 }
 
 // CurrentUser is the resolver for the currentUser field.
