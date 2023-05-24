@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
+import { Button, SideNav as TrussSideNav } from '@trussworks/react-uswds';
 
 import { subComponentsProps } from '../..';
 
@@ -22,6 +22,7 @@ const SideNav = ({
 }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('helpAndKnowledge');
+  const { t: g } = useTranslation('generalReadOnly');
 
   const translationKey = solutionNavigation ? h : t;
 
@@ -55,6 +56,12 @@ const SideNav = ({
       id="read-only-side-nav__wrapper"
       data-testid="read-only-side-nav__wrapper"
     >
+      <div className="bg-base-lightest padding-2 margin-bottom-4">
+        <p className="margin-top-0 text-bold line-height-sans-5">
+          {g('filterView.text')}
+        </p>
+        <Button type="button">{g('filterView.button')}</Button>
+      </div>
       <TrussSideNav items={subNavigationLinks} />
     </div>
   );
