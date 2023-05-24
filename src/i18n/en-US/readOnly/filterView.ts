@@ -1,6 +1,7 @@
 const filterView = {
   group: 'Group',
   content: 'Filter down to the content your group cares the most about.',
+  selectAGroup: 'Select a group',
   alert: {
     heading: 'Don’t see your group listed?',
     content:

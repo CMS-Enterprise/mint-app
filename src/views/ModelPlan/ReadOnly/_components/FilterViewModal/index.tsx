@@ -1,15 +1,44 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Alert, Button, Link } from '@trussworks/react-uswds';
+import {
+  Alert,
+  Button,
+  ComboBox,
+  Form,
+  Label,
+  Link
+} from '@trussworks/react-uswds';
 
 const FilterViewModal = () => {
   const { t } = useTranslation('filterView');
+
+  const groupOptions = [
+    { value: 'test', label: 'test' },
+    { value: 'Gary', label: 'Gary' }
+  ];
 
   return (
     <>
       <div className="filter-view__body padding-top-3 padding-bottom-4">
         <h3 className="margin-y-0">{t('group')}</h3>
-        <p className="margin-y-0 font-body-sm text-base">{t('content')}</p>
+        <p className="margin-top-0 margin-bottom-3 font-body-sm text-base">
+          {t('content')}
+        </p>
+        <Form
+          className="maxw-none margin-bottom-5"
+          onSubmit={() => console.log('asdf')}
+        >
+          <Label htmlFor="filter-group" className="margin-y-0 text-normal">
+            {t('selectAGroup')}
+          </Label>
+          <ComboBox
+            id="filter-group"
+            name="filter-group"
+            onChange={() => console.log('asdf')}
+            options={groupOptions}
+          />
+        </Form>
+
         <Alert noIcon type="info">
           <p className="margin-y-0 font-body-sm text-bold">
             {t('alert.heading')}
