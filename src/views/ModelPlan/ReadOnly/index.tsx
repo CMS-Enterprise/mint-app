@@ -304,6 +304,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isOpen={isFilterViewModalOpen}
         closeModal={() => setIsFilterViewModalOpen(false)}
         shouldCloseOnOverlayClick
+        modalHeading={h('filterView.text')}
       >
         <FilterViewModal />
       </Modal>
