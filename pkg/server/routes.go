@@ -83,7 +83,6 @@ func (s *Server) routes(
 	}
 
 	store, storeErr := storage.NewStore(
-		s.logger,
 		s.NewDBConfig(),
 		ldClient,
 	)
