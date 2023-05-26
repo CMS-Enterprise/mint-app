@@ -87,7 +87,7 @@ func TestIntegrationTestSuite(t *testing.T) {
 		server:      testServer,
 		user:        user{euaID: config.GetString("OKTA_TEST_USERNAME"), accessToken: accessToken},
 		store:       store,
-		base:        handlers.NewHandlerBase(logger),
+		base:        handlers.NewHandlerBase(),
 	}
 
 	suite.Run(t, testSuite)

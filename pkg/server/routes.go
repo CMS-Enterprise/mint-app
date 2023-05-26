@@ -94,7 +94,7 @@ func (s *Server) routes(
 	jwtVerifier := okta.NewJwtVerifier(oktaConfig.OktaClientID, oktaConfig.OktaIssuer)
 
 	oktaMiddlewareFactory := okta.NewMiddlewareFactory(
-		handlers.NewHandlerBase(s.logger),
+		handlers.NewHandlerBase(),
 		jwtVerifier,
 		store,
 		!s.environment.Prod(),
@@ -123,7 +123,7 @@ func (s *Server) routes(
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware()
 
 	// set up handler base
-	base := handlers.NewHandlerBase(s.logger)
+	base := handlers.NewHandlerBase()
 
 	// endpoints that dont require authorization go directly on the main router
 	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())

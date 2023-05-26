@@ -82,7 +82,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleWareFactory(verify func(j
 	ldClient, err := ld.MakeCustomClient("fake", ldConfig, 0)
 	s.NoError(err)
 	factory := NewMiddlewareFactory(
-		handlers.NewHandlerBase(s.logger),
+		handlers.NewHandlerBase(),
 		verifier,
 		s.store,
 		true,
