@@ -120,7 +120,7 @@ func (s *Server) routes(
 
 	s.router.Use(userAccountServiceMiddleware)
 
-	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
+	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware()
 
 	// set up handler base
 	base := handlers.NewHandlerBase(s.logger)
