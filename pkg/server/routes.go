@@ -109,7 +109,7 @@ func (s *Server) routes(
 	)
 
 	if s.NewLocalAuthIsEnabled() {
-		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger, store)
+		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(store)
 		s.router.Use(localAuthenticationMiddleware)
 	}
 	dataLoaders := loaders.NewDataLoaders(store)
