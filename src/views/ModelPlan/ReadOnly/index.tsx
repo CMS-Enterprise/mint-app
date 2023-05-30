@@ -304,7 +304,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
-      {/* <p>{filteredView}</p> */}
       <Modal
         isOpen={isFilterViewModalOpen}
         closeModal={() => setIsFilterViewModalOpen(false)}
