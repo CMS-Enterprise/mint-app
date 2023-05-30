@@ -129,10 +129,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
 
-  // Temporary disable unused variable, since it will be convered in another ticket
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [filteredView, setFilteredView] = useState('');
-
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -310,10 +306,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         shouldCloseOnOverlayClick
         modalHeading={h('filterView.text')}
       >
-        <FilterViewModal
-          closeModal={() => setIsFilterViewModalOpen(false)}
-          setFilteredView={setFilteredView}
-        />
+        <FilterViewModal closeModal={() => setIsFilterViewModalOpen(false)} />
       </Modal>
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 

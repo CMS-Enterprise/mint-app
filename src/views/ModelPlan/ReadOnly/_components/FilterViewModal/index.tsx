@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -11,14 +12,11 @@ import {
 
 type FilterViewModalProps = {
   closeModal: () => void;
-  setFilteredView: (value: string) => void;
 };
 
-const FilterViewModal = ({
-  closeModal,
-  setFilteredView
-}: FilterViewModalProps) => {
+const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
   const { t } = useTranslation('filterView');
+  const history = useHistory();
 
   const [filteredGroup, setFilteredGroup] = useState('');
 
@@ -44,7 +42,7 @@ const FilterViewModal = ({
   ];
 
   const handleSubmit = (value: string) => {
-    setFilteredView(value);
+    history.push(`${history.location.pathname}?filter-view=${value}`);
     closeModal();
   };
 
