@@ -8230,6 +8230,8 @@ enum ModelStatus {
 	ANNOUNCED
   PAUSED
   CANCELED
+  ACTIVE
+  ENDED
 }
 
 enum CMSCenter {
@@ -49684,18 +49686,20 @@ func (ec *executionContext) unmarshalInputCreateOperationalSolutionSubtaskInput(
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			it.Name, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Name = data
 		case "status":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			it.Status, err = ec.unmarshalNOperationalSolutionSubtaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionSubtaskStatus(ctx, v)
+			data, err := ec.unmarshalNOperationalSolutionSubtaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionSubtaskStatus(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Status = data
 		}
 	}
 
@@ -49724,26 +49728,29 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("discussionID"))
-			it.DiscussionID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.DiscussionID = data
 		case "content":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			it.Content, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Content = data
 		case "resolution":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolution"))
-			it.Resolution, err = ec.unmarshalNBoolean2bool(ctx, v)
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Resolution = data
 		}
 	}
 
@@ -49768,26 +49775,29 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ModelPlanID = data
 		case "userName":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userName"))
-			it.UserName, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.UserName = data
 		case "teamRole":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamRole"))
-			it.TeamRole, err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, v)
+			data, err := ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.TeamRole = data
 		}
 	}
 
@@ -49812,42 +49822,47 @@ func (ec *executionContext) unmarshalInputPlanCrTdlCreateInput(ctx context.Conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ModelPlanID = data
 		case "idNumber":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idNumber"))
-			it.IDNumber, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.IDNumber = data
 		case "dateInitiated":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateInitiated"))
-			it.DateInitiated, err = ec.unmarshalNTime2timeᚐTime(ctx, v)
+			data, err := ec.unmarshalNTime2timeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.DateInitiated = data
 		case "title":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
-			it.Title, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Title = data
 		case "note":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
-			it.Note, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Note = data
 		}
 	}
 
@@ -49872,18 +49887,20 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ModelPlanID = data
 		case "content":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			it.Content, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Content = data
 		}
 	}
 
@@ -49908,50 +49925,56 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ModelPlanID = data
 		case "fileData":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileData"))
-			it.FileData, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, v)
+			data, err := ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.FileData = data
 		case "documentType":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentType"))
-			it.DocumentType, err = ec.unmarshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, v)
+			data, err := ec.unmarshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.DocumentType = data
 		case "restricted":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("restricted"))
-			it.Restricted, err = ec.unmarshalNBoolean2bool(ctx, v)
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Restricted = data
 		case "otherTypeDescription":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherTypeDescription"))
-			it.OtherTypeDescription, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.OtherTypeDescription = data
 		case "optionalNotes":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalNotes"))
-			it.OptionalNotes, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.OptionalNotes = data
 		}
 	}
 
@@ -49976,10 +49999,11 @@ func (ec *executionContext) unmarshalInputSearchRequest(ctx context.Context, obj
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("query"))
-			it.Query, err = ec.unmarshalNMap2map(ctx, v)
+			data, err := ec.unmarshalNMap2map(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Query = data
 		}
 	}
 
@@ -50004,18 +50028,20 @@ func (ec *executionContext) unmarshalInputUpdateOperationalSolutionSubtaskInput(
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ID = data
 		case "changes":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-			it.Changes, err = ec.unmarshalNUpdateOperationalSolutionSubtaskChangesInput2map(ctx, v)
+			data, err := ec.unmarshalNUpdateOperationalSolutionSubtaskChangesInput2map(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Changes = data
 		}
 	}
 

@@ -132,6 +132,9 @@ const Discussions = ({
   // State and setter used for containing the related question when replying
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
+  // State used to manage alert rendering
+  const [alertClosed, closeAlert] = useState<boolean>(false);
+
   // Hook used to open reply form if discussionID present
   useEffect(() => {
     const discussionToReply = discussions.find(
@@ -366,10 +369,14 @@ const Discussions = ({
           </div>
         )}
 
-        {/* General error message for mutations that expires after 3 seconds */}
-        {discussionStatusMessage && (
+        {/* General error message for mutations that expires after 45 seconds */}
+        {discussionStatusMessage && !alertClosed && (
           <Expire delay={45000} callback={setDiscussionStatusMessage}>
-            <Alert type={discussionStatus} className="margin-bottom-4">
+            <Alert
+              type={discussionStatus}
+              className="margin-bottom-4"
+              closeAlert={closeAlert}
+            >
               {discussionStatusMessage}
             </Alert>
           </Expire>

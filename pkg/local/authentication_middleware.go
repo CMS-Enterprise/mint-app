@@ -23,8 +23,9 @@ type DevUserConfig struct {
 	JobCodes []string `json:"jobCodes"`
 }
 
-func authenticateMiddleware(logger *zap.Logger, next http.Handler, store *storage.Store) http.Handler {
+func authenticateMiddleware(next http.Handler, store *storage.Store) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		logger := appcontext.ZLogger(r.Context())
 		logger.Info("Using local authorization middleware")
 
 		if len(r.Header["Authorization"]) == 0 {
@@ -122,8 +123,8 @@ func NewLocalWebSocketAuthenticationMiddleware(store *storage.Store) transport.W
 }
 
 // NewLocalAuthenticationMiddleware stubs out context info for local (non-Okta) authentication
-func NewLocalAuthenticationMiddleware(logger *zap.Logger, store *storage.Store) func(http.Handler) http.Handler {
+func NewLocalAuthenticationMiddleware(store *storage.Store) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
-		return authenticateMiddleware(logger, next, store)
+		return authenticateMiddleware(next, store)
 	}
 }

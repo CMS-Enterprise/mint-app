@@ -11,7 +11,8 @@ exports[`The ITSolutionsWarning component matches snapshot 1`] = `
     >
       <p
         class="usa-alert__text"
-      >
+      />
+      <div>
         Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
         <button
           class="usa-button usa-button usa-button--unstyled"
@@ -21,7 +22,8 @@ exports[`The ITSolutionsWarning component matches snapshot 1`] = `
         >
           Go to IT solutions tracker.
         </button>
-      </p>
+      </div>
+      <p />
     </div>
   </div>
 </DocumentFragment>
