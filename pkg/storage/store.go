@@ -8,14 +8,12 @@ import (
 	"github.com/facebookgo/clock"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq" // required for postgres driver in sql
-	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
 // Store performs database operations for MINT
 type Store struct {
 	db        *sqlx.DB
-	logger    *zap.Logger
 	clock     clock.Clock
 	easternTZ *time.Location
 	ldClient  *ld.LDClient
@@ -40,7 +38,6 @@ type DBConfig struct {
 // If config.UseIAM is false, it will connect using the "postgres" driver that SQLx registers in its init() function
 // https://github.com/jmoiron/sqlx/blob/75a7ebf246fd757c9c7742da7dc4d26c6fdb6b5b/bind.go#L33-L40
 func NewStore(
-	logger *zap.Logger,
 	config DBConfig,
 	ldClient *ld.LDClient,
 ) (*Store, error) {
@@ -82,7 +79,6 @@ func NewStore(
 
 	return &Store{
 		db:        db,
-		logger:    logger,
 		clock:     clock.New(),
 		easternTZ: tz,
 		ldClient:  ldClient,

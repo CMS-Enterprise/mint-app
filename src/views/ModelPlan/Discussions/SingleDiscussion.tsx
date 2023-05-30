@@ -64,7 +64,9 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
-        <p className="margin-y-0 padding-y-1">{discussion.content}</p>
+        <p className="margin-y-0 padding-y-1 text-pre-wrap">
+          {discussion.content}
+        </p>
         <div className="display-flex margin-bottom-2">
           {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
           {hasEditAccess && answerQuestion && (
