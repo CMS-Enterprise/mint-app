@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { Button, SideNav as TrussSideNav } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { subComponentsProps } from '../..';
 
@@ -53,19 +54,23 @@ const SideNav = ({
     )
   );
 
+  const flags = useFlags();
+
   return (
     <div
       id="read-only-side-nav__wrapper"
       data-testid="read-only-side-nav__wrapper"
     >
-      <div className="bg-base-lightest padding-2 margin-bottom-4">
-        <p className="margin-top-0 text-bold line-height-sans-5">
-          {g('filterView.question')}
-        </p>
-        <Button type="button" onClick={openFilterModal}>
-          {g('filterView.text')}
-        </Button>
-      </div>
+      {flags.hideGroupView && (
+        <div className="bg-base-lightest padding-2 margin-bottom-4">
+          <p className="margin-top-0 text-bold line-height-sans-5">
+            {g('filterView.question')}
+          </p>
+          <Button type="button" onClick={openFilterModal}>
+            {g('filterView.text')}
+          </Button>
+        </div>
+      )}
       <TrussSideNav items={subNavigationLinks} />
     </div>
   );
