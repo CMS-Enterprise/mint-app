@@ -384,13 +384,15 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   >
                     <p
                       class="usa-alert__text"
-                    >
+                    />
+                    <div>
                       <span
                         class="mandatory-fields-alert__text"
                       >
                         To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
                       </span>
-                    </p>
+                    </div>
+                    <p />
                   </div>
                 </div>
                 <button
