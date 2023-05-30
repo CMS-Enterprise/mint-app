@@ -56,7 +56,7 @@ func NewChangedByActorFilter(qb *QueryBuilder) *ChangedByActorFilter {
 
 // HandleFilter handles the filter value for the ChangedByActorFilter
 func (f *ChangedByActorFilter) HandleFilter(value interface{}) error {
-	f.qb.boolQuery = f.qb.boolQuery.Should(
+	f.qb.BoolQuery = f.qb.BoolQuery.Should(
 		esquery.MultiMatch(value).Fields(
 			"modified_by.common_name",
 			"modified_by.username",
@@ -79,7 +79,7 @@ func NewModelPlanIDFilter(qb *QueryBuilder) *ModelPlanIDFilter {
 
 // HandleFilter handles the filter value for the ModelPlanIDFilter
 func (f *ModelPlanIDFilter) HandleFilter(value interface{}) error {
-	f.qb.boolQuery = f.qb.boolQuery.Filter(esquery.Term("model_plan_id.keyword", value))
+	f.qb.BoolQuery = f.qb.BoolQuery.Filter(esquery.Term("model_plan_id.keyword", value))
 	return nil
 }
 
@@ -95,7 +95,7 @@ func NewModelPlanStatusFilter(qb *QueryBuilder) *ModelPlanStatusFilter {
 
 // HandleFilter handles the filter value for the ModelPlanStatusFilter
 func (f *ModelPlanStatusFilter) HandleFilter(value interface{}) error {
-	f.qb.boolQuery = f.qb.boolQuery.Should(
+	f.qb.BoolQuery = f.qb.BoolQuery.Should(
 		esquery.Term("fields.status.new.keyword", value),
 		esquery.Term("fields.status.old.keyword", value),
 	).MinimumShouldMatch(1)
@@ -114,7 +114,7 @@ func NewTableIDFilter(qb *QueryBuilder) *TableIDFilter {
 
 // HandleFilter handles the filter value for the TableIDFilter
 func (f *TableIDFilter) HandleFilter(value interface{}) error {
-	f.qb.boolQuery = f.qb.boolQuery.Filter(esquery.Term("table_id", value))
+	f.qb.BoolQuery = f.qb.BoolQuery.Filter(esquery.Term("table_id", value))
 	return nil
 }
 
@@ -130,7 +130,7 @@ func NewTableNameFilter(qb *QueryBuilder) *TableNameFilter {
 
 // HandleFilter handles the filter value for the TableNameFilter
 func (f *TableNameFilter) HandleFilter(value interface{}) error {
-	f.qb.boolQuery = f.qb.boolQuery.Filter(esquery.Term("table_name.keyword", value))
+	f.qb.BoolQuery = f.qb.BoolQuery.Filter(esquery.Term("table_name.keyword", value))
 	return nil
 }
 
@@ -146,7 +146,7 @@ func NewFreeTextFilter(qb *QueryBuilder) *FreeTextFilter {
 
 // HandleFilter handles the filter value for the FreeTextFilter
 func (f *FreeTextFilter) HandleFilter(value interface{}) error {
-	f.qb.boolQuery = f.qb.boolQuery.Must(
+	f.qb.BoolQuery = f.qb.BoolQuery.Must(
 		esquery.MultiMatch(value).Fields("*").Fuzziness("AUTO").PrefixLength(1),
 	)
 	return nil

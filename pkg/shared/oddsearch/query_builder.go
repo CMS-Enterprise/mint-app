@@ -14,18 +14,26 @@ type FilterHandler interface {
 // QueryBuilder is a builder for Elasticsearch queries
 type QueryBuilder struct {
 	query      *esquery.SearchRequest
-	boolQuery  *esquery.BoolQuery
+	BoolQuery  *esquery.BoolQuery
 	rangeQuery *esquery.RangeQuery
 	handlers   map[string]FilterHandler
+	sortBy     string
+	order      esquery.Order
+	offset     int
+	limit      int
 }
 
 // NewQueryBuilder creates a new QueryBuilder
 func NewQueryBuilder() *QueryBuilder {
 	return &QueryBuilder{
 		query:      esquery.Search(),
-		boolQuery:  esquery.Bool(),
+		BoolQuery:  esquery.Bool(),
 		rangeQuery: nil,
 		handlers:   make(map[string]FilterHandler),
+		sortBy:     "",
+		order:      esquery.OrderDesc,
+		offset:     0,
+		limit:      10,
 	}
 }
 
@@ -47,11 +55,35 @@ func (qb *QueryBuilder) AddFilter(filterType string, filterValue interface{}) er
 	return handler.HandleFilter(filterValue)
 }
 
+// SortBy sets the sorting parameters for the query
+func (qb *QueryBuilder) SortBy(field string, order esquery.Order) {
+	qb.sortBy = field
+	qb.order = order
+}
+
+// Page sets the pagination parameters for the query
+func (qb *QueryBuilder) Page(offset int, limit int) {
+	qb.offset = offset
+	qb.limit = limit
+}
+
 // Build builds the query
 func (qb *QueryBuilder) Build() *esquery.SearchRequest {
 	if qb.rangeQuery != nil {
-		qb.boolQuery = qb.boolQuery.Filter(qb.rangeQuery)
+		qb.BoolQuery = qb.BoolQuery.Filter(qb.rangeQuery)
 	}
-	qb.query = qb.query.Query(qb.boolQuery)
+	qb.query = qb.query.Query(qb.BoolQuery)
+
+	// Apply sorting and pagination parameters
+	if qb.sortBy != "" {
+		qb.query = qb.query.Sort(qb.sortBy, qb.order)
+	}
+	if qb.offset > 0 {
+		qb.query = qb.query.From(uint64(qb.offset))
+	}
+	if qb.limit > 0 {
+		qb.query = qb.query.Size(uint64(qb.limit))
+	}
+
 	return qb.query
 }

@@ -10,10 +10,12 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/aquasecurity/esquery"
+
 	"github.com/opensearch-project/opensearch-go/v2"
 
-	"github.com/cmsgov/mint-app/pkg/factories"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/querybuilderfactories"
 
 	"github.com/opensearch-project/opensearch-go/v2/opensearchapi"
 
@@ -115,6 +117,18 @@ func marshalSearchQuery(request models.SearchRequest) (io.Reader, error) {
 }
 
 func performSearch(
+	searchClient *opensearch.Client,
+	queryReader io.Reader,
+) (*opensearchapi.Response, error) {
+	return searchClient.Search(
+		searchClient.Search.WithIndex("change_table_idx"),
+		searchClient.Search.WithBody(queryReader),
+		searchClient.Search.WithTrackTotalHits(true),
+		searchClient.Search.WithPretty(),
+	)
+}
+
+func performSearchWithParameters(
 	searchClient *opensearch.Client,
 	queryReader io.Reader,
 	limit int,
@@ -234,7 +248,7 @@ func searchChangeTableBase(
 	offset int,
 	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	res, err := performSearch(searchClient, queryReader, limit, offset, sortBy)
+	res, err := performSearchWithParameters(searchClient, queryReader, limit, offset, sortBy)
 	if err != nil {
 		return nil, err
 	}
@@ -285,11 +299,8 @@ func searchChanges(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
 	queryReader io.Reader,
-	limit int,
-	offset int,
-	sortBy string,
 ) ([]*models.ChangeTableRecord, error) {
-	res, err := performSearch(searchClient, queryReader, limit, offset, sortBy)
+	res, err := performSearch(searchClient, queryReader)
 	if err != nil {
 		return nil, err
 	}
@@ -317,16 +328,33 @@ func searchChanges(
 	return changeTableRecords, nil
 }
 
+func convertSortKeyToField(sortKey model.ChangeHistorySortKey) (string, error) {
+	switch sortKey {
+	case model.ChangeHistorySortKeyChangeDate:
+		return "modified_dts", nil
+	case model.ChangeHistorySortKeyActor:
+		return "modified_by.username", nil
+	case model.ChangeHistorySortKeyModelPlanID:
+		return "model_plan_id", nil
+	case model.ChangeHistorySortKeyTableID:
+		return "table_id", nil
+	case model.ChangeHistorySortKeyTableName:
+		return "table_name", nil
+	default:
+		return "", fmt.Errorf("unknown sort key: %s", sortKey)
+	}
+}
+
 // SearchChangesWithFilters searches the change table for records matching the given query and filters
 func SearchChangesWithFilters(
 	logger *zap.Logger,
 	searchClient *opensearch.Client,
 	searchFilters []*model.SearchFilter,
-	limit int,
-	offset int,
+	sortBy *model.ChangeHistorySortParams,
+	page *model.PageParams,
 ) ([]*models.ChangeTableRecord, error) {
 	// Initialize a new QueryBuilder with the provided searchFilters
-	qb, err := factories.NewMINTQueryBuilder()
+	qb, err := querybuilderfactories.NewMINTQueryBuilder()
 	if err != nil {
 		return nil, err
 	}
@@ -334,12 +362,32 @@ func SearchChangesWithFilters(
 	for _, searchFilter := range searchFilters {
 		err2 := qb.AddFilter(string(searchFilter.Type), searchFilter.Value)
 		if err2 != nil {
-			return nil, err
+			return nil, err2
 		}
 	}
 
+	if sortBy != nil {
+		var sortOrder esquery.Order
+		if sortBy.Order == models.SortAsc {
+			sortOrder = esquery.OrderAsc
+		} else {
+			sortOrder = esquery.OrderDesc
+		}
+
+		sortField, err2 := convertSortKeyToField(sortBy.Field)
+		if err2 != nil {
+			return nil, err2
+		}
+
+		qb.SortBy(sortField, sortOrder)
+	}
+
+	if page != nil {
+		qb.Page(page.Offset, page.Limit)
+	}
+
 	// Build the query
-	query := qb.Build().Size(uint64(limit)).From(uint64(offset))
+	query := qb.Build()
 
 	// Convert the query to a map
 	queryMap := query.Map()
@@ -357,7 +405,7 @@ func SearchChangesWithFilters(
 	// Convert the JSON string to a reader
 	queryReader := strings.NewReader(string(queryJSON))
 
-	return searchChanges(logger, searchClient, queryReader, limit, offset, "modified_dts:desc")
+	return searchChanges(logger, searchClient, queryReader)
 }
 
 // SearchChangeTableWithFreeText searches for change table records in search using a free-text search

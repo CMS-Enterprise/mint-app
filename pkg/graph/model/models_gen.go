@@ -14,6 +14,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type ChangeHistorySortParams struct {
+	Field ChangeHistorySortKey `json:"field"`
+	Order models.SortDirection `json:"order"`
+}
+
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -41,6 +46,11 @@ type LaunchDarklySettings struct {
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
+}
+
+type PageParams struct {
+	Offset int `json:"offset"`
+	Limit  int `json:"limit"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -516,6 +526,58 @@ func (e *CcmInvolvmentType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CcmInvolvmentType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ChangeHistorySortKey string
+
+const (
+	// Sort by the date the change was made
+	ChangeHistorySortKeyChangeDate ChangeHistorySortKey = "CHANGE_DATE"
+	// Sort by the user who made the change
+	ChangeHistorySortKeyActor ChangeHistorySortKey = "ACTOR"
+	// Sort by the model plan ID that was changed
+	ChangeHistorySortKeyModelPlanID ChangeHistorySortKey = "MODEL_PLAN_ID"
+	// Sort by the table ID that was changed
+	ChangeHistorySortKeyTableID ChangeHistorySortKey = "TABLE_ID"
+	// Sort by the table name that was changed
+	ChangeHistorySortKeyTableName ChangeHistorySortKey = "TABLE_NAME"
+)
+
+var AllChangeHistorySortKey = []ChangeHistorySortKey{
+	ChangeHistorySortKeyChangeDate,
+	ChangeHistorySortKeyActor,
+	ChangeHistorySortKeyModelPlanID,
+	ChangeHistorySortKeyTableID,
+	ChangeHistorySortKeyTableName,
+}
+
+func (e ChangeHistorySortKey) IsValid() bool {
+	switch e {
+	case ChangeHistorySortKeyChangeDate, ChangeHistorySortKeyActor, ChangeHistorySortKeyModelPlanID, ChangeHistorySortKeyTableID, ChangeHistorySortKeyTableName:
+		return true
+	}
+	return false
+}
+
+func (e ChangeHistorySortKey) String() string {
+	return string(e)
+}
+
+func (e *ChangeHistorySortKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ChangeHistorySortKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ChangeHistorySortKey", str)
+	}
+	return nil
+}
+
+func (e ChangeHistorySortKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1625,6 +1687,55 @@ func (e *SearchFilterType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SearchFilterType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SearchableTaskListSection string
+
+const (
+	SearchableTaskListSectionBasics                          SearchableTaskListSection = "BASICS"
+	SearchableTaskListSectionGeneralCharacteristics          SearchableTaskListSection = "GENERAL_CHARACTERISTICS"
+	SearchableTaskListSectionParticipantsAndProviders        SearchableTaskListSection = "PARTICIPANTS_AND_PROVIDERS"
+	SearchableTaskListSectionBeneficiaries                   SearchableTaskListSection = "BENEFICIARIES"
+	SearchableTaskListSectionOperationsEvaluationAndLearning SearchableTaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
+	SearchableTaskListSectionPayment                         SearchableTaskListSection = "PAYMENT"
+)
+
+var AllSearchableTaskListSection = []SearchableTaskListSection{
+	SearchableTaskListSectionBasics,
+	SearchableTaskListSectionGeneralCharacteristics,
+	SearchableTaskListSectionParticipantsAndProviders,
+	SearchableTaskListSectionBeneficiaries,
+	SearchableTaskListSectionOperationsEvaluationAndLearning,
+	SearchableTaskListSectionPayment,
+}
+
+func (e SearchableTaskListSection) IsValid() bool {
+	switch e {
+	case SearchableTaskListSectionBasics, SearchableTaskListSectionGeneralCharacteristics, SearchableTaskListSectionParticipantsAndProviders, SearchableTaskListSectionBeneficiaries, SearchableTaskListSectionOperationsEvaluationAndLearning, SearchableTaskListSectionPayment:
+		return true
+	}
+	return false
+}
+
+func (e SearchableTaskListSection) String() string {
+	return string(e)
+}
+
+func (e *SearchableTaskListSection) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SearchableTaskListSection(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SearchableTaskListSection", str)
+	}
+	return nil
+}
+
+func (e SearchableTaskListSection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

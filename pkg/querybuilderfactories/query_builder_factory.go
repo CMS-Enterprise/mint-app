@@ -1,7 +1,8 @@
-package factories
+package querybuilderfactories
 
 import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/querybuilderfilters"
 	"github.com/cmsgov/mint-app/pkg/shared/oddsearch"
 )
 
@@ -35,6 +36,7 @@ func NewMINTQueryBuilder() (*oddsearch.QueryBuilder, error) {
 		{model.SearchFilterTypeTableID, oddsearch.NewTableIDFilter(qb)},
 		{model.SearchFilterTypeTableName, oddsearch.NewTableNameFilter(qb)},
 		{model.SearchFilterTypeFreeText, oddsearch.NewFreeTextFilter(qb)},
+		{model.SearchFilterTypeModelPlanSection, querybuilderfilters.NewModelPlanSectionFilter(qb)},
 	}
 
 	for _, filter := range filters {
