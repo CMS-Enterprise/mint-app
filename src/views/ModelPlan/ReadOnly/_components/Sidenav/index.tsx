@@ -61,7 +61,7 @@ const SideNav = ({
       id="read-only-side-nav__wrapper"
       data-testid="read-only-side-nav__wrapper"
     >
-      {flags.hideGroupView && (
+      {!flags.hideGroupView && (
         <div className="bg-base-lightest padding-2 margin-bottom-4">
           <p className="margin-top-0 text-bold line-height-sans-5">
             {g('filterView.question')}
