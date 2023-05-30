@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Alert,
@@ -15,6 +15,8 @@ type FilterViewModalProps = {
 
 const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
   const { t } = useTranslation('filterView');
+
+  const [filteredGroup, setFilteredGroup] = useState('');
 
   const groupOptions = [
     { value: 'ccw', label: 'Chronic Conditions Warehouse (CCW)' },
@@ -44,17 +46,21 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
         <p className="margin-top-0 margin-bottom-3 font-body-sm text-base">
           {t('content')}
         </p>
-        <Form
-          className="maxw-none margin-bottom-5"
-          onSubmit={() => console.log('asdf')}
-        >
+        <Form className="maxw-none margin-bottom-5" onSubmit={() => {}}>
           <Label htmlFor="filter-group" className="margin-y-0 text-normal">
             {t('selectAGroup')}
           </Label>
           <ComboBox
             id="filter-group"
             name="filter-group"
-            onChange={() => console.log('asdf')}
+            onChange={value => {
+              if (value !== '' && value !== undefined) {
+                setFilteredGroup(value);
+              }
+              if (value === undefined) {
+                setFilteredGroup('');
+              }
+            }}
             options={groupOptions}
           />
         </Form>
@@ -77,7 +83,12 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
           <Button type="button" unstyled onClick={closeModal}>
             {t('viewAll')}
           </Button>
-          <Button type="button" disabled className="margin-x-0">
+          <Button
+            type="button"
+            disabled={filteredGroup === ''}
+            className="margin-x-0"
+            // onClick={() => console.log(filteredGroup)}
+          >
             {t('viewFiltered')}
           </Button>
         </div>
