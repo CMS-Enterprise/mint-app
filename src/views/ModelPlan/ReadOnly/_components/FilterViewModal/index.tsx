@@ -75,16 +75,14 @@ const FilterViewModal = ({
         </Form>
 
         <Alert noIcon type="info">
-          <p className="margin-y-0 font-body-sm text-bold">
+          <span className="margin-y-0 font-body-sm text-bold display-block">
             {t('alert.heading')}
-          </p>
-          <p className="margin-y-0 font-body-sm">
-            <Trans i18nKey="filterView:alert.content">
-              indexOne
-              <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
-              indexTwo
-            </Trans>
-          </p>
+          </span>
+          <Trans i18nKey="filterView:alert.content">
+            indexOne
+            <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
+            indexTwo
+          </Trans>
         </Alert>
       </div>
       <div className="filter-view__footer margin-x-neg-4 border-top-1px border-base-lighter">
