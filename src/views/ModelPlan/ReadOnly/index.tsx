@@ -128,6 +128,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
+
   // Temporary disable unused variable, since it will be convered in another ticket
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filteredView, setFilteredView] = useState('');
