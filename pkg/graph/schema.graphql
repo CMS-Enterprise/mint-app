@@ -2234,47 +2234,65 @@ enum ActionType {
 
 enum SearchFilterType {
   """
-  Filter search results to include changes on or after the specified date
+  Filter search results to include changes on or after the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
   """
   CHANGED_AFTER
 
   """
-  Filter search results to include changes on or before the specified date
+  Filter search results to include changes on or before the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
   """
   CHANGED_BEFORE
 
   """
-  Filter search results to include changes made by the specified actor
+  Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+  Expected value: A string representing the name or username of the actor.
+  Example: "MINT"
   """
   CHANGED_BY_ACTOR
 
   """
-  Filter search results to include changes made to the specified object
+  Filter search results to include changes made to the specified object.
+  Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+  Example: "BASICS"
   """
   MODEL_PLAN_SECTION
 
   """
-  Filter search results to include changes made to the specified model plan by ID
+  Filter search results to include changes made to the specified model plan by ID.
+  Expected value: A string representing the ID of the model plan.
+  Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
   """
   MODEL_PLAN_ID
 
   """
-  Filter search results to include model plans with the specified status
+  Filter search results to include model plans with the specified status.
+  Expected value: A string representing the status of the model plan.
+  Example: "ACTIVE"
   """
   MODEL_PLAN_STATUS
 
   """
-  Filter results with a free text search
+  Filter results with a free text search. This is a fuzzy search on the entire record.
+  Expected value: A string representing the free text search query.
+  Example: "Operational Need"
   """
   FREE_TEXT
 
   """
-  Filter results by table id
+  Filter results by table id.
+  Expected value: An integer representing the table ID.
+  Example: 14
   """
   TABLE_ID
 
   """
-  Filter results by table name
+  Filter results by table name.
+  Expected value: A string representing the table name.
+  Example: "plan_basics"
   """
   TABLE_NAME
 }
