@@ -9,7 +9,11 @@ import {
   Link
 } from '@trussworks/react-uswds';
 
-const FilterViewModal = () => {
+type FilterViewModalProps = {
+  closeModal: () => void;
+};
+
+const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
   const { t } = useTranslation('filterView');
 
   const groupOptions = [
@@ -54,7 +58,7 @@ const FilterViewModal = () => {
       </div>
       <div className="filter-view__footer margin-x-neg-4 border-top-1px border-base-lighter">
         <div className="padding-x-4 padding-top-2 display-flex flex-justify">
-          <Button type="button" unstyled>
+          <Button type="button" unstyled onClick={closeModal}>
             {t('viewAll')}
           </Button>
           <Button type="button" disabled className="margin-x-0">
