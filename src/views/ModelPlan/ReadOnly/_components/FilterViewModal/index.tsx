@@ -42,7 +42,11 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
   ];
 
   const handleSubmit = (value: string) => {
-    history.push(`${history.location.pathname}?filter-view=${value}`);
+    if (value === 'view-all') {
+      history.push(`${history.location.pathname}`);
+    } else {
+      history.push(`${history.location.pathname}?filter-view=${value}`);
+    }
     closeModal();
   };
 
