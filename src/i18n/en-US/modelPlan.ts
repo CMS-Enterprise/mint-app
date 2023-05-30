@@ -20,7 +20,9 @@ const modelPlan = {
     cleared: 'Cleared',
     announced: 'Announced',
     paused: 'Paused',
-    canceled: 'Canceled'
+    canceled: 'Canceled',
+    active: 'Active',
+    ended: 'Ended'
   },
   status: {
     heading: 'Update status',

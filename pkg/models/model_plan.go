@@ -56,4 +56,6 @@ const (
 	ModelStatusOmbAsrfClearance      ModelStatus = "OMB_ASRF_CLEARANCE"
 	ModelStatusCleared               ModelStatus = "CLEARED"
 	ModelStatusAnnounced             ModelStatus = "ANNOUNCED"
+	ModelStatusActive                ModelStatus = "ACTIVE"
+	ModelStatusEnded                 ModelStatus = "ENDED"
 )

@@ -38,7 +38,7 @@ func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
 	logger := zap.NewNop()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 
-	store, _ := storage.NewStore(logger, NewDBConfig(), ldClient)
+	store, _ := storage.NewStore(NewDBConfig(), ldClient)
 
 	testSuite := &AuthenticationMiddlewareTestSuite{
 		Suite:  suite.Suite{},
@@ -82,7 +82,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleWareFactory(verify func(j
 	ldClient, err := ld.MakeCustomClient("fake", ldConfig, 0)
 	s.NoError(err)
 	factory := NewMiddlewareFactory(
-		handlers.NewHandlerBase(s.logger),
+		handlers.NewHandlerBase(),
 		verifier,
 		s.store,
 		true,

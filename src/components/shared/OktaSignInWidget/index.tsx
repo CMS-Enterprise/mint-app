@@ -10,9 +10,14 @@ import './index.scss';
 type OktaSignInWidgetProps = {
   onSuccess: (auth: any) => any;
   onError: () => void;
+  setError: (value: boolean) => void;
 };
 
-const OktaSignInWidget = ({ onSuccess, onError }: OktaSignInWidgetProps) => {
+const OktaSignInWidget = ({
+  onSuccess,
+  onError,
+  setError
+}: OktaSignInWidgetProps) => {
   const { t } = useTranslation('general');
   const widgetRef = useRef(null);
 
@@ -32,6 +37,12 @@ const OktaSignInWidget = ({ onSuccess, onError }: OktaSignInWidgetProps) => {
           pkce: true,
           issuer: process.env.REACT_APP_OKTA_ISSUER,
           responseMode: 'query'
+        }
+      });
+
+      signIn.on('afterError', (error: any) => {
+        if (error.name === 'OAUTH_ERROR') {
+          setError(true);
         }
       });
 
