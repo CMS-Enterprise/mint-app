@@ -64,7 +64,7 @@ func createS3Client() upload.S3Client {
 // The principal needs to be set before every test as the user account is removed between tests
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
-	store, _ := storage.NewStore(logger, config, ldClient)
+	store, _ := storage.NewStore(config, ldClient)
 
 	s3Client := createS3Client()
 	tc.DBConfig = config

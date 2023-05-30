@@ -88,6 +88,11 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
               name="role"
             >
               <option
+                value="ACTIVE"
+              >
+                Active
+              </option>
+              <option
                 value="ANNOUNCED"
               >
                 Announced
@@ -106,6 +111,11 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
                 value="CMS_CLEARANCE"
               >
                 CMS clearance
+              </option>
+              <option
+                value="ENDED"
+              >
+                Ended
               </option>
               <option
                 value="HHS_CLEARANCE"
