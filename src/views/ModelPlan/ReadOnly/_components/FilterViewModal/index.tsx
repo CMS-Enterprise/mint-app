@@ -51,7 +51,7 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
   };
 
   return (
-    <>
+    <div data-testid="filter-view-modal">
       <div className="filter-view__body padding-top-3 padding-bottom-4">
         <h3 className="margin-y-0">{t('group')}</h3>
         <p className="margin-top-0 margin-bottom-3 font-body-sm text-base">
@@ -106,7 +106,7 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
