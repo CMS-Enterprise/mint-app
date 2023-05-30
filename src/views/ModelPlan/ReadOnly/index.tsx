@@ -128,6 +128,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
+  const [filteredView, setFilteredView] = useState('');
 
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -300,13 +301,17 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
+      <p>{filteredView}</p>
       <Modal
         isOpen={isFilterViewModalOpen}
         closeModal={() => setIsFilterViewModalOpen(false)}
         shouldCloseOnOverlayClick
         modalHeading={h('filterView.text')}
       >
-        <FilterViewModal closeModal={() => setIsFilterViewModalOpen(false)} />
+        <FilterViewModal
+          closeModal={() => setIsFilterViewModalOpen(false)}
+          setFilteredView={setFilteredView}
+        />
       </Modal>
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 

@@ -11,9 +11,13 @@ import {
 
 type FilterViewModalProps = {
   closeModal: () => void;
+  setFilteredView: (value: string) => void;
 };
 
-const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
+const FilterViewModal = ({
+  closeModal,
+  setFilteredView
+}: FilterViewModalProps) => {
   const { t } = useTranslation('filterView');
 
   const [filteredGroup, setFilteredGroup] = useState('');
@@ -38,6 +42,11 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
     { value: 'oact', label: 'Office of the Actuary (OACT)' },
     { value: 'pbg', label: 'Provider Billing Group (PBG)' }
   ];
+
+  const handleSubmit = (value: string) => {
+    setFilteredView(value);
+    closeModal();
+  };
 
   return (
     <>
@@ -80,14 +89,18 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
       </div>
       <div className="filter-view__footer margin-x-neg-4 border-top-1px border-base-lighter">
         <div className="padding-x-4 padding-top-2 display-flex flex-justify">
-          <Button type="button" unstyled onClick={closeModal}>
+          <Button
+            type="button"
+            unstyled
+            onClick={() => handleSubmit('view-all')}
+          >
             {t('viewAll')}
           </Button>
           <Button
             type="button"
             disabled={filteredGroup === ''}
             className="margin-x-0"
-            // onClick={() => console.log(filteredGroup)}
+            onClick={() => handleSubmit(filteredGroup)}
           >
             {t('viewFiltered')}
           </Button>
