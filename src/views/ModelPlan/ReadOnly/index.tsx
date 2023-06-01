@@ -320,6 +320,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           filteredView={
             groupOptions.filter(n => n.value.includes(filteredView))[0].label
           }
+          openFilterModal={() => setIsFilterViewModalOpen(true)}
         />
       )}
 
