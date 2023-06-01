@@ -17,6 +17,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import Modal from 'components/Modal';
 import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -45,6 +46,7 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
+import FilterViewModal from './_components/FilterViewModal';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
@@ -123,13 +125,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   const descriptionRef = React.createRef<HTMLElement>();
-  const [
-    isDescriptionExpandable,
-    setIsDescriptionExpandable
-  ] = useState<boolean>(false);
-  const [descriptionExpanded, setDescriptionExpanded] = useState<boolean>(
-    false
-  );
+  const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
 
   // Enable the description toggle if it overflows
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -302,6 +300,14 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
+      <Modal
+        isOpen={isFilterViewModalOpen}
+        closeModal={() => setIsFilterViewModalOpen(false)}
+        shouldCloseOnOverlayClick
+        modalHeading={h('filterView.text')}
+      >
+        <FilterViewModal closeModal={() => setIsFilterViewModalOpen(false)} />
+      </Modal>
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 
       <SummaryBox
@@ -487,6 +493,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 <SideNav
                   subComponents={subComponents}
                   isHelpArticle={isHelpArticle}
+                  openFilterModal={() => setIsFilterViewModalOpen(true)}
                 />
               </Grid>
             )}
