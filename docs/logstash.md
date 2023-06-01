@@ -2,7 +2,12 @@
 
 [Logstash](https://www.elastic.co/guide/en/logstash/current/index.html)
 
+## Mint-Logstash image
 
+Uses `opensearchproject/logstash-oss-with-opensearch-output-plugin:8.6.1` as base.  
+This image is based on the OSS version of Logstash and includes the Opensearch plugin installed already.  
+We use `logstash_entrypoint.sh` to update the Logstash configuration by way of environment variable `LOGSTASH_CONF_BASE64`, which is a BASE64 encoded string of the environment's (DEV, TEST, IMPL, PROD) `logstash.conf`.  
+`LOGSTASH_CONF_BASE64` is set in the ECS task definition.
 
 
 ## Documentation discovery
