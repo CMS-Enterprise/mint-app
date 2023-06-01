@@ -46,6 +46,7 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
+import FilterViewBanner from './_components/FilterViewBanner';
 import FilterViewModal from './_components/FilterViewModal';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
@@ -309,6 +310,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         <FilterViewModal closeModal={() => setIsFilterViewModalOpen(false)} />
       </Modal>
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
+      <FilterViewBanner />
 
       <SummaryBox
         heading=""
