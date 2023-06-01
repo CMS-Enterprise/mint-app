@@ -6,9 +6,6 @@ if [ -z "${LOGSTASH_CONF_BASE64}" ]; then
 	exit 1
 fi
 
-# Install Opensearch output plugin
-logstash-plugin install logstash-output-opensearch
-
 # Copy Logstash config from environment variable into file for Logstash service to read
 echo "$LOGSTASH_CONF_BASE64" | base64 -d > /usr/share/logstash/pipeline/logstash.conf
 
