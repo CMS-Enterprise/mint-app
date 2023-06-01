@@ -20,6 +20,7 @@ type SingleDiscussionProps = {
   setDiscussionStatusMessage: (a: string) => void;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
+  setIsDiscussionOpen?: (value: boolean) => void;
 };
 
 const SingleDiscussion = ({
@@ -30,7 +31,8 @@ const SingleDiscussion = ({
   hasEditAccess,
   setDiscussionStatusMessage,
   setDiscussionType,
-  setReply
+  setReply,
+  setIsDiscussionOpen
 }: SingleDiscussionProps) => {
   const { t } = useTranslation('discussions');
 
@@ -77,6 +79,9 @@ const SingleDiscussion = ({
                 unstyled
                 role="button"
                 onClick={() => {
+                  if (setIsDiscussionOpen) {
+                    setIsDiscussionOpen(true);
+                  }
                   setDiscussionStatusMessage('');
                   setDiscussionType('reply');
                   setReply(discussion);
