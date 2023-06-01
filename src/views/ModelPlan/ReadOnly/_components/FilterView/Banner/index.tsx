@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, GridContainer, IconVisiblity } from '@trussworks/react-uswds';
 
+import './index.scss';
+
 type FilterViewBannerProps = {
   filteredView: string;
   openFilterModal: () => void;
@@ -17,7 +19,7 @@ const FilterViewBanner = ({
   return (
     <div className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105">
       <GridContainer>
-        <div className="display-flex flex-justify flex-align-center">
+        <div className="banner display-flex flex-justify flex-align-center">
           <div
             className="display-flex flex-align-center"
             style={{ gap: '1rem' }}
@@ -29,13 +31,13 @@ const FilterViewBanner = ({
             </div>
           </div>
           <div
-            className="display-flex flex-justify flex-align-center"
+            className="display-flex flex-justify flex-align-center flex-align-self-end"
             style={{ gap: '1rem' }}
           >
             <Button
               type="button"
               unstyled
-              className="text-white"
+              className="text-white text-no-wrap"
               onClick={() => history.push(`${history.location.pathname}`)}
             >
               {t('clearFilter')}
