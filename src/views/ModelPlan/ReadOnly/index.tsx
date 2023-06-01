@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Button,
@@ -46,8 +46,8 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
-import FilterViewBanner from './_components/FilterViewBanner';
-import FilterViewModal from './_components/FilterViewModal';
+import FilterViewBanner from './_components/FilterView/Banner';
+import FilterViewModal from './_components/FilterView/Modal';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
@@ -121,6 +121,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     modelID: string;
     subinfo: SubpageKey;
   }>();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const filteredView = params.get('filter-view');
 
   // Usered to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
