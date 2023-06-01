@@ -10,7 +10,9 @@ const filterView = {
   viewAll: 'View all content',
   viewFiltered: 'View filtered content',
   youAreViewing: 'You are viewing',
-  information: 'information.'
+  information: 'information.',
+  clearFilter: 'Clear filter',
+  filterButton: 'Filter'
 };
 
 export default filterView;
