@@ -8,7 +8,9 @@ const filterView = {
       'Contact the MINT Team at <1>MINTTeam@cms.hhs.gov</1>, so we can learn more about your group.'
   },
   viewAll: 'View all content',
-  viewFiltered: 'View filtered content'
+  viewFiltered: 'View filtered content',
+  youAreViewing: 'You are viewing',
+  information: 'information.'
 };
 
 export default filterView;
