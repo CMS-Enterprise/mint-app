@@ -33,9 +33,14 @@ require github.com/gorilla/websocket v1.5.0
 
 require github.com/xhit/go-simple-mail/v2 v2.12.0
 
-require github.com/contribsys/faktory v1.6.2
+require (
+	github.com/aquasecurity/esquery v0.2.0
+	github.com/contribsys/faktory v1.6.2
+)
 
 require (
+	github.com/elastic/go-elasticsearch/v7 v7.6.0 // indirect
+	github.com/fatih/structs v1.1.0 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.1 // indirect
 )
