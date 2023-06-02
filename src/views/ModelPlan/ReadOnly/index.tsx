@@ -321,7 +321,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         shouldCloseOnOverlayClick
         modalHeading={h('filterView.text')}
       >
-        <FilterViewModal closeModal={() => setIsFilterViewModalOpen(false)} />
+        <FilterViewModal
+          closeModal={() => setIsFilterViewModalOpen(false)}
+          filteredView={filteredView}
+        />
       </Modal>
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
       {filteredView && (

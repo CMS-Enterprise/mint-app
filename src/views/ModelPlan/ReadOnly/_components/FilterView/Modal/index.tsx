@@ -13,10 +13,14 @@ import {
 import groupOptions from '../util';
 
 type FilterViewModalProps = {
+  filteredView: string | null;
   closeModal: () => void;
 };
 
-const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
+const FilterViewModal = ({
+  filteredView,
+  closeModal
+}: FilterViewModalProps) => {
   const { t } = useTranslation('filterView');
   const history = useHistory();
 
@@ -53,6 +57,7 @@ const FilterViewModal = ({ closeModal }: FilterViewModalProps) => {
                 setFilteredGroup('');
               }
             }}
+            defaultValue={filteredView || ''}
             options={groupOptions}
           />
         </Form>
