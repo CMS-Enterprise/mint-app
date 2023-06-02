@@ -127,6 +127,15 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const params = new URLSearchParams(location.search);
   const filteredView = params.get('filter-view');
 
+  const filteredViewOutput = (value: string) => {
+    if (value === 'cmmi') {
+      return groupOptions.filter(n => n.value.includes(value))[0].label;
+    }
+    return groupOptions
+      .filter(n => n.value.includes(value))[0]
+      .value.toUpperCase();
+  };
+
   // Usered to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -317,9 +326,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
       {filteredView && (
         <FilterViewBanner
-          filteredView={
-            groupOptions.filter(n => n.value.includes(filteredView))[0].label
-          }
+          filteredView={filteredViewOutput(filteredView)}
           openFilterModal={() => setIsFilterViewModalOpen(true)}
         />
       )}
