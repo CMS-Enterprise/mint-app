@@ -8,57 +8,61 @@ import {
   DescriptionDefinition,
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
-import basics from 'i18n/en-US/draftModelPlan/basics';
-import generalCharacteristics from 'i18n/en-US/draftModelPlan/generalCharacteristics';
 import {
   GetModelSummary_modelPlan_collaborators as CollaboratorsType,
-  GetModelSummary_modelPlan_crTdls as CRTDLsTypes
+  GetModelSummary_modelPlan_crTdls as CRTDLsTypes,
+  GetModelSummary_modelPlan_generalCharacteristics as CharacteristicsType
 } from 'queries/ReadOnly/types/GetModelSummary';
-import { KeyCharacteristic } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 
 type ModelSummaryProps = {
+  characteristics: CharacteristicsType;
+  crTdls: CRTDLsTypes[] | null;
   descriptionRef: RefObject<HTMLElement>;
-  modelName: string;
+  goal: string;
   isDescriptionExpandable: boolean;
   loading: boolean;
-  performancePeriodStarts: string | null;
   modelLeads: CollaboratorsType[];
-  crTdls: CRTDLsTypes[];
-  characteristics: KeyCharacteristic[];
+  modelName: string;
+  performancePeriodStarts: string | null;
 };
 
 const ModelSummary = ({
+  characteristics,
+  crTdls,
   descriptionRef,
-  modelName,
+  goal,
   isDescriptionExpandable,
   loading,
-  performancePeriodStarts,
   modelLeads,
-  crTdls,
-  characteristics
+  modelName,
+  performancePeriodStarts
 }: ModelSummaryProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   // Formatting the data
-  const formattedKeyCharacteristics = characteristics.map((item, index) => {
-    return `${translateKeyCharacteristics(item)}${
-      index === characteristics.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedKeyCharacteristics = characteristics?.keyCharacteristics.map(
+    (item, index) => {
+      return `${translateKeyCharacteristics(item)}${
+        index === characteristics?.keyCharacteristics.length - 1 ? '' : ', '
+      }`;
+    }
+  );
 
   const formattedPerformanceStartDate =
     performancePeriodStarts &&
     formatDateLocal(performancePeriodStarts, 'MMMM d, yyyy');
 
-  const formattedModelLeads = modelLeads.map((collaborator, index) => {
-    return `${collaborator.userAccount.commonName}${
-      index === modelLeads.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedModelLeads =
+    modelLeads &&
+    modelLeads.map((collaborator, index) => {
+      return `${collaborator.userAccount.commonName}${
+        index === modelLeads.length - 1 ? '' : ', '
+      }`;
+    });
 
   const formattedCrTdls = (items: CRTDLsTypes[]) => {
     const idNumbers = items.map(item => item.idNumber);
@@ -87,11 +91,11 @@ const ModelSummary = ({
         })}
       >
         <DescriptionDefinition
-          definition={basics?.goal ?? ''}
+          definition={goal}
           ref={descriptionRef}
           dataTestId="read-only-model-summary__description"
           className={classnames('font-body-lg line-height-body-5 text-light', {
-            'minh-5': loading || basics?.goal
+            'minh-5': loading || goal
           })}
         />
         {isDescriptionExpandable && (
@@ -119,7 +123,7 @@ const ModelSummary = ({
           <DescriptionTerm
             className="font-body-lg line-height-sans-2 margin-bottom-0"
             term={
-              generalCharacteristics?.keyCharacteristics.length !== 0
+              characteristics?.keyCharacteristics.length !== 0
                 ? formattedKeyCharacteristics
                 : t('noAnswer.noneEntered')
             }
