@@ -17,7 +17,10 @@ const FilterViewBanner = ({
   const { t } = useTranslation('filterView');
   const history = useHistory();
   return (
-    <div className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105">
+    <div
+      className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
+      data-testid="group-filter-banner"
+    >
       <GridContainer>
         <div className="banner display-flex flex-justify flex-align-center">
           <div
