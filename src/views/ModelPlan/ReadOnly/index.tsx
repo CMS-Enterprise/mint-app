@@ -4,11 +4,9 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
-  Button,
   Grid,
   GridContainer,
   IconArrowBack,
-  IconExpandMore,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -21,11 +19,6 @@ import Modal from 'components/Modal';
 import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import CollapsableLink from 'components/shared/CollapsableLink';
-import {
-  DescriptionDefinition,
-  DescriptionTerm
-} from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -33,12 +26,9 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
-  GetModelSummary_modelPlan as GetModelSummaryTypes,
-  GetModelSummary_modelPlan_crTdls as CRTDLsTypes
+  GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
-import { formatDateLocal } from 'utils/date';
-import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
@@ -50,6 +40,7 @@ import FilterViewBanner from './_components/FilterView/Banner';
 import FilterViewModal from './_components/FilterView/Modal';
 import groupOptions from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
+import ModelSummary from './_components/ModelSummary';
 import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
@@ -109,7 +100,6 @@ const isSubpage = (
 };
 
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
-  const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
 
@@ -132,7 +122,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const descriptionRef = React.createRef<HTMLElement>();
   const [isDescriptionExpandable, setIsDescriptionExpandable] = useState(false);
-  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState(false);
 
   // Enable the description toggle if it overflows
@@ -184,41 +173,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     !isHelpArticle &&
     !isMAC(groups) &&
     (isCollaborator || isAssessment(groups, flags));
-
-  const formattedPerformanceStartDate =
-    basics?.performancePeriodStarts &&
-    formatDateLocal(basics?.performancePeriodStarts, 'MMMM d, yyyy');
-
-  const formattedKeyCharacteristics = generalCharacteristics?.keyCharacteristics.map(
-    (item, index) => {
-      return `${translateKeyCharacteristics(item)}${
-        index === generalCharacteristics?.keyCharacteristics.length - 1
-          ? ''
-          : ', '
-      }`;
-    }
-  );
-
-  const formattedModelLeads = collaborators
-    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
-    .map((collaborator, index) => {
-      return `${collaborator.userAccount.commonName}${
-        index ===
-        collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
-          ? ''
-          : ', '
-      }`;
-    });
-
-  const formattedCrTdls = (items: CRTDLsTypes[]) => {
-    const idNumbers = items.map(item => item.idNumber);
-    if (idNumbers.length > 3) {
-      return `${idNumbers.slice(0, 3).join(', ')} +${idNumbers.length - 3} ${t(
-        'more'
-      )}`;
-    }
-    return idNumbers.join(', ');
-  };
 
   const filteredViewOutput = (value: string) => {
     if (value === 'cmmi') {
@@ -367,113 +321,19 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             {modelName}
           </PageHeading>
 
-          <CollapsableLink
-            className="margin-top-3 padding-0"
-            eyeIcon
-            startOpen
-            labelPosition="bottom"
-            closeLabel={h('hideSummary')}
-            styleLeftBar={false}
-            id={`${modelName?.replace(/\s+/g, '-').toLowerCase()}--description`}
-            label={h('showSummary')}
-          >
-            <div
-              className={classnames(
-                'description-truncated',
-                'margin-bottom-2',
-                {
-                  expanded: descriptionExpanded
-                }
-              )}
-            >
-              <DescriptionDefinition
-                definition={basics?.goal ?? ''}
-                ref={descriptionRef}
-                dataTestId="read-only-model-summary__description"
-                className={classnames(
-                  'font-body-lg line-height-body-5 text-light',
-                  {
-                    'minh-5': loading || basics?.goal
-                  }
-                )}
-              />
-              {isDescriptionExpandable && (
-                <div>
-                  <Button
-                    unstyled
-                    type="button"
-                    className="margin-top-1"
-                    onClick={() => {
-                      setDescriptionExpanded(!descriptionExpanded);
-                    }}
-                  >
-                    {h(
-                      descriptionExpanded
-                        ? 'description.less'
-                        : 'description.more'
-                    )}
-                    <IconExpandMore className="expand-icon margin-left-05 margin-bottom-2px text-tbottom" />
-                  </Button>
-                </div>
-              )}
-            </div>
-            <Grid row className="margin-top-3">
-              <Grid col={6} className="margin-bottom-2 minh-7">
-                <DescriptionDefinition
-                  className="font-body-sm"
-                  definition={t('summary.keyCharacteristics')}
-                />
-                <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={
-                    generalCharacteristics?.keyCharacteristics.length !== 0
-                      ? formattedKeyCharacteristics
-                      : t('noAnswer.noneEntered')
-                  }
-                />
-              </Grid>
-              <Grid col={6} className="margin-bottom-2 minh-7">
-                <DescriptionDefinition
-                  className="font-body-sm"
-                  definition={t('summary.modelLeads')}
-                />
-                <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedModelLeads}
-                />
-              </Grid>
-              <Grid
-                col={6}
-                className="margin-bottom-2 desktop:margin-bottom-0 minh-7"
-              >
-                <DescriptionDefinition
-                  className="font-body-sm"
-                  definition={t('summary.modelStartDate')}
-                />
-                <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedPerformanceStartDate ?? t('noAnswer.tBD')}
-                />
-              </Grid>
-              <Grid
-                col={6}
-                className="margin-bottom-2 desktop:margin-bottom-0 minh-7"
-              >
-                <DescriptionDefinition
-                  className="font-body-sm"
-                  definition={t('summary.crAndTdls')}
-                />
-                <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-bottom-0 "
-                  term={
-                    crTdls && crTdls.length !== 0
-                      ? formattedCrTdls(crTdls)
-                      : t('noAnswer.noneEntered')
-                  }
-                />
-              </Grid>
-            </Grid>
-          </CollapsableLink>
+          <ModelSummary
+            descriptionRef={descriptionRef}
+            goal={basics?.goal ?? ''}
+            loading={loading}
+            modelName={modelName}
+            isDescriptionExpandable={isDescriptionExpandable}
+            characteristics={generalCharacteristics}
+            performancePeriodStarts={basics?.performancePeriodStarts}
+            modelLeads={collaborators?.filter(
+              c => c.teamRole === TeamRole.MODEL_LEAD
+            )}
+            crTdls={crTdls}
+          />
         </GridContainer>
       </SummaryBox>
       <SectionWrapper className="model-plan-status-bar bg-base-lightest">
