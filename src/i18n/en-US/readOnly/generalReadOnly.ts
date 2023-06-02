@@ -15,6 +15,11 @@ const generalReadOnly = {
     modelLeads: 'Model lead(s)',
     sendAnEmail: 'Send an email',
     moreTeamMembers: 'More team members'
+  },
+  filterView: {
+    question:
+      'Are you part of a group that only cares about some of these fields?',
+    text: 'Filter view'
   }
 };
 

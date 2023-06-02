@@ -40,7 +40,8 @@ describe('user', () => {
         expect(
           isAssessment(groups, {
             downgradeAssessmentTeam: true,
-            hideITLeadExperience: false
+            hideITLeadExperience: false,
+            hideGroupView: true
           })
         ).toBe(false);
       });
