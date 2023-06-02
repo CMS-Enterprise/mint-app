@@ -1,6 +1,7 @@
 export type Flags = {
   hideITLeadExperience: boolean;
   downgradeAssessmentTeam: boolean;
+  hideGroupView: boolean;
 };
 
 export type FlagsState = {
