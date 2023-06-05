@@ -1,5 +1,5 @@
 FROM opensearchproject/logstash-oss-with-opensearch-output-plugin:8.6.1
 
-COPY logstash_entrypoint.sh ./config/postgresql-42.6.0.jar ./config/ingest_change_table.sql /usr/share/logstash/
+COPY logstash_entrypoint.sh ./connectors/postgresql-42.6.0.jar ./config/ingest_change_table.sql /usr/share/logstash/
 
 ENTRYPOINT [ "/usr/share/logstash/logstash_entrypoint.sh" ]

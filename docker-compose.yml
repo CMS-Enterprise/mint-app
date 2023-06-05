@@ -185,7 +185,7 @@ services:
         max-size: "100m"
         max-file: "3"
     volumes:
-      - ./logstash/config/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
+      - ./logstash/connectors/postgresql-42.6.0.jar:/usr/share/logstash/postgresql-42.6.0.jar
       - ./logstash/config/logstash.conf:/usr/share/logstash/logstash.config
       - ./logstash/config/ingest_change_table.sql:/usr/share/logstash/ingest_change_table.sql
     ports:
