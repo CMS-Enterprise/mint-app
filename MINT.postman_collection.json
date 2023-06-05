@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "32763e93-3738-4a6c-aac0-00904307f929",
+		"_postman_id": "77f6ed93-1764-448b-a703-766ff8ac4fe8",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "20435042"
 	},
 	"item": [
 		{
@@ -1685,6 +1685,27 @@
 			"name": "Search",
 			"item": [
 				{
+					"name": "SearchChanges",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChanges($filters: [SearchFilter!], $sortBy: ChangeHistorySortParams, $page: PageParams) {\r\n  searchChanges(filters: $filters, sortBy: $sortBy, page: $page) {\r\n    guid\r\n    modelPlanID\r\n    tableID\r\n    tableName\r\n    primaryKey\r\n    foreignKey\r\n    fields {\r\n      changes {\r\n        name\r\n        value {\r\n          ... on FieldValue {\r\n            new\r\n            old\r\n          }\r\n        }\r\n      }\r\n    }\r\n    modifiedDts\r\n    modifiedBy {\r\n      id\r\n      username\r\n      isEUAID\r\n      commonName\r\n      locale\r\n      email\r\n      givenName\r\n      familyName\r\n      zoneInfo\r\n      hasLoggedIn\r\n    }\r\n  }\r\n}\r\n",
+								"variables": "{\r\n  \"filters\": [\r\n    {\r\n        \"type\": \"CHANGED_AFTER\",\r\n        \"value\": \"2023-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BEFORE\",\r\n        \"value\": \"2024-01-01T00:00:00.000Z\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_SECTION\",\r\n        \"value\": \"BASICS\"\r\n    },\r\n    {\r\n        \"type\": \"CHANGED_BY_ACTOR\",\r\n        \"value\": \"MINT\"\r\n    },\r\n    {\r\n        \"type\": \"FREE_TEXT\",\r\n        \"value\": \"high level note\"\r\n    },\r\n    {\r\n        \"type\": \"MODEL_PLAN_ID\",\r\n        \"value\": \"b7dbeec2-bbd0-4097-9a0e-650f74e4c307\"\r\n    }\r\n  ],\r\n  \"sortBy\": {\r\n    \"field\": \"CHANGE_DATE\",\r\n    \"order\": \"DESC\"   \r\n  },\r\n  \"page\": {\r\n    \"limit\": 200,\r\n    \"offset\": 0\r\n  }\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "SearchChangeData",
 					"request": {
 						"method": "POST",
@@ -1692,8 +1713,50 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTable($request: SearchRequest!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTable(request: $request, limit: $limit, offset: $offset) {\r\n        guid\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
+								"query": "query searchChangeTable($request: SearchRequest!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTable(request: $request, limit: $limit, offset: $offset) {\r\n        guid\r\n        modelPlanID\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
 								"variables": "{\r\n  \"request\": {\r\n    \"query\": {\r\n      \"query\": {\r\n        \"bool\": {\r\n          \"filter\": [\r\n            {\r\n              \"term\": {\r\n                \"table_id\": \"1\"\r\n              }\r\n            },\r\n            {\r\n              \"term\": {\r\n                \"primary_key.keyword\": \"{{modelPlanID}}\"\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeTableByActor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChangeTableByActor ($actor: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByActor (actor: $actor, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
+								"variables": "{\n  \"actor\": \"MINT\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeTableByDateRange",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChangeTableByDateRange ($startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByDateRange (startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
+								"variables": "{\n  \"startDate\": \"2023-04-19T00:00:00Z\",\n  \"endDate\": \"2024-04-20T23:59:59Z\",\n  \"limit\": 2000,\n  \"offset\": 0\n}"
 							}
 						},
 						"url": {
@@ -1713,7 +1776,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTableByModelPlanID($modelPlanID: UUID!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTableByModelPlanID(modelPlanID: $modelPlanID, limit: $limit, offset: $offset) {\r\n        guid\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
+								"query": "query searchChangeTableByModelPlanID($modelPlanID: UUID!, $limit: Int!, $offset: Int!) {\r\n  searchChangeTableByModelPlanID(modelPlanID: $modelPlanID, limit: $limit, offset: $offset) {\r\n        guid    \r\n        modelPlanID\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
 								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
 							}
 						},
@@ -1734,71 +1797,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchModelPlanChangesByDateRange($modelPlanID: UUID!, $startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\r\n  searchModelPlanChangesByDateRange(modelPlanID: $modelPlanID, startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\r\n        guid\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
+								"query": "query searchModelPlanChangesByDateRange($modelPlanID: UUID!, $startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\r\n  searchModelPlanChangesByDateRange(modelPlanID: $modelPlanID, startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\r\n        guid    \r\n        modelPlanID\r\n        tableID\r\n        tableName\r\n        primaryKey\r\n        foreignKey\r\n        fields {\r\n            changes {\r\n                name\r\n                value {\r\n                    ... on FieldValue {\r\n                        new\r\n                        old\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        modifiedDts\r\n        modifiedBy {\r\n            id\r\n            username\r\n            isEUAID\r\n            commonName\r\n            locale\r\n            email\r\n            givenName\r\n            familyName\r\n            zoneInfo\r\n            hasLoggedIn\r\n        }\r\n    }\r\n}",
 								"variables": "{\r\n  \"modelPlanID\": \"{{modelPlanID}}\",\r\n  \"startDate\": \"2023-04-19T00:00:00Z\",\r\n  \"endDate\": \"2024-04-20T23:59:59Z\",\r\n  \"limit\": 20,\r\n  \"offset\": 0\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableWithFreeText",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableWithFreeText ($searchText: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableWithFreeText (searchText: $searchText, limit: $limit, offset: $offset) {\n        guid\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
-								"variables": "{\n  \"searchText\": \"Do the hting~\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableByDateRange",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByDateRange ($startDate: Time!, $endDate: Time!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByDateRange (startDate: $startDate, endDate: $endDate, limit: $limit, offset: $offset) {\n        guid\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
-								"variables": "{\n  \"startDate\": \"2023-04-19T00:00:00Z\",\n  \"endDate\": \"2024-04-20T23:59:59Z\",\n  \"limit\": 2000,\n  \"offset\": 0\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "SearchChangeTableByActor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query searchChangeTableByActor ($actor: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByActor (actor: $actor, limit: $limit, offset: $offset) {\n        guid\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
-								"variables": "{\n  \"actor\": \"MINT\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
 							}
 						},
 						"url": {
@@ -1818,7 +1818,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query searchChangeTableByModelStatus ($modelStatus: ModelStatus!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByModelStatus (modelStatus: $modelStatus, limit: $limit, offset: $offset) {\n        guid\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}\n",
+								"query": "query searchChangeTableByModelStatus ($modelStatus: ModelStatus!, $limit: Int!, $offset: Int!) {\n    searchChangeTableByModelStatus (modelStatus: $modelStatus, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}\n",
 								"variables": "{\n  \"modelStatus\": \"PLAN_DRAFT\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
 							}
 						},
@@ -1841,6 +1841,27 @@
 							"graphql": {
 								"query": "query searchChangeTableDateHistogramConsolidatedAggregations ($interval: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableDateHistogramConsolidatedAggregations (interval: $interval, limit: $limit, offset: $offset) {\n        key\n        docCount\n        maxModifiedDts\n        minModifiedDts\n    }\n}",
 								"variables": "{\n  \"interval\": \"5m\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchChangeTableWithFreeText",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query searchChangeTableWithFreeText ($searchText: String!, $limit: Int!, $offset: Int!) {\n    searchChangeTableWithFreeText (searchText: $searchText, limit: $limit, offset: $offset) {\n        guid    \n        modelPlanID\n        tableID\n        tableName\n        primaryKey\n        foreignKey\n        fields {\n            changes {\n                name\n                value {\n                    ... on FieldValue {\n                        new\n                        old\n                    }\n                }\n            }\n        }\n        modifiedDts\n        modifiedBy {\n            id\n            username\n            isEUAID\n            commonName\n            locale\n            email\n            givenName\n            familyName\n            zoneInfo\n            hasLoggedIn\n        }\n    }\n}",
+								"variables": "{\n  \"searchText\": \"Do the hting~\",\n  \"limit\": 20,\n  \"offset\": 0\n}"
 							}
 						},
 						"url": {
