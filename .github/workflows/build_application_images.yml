@@ -227,7 +227,7 @@ jobs:
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.GIT_HASH }}
           file: "./logstash/Dockerfile.logstash"
           platforms: "linux/amd64"
-          context: .
+          context: "./logstash/"
           cache-to: type=gha,scope=${{ env.GIT_REF_NAME }}-logstash
           cache-from: type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-logstash
       - name: Announce failure
