@@ -218,7 +218,10 @@ inlining
 Performant
 serializable
 OpenSearch
+Opensearch
+OpensearchProject
 OpenSearch-Dashboards
+mint-logstash
 Logstash
 audit.change_table
 Elasticsearch
