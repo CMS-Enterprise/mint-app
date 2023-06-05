@@ -2,7 +2,7 @@
 
 [Logstash](https://www.elastic.co/guide/en/logstash/current/index.html)
 
-## Mint-Logstash image
+## mint-logstash Image
 
 Uses `opensearchproject/logstash-oss-with-opensearch-output-plugin:8.6.1` as base.  
 This image is based on the OSS version of Logstash and includes the Opensearch plugin installed already.  
@@ -26,3 +26,4 @@ We use `logstash_entrypoint.sh` to update the Logstash configuration by way of e
  
 - https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-logstash.html
     - AWS documentation that references Logstash and using it with Opensearch Service
+    
