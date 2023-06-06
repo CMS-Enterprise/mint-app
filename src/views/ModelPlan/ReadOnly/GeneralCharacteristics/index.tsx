@@ -21,6 +21,7 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyGeneralCharacteristics = ({
@@ -215,22 +216,18 @@ const ReadOnlyGeneralCharacteristics = ({
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('careCoordination')}
-              copy={translateBooleanOrNull(careCoordinationInvolved)}
-            />
-          </div>
-          {careCoordinationInvolved && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={careCoordinationInvolvedDescription}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('careCoordination'),
+            copy: translateBooleanOrNull(careCoordinationInvolved)
+          }}
+          secondSection={
+            careCoordinationInvolved === true && {
+              heading: h('howSo'),
+              copy: careCoordinationInvolvedDescription
+            }
+          }
+        />
         {careCoordinationInvolvedNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
@@ -238,22 +235,18 @@ const ReadOnlyGeneralCharacteristics = ({
           />
         )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('additionalServices')}
-              copy={translateBooleanOrNull(additionalServicesInvolved)}
-            />
-          </div>
-          {additionalServicesInvolved && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={additionalServicesInvolvedDescription}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('additionalServices'),
+            copy: translateBooleanOrNull(additionalServicesInvolved)
+          }}
+          secondSection={
+            additionalServicesInvolved === true && {
+              heading: h('howSo'),
+              copy: additionalServicesInvolvedDescription
+            }
+          }
+        />
         {additionalServicesInvolvedNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
@@ -261,22 +254,18 @@ const ReadOnlyGeneralCharacteristics = ({
           />
         )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('communityInvolved')}
-              copy={translateBooleanOrNull(communityPartnersInvolved)}
-            />
-          </div>
-          {communityPartnersInvolved && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={communityPartnersInvolvedDescription}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('communityInvolved'),
+            copy: translateBooleanOrNull(communityPartnersInvolved)
+          }}
+          secondSection={
+            communityPartnersInvolved === true && {
+              heading: h('howSo'),
+              copy: communityPartnersInvolvedDescription
+            }
+          }
+        />
         {communityPartnersInvolvedNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
@@ -328,23 +317,18 @@ const ReadOnlyGeneralCharacteristics = ({
         />
       </div>
       <div className="margin-bottom-4 padding-bottom-2">
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('rulemakingRequired')}
-              copy={translateBooleanOrNull(rulemakingRequired)}
-            />
-          </div>
-
-          {rulemakingRequired && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('ruleMakingInfo')}
-                copy={rulemakingRequiredDescription}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('rulemakingRequired'),
+            copy: translateBooleanOrNull(rulemakingRequired)
+          }}
+          secondSection={
+            rulemakingRequired === true && {
+              heading: t('ruleMakingInfo'),
+              copy: rulemakingRequiredDescription
+            }
+          }
+        />
         {rulemakingRequiredNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
@@ -360,24 +344,19 @@ const ReadOnlyGeneralCharacteristics = ({
           notes={authorityAllowancesNote}
         />
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('waiversRequired')}
-              copy={translateBooleanOrNull(waiversRequired)}
-            />
-          </div>
-
-          {waiversRequired && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('waiverTypesQuestion')}
-                list
-                listItems={waiversRequiredTypes?.map(translateWaiverTypes)}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('waiversRequired'),
+            copy: translateBooleanOrNull(waiversRequired)
+          }}
+          secondSection={
+            waiversRequired === true && {
+              heading: t('waiverTypesQuestion'),
+              list: true,
+              listItems: waiversRequiredTypes?.map(translateWaiverTypes)
+            }
+          }
+        />
         {waiversRequiredNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
