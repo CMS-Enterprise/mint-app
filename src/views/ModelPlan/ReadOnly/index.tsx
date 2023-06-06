@@ -117,8 +117,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const filteredView = params.get('filter-view');
+  const isViewingFilteredGroup = filteredView !== null;
 
-  // Usered to check if user is assessment for rendering subnav to task list
+  // Used to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   const descriptionRef = React.createRef<HTMLElement>();
@@ -324,19 +325,21 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             {modelName}
           </PageHeading>
 
-          <ModelSummary
-            descriptionRef={descriptionRef}
-            goal={basics?.goal ?? ''}
-            loading={loading}
-            modelName={modelName}
-            isDescriptionExpandable={isDescriptionExpandable}
-            characteristics={generalCharacteristics}
-            performancePeriodStarts={basics?.performancePeriodStarts}
-            modelLeads={collaborators?.filter(
-              c => c.teamRole === TeamRole.MODEL_LEAD
-            )}
-            crTdls={crTdls}
-          />
+          {!isViewingFilteredGroup && (
+            <ModelSummary
+              descriptionRef={descriptionRef}
+              goal={basics?.goal ?? ''}
+              loading={loading}
+              modelName={modelName}
+              isDescriptionExpandable={isDescriptionExpandable}
+              characteristics={generalCharacteristics}
+              performancePeriodStarts={basics?.performancePeriodStarts}
+              modelLeads={collaborators?.filter(
+                c => c.teamRole === TeamRole.MODEL_LEAD
+              )}
+              crTdls={crTdls}
+            />
+          )}
         </GridContainer>
       </SummaryBox>
       <SectionWrapper className="model-plan-status-bar bg-base-lightest">
@@ -378,7 +381,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
           <Grid row gap>
-            {!isMobile && (
+            {!isViewingFilteredGroup && !isMobile && (
               <Grid
                 desktop={{ col: 3 }}
                 className={classnames('padding-right-4 sticky-nav', {
@@ -393,7 +396,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               </Grid>
             )}
 
-            <Grid desktop={{ col: 9 }}>
+            <Grid desktop={{ col: isViewingFilteredGroup ? 12 : 9 }}>
               <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
@@ -401,6 +404,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     <Grid
                       desktop={{
                         col:
+                          isViewingFilteredGroup ||
                           subinfo === 'documents' ||
                           subinfo === 'crs-and-tdl' ||
                           subinfo === 'it-solutions'
@@ -411,7 +415,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                       {subComponent.component}
                     </Grid>
                     {/* Contact info sidebar */}
-                    {subinfo !== 'documents' &&
+                    {!isViewingFilteredGroup &&
+                      subinfo !== 'documents' &&
                       subinfo !== 'crs-and-tdl' &&
                       subinfo !== 'it-solutions' && (
                         <Grid
