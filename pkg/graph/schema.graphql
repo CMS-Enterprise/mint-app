@@ -1395,6 +1395,7 @@ type FieldValue {
 
 type ChangeTableRecord {
   guid: ID!
+  modelPlanID: UUID!
   tableID: Int!
   tableName: String!
   primaryKey: UUID!
@@ -1414,6 +1415,21 @@ type DateHistogramAggregationBucket {
   docCount: Int!
   maxModifiedDts: Time!
   minModifiedDts: Time!
+}
+
+input SearchFilter {
+  type: SearchFilterType!
+  value: Any!
+}
+
+input ChangeHistorySortParams {
+  field: ChangeHistorySortKey!
+  order: SortDirection!
+}
+
+input PageParams {
+  offset: Int!
+  limit: Int!
 }
 
 """
@@ -1457,6 +1473,8 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   existingModelLink(id: UUID!): ExistingModelLink!
   @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+  searchChanges(filters: [SearchFilter!], sortBy: ChangeHistorySortParams, page: PageParams): [ChangeTableRecord!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTable(request: SearchRequest!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableWithFreeText(searchText: String!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
@@ -2214,4 +2232,106 @@ enum ActionType {
   An administrative action
   """
   ADMIN
+}
+
+enum SearchFilterType {
+  """
+  Filter search results to include changes on or after the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
+  """
+  CHANGED_AFTER
+
+  """
+  Filter search results to include changes on or before the specified date.
+  Expected value: A string in RFC3339 format representing the date and time.
+  Example: "2006-01-02T15:04:05Z07:00"
+  """
+  CHANGED_BEFORE
+
+  """
+  Filter search results to include changes made by the specified actor. This is a fuzzy search on the fields: common_name, username, given_name, and family_name of the actor.
+  Expected value: A string representing the name or username of the actor.
+  Example: "MINT"
+  """
+  CHANGED_BY_ACTOR
+
+  """
+  Filter search results to include changes made to the specified object.
+  Expected value: A string representing the section of the model plan. Use the SearchableTaskListSection enum for valid values.
+  Example: "BASICS"
+  """
+  MODEL_PLAN_SECTION
+
+  """
+  Filter search results to include changes made to the specified model plan by ID.
+  Expected value: A string representing the ID of the model plan.
+  Example: "efda354c-11dd-458e-91cf-4f43ee47440b"
+  """
+  MODEL_PLAN_ID
+
+  """
+  Filter search results to include model plans with the specified status.
+  Expected value: A string representing the status of the model plan.
+  Example: "ACTIVE"
+  """
+  MODEL_PLAN_STATUS
+
+  """
+  Filter results with a free text search. This is a fuzzy search on the entire record.
+  Expected value: A string representing the free text search query.
+  Example: "Operational Need"
+  """
+  FREE_TEXT
+
+  """
+  Filter results by table id.
+  Expected value: An integer representing the table ID.
+  Example: 14
+  """
+  TABLE_ID
+
+  """
+  Filter results by table name.
+  Expected value: A string representing the table name.
+  Example: "plan_basics"
+  """
+  TABLE_NAME
+}
+
+enum ChangeHistorySortKey {
+  """
+  Sort by the date the change was made
+  """
+  CHANGE_DATE
+
+  """
+  Sort by the user who made the change
+  """
+  ACTOR
+
+  """
+  Sort by the model plan ID that was changed
+  """
+  MODEL_PLAN_ID
+
+  """
+  Sort by the table ID that was changed
+  """
+  TABLE_ID
+
+  """
+  Sort by the table name that was changed
+  """
+  TABLE_NAME
+}
+
+# lint-disable defined-types-are-used
+enum SearchableTaskListSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT
 }
