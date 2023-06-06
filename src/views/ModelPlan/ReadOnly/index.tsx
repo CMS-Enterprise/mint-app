@@ -281,7 +281,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           filteredView={filteredView}
         />
       </Modal>
+
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
+
       {filteredView && (
         <FilterViewBanner
           filteredView={filteredViewOutput(filteredView)}
