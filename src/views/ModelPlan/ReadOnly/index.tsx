@@ -48,6 +48,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
 import FilterViewModal from './_components/FilterView/Modal';
+import SideNavFilterButton from './_components/FilterView/SideNavFilterButton';
 import groupOptions from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
@@ -496,13 +497,21 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isHelpArticle={isHelpArticle}
       />
 
-      <SectionWrapper className="model-plan-alert-wrapper">
+      {isMobile && !flags.hideGroupView && (
+        <GridContainer className="padding-y-2">
+          <SideNavFilterButton
+            openFilterModal={() => setIsFilterViewModalOpen(true)}
+          />
+        </GridContainer>
+      )}
+
+      <GridContainer className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
           <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
             {h('alert')}
           </Alert>
         )}
-      </SectionWrapper>
+      </GridContainer>
 
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
