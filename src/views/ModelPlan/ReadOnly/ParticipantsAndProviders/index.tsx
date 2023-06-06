@@ -28,6 +28,7 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyParticipantsAndProviders = ({
@@ -204,23 +205,19 @@ const ReadOnlyParticipantsAndProviders = ({
           notes={communicationNote}
         />
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('assumeRisk')}
-              copy={translateBooleanOrNull(participantAssumeRisk)}
-            />
-          </div>
-          {participantAssumeRisk && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('riskType')}
-                copy={riskType && translateRiskType(riskType)}
-                listOtherItem={riskOther}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('assumeRisk'),
+            copy: translateBooleanOrNull(participantAssumeRisk)
+          }}
+          secondSection={
+            participantAssumeRisk === true && {
+              heading: t('riskType'),
+              copy: riskType && translateRiskType(riskType),
+              listOtherItem: riskOther
+            }
+          }
+        />
         {riskNote && (
           <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
         )}
@@ -239,22 +236,18 @@ const ReadOnlyParticipantsAndProviders = ({
           notes={coordinateWorkNote}
         />
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('gainsharing')}
-              copy={translateBooleanOrNull(gainsharePayments)}
-            />
-          </div>
-          {gainsharePayments && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('trackPayments')}
-                copy={translateBooleanOrNull(gainsharePaymentsTrack)}
-              />
-            </div>
-          )}
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('gainsharing'),
+            copy: translateBooleanOrNull(gainsharePayments)
+          }}
+          secondSection={
+            gainsharePayments === true && {
+              heading: t('trackPayments'),
+              copy: translateBooleanOrNull(gainsharePaymentsTrack)
+            }
+          }
+        />
         {gainsharePaymentsNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
