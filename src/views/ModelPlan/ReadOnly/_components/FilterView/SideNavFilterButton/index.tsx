@@ -10,7 +10,7 @@ const SideNavFilterButton = ({ openFilterModal }: SideNavFilterButtonProps) => {
   const { t } = useTranslation('generalReadOnly');
 
   return (
-    <div className="bg-base-lightest padding-2 margin-bottom-4">
+    <div className="bg-base-lightest padding-2">
       <p className="margin-top-0 text-bold line-height-sans-5">
         {t('filterView.question')}
       </p>

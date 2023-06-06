@@ -61,7 +61,9 @@ const SideNav = ({
       data-testid="read-only-side-nav__wrapper"
     >
       {!flags.hideGroupView && openFilterModal && (
-        <SideNavFilterButton openFilterModal={openFilterModal} />
+        <div className="margin-bottom-4">
+          <SideNavFilterButton openFilterModal={openFilterModal} />
+        </div>
       )}
       <TrussSideNav items={subNavigationLinks} />
     </div>
