@@ -23,6 +23,7 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 
 import './index.scss';
 
@@ -116,23 +117,19 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
         copy={modelCategory && translateModelCategory(modelCategory)}
       />
 
-      <div className="desktop:display-flex flex-justify">
-        <div className="desktop:width-card-lg">
-          <ReadOnlySection
-            heading={t('cmsComponent')}
-            list
-            listItems={cmsCenters?.map(translateCmsCenter)}
-            listOtherItem={cmsOther}
-          />
-        </div>
-        <div className="desktop:width-card-lg">
-          <ReadOnlySection
-            heading={t('cmmiGroup')}
-            list
-            listItems={cmmiGroups?.map(translateCmmiGroups)}
-          />
-        </div>
-      </div>
+      <SideBySideReadOnlySection
+        firstSection={{
+          heading: t('cmsComponent'),
+          list: true,
+          listItems: cmsCenters?.map(translateCmsCenter),
+          listOtherItem: cmsOther
+        }}
+        secondSection={{
+          heading: t('cmmiGroup'),
+          list: true,
+          listItems: cmmiGroups?.map(translateCmmiGroups)
+        }}
+      />
 
       <ReadOnlySection
         heading={t('modelType')}

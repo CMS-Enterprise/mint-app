@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Grid } from '@trussworks/react-uswds';
 
-type ReadOnlySectionProps = {
+export type ReadOnlySectionProps = {
   copy?: string | null;
   heading: string;
   list?: boolean;
@@ -58,7 +59,7 @@ const ReadOnlySection = ({
   }
 
   return (
-    <>
+    <Grid desktop={{ col: 12 }}>
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
@@ -68,7 +69,7 @@ const ReadOnlySection = ({
         {renderCopyOrList()}
       </div>
       {notes && <ReadOnlySection heading={t('notes')} copy={notes} />}
-    </>
+    </Grid>
   );
 };
 
