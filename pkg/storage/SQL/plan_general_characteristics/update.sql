@@ -1,5 +1,8 @@
 UPDATE plan_general_characteristics
 SET
+    demo_code = :demo_code,
+    ams_model_id = :ams_model_id,
+    model_abbreviation = :model_abbreviation,
     is_new_model = :is_new_model,
     existing_model = :existing_model,
     resembles_existing_model = :resembles_existing_model,

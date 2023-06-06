@@ -534,6 +534,11 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
+// AmsModelID is the resolver for the amsModelID field.
+func (r *planGeneralCharacteristicsResolver) AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: AmsModelID - amsModelID"))
+}
+
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
 func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
 	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)

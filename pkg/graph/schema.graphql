@@ -431,6 +431,9 @@ PlanGeneralCharacteristics represents a plan general characteristics object
 type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
+  demoCode: String
+  amsModelID: UUID
+  modelAbbreviation: String
 
   # Page 1
   isNewModel: Boolean
