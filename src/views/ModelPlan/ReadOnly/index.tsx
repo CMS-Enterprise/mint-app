@@ -111,7 +111,7 @@ const isSubpage = (
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
-  const isMobile = useCheckResponsiveScreen('tablet');
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const flags = useFlags();
 
