@@ -11,6 +11,7 @@ import (
 // ChangeTableRecord represents an Elasticsearch record from the change table
 type ChangeTableRecord struct {
 	GUID        string                      `json:"guid"`
+	ModelPlanID uuid.UUID                   `json:"model_plan_id"`
 	TableID     int                         `json:"table_id"`
 	TableName   string                      `json:"table_name"`
 	PrimaryKey  uuid.UUID                   `json:"primary_key"`
