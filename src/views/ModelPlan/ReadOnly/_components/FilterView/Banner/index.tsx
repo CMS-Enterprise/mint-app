@@ -22,7 +22,7 @@ const FilterViewBanner = ({
       data-testid="group-filter-banner"
     >
       <GridContainer>
-        <div className="banner display-flex flex-justify flex-align-center">
+        <div className="banner display-flex flex-justify">
           <div
             className="display-flex flex-align-center"
             style={{ gap: '1rem' }}
