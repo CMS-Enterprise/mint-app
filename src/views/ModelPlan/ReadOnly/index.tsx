@@ -356,13 +356,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isHelpArticle={isHelpArticle}
       />
 
-      <SectionWrapper className="model-plan-alert-wrapper">
+      <GridContainer className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
           <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
             {h('alert')}
           </Alert>
         )}
-      </SectionWrapper>
+      </GridContainer>
 
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
