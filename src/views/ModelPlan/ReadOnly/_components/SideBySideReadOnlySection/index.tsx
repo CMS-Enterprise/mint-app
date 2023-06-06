@@ -5,7 +5,7 @@ import ReadOnlySection, { ReadOnlySectionProps } from '../ReadOnlySection';
 
 type SideBySideReadOnlySectionProps = {
   firstSection: ReadOnlySectionProps;
-  secondSection: ReadOnlySectionProps;
+  secondSection: ReadOnlySectionProps | boolean;
 };
 
 const SideBySideReadOnlySection = ({
@@ -13,8 +13,8 @@ const SideBySideReadOnlySection = ({
   secondSection
 }: SideBySideReadOnlySectionProps) => {
   return (
-    <Grid row>
-      <Grid desktop={{ col: 6 }}>
+    <Grid row gap>
+      <Grid desktop={{ col: secondSection ? 6 : 12 }}>
         <ReadOnlySection
           heading={firstSection.heading}
           list={firstSection.list}
@@ -24,16 +24,20 @@ const SideBySideReadOnlySection = ({
           notes={firstSection.notes}
         />
       </Grid>
-      <Grid desktop={{ col: 6 }}>
-        <ReadOnlySection
-          heading={secondSection.heading}
-          list={secondSection.list}
-          listItems={secondSection.listItems}
-          listOtherItem={secondSection.listOtherItem}
-          copy={secondSection.copy}
-          notes={secondSection.notes}
-        />
-      </Grid>
+      {secondSection && (
+        <Grid desktop={{ col: 6 }}>
+          <ReadOnlySection
+            heading={(secondSection as ReadOnlySectionProps).heading}
+            list={(secondSection as ReadOnlySectionProps).list}
+            listItems={(secondSection as ReadOnlySectionProps).listItems}
+            listOtherItem={
+              (secondSection as ReadOnlySectionProps).listOtherItem
+            }
+            copy={(secondSection as ReadOnlySectionProps).copy}
+            notes={(secondSection as ReadOnlySectionProps).notes}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 };
