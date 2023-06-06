@@ -21,6 +21,7 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
@@ -210,30 +211,18 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
             notes={changesMedicarePhysicianFeeScheduleNote}
           />
 
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={
-                affectsMedicareSecondaryPayerClaims
-                  ? 'desktop:width-card-lg'
-                  : ''
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('modelAffect'),
+              copy: translateBooleanOrNull(affectsMedicareSecondaryPayerClaims)
+            }}
+            secondSection={
+              affectsMedicareSecondaryPayerClaims === true && {
+                heading: h('howSo'),
+                copy: affectsMedicareSecondaryPayerClaimsHow
               }
-            >
-              <ReadOnlySection
-                heading={t('modelAffect')}
-                copy={translateBooleanOrNull(
-                  affectsMedicareSecondaryPayerClaims
-                )}
-              />
-            </div>
-            {affectsMedicareSecondaryPayerClaims && (
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={h('howSo')}
-                  copy={affectsMedicareSecondaryPayerClaimsHow}
-                />
-              </div>
-            )}
-          </div>
+            }
+          />
           {affectsMedicareSecondaryPayerClaimsNote && (
             <ReadOnlySection
               heading={t('basics:notes')}
@@ -282,32 +271,20 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
               copy={beneficiaryCostSharingLevelAndHandling}
             />
 
-            <div className="desktop:display-flex flex-justify">
-              <div
-                className={
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('waiveBeneficiaryCostSharingForAnyServices'),
+                copy: translateBooleanOrNull(
                   waiveBeneficiaryCostSharingForAnyServices
-                    ? 'desktop:width-card-lg'
-                    : ''
+                )
+              }}
+              secondSection={
+                waiveBeneficiaryCostSharingForAnyServices === true && {
+                  heading: t('waiveBeneficiaryCostSharingServiceSpecification'),
+                  copy: waiveBeneficiaryCostSharingServiceSpecification
                 }
-              >
-                <ReadOnlySection
-                  heading={t('waiveBeneficiaryCostSharingForAnyServices')}
-                  copy={translateBooleanOrNull(
-                    waiveBeneficiaryCostSharingForAnyServices
-                  )}
-                />
-              </div>
-              {waiveBeneficiaryCostSharingForAnyServices && (
-                <div className="desktop:width-card-lg">
-                  <ReadOnlySection
-                    heading={t(
-                      'waiveBeneficiaryCostSharingServiceSpecification'
-                    )}
-                    copy={waiveBeneficiaryCostSharingServiceSpecification}
-                  />
-                </div>
-              )}
-            </div>
+              }
+            />
             {waiveBeneficiaryCostSharingForAnyServices && (
               <ReadOnlySection
                 heading={t('waiverOnlyAppliesPartOfPayment')}
@@ -373,29 +350,20 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
           notes={expectedCalculationComplexityLevelNote}
         />
 
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              affectsMedicareSecondaryPayerClaims ? 'desktop:width-card-lg' : ''
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('canParticipantsSelectBetweenPaymentMechanisms'),
+            copy: translateBooleanOrNull(
+              canParticipantsSelectBetweenPaymentMechanisms
+            )
+          }}
+          secondSection={
+            canParticipantsSelectBetweenPaymentMechanisms === true && {
+              heading: h('howSo'),
+              copy: canParticipantsSelectBetweenPaymentMechanismsHow
             }
-          >
-            <ReadOnlySection
-              heading={t('canParticipantsSelectBetweenPaymentMechanisms')}
-              copy={translateBooleanOrNull(
-                canParticipantsSelectBetweenPaymentMechanisms
-              )}
-              notes={canParticipantsSelectBetweenPaymentMechanismsNote}
-            />
-          </div>
-          {canParticipantsSelectBetweenPaymentMechanisms && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={canParticipantsSelectBetweenPaymentMechanismsHow}
-              />
-            </div>
-          )}
-        </div>
+          }
+        />
         {canParticipantsSelectBetweenPaymentMechanismsNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
