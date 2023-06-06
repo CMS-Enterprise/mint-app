@@ -31,6 +31,7 @@ import {
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
@@ -226,27 +227,18 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           notes={iddocSupportNote}
         />
         {iddocSupport && (
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={
-                technicalContactsIdentified ? 'desktop:width-card-lg' : ''
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('technicalContacts'),
+              copy: translateBooleanOrNull(technicalContactsIdentified)
+            }}
+            secondSection={
+              technicalContactsIdentified === true && {
+                heading: h('pleaseSpecify'),
+                copy: technicalContactsIdentifiedDetail
               }
-            >
-              <ReadOnlySection
-                heading={t('technicalContacts')}
-                copy={translateBooleanOrNull(technicalContactsIdentified)}
-              />
-            </div>
-            {/* Only display specification div if "yes" was selected for technical contacts question above */}
-            {technicalContactsIdentified && (
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={h('pleaseSpecify')}
-                  copy={technicalContactsIdentifiedDetail}
-                />
-              </div>
-            )}
-          </div>
+            }
+          />
         )}
 
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
@@ -313,39 +305,33 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
               heading={t('fileFrequency')}
               copy={dataResponseFileFrequency}
             />
-            <div className="desktop:display-flex flex-justify">
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('timeFrequency')}
-                  copy={
-                    dataFullTimeOrIncremental &&
-                    translateDataFullTimeOrIncrementalType(
-                      dataFullTimeOrIncremental
-                    )
-                  }
-                />
-              </div>
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('eftAndConnectivity')}
-                  copy={translateBooleanOrNull(eftSetUp)}
-                />
-              </div>
-            </div>
-            <div className="desktop:display-flex flex-justify">
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('adjustments')}
-                  copy={translateBooleanOrNull(unsolicitedAdjustmentsIncluded)}
-                />
-              </div>
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={t('diagrams')}
-                  copy={translateBooleanOrNull(dataFlowDiagramsNeeded)}
-                />
-              </div>
-            </div>
+
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('timeFrequency'),
+                copy:
+                  dataFullTimeOrIncremental &&
+                  translateDataFullTimeOrIncrementalType(
+                    dataFullTimeOrIncremental
+                  )
+              }}
+              secondSection={{
+                heading: t('eftAndConnectivity'),
+                copy: translateBooleanOrNull(eftSetUp)
+              }}
+            />
+
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('adjustments'),
+                copy: translateBooleanOrNull(unsolicitedAdjustmentsIncluded)
+              }}
+              secondSection={{
+                heading: t('diagrams'),
+                copy: translateBooleanOrNull(dataFlowDiagramsNeeded)
+              }}
+            />
+
             <ReadOnlySection
               heading={t('benefitEnhancement')}
               copy={translateBooleanOrNull(produceBenefitEnhancementFiles)}
@@ -375,66 +361,53 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           notes={computePerformanceScoresNote}
         />
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.performanceScores')}
-              copy={translateBooleanOrNull(riskAdjustPerformance)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.feedbackResults')}
-              copy={translateBooleanOrNull(riskAdjustFeedback)}
-            />
-          </div>
-        </div>
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.payments')}
-              copy={translateBooleanOrNull(riskAdjustPayments)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.riskAdj.others')}
-              copy={translateBooleanOrNull(riskAdjustOther)}
-            />
-          </div>
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: readOnly('opsEvalAndLearning.riskAdj.performanceScores'),
+            copy: translateBooleanOrNull(riskAdjustPerformance)
+          }}
+          secondSection={{
+            heading: readOnly('opsEvalAndLearning.riskAdj.feedbackResults'),
+            copy: translateBooleanOrNull(riskAdjustFeedback)
+          }}
+        />
+
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: readOnly('opsEvalAndLearning.riskAdj.payments'),
+            copy: translateBooleanOrNull(riskAdjustPayments)
+          }}
+          secondSection={{
+            heading: readOnly('opsEvalAndLearning.riskAdj.others'),
+            copy: translateBooleanOrNull(riskAdjustOther)
+          }}
+        />
+
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
         <ReadOnlySection heading={h('note')} copy={riskAdjustNote} />
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.performanceScores')}
-              copy={translateBooleanOrNull(appealPerformance)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.feedbackResults')}
-              copy={translateBooleanOrNull(appealFeedback)}
-            />
-          </div>
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: readOnly('opsEvalAndLearning.appeal.performanceScores'),
+            copy: translateBooleanOrNull(appealPerformance)
+          }}
+          secondSection={{
+            heading: readOnly('opsEvalAndLearning.appeal.feedbackResults'),
+            copy: translateBooleanOrNull(appealFeedback)
+          }}
+        />
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.payments')}
-              copy={translateBooleanOrNull(appealPayments)}
-            />
-          </div>
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={readOnly('opsEvalAndLearning.appeal.others')}
-              copy={translateBooleanOrNull(appealOther)}
-            />
-          </div>
-        </div>
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: readOnly('opsEvalAndLearning.appeal.payments'),
+            copy: translateBooleanOrNull(appealPayments)
+          }}
+          secondSection={{
+            heading: readOnly('opsEvalAndLearning.appeal.others'),
+            copy: translateBooleanOrNull(appealOther)
+          }}
+        />
+
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
         <ReadOnlySection heading={h('note')} copy={appealNote} />
       </div>
@@ -489,25 +462,19 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
             copy={translateBooleanOrNull(sendFilesBetweenCcw)}
             notes={sendFilesBetweenCcwNote}
           />
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={appToSendFilesToKnown ? 'desktop:width-card-lg' : ''}
-            >
-              <ReadOnlySection
-                heading={t('fileTransfers')}
-                copy={translateBooleanOrNull(appToSendFilesToKnown)}
-              />
-            </div>
-            {/* Only display specification div if "yes" was selected for file transfer question above */}
-            {appToSendFilesToKnown && (
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={h('pleaseSpecify')}
-                  copy={appToSendFilesToWhich}
-                />
-              </div>
-            )}
-          </div>
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('fileTransfers'),
+              copy: translateBooleanOrNull(appToSendFilesToKnown)
+            }}
+            secondSection={
+              appToSendFilesToKnown === true && {
+                heading: h('pleaseSpecify'),
+                copy: appToSendFilesToWhich
+              }
+            }
+          />
+
           {/* This is a slight "hack" of this component in order to get around the heading being required */}
           <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
 
