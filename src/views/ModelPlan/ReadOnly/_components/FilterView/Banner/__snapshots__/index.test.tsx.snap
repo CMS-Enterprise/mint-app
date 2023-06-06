@@ -11,7 +11,7 @@ exports[`Filter View Modal matches snapshot 1`] = `
       data-testid="gridContainer"
     >
       <div
-        class="banner display-flex flex-justify flex-align-center"
+        class="banner display-flex flex-justify"
       >
         <div
           class="display-flex flex-align-center"
@@ -35,7 +35,7 @@ exports[`Filter View Modal matches snapshot 1`] = `
             />
           </svg>
           <div>
-            You are viewing 
+            You are viewing
             <strong>
               CMMI
             </strong>
