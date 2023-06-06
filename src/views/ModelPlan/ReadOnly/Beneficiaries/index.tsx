@@ -18,6 +18,7 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
@@ -94,31 +95,20 @@ const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
           notes={beneficiariesNote}
         />
 
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              treatDualElligibleDifferent === TriStateAnswer.YES
-                ? 'desktop:width-card-lg'
-                : ''
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('dualEligibility'),
+            copy:
+              treatDualElligibleDifferent &&
+              translateTriStateAnswer(treatDualElligibleDifferent)
+          }}
+          secondSection={
+            treatDualElligibleDifferent === TriStateAnswer.YES && {
+              heading: h('howSo'),
+              copy: treatDualElligibleDifferentHow
             }
-          >
-            <ReadOnlySection
-              heading={t('dualEligibility')}
-              copy={
-                treatDualElligibleDifferent &&
-                translateTriStateAnswer(treatDualElligibleDifferent)
-              }
-            />
-          </div>
-          {treatDualElligibleDifferent === TriStateAnswer.YES && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={treatDualElligibleDifferentHow}
-              />
-            </div>
-          )}
-        </div>
+          }
+        />
         {treatDualElligibleDifferentNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
@@ -126,31 +116,21 @@ const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
           />
         )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              excludeCertainCharacteristics === TriStateAnswer.YES
-                ? 'desktop:width-card-lg'
-                : ''
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('excluded'),
+            copy:
+              excludeCertainCharacteristics &&
+              translateTriStateAnswer(excludeCertainCharacteristics)
+          }}
+          secondSection={
+            excludeCertainCharacteristics === TriStateAnswer.YES && {
+              heading: t('excludedNestedQuestion'),
+              copy: excludeCertainCharacteristicsCriteria
             }
-          >
-            <ReadOnlySection
-              heading={t('excluded')}
-              copy={
-                excludeCertainCharacteristics &&
-                translateTriStateAnswer(excludeCertainCharacteristics)
-              }
-            />
-          </div>
-          {excludeCertainCharacteristics === TriStateAnswer.YES && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('excludedNestedQuestion')}
-                copy={excludeCertainCharacteristicsCriteria}
-              />
-            </div>
-          )}
-        </div>
+          }
+        />
+
         {excludeCertainCharacteristicsNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
