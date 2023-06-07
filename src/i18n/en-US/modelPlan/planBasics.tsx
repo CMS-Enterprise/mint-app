@@ -1,6 +1,6 @@
 import { TranslationFieldObject } from 'types/translation';
 
-const planBasics: Record<string, TranslationFieldObject> = {
+export const planBasics: Record<string, TranslationFieldObject> = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
@@ -59,6 +59,49 @@ const planBasics: Record<string, TranslationFieldObject> = {
       TBD: 'To be determined'
     }
   }
+};
+
+export const planBasicsMisc: Record<string, string> = {
+  heading: 'Model basics',
+  clearanceHeading: 'Review model basics',
+  breadcrumb: 'Model basics',
+  previousNames: 'Previous model names',
+  modelType: 'Model Type',
+  voluntary: 'Voluntary',
+  mandatory: 'Mandatory',
+  problem: 'Problem statement',
+  goal: 'Goal',
+  goalHelp:
+    'Please include the high level goal of the program and a description of the project.',
+  validDate: 'Please use a valid date format',
+  testInterventions: 'Test Interventions',
+  highLevelTimeline: 'Anticipated high level timeline',
+  completeICIP: 'Complete ICIP',
+  clearance: 'Clearance',
+  clearanceInfo:
+    'When you think you’ll begin internal (CMMI) clearance through when you’ll complete OMB/ASRF clearance',
+  clearanceStartDate: 'Clearance start date',
+  clearanceEndDate: 'Clearance end date',
+  annouceModel: 'Announce model',
+  applicationPeriod: 'Application period',
+  applicationStartDate: 'Application start date',
+  applicationEndDate: 'Application end date',
+  perforamncePeriod: 'Performance period',
+  performanceStartDate: 'Performance start date',
+  performanceEndDate: 'Performance end date',
+  demonstrationPerformance: 'Performance period',
+  demonstrationPerformanceInfo:
+    'When the model will be active beginning with the go-live date',
+  modelWrapUp: 'Model wrap-up end date',
+  notes: 'Notes',
+  tightTimeline:
+    'If timelines are tight, might there be pieces of the model that can be phased in over time?',
+  tightTimelineInfo:
+    'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
+  na: 'No answer entered',
+  otherNotSpecificed: 'Other not specified',
+  milestonesInfo:
+    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
 };
 
 export default planBasics;

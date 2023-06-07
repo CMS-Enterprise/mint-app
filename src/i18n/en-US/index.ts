@@ -16,7 +16,7 @@ import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import plan from './modelPlan/plan';
-import planBasics from './modelPlan/planBasics';
+import { planBasics, planBasicsMisc } from './modelPlan/planBasics';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -69,6 +69,7 @@ const enUS = {
   payments,
   plan,
   planBasics,
+  planBasicsMisc,
   prepareForClearance,
   privacyPolicy,
   readOnlyModelPlan,
