@@ -2,11 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
 
-interface SideNavFilterButtonProps {
+interface FitlerButtonProps {
   openFilterModal: () => void;
 }
 
-const SideNavFilterButton = ({ openFilterModal }: SideNavFilterButtonProps) => {
+const FitlerButton = ({ openFilterModal }: FitlerButtonProps) => {
   const { t } = useTranslation('generalReadOnly');
 
   return (
@@ -21,4 +21,4 @@ const SideNavFilterButton = ({ openFilterModal }: SideNavFilterButtonProps) => {
   );
 };
 
-export default SideNavFilterButton;
+export default FitlerButton;
