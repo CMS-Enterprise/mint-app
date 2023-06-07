@@ -37,7 +37,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
-import SideNavFilterButton from './_components/FilterView/FilterButton';
+import FilterButton from './_components/FilterView/FilterButton';
 import FilterViewModal from './_components/FilterView/Modal';
 import groupOptions from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
@@ -364,7 +364,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
       {isMobile && !flags.hideGroupView && (
         <GridContainer className="padding-y-2">
-          <SideNavFilterButton
+          <FilterButton
             openFilterModal={() => setIsFilterViewModalOpen(true)}
           />
         </GridContainer>
