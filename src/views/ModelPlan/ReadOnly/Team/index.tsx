@@ -69,9 +69,12 @@ const TeamGroupings = ({
 };
 
 const FilteredViewGroupings = ({
-  collaborators
+  collaborators,
+  role
 }: {
   collaborators: CollaboratorsType[];
+  role: TeamRole.MODEL_LEAD;
+  // role is included for future edit to include TeamRole.PAYMENT
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
@@ -80,24 +83,26 @@ const FilteredViewGroupings = ({
         {t('contactInfo.modelLeads')}
       </h3>
       <Grid row gap>
-        {collaborators.map(collaborator => {
-          return (
-            <Grid desktop={{ col: 6 }} className="margin-bottom-4">
-              <p className="margin-y-0 font-body-sm text-bold">
-                {collaborator.userAccount.commonName}
-              </p>
-              <Link
-                aria-label={collaborator.userAccount.email}
-                className="margin-0 line-height-body-5"
-                href={`mailto:${collaborator.userAccount.email}`}
-                target="_blank"
-              >
-                {collaborator.userAccount.email}
-                <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
-              </Link>
-            </Grid>
-          );
-        })}
+        {collaborators
+          .filter(c => c.teamRole === role)
+          .map(collaborator => {
+            return (
+              <Grid desktop={{ col: 6 }} className="margin-bottom-4">
+                <p className="margin-y-0 font-body-sm text-bold">
+                  {collaborator.userAccount.commonName}
+                </p>
+                <Link
+                  aria-label={collaborator.userAccount.email}
+                  className="margin-0 line-height-body-5"
+                  href={`mailto:${collaborator.userAccount.email}`}
+                  target="_blank"
+                >
+                  {collaborator.userAccount.email}
+                  <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+                </Link>
+              </Grid>
+            );
+          })}
       </Grid>
     </div>
   );
@@ -138,6 +143,7 @@ const ReadOnlyTeamInfo = ({
     >
       {isViewingFilteredView ? (
         <FilteredViewGroupings
+          role={TeamRole.MODEL_LEAD}
           collaborators={collaborators.filter(
             c => c.teamRole === TeamRole.MODEL_LEAD
           )}
