@@ -69,41 +69,35 @@ const TeamGroupings = ({
 };
 
 const FilteredViewGroupings = ({
-  role,
   collaborators
 }: {
-  role: string;
   collaborators: CollaboratorsType[];
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
     <div>
       <h3 className="margin-top-0 margin-bottom-2">
-        {role === TeamRole.MODEL_LEAD
-          ? t('contactInfo.modelLeads')
-          : translateTeamRole(role)}
+        {t('contactInfo.modelLeads')}
       </h3>
       <Grid row gap>
-        {collaborators
-          .filter(c => c.teamRole === role)
-          .map(collaborator => {
-            return (
-              <Grid desktop={{ col: 6 }} className="margin-bottom-4">
-                <p className="margin-y-0 font-body-sm text-bold">
-                  {collaborator.userAccount.commonName}
-                </p>
-                <Link
-                  aria-label={collaborator.userAccount.email}
-                  className="margin-0 line-height-body-5"
-                  href={`mailto:${collaborator.userAccount.email}`}
-                  target="_blank"
-                >
-                  {collaborator.userAccount.email}
-                  <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
-                </Link>
-              </Grid>
-            );
-          })}
+        {collaborators.map(collaborator => {
+          return (
+            <Grid desktop={{ col: 6 }} className="margin-bottom-4">
+              <p className="margin-y-0 font-body-sm text-bold">
+                {collaborator.userAccount.commonName}
+              </p>
+              <Link
+                aria-label={collaborator.userAccount.email}
+                className="margin-0 line-height-body-5"
+                href={`mailto:${collaborator.userAccount.email}`}
+                target="_blank"
+              >
+                {collaborator.userAccount.email}
+                <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+              </Link>
+            </Grid>
+          );
+        })}
       </Grid>
     </div>
   );
@@ -142,11 +136,17 @@ const ReadOnlyTeamInfo = ({
       className="read-only-model-plan--team-info"
       data-testid="read-only-model-plan--team-info"
     >
-      {sortModelLeadFirst.map((role, index) => {
-        if (collaborators.filter(c => c.teamRole === role).length !== 0) {
-          if (isViewingFilteredView) {
+      {isViewingFilteredView ? (
+        <FilteredViewGroupings
+          collaborators={collaborators.filter(
+            c => c.teamRole === TeamRole.MODEL_LEAD
+          )}
+        />
+      ) : (
+        sortModelLeadFirst.map((role, index) => {
+          if (collaborators.filter(c => c.teamRole === role).length !== 0) {
             return (
-              <FilteredViewGroupings
+              <TeamGroupings
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 role={role}
@@ -154,17 +154,9 @@ const ReadOnlyTeamInfo = ({
               />
             );
           }
-          return (
-            <TeamGroupings
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              role={role}
-              collaborators={collaborators}
-            />
-          );
-        }
-        return '';
-      })}
+          return '';
+        })
+      )}
     </div>
   );
 };
