@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import {
   Card,
   CardHeader,
+  Grid,
   IconMailOutline,
   Link
 } from '@trussworks/react-uswds';
@@ -67,7 +68,54 @@ const TeamGroupings = ({
   );
 };
 
-const ReadOnlyTeamInfo = ({ modelID }: { modelID: string }) => {
+const FilteredViewGroupings = ({
+  role,
+  collaborators
+}: {
+  role: string;
+  collaborators: CollaboratorsType[];
+}) => {
+  const { t } = useTranslation('generalReadOnly');
+  return (
+    <div>
+      <h3 className="margin-top-0 margin-bottom-2">
+        {role === TeamRole.MODEL_LEAD
+          ? t('contactInfo.modelLeads')
+          : translateTeamRole(role)}
+      </h3>
+      <Grid row gap>
+        {collaborators
+          .filter(c => c.teamRole === role)
+          .map(collaborator => {
+            return (
+              <Grid desktop={{ col: 6 }} className="margin-bottom-4">
+                <p className="margin-y-0 font-body-sm text-bold">
+                  {collaborator.userAccount.commonName}
+                </p>
+                <Link
+                  aria-label={collaborator.userAccount.email}
+                  className="margin-0 line-height-body-5"
+                  href={`mailto:${collaborator.userAccount.email}`}
+                  target="_blank"
+                >
+                  {collaborator.userAccount.email}
+                  <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+                </Link>
+              </Grid>
+            );
+          })}
+      </Grid>
+    </div>
+  );
+};
+
+const ReadOnlyTeamInfo = ({
+  modelID,
+  isViewingFilteredView
+}: {
+  modelID: string;
+  isViewingFilteredView?: boolean;
+}) => {
   const { data, loading, error } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
@@ -96,6 +144,16 @@ const ReadOnlyTeamInfo = ({ modelID }: { modelID: string }) => {
     >
       {sortModelLeadFirst.map((role, index) => {
         if (collaborators.filter(c => c.teamRole === role).length !== 0) {
+          if (isViewingFilteredView) {
+            return (
+              <FilteredViewGroupings
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                role={role}
+                collaborators={collaborators}
+              />
+            );
+          }
           return (
             <TeamGroupings
               // eslint-disable-next-line react/no-array-index-key
