@@ -4,9 +4,9 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import enUS from 'i18n/en-US';
 
-export const resources = {
+const resources = {
   'en-US': enUS
-} as const;
+};
 
 i18n.use(LanguageDetector).use(initReactI18next).init({
   lng: 'en-US',

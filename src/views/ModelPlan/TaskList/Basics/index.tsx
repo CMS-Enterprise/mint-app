@@ -17,7 +17,6 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
-import { ResourceKey } from 'i18next';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
@@ -30,6 +29,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
   GetModelPlanInfo as GetModelPlanInfoType,
@@ -39,7 +39,6 @@ import {
 import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
 import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
 import { CMMIGroup, CMSCenter } from 'types/graphql-global-types';
-import { TranslationPlan } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -55,17 +54,11 @@ const BasicsContent = () => {
   const { t: planBasicsMiscT } = useTranslation('plan_basics_misc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
-  // Question configuration and translation mappings
-  const translationStore: ResourceKey = useTranslation().i18n.store;
-
-  const translationPlanMap: TranslationPlan =
-    translationStore.data[navigator.language];
-
   const {
     modelCategory: modelCategoryConfig,
     cmsCenters: modelCMSCenterConfig,
     cmmiGroups: modelCMSGroupsConfig
-  } = translationPlanMap.plan_basics;
+  } = usePlanTranslation('plan_basics');
 
   const { modelID } = useParams<{ modelID: string }>();
 
