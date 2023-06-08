@@ -27,51 +27,51 @@ func (ctr *ChangeTableRecord) GQLTableName() GQLTableName { //can include ctx co
 
 	switch ctr.TableName { // TODO: this could be a map if desired, but GO doesn't allow constant maps
 	case "analyzed_audit":
-		return GQLTableName("AnalyzedAudit")
+		return GQLTableName("analyzedAudit")
 	case "discussion_reply":
-		return GQLTableName("DiscussionReply")
+		return GQLTableName("discussionReply")
 	case "existing_model":
-		return GQLTableName("ExistingModel")
+		return GQLTableName("existingModel")
 	case "existing_model_link":
-		return GQLTableName("ExistingModelLink")
+		return GQLTableName("existingModelLink")
 	case "model_plan":
-		return GQLTableName("ModelPlan")
+		return GQLTableName("modelPlan")
 	case "nda_agreement":
-		return GQLTableName("NdaAgreement")
+		return GQLTableName("ndaAgreement")
 	case "operational_need":
-		return GQLTableName("OperationalNeed")
+		return GQLTableName("operationalNeed")
 	case "operational_solution":
-		return GQLTableName("OperationalSolution")
+		return GQLTableName("operationalSolution")
 	case "operational_solution_subtask":
-		return GQLTableName("OperationalSolutionSubtask")
+		return GQLTableName("operationalSolutionSubtask")
 	case "plan_basics":
-		return GQLTableName("PlanBasics")
+		return GQLTableName("planBasics")
 	case "plan_beneficiaries":
-		return GQLTableName("PlanBeneficiaries")
+		return GQLTableName("planBeneficiaries")
 	case "plan_collaborator":
-		return GQLTableName("PlanCollaborator")
+		return GQLTableName("planCollaborator")
 	case "plan_cr_tdl":
-		return GQLTableName("PlanCrTdl")
+		return GQLTableName("planCrTdl")
 	case "plan_discussion":
-		return GQLTableName("PlanDiscussion")
+		return GQLTableName("planDiscussion")
 	case "plan_document":
-		return GQLTableName("PlanDocument")
+		return GQLTableName("planDocument")
 	case "plan_document_solution_link":
-		return GQLTableName("PlanDocumentSolutionLink")
+		return GQLTableName("planDocumentSolutionLink")
 	case "plan_general_characteristics":
-		return GQLTableName("PlanGeneralCharacteristics")
+		return GQLTableName("planGeneralCharacteristics")
 	case "plan_ops_eval_and_learning":
-		return GQLTableName("PlanOpsEvalAndLearning")
+		return GQLTableName("planOpsEvalAndLearning")
 	case "plan_participants_and_providers":
-		return GQLTableName("PlanParticipantsAndProviders")
+		return GQLTableName("planParticipantsAndProviders")
 	case "plan_payments":
-		return GQLTableName("PlanPayments")
+		return GQLTableName("planPayments")
 	case "possible_operational_need":
-		return GQLTableName("PossibleOperationalNeed")
+		return GQLTableName("possibleOperationalNeed")
 	case "possible_operational_solution":
-		return GQLTableName("PossibleOperationalSolution")
+		return GQLTableName("possibleOperationalSolution")
 	case "user_account":
-		return GQLTableName("UserAccount")
+		return GQLTableName("userAccount")
 
 	default:
 		return GQLTableName("UNKNOWN") //TODO: this will fail

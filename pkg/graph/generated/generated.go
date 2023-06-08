@@ -7992,29 +7992,29 @@ type ChangeTableRecord {
 
 # lint-disable enum-values-all-caps
 enum GQLTableName {
-  AnalyzedAudit
-  DiscussionReply
-  ExistingModel
-  ExistingModelLink
-  ModelPlan
-  NdaAgreement
-  OperationalNeed
-  OperationalSolution
-  OperationalSolutionSubtask
-  PlanBasics
-  PlanBeneficiaries
-  PlanCollaborator
-  PlanCrTdl
-  PlanDiscussion
-  PlanDocument
-  PlanDocumentSolutionLink
-  PlanGeneralCharacteristics
-  PlanOpsEvalAndLearning
-  PlanParticipantsAndProviders
-  PlanPayments
-  PossibleOperationalNeed
-  PossibleOperationalSolution
-  UserAccount
+  analyzedAudit
+  discussionReply
+  existingModel
+  existingModelLink
+  modelPlan
+  ndaAgreement
+  operationalNeed
+  operationalSolution
+  operationalSolutionSubtask
+  planBasics
+  planBeneficiaries
+  planCollaborator
+  planCrTdl
+  planDiscussion
+  planDocument
+  planDocumentSolutionLink
+  planGeneralCharacteristics
+  planOpsEvalAndLearning
+  planParticipantsAndProviders
+  planPayments
+  possibleOperationalNeed
+  possibleOperationalSolution
+  userAccount
 }
 # lint-enable enum-values-all-caps
 
