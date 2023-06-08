@@ -433,7 +433,6 @@ type PlanGeneralCharacteristics {
   modelPlanID: UUID!
   demoCode: String
   amsModelID: UUID
-  modelAbbreviation: String
 
   # Page 1
   isNewModel: Boolean

@@ -1,6 +1,7 @@
 SELECT DISTINCT
     model_plan.id,
     model_plan.model_name,
+    model_plan.model_abbreviation,
     model_plan.status,
     model_plan.archived,
     model_plan.created_by,

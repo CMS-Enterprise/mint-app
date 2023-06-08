@@ -11,7 +11,6 @@ SELECT
     gc.model_plan_id,
     gc.demo_code,
     gc.ams_model_id,
-    gc.model_abbreviation,
     gc.is_new_model,
     gc.existing_model,
     gc.resembles_existing_model,

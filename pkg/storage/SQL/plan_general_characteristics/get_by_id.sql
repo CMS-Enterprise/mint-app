@@ -3,7 +3,6 @@ SELECT
     model_plan_id,
     demo_code,
     ams_model_id,
-    model_abbreviation,
     is_new_model,
     existing_model,
     resembles_existing_model,
