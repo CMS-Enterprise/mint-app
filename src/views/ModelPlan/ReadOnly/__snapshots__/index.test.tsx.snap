@@ -329,8 +329,8 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
       </button>
     </div>
     <div
-      class="mint-section model-plan-alert-wrapper"
-      data-testid="section-wrapper"
+      class="grid-container model-plan-alert-wrapper"
+      data-testid="gridContainer"
     >
       <div
         class="usa-alert usa-alert--warning flex margin-bottom-5 desktop:margin-y-3"
@@ -370,20 +370,24 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
               id="read-only-side-nav__wrapper"
             >
               <div
-                class="bg-base-lightest padding-2 margin-bottom-4"
+                class="margin-bottom-4"
               >
-                <p
-                  class="margin-top-0 text-bold line-height-sans-5"
+                <div
+                  class="bg-base-lightest padding-2"
                 >
-                  Are you part of a group that only cares about some of these fields?
-                </p>
-                <button
-                  class="usa-button"
-                  data-testid="button"
-                  type="button"
-                >
-                  Filter view
-                </button>
+                  <p
+                    class="margin-top-0 text-bold line-height-sans-5"
+                  >
+                    Are you part of a group that only cares about some of these fields?
+                  </p>
+                  <button
+                    class="usa-button"
+                    data-testid="button"
+                    type="button"
+                  >
+                    Filter view
+                  </button>
+                </div>
               </div>
               <ul
                 class="usa-sidenav"
