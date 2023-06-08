@@ -1,6 +1,8 @@
+/* eslint-disable camelcase */
+
 import { TranslationModelPlan } from 'types/translation';
 
-const plan: TranslationModelPlan = {
+const model_plan: TranslationModelPlan = {
   modelName: {
     gqlField: 'modelName',
     goField: 'ModelName',
@@ -11,4 +13,4 @@ const plan: TranslationModelPlan = {
   }
 };
 
-export default plan;
+export default model_plan;

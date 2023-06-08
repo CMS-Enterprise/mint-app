@@ -8,4 +8,6 @@ export const hasOptions = (
 ): options is TranslationFieldPropertiesWithOptions =>
   !!(options as any).options;
 
+export const translateBoolean = (bool: boolean) => bool.toString();
+
 export default hasOptions;

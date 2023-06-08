@@ -15,7 +15,8 @@ export type TranslationFieldProperties = {
     | 'radio'
     | 'checkbox'
     | 'select'
-    | 'multiselect'
+    | 'multiSelect'
+    | 'datePicker'
     | 'rangeInput';
   tags?: string[];
 };
@@ -33,13 +34,29 @@ export type TranslationModelPlan = {
 };
 
 export type TranslationPlanBasics = {
+  // Model Plan
   modelCategory: TranslationFieldPropertiesWithOptions;
   cmsCenters: TranslationFieldPropertiesWithOptions;
   cmmiGroups: TranslationFieldPropertiesWithOptions;
+  // Overview
   modelType: TranslationFieldPropertiesWithOptions;
   problem: TranslationFieldProperties;
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
+  // Milestones
+  completeICIP: TranslationFieldProperties;
+  clearanceStarts: TranslationFieldProperties;
+  clearanceEnds: TranslationFieldProperties;
+  announced: TranslationFieldProperties;
+  applicationsStart: TranslationFieldProperties;
+  applicationsEnd: TranslationFieldProperties;
+  performancePeriodStarts: TranslationFieldProperties;
+  performancePeriodEnds: TranslationFieldProperties;
+  highLevelNote: TranslationFieldProperties;
+  wrapUpEnds: TranslationFieldProperties;
+  phasedIn: TranslationFieldPropertiesWithOptions;
+  phasedInNote: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions;
 };
 
 export type PlanSection =

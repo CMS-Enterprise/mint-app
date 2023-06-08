@@ -1,6 +1,7 @@
 /* eslint-disable no-redeclare */
 
 // Custom hook for question configuration and typed translation mappings for iterative rendering
+
 import { useTranslation } from 'react-i18next';
 import { ResourceKey } from 'i18next';
 

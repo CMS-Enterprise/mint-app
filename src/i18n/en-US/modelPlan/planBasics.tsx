@@ -1,6 +1,8 @@
+/* eslint-disable camelcase */
+
 import { TranslationPlanBasics } from 'types/translation';
 
-export const planBasics: TranslationPlanBasics = {
+export const plan_basics: TranslationPlanBasics = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
@@ -96,42 +98,148 @@ export const planBasics: TranslationPlanBasics = {
     question: 'Test Interventions',
     dataType: 'string',
     formType: 'textarea'
+  },
+  completeICIP: {
+    gqlField: 'completeICIP',
+    goField: 'CompleteICIP',
+    dbField: 'complete_icip',
+    question: 'Complete ICIP',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  clearanceStarts: {
+    gqlField: 'clearanceStarts',
+    goField: 'ClearanceStarts',
+    dbField: 'clearance_starts',
+    question: 'Clearance start date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  clearanceEnds: {
+    gqlField: 'clearanceEnds',
+    goField: 'ClearanceEnds',
+    dbField: 'clearance_ends',
+    question: 'Clearance end date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  announced: {
+    gqlField: 'announced',
+    goField: 'Announced',
+    dbField: 'announced',
+    question: 'Announce model',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  applicationsStart: {
+    gqlField: 'applicationsStart',
+    goField: 'ApplicationsStart',
+    dbField: 'applications_starts',
+    question: 'Application start date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  applicationsEnd: {
+    gqlField: 'applicationsEnd',
+    goField: 'ApplicationsEnd',
+    dbField: 'applications_ends',
+    question: 'Application end date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  performancePeriodStarts: {
+    gqlField: 'applicationsEnd',
+    goField: 'ApplicationsEnd',
+    dbField: 'applications_ends',
+    question: 'Application end date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  performancePeriodEnds: {
+    gqlField: 'applicationsEnd',
+    goField: 'ApplicationsEnd',
+    dbField: 'applications_ends',
+    question: 'Application end date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  highLevelNote: {
+    gqlField: 'highLevelNote',
+    goField: 'HighLevelNote',
+    dbField: 'high_level_note',
+    question: 'Note',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  wrapUpEnds: {
+    gqlField: 'wrapUpEnds',
+    goField: 'WrapUpEnds',
+    dbField: 'wrap_up_ends',
+    question: 'Model wrap-up end date',
+    dataType: 'date',
+    formType: 'datePicker'
+  },
+  phasedIn: {
+    gqlField: 'phasedIn',
+    goField: 'PhasedIn',
+    dbField: 'phased_in',
+    question:
+      'If timelines are tight, might there be pieces of the model that can be phased in over time?',
+    hint:
+      'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  phasedInNote: {
+    gqlField: 'phasedInNote',
+    goField: 'PhasedInNote',
+    dbField: 'phased_in_note',
+    question: 'Note',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    question: 'Model Plan status',
+    dataType: 'enum',
+    formType: 'checkbox',
+    options: {
+      READY:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      IN_PROGRESS:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_REVIEW:
+        'This section of the Model Plan (Model basics) is ready for review.',
+      READY_FOR_CLEARANCE:
+        'This section of the Model Plan (Model basics) is ready for review.'
+    }
   }
 };
 
-export const planBasicsMisc: Record<string, string> = {
+export const plan_basics_misc: Record<string, string> = {
   heading: 'Model basics',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
   previousNames: 'Previous model names',
   validDate: 'Please use a valid date format',
   highLevelTimeline: 'Anticipated high level timeline',
-  completeICIP: 'Complete ICIP',
   clearance: 'Clearance',
   clearanceInfo:
     'When you think you’ll begin internal (CMMI) clearance through when you’ll complete OMB/ASRF clearance',
-  clearanceStartDate: 'Clearance start date',
-  clearanceEndDate: 'Clearance end date',
-  annouceModel: 'Announce model',
   applicationPeriod: 'Application period',
-  applicationStartDate: 'Application start date',
-  applicationEndDate: 'Application end date',
-  perforamncePeriod: 'Performance period',
-  performanceStartDate: 'Performance start date',
-  performanceEndDate: 'Performance end date',
   demonstrationPerformance: 'Performance period',
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
-  modelWrapUp: 'Model wrap-up end date',
-  notes: 'Notes',
-  tightTimeline:
-    'If timelines are tight, might there be pieces of the model that can be phased in over time?',
-  tightTimelineInfo:
-    'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
   na: 'No answer entered',
   otherNotSpecificed: 'Other not specified',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
 };
 
-export default planBasics;
+export default plan_basics;
