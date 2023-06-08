@@ -74,7 +74,7 @@ const FilteredViewGroupings = ({
 }: {
   collaborators: CollaboratorsType[];
   role: TeamRole.MODEL_LEAD;
-  // role is included for future edit to include TeamRole.PAYMENT
+  // TODO: Add TeamRole.PAYMENT
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
