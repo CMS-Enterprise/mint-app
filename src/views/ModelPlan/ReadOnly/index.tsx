@@ -37,6 +37,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
+import BodyContent from './_components/FilterView/BodyContent';
 import FilterButton from './_components/FilterView/FilterButton';
 import FilterViewModal from './_components/FilterView/Modal';
 import groupOptions from './_components/FilterView/util';
@@ -380,63 +381,65 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
-          <Grid row gap>
-            {!isViewingFilteredGroup && !isMobile && (
-              <Grid
-                desktop={{ col: 3 }}
-                className={classnames('padding-right-4 sticky-nav', {
-                  'sticky-nav__collaborator': hasEditAccess
-                })}
-              >
-                <SideNav
-                  subComponents={subComponents}
-                  isHelpArticle={isHelpArticle}
-                  openFilterModal={() => setIsFilterViewModalOpen(true)}
-                />
-              </Grid>
-            )}
+          {isViewingFilteredGroup ? (
+            <BodyContent />
+          ) : (
+            <Grid row gap>
+              {!isMobile && (
+                <Grid
+                  desktop={{ col: 3 }}
+                  className={classnames('padding-right-4 sticky-nav', {
+                    'sticky-nav__collaborator': hasEditAccess
+                  })}
+                >
+                  <SideNav
+                    subComponents={subComponents}
+                    isHelpArticle={isHelpArticle}
+                    openFilterModal={() => setIsFilterViewModalOpen(true)}
+                  />
+                </Grid>
+              )}
 
-            <Grid desktop={{ col: isViewingFilteredGroup ? 12 : 9 }}>
-              <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
-                <GridContainer className="padding-left-0 padding-right-0">
-                  <Grid row gap>
-                    {/* Central component */}
-                    <Grid
-                      desktop={{
-                        col:
-                          isViewingFilteredGroup ||
-                          subinfo === 'documents' ||
-                          subinfo === 'crs-and-tdl' ||
-                          subinfo === 'it-solutions'
-                            ? 12
-                            : 8
-                      }}
-                    >
-                      {subComponent.component}
+              <Grid desktop={{ col: 9 }}>
+                <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
+                  <GridContainer className="padding-left-0 padding-right-0">
+                    <Grid row gap>
+                      {/* Central component */}
+                      <Grid
+                        desktop={{
+                          col:
+                            subinfo === 'documents' ||
+                            subinfo === 'crs-and-tdl' ||
+                            subinfo === 'it-solutions'
+                              ? 12
+                              : 8
+                        }}
+                      >
+                        {subComponent.component}
+                      </Grid>
+                      {/* Contact info sidebar */}
+                      {subinfo !== 'documents' &&
+                        subinfo !== 'crs-and-tdl' &&
+                        subinfo !== 'it-solutions' && (
+                          <Grid
+                            desktop={{ col: 4 }}
+                            className={classnames({
+                              'sticky-nav': !isMobile,
+                              'sticky-nav__collaborator': hasEditAccess
+                            })}
+                          >
+                            <ContactInfo
+                              modelID={modelID}
+                              isViewingTeamPage={subinfo === 'team'}
+                            />
+                          </Grid>
+                        )}
                     </Grid>
-                    {/* Contact info sidebar */}
-                    {!isViewingFilteredGroup &&
-                      subinfo !== 'documents' &&
-                      subinfo !== 'crs-and-tdl' &&
-                      subinfo !== 'it-solutions' && (
-                        <Grid
-                          desktop={{ col: 4 }}
-                          className={classnames({
-                            'sticky-nav': !isMobile,
-                            'sticky-nav__collaborator': hasEditAccess
-                          })}
-                        >
-                          <ContactInfo
-                            modelID={modelID}
-                            isViewingTeamPage={subinfo === 'team'}
-                          />
-                        </Grid>
-                      )}
-                  </Grid>
-                </GridContainer>
-              </div>
+                  </GridContainer>
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </GridContainer>
       </SectionWrapper>
     </MainContent>
