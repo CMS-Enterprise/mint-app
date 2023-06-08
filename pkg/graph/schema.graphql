@@ -1397,6 +1397,12 @@ type ChangeTableRecord {
   guid: ID!
   modelPlanID: UUID!
   tableID: Int!
+
+  """
+  Returns the table name in the format of the type returned in GraphQL
+  Example:  a table name of model_plan returns as ModelPlan
+  """
+  gqlTableName: GQLTableName!
   tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
@@ -1405,6 +1411,34 @@ type ChangeTableRecord {
   modifiedDts: Time
   modifiedBy: UserAccount
 }
+
+# lint-disable enum-values-all-caps
+enum GQLTableName {
+  AnalyzedAudit
+  DiscussionReply
+  ExistingModel
+  ExistingModelLink
+  ModelPlan
+  NdaAgreement
+  OperationalNeed
+  OperationalSolution
+  OperationalSolutionSubtask
+  PlanBasics
+  PlanBeneficiaries
+  PlanCollaborator
+  PlanCrTdl
+  PlanDiscussion
+  PlanDocument
+  PlanDocumentSolutionLink
+  PlanGeneralCharacteristics
+  PlanOpsEvalAndLearning
+  PlanParticipantsAndProviders
+  PlanPayments
+  PossibleOperationalNeed
+  PossibleOperationalSolution
+  UserAccount
+}
+# lint-enable enum-values-all-caps
 
 input SearchRequest {
   query: Map!

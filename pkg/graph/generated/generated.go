@@ -79,16 +79,17 @@ type ComplexityRoot struct {
 	}
 
 	ChangeTableRecord struct {
-		Action      func(childComplexity int) int
-		Fields      func(childComplexity int) int
-		ForeignKey  func(childComplexity int) int
-		GUID        func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		PrimaryKey  func(childComplexity int) int
-		TableID     func(childComplexity int) int
-		TableName   func(childComplexity int) int
+		Action       func(childComplexity int) int
+		Fields       func(childComplexity int) int
+		ForeignKey   func(childComplexity int) int
+		GQLTableName func(childComplexity int) int
+		GUID         func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
+		ModifiedBy   func(childComplexity int) int
+		ModifiedDts  func(childComplexity int) int
+		PrimaryKey   func(childComplexity int) int
+		TableID      func(childComplexity int) int
+		TableName    func(childComplexity int) int
 	}
 
 	ChangedFields struct {
@@ -1197,6 +1198,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ChangeTableRecord.ForeignKey(childComplexity), true
+
+	case "ChangeTableRecord.gqlTableName":
+		if e.complexity.ChangeTableRecord.GQLTableName == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.GQLTableName(childComplexity), true
 
 	case "ChangeTableRecord.guid":
 		if e.complexity.ChangeTableRecord.GUID == nil {
@@ -7967,6 +7975,12 @@ type ChangeTableRecord {
   guid: ID!
   modelPlanID: UUID!
   tableID: Int!
+
+  """
+  Returns the table name in the format of the type returned in GraphQL
+  Example:  a table name of model_plan returns as ModelPlan
+  """
+  gqlTableName: GQLTableName!
   tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
@@ -7975,6 +7989,34 @@ type ChangeTableRecord {
   modifiedDts: Time
   modifiedBy: UserAccount
 }
+
+# lint-disable enum-values-all-caps
+enum GQLTableName {
+  AnalyzedAudit
+  DiscussionReply
+  ExistingModel
+  ExistingModelLink
+  ModelPlan
+  NdaAgreement
+  OperationalNeed
+  OperationalSolution
+  OperationalSolutionSubtask
+  PlanBasics
+  PlanBeneficiaries
+  PlanCollaborator
+  PlanCrTdl
+  PlanDiscussion
+  PlanDocument
+  PlanDocumentSolutionLink
+  PlanGeneralCharacteristics
+  PlanOpsEvalAndLearning
+  PlanParticipantsAndProviders
+  PlanPayments
+  PossibleOperationalNeed
+  PossibleOperationalSolution
+  UserAccount
+}
+# lint-enable enum-values-all-caps
 
 input SearchRequest {
   query: Map!
@@ -10935,6 +10977,50 @@ func (ec *executionContext) fieldContext_ChangeTableRecord_tableID(ctx context.C
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ChangeTableRecord_gqlTableName(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GQLTableName(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.GQLTableName)
+	fc.Result = res
+	return ec.marshalNGQLTableName2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGQLTableName(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_gqlTableName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type GQLTableName does not have child fields")
 		},
 	}
 	return fc, nil
@@ -46078,6 +46164,8 @@ func (ec *executionContext) fieldContext_Query_searchChanges(ctx context.Context
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46179,6 +46267,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTable(ctx context.Con
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46280,6 +46370,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableWithFreeText(ctx
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46381,6 +46473,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByModelPlanID(ct
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46482,6 +46576,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByDateRange(ctx 
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46583,6 +46679,8 @@ func (ec *executionContext) fieldContext_Query_searchModelPlanChangesByDateRange
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46684,6 +46782,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByActor(ctx cont
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46785,6 +46885,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByModelStatus(ct
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -50631,6 +50733,13 @@ func (ec *executionContext) _ChangeTableRecord(ctx context.Context, sel ast.Sele
 		case "tableID":
 
 			out.Values[i] = ec._ChangeTableRecord_tableID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "gqlTableName":
+
+			out.Values[i] = ec._ChangeTableRecord_gqlTableName(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -59240,6 +59349,22 @@ func (ec *executionContext) marshalNFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmin
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNGQLTableName2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGQLTableName(ctx context.Context, v interface{}) (models.GQLTableName, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.GQLTableName(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGQLTableName2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGQLTableName(ctx context.Context, sel ast.SelectionSet, v models.GQLTableName) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, v interface{}) (model.GeographyApplication, error) {
