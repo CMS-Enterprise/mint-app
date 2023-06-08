@@ -53,7 +53,7 @@ export type PlanSection =
   | 'operational_need'
   | 'operational_solution';
 
-export type TranslationPlan<> = {
+export type TranslationPlan = {
   model_plan: TranslationModelPlan;
   plan_basics: TranslationPlanBasics;
 };
