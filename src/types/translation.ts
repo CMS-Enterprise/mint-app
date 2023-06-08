@@ -28,9 +28,9 @@ export type TranslationField =
   | TranslationFieldProperties
   | TranslationFieldPropertiesWithOptions;
 
-  export type TranslationModelPlan = {
-    modelName: TranslationFieldProperties;
-  };
+export type TranslationModelPlan = {
+  modelName: TranslationFieldProperties;
+};
 
 export type TranslationPlanBasics = {
   modelCategory: TranslationFieldPropertiesWithOptions;
