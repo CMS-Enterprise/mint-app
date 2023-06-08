@@ -1,6 +1,6 @@
-import { TranslationFieldObject } from 'types/translation';
+import { TranslationModelPlan } from 'types/translation';
 
-const plan: Record<string, TranslationFieldObject> = {
+const plan: TranslationModelPlan = {
   modelName: {
     gqlField: 'modelName',
     goField: 'ModelName',

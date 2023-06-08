@@ -1,6 +1,6 @@
-import { TranslationFieldObject } from 'types/translation';
+import { TranslationPlanBasics } from 'types/translation';
 
-export const planBasics: Record<string, TranslationFieldObject> = {
+export const planBasics: TranslationPlanBasics = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
@@ -57,6 +57,18 @@ export const planBasics: Record<string, TranslationFieldObject> = {
       STATE_AND_POPULATION_HEALTH_GROUP:
         'State and Population Health Group (SPHG)',
       TBD: 'To be determined'
+    }
+  },
+  modelType: {
+    gqlField: 'modelType',
+    goField: 'ModelType',
+    dbField: 'model_type',
+    question: 'Model Type',
+    dataType: 'enum',
+    formType: 'radio',
+    options: {
+      VOLUNTARY: 'Voluntary',
+      MANDATORY: 'Mandatory'
     }
   }
 };

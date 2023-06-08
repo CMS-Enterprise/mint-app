@@ -1,10 +1,11 @@
 import {
-  TranslationFieldObject,
-  TranslationFieldObjectOptions
+  TranslationField,
+  TranslationFieldPropertiesWithOptions
 } from 'types/translation';
 
 export const hasOptions = (
-  options: TranslationFieldObject
-): options is TranslationFieldObjectOptions => !!(options as any).options;
+  options: TranslationField
+): options is TranslationFieldPropertiesWithOptions =>
+  !!(options as any).options;
 
 export default hasOptions;

@@ -1,4 +1,6 @@
-export type TranslationFieldObjectFreeText = {
+/* eslint-disable */
+
+export type TranslationFieldProperties = {
   gqlField: string;
   goField: string;
   dbField: string;
@@ -18,10 +20,26 @@ export type TranslationFieldObjectFreeText = {
   tags?: string[];
 };
 
-export type TranslationFieldObjectOptions = TranslationFieldObjectFreeText & {
+export type TranslationFieldPropertiesWithOptions = TranslationFieldProperties & {
   options: Record<string, string>;
 };
 
-export type TranslationFieldObject =
-  | TranslationFieldObjectFreeText
-  | TranslationFieldObjectOptions;
+export type TranslationField =
+  | TranslationFieldProperties
+  | TranslationFieldPropertiesWithOptions;
+
+  export type TranslationModelPlan = {
+    modelName: TranslationFieldProperties;
+  };
+
+export type TranslationPlanBasics = {
+  modelCategory: TranslationFieldPropertiesWithOptions;
+  cmsCenters: TranslationFieldPropertiesWithOptions;
+  cmmiGroups: TranslationFieldPropertiesWithOptions;
+  modelType: TranslationFieldPropertiesWithOptions;
+};
+
+export type TranslationPlan = {
+  model_plan: TranslationModelPlan;
+  plan_basics: TranslationPlanBasics;
+};
