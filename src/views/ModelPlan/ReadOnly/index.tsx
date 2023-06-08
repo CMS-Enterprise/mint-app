@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Button,
@@ -46,7 +46,10 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
-import FilterViewModal from './_components/FilterViewModal';
+import FilterViewBanner from './_components/FilterView/Banner';
+import FilterViewModal from './_components/FilterView/Modal';
+import SideNavFilterButton from './_components/FilterView/SideNavFilterButton';
+import groupOptions from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
@@ -109,7 +112,7 @@ const isSubpage = (
 const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
-  const isMobile = useCheckResponsiveScreen('tablet');
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const flags = useFlags();
 
@@ -120,6 +123,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     modelID: string;
     subinfo: SubpageKey;
   }>();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const filteredView = params.get('filter-view');
 
   // Usered to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
@@ -214,6 +221,15 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return idNumbers.join(', ');
   };
 
+  const filteredViewOutput = (value: string) => {
+    if (value === 'cmmi') {
+      return groupOptions.filter(n => n.value.includes(value))[0].label;
+    }
+    return groupOptions
+      .filter(n => n.value.includes(value))[0]
+      .value.toUpperCase();
+  };
+
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
@@ -306,9 +322,18 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         shouldCloseOnOverlayClick
         modalHeading={h('filterView.text')}
       >
-        <FilterViewModal closeModal={() => setIsFilterViewModalOpen(false)} />
+        <FilterViewModal
+          closeModal={() => setIsFilterViewModalOpen(false)}
+          filteredView={filteredView}
+        />
       </Modal>
       {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
+      {filteredView && (
+        <FilterViewBanner
+          filteredView={filteredViewOutput(filteredView)}
+          openFilterModal={() => setIsFilterViewModalOpen(true)}
+        />
+      )}
 
       <SummaryBox
         heading=""
@@ -472,13 +497,21 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         isHelpArticle={isHelpArticle}
       />
 
-      <SectionWrapper className="model-plan-alert-wrapper">
+      {isMobile && !flags.hideGroupView && (
+        <GridContainer className="padding-y-2">
+          <SideNavFilterButton
+            openFilterModal={() => setIsFilterViewModalOpen(true)}
+          />
+        </GridContainer>
+      )}
+
+      <GridContainer className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
           <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
             {h('alert')}
           </Alert>
         )}
-      </SectionWrapper>
+      </GridContainer>
 
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
