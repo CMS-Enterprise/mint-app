@@ -30,9 +30,14 @@ import './index.scss';
 export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
+  isViewingFilteredView?: boolean;
 };
 
-const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyModelBasics = ({
+  modelID,
+  clearance,
+  isViewingFilteredView
+}: ReadOnlyProps) => {
   const { t } = useTranslation('basics');
   const { t: p } = useTranslation('prepareForClearance');
 
@@ -94,8 +99,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (
