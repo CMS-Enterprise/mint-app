@@ -37,6 +37,9 @@ export type TranslationPlanBasics = {
   cmsCenters: TranslationFieldPropertiesWithOptions;
   cmmiGroups: TranslationFieldPropertiesWithOptions;
   modelType: TranslationFieldPropertiesWithOptions;
+  problem: TranslationFieldProperties
+  goal: TranslationFieldProperties
+  testInterventions: TranslationFieldProperties
 };
 
 export type PlanSection = 'model_plan' | 'plan_basics' | 'plan_general_characteristics' | 'plan_participants_and_providers' | 'plan_beneficiaries' | 'plan_ops_eval_and_learning' | 'plan_payments' | 'operational_need' | 'operational_solution';

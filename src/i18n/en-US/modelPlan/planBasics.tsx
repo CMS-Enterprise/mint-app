@@ -70,6 +70,32 @@ export const planBasics: TranslationPlanBasics = {
       VOLUNTARY: 'Voluntary',
       MANDATORY: 'Mandatory'
     }
+  },
+  problem: {
+    gqlField: 'problem',
+    goField: 'Problem',
+    dbField: 'problem',
+    question: 'Problem statement',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  goal: {
+    gqlField: 'goal',
+    goField: 'Goal',
+    dbField: 'goal',
+    question: 'Goal',
+    hint:
+      'Please include the high level goal of the program and a description of the project.',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  testInterventions: {
+    gqlField: 'testInterventions',
+    goField: 'TestInterventions',
+    dbField: 'test_interventions',
+    question: 'Test Interventions',
+    dataType: 'string',
+    formType: 'textarea'
   }
 };
 
@@ -78,15 +104,7 @@ export const planBasicsMisc: Record<string, string> = {
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
   previousNames: 'Previous model names',
-  modelType: 'Model Type',
-  voluntary: 'Voluntary',
-  mandatory: 'Mandatory',
-  problem: 'Problem statement',
-  goal: 'Goal',
-  goalHelp:
-    'Please include the high level goal of the program and a description of the project.',
   validDate: 'Please use a valid date format',
-  testInterventions: 'Test Interventions',
   highLevelTimeline: 'Anticipated high level timeline',
   completeICIP: 'Complete ICIP',
   clearance: 'Clearance',
