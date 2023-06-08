@@ -82,12 +82,12 @@ const FilteredViewGroupings = ({
       <h3 className="margin-top-0 margin-bottom-2">
         {t('contactInfo.modelLeads')}
       </h3>
-      <Grid row gap>
+      <Grid row gap style={{ rowGap: '2rem' }}>
         {collaborators
           .filter(c => c.teamRole === role)
           .map(collaborator => {
             return (
-              <Grid desktop={{ col: 6 }} className="margin-bottom-4">
+              <Grid desktop={{ col: 6 }}>
                 <p className="margin-y-0 font-body-sm text-bold">
                   {collaborator.userAccount.commonName}
                 </p>
