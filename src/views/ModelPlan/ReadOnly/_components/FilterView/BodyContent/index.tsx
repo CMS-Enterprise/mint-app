@@ -14,7 +14,7 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
         <h2 className="margin-top-0 margin-bottom-4">Model Team</h2>
         <ReadOnlyTeamInfo modelID={modelID} isViewingFilteredView />
       </div>
-      <div className="filtered-view-section filtered-view-section--model-team border-bottom border-base-light padding-bottom-6 margin-bottom-6">
+      <div className="filtered-view-section filtered-view-section--model-basics border-bottom border-base-light padding-bottom-6 margin-bottom-6">
         <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
       </div>
 
