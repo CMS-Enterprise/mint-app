@@ -44,6 +44,11 @@ func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *m
 	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
 }
 
+// Abbreviation is the resolver for the abbreviation field.
+func (r *modelPlanResolver) Abbreviation(ctx context.Context, obj *models.ModelPlan) (*string, error) {
+	panic(fmt.Errorf("not implemented: Abbreviation - abbreviation"))
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -532,11 +537,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
-}
-
-// AmsModelID is the resolver for the amsModelID field.
-func (r *planGeneralCharacteristicsResolver) AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: AmsModelID - amsModelID"))
 }
 
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
@@ -1045,3 +1045,13 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planGeneralCharacteristicsResolver) AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: AmsModelID - amsModelID"))
+}

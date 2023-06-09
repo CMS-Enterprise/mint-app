@@ -175,6 +175,7 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
+		Abbreviation             func(childComplexity int) int
 		Archived                 func(childComplexity int) int
 		Basics                   func(childComplexity int) int
 		Beneficiaries            func(childComplexity int) int
@@ -911,6 +912,8 @@ type ExistingModelLinkResolver interface {
 	CurrentModelPlan(ctx context.Context, obj *models.ExistingModelLink) (*models.ModelPlan, error)
 }
 type ModelPlanResolver interface {
+	Abbreviation(ctx context.Context, obj *models.ModelPlan) (*string, error)
+
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 	GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error)
 	ParticipantsAndProviders(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error)
@@ -997,8 +1000,6 @@ type PlanDocumentResolver interface {
 	NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error)
 }
 type PlanGeneralCharacteristicsResolver interface {
-	AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error)
-
 	AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error)
 
 	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
@@ -1642,6 +1643,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
+
+	case "ModelPlan.abbreviation":
+		if e.complexity.ModelPlan.Abbreviation == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Abbreviation(childComplexity), true
 
 	case "ModelPlan.archived":
 		if e.complexity.ModelPlan.Archived == nil {
@@ -6637,6 +6645,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID!
   modelName: String!
+  abbreviation: String
   archived: Boolean!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -7020,7 +7029,7 @@ type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
   demoCode: String
-  amsModelID: UUID
+  amsModelID: String
 
   # Page 1
   isNewModel: Boolean
@@ -13283,6 +13292,8 @@ func (ec *executionContext) fieldContext_ExistingModelLink_currentModelPlan(ctx 
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -13982,6 +13993,47 @@ func (ec *executionContext) fieldContext_ModelPlan_modelName(ctx context.Context
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlan_abbreviation(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().Abbreviation(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_abbreviation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -16118,6 +16170,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -16251,6 +16305,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -29843,7 +29899,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_amsModelID(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanGeneralCharacteristics().AmsModelID(rctx, obj)
+		return obj.AmsModelID, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -29852,19 +29908,19 @@ func (ec *executionContext) _PlanGeneralCharacteristics_amsModelID(ctx context.C
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*uuid.UUID)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -44140,6 +44196,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -44398,6 +44456,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -51409,6 +51469,23 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "abbreviation":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_abbreviation(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "archived":
 
 			out.Values[i] = ec._ModelPlan_archived(ctx, field, obj)
@@ -54041,22 +54118,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 			out.Values[i] = ec._PlanGeneralCharacteristics_demoCode(ctx, field, obj)
 
 		case "amsModelID":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanGeneralCharacteristics_amsModelID(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanGeneralCharacteristics_amsModelID(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "isNewModel":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_isNewModel(ctx, field, obj)

@@ -49,6 +49,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID!
   modelName: String!
+  abbreviation: String
   archived: Boolean!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -432,7 +433,7 @@ type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
   demoCode: String
-  amsModelID: UUID
+  amsModelID: String
 
   # Page 1
   isNewModel: Boolean
