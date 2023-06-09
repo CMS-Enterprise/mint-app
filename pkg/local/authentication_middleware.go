@@ -77,7 +77,7 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	// Pull job codes from config
 	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
 	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
-	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT Medicare Administrative Contractor"))
+	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT Contractor"))
 
 	// Always set assessment users to have base user permissions
 	if jcAssessment {

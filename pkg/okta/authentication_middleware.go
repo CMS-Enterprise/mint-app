@@ -32,7 +32,7 @@ const (
 	JobCodeProdMACUser    = "MINT MAC Users"
 
 	// This represents the rename to the MAC user job code. Future work will likely rename the job code config, but for now will allow either
-	JobCodeMINTContractor = "MINT Medicare Administrative Contractor"
+	JobCodeMINTContractor = "MINT Contractor"
 )
 
 // JobCodesConfig contains a set of environment context-sensitive job codes
@@ -93,7 +93,7 @@ func (j *JobCodesConfig) GetMACUserJobCode() string {
 	return j.macUser
 }
 
-// GetMINTContractorJobCode returns this JobCodesConfig's MINT Medicare Administrative Contractor job code
+// GetMINTContractorJobCode returns this JobCodesConfig's MINT Contractor job code
 func (j *JobCodesConfig) GetMINTContractorJobCode() string {
 	return j.mintContractor
 }
