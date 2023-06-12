@@ -44,11 +44,6 @@ func (r *existingModelLinkResolver) CurrentModelPlan(ctx context.Context, obj *m
 	return resolvers.ModelPlanGetByIDLOADER(ctx, *obj.CurrentModelPlanID) //TODO, implement loader, or this will be many queries
 }
 
-// Abbreviation is the resolver for the abbreviation field.
-func (r *modelPlanResolver) Abbreviation(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	panic(fmt.Errorf("not implemented: Abbreviation - abbreviation"))
-}
-
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	return resolvers.PlanBasicsGetByModelPlanIDLOADER(ctx, obj.ID)
@@ -1052,6 +1047,6 @@ type subscriptionResolver struct{ *Resolver }
 //  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
 //    it when you're done.
 //  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planGeneralCharacteristicsResolver) AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: AmsModelID - amsModelID"))
+func (r *modelPlanResolver) Abbreviation(ctx context.Context, obj *models.ModelPlan) (*string, error) {
+	panic(fmt.Errorf("not implemented: Abbreviation - abbreviation"))
 }
