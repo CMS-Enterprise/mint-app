@@ -3,6 +3,7 @@ package oktaapi
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/okta/okta-sdk-golang/v2/okta"
@@ -110,7 +111,7 @@ func (cw *clientWrapper) SearchByName(ctx context.Context, searchTerm string) ([
 	search := query.NewQueryParams(query.WithSearch(searchString))
 
 	searchedUsers, _, err := cw.oktaClient.User.ListUsers(ctx, search)
-	if err != nil {
+	if err != nil && !errors.Is(err, context.Canceled) {
 		logger.Error("Error searching Okta users", zap.Error(err), zap.String("searchTerm", searchTerm))
 		return nil, err
 	}
