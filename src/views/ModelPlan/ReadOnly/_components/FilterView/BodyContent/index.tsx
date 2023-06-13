@@ -25,8 +25,8 @@ const FitleredViewSection = ({
     <div
       className={`filtered-view-section filtered-view-section--${sectionName} margin-bottom-6 ${
         !lastSection
-          ? 'border-bottom border-base-light padding-bottom-0 '
-          : 'padding-bottom-4 '
+          ? 'border-bottom border-base-light padding-bottom-4'
+          : 'padding-bottom-0'
       }`}
     >
       {children}
@@ -134,6 +134,7 @@ const BodyContent = ({
             </FitleredViewSection>
           );
         }
+        return <></>;
       })}
 
       <Alert type="info" noIcon>
