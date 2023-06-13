@@ -382,7 +382,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       <SectionWrapper className="model-plan__body-content margin-top-4">
         <GridContainer>
           {isViewingFilteredGroup ? (
-            <BodyContent modelID={modelID} />
+            <BodyContent modelID={modelID} filteredView={filteredView} />
           ) : (
             <Grid row gap>
               {!isMobile && (
