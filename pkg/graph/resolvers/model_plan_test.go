@@ -43,9 +43,10 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	plan := suite.createModelPlan("Test Plan")
 
 	changes := map[string]interface{}{
-		"modelName": "NEW_AND_IMPROVED",
-		"status":    models.ModelStatusIcipComplete,
-		"archived":  true,
+		"modelName":    "NEW_AND_IMPROVED",
+		"abbreviation": "some model abbreviation",
+		"status":       models.ModelStatusIcipComplete,
+		"archived":     true,
 	}
 	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store) // update plan with new user "UPDT"
 
