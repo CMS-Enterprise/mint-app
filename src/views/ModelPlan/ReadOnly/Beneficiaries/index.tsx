@@ -92,7 +92,13 @@ const ReadOnlyBeneficiaries = ({
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('beneficiariesQuestion')}
           list
@@ -145,7 +151,13 @@ const ReadOnlyBeneficiaries = ({
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('howManyImpacted')}
           copy={numberPeopleImpacted?.toString()}
@@ -170,7 +182,7 @@ const ReadOnlyBeneficiaries = ({
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2">
+      <div>
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
         <ReadOnlySection
