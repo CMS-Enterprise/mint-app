@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
+  Alert,
   Grid,
   GridContainer,
   IconArrowBack,
@@ -18,7 +19,6 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
