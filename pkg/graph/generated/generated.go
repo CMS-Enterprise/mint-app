@@ -6725,6 +6725,7 @@ https://gqlgen.com/reference/changesets/
 """
 input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
+  abbreviation: String
   someNumbers: [Int!]
   archived: Boolean
   status: ModelStatus

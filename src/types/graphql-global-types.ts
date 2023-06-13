@@ -592,6 +592,7 @@ export interface DiscussionReplyCreateInput {
  */
 export interface ModelPlanChanges {
   modelName?: string | null;
+  abbreviation?: string | null;
   someNumbers?: number[] | null;
   archived?: boolean | null;
   status?: ModelStatus | null;
