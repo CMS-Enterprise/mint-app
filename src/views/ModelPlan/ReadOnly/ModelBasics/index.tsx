@@ -31,12 +31,14 @@ export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
   isViewingFilteredView?: boolean;
+  filteredQuestions?: string[];
 };
 
 const ReadOnlyModelBasics = ({
   modelID,
   clearance,
-  isViewingFilteredView
+  isViewingFilteredView,
+  filteredQuestions
 }: ReadOnlyProps) => {
   const { t } = useTranslation('basics');
   const { t: p } = useTranslation('prepareForClearance');
@@ -90,6 +92,19 @@ const ReadOnlyModelBasics = ({
     return <em className="text-base">{t('na')}</em>;
   };
 
+  const checkGroupMap = (question: string, component: React.ReactNode) => {
+    // Show the question if it is included in the map
+    if (isViewingFilteredView && filteredQuestions?.includes(question)) {
+      return component;
+    }
+    // Hide the question if it is NOT included in the map
+    if (isViewingFilteredView && !filteredQuestions?.includes(question)) {
+      return <></>;
+    }
+    // Return the component if it is NOT isViewingFilteredView
+    return component;
+  };
+
   return (
     <div
       className="read-only-model-plan--model-basics"
@@ -112,11 +127,29 @@ const ReadOnlyModelBasics = ({
         </p>
       )}
 
-      <ReadOnlySection
-        heading={t('previousNames')}
-        list
-        listItems={filteredNameHistory}
-      />
+      {checkGroupMap(
+        'nameHistory',
+        <ReadOnlySection
+          heading={t('previousNames')}
+          list
+          listItems={filteredNameHistory}
+        />
+      )}
+      {/* {isViewingFilteredView ? (
+        filteredQuestions?.includes('nameHistory') && (
+          <ReadOnlySection
+            heading={t('previousNames')}
+            list
+            listItems={filteredNameHistory}
+          />
+        )
+      ) : (
+        <ReadOnlySection
+          heading={t('previousNames')}
+          list
+          listItems={filteredNameHistory}
+        />
+      )} */}
 
       <ReadOnlySection
         heading={t('modelCategory')}

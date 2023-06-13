@@ -61,7 +61,15 @@ const BodyContent = ({
               key={task}
               lastSection={task === Object.keys(individualFilterView).pop()}
             >
-              <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
+              <ReadOnlyModelBasics
+                modelID={modelID}
+                isViewingFilteredView
+                filteredQuestions={
+                  individualFilterView[
+                    task as keyof typeof individualFilterView
+                  ]
+                }
+              />
             </FitleredViewSection>
           );
         }
