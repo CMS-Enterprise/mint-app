@@ -25,7 +25,7 @@ const FilterGroupMap = {
     payments: ['']
   },
   ipc: {
-    basics: ['nameHistory'],
+    basics: [''],
     'general-characteristics': [''],
     'participants-and-providers': [''],
     payments: ['']
@@ -39,7 +39,7 @@ const FilterGroupMap = {
     payments: ['']
   },
   pbg: {
-    basics: [''],
+    basics: ['modelType', 'goal'],
     'general-characteristics': [''],
     'participants-and-providers': [''],
     beneficiaries: [''],
@@ -47,7 +47,7 @@ const FilterGroupMap = {
     payments: ['']
   },
   mdm: {
-    basics: ['nameHistory'],
+    basics: [''],
     beneficiaries: [
       'beneficiaries',
       'beneficiariesOther',

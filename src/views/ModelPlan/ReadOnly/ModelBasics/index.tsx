@@ -127,14 +127,11 @@ const ReadOnlyModelBasics = ({
         </p>
       )}
 
-      {checkGroupMap(
-        'nameHistory',
-        <ReadOnlySection
-          heading={t('previousNames')}
-          list
-          listItems={filteredNameHistory}
-        />
-      )}
+      <ReadOnlySection
+        heading={t('previousNames')}
+        list
+        listItems={filteredNameHistory}
+      />
       {/* {isViewingFilteredView ? (
         filteredQuestions?.includes('nameHistory') && (
           <ReadOnlySection
@@ -151,36 +148,52 @@ const ReadOnlyModelBasics = ({
         />
       )} */}
 
-      <ReadOnlySection
-        heading={t('modelCategory')}
-        copy={modelCategory && translateModelCategory(modelCategory)}
-      />
+      {!isViewingFilteredView && (
+        <ReadOnlySection
+          heading={t('modelCategory')}
+          copy={modelCategory && translateModelCategory(modelCategory)}
+        />
+      )}
 
-      <SideBySideReadOnlySection
-        firstSection={{
-          heading: t('cmsComponent'),
-          list: true,
-          listItems: cmsCenters?.map(translateCmsCenter),
-          listOtherItem: cmsOther
-        }}
-        secondSection={{
-          heading: t('cmmiGroup'),
-          list: true,
-          listItems: cmmiGroups?.map(translateCmmiGroups)
-        }}
-      />
+      {!isViewingFilteredView && (
+        <SideBySideReadOnlySection
+          firstSection={{
+            heading: t('cmsComponent'),
+            list: true,
+            listItems: cmsCenters?.map(translateCmsCenter),
+            listOtherItem: cmsOther
+          }}
+          secondSection={{
+            heading: t('cmmiGroup'),
+            list: true,
+            listItems: cmmiGroups?.map(translateCmmiGroups)
+          }}
+        />
+      )}
 
-      <ReadOnlySection
-        heading={t('modelType')}
-        copy={modelType && translateModelType(modelType)}
-      />
+      {checkGroupMap(
+        'modelType',
+        <ReadOnlySection
+          heading={t('modelType')}
+          copy={modelType && translateModelType(modelType)}
+        />
+      )}
 
-      <ReadOnlySection heading={t('problem')} copy={problem} />
-      <ReadOnlySection heading={t('goal')} copy={goal} />
-      <ReadOnlySection
-        heading={t('testInterventions')}
-        copy={testInterventions}
-      />
+      {!isViewingFilteredView && (
+        <ReadOnlySection heading={t('problem')} copy={problem} />
+      )}
+
+      {checkGroupMap(
+        'goal',
+        <ReadOnlySection heading={t('goal')} copy={goal} />
+      )}
+
+      {!isViewingFilteredView && (
+        <ReadOnlySection
+          heading={t('testInterventions')}
+          copy={testInterventions}
+        />
+      )}
       <ReadOnlySection heading={t('notes')} copy={note} />
 
       <SectionWrapper
