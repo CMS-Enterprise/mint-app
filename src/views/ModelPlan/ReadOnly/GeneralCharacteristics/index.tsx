@@ -26,7 +26,8 @@ import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyGeneralCharacteristics = ({
   modelID,
-  clearance
+  clearance,
+  isViewingFilteredView
 }: ReadOnlyProps) => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
@@ -118,7 +119,9 @@ const ReadOnlyGeneralCharacteristics = ({
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (

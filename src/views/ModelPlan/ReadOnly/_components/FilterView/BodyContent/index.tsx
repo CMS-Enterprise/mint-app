@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Grid, Link } from '@trussworks/react-uswds';
 
+import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 
@@ -32,6 +33,12 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
       </FitleredViewSection>
       <FitleredViewSection sectionName="model-basics">
         <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
+      </FitleredViewSection>
+      <FitleredViewSection sectionName="general-characteristics">
+        <ReadOnlyGeneralCharacteristics
+          modelID={modelID}
+          isViewingFilteredView
+        />
       </FitleredViewSection>
 
       <Alert type="info" noIcon>
