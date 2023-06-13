@@ -85,22 +85,25 @@ const FilteredViewGroupings = ({
       <Grid row gap style={{ rowGap: '2rem' }}>
         {collaborators
           .filter(c => c.teamRole === role)
-          .map(collaborator => {
+          .map((collaborator, index) => {
             return (
-              <Grid desktop={{ col: 6 }}>
-                <p className="margin-y-0 font-body-sm text-bold">
-                  {collaborator.userAccount.commonName}
-                </p>
-                <Link
-                  aria-label={collaborator.userAccount.email}
-                  className="margin-0 line-height-body-5"
-                  href={`mailto:${collaborator.userAccount.email}`}
-                  target="_blank"
-                >
-                  {collaborator.userAccount.email}
-                  <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
-                </Link>
-              </Grid>
+              // eslint-disable-next-line react/no-array-index-key
+              <React.Fragment key={index}>
+                <Grid desktop={{ col: 6 }}>
+                  <p className="margin-y-0 font-body-sm text-bold">
+                    {collaborator.userAccount.commonName}
+                  </p>
+                  <Link
+                    aria-label={collaborator.userAccount.email}
+                    className="margin-0 line-height-body-5"
+                    href={`mailto:${collaborator.userAccount.email}`}
+                    target="_blank"
+                  >
+                    {collaborator.userAccount.email}
+                    <IconMailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+                  </Link>
+                </Grid>
+              </React.Fragment>
             );
           })}
       </Grid>
