@@ -33,7 +33,8 @@ import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyParticipantsAndProviders = ({
   modelID,
-  clearance
+  clearance,
+  isViewingFilteredView
 }: ReadOnlyProps) => {
   const { t } = useTranslation('participantsAndProviders');
   const { t: p } = useTranslation('prepareForClearance');
@@ -112,7 +113,9 @@ const ReadOnlyParticipantsAndProviders = ({
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-        <TaskListStatusTag status={status} />
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (

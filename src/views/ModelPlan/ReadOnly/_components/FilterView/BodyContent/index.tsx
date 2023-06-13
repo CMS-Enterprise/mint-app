@@ -4,6 +4,7 @@ import { Alert, Grid, Link } from '@trussworks/react-uswds';
 
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
+import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 
 const FitleredViewSection = ({
@@ -36,6 +37,12 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
       </FitleredViewSection>
       <FitleredViewSection sectionName="general-characteristics">
         <ReadOnlyGeneralCharacteristics
+          modelID={modelID}
+          isViewingFilteredView
+        />
+      </FitleredViewSection>
+      <FitleredViewSection sectionName="participants-and-providers">
+        <ReadOnlyParticipantsAndProviders
           modelID={modelID}
           isViewingFilteredView
         />
