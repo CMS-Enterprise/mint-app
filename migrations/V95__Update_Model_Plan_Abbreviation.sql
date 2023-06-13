@@ -1,2 +1,2 @@
 ALTER TABLE model_plan
-  ADD COLUMN model_abbreviation zero_string;
+  ADD COLUMN abbreviation zero_string;

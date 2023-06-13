@@ -1,7 +1,7 @@
 UPDATE model_plan
 SET
     model_name = :model_name,
-    model_abbreviation = :model_abbreviation,
+    abbreviation = :abbreviation,
     status = :status,
     archived = :archived,
     modified_by = :modified_by,
@@ -10,7 +10,7 @@ WHERE model_plan.id = :id
 RETURNING
 id,
 model_name,
-model_abbreviation,
+abbreviation,
 archived,
 status,
 created_by,
