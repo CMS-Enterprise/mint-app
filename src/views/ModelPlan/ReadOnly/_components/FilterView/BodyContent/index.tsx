@@ -13,15 +13,21 @@ import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 import allPossibleFilterViews from './utils';
 
 const FitleredViewSection = ({
-  sectionName,
-  children
+  children,
+  lastSection,
+  sectionName
 }: {
-  sectionName: string;
   children: React.ReactNode;
+  lastSection?: boolean;
+  sectionName: string;
 }) => {
   return (
     <div
-      className={`filtered-view-section filtered-view-section--${sectionName} border-bottom border-base-light padding-bottom-4 margin-bottom-6`}
+      className={`filtered-view-section filtered-view-section--${sectionName} margin-bottom-6 ${
+        !lastSection
+          ? 'border-bottom border-base-light padding-bottom-0 '
+          : 'padding-bottom-4 '
+      }`}
     >
       {children}
     </div>
@@ -50,42 +56,85 @@ const BodyContent = ({
       {Object.keys(individualFilterView).map(task => {
         if (task === 'basics') {
           return (
-            <FitleredViewSection sectionName="model-basics" key={task}>
+            <FitleredViewSection
+              sectionName="model-basics"
+              key={task}
+              lastSection={task === Object.keys(individualFilterView).pop()}
+            >
               <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
             </FitleredViewSection>
           );
         }
+
+        if (task === 'general-characteristics') {
+          return (
+            <FitleredViewSection
+              sectionName={task}
+              key={task}
+              lastSection={task === Object.keys(individualFilterView).pop()}
+            >
+              <ReadOnlyGeneralCharacteristics
+                modelID={modelID}
+                isViewingFilteredView
+              />
+            </FitleredViewSection>
+          );
+        }
+
+        if (task === 'participants-and-providers') {
+          return (
+            <FitleredViewSection
+              sectionName={task}
+              key={task}
+              lastSection={task === Object.keys(individualFilterView).pop()}
+            >
+              <ReadOnlyParticipantsAndProviders
+                modelID={modelID}
+                isViewingFilteredView
+              />
+            </FitleredViewSection>
+          );
+        }
+
+        if (task === 'beneficiaries') {
+          return (
+            <FitleredViewSection
+              sectionName={task}
+              key={task}
+              lastSection={task === Object.keys(individualFilterView).pop()}
+            >
+              <ReadOnlyBeneficiaries modelID={modelID} isViewingFilteredView />
+            </FitleredViewSection>
+          );
+        }
+
+        if (task === 'ops-eval-and-learning') {
+          return (
+            <FitleredViewSection
+              sectionName={task}
+              key={task}
+              lastSection={task === Object.keys(individualFilterView).pop()}
+            >
+              <ReadOnlyOpsEvalAndLearning
+                modelID={modelID}
+                isViewingFilteredView
+              />
+            </FitleredViewSection>
+          );
+        }
+
+        if (task === 'payments') {
+          return (
+            <FitleredViewSection
+              sectionName={task}
+              key={task}
+              lastSection={task === Object.keys(individualFilterView).pop()}
+            >
+              <ReadOnlyPayments modelID={modelID} isViewingFilteredView />
+            </FitleredViewSection>
+          );
+        }
       })}
-
-      {/* {individualFilterView.map((key: string) => {
-        console.log(filteredViews[key]);
-        return <p>Filtered View: {key}</p>;
-      })} */}
-
-      {/* <FitleredViewSection sectionName="model-basics">
-        <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
-      </FitleredViewSection>
-      <FitleredViewSection sectionName="general-characteristics">
-        <ReadOnlyGeneralCharacteristics
-          modelID={modelID}
-          isViewingFilteredView
-        />
-      </FitleredViewSection>
-      <FitleredViewSection sectionName="participants-and-providers">
-        <ReadOnlyParticipantsAndProviders
-          modelID={modelID}
-          isViewingFilteredView
-        />
-      </FitleredViewSection>
-      <FitleredViewSection sectionName="beneficiaries">
-        <ReadOnlyBeneficiaries modelID={modelID} isViewingFilteredView />
-      </FitleredViewSection>
-      <FitleredViewSection sectionName="ops-eval-and-learning">
-        <ReadOnlyOpsEvalAndLearning modelID={modelID} isViewingFilteredView />
-      </FitleredViewSection>
-      <FitleredViewSection sectionName="payments">
-        <ReadOnlyPayments modelID={modelID} isViewingFilteredView />
-      </FitleredViewSection> */}
 
       <Alert type="info" noIcon>
         <span className="margin-y-0 font-body-sm text-bold display-block">
