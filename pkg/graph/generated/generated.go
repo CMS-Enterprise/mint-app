@@ -7112,6 +7112,9 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
   # Page 1
   isNewModel: Boolean
   existingModel: String

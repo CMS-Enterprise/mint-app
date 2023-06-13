@@ -724,6 +724,8 @@ export interface PlanDocumentInput {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanGeneralCharacteristicsChanges {
+  demoCode?: string | null;
+  amsModelID?: string | null;
   isNewModel?: boolean | null;
   existingModel?: string | null;
   resemblesExistingModel?: boolean | null;
