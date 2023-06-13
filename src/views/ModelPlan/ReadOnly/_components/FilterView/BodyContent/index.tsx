@@ -5,7 +5,9 @@ import { Alert, Grid, Link } from '@trussworks/react-uswds';
 import ReadOnlyBeneficiaries from 'views/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
+import ReadOnlyOpsEvalAndLearning from 'views/ModelPlan/ReadOnly/OpsEvalAndLearning';
 import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/ParticipantsAndProviders';
+import ReadOnlyPayments from 'views/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 
 const FitleredViewSection = ({
@@ -50,6 +52,12 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
       </FitleredViewSection>
       <FitleredViewSection sectionName="beneficiaries">
         <ReadOnlyBeneficiaries modelID={modelID} isViewingFilteredView />
+      </FitleredViewSection>
+      <FitleredViewSection sectionName="ops-eval-and-learning">
+        <ReadOnlyOpsEvalAndLearning modelID={modelID} isViewingFilteredView />
+      </FitleredViewSection>
+      <FitleredViewSection sectionName="payments">
+        <ReadOnlyPayments modelID={modelID} isViewingFilteredView />
       </FitleredViewSection>
 
       <Alert type="info" noIcon>

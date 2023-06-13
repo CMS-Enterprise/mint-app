@@ -24,7 +24,11 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyPayments = ({
+  modelID,
+  clearance,
+  isViewingFilteredView
+}: ReadOnlyProps) => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
@@ -117,7 +121,9 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (
@@ -128,7 +134,13 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('fundingSourceQuestion')}
           list
@@ -188,7 +200,13 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
       </div>
 
       {payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
           <h3>{t('whatWillYouPayOptions.claims')}</h3>
 
           <ReadOnlySection
@@ -263,7 +281,13 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         payClaims?.includes(
           ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
         ) && (
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
             <h3>{t('beneficaryCostSharingQuestions')}</h3>
 
             <ReadOnlySection
@@ -296,7 +320,13 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         )}
 
       {payType?.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
           <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
           <ReadOnlySection
             heading={t('nonClaimsPayments')}
@@ -340,7 +370,13 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         </div>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('expectedCalculationComplexityLevel')}
           copy={
@@ -382,7 +418,7 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2">
+      <div>
         <ReadOnlySection
           heading={t('willRecoverPayments')}
           copy={translateBooleanOrNull(willRecoverPayments)}

@@ -34,7 +34,11 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyOpsEvalAndLearning = ({
+  modelID,
+  clearance,
+  isViewingFilteredView
+}: ReadOnlyProps) => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: readOnly } = useTranslation('readOnlyModelPlan');
@@ -172,7 +176,9 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
             ? t('operationsEvaluationAndLearningHeading')
             : t('heading')}
         </h2>
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (
@@ -184,7 +190,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       )}
 
       {/* // OpsEvalAndLearningContent */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={readOnly('opsEvalAndLearning.anotherAgency')}
           list
@@ -219,7 +231,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
 
       {/* IDDOC */}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
         <ReadOnlySection
           heading={t('iddocSupport')}
@@ -262,7 +280,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       {/* Interface Control Document - ICD */}
       {iddocSupport && (
         <>
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
             <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
             <ReadOnlySection heading={t('icdOwner')} copy={icdOwner} />
             <ReadOnlySection
@@ -275,7 +299,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           </div>
 
           {/* IDDOCTesting */}
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
             <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
             <ReadOnlySection heading={t('uatNeeds')} copy={uatNeeds} />
             <ReadOnlySection heading={t('stcNeeds')} copy={stcNeeds} />
@@ -287,7 +317,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
           </div>
 
           {/* IDDOCMonitoring */}
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <div
+            className={`${
+              isViewingFilteredView
+                ? ''
+                : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+            }`}
+          >
             <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
             <ReadOnlySection
               heading={t('fileTypes')}
@@ -346,7 +382,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       )}
 
       {/* Performance */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('establishBenchmark')}
           copy={
@@ -413,7 +455,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       </div>
 
       {/* Evaluation */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={readOnly('opsEvalAndLearning.evaluationApproach')}
           list
@@ -455,7 +503,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
 
       {/* CCWAndQuality */}
       {isCCWInvolvement(ccmInvolvment) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
           <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
           <ReadOnlySection
             heading={t('ccwSendFiles')}
@@ -490,7 +544,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
 
       {/* Quality */}
       {isQualityMeasures(dataNeededForMonitoring) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <div
+          className={`${
+            isViewingFilteredView
+              ? ''
+              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+          }`}
+        >
           <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
           <ReadOnlySection
             heading={t('validatedQuality')}
@@ -506,7 +566,13 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       )}
 
       {/* DataSharing */}
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <h3>{readOnly('opsEvalAndLearning.headings.data')}</h3>
         <ReadOnlySection
           heading={t('dataSharing')}
@@ -559,7 +625,7 @@ const ReadOnlyOpsEvalAndLearning = ({ modelID, clearance }: ReadOnlyProps) => {
       </div>
 
       {/* Learning */}
-      <div className="margin-bottom-4 padding-bottom-2">
+      <div>
         <ReadOnlySection
           heading={t('learningSystem')}
           list
