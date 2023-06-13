@@ -10,7 +10,7 @@ import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/Participa
 import ReadOnlyPayments from 'views/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 
-import allPossibleFilterViews from './utils';
+import allPossibleFilterViews from './_filterGroupMapping';
 
 const FitleredViewSection = ({
   children,
