@@ -8,9 +8,10 @@ import (
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
-	Content      string           `json:"content" db:"content"`
-	Status       DiscussionStatus `json:"status" db:"status"`
-	IsAssessment bool             `json:"isAssessment" db:"is_assessment"`
+	Content      string             `json:"content" db:"content"`
+	Role         DiscussionUserRole `json:"role" db:"role"`
+	Status       DiscussionStatus   `json:"status" db:"status"`
+	IsAssessment bool               `json:"isAssessment" db:"is_assessment"`
 }
 
 // NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
@@ -52,4 +53,20 @@ const (
 	DiscussionAnswered   DiscussionStatus = "ANSWERED"
 	DiscussionWaiting    DiscussionStatus = "WAITING_FOR_RESPONSE"
 	DiscussionUnAnswered DiscussionStatus = "UNANSWERED"
+)
+
+// DiscussionUserRole is an enum that represents the role of a user in a Discussion
+type DiscussionUserRole string
+
+// These constants represent the possible values of a DiscussionUserRole
+const (
+	DiscussionRoleCmsSystemServiceTeam             DiscussionUserRole = "CMS_SYSTEM_SERVICE_TEAM"
+	DiscussionRoleItArchitect                      DiscussionUserRole = "IT_ARCHITECT"
+	DiscussionRoleLeadership                       DiscussionUserRole = "LEADERSHIP"
+	DiscussionRoleMedicareAdministrativeContractor DiscussionUserRole = "MEDICARE_ADMINISTRATIVE_CONTRACTOR"
+	DiscussionRoleMintTeam                         DiscussionUserRole = "MINT_TEAM"
+	DiscussionRoleModelItLead                      DiscussionUserRole = "MODEL_IT_LEAD"
+	DiscussionRoleModelTeam                        DiscussionUserRole = "MODEL_TEAM"
+	DiscussionRoleSharedSystemMaintainer           DiscussionUserRole = "SHARED_SYSTEM_MAINTAINER"
+	DiscussionRoleNoneOfTheAbove                   DiscussionUserRole = "NONE_OF_THE_ABOVE"
 )

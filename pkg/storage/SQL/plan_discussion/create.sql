@@ -2,6 +2,7 @@ INSERT INTO plan_discussion(
     id,
     model_plan_id,
     content,
+    
     status,
     is_assessment,
     created_by,
