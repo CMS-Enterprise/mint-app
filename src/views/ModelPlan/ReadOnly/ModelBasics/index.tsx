@@ -150,8 +150,18 @@ const ReadOnlyModelBasics = ({
       />
       <ReadOnlySection heading={t('notes')} copy={note} />
 
-      <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
-        <h3 className="margin-top-0 margin-bottom-4">
+      <SectionWrapper
+        className={`read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2 ${
+          isViewingFilteredView
+            ? 'border-0 padding-y-0 margin-top-1 margin-bottom-0'
+            : ''
+        }`}
+      >
+        <h3
+          className={`margin-top-0 ${
+            isViewingFilteredView ? 'margin-bottom-05' : 'margin-bottom-4'
+          }`}
+        >
           {t('highLevelTimeline')}
         </h3>
         <ProcessList className="read-only-model-plan__timeline">
