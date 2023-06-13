@@ -10,6 +10,8 @@ import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/Participa
 import ReadOnlyPayments from 'views/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'views/ModelPlan/ReadOnly/Team';
 
+import allPossibleFilterViews from './utils';
+
 const FitleredViewSection = ({
   sectionName,
   children
@@ -26,8 +28,17 @@ const FitleredViewSection = ({
   );
 };
 
-const BodyContent = ({ modelID }: { modelID: string }) => {
+const BodyContent = ({
+  modelID,
+  filteredView
+}: {
+  modelID: string;
+  filteredView: string;
+}) => {
   const { t } = useTranslation('filterView');
+
+  const individualFilterView =
+    allPossibleFilterViews[filteredView as keyof typeof allPossibleFilterViews];
 
   return (
     <Grid>
@@ -35,7 +46,23 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
         <h2 className="margin-top-0 margin-bottom-4">Model Team</h2>
         <ReadOnlyTeamInfo modelID={modelID} isViewingFilteredView />
       </FitleredViewSection>
-      <FitleredViewSection sectionName="model-basics">
+
+      {Object.keys(individualFilterView).map(task => {
+        if (task === 'basics') {
+          return (
+            <FitleredViewSection sectionName="model-basics" key={task}>
+              <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
+            </FitleredViewSection>
+          );
+        }
+      })}
+
+      {/* {individualFilterView.map((key: string) => {
+        console.log(filteredViews[key]);
+        return <p>Filtered View: {key}</p>;
+      })} */}
+
+      {/* <FitleredViewSection sectionName="model-basics">
         <ReadOnlyModelBasics modelID={modelID} isViewingFilteredView />
       </FitleredViewSection>
       <FitleredViewSection sectionName="general-characteristics">
@@ -58,7 +85,7 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
       </FitleredViewSection>
       <FitleredViewSection sectionName="payments">
         <ReadOnlyPayments modelID={modelID} isViewingFilteredView />
-      </FitleredViewSection>
+      </FitleredViewSection> */}
 
       <Alert type="info" noIcon>
         <span className="margin-y-0 font-body-sm text-bold display-block">
