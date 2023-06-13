@@ -14,7 +14,18 @@ const SideBySideReadOnlySection = ({
 }: SideBySideReadOnlySectionProps) => {
   return (
     <Grid row gap>
-      <Grid desktop={{ col: secondSection ? 6 : 12 }}>
+      {secondSection ? (
+        <Grid desktop={{ col: 6 }}>
+          <ReadOnlySection
+            heading={firstSection.heading}
+            list={firstSection.list}
+            listItems={firstSection.listItems}
+            listOtherItem={firstSection.listOtherItem}
+            copy={firstSection.copy}
+            notes={firstSection.notes}
+          />
+        </Grid>
+      ) : (
         <ReadOnlySection
           heading={firstSection.heading}
           list={firstSection.list}
@@ -23,7 +34,7 @@ const SideBySideReadOnlySection = ({
           copy={firstSection.copy}
           notes={firstSection.notes}
         />
-      </Grid>
+      )}
       {secondSection && (
         <Grid desktop={{ col: 6 }}>
           <ReadOnlySection

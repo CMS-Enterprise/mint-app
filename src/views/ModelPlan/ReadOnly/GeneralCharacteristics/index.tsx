@@ -132,7 +132,13 @@ const ReadOnlyGeneralCharacteristics = ({
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
         <ReadOnlySection
           heading={t('isNewModel')}
           copy={translateNewModel(isNewModel)}
@@ -176,7 +182,13 @@ const ReadOnlyGeneralCharacteristics = ({
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
         <ReadOnlySection
           heading={t('modelAPM')}
           list
@@ -218,7 +230,13 @@ const ReadOnlyGeneralCharacteristics = ({
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
         <SideBySideReadOnlySection
           firstSection={{
             heading: t('careCoordination'),
@@ -277,7 +295,13 @@ const ReadOnlyGeneralCharacteristics = ({
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
         <ReadOnlySection
           heading={t('specificGeographies')}
           copy={translateBooleanOrNull(geographiesTargeted)}
@@ -319,7 +343,7 @@ const ReadOnlyGeneralCharacteristics = ({
           notes={multiplePatricipationAgreementsNeededNote}
         />
       </div>
-      <div className="margin-bottom-4 padding-bottom-2">
+      <div>
         <SideBySideReadOnlySection
           firstSection={{
             heading: t('rulemakingRequired'),

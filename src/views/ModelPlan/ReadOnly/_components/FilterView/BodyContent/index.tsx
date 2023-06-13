@@ -15,7 +15,7 @@ const FitleredViewSection = ({
 }) => {
   return (
     <div
-      className={`filtered-view-section filtered-view-section--${sectionName} border-bottom border-base-light padding-bottom-6 margin-bottom-6`}
+      className={`filtered-view-section filtered-view-section--${sectionName} border-bottom border-base-light padding-bottom-4 margin-bottom-6`}
     >
       {children}
     </div>

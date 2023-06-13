@@ -78,7 +78,7 @@ const FilteredViewGroupings = ({
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
-    <div>
+    <div className="margin-bottom-3">
       <h3 className="margin-top-0 margin-bottom-2">
         {t('contactInfo.modelLeads')}
       </h3>
