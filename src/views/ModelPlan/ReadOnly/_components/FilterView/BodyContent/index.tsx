@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Grid, Link } from '@trussworks/react-uswds';
 
+import ReadOnlyBeneficiaries from 'views/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyParticipantsAndProviders from 'views/ModelPlan/ReadOnly/ParticipantsAndProviders';
@@ -46,6 +47,9 @@ const BodyContent = ({ modelID }: { modelID: string }) => {
           modelID={modelID}
           isViewingFilteredView
         />
+      </FitleredViewSection>
+      <FitleredViewSection sectionName="beneficiaries">
+        <ReadOnlyBeneficiaries modelID={modelID} isViewingFilteredView />
       </FitleredViewSection>
 
       <Alert type="info" noIcon>

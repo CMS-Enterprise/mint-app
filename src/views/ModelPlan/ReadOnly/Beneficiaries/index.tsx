@@ -21,7 +21,11 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyBeneficiaries = ({
+  modelID,
+  clearance,
+  isViewingFilteredView
+}: ReadOnlyProps) => {
   const { t } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
@@ -75,7 +79,9 @@ const ReadOnlyBeneficiaries = ({ modelID, clearance }: ReadOnlyProps) => {
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (

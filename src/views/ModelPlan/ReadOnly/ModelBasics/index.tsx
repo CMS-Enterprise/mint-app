@@ -151,10 +151,10 @@ const ReadOnlyModelBasics = ({
       <ReadOnlySection heading={t('notes')} copy={note} />
 
       <SectionWrapper
-        className={`read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2 ${
+        className={`read-only-model-plan__timeline--wrapper  ${
           isViewingFilteredView
-            ? 'border-0 padding-y-0 margin-top-1 margin-bottom-0'
-            : ''
+            ? 'padding-y-0 margin-top-1 margin-bottom-0'
+            : 'border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2'
         }`}
       >
         <h3

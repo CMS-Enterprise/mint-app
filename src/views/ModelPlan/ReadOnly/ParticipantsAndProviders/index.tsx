@@ -126,7 +126,13 @@ const ReadOnlyParticipantsAndProviders = ({
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('whoAreParticipantsQuestion')}
           list
@@ -161,7 +167,13 @@ const ReadOnlyParticipantsAndProviders = ({
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('howManyParticipants')}
           copy={expectedNumberOfParticipants?.toString()}
@@ -199,7 +211,13 @@ const ReadOnlyParticipantsAndProviders = ({
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('participantCommunication')}
           list
@@ -232,7 +250,13 @@ const ReadOnlyParticipantsAndProviders = ({
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
         <ReadOnlySection
           heading={t('workCoordination')}
           copy={translateBooleanOrNull(coordinateWork)}
@@ -267,7 +291,7 @@ const ReadOnlyParticipantsAndProviders = ({
         />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2">
+      <div>
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
         <ReadOnlySection
