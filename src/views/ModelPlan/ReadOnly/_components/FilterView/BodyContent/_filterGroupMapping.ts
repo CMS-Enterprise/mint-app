@@ -7,31 +7,31 @@ const FilterGroupMap = {
     payments: ['']
   },
   oact: {
-    basics: [''],
+    basics: ['nameHistory'],
     'general-characteristics': [''],
     'participants-and-providers': [''],
     beneficiaries: [''],
     payments: ['']
   },
   dfsdm: {
-    basics: [''],
+    basics: ['nameHistory'],
     'participants-and-providers': [''],
     payments: ['']
   },
   ccw: {
-    basics: [''],
+    basics: ['nameHistory'],
     'participants-and-providers': [''],
     'ops-eval-and-learning': [''],
     payments: ['']
   },
   ipc: {
-    basics: [''],
+    basics: ['nameHistory'],
     'general-characteristics': [''],
     'participants-and-providers': [''],
     payments: ['']
   },
   iddoc: {
-    basics: [''],
+    basics: ['nameHistory'],
     'general-characteristics': [''],
     'participants-and-providers': [''],
     beneficiaries: [''],
@@ -47,7 +47,7 @@ const FilterGroupMap = {
     payments: ['']
   },
   mdm: {
-    basics: [''],
+    basics: ['nameHistory'],
     beneficiaries: [
       'beneficiaries',
       'beneficiariesOther',
@@ -60,7 +60,7 @@ const FilterGroupMap = {
     ]
   },
   cbosc: {
-    basics: [''],
+    basics: ['nameHistory'],
     'participants-and-providers': [''],
     'ops-eval-and-learning': ['']
   }

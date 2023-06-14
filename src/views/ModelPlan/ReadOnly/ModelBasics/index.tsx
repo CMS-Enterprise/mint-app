@@ -127,11 +127,14 @@ const ReadOnlyModelBasics = ({
         </p>
       )}
 
-      <ReadOnlySection
-        heading={t('previousNames')}
-        list
-        listItems={filteredNameHistory}
-      />
+      {checkGroupMap(
+        'nameHistory',
+        <ReadOnlySection
+          heading={t('previousNames')}
+          list
+          listItems={filteredNameHistory}
+        />
+      )}
 
       {!isViewingFilteredView && (
         <ReadOnlySection
