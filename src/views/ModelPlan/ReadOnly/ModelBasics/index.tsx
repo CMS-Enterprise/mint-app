@@ -132,21 +132,6 @@ const ReadOnlyModelBasics = ({
         list
         listItems={filteredNameHistory}
       />
-      {/* {isViewingFilteredView ? (
-        filteredQuestions?.includes('nameHistory') && (
-          <ReadOnlySection
-            heading={t('previousNames')}
-            list
-            listItems={filteredNameHistory}
-          />
-        )
-      ) : (
-        <ReadOnlySection
-          heading={t('previousNames')}
-          list
-          listItems={filteredNameHistory}
-        />
-      )} */}
 
       {!isViewingFilteredView && (
         <ReadOnlySection
@@ -196,6 +181,7 @@ const ReadOnlyModelBasics = ({
       )}
       <ReadOnlySection heading={t('notes')} copy={note} />
 
+      {/* TODO: timeline group mapping */}
       <SectionWrapper
         className={`read-only-model-plan__timeline--wrapper  ${
           isViewingFilteredView
@@ -350,11 +336,14 @@ const ReadOnlyModelBasics = ({
         <ReadOnlySection heading={t('notes')} copy={highLevelNote} />
       </SectionWrapper>
 
-      <ReadOnlySection
-        heading={t('tightTimeline')}
-        copy={translateBooleanOrNull(phasedIn)}
-        notes={phasedInNote}
-      />
+      {checkGroupMap(
+        'phasedIn',
+        <ReadOnlySection
+          heading={t('tightTimeline')}
+          copy={translateBooleanOrNull(phasedIn)}
+          notes={phasedInNote}
+        />
+      )}
     </div>
   );
 };
