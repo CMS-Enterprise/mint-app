@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "77f6ed93-1764-448b-a703-766ff8ac4fe8",
+		"_postman_id": "6246fe2c-fc2c-444f-bedc-0855efe7bbf3",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -31,7 +31,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"modelName\": \"Test\"\n}"
 							}
 						},
@@ -52,7 +52,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
@@ -73,7 +73,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
@@ -94,7 +94,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -115,7 +115,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
@@ -204,7 +204,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanGeneralCharacteristics ($id: UUID!, $changes: PlanGeneralCharacteristicsChanges!) {\n    updatePlanGeneralCharacteristics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        isNewModel\n        existingModel\n        resemblesExistingModel\n        resemblesExistingModelWhich\n        resemblesExistingModelHow\n        resemblesExistingModelNote\n        hasComponentsOrTracks\n        hasComponentsOrTracksDiffer\n        hasComponentsOrTracksNote\n        alternativePaymentModelTypes\n        alternativePaymentModelNote\n        keyCharacteristics\n        keyCharacteristicsOther\n        keyCharacteristicsNote\n        collectPlanBids\n        collectPlanBidsNote\n        managePartCDEnrollment\n        managePartCDEnrollmentNote\n        planContractUpdated\n        planContractUpdatedNote\n        careCoordinationInvolved\n        careCoordinationInvolvedDescription\n        careCoordinationInvolvedNote\n        additionalServicesInvolved\n        additionalServicesInvolvedDescription\n        additionalServicesInvolvedNote\n        communityPartnersInvolved\n        communityPartnersInvolvedDescription\n        communityPartnersInvolvedNote\n        geographiesTargeted\n        geographiesTargetedTypes\n        geographiesTargetedTypesOther\n        geographiesTargetedAppliedTo\n        geographiesTargetedAppliedToOther\n        geographiesTargetedNote\n        participationOptions\n        participationOptionsNote\n        agreementTypes\n        agreementTypesOther\n        multiplePatricipationAgreementsNeeded\n        multiplePatricipationAgreementsNeededNote\n        rulemakingRequired\n        rulemakingRequiredDescription\n        rulemakingRequiredNote\n        authorityAllowances\n        authorityAllowancesOther\n        authorityAllowancesNote\n        waiversRequired\n        waiversRequiredTypes\n        waiversRequiredNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }            \n    }\n}",
+								"query": "mutation updatePlanGeneralCharacteristics ($id: UUID!, $changes: PlanGeneralCharacteristicsChanges!) {\n    updatePlanGeneralCharacteristics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        demoCode\n        amsModelID\n        isNewModel\n        existingModel\n        resemblesExistingModel\n        resemblesExistingModelWhich\n        resemblesExistingModelHow\n        resemblesExistingModelNote\n        hasComponentsOrTracks\n        hasComponentsOrTracksDiffer\n        hasComponentsOrTracksNote\n        alternativePaymentModelTypes\n        alternativePaymentModelNote\n        keyCharacteristics\n        keyCharacteristicsOther\n        keyCharacteristicsNote\n        collectPlanBids\n        collectPlanBidsNote\n        managePartCDEnrollment\n        managePartCDEnrollmentNote\n        planContractUpdated\n        planContractUpdatedNote\n        careCoordinationInvolved\n        careCoordinationInvolvedDescription\n        careCoordinationInvolvedNote\n        additionalServicesInvolved\n        additionalServicesInvolvedDescription\n        additionalServicesInvolvedNote\n        communityPartnersInvolved\n        communityPartnersInvolvedDescription\n        communityPartnersInvolvedNote\n        geographiesTargeted\n        geographiesTargetedTypes\n        geographiesTargetedTypesOther\n        geographiesTargetedAppliedTo\n        geographiesTargetedAppliedToOther\n        geographiesTargetedNote\n        participationOptions\n        participationOptionsNote\n        agreementTypes\n        agreementTypesOther\n        multiplePatricipationAgreementsNeeded\n        multiplePatricipationAgreementsNeededNote\n        rulemakingRequired\n        rulemakingRequiredDescription\n        rulemakingRequiredNote\n        authorityAllowances\n        authorityAllowancesOther\n        authorityAllowancesNote\n        waiversRequired\n        waiversRequiredTypes\n        waiversRequiredNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }            \n    }\n}",
 								"variables": "{\n  \"id\": \"{{generalCharacteristicsID}}\",\n  \"changes\": {\n    \"isNewModel\": true,\n    \"existingModel\": \"\",\n    \"resemblesExistingModel\": true,\n    \"resemblesExistingModelWhich\": [\n      \"\"\n    ],\n    \"resemblesExistingModelHow\": \"\",\n    \"resemblesExistingModelNote\": \"\",\n    \"hasComponentsOrTracks\": true,\n    \"hasComponentsOrTracksDiffer\": \"\",\n    \"hasComponentsOrTracksNote\": \"\",\n    \"alternativePaymentModelTypes\": [\n      \"\"\n    ],\n    \"alternativePaymentModelNote\": \"\",\n    \"keyCharacteristics\": [\n      \"\"\n    ],\n    \"keyCharacteristicsOther\": \"\",\n    \"keyCharacteristicsNote\": \"\",\n    \"collectPlanBids\": true,\n    \"collectPlanBidsNote\": \"\",\n    \"managePartCDEnrollment\": true,\n    \"managePartCDEnrollmentNote\": \"\",\n    \"planContractUpdated\": true,\n    \"planContractUpdatedNote\": \"\",\n    \"careCoordinationInvolved\": true,\n    \"careCoordinationInvolvedDescription\": \"\",\n    \"careCoordinationInvolvedNote\": \"\",\n    \"additionalServicesInvolved\": true,\n    \"additionalServicesInvolvedDescription\": \"\",\n    \"additionalServicesInvolvedNote\": \"\",\n    \"communityPartnersInvolved\": true,\n    \"communityPartnersInvolvedDescription\": \"\",\n    \"communityPartnersInvolvedNote\": \"\",\n    \"geographiesTargeted\": true,\n    \"geographiesTargetedTypes\": [\n      \"\"\n    ],\n    \"geographiesTargetedTypesOther\": \"\",\n    \"geographiesTargetedAppliedTo\": [\n      \"\"\n    ],\n    \"geographiesTargetedAppliedToOther\": \"\",\n    \"geographiesTargetedNote\": \"\",\n    \"participationOptions\": true,\n    \"participationOptionsNote\": \"\",\n    \"agreementTypes\": [\n      \"\"\n    ],\n    \"agreementTypesOther\": \"\",\n    \"multiplePatricipationAgreementsNeeded\": true,\n    \"multiplePatricipationAgreementsNeededNote\": \"\",\n    \"rulemakingRequired\": true,\n    \"rulemakingRequiredDescription\": \"\",\n    \"rulemakingRequiredNote\": \"\",\n    \"authorityAllowances\": [\n      \"\"\n    ],\n    \"authorityAllowancesOther\": \"\",\n    \"authorityAllowancesNote\": \"\",\n    \"waiversRequired\": true,\n    \"waiversRequiredTypes\": [\n      \"\"\n    ],\n    \"waiversRequiredNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
