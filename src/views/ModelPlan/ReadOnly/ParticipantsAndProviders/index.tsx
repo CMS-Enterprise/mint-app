@@ -27,6 +27,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -34,7 +35,8 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyParticipantsAndProviders = ({
   modelID,
   clearance,
-  isViewingFilteredView
+  isViewingFilteredView,
+  filteredQuestions
 }: ReadOnlyProps) => {
   const { t } = useTranslation('participantsAndProviders');
   const { t: p } = useTranslation('prepareForClearance');
@@ -133,13 +135,18 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <ReadOnlySection
-          heading={t('whoAreParticipantsQuestion')}
-          list
-          listItems={participants?.map(translateParticipantsType)}
-          listOtherItem={participantsOther}
-          notes={participantsNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participants',
+          <ReadOnlySection
+            heading={t('whoAreParticipantsQuestion')}
+            list
+            listItems={participants?.map(translateParticipantsType)}
+            listOtherItem={participantsOther}
+            notes={participantsNote}
+          />
+        )}
 
         {medicareProviderType && (
           <ReadOnlySection
@@ -155,16 +162,26 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        <ReadOnlySection
-          heading={t('participantsCMMI')}
-          copy={translateBooleanOrNull(participantsCurrentlyInModels)}
-          notes={participantsCurrentlyInModelsNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participantsCurrentlyInModels',
+          <ReadOnlySection
+            heading={t('participantsCMMI')}
+            copy={translateBooleanOrNull(participantsCurrentlyInModels)}
+            notes={participantsCurrentlyInModelsNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('modelLevel')}
-          copy={modelApplicationLevel}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'modelLevel',
+          <ReadOnlySection
+            heading={t('modelLevel')}
+            copy={modelApplicationLevel}
+          />
+        )}
       </div>
 
       <div
@@ -174,41 +191,61 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <ReadOnlySection
-          heading={t('howManyParticipants')}
-          copy={expectedNumberOfParticipants?.toString()}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'howManyParticipants',
+          <ReadOnlySection
+            heading={t('howManyParticipants')}
+            copy={expectedNumberOfParticipants?.toString()}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('estimateConfidence')}
-          copy={
-            estimateConfidence && translateConfidenceType(estimateConfidence)
-          }
-          notes={confidenceNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'estimateConfidence',
+          <ReadOnlySection
+            heading={t('estimateConfidence')}
+            copy={
+              estimateConfidence && translateConfidenceType(estimateConfidence)
+            }
+            notes={confidenceNote}
+          />
+        )}
 
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
-        <ReadOnlySection
-          heading={t('recruitParticipants')}
-          copy={
-            recruitmentMethod &&
-            (recruitmentMethod === RecruitmentType.OTHER
-              ? `${translateRecruitmentType(
-                  recruitmentMethod
-                )} \u2014  ${recruitmentOther}`
-              : translateRecruitmentType(recruitmentMethod))
-          }
-          notes={recruitmentNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'recruitParticipants',
+          <ReadOnlySection
+            heading={t('recruitParticipants')}
+            copy={
+              recruitmentMethod &&
+              (recruitmentMethod === RecruitmentType.OTHER
+                ? `${translateRecruitmentType(
+                    recruitmentMethod
+                  )} \u2014  ${recruitmentOther}`
+                : translateRecruitmentType(recruitmentMethod))
+            }
+            notes={recruitmentNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('howWillYouSelectQuestion')}
-          list
-          listItems={selectionMethod?.map(translateParticipantSelectiontType)}
-          listOtherItem={selectionOther}
-          notes={selectionNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'selectionMethod',
+          <ReadOnlySection
+            heading={t('howWillYouSelectQuestion')}
+            list
+            listItems={selectionMethod?.map(translateParticipantSelectiontType)}
+            listOtherItem={selectionOther}
+            notes={selectionNote}
+          />
+        )}
       </div>
 
       <div
@@ -218,27 +255,37 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <ReadOnlySection
-          heading={t('participantCommunication')}
-          list
-          listItems={communicationMethod?.map(translateCommunicationType)}
-          listOtherItem={communicationMethodOther}
-          notes={communicationNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'communicationMethod',
+          <ReadOnlySection
+            heading={t('participantCommunication')}
+            list
+            listItems={communicationMethod?.map(translateCommunicationType)}
+            listOtherItem={communicationMethodOther}
+            notes={communicationNote}
+          />
+        )}
 
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: t('assumeRisk'),
-            copy: translateBooleanOrNull(participantAssumeRisk)
-          }}
-          secondSection={
-            participantAssumeRisk === true && {
-              heading: t('riskType'),
-              copy: riskType && translateRiskType(riskType),
-              listOtherItem: riskOther
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'assumeRisk',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('assumeRisk'),
+              copy: translateBooleanOrNull(participantAssumeRisk)
+            }}
+            secondSection={
+              participantAssumeRisk === true && {
+                heading: t('riskType'),
+                copy: riskType && translateRiskType(riskType),
+                listOtherItem: riskOther
+              }
             }
-          }
-        />
+          />
+        )}
         {riskNote && (
           <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
         )}
@@ -257,24 +304,34 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <ReadOnlySection
-          heading={t('workCoordination')}
-          copy={translateBooleanOrNull(coordinateWork)}
-          notes={coordinateWorkNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'workCoordination',
+          <ReadOnlySection
+            heading={t('workCoordination')}
+            copy={translateBooleanOrNull(coordinateWork)}
+            notes={coordinateWorkNote}
+          />
+        )}
 
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: t('gainsharing'),
-            copy: translateBooleanOrNull(gainsharePayments)
-          }}
-          secondSection={
-            gainsharePayments === true && {
-              heading: t('trackPayments'),
-              copy: translateBooleanOrNull(gainsharePaymentsTrack)
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'gainsharing',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('gainsharing'),
+              copy: translateBooleanOrNull(gainsharePayments)
+            }}
+            secondSection={
+              gainsharePayments === true && {
+                heading: t('trackPayments'),
+                copy: translateBooleanOrNull(gainsharePaymentsTrack)
+              }
             }
-          }
-        />
+          />
+        )}
         {gainsharePaymentsNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
@@ -282,51 +339,76 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        <ReadOnlySection
-          heading={t('collectTINs')}
-          list
-          listItems={participantsIds?.map(translateParticipantIDType)}
-          listOtherItem={participantsIdsOther}
-          notes={participantsIDSNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'collectTINs',
+          <ReadOnlySection
+            heading={t('collectTINs')}
+            list
+            listItems={participantsIds?.map(translateParticipantIDType)}
+            listOtherItem={participantsIdsOther}
+            notes={participantsIDSNote}
+          />
+        )}
       </div>
 
       <div>
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
-        <ReadOnlySection
-          heading={t('frequency')}
-          copy={
-            providerAdditionFrequency &&
-            (providerAdditionFrequency === FrequencyType.OTHER
-              ? `${translateFrequencyType(
-                  providerAdditionFrequency
-                )} \u2014  ${providerAdditionFrequencyOther}`
-              : translateFrequencyType(providerAdditionFrequency))
-          }
-          notes={providerAdditionFrequencyNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerAdditionFrequency',
+          <ReadOnlySection
+            heading={t('frequency')}
+            copy={
+              providerAdditionFrequency &&
+              (providerAdditionFrequency === FrequencyType.OTHER
+                ? `${translateFrequencyType(
+                    providerAdditionFrequency
+                  )} \u2014  ${providerAdditionFrequencyOther}`
+                : translateFrequencyType(providerAdditionFrequency))
+            }
+            notes={providerAdditionFrequencyNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('decideProvidersQuestion')}
-          list
-          listItems={providerAddMethod?.map(translateProviderAddType)}
-          listOtherItem={providerAddMethodOther}
-          notes={providerAddMethodNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerAddMethod',
+          <ReadOnlySection
+            heading={t('decideProvidersQuestion')}
+            list
+            listItems={providerAddMethod?.map(translateProviderAddType)}
+            listOtherItem={providerAddMethodOther}
+            notes={providerAddMethodNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('canProvidersLeaveQuestion')}
-          list
-          listItems={providerLeaveMethod?.map(translateProviderLeaveType)}
-          listOtherItem={providerLeaveMethodOther}
-          notes={providerLeaveMethodNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerLeaveMethod',
+          <ReadOnlySection
+            heading={t('canProvidersLeaveQuestion')}
+            list
+            listItems={providerLeaveMethod?.map(translateProviderLeaveType)}
+            listOtherItem={providerLeaveMethodOther}
+            notes={providerLeaveMethodNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('overlap')}
-          copy={providerOverlap && translateOverlapType(providerOverlap)}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'providerOverlap',
+          <ReadOnlySection
+            heading={t('overlap')}
+            copy={providerOverlap && translateOverlapType(providerOverlap)}
+          />
+        )}
 
         {providerOverlap !== OverlapType.NO && (
           <ReadOnlySection
