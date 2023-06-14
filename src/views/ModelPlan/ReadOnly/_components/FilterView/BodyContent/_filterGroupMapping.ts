@@ -26,13 +26,19 @@ const FilterGroupMap = {
   },
   ipc: {
     basics: ['nameHistory'],
-    'general-characteristics': [''],
+    'general-characteristics': ['rulemakingRequired'],
     'participants-and-providers': [''],
     payments: ['']
   },
   iddoc: {
     basics: ['nameHistory'],
-    'general-characteristics': [''],
+    'general-characteristics': [
+      'keyCharacteristics',
+      'specificGeographies',
+      'geographyType',
+      'geographyApplied',
+      'rulemakingRequired'
+    ],
     'participants-and-providers': [''],
     beneficiaries: [''],
     'ops-eval-and-learning': [''],
@@ -40,7 +46,13 @@ const FilterGroupMap = {
   },
   pbg: {
     basics: ['modelType', 'goal'],
-    'general-characteristics': [''],
+    'general-characteristics': [
+      'keyCharacteristics',
+      'specificGeographies',
+      'geographyType',
+      'geographyApplied',
+      'rulemakingRequired'
+    ],
     'participants-and-providers': [''],
     beneficiaries: [''],
     'ops-eval-and-learning': [''],
