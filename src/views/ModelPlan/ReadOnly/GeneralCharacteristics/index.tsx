@@ -20,6 +20,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -27,7 +28,8 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyGeneralCharacteristics = ({
   modelID,
   clearance,
-  isViewingFilteredView
+  isViewingFilteredView,
+  filteredQuestions
 }: ReadOnlyProps) => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
@@ -198,13 +200,18 @@ const ReadOnlyGeneralCharacteristics = ({
           notes={alternativePaymentModelNote}
         />
 
-        <ReadOnlySection
-          heading={t('keyCharacteristicsQuestion')}
-          list
-          listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
-          listOtherItem={keyCharacteristicsOther}
-          notes={keyCharacteristicsNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'keyCharacteristics',
+          <ReadOnlySection
+            heading={t('keyCharacteristicsQuestion')}
+            list
+            listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
+            listOtherItem={keyCharacteristicsOther}
+            notes={keyCharacteristicsNote}
+          />
+        )}
 
         {(keyCharacteristics?.includes(KeyCharacteristic.PART_C) ||
           keyCharacteristics?.includes(KeyCharacteristic.PART_D)) && (
@@ -302,27 +309,42 @@ const ReadOnlyGeneralCharacteristics = ({
             : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
         }`}
       >
-        <ReadOnlySection
-          heading={t('specificGeographies')}
-          copy={translateBooleanOrNull(geographiesTargeted)}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'specificGeographies',
+          <ReadOnlySection
+            heading={t('specificGeographies')}
+            copy={translateBooleanOrNull(geographiesTargeted)}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('geographyType')}
-          list
-          listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
-          listOtherItem={geographiesTargetedTypesOther}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographyType',
+          <ReadOnlySection
+            heading={t('geographyType')}
+            list
+            listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
+            listOtherItem={geographiesTargetedTypesOther}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('geographyApplied')}
-          list
-          listItems={geographiesTargetedAppliedTo?.map(
-            translateGeographyApplication
-          )}
-          listOtherItem={geographiesTargetedAppliedToOther}
-          notes={geographiesTargetedNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographyApplied',
+          <ReadOnlySection
+            heading={t('geographyApplied')}
+            list
+            listItems={geographiesTargetedAppliedTo?.map(
+              translateGeographyApplication
+            )}
+            listOtherItem={geographiesTargetedAppliedToOther}
+            notes={geographiesTargetedNote}
+          />
+        )}
 
         <ReadOnlySection
           heading={t('participationOptions')}
@@ -344,18 +366,23 @@ const ReadOnlyGeneralCharacteristics = ({
         />
       </div>
       <div>
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: t('rulemakingRequired'),
-            copy: translateBooleanOrNull(rulemakingRequired)
-          }}
-          secondSection={
-            rulemakingRequired === true && {
-              heading: t('ruleMakingInfo'),
-              copy: rulemakingRequiredDescription
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'rulemakingRequired',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('rulemakingRequired'),
+              copy: translateBooleanOrNull(rulemakingRequired)
+            }}
+            secondSection={
+              rulemakingRequired === true && {
+                heading: t('ruleMakingInfo'),
+                copy: rulemakingRequiredDescription
+              }
             }
-          }
-        />
+          />
+        )}
         {rulemakingRequiredNote && (
           <ReadOnlySection
             heading={t('basics:notes')}
