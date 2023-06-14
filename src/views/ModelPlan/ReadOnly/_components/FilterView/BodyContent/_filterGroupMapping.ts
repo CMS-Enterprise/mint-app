@@ -26,7 +26,14 @@ const FilterGroupMap = {
   },
   ipc: {
     basics: ['nameHistory'],
-    'general-characteristics': ['rulemakingRequired'],
+    'general-characteristics': [
+      'isNewModel',
+      'resembleModel',
+      'modelResemblance',
+      'waysResembleModel',
+      'differentComponents',
+      'tracksDiffer'
+    ],
     'participants-and-providers': [''],
     payments: ['']
   },
