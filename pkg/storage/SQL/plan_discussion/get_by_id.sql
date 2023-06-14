@@ -2,6 +2,7 @@ SELECT
     id,
     model_plan_id,
     content,
+    role,
     status,
     is_assessment,
     created_by,
