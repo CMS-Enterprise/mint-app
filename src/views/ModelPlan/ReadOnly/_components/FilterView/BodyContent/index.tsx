@@ -84,6 +84,11 @@ const BodyContent = ({
               <ReadOnlyGeneralCharacteristics
                 modelID={modelID}
                 isViewingFilteredView
+                filteredQuestions={
+                  individualFilterView[
+                    task as keyof typeof individualFilterView
+                  ]
+                }
               />
             </FitleredViewSection>
           );
