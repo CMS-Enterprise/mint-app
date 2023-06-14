@@ -22,6 +22,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 
@@ -92,19 +93,6 @@ const ReadOnlyModelBasics = ({
     return <em className="text-base">{t('na')}</em>;
   };
 
-  const checkGroupMap = (question: string, component: React.ReactNode) => {
-    // Show the question if it is included in the map
-    if (isViewingFilteredView && filteredQuestions?.includes(question)) {
-      return component;
-    }
-    // Hide the question if it is NOT included in the map
-    if (isViewingFilteredView && !filteredQuestions?.includes(question)) {
-      return <></>;
-    }
-    // Return the component if it is NOT isViewingFilteredView
-    return component;
-  };
-
   return (
     <div
       className="read-only-model-plan--model-basics"
@@ -128,6 +116,8 @@ const ReadOnlyModelBasics = ({
       )}
 
       {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
         'nameHistory',
         <ReadOnlySection
           heading={t('previousNames')}
@@ -160,6 +150,8 @@ const ReadOnlyModelBasics = ({
       )}
 
       {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
         'modelType',
         <ReadOnlySection
           heading={t('modelType')}
@@ -172,6 +164,8 @@ const ReadOnlyModelBasics = ({
       )}
 
       {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
         'goal',
         <ReadOnlySection heading={t('goal')} copy={goal} />
       )}
@@ -340,6 +334,8 @@ const ReadOnlyModelBasics = ({
       </SectionWrapper>
 
       {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
         'phasedIn',
         <ReadOnlySection
           heading={t('tightTimeline')}

@@ -1,4 +1,6 @@
-const groupOptions = [
+import React from 'react';
+
+export const groupOptions = [
   { value: 'ccw', label: 'Chronic Conditions Warehouse (CCW)' },
   { value: 'cmmi', label: 'CMMI Cost Estimate' },
   {
@@ -19,4 +21,20 @@ const groupOptions = [
   { value: 'pbg', label: 'Provider Billing Group (PBG)' }
 ];
 
-export default groupOptions;
+export const checkGroupMap = (
+  isViewingFilteredView: boolean | undefined,
+  filteredQuestions: string[] | undefined,
+  question: string,
+  component: React.ReactNode
+) => {
+  // Show the question if it is included in the map
+  if (isViewingFilteredView && filteredQuestions?.includes(question)) {
+    return component;
+  }
+  // Hide the question if it is NOT included in the map
+  if (isViewingFilteredView && !filteredQuestions?.includes(question)) {
+    return <></>;
+  }
+  // Return the component if it is NOT isViewingFilteredView
+  return component;
+};

@@ -40,7 +40,7 @@ import FilterViewBanner from './_components/FilterView/Banner';
 import BodyContent from './_components/FilterView/BodyContent';
 import FilterButton from './_components/FilterView/FilterButton';
 import FilterViewModal from './_components/FilterView/Modal';
-import groupOptions from './_components/FilterView/util';
+import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
 import ModelSummary from './_components/ModelSummary';
 import SideNav from './_components/Sidenav';

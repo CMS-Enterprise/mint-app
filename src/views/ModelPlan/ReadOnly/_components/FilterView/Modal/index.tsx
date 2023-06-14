@@ -10,7 +10,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 
-import groupOptions from '../util';
+import { groupOptions } from '../util';
 
 type FilterViewModalProps = {
   filteredView: string | null;

@@ -8,7 +8,7 @@ const FilterGroupMap = {
   },
   oact: {
     basics: ['nameHistory'],
-    'general-characteristics': [''],
+    'general-characteristics': ['modelAPM'],
     'participants-and-providers': [''],
     beneficiaries: [''],
     payments: ['']
