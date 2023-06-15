@@ -7,8 +7,6 @@ import (
 // PlanGeneralCharacteristics represents the "general characteristics" section of a plan
 type PlanGeneralCharacteristics struct {
 	baseTaskListSection
-	DemoCode   *string `json:"demoCode" db:"demo_code"`
-	AmsModelID *string `json:"amsModelID" db:"ams_model_id"`
 
 	// Page 1
 	IsNewModel                  *bool   `json:"isNewModel" db:"is_new_model" statusWeight:"1"`

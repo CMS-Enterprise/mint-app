@@ -307,6 +307,7 @@ type ComplexityRoot struct {
 	}
 
 	PlanBasics struct {
+		AmsModelID                     func(childComplexity int) int
 		Announced                      func(childComplexity int) int
 		ApplicationsEnd                func(childComplexity int) int
 		ApplicationsStart              func(childComplexity int) int
@@ -319,6 +320,7 @@ type ComplexityRoot struct {
 		CreatedBy                      func(childComplexity int) int
 		CreatedByUserAccount           func(childComplexity int) int
 		CreatedDts                     func(childComplexity int) int
+		DemoCode                       func(childComplexity int) int
 		Goal                           func(childComplexity int) int
 		HighLevelNote                  func(childComplexity int) int
 		ID                             func(childComplexity int) int
@@ -486,7 +488,6 @@ type ComplexityRoot struct {
 		AgreementTypesOther                       func(childComplexity int) int
 		AlternativePaymentModelNote               func(childComplexity int) int
 		AlternativePaymentModelTypes              func(childComplexity int) int
-		AmsModelID                                func(childComplexity int) int
 		AuthorityAllowances                       func(childComplexity int) int
 		AuthorityAllowancesNote                   func(childComplexity int) int
 		AuthorityAllowancesOther                  func(childComplexity int) int
@@ -501,7 +502,6 @@ type ComplexityRoot struct {
 		CreatedBy                                 func(childComplexity int) int
 		CreatedByUserAccount                      func(childComplexity int) int
 		CreatedDts                                func(childComplexity int) int
-		DemoCode                                  func(childComplexity int) int
 		ExistingModel                             func(childComplexity int) int
 		GeographiesTargeted                       func(childComplexity int) int
 		GeographiesTargetedAppliedTo              func(childComplexity int) int
@@ -2640,6 +2640,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.OperationalSolutionSubtask.Status(childComplexity), true
 
+	case "PlanBasics.amsModelID":
+		if e.complexity.PlanBasics.AmsModelID == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.AmsModelID(childComplexity), true
+
 	case "PlanBasics.announced":
 		if e.complexity.PlanBasics.Announced == nil {
 			break
@@ -2723,6 +2730,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBasics.CreatedDts(childComplexity), true
+
+	case "PlanBasics.demoCode":
+		if e.complexity.PlanBasics.DemoCode == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.DemoCode(childComplexity), true
 
 	case "PlanBasics.goal":
 		if e.complexity.PlanBasics.Goal == nil {
@@ -3725,13 +3739,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelTypes(childComplexity), true
 
-	case "PlanGeneralCharacteristics.amsModelID":
-		if e.complexity.PlanGeneralCharacteristics.AmsModelID == nil {
-			break
-		}
-
-		return e.complexity.PlanGeneralCharacteristics.AmsModelID(childComplexity), true
-
 	case "PlanGeneralCharacteristics.authorityAllowances":
 		if e.complexity.PlanGeneralCharacteristics.AuthorityAllowances == nil {
 			break
@@ -3829,13 +3836,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanGeneralCharacteristics.CreatedDts(childComplexity), true
-
-	case "PlanGeneralCharacteristics.demoCode":
-		if e.complexity.PlanGeneralCharacteristics.DemoCode == nil {
-			break
-		}
-
-		return e.complexity.PlanGeneralCharacteristics.DemoCode(childComplexity), true
 
 	case "PlanGeneralCharacteristics.existingModel":
 		if e.complexity.PlanGeneralCharacteristics.ExistingModel == nil {
@@ -6862,6 +6862,9 @@ type PlanBasics {
   id: UUID!
   modelPlanID: UUID!
 
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
@@ -6909,6 +6912,9 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]
   cmsOther: String
@@ -7027,8 +7033,6 @@ PlanGeneralCharacteristics represents a plan general characteristics object
 type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
-  demoCode: String
-  amsModelID: String
 
   # Page 1
   isNewModel: Boolean
@@ -7113,9 +7117,6 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
-  demoCode: String
-  amsModelID: String
-
   # Page 1
   isNewModel: Boolean
   existingModel: String
@@ -14429,6 +14430,10 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
+			case "demoCode":
+				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
+			case "amsModelID":
+				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
 			case "modelCategory":
 				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
 			case "cmsCenters":
@@ -14547,10 +14552,6 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
-			case "demoCode":
-				return ec.fieldContext_PlanGeneralCharacteristics_demoCode(ctx, field)
-			case "amsModelID":
-				return ec.fieldContext_PlanGeneralCharacteristics_amsModelID(ctx, field)
 			case "isNewModel":
 				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
 			case "existingModel":
@@ -16751,6 +16752,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
+			case "demoCode":
+				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
+			case "amsModelID":
+				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
 			case "modelCategory":
 				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
 			case "cmsCenters":
@@ -16904,10 +16909,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
-			case "demoCode":
-				return ec.fieldContext_PlanGeneralCharacteristics_demoCode(ctx, field)
-			case "amsModelID":
-				return ec.fieldContext_PlanGeneralCharacteristics_amsModelID(ctx, field)
 			case "isNewModel":
 				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
 			case "existingModel":
@@ -23061,6 +23062,88 @@ func (ec *executionContext) fieldContext_PlanBasics_modelPlanID(ctx context.Cont
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_demoCode(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_demoCode(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DemoCode, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_amsModelID(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_amsModelID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AmsModelID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -29841,88 +29924,6 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_modelPlanID(
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanGeneralCharacteristics_demoCode(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_demoCode(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DemoCode, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanGeneralCharacteristics",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanGeneralCharacteristics_amsModelID(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_amsModelID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.AmsModelID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanGeneralCharacteristics",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -52735,6 +52736,14 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "demoCode":
+
+			out.Values[i] = ec._PlanBasics_demoCode(ctx, field, obj)
+
+		case "amsModelID":
+
+			out.Values[i] = ec._PlanBasics_amsModelID(ctx, field, obj)
+
 		case "modelCategory":
 
 			out.Values[i] = ec._PlanBasics_modelCategory(ctx, field, obj)
@@ -54102,14 +54111,6 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "demoCode":
-
-			out.Values[i] = ec._PlanGeneralCharacteristics_demoCode(ctx, field, obj)
-
-		case "amsModelID":
-
-			out.Values[i] = ec._PlanGeneralCharacteristics_amsModelID(ctx, field, obj)
-
 		case "isNewModel":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_isNewModel(ctx, field, obj)

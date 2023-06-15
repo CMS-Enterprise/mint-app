@@ -615,6 +615,8 @@ export interface OperationalSolutionChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanBasicsChanges {
+  demoCode?: string | null;
+  amsModelID?: string | null;
   modelCategory?: ModelCategory | null;
   cmsCenters?: CMSCenter[] | null;
   cmsOther?: string | null;
@@ -725,8 +727,6 @@ export interface PlanDocumentInput {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanGeneralCharacteristicsChanges {
-  demoCode?: string | null;
-  amsModelID?: string | null;
   isNewModel?: boolean | null;
   existingModel?: string | null;
   resemblesExistingModel?: boolean | null;
