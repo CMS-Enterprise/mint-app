@@ -707,6 +707,7 @@ export interface PlanCrTdlCreateInput {
 export interface PlanDiscussionChanges {
   content?: string | null;
   status?: DiscussionStatus | null;
+  userRole: DiscussionUserRole;
 }
 
 /**
@@ -715,7 +716,7 @@ export interface PlanDiscussionChanges {
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
   content: string;
-  role: DiscussionUserRole;
+  userRole: DiscussionUserRole;
 }
 
 /**

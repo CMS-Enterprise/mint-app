@@ -72,7 +72,7 @@ type PlanCrTdlCreateInput struct {
 type PlanDiscussionCreateInput struct {
 	ModelPlanID uuid.UUID                 `json:"modelPlanID"`
 	Content     string                    `json:"content"`
-	Role        models.DiscussionUserRole `json:"role"`
+	UserRole    models.DiscussionUserRole `json:"userRole"`
 }
 
 // PlanDocumentInput

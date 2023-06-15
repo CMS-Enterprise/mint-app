@@ -10,7 +10,7 @@ SELECT
     disc.id,
     disc.model_plan_id,
     disc.content,
-    disc.role,
+    disc.user_role,
     disc.status,
     disc.is_assessment,
     disc.created_by,

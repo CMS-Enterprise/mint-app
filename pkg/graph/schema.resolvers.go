@@ -534,11 +534,6 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 	return resolvers.PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
 }
 
-// AmsModelID is the resolver for the amsModelID field.
-func (r *planGeneralCharacteristicsResolver) AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: AmsModelID - amsModelID"))
-}
-
 // AlternativePaymentModelTypes is the resolver for the alternativePaymentModelTypes field.
 func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
 	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)
@@ -943,6 +938,14 @@ func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(c
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.SearchChangeTableDateHistogramConsolidatedAggregations(logger, r.searchClient, interval, limit, offset)
+}
+
+// MostRecentDiscussionRoleSelection is the resolver for the mostRecentDiscussionRoleSelection field.
+func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (models.DiscussionUserRole, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.GetMostRecentDiscussionRoleSelection(logger, r.store, principal)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

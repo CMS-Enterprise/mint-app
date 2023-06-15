@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -24,6 +25,9 @@ var planDiscussionDeleteSQL string
 
 //go:embed SQL/plan_discussion/get_by_id.sql
 var planDiscussionGetByID string
+
+//go:embed SQL/plan_discussion/get_most_recent_user_role.sql
+var getUserRoleSQL string
 
 //go:embed SQL/discussion_reply/create.sql
 var discussionReplyCreateSQL string
@@ -241,4 +245,25 @@ func (s *Store) DiscussionReplyByID(logger *zap.Logger, id uuid.UUID) (*models.D
 	}
 
 	return discussionReply, nil
+}
+
+// GetMostRecentDiscussionRoleSelection retrieves the latest role selection for a given user
+func (s *Store) GetMostRecentDiscussionRoleSelection(logger *zap.Logger, userID uuid.UUID) (models.DiscussionUserRole, error) {
+	print("GetLatestDiscussionRoleSelection test\n\n")
+	statement, err := s.db.PrepareNamed(getUserRoleSQL)
+	if err != nil {
+		logger.Error("failed to prepare SQL statement", zap.Error(err))
+		return models.DiscussionRoleNoneOfTheAbove, err
+	}
+
+	spew.Dump(userID)
+
+	var role models.DiscussionUserRole
+	err = statement.Get(&role, map[string]interface{}{"user_id": userID})
+	if err != nil {
+		logger.Error("failed to get latest role selection", zap.Error(err))
+		return models.DiscussionRoleNoneOfTheAbove, err
+	}
+
+	return role, nil
 }

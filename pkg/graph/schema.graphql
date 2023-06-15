@@ -357,7 +357,7 @@ type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
 	content: String
-  role: DiscussionUserRole!
+  userRole: DiscussionUserRole!
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
@@ -377,7 +377,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
   content: String!
-  role: DiscussionUserRole!
+  userRole: DiscussionUserRole!
 }
 
 """
@@ -388,6 +388,7 @@ https://gqlgen.com/reference/changesets/
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
+  userRole: DiscussionUserRole!
 }
 
 """
@@ -433,8 +434,6 @@ PlanGeneralCharacteristics represents a plan general characteristics object
 type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
-  demoCode: String
-  amsModelID: UUID
 
   # Page 1
   isNewModel: Boolean
@@ -1494,6 +1493,8 @@ type Query {
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  mostRecentDiscussionRoleSelection: DiscussionUserRole!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 

@@ -424,8 +424,8 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		Replies               func(childComplexity int) int
-		Role                  func(childComplexity int) int
 		Status                func(childComplexity int) int
+		UserRole              func(childComplexity int) int
 	}
 
 	PlanDocument struct {
@@ -486,7 +486,6 @@ type ComplexityRoot struct {
 		AgreementTypesOther                       func(childComplexity int) int
 		AlternativePaymentModelNote               func(childComplexity int) int
 		AlternativePaymentModelTypes              func(childComplexity int) int
-		AmsModelID                                func(childComplexity int) int
 		AuthorityAllowances                       func(childComplexity int) int
 		AuthorityAllowancesNote                   func(childComplexity int) int
 		AuthorityAllowancesOther                  func(childComplexity int) int
@@ -501,7 +500,6 @@ type ComplexityRoot struct {
 		CreatedBy                                 func(childComplexity int) int
 		CreatedByUserAccount                      func(childComplexity int) int
 		CreatedDts                                func(childComplexity int) int
-		DemoCode                                  func(childComplexity int) int
 		ExistingModel                             func(childComplexity int) int
 		GeographiesTargeted                       func(childComplexity int) int
 		GeographiesTargetedAppliedTo              func(childComplexity int) int
@@ -840,6 +838,7 @@ type ComplexityRoot struct {
 		ExistingModelLink                                      func(childComplexity int, id uuid.UUID) int
 		ModelPlan                                              func(childComplexity int, id uuid.UUID) int
 		ModelPlanCollection                                    func(childComplexity int, filter model.ModelPlanFilter) int
+		MostRecentDiscussionRoleSelection                      func(childComplexity int) int
 		NdaInfo                                                func(childComplexity int) int
 		OperationalNeed                                        func(childComplexity int, id uuid.UUID) int
 		OperationalSolution                                    func(childComplexity int, id uuid.UUID) int
@@ -998,8 +997,6 @@ type PlanDocumentResolver interface {
 	NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error)
 }
 type PlanGeneralCharacteristicsResolver interface {
-	AmsModelID(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*uuid.UUID, error)
-
 	AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error)
 
 	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
@@ -1098,6 +1095,7 @@ type QueryResolver interface {
 	SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error)
+	MostRecentDiscussionRoleSelection(ctx context.Context) (models.DiscussionUserRole, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -3377,19 +3375,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanDiscussion.Replies(childComplexity), true
 
-	case "PlanDiscussion.role":
-		if e.complexity.PlanDiscussion.Role == nil {
-			break
-		}
-
-		return e.complexity.PlanDiscussion.Role(childComplexity), true
-
 	case "PlanDiscussion.status":
 		if e.complexity.PlanDiscussion.Status == nil {
 			break
 		}
 
 		return e.complexity.PlanDiscussion.Status(childComplexity), true
+
+	case "PlanDiscussion.userRole":
+		if e.complexity.PlanDiscussion.UserRole == nil {
+			break
+		}
+
+		return e.complexity.PlanDiscussion.UserRole(childComplexity), true
 
 	case "PlanDocument.bucket":
 		if e.complexity.PlanDocument.Bucket == nil {
@@ -3727,13 +3725,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelTypes(childComplexity), true
 
-	case "PlanGeneralCharacteristics.amsModelID":
-		if e.complexity.PlanGeneralCharacteristics.AmsModelID == nil {
-			break
-		}
-
-		return e.complexity.PlanGeneralCharacteristics.AmsModelID(childComplexity), true
-
 	case "PlanGeneralCharacteristics.authorityAllowances":
 		if e.complexity.PlanGeneralCharacteristics.AuthorityAllowances == nil {
 			break
@@ -3831,13 +3822,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanGeneralCharacteristics.CreatedDts(childComplexity), true
-
-	case "PlanGeneralCharacteristics.demoCode":
-		if e.complexity.PlanGeneralCharacteristics.DemoCode == nil {
-			break
-		}
-
-		return e.complexity.PlanGeneralCharacteristics.DemoCode(childComplexity), true
 
 	case "PlanGeneralCharacteristics.existingModel":
 		if e.complexity.PlanGeneralCharacteristics.ExistingModel == nil {
@@ -6083,6 +6067,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.ModelPlanCollection(childComplexity, args["filter"].(model.ModelPlanFilter)), true
 
+	case "Query.mostRecentDiscussionRoleSelection":
+		if e.complexity.Query.MostRecentDiscussionRoleSelection == nil {
+			break
+		}
+
+		return e.complexity.Query.MostRecentDiscussionRoleSelection(childComplexity), true
+
 	case "Query.ndaInfo":
 		if e.complexity.Query.NdaInfo == nil {
 			break
@@ -6953,7 +6944,7 @@ type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
 	content: String
-  role: DiscussionUserRole!
+  userRole: DiscussionUserRole!
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
@@ -6973,7 +6964,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
   content: String!
-  role: DiscussionUserRole!
+  userRole: DiscussionUserRole!
 }
 
 """
@@ -6984,6 +6975,7 @@ https://gqlgen.com/reference/changesets/
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
+  userRole: DiscussionUserRole!
 }
 
 """
@@ -7029,8 +7021,6 @@ PlanGeneralCharacteristics represents a plan general characteristics object
 type PlanGeneralCharacteristics {
   id: UUID!
   modelPlanID: UUID!
-  demoCode: String
-  amsModelID: UUID
 
   # Page 1
   isNewModel: Boolean
@@ -8090,6 +8080,8 @@ type Query {
   searchChangeTableByModelStatus(modelStatus: ModelStatus!, limit: Int!, offset: Int!): [ChangeTableRecord!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  mostRecentDiscussionRoleSelection: DiscussionUserRole!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
@@ -14516,10 +14508,6 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
-			case "demoCode":
-				return ec.fieldContext_PlanGeneralCharacteristics_demoCode(ctx, field)
-			case "amsModelID":
-				return ec.fieldContext_PlanGeneralCharacteristics_amsModelID(ctx, field)
 			case "isNewModel":
 				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
 			case "existingModel":
@@ -15402,8 +15390,8 @@ func (ec *executionContext) fieldContext_ModelPlan_discussions(ctx context.Conte
 				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
 			case "content":
 				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "role":
-				return ec.fieldContext_PlanDiscussion_role(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
@@ -16871,10 +16859,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
-			case "demoCode":
-				return ec.fieldContext_PlanGeneralCharacteristics_demoCode(ctx, field)
-			case "amsModelID":
-				return ec.fieldContext_PlanGeneralCharacteristics_amsModelID(ctx, field)
 			case "isNewModel":
 				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
 			case "existingModel":
@@ -17943,8 +17927,8 @@ func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
 			case "content":
 				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "role":
-				return ec.fieldContext_PlanDiscussion_role(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
@@ -18050,8 +18034,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
 			case "content":
 				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "role":
-				return ec.fieldContext_PlanDiscussion_role(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
@@ -18157,8 +18141,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
 			case "content":
 				return ec.fieldContext_PlanDiscussion_content(ctx, field)
-			case "role":
-				return ec.fieldContext_PlanDiscussion_role(ctx, field)
+			case "userRole":
+				return ec.fieldContext_PlanDiscussion_userRole(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
@@ -27357,8 +27341,8 @@ func (ec *executionContext) fieldContext_PlanDiscussion_content(ctx context.Cont
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanDiscussion_role(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanDiscussion_role(ctx, field)
+func (ec *executionContext) _PlanDiscussion_userRole(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDiscussion_userRole(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -27371,7 +27355,7 @@ func (ec *executionContext) _PlanDiscussion_role(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Role, nil
+		return obj.UserRole, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -27388,7 +27372,7 @@ func (ec *executionContext) _PlanDiscussion_role(ctx context.Context, field grap
 	return ec.marshalNDiscussionUserRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanDiscussion_role(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanDiscussion_userRole(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanDiscussion",
 		Field:      field,
@@ -29856,88 +29840,6 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_modelPlanID(
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanGeneralCharacteristics_demoCode(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_demoCode(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DemoCode, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanGeneralCharacteristics",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanGeneralCharacteristics_amsModelID(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanGeneralCharacteristics_amsModelID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanGeneralCharacteristics().AmsModelID(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*uuid.UUID)
-	fc.Result = res
-	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanGeneralCharacteristics",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
 		},
@@ -47091,6 +46993,74 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableDateHistogramCon
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_mostRecentDiscussionRoleSelection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().MostRecentDiscussionRoleSelection(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
+			}
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(models.DiscussionUserRole); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be github.com/cmsgov/mint-app/pkg/models.DiscussionUserRole`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.DiscussionUserRole)
+	fc.Result = res
+	return ec.marshalNDiscussionUserRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DiscussionUserRole does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -50473,7 +50443,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "content", "role"}
+	fieldsInOrder := [...]string{"modelPlanID", "content", "userRole"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -50498,15 +50468,15 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 				return it, err
 			}
 			it.Content = data
-		case "role":
+		case "userRole":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("role"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userRole"))
 			data, err := ec.unmarshalNDiscussionUserRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Role = data
+			it.UserRole = data
 		}
 	}
 
@@ -53538,9 +53508,9 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanDiscussion_content(ctx, field, obj)
 
-		case "role":
+		case "userRole":
 
-			out.Values[i] = ec._PlanDiscussion_role(ctx, field, obj)
+			out.Values[i] = ec._PlanDiscussion_userRole(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -54127,27 +54097,6 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "demoCode":
-
-			out.Values[i] = ec._PlanGeneralCharacteristics_demoCode(ctx, field, obj)
-
-		case "amsModelID":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanGeneralCharacteristics_amsModelID(ctx, field, obj)
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "isNewModel":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_isNewModel(ctx, field, obj)
@@ -57144,6 +57093,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_searchChangeTableDateHistogramConsolidatedAggregations(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "mostRecentDiscussionRoleSelection":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
