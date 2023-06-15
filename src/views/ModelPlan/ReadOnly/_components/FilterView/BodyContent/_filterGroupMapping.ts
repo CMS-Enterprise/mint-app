@@ -14,7 +14,18 @@ const FilterGroupMap = {
       'beneficiarySelectionMethod',
       'beneficiarySelectionFrequency'
     ],
-    'ops-eval-and-learning': [],
+    'ops-eval-and-learning': [
+      'benchmarkForPerformance',
+      'computePerformanceScores',
+      'riskAdjustPerformance',
+      'dataNeededForMonitoring',
+      'dataToSendParticicipants',
+      'shareCclfData',
+      'developNewQualityMeasures',
+      'qualityPerformanceImpactsPayment',
+      'dataSharingFrequency',
+      'dataCollectionFrequency'
+    ],
     payments: [
       'payType',
       'payClaims',
@@ -33,7 +44,7 @@ const FilterGroupMap = {
       'providerLeaveMethod',
       'providerOverlap'
     ],
-    beneficiaries: [],
+    beneficiaries: ['precedenceRules'],
     payments: [
       'fundingSource',
       'payClaims',
@@ -55,7 +66,12 @@ const FilterGroupMap = {
   ccw: {
     basics: ['nameHistory'],
     'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
-    'ops-eval-and-learning': [],
+    'ops-eval-and-learning': [
+      'ccmInvolvment',
+      'sendFilesBetweenCcw',
+      'appToSendFilesToKnown',
+      'useCcwForFileDistribiutionToParticipants'
+    ],
     payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
   ipc: {
@@ -101,7 +117,29 @@ const FilterGroupMap = {
       'providerOverlap'
     ],
     beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
-    'ops-eval-and-learning': [],
+    'ops-eval-and-learning': [
+      'contractorSupport',
+      'contractorSupport',
+      'iddocSupport',
+      'captureParticipantInfo',
+      'icdOwner',
+      'draftIcdDueDate',
+      'uatNeeds',
+      'stcNeeds',
+      'testingTimelines',
+      'dataMonitoringFileTypes',
+      'dataResponseType',
+      'dataResponseFileFrequency',
+      'dataFullTimeOrIncremental',
+      'unsolicitedAdjustmentsIncluded',
+      'produceBenefitEnhancementFiles',
+      'fileNamingConventions',
+      'dataNeededForMonitoring',
+      'dataSharingStarts',
+      'dataSharingFrequency',
+      'dataCollectionStarts',
+      'anticipatedChallenges'
+    ],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
       'changesMedicarePhysicianFeeSchedule',
@@ -135,7 +173,11 @@ const FilterGroupMap = {
       'providerOverlap'
     ],
     beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
-    'ops-eval-and-learning': [],
+    'ops-eval-and-learning': [
+      'contractorSupport',
+      'contractorSupportHow',
+      'anticipatedChallenges'
+    ],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
       'changesMedicarePhysicianFeeSchedule',
@@ -171,7 +213,12 @@ const FilterGroupMap = {
       'estimateConfidence',
       'communicationMethod'
     ],
-    'ops-eval-and-learning': []
+    'ops-eval-and-learning': [
+      'stakeholders',
+      'helpdeskUse',
+      'contractorSupport',
+      'contractorSupportHow'
+    ]
   }
 };
 

@@ -426,7 +426,7 @@ const ReadOnlyOpsEvalAndLearning = ({
             {checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
-              'dataResponseFileFrequenc',
+              'dataResponseFileFrequency',
               <ReadOnlySection
                 heading={t('fileFrequency')}
                 copy={dataResponseFileFrequency}
