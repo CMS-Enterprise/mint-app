@@ -63,6 +63,7 @@ const BodyContent = ({
             >
               <ReadOnlyModelBasics
                 modelID={modelID}
+                filteredView={filteredView}
                 isViewingFilteredView
                 filteredQuestions={
                   individualFilterView[

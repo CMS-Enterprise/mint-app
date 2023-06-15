@@ -33,11 +33,13 @@ export type ReadOnlyProps = {
   clearance?: boolean;
   isViewingFilteredView?: boolean;
   filteredQuestions?: string[];
+  filteredView?: string;
 };
 
 const ReadOnlyModelBasics = ({
   modelID,
   clearance,
+  filteredView,
   isViewingFilteredView,
   filteredQuestions
 }: ReadOnlyProps) => {
