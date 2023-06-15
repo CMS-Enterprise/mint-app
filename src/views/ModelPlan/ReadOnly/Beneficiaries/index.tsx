@@ -17,6 +17,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
 import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -24,7 +25,8 @@ import { ReadOnlyProps } from '../ModelBasics';
 const ReadOnlyBeneficiaries = ({
   modelID,
   clearance,
-  isViewingFilteredView
+  isViewingFilteredView,
+  filteredQuestions
 }: ReadOnlyProps) => {
   const { t } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
@@ -99,13 +101,18 @@ const ReadOnlyBeneficiaries = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <ReadOnlySection
-          heading={t('beneficiariesQuestion')}
-          list
-          listItems={beneficiaries?.map(translateBeneficiariesType)}
-          listOtherItem={beneficiariesOther}
-          notes={beneficiariesNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiaries',
+          <ReadOnlySection
+            heading={t('beneficiariesQuestion')}
+            list
+            listItems={beneficiaries?.map(translateBeneficiariesType)}
+            listOtherItem={beneficiariesOther}
+            notes={beneficiariesNote}
+          />
+        )}
 
         <SideBySideReadOnlySection
           firstSection={{
@@ -128,20 +135,25 @@ const ReadOnlyBeneficiaries = ({
           />
         )}
 
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: t('excluded'),
-            copy:
-              excludeCertainCharacteristics &&
-              translateTriStateAnswer(excludeCertainCharacteristics)
-          }}
-          secondSection={
-            excludeCertainCharacteristics === TriStateAnswer.YES && {
-              heading: t('excludedNestedQuestion'),
-              copy: excludeCertainCharacteristicsCriteria
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'excludeCertainCharacteristics',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('excluded'),
+              copy:
+                excludeCertainCharacteristics &&
+                translateTriStateAnswer(excludeCertainCharacteristics)
+            }}
+            secondSection={
+              excludeCertainCharacteristics === TriStateAnswer.YES && {
+                heading: t('excludedNestedQuestion'),
+                copy: excludeCertainCharacteristicsCriteria
+              }
             }
-          }
-        />
+          />
+        )}
 
         {excludeCertainCharacteristicsNote && (
           <ReadOnlySection
@@ -158,56 +170,88 @@ const ReadOnlyBeneficiaries = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <ReadOnlySection
-          heading={t('howManyImpacted')}
-          copy={numberPeopleImpacted?.toString()}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'numberPeopleImpacted',
+          <ReadOnlySection
+            heading={t('howManyImpacted')}
+            copy={numberPeopleImpacted?.toString()}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('levelOfConfidence')}
-          copy={
-            estimateConfidence && translateConfidenceType(estimateConfidence)
-          }
-          notes={confidenceNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'estimateConfidence',
+          <ReadOnlySection
+            heading={t('levelOfConfidence')}
+            copy={
+              estimateConfidence && translateConfidenceType(estimateConfidence)
+            }
+            notes={confidenceNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('chooseBeneficiariesQuestion')}
-          list
-          listItems={beneficiarySelectionMethod?.map(
-            translateSelectionMethodType
-          )}
-          listOtherItem={beneficiarySelectionOther}
-          notes={beneficiarySelectionNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiarySelectionMethod',
+          <ReadOnlySection
+            heading={t('chooseBeneficiariesQuestion')}
+            list
+            listItems={beneficiarySelectionMethod?.map(
+              translateSelectionMethodType
+            )}
+            listOtherItem={beneficiarySelectionOther}
+            notes={beneficiarySelectionNote}
+          />
+        )}
       </div>
 
       <div>
         {/* If "Other", then display "Other — Lorem ipsum." */}
         {/* Else just display content, i.e. "LOI (Letter of interest)" */}
-        <ReadOnlySection
-          heading={t('beneficiaryFrequency')}
-          copy={
-            beneficiarySelectionFrequency &&
-            (beneficiarySelectionFrequency === FrequencyType.OTHER
-              ? `${translateFrequencyType(
-                  beneficiarySelectionFrequency
-                )} \u2014  ${beneficiarySelectionFrequencyOther}`
-              : translateFrequencyType(beneficiarySelectionFrequency))
-          }
-          notes={beneficiarySelectionFrequencyNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiarySelectionFrequency',
+          <ReadOnlySection
+            heading={t('beneficiaryFrequency')}
+            copy={
+              beneficiarySelectionFrequency &&
+              (beneficiarySelectionFrequency === FrequencyType.OTHER
+                ? `${translateFrequencyType(
+                    beneficiarySelectionFrequency
+                  )} \u2014  ${beneficiarySelectionFrequencyOther}`
+                : translateFrequencyType(beneficiarySelectionFrequency))
+            }
+            notes={beneficiarySelectionFrequencyNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('beneficiaryOverlap')}
-          copy={beneficiaryOverlap && translateOverlapType(beneficiaryOverlap)}
-          notes={beneficiaryOverlapNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'beneficiaryOverlap',
+          <ReadOnlySection
+            heading={t('beneficiaryOverlap')}
+            copy={
+              beneficiaryOverlap && translateOverlapType(beneficiaryOverlap)
+            }
+            notes={beneficiaryOverlapNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('benficiaryPrecedence')}
-          copy={precedenceRules}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'precedenceRules',
+          <ReadOnlySection
+            heading={t('benficiaryPrecedence')}
+            copy={precedenceRules}
+          />
+        )}
       </div>
     </div>
   );
