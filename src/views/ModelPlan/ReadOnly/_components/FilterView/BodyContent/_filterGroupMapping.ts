@@ -53,7 +53,7 @@ const FilterGroupMap = {
     ]
   },
   dfsdm: {
-    basics: ['nameHistory', 'modelType', 'goal'],
+    basics: ['nameHistory', 'modelType', 'goal', 'performanceStartDate'],
     'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
     payments: [
       'numberPaymentsPerPayCycle',
@@ -63,7 +63,7 @@ const FilterGroupMap = {
     ]
   },
   ccw: {
-    basics: ['nameHistory'],
+    basics: ['nameHistory', 'performanceStartDate'],
     'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
     'ops-eval-and-learning': [
       'ccmInvolvment',
@@ -101,7 +101,14 @@ const FilterGroupMap = {
     ]
   },
   iddoc: {
-    basics: ['nameHistory'],
+    basics: [
+      'nameHistory',
+      'modelType',
+      'goal',
+      'annouceModel',
+      'performanceStartDate',
+      'phasedIn'
+    ],
     'general-characteristics': [
       'keyCharacteristics',
       'specificGeographies',
@@ -159,7 +166,14 @@ const FilterGroupMap = {
     ]
   },
   pbg: {
-    basics: ['modelType', 'goal'],
+    basics: [
+      'nameHistory',
+      'modelType',
+      'goal',
+      'annouceModel',
+      'performanceStartDate',
+      'phasedIn'
+    ],
     'general-characteristics': [
       'keyCharacteristics',
       'specificGeographies',
@@ -208,7 +222,12 @@ const FilterGroupMap = {
     ]
   },
   cbosc: {
-    basics: ['nameHistory'],
+    basics: [
+      'nameHistory',
+      'annouceModel',
+      'applicationStartDate',
+      'performanceStartDate'
+    ],
     'participants-and-providers': [
       'participants',
       'howManyParticipants',
