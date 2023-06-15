@@ -1,9 +1,17 @@
 const FilterGroupMap = {
   cmmi: {
-    'general-characteristics': [''],
-    'participants-and-providers': [''],
-    beneficiaries: [''],
-    'ops-eval-and-learning': [''],
+    'general-characteristics': [
+      'modelAPM',
+      'keyCharacteristics',
+      'participationOptions',
+      'agreementType',
+      'moreParticipation',
+      'authorityAllowed',
+      'waiversRequired'
+    ],
+    'participants-and-providers': [],
+    beneficiaries: [],
+    'ops-eval-and-learning': [],
     payments: [
       'payType',
       'payClaims',
@@ -16,8 +24,8 @@ const FilterGroupMap = {
   oact: {
     basics: ['nameHistory'],
     'general-characteristics': ['modelAPM'],
-    'participants-and-providers': [''],
-    beneficiaries: [''],
+    'participants-and-providers': [],
+    beneficiaries: [],
     payments: [
       'fundingSource',
       'payClaims',
@@ -28,7 +36,7 @@ const FilterGroupMap = {
   },
   dfsdm: {
     basics: ['nameHistory'],
-    'participants-and-providers': [''],
+    'participants-and-providers': [],
     payments: [
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
@@ -38,8 +46,8 @@ const FilterGroupMap = {
   },
   ccw: {
     basics: ['nameHistory'],
-    'participants-and-providers': [''],
-    'ops-eval-and-learning': [''],
+    'participants-and-providers': [],
+    'ops-eval-and-learning': [],
     payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
   ipc: {
@@ -49,10 +57,9 @@ const FilterGroupMap = {
       'resembleModel',
       'modelResemblance',
       'waysResembleModel',
-      'differentComponents',
-      'tracksDiffer'
+      'differentComponents'
     ],
-    'participants-and-providers': [''],
+    'participants-and-providers': [],
     payments: [
       'fundingSource',
       'payType',
@@ -74,9 +81,9 @@ const FilterGroupMap = {
       'geographyApplied',
       'rulemakingRequired'
     ],
-    'participants-and-providers': [''],
-    beneficiaries: [''],
-    'ops-eval-and-learning': [''],
+    'participants-and-providers': [],
+    beneficiaries: [],
+    'ops-eval-and-learning': [],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
       'changesMedicarePhysicianFeeSchedule',
@@ -103,9 +110,9 @@ const FilterGroupMap = {
       'geographyApplied',
       'rulemakingRequired'
     ],
-    'participants-and-providers': [''],
-    beneficiaries: [''],
-    'ops-eval-and-learning': [''],
+    'participants-and-providers': [],
+    beneficiaries: [],
+    'ops-eval-and-learning': [],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
       'changesMedicarePhysicianFeeSchedule',
@@ -138,8 +145,8 @@ const FilterGroupMap = {
   },
   cbosc: {
     basics: ['nameHistory'],
-    'participants-and-providers': [''],
-    'ops-eval-and-learning': ['']
+    'participants-and-providers': [],
+    'ops-eval-and-learning': []
   }
 };
 
