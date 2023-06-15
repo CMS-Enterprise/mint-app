@@ -114,20 +114,25 @@ const ReadOnlyBeneficiaries = ({
           />
         )}
 
-        <SideBySideReadOnlySection
-          firstSection={{
-            heading: t('dualEligibility'),
-            copy:
-              treatDualElligibleDifferent &&
-              translateTriStateAnswer(treatDualElligibleDifferent)
-          }}
-          secondSection={
-            treatDualElligibleDifferent === TriStateAnswer.YES && {
-              heading: h('howSo'),
-              copy: treatDualElligibleDifferentHow
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'dualEligibility',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('dualEligibility'),
+              copy:
+                treatDualElligibleDifferent &&
+                translateTriStateAnswer(treatDualElligibleDifferent)
+            }}
+            secondSection={
+              treatDualElligibleDifferent === TriStateAnswer.YES && {
+                heading: h('howSo'),
+                copy: treatDualElligibleDifferentHow
+              }
             }
-          }
-        />
+          />
+        )}
         {treatDualElligibleDifferentNote && (
           <ReadOnlySection
             heading={t('basics:notes')}

@@ -10,7 +10,10 @@ const FilterGroupMap = {
       'waiversRequired'
     ],
     'participants-and-providers': ['participants', 'selectionMethod'],
-    beneficiaries: [],
+    beneficiaries: [
+      'beneficiarySelectionMethod',
+      'beneficiarySelectionFrequency'
+    ],
     'ops-eval-and-learning': [],
     payments: [
       'payType',
@@ -97,7 +100,7 @@ const FilterGroupMap = {
       'collectTINs',
       'providerOverlap'
     ],
-    beneficiaries: [],
+    beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
     'ops-eval-and-learning': [],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
@@ -131,7 +134,7 @@ const FilterGroupMap = {
       'selectionMethod',
       'providerOverlap'
     ],
-    beneficiaries: [],
+    beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
     'ops-eval-and-learning': [],
     payments: [
       'shouldAnyProvidersExcludedFFSSystems',
@@ -154,12 +157,9 @@ const FilterGroupMap = {
     basics: ['nameHistory'],
     beneficiaries: [
       'beneficiaries',
-      'beneficiariesOther',
-      'beneficiariesNote',
       'numberPeopleImpacted',
       'estimateConfidence',
       'beneficiaryOverlap',
-      'beneficiaryOverlapNote',
       'precedenceRules'
     ]
   },
