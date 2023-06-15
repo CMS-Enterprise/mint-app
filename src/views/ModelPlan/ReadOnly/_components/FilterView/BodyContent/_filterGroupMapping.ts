@@ -9,7 +9,7 @@ const FilterGroupMap = {
       'authorityAllowed',
       'waiversRequired'
     ],
-    'participants-and-providers': [],
+    'participants-and-providers': ['participants', 'selectionMethod'],
     beneficiaries: [],
     'ops-eval-and-learning': [],
     payments: [
@@ -24,7 +24,12 @@ const FilterGroupMap = {
   oact: {
     basics: ['nameHistory'],
     'general-characteristics': ['modelAPM'],
-    'participants-and-providers': [],
+    'participants-and-providers': [
+      'providerAdditionFrequency',
+      'providerAddMethod',
+      'providerLeaveMethod',
+      'providerOverlap'
+    ],
     beneficiaries: [],
     payments: [
       'fundingSource',
@@ -36,7 +41,7 @@ const FilterGroupMap = {
   },
   dfsdm: {
     basics: ['nameHistory'],
-    'participants-and-providers': [],
+    'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
     payments: [
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
@@ -46,7 +51,7 @@ const FilterGroupMap = {
   },
   ccw: {
     basics: ['nameHistory'],
-    'participants-and-providers': [],
+    'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
     'ops-eval-and-learning': [],
     payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
@@ -59,7 +64,11 @@ const FilterGroupMap = {
       'waysResembleModel',
       'differentComponents'
     ],
-    'participants-and-providers': [],
+    'participants-and-providers': [
+      'participants',
+      'howManyParticipants',
+      'estimateConfidence'
+    ],
     payments: [
       'fundingSource',
       'payType',
@@ -81,7 +90,13 @@ const FilterGroupMap = {
       'geographyApplied',
       'rulemakingRequired'
     ],
-    'participants-and-providers': [],
+    'participants-and-providers': [
+      'participants',
+      'modelLevel',
+      'selectionMethod',
+      'collectTINs',
+      'providerOverlap'
+    ],
     beneficiaries: [],
     'ops-eval-and-learning': [],
     payments: [
@@ -110,7 +125,12 @@ const FilterGroupMap = {
       'geographyApplied',
       'rulemakingRequired'
     ],
-    'participants-and-providers': [],
+    'participants-and-providers': [
+      'participants',
+      'modelLevel',
+      'selectionMethod',
+      'providerOverlap'
+    ],
     beneficiaries: [],
     'ops-eval-and-learning': [],
     payments: [
@@ -145,7 +165,12 @@ const FilterGroupMap = {
   },
   cbosc: {
     basics: ['nameHistory'],
-    'participants-and-providers': [],
+    'participants-and-providers': [
+      'participants',
+      'howManyParticipants',
+      'estimateConfidence',
+      'communicationMethod'
+    ],
     'ops-eval-and-learning': []
   }
 };

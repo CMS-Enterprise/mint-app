@@ -290,11 +290,16 @@ const ReadOnlyParticipantsAndProviders = ({
           <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
         )}
 
-        <ReadOnlySection
-          heading={t('changeRisk')}
-          copy={translateBooleanOrNull(willRiskChange)}
-          notes={willRiskChangeNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'changeRisk',
+          <ReadOnlySection
+            heading={t('changeRisk')}
+            copy={translateBooleanOrNull(willRiskChange)}
+            notes={willRiskChangeNote}
+          />
+        )}
       </div>
 
       <div
