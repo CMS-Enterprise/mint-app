@@ -179,159 +179,209 @@ const ReadOnlyModelBasics = ({
       <ReadOnlySection heading={t('notes')} copy={note} />
 
       {/* TODO: timeline group mapping */}
-      <SectionWrapper
-        className={`read-only-model-plan__timeline--wrapper  ${
-          isViewingFilteredView
-            ? 'padding-y-0 margin-top-1 margin-bottom-0'
-            : 'border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2'
-        }`}
-      >
-        <h3
-          className={`margin-top-0 ${
-            isViewingFilteredView ? 'margin-bottom-05' : 'margin-bottom-4'
-          }`}
-        >
-          {t('highLevelTimeline')}
-        </h3>
-        <ProcessList className="read-only-model-plan__timeline">
-          <ProcessListItem className="read-only-model-plan__timeline__list-item">
-            <ProcessListHeading
-              type="p"
-              className="font-body-sm line-height-sans-4"
-            >
-              {t('completeICIP')}
-            </ProcessListHeading>
-            <p className="margin-y-0 font-body-md line-height-sans-4">
-              {dateOrNoAnswer(completeICIP)}
-            </p>
-          </ProcessListItem>
+      {isViewingFilteredView ? (
+        <>
+          <ReadOnlySection
+            heading={t('completeICIP')}
+            copy={completeICIP && formatDateUtc(completeICIP, 'MM/dd/yyyy')}
+          />
 
-          <ProcessListItem className="read-only-model-plan__timeline__list-item">
-            <ProcessListHeading
-              type="p"
-              className="font-body-sm line-height-sans-4"
-            >
-              {t('clearance')}
-            </ProcessListHeading>
-            <div className="mobile-lg:display-flex">
-              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                <ProcessListHeading
-                  type="p"
-                  className="font-body-sm line-height-sans-4"
-                >
-                  {t('clearanceStartDate')}
-                </ProcessListHeading>
-                <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {dateOrNoAnswer(clearanceStarts)}
-                </p>
-              </div>
-              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                <ProcessListHeading
-                  type="p"
-                  className="font-body-sm line-height-sans-4"
-                >
-                  {t('clearanceEndDate')}
-                </ProcessListHeading>
-                <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {dateOrNoAnswer(clearanceEnds)}
-                </p>
-              </div>
-            </div>
-          </ProcessListItem>
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('clearanceStartDate'),
+              copy:
+                clearanceStarts && formatDateUtc(clearanceStarts, 'MM/dd/yyyy')
+            }}
+            secondSection={{
+              heading: t('clearanceEndDate'),
+              copy: clearanceEnds && formatDateUtc(clearanceEnds, 'MM/dd/yyyy')
+            }}
+          />
 
-          <ProcessListItem className="read-only-model-plan__timeline__list-item">
-            <ProcessListHeading
-              type="p"
-              className="font-body-sm line-height-sans-4"
-            >
-              {t('annouceModel')}
-            </ProcessListHeading>
-            <p className="margin-y-0 font-body-md line-height-sans-4">
-              {dateOrNoAnswer(announced)}
-            </p>
-          </ProcessListItem>
+          <ReadOnlySection
+            heading={t('annouceModel')}
+            copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
+          />
 
-          <ProcessListItem className="read-only-model-plan__timeline__list-item">
-            <ProcessListHeading
-              type="p"
-              className="font-body-sm line-height-sans-4"
-            >
-              {t('applicationPeriod')}
-            </ProcessListHeading>
-            <div className="mobile-lg:display-flex">
-              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                <ProcessListHeading
-                  type="p"
-                  className="font-body-sm line-height-sans-4"
-                >
-                  {t('applicationStartDate')}
-                </ProcessListHeading>
-                <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {dateOrNoAnswer(applicationsStart)}
-                </p>
-              </div>
-              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                <ProcessListHeading
-                  type="p"
-                  className="font-body-sm line-height-sans-4"
-                >
-                  {t('applicationEndDate')}
-                </ProcessListHeading>
-                <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {dateOrNoAnswer(applicationsEnd)}
-                </p>
-              </div>
-            </div>
-          </ProcessListItem>
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('applicationStartDate'),
+              copy:
+                applicationsStart &&
+                formatDateUtc(applicationsStart, 'MM/dd/yyyy')
+            }}
+            secondSection={{
+              heading: t('applicationEndDate'),
+              copy:
+                applicationsEnd && formatDateUtc(applicationsEnd, 'MM/dd/yyyy')
+            }}
+          />
 
-          <ProcessListItem className="read-only-model-plan__timeline__list-item">
-            <ProcessListHeading
-              type="p"
-              className="font-body-sm line-height-sans-4"
-            >
-              {t('perforamncePeriod')}
-            </ProcessListHeading>
-            <div className="mobile-lg:display-flex">
-              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                <ProcessListHeading
-                  type="p"
-                  className="font-body-sm line-height-sans-4"
-                >
-                  {t('performanceStartDate')}
-                </ProcessListHeading>
-                <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {dateOrNoAnswer(performancePeriodStarts)}
-                </p>
-              </div>
-              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                <ProcessListHeading
-                  type="p"
-                  className="font-body-sm line-height-sans-4"
-                >
-                  {t('performanceEndDate')}
-                </ProcessListHeading>
-                <p className="margin-y-0 font-body-md line-height-sans-4">
-                  {dateOrNoAnswer(performancePeriodEnds)}
-                </p>
-              </div>
-            </div>
-          </ProcessListItem>
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('performanceStartDate'),
+              copy:
+                performancePeriodStarts &&
+                formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy')
+            }}
+            secondSection={{
+              heading: t('performanceEndDate'),
+              copy:
+                performancePeriodEnds &&
+                formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy')
+            }}
+          />
 
-          <ProcessListItem className="read-only-model-plan__timeline__list-item">
-            <ProcessListHeading
-              type="p"
-              className="font-body-sm line-height-sans-4"
-            >
-              {t('modelWrapUp')}
-            </ProcessListHeading>
-            <p className="margin-y-0 font-body-md line-height-sans-4">
-              {dateOrNoAnswer(wrapUpEnds)}
-            </p>
-          </ProcessListItem>
-        </ProcessList>
+          <ReadOnlySection
+            heading={t('modelWrapUp')}
+            copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
+          />
+        </>
+      ) : (
+        <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
+          <h3 className={`margin-top-0 margin-bottom-4'`}>
+            {t('highLevelTimeline')}
+          </h3>
+          <ProcessList className="read-only-model-plan__timeline">
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <ProcessListHeading
+                type="p"
+                className="font-body-sm line-height-sans-4"
+              >
+                {t('completeICIP')}
+              </ProcessListHeading>
+              <p className="margin-y-0 font-body-md line-height-sans-4">
+                {dateOrNoAnswer(completeICIP)}
+              </p>
+            </ProcessListItem>
 
-        <ReadOnlySection heading={t('notes')} copy={highLevelNote} />
-      </SectionWrapper>
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <ProcessListHeading
+                type="p"
+                className="font-body-sm line-height-sans-4"
+              >
+                {t('clearance')}
+              </ProcessListHeading>
+              <div className="mobile-lg:display-flex">
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <ProcessListHeading
+                    type="p"
+                    className="font-body-sm line-height-sans-4"
+                  >
+                    {t('clearanceStartDate')}
+                  </ProcessListHeading>
+                  <p className="margin-y-0 font-body-md line-height-sans-4">
+                    {dateOrNoAnswer(clearanceStarts)}
+                  </p>
+                </div>
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <ProcessListHeading
+                    type="p"
+                    className="font-body-sm line-height-sans-4"
+                  >
+                    {t('clearanceEndDate')}
+                  </ProcessListHeading>
+                  <p className="margin-y-0 font-body-md line-height-sans-4">
+                    {dateOrNoAnswer(clearanceEnds)}
+                  </p>
+                </div>
+              </div>
+            </ProcessListItem>
+
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <ProcessListHeading
+                type="p"
+                className="font-body-sm line-height-sans-4"
+              >
+                {t('annouceModel')}
+              </ProcessListHeading>
+              <p className="margin-y-0 font-body-md line-height-sans-4">
+                {dateOrNoAnswer(announced)}
+              </p>
+            </ProcessListItem>
+
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <ProcessListHeading
+                type="p"
+                className="font-body-sm line-height-sans-4"
+              >
+                {t('applicationPeriod')}
+              </ProcessListHeading>
+              <div className="mobile-lg:display-flex">
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <ProcessListHeading
+                    type="p"
+                    className="font-body-sm line-height-sans-4"
+                  >
+                    {t('applicationStartDate')}
+                  </ProcessListHeading>
+                  <p className="margin-y-0 font-body-md line-height-sans-4">
+                    {dateOrNoAnswer(applicationsStart)}
+                  </p>
+                </div>
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <ProcessListHeading
+                    type="p"
+                    className="font-body-sm line-height-sans-4"
+                  >
+                    {t('applicationEndDate')}
+                  </ProcessListHeading>
+                  <p className="margin-y-0 font-body-md line-height-sans-4">
+                    {dateOrNoAnswer(applicationsEnd)}
+                  </p>
+                </div>
+              </div>
+            </ProcessListItem>
+
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <ProcessListHeading
+                type="p"
+                className="font-body-sm line-height-sans-4"
+              >
+                {t('perforamncePeriod')}
+              </ProcessListHeading>
+              <div className="mobile-lg:display-flex">
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <ProcessListHeading
+                    type="p"
+                    className="font-body-sm line-height-sans-4"
+                  >
+                    {t('performanceStartDate')}
+                  </ProcessListHeading>
+                  <p className="margin-y-0 font-body-md line-height-sans-4">
+                    {dateOrNoAnswer(performancePeriodStarts)}
+                  </p>
+                </div>
+                <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                  <ProcessListHeading
+                    type="p"
+                    className="font-body-sm line-height-sans-4"
+                  >
+                    {t('performanceEndDate')}
+                  </ProcessListHeading>
+                  <p className="margin-y-0 font-body-md line-height-sans-4">
+                    {dateOrNoAnswer(performancePeriodEnds)}
+                  </p>
+                </div>
+              </div>
+            </ProcessListItem>
+
+            <ProcessListItem className="read-only-model-plan__timeline__list-item">
+              <ProcessListHeading
+                type="p"
+                className="font-body-sm line-height-sans-4"
+              >
+                {t('modelWrapUp')}
+              </ProcessListHeading>
+              <p className="margin-y-0 font-body-md line-height-sans-4">
+                {dateOrNoAnswer(wrapUpEnds)}
+              </p>
+            </ProcessListItem>
+          </ProcessList>
+
+          <ReadOnlySection heading={t('notes')} copy={highLevelNote} />
+        </SectionWrapper>
+      )}
 
       {checkGroupMap(
         isViewingFilteredView,

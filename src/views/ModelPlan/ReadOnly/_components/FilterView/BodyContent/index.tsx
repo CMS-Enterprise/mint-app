@@ -121,7 +121,15 @@ const BodyContent = ({
               key={task}
               lastSection={task === Object.keys(individualFilterView).pop()}
             >
-              <ReadOnlyBeneficiaries modelID={modelID} isViewingFilteredView />
+              <ReadOnlyBeneficiaries
+                modelID={modelID}
+                isViewingFilteredView
+                filteredQuestions={
+                  individualFilterView[
+                    task as keyof typeof individualFilterView
+                  ]
+                }
+              />
             </FitleredViewSection>
           );
         }
@@ -136,6 +144,11 @@ const BodyContent = ({
               <ReadOnlyOpsEvalAndLearning
                 modelID={modelID}
                 isViewingFilteredView
+                filteredQuestions={
+                  individualFilterView[
+                    task as keyof typeof individualFilterView
+                  ]
+                }
               />
             </FitleredViewSection>
           );
@@ -148,7 +161,15 @@ const BodyContent = ({
               key={task}
               lastSection={task === Object.keys(individualFilterView).pop()}
             >
-              <ReadOnlyPayments modelID={modelID} isViewingFilteredView />
+              <ReadOnlyPayments
+                modelID={modelID}
+                isViewingFilteredView
+                filteredQuestions={
+                  individualFilterView[
+                    task as keyof typeof individualFilterView
+                  ]
+                }
+              />
             </FitleredViewSection>
           );
         }
