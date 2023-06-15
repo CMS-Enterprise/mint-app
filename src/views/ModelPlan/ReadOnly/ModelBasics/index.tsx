@@ -178,7 +178,6 @@ const ReadOnlyModelBasics = ({
       )}
       <ReadOnlySection heading={t('notes')} copy={note} />
 
-      {/* TODO: timeline group mapping */}
       {isViewingFilteredView ? (
         <>
           <ReadOnlySection
