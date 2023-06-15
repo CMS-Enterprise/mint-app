@@ -415,12 +415,16 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        {providerOverlap !== OverlapType.NO && (
-          <ReadOnlySection
-            heading={t('overlapInfo')}
-            copy={providerOverlapHierarchy}
-          />
-        )}
+        {providerOverlap !== OverlapType.NO &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'overlapInfo',
+            <ReadOnlySection
+              heading={t('overlapInfo')}
+              copy={providerOverlapHierarchy}
+            />
+          )}
 
         {providerOverlapNote && (
           <ReadOnlySection

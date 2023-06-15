@@ -151,12 +151,16 @@ const ReadOnlyGeneralCharacteristics = ({
           />
         )}
 
-        {!isNewModel && (
-          <ReadOnlySection
-            heading={t('whichExistingModel')}
-            copy={existingModel}
-          />
-        )}
+        {!isNewModel &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'whichExistingModel',
+            <ReadOnlySection
+              heading={t('whichExistingModel')}
+              copy={existingModel}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,

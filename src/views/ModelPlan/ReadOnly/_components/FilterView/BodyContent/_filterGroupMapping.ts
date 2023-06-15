@@ -41,8 +41,7 @@ const FilterGroupMap = {
     'participants-and-providers': [
       'providerAdditionFrequency',
       'providerAddMethod',
-      'providerLeaveMethod',
-      'providerOverlap'
+      'providerLeaveMethod'
     ],
     beneficiaries: ['precedenceRules'],
     payments: [
@@ -78,6 +77,7 @@ const FilterGroupMap = {
     basics: ['nameHistory'],
     'general-characteristics': [
       'isNewModel',
+      'whichExistingModel',
       'resembleModel',
       'modelResemblance',
       'waysResembleModel',
@@ -114,7 +114,8 @@ const FilterGroupMap = {
       'modelLevel',
       'selectionMethod',
       'collectTINs',
-      'providerOverlap'
+      'providerOverlap',
+      'overlapInfo'
     ],
     beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
     'ops-eval-and-learning': [
@@ -170,7 +171,8 @@ const FilterGroupMap = {
       'participants',
       'modelLevel',
       'selectionMethod',
-      'providerOverlap'
+      'providerOverlap',
+      'overlapInfo'
     ],
     beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
     'ops-eval-and-learning': [
