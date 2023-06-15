@@ -53,7 +53,7 @@ const FilterGroupMap = {
     ]
   },
   dfsdm: {
-    basics: ['nameHistory'],
+    basics: ['nameHistory', 'modelType', 'goal'],
     'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
     payments: [
       'numberPaymentsPerPayCycle',

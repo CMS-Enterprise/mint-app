@@ -170,71 +170,108 @@ const ReadOnlyModelBasics = ({
         <ReadOnlySection heading={t('goal')} copy={goal} />
       )}
 
-      {!isViewingFilteredView && (
+      {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
+        'testInterventions',
         <ReadOnlySection
           heading={t('testInterventions')}
           copy={testInterventions}
         />
       )}
+
       <ReadOnlySection heading={t('notes')} copy={note} />
 
       {isViewingFilteredView ? (
         <>
-          <ReadOnlySection
-            heading={t('completeICIP')}
-            copy={completeICIP && formatDateUtc(completeICIP, 'MM/dd/yyyy')}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'completeICIP',
+            <ReadOnlySection
+              heading={t('completeICIP')}
+              copy={completeICIP && formatDateUtc(completeICIP, 'MM/dd/yyyy')}
+            />
+          )}
 
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: t('clearanceStartDate'),
-              copy:
-                clearanceStarts && formatDateUtc(clearanceStarts, 'MM/dd/yyyy')
-            }}
-            secondSection={{
-              heading: t('clearanceEndDate'),
-              copy: clearanceEnds && formatDateUtc(clearanceEnds, 'MM/dd/yyyy')
-            }}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'clearanceStartDate',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('clearanceStartDate'),
+                copy:
+                  clearanceStarts &&
+                  formatDateUtc(clearanceStarts, 'MM/dd/yyyy')
+              }}
+              secondSection={{
+                heading: t('clearanceEndDate'),
+                copy:
+                  clearanceEnds && formatDateUtc(clearanceEnds, 'MM/dd/yyyy')
+              }}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('annouceModel')}
-            copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'annouceModel',
+            <ReadOnlySection
+              heading={t('annouceModel')}
+              copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
+            />
+          )}
 
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: t('applicationStartDate'),
-              copy:
-                applicationsStart &&
-                formatDateUtc(applicationsStart, 'MM/dd/yyyy')
-            }}
-            secondSection={{
-              heading: t('applicationEndDate'),
-              copy:
-                applicationsEnd && formatDateUtc(applicationsEnd, 'MM/dd/yyyy')
-            }}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'applicationStartDate',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('applicationStartDate'),
+                copy:
+                  applicationsStart &&
+                  formatDateUtc(applicationsStart, 'MM/dd/yyyy')
+              }}
+              secondSection={{
+                heading: t('applicationEndDate'),
+                copy:
+                  applicationsEnd &&
+                  formatDateUtc(applicationsEnd, 'MM/dd/yyyy')
+              }}
+            />
+          )}
 
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: t('performanceStartDate'),
-              copy:
-                performancePeriodStarts &&
-                formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy')
-            }}
-            secondSection={{
-              heading: t('performanceEndDate'),
-              copy:
-                performancePeriodEnds &&
-                formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy')
-            }}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'performanceStartDate',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('performanceStartDate'),
+                copy:
+                  performancePeriodStarts &&
+                  formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy')
+              }}
+              secondSection={{
+                heading: t('performanceEndDate'),
+                copy:
+                  performancePeriodEnds &&
+                  formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy')
+              }}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('modelWrapUp')}
-            copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
-          />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'modelWrapUp',
+            <ReadOnlySection
+              heading={t('modelWrapUp')}
+              copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}
+            />
+          )}
         </>
       ) : (
         <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
