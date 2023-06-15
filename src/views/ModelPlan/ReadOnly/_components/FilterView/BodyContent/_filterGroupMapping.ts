@@ -4,25 +4,43 @@ const FilterGroupMap = {
     'participants-and-providers': [''],
     beneficiaries: [''],
     'ops-eval-and-learning': [''],
-    payments: ['']
+    payments: [
+      'payType',
+      'payClaims',
+      'nonClaimsPayments',
+      'canParticipantsSelectBetweenPaymentMechanisms',
+      'anticipatedPaymentFrequency',
+      'willRecoverPayments'
+    ]
   },
   oact: {
     basics: ['nameHistory'],
     'general-characteristics': ['modelAPM'],
     'participants-and-providers': [''],
     beneficiaries: [''],
-    payments: ['']
+    payments: [
+      'fundingSource',
+      'payClaims',
+      'isContractorAwareTestDataRequirements',
+      'beneficiaryCostSharingLevelAndHandling',
+      'waiveBeneficiaryCostSharingForAnyServices'
+    ]
   },
   dfsdm: {
     basics: ['nameHistory'],
     'participants-and-providers': [''],
-    payments: ['']
+    payments: [
+      'numberPaymentsPerPayCycle',
+      'planningToUseInnovationPaymentContractor',
+      'fundingStructure',
+      'anticipatedPaymentFrequency'
+    ]
   },
   ccw: {
     basics: ['nameHistory'],
     'participants-and-providers': [''],
     'ops-eval-and-learning': [''],
-    payments: ['']
+    payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
   ipc: {
     basics: ['nameHistory'],
@@ -35,7 +53,17 @@ const FilterGroupMap = {
       'tracksDiffer'
     ],
     'participants-and-providers': [''],
-    payments: ['']
+    payments: [
+      'fundingSource',
+      'payType',
+      'nonClaimsPayments',
+      'numberPaymentsPerPayCycle',
+      'planningToUseInnovationPaymentContractor',
+      'anticipatedPaymentFrequency',
+      'willRecoverPayments',
+      'anticipateReconcilingPaymentsRetrospectively',
+      'paymentStartDate'
+    ]
   },
   iddoc: {
     basics: ['nameHistory'],
@@ -49,7 +77,22 @@ const FilterGroupMap = {
     'participants-and-providers': [''],
     beneficiaries: [''],
     'ops-eval-and-learning': [''],
-    payments: ['']
+    payments: [
+      'shouldAnyProvidersExcludedFFSSystems',
+      'changesMedicarePhysicianFeeSchedule',
+      'affectsMedicareSecondaryPayerClaims',
+      'payModelDifferentiation',
+      'ancitipateCreatingDependencies',
+      'needsClaimsDataCollection',
+      'thirdParty',
+      'isContractorAwareTestDataRequirements',
+      'beneficiaryCostSharingLevelAndHandling',
+      'waiveBeneficiaryCostSharingForAnyServices',
+      'waiverOnlyAppliesPartOfPayment',
+      'nonClaimsPayments',
+      'planningToUseInnovationPaymentContractor',
+      'anticipateReconcilingPaymentsRetrospectively'
+    ]
   },
   pbg: {
     basics: ['modelType', 'goal'],
@@ -63,7 +106,22 @@ const FilterGroupMap = {
     'participants-and-providers': [''],
     beneficiaries: [''],
     'ops-eval-and-learning': [''],
-    payments: ['']
+    payments: [
+      'shouldAnyProvidersExcludedFFSSystems',
+      'changesMedicarePhysicianFeeSchedule',
+      'affectsMedicareSecondaryPayerClaims',
+      'payModelDifferentiation',
+      'ancitipateCreatingDependencies',
+      'needsClaimsDataCollection',
+      'thirdParty',
+      'isContractorAwareTestDataRequirements',
+      'beneficiaryCostSharingLevelAndHandling',
+      'waiveBeneficiaryCostSharingForAnyServices',
+      'waiverOnlyAppliesPartOfPayment',
+      'nonClaimsPayments',
+      'planningToUseInnovationPaymentContractor',
+      'anticipateReconcilingPaymentsRetrospectively'
+    ]
   },
   mdm: {
     basics: ['nameHistory'],

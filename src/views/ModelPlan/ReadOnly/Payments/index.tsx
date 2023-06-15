@@ -307,7 +307,7 @@ const ReadOnlyPayments = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'creatingDependenciesBetweenServices',
+            'ancitipateCreatingDependencies',
             <ReadOnlySection
               heading={t('ancitipateCreatingDependencies')}
               copy={translateBooleanOrNull(creatingDependenciesBetweenServices)}
@@ -329,7 +329,7 @@ const ReadOnlyPayments = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'providingThirdPartyFile',
+            'thirdParty',
             <ReadOnlySection
               heading={t('thirdParty')}
               copy={translateBooleanOrNull(providingThirdPartyFile)}
