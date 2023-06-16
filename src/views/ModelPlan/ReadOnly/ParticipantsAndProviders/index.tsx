@@ -148,19 +148,27 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        {medicareProviderType && (
-          <ReadOnlySection
-            heading={t('typeMedicateProvider')}
-            copy={medicareProviderType}
-          />
-        )}
+        {medicareProviderType &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'typeMedicateProvider',
+            <ReadOnlySection
+              heading={t('typeMedicateProvider')}
+              copy={medicareProviderType}
+            />
+          )}
 
-        {statesEngagement && (
-          <ReadOnlySection
-            heading={t('describeStates')}
-            copy={statesEngagement}
-          />
-        )}
+        {statesEngagement &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'describeStates',
+            <ReadOnlySection
+              heading={t('describeStates')}
+              copy={statesEngagement}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,

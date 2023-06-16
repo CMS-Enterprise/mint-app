@@ -9,7 +9,12 @@ const FilterGroupMap = {
       'authorityAllowed',
       'waiversRequired'
     ],
-    'participants-and-providers': ['participants', 'selectionMethod'],
+    'participants-and-providers': [
+      'participants',
+      'typeMedicateProvider',
+      'describeStates',
+      'selectionMethod'
+    ],
     beneficiaries: [
       'beneficiarySelectionMethod',
       'beneficiarySelectionFrequency'
@@ -85,6 +90,8 @@ const FilterGroupMap = {
     ],
     'participants-and-providers': [
       'participants',
+      'typeMedicateProvider',
+      'describeStates',
       'howManyParticipants',
       'estimateConfidence'
     ],
@@ -118,6 +125,8 @@ const FilterGroupMap = {
     ],
     'participants-and-providers': [
       'participants',
+      'typeMedicateProvider',
+      'describeStates',
       'modelLevel',
       'selectionMethod',
       'collectTINs',
@@ -183,6 +192,8 @@ const FilterGroupMap = {
     ],
     'participants-and-providers': [
       'participants',
+      'typeMedicateProvider',
+      'describeStates',
       'modelLevel',
       'selectionMethod',
       'providerOverlap',
@@ -230,6 +241,8 @@ const FilterGroupMap = {
     ],
     'participants-and-providers': [
       'participants',
+      'typeMedicateProvider',
+      'describeStates',
       'howManyParticipants',
       'estimateConfidence',
       'communicationMethod'
