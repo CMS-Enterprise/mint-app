@@ -23,6 +23,7 @@ const FilterGroupMap = {
       'benchmarkForPerformance',
       'computePerformanceScores',
       'riskAdjustPerformance',
+      'riskAdjustPayments',
       'dataNeededForMonitoring',
       'dataToSendParticicipants',
       'shareCclfData',
