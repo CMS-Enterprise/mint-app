@@ -35,7 +35,7 @@ exports[`Filter View Modal matches snapshot 1`] = `
             />
           </svg>
           <div>
-            You are viewing
+            You are viewing 
             <strong>
               CMMI
             </strong>
