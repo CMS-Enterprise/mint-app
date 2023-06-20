@@ -21,6 +21,9 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.EqualValues(models.TaskReady, basics.Status)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, basics.CreatedBy)
 
+	suite.Nil(basics.DemoCode)
+	suite.Nil(basics.AmsModelID)
+
 	// Many of the fields are nil upon creation
 	suite.Nil(basics.ModelType)
 	suite.Nil(basics.Problem)
