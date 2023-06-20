@@ -220,6 +220,7 @@ export const planBasics: TranslationPlanBasics = {
   }
 };
 
+// Miscellaneous translations outside scope of individual questions
 export const planBasicsMisc: Record<string, string> = {
   heading: 'Model basics',
   clearanceHeading: 'Review model basics',

@@ -1,3 +1,8 @@
+/*
+  Typed translation mappings for question centric architecture for a model plan
+  Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
+*/
+
 export type TranslationFieldProperties = {
   gqlField: string;
   goField: string;
@@ -19,6 +24,7 @@ export type TranslationFieldProperties = {
   tags?: string[];
 };
 
+// Extended type for questions that have options - boolean, radio, checkbox, etc.
 export type TranslationFieldPropertiesWithOptions = TranslationFieldProperties & {
   options: Record<string, string>;
 };
