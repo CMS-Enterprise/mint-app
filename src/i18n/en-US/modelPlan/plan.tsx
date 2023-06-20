@@ -1,8 +1,6 @@
-/* eslint-disable camelcase */
-
 import { TranslationModelPlan } from 'types/translation';
 
-const model_plan: TranslationModelPlan = {
+const modelPlan: TranslationModelPlan = {
   modelName: {
     gqlField: 'modelName',
     goField: 'ModelName',
@@ -10,7 +8,15 @@ const model_plan: TranslationModelPlan = {
     question: 'Model name',
     dataType: 'string',
     formType: 'text'
+  },
+  previousName: {
+    gqlField: 'previousName',
+    goField: 'PreviousName',
+    dbField: 'previous_name',
+    question: 'Previous names',
+    dataType: 'string',
+    formType: 'text'
   }
 };
 
-export default model_plan;
+export default modelPlan;

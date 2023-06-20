@@ -49,16 +49,16 @@ import Overview from './Overview';
 type ModelPlanInfoFormType = Omit<ModelFormType, 'nameHistory'>;
 
 const BasicsContent = () => {
-  const { t: modelPlanT } = useTranslation('model_plan');
-  const { t: planBasicsT } = useTranslation('plan_basics');
-  const { t: planBasicsMiscT } = useTranslation('plan_basics_misc');
+  const { t: modelPlanT } = useTranslation('modelPlan');
+  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
   const {
     modelCategory: modelCategoryConfig,
     cmsCenters: modelCMSCenterConfig,
     cmmiGroups: modelCMSGroupsConfig
-  } = usePlanTranslation('plan_basics');
+  } = usePlanTranslation('planBasics');
 
   const { modelID } = useParams<{ modelID: string }>();
 

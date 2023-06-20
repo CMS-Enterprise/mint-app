@@ -1,8 +1,6 @@
-/* eslint-disable camelcase */
-
 import { TranslationPlanBasics } from 'types/translation';
 
-export const plan_basics: TranslationPlanBasics = {
+export const planBasics: TranslationPlanBasics = {
   modelCategory: {
     gqlField: 'modelCategory',
     goField: 'ModelCategory',
@@ -148,18 +146,18 @@ export const plan_basics: TranslationPlanBasics = {
     formType: 'datePicker'
   },
   performancePeriodStarts: {
-    gqlField: 'applicationsEnd',
-    goField: 'ApplicationsEnd',
-    dbField: 'applications_ends',
-    question: 'Application end date',
+    gqlField: 'performancePeriodStarts',
+    goField: 'PerformancePeriodStarts',
+    dbField: 'performance_period_starts',
+    question: 'Performance start date',
     dataType: 'date',
     formType: 'datePicker'
   },
   performancePeriodEnds: {
-    gqlField: 'applicationsEnd',
-    goField: 'ApplicationsEnd',
-    dbField: 'applications_ends',
-    question: 'Application end date',
+    gqlField: 'performancePeriodEnds',
+    goField: 'PerformancePeriodEnds',
+    dbField: 'performance_period_ends',
+    question: 'Performance end date',
     dataType: 'date',
     formType: 'datePicker'
   },
@@ -222,7 +220,7 @@ export const plan_basics: TranslationPlanBasics = {
   }
 };
 
-export const plan_basics_misc: Record<string, string> = {
+export const planBasicsMisc: Record<string, string> = {
   heading: 'Model basics',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
@@ -242,4 +240,4 @@ export const plan_basics_misc: Record<string, string> = {
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
 };
 
-export default plan_basics;
+export default planBasics;

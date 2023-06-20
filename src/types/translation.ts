@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 export type TranslationFieldProperties = {
   gqlField: string;
   goField: string;
@@ -29,10 +27,13 @@ export type TranslationField =
   | TranslationFieldProperties
   | TranslationFieldPropertiesWithOptions;
 
+// Model Plan
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
+  previousName: TranslationFieldProperties;
 };
 
+// Plan Basics
 export type TranslationPlanBasics = {
   // Model Plan
   modelCategory: TranslationFieldPropertiesWithOptions;
@@ -59,18 +60,9 @@ export type TranslationPlanBasics = {
   status: TranslationFieldPropertiesWithOptions;
 };
 
-export type PlanSection =
-  | 'model_plan'
-  | 'plan_basics'
-  | 'plan_general_characteristics'
-  | 'plan_participants_and_providers'
-  | 'plan_beneficiaries'
-  | 'plan_ops_eval_and_learning'
-  | 'plan_payments'
-  | 'operational_need'
-  | 'operational_solution';
+export type PlanSection = 'modelPlan' | 'planBasics';
 
 export type TranslationPlan = {
-  model_plan: TranslationModelPlan;
-  plan_basics: TranslationPlanBasics;
+  modelPlan: TranslationModelPlan;
+  planBasics: TranslationPlanBasics;
 };

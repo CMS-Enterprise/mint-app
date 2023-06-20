@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import basics from './draftModelPlan/basics';
 import beneficiaries from './draftModelPlan/beneficiaries';
 import crtdl from './draftModelPlan/crtdl';
@@ -17,8 +15,8 @@ import subtasks from './draftModelPlan/subtasks';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
-import model_plan from './modelPlan/plan';
-import { plan_basics, plan_basics_misc } from './modelPlan/planBasics';
+import modelPlan from './modelPlan/plan';
+import { planBasics, planBasicsMisc } from './modelPlan/planBasics';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -32,7 +30,7 @@ import general from './general';
 import header from './header';
 import home from './home';
 import landing from './landing';
-import modelPlan from './modelPlan';
+import plan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
 import nda from './nda';
 import privacyPolicy from './privacyPolicy';
@@ -60,7 +58,7 @@ const enUS = {
   home,
   itSolutions,
   landing,
-  modelPlan,
+  plan,
   modelPlanOverview,
   modelPlanTaskList,
   modelSummary,
@@ -69,9 +67,11 @@ const enUS = {
   operationsEvaluationAndLearning,
   participantsAndProviders,
   payments,
-  model_plan,
-  plan_basics,
-  plan_basics_misc,
+  // New Translation
+  modelPlan,
+  planBasics,
+  planBasicsMisc,
+  // End new translation
   prepareForClearance,
   privacyPolicy,
   readOnlyModelPlan,

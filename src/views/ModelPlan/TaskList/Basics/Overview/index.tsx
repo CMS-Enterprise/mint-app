@@ -40,11 +40,11 @@ import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Overview = () => {
-  const { t: planBasicsT } = useTranslation('plan_basics');
-  const { t: planBasicsMiscT } = useTranslation('plan_basics_misc');
+  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
-  const { modelType: modelTypeConfig } = usePlanTranslation('plan_basics');
+  const { modelType: modelTypeConfig } = usePlanTranslation('planBasics');
 
   const { modelID } = useParams<{ modelID: string }>();
 

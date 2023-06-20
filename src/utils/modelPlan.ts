@@ -15,9 +15,9 @@ import {
 export const translateBoolean = (type: boolean) => {
   switch (type) {
     case true:
-      return i18next.t('draftModelPlan:yes');
+      return i18next.t('draftplan:yes');
     case false:
-      return i18next.t('draftModelPlan:no');
+      return i18next.t('draftplan:no');
     default:
       return '';
   }
@@ -26,9 +26,9 @@ export const translateBoolean = (type: boolean) => {
 export const translateBooleanOrNull = (type: boolean | null | undefined) => {
   switch (type) {
     case true:
-      return i18next.t('draftModelPlan:yes');
+      return i18next.t('draftplan:yes');
     case false:
-      return i18next.t('draftModelPlan:no');
+      return i18next.t('draftplan:no');
     case null:
       return null;
     default:
@@ -50,9 +50,9 @@ export const translateNewModel = (type: boolean | null | undefined) => {
 export const translateTriStateAnswer = (type: string) => {
   switch (type) {
     case 'YES':
-      return i18next.t('draftModelPlan:yes');
+      return i18next.t('draftplan:yes');
     case 'NO':
-      return i18next.t('draftModelPlan:no');
+      return i18next.t('draftplan:no');
     case 'TBD':
       return i18next.t('beneficiaries:beneficiariesOptions.na');
     default:
@@ -63,19 +63,19 @@ export const translateTriStateAnswer = (type: string) => {
 export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
-      return i18next.t('modelPlan:teamRoles.evaluation');
+      return i18next.t('plan:teamRoles.evaluation');
     case 'IT_LEAD':
-      return i18next.t('modelPlan:teamRoles.itLead');
+      return i18next.t('plan:teamRoles.itLead');
     case 'LEADERSHIP':
-      return i18next.t('modelPlan:teamRoles.leadership');
+      return i18next.t('plan:teamRoles.leadership');
     case 'LEARNING':
-      return i18next.t('modelPlan:teamRoles.learning');
+      return i18next.t('plan:teamRoles.learning');
     case 'MODEL_LEAD':
-      return i18next.t('modelPlan:teamRoles.modelLead');
+      return i18next.t('plan:teamRoles.modelLead');
     case 'MODEL_TEAM':
-      return i18next.t('modelPlan:teamRoles.modelTeam');
+      return i18next.t('plan:teamRoles.modelTeam');
     case 'QUALITY':
-      return i18next.t('modelPlan:teamRoles.quality');
+      return i18next.t('plan:teamRoles.quality');
     default:
       return '';
   }
@@ -160,31 +160,31 @@ export const translateCmmiGroups = (category: string) => {
 export const translateModelPlanStatus = (status: string) => {
   switch (status) {
     case 'PLAN_DRAFT':
-      return i18next.t('modelPlan:planStatuses.planDraft');
+      return i18next.t('plan:planStatuses.planDraft');
     case 'PLAN_COMPLETE':
-      return i18next.t('modelPlan:planStatuses.planComplete');
+      return i18next.t('plan:planStatuses.planComplete');
     case 'ICIP_COMPLETE':
-      return i18next.t('modelPlan:planStatuses.icipComplete');
+      return i18next.t('plan:planStatuses.icipComplete');
     case 'INTERNAL_CMMI_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.cmmiClearance');
+      return i18next.t('plan:planStatuses.cmmiClearance');
     case 'CMS_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.cmsClearance');
+      return i18next.t('plan:planStatuses.cmsClearance');
     case 'HHS_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.hhsClearance');
+      return i18next.t('plan:planStatuses.hhsClearance');
     case 'OMB_ASRF_CLEARANCE':
-      return i18next.t('modelPlan:planStatuses.ombASRFClearance');
+      return i18next.t('plan:planStatuses.ombASRFClearance');
     case 'CLEARED':
-      return i18next.t('modelPlan:planStatuses.cleared');
+      return i18next.t('plan:planStatuses.cleared');
     case 'ANNOUNCED':
-      return i18next.t('modelPlan:planStatuses.announced');
+      return i18next.t('plan:planStatuses.announced');
     case 'PAUSED':
-      return i18next.t('modelPlan:planStatuses.paused');
+      return i18next.t('plan:planStatuses.paused');
     case 'CANCELED':
-      return i18next.t('modelPlan:planStatuses.canceled');
+      return i18next.t('plan:planStatuses.canceled');
     case 'ACTIVE':
-      return i18next.t('modelPlan:planStatuses.active');
+      return i18next.t('plan:planStatuses.active');
     case 'ENDED':
-      return i18next.t('modelPlan:planStatuses.ended');
+      return i18next.t('plan:planStatuses.ended');
     default:
       return '';
   }

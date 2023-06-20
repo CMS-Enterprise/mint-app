@@ -47,11 +47,11 @@ import { NotFoundPartial } from 'views/NotFound';
 import './index.scss';
 
 const Milestones = () => {
-  const { t: planBasicsT } = useTranslation('plan_basics');
-  const { t: planBasicsMiscT } = useTranslation('plan_basics_misc');
+  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
 
-  const { phasedIn: phasedInConfig } = usePlanTranslation('plan_basics');
+  const { phasedIn: phasedInConfig } = usePlanTranslation('planBasics');
 
   const { modelID } = useParams<{ modelID: string }>();
 
