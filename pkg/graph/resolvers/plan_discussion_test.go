@@ -21,6 +21,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID: plan.ID,
 		Content:     "This is a test comment",
+		UserRole:    models.DiscussionRoleNoneOfTheAbove,
 	}
 
 	result, err := CreatePlanDiscussion(
@@ -49,6 +50,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID: plan.ID,
 		Content:     "This is a test comment",
+		UserRole:    models.DiscussionRoleNoneOfTheAbove,
 	}
 
 	regularUserPrincipal := suite.testConfigs.Principal
