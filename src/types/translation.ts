@@ -23,10 +23,6 @@ export type TranslationFieldPropertiesWithOptions = TranslationFieldProperties &
   options: Record<string, string>;
 };
 
-export type TranslationField =
-  | TranslationFieldProperties
-  | TranslationFieldPropertiesWithOptions;
-
 // Model Plan
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
@@ -59,8 +55,6 @@ export type TranslationPlanBasics = {
   phasedInNote: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions;
 };
-
-export type PlanSection = 'modelPlan' | 'planBasics';
 
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
