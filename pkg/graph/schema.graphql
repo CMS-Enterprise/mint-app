@@ -1586,7 +1586,7 @@ agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
