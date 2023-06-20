@@ -175,6 +175,7 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
+		Abbreviation             func(childComplexity int) int
 		Archived                 func(childComplexity int) int
 		Basics                   func(childComplexity int) int
 		Beneficiaries            func(childComplexity int) int
@@ -306,6 +307,7 @@ type ComplexityRoot struct {
 	}
 
 	PlanBasics struct {
+		AmsModelID                     func(childComplexity int) int
 		Announced                      func(childComplexity int) int
 		ApplicationsEnd                func(childComplexity int) int
 		ApplicationsStart              func(childComplexity int) int
@@ -318,6 +320,7 @@ type ComplexityRoot struct {
 		CreatedBy                      func(childComplexity int) int
 		CreatedByUserAccount           func(childComplexity int) int
 		CreatedDts                     func(childComplexity int) int
+		DemoCode                       func(childComplexity int) int
 		Goal                           func(childComplexity int) int
 		HighLevelNote                  func(childComplexity int) int
 		ID                             func(childComplexity int) int
@@ -1639,6 +1642,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
 
+	case "ModelPlan.abbreviation":
+		if e.complexity.ModelPlan.Abbreviation == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Abbreviation(childComplexity), true
+
 	case "ModelPlan.archived":
 		if e.complexity.ModelPlan.Archived == nil {
 			break
@@ -2630,6 +2640,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.OperationalSolutionSubtask.Status(childComplexity), true
 
+	case "PlanBasics.amsModelID":
+		if e.complexity.PlanBasics.AmsModelID == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.AmsModelID(childComplexity), true
+
 	case "PlanBasics.announced":
 		if e.complexity.PlanBasics.Announced == nil {
 			break
@@ -2713,6 +2730,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBasics.CreatedDts(childComplexity), true
+
+	case "PlanBasics.demoCode":
+		if e.complexity.PlanBasics.DemoCode == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.DemoCode(childComplexity), true
 
 	case "PlanBasics.goal":
 		if e.complexity.PlanBasics.Goal == nil {
@@ -6619,6 +6643,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID!
   modelName: String!
+  abbreviation: String
   archived: Boolean!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -6700,6 +6725,7 @@ https://gqlgen.com/reference/changesets/
 """
 input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
+  abbreviation: String
   someNumbers: [Int!]
   archived: Boolean
   status: ModelStatus
@@ -6836,6 +6862,9 @@ type PlanBasics {
   id: UUID!
   modelPlanID: UUID!
 
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
@@ -6883,6 +6912,9 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]
   cmsOther: String
@@ -8143,7 +8175,7 @@ agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
@@ -13263,6 +13295,8 @@ func (ec *executionContext) fieldContext_ExistingModelLink_currentModelPlan(ctx 
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -13969,6 +14003,47 @@ func (ec *executionContext) fieldContext_ModelPlan_modelName(ctx context.Context
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_abbreviation(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Abbreviation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_abbreviation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_archived(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_archived(ctx, field)
 	if err != nil {
@@ -14355,6 +14430,10 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
+			case "demoCode":
+				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
+			case "amsModelID":
+				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
 			case "modelCategory":
 				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
 			case "cmsCenters":
@@ -16094,6 +16173,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -16227,6 +16308,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -16669,6 +16752,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_id(ctx, field)
 			case "modelPlanID":
 				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
+			case "demoCode":
+				return ec.fieldContext_PlanBasics_demoCode(ctx, field)
+			case "amsModelID":
+				return ec.fieldContext_PlanBasics_amsModelID(ctx, field)
 			case "modelCategory":
 				return ec.fieldContext_PlanBasics_modelCategory(ctx, field)
 			case "cmsCenters":
@@ -19026,14 +19113,14 @@ func (ec *executionContext) _Mutation_addPlanFavorite(ctx context.Context, field
 			return ec.resolvers.Mutation().AddPlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
 			if err != nil {
 				return nil, err
 			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
 		}
 
 		tmp, err := directive1(rctx)
@@ -22975,6 +23062,88 @@ func (ec *executionContext) fieldContext_PlanBasics_modelPlanID(ctx context.Cont
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_demoCode(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_demoCode(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DemoCode, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_demoCode(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_amsModelID(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_amsModelID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AmsModelID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_amsModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -44030,6 +44199,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -44288,6 +44459,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_id(ctx, field)
 			case "modelName":
 				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
 			case "archived":
 				return ec.fieldContext_ModelPlan_archived(ctx, field)
 			case "createdBy":
@@ -51299,6 +51472,10 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "abbreviation":
+
+			out.Values[i] = ec._ModelPlan_abbreviation(ctx, field, obj)
+
 		case "archived":
 
 			out.Values[i] = ec._ModelPlan_archived(ctx, field, obj)
@@ -52559,6 +52736,14 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "demoCode":
+
+			out.Values[i] = ec._PlanBasics_demoCode(ctx, field, obj)
+
+		case "amsModelID":
+
+			out.Values[i] = ec._PlanBasics_amsModelID(ctx, field, obj)
+
 		case "modelCategory":
 
 			out.Values[i] = ec._PlanBasics_modelCategory(ctx, field, obj)
