@@ -4,7 +4,6 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -255,8 +254,6 @@ func (s *Store) GetMostRecentDiscussionRoleSelection(logger *zap.Logger, userID 
 		logger.Error("failed to prepare SQL statement", zap.Error(err))
 		return models.DiscussionRoleNoneOfTheAbove, err
 	}
-
-	spew.Dump(userID)
 
 	var role models.DiscussionUserRole
 	err = statement.Get(&role, map[string]interface{}{"user_id": userID})
