@@ -281,7 +281,8 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware() transport.
 		jwt, err := f.jwt(logger, token)
 		if err != nil {
 			// Should be safe to log, since we're logging a token that's invalid
-			logger.Warn("could not parse jwt from token", zap.Error(err), zap.String("token", token))
+			logger.Info("could not parse jwt from token", zap.Error(err))
+			return nil, err
 		}
 		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
