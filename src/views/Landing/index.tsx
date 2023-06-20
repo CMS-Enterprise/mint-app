@@ -1,9 +1,11 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
+  IconArrowForward,
   IconMail,
+  IconMailOutline,
   Link,
   Tag
 } from '@trussworks/react-uswds';
@@ -57,13 +59,22 @@ export const LandingHeader = () => {
           {t('description')}
         </p>
 
-        <UswdsReactLink
-          className="usa-button bg-mint-cool-vivid text-white width-auto"
-          variant="unstyled"
-          to="/signin"
-        >
-          {t('signIn')}
-        </UswdsReactLink>
+        <span>
+          <UswdsReactLink
+            className="usa-button bg-mint-cool-vivid text-white width-auto"
+            variant="unstyled"
+            to="/signin"
+          >
+            {t('signIn')}
+          </UswdsReactLink>
+
+          <UswdsReactLink
+            to="/"
+            className="landing__access-link margin-left-105"
+          >
+            {t('getAccess')}
+          </UswdsReactLink>
+        </span>
 
         <NDABanner
           className="bg-primary-darker text-white padding-x-0 border-top border-primary-dark margin-top-6 text-primary-lighter"
@@ -177,11 +188,20 @@ export const LandingFooter = () => {
         <div className="landing__footer padding-top-4 padding-bottom-2">
           <span className="text-bold margin-right-1">{t('access')}</span>
           <span>
-            <Trans i18nKey="landing:email">
-              indexOne
-              <Link href="mailto:MINTTeam@cms.hhs.gov">helpTextEmail</Link>
-              indexTwo
-            </Trans>
+            <UswdsReactLink to="/">
+              {t('learnHowtoGetAccess')}{' '}
+              <IconArrowForward className="margin-left-1 text-tbottom" />
+            </UswdsReactLink>
+          </span>
+        </div>
+
+        <div className="padding-top-1 padding-bottom-2">
+          <span className="text-bold margin-right-1">{t('questions')}</span>
+          <span>
+            <Link href="mailto:MINTTeam@cms.hhs.gov">
+              {t('email')}
+              <IconMailOutline className="margin-left-1 text-tbottom" />
+            </Link>
           </span>
         </div>
       </GridContainer>

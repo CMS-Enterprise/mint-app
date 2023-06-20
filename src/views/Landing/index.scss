@@ -22,6 +22,13 @@ $card-radius: 6px;
         background-position: bottom 10px right 0px;
     }
 
+    &__access-link {
+        text-underline-offset: 0.15rem;
+        &:visited {
+            color: white !important;
+        }
+    }
+
     &__description {
         font-size: 40px;
     }
