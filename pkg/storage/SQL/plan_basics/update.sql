@@ -1,6 +1,8 @@
 UPDATE plan_basics
 SET
     model_plan_id = :model_plan_id,
+    demo_code = :demo_code,
+    ams_model_id = :ams_model_id,
     model_category = :model_category,
     cms_centers = :cms_centers,
     cms_other = :cms_other,
@@ -33,6 +35,8 @@ WHERE plan_basics.id = :id
 RETURNING
 id,
 model_plan_id,
+demo_code,
+ams_model_id,
 model_category,
 cms_centers,
 cms_other,

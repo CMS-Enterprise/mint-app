@@ -9,6 +9,7 @@ WITH QUERIED_IDS AS (
 SELECT
     plan.id,
     plan.model_name,
+    plan.abbreviation,
     plan.archived,
     plan.status,
     plan.created_by,

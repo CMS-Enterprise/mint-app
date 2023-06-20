@@ -309,13 +309,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 {h('back')}
               </UswdsReactLink>
 
-              {!isMAC(groups) && (
-                <FavoriteIcon
-                  isFavorite={isFavorite}
-                  modelPlanID={id}
-                  updateFavorite={handleUpdateFavorite}
-                />
-              )}
+              <FavoriteIcon
+                isFavorite={isFavorite}
+                modelPlanID={id}
+                updateFavorite={handleUpdateFavorite}
+              />
             </div>
           )}
 
