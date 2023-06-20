@@ -69,7 +69,7 @@ export const LandingHeader = () => {
           </UswdsReactLink>
 
           <UswdsReactLink
-            to="/"
+            to="/get-access"
             className="landing__access-link margin-left-105"
           >
             {t('getAccess')}
@@ -188,7 +188,7 @@ export const LandingFooter = () => {
         <div className="landing__footer padding-top-4 padding-bottom-2">
           <span className="text-bold margin-right-1">{t('access')}</span>
           <span>
-            <UswdsReactLink to="/">
+            <UswdsReactLink to="/get-access">
               {t('learnHowtoGetAccess')}{' '}
               <IconArrowForward className="margin-left-1 text-tbottom" />
             </UswdsReactLink>

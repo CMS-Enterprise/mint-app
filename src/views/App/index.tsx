@@ -20,6 +20,7 @@ import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
+import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
@@ -195,6 +196,8 @@ const AppRoutes = () => {
         path="/terms-and-conditions"
         component={TermsAndConditions}
       />
+
+      <Route exact path="/get-access" component={GetAccess} />
 
       {/* Misc Routes */}
       {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}

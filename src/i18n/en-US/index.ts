@@ -12,6 +12,7 @@ import participantsAndProviders from './draftModelPlan/participantsAndProviders'
 import payments from './draftModelPlan/payments';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
 import subtasks from './draftModelPlan/subtasks';
+import getAccess from './helpAndKnowledge/Articles/getAccess';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
@@ -51,6 +52,7 @@ const enUS = {
   general,
   generalCharacteristics,
   generalReadOnly,
+  getAccess,
   header,
   helpAndKnowledge,
   home,
