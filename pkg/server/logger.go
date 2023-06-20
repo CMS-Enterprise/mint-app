@@ -23,7 +23,7 @@ func loggerMiddleware(logger *zap.Logger, environment appconfig.Environment, nex
 
 		// Add app-name and app-env to ALL logs for easier filtering
 		logger = logger.With(
-			zap.String("app-name", "easi"),
+			zap.String("app-name", "mint"),
 			zap.String("app-env", environment.String()),
 		)
 		ctx = appcontext.WithLogger(ctx, logger)
