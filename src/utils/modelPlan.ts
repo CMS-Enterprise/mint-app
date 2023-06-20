@@ -15,9 +15,9 @@ import {
 export const translateBoolean = (type: boolean) => {
   switch (type) {
     case true:
-      return i18next.t('draftplan:yes');
+      return i18next.t('draftModelPlan:yes');
     case false:
-      return i18next.t('draftplan:no');
+      return i18next.t('draftModelPlan:no');
     default:
       return '';
   }
@@ -26,9 +26,9 @@ export const translateBoolean = (type: boolean) => {
 export const translateBooleanOrNull = (type: boolean | null | undefined) => {
   switch (type) {
     case true:
-      return i18next.t('draftplan:yes');
+      return i18next.t('draftModelPlan:yes');
     case false:
-      return i18next.t('draftplan:no');
+      return i18next.t('draftModelPlan:no');
     case null:
       return null;
     default:
@@ -50,9 +50,9 @@ export const translateNewModel = (type: boolean | null | undefined) => {
 export const translateTriStateAnswer = (type: string) => {
   switch (type) {
     case 'YES':
-      return i18next.t('draftplan:yes');
+      return i18next.t('draftModelPlan:yes');
     case 'NO':
-      return i18next.t('draftplan:no');
+      return i18next.t('draftModelPlan:no');
     case 'TBD':
       return i18next.t('beneficiaries:beneficiariesOptions.na');
     default:

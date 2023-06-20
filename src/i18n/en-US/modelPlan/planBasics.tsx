@@ -13,9 +13,9 @@ export const planBasics: TranslationPlanBasics = {
       DEMONSTRATION: 'Demonstration',
       EPISODE_BASED_PAYMENT_INITIATIVES: 'Episode-based Payment Initiatives',
       INIT_ACCEL_DEV_AND_TEST:
-        'Initiatives Focused on the Medicaid and CHIP Population',
-      INIT_MEDICAID_CHIP_POP:
         'Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models',
+      INIT_MEDICAID_CHIP_POP:
+        'Initiatives Focused on the Medicaid and CHIP Population',
       INIT_SPEED_ADOPT_BEST_PRACTICE:
         'Initiatives to Speed the Adoption of Best Practices',
       INIT__MEDICARE_MEDICAID_ENROLLEES:
@@ -28,7 +28,7 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'cmsCenters',
     goField: 'CMMIGroups',
     dbField: 'cmmi_groups',
-    question: 'CMMI Group',
+    question: 'CMS component',
     dataType: 'enum',
     formType: 'checkbox',
     options: {
@@ -45,7 +45,7 @@ export const planBasics: TranslationPlanBasics = {
     gqlField: 'cmmiGroups',
     goField: 'CMSCenters',
     dbField: 'cms_centers',
-    question: 'CMS Component',
+    question: 'CMMI Group',
     hint:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: 'enum',

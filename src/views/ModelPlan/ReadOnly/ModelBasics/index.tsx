@@ -25,7 +25,6 @@ export type ReadOnlyProps = {
 };
 
 const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
-  const { t: modelPlanT } = useTranslation('modelPlan');
   const { t: planBasicsT } = useTranslation('planBasics');
   const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
   const { t: generalT } = useTranslation('draftModelPlan');
@@ -44,6 +43,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   }
 
   const { nameHistory } = data?.modelPlan || {};
+
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
   );
@@ -77,6 +77,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
     if (value) {
       return formatDateUtc(value, 'MM/dd/yyyy');
     }
+
     return <em className="text-base">{planBasicsMiscT('na')}</em>;
   };
 
@@ -104,14 +105,14 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
       )}
 
       <ReadOnlySection
-        heading={modelPlanT('previousName.question')}
+        heading={planBasicsMiscT('previousNames')}
         list
         listItems={filteredNameHistory}
       />
 
       <ReadOnlySection
         heading={planBasicsT('modelCategory.question')}
-        copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')}
+        copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
       />
 
       <div className="desktop:display-flex flex-justify">
