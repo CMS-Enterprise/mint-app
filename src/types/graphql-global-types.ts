@@ -604,6 +604,7 @@ export interface DiscussionReplyCreateInput {
  */
 export interface ModelPlanChanges {
   modelName?: string | null;
+  abbreviation?: string | null;
   someNumbers?: number[] | null;
   archived?: boolean | null;
   status?: ModelStatus | null;
@@ -626,6 +627,8 @@ export interface OperationalSolutionChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanBasicsChanges {
+  demoCode?: string | null;
+  amsModelID?: string | null;
   modelCategory?: ModelCategory | null;
   cmsCenters?: CMSCenter[] | null;
   cmsOther?: string | null;

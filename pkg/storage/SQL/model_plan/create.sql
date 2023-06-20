@@ -1,7 +1,7 @@
 INSERT INTO model_plan (
     id,
     model_name,
-    model_abbreviation,
+    abbreviation,
     status,
     created_by,
     modified_by
@@ -9,7 +9,7 @@ INSERT INTO model_plan (
 VALUES (
     :id,
     :model_name,
-    :model_abbreviation,
+    :abbreviation,
     :status,
     :created_by,
     :modified_by
@@ -17,7 +17,7 @@ VALUES (
 RETURNING
 id,
 model_name,
-model_abbreviation,
+abbreviation,
 status,
 archived,
 created_by,

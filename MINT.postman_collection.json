@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9feba892-a5c4-4e3f-8b67-85ac56c12082",
+		"_postman_id": "d68b29a0-4aa9-48e1-87ca-9439dd83676e",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -31,7 +31,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"modelName\": \"Test\"\n}"
 							}
 						},
@@ -52,7 +52,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
@@ -73,7 +73,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
@@ -94,7 +94,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -115,7 +115,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
@@ -183,8 +183,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        modelCategory\n        cmsCenters\n        cmsOther\n        cmmiGroups\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
-								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmsOther\": \"\",\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        demoCode\n        amsModelID\n        modelCategory\n        cmsCenters\n        cmsOther\n        cmmiGroups\n        modelType\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
+								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"demoCode\": \"\",\n    \"amsModelID\": \"\",\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmsOther\": \"\",\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -461,45 +461,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        userRole\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
-								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\",\n    \"userRole\": \"NONE_OF_THE_ABOVE\"\n  }\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Most Recent Discussion Role Selection",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let responseData = pm.response.json().data.createPlanDiscussion",
-									"",
-									"discussionID = responseData.id",
-									"",
-									"",
-									"pm.collectionVariables.set(\"discussionID\", discussionID);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query {\n    mostRecentDiscussionRoleSelection\n}\n",
-								"variables": "{\n    \n}"
+								"query": "mutation createPlanDiscussion ($input: PlanDiscussionCreateInput!) {\n    createPlanDiscussion (input: $input) {\n        id\n        modelPlanID\n        content\n        status\n        isAssessment\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }             \n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"{{modelPlanID}}\",\n    \"content\": \"This is a question\"\n  }\n}"
 							}
 						},
 						"url": {

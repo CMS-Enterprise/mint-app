@@ -3,7 +3,8 @@ import {
   ASSESSMENT_NONPROD,
   BASIC,
   BASIC_NONPROD,
-  MAC
+  MAC,
+  MINT_CONTRACTOR
 } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
@@ -27,7 +28,7 @@ export const isBasicUser = (groups: Array<String> = []) => {
 };
 
 export const isMAC = (groups: Array<String> = []) => {
-  if (groups.includes(MAC)) {
+  if (groups.includes(MAC) || groups.includes(MINT_CONTRACTOR)) {
     return true;
   }
 

@@ -160,7 +160,8 @@ func (s *Seeder) SeedData() {
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
-		"archived": true,
+		"archived":     true,
+		"abbreviation": "arch",
 	})
 
 	// Seed a plan with some documents
@@ -189,6 +190,8 @@ func (s *Seeder) SeedData() {
 			TeamRole:    models.TeamRoleLeadership,
 		})
 	s.updatePlanBasics(sampleModelPlan, map[string]interface{}{
+		"amsModelID":      "123",
+		"demoCode":        "1",
 		"modelType":       models.MTVoluntary,
 		"goal":            "Some goal",
 		"cmsCenters":      []string{"CMMI", "OTHER"},
