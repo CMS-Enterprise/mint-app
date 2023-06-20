@@ -121,42 +121,6 @@ export const translateModelCategory = (category: string) => {
   }
 };
 
-export const translateCmsCenter = (category: string) => {
-  switch (category) {
-    case 'CMMI':
-      return i18next.t('basics:cmsComponents.cmmi');
-    case 'CENTER_FOR_MEDICARE':
-      return i18next.t('basics:cmsComponents.cm');
-    case 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE':
-      return i18next.t('basics:cmsComponents.federalCoordinateHealthCare');
-    case 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY':
-      return i18next.t('basics:cmsComponents.ccsq');
-    case 'CENTER_FOR_PROGRAM_INTEGRITY':
-      return i18next.t('basics:cmsComponents.cpi');
-    case 'OTHER':
-      return i18next.t('basics:cmsComponents.other');
-    default:
-      return '';
-  }
-};
-
-export const translateCmmiGroups = (category: string) => {
-  switch (category) {
-    case 'PATIENT_CARE_MODELS_GROUP':
-      return i18next.t('basics:cmmiGroups.pcmg');
-    case 'POLICY_AND_PROGRAMS_GROUP':
-      return i18next.t('basics:cmmiGroups.ppg');
-    case 'SEAMLESS_CARE_MODELS_GROUP':
-      return i18next.t('basics:cmmiGroups.scmg');
-    case 'STATE_AND_POPULATION_HEALTH_GROUP':
-      return i18next.t('basics:cmmiGroups.sphg');
-    case 'TBD':
-      return i18next.t('basics:cmmiGroups.tbd');
-    default:
-      return '';
-  }
-};
-
 export const translateModelPlanStatus = (status: string) => {
   switch (status) {
     case 'PLAN_DRAFT':
@@ -427,17 +391,6 @@ export const translateSelectionMethodType = (type: string) => {
       return i18next.t('beneficiaries:selectionMethod.other');
     case 'NA':
       return i18next.t('beneficiaries:selectionMethod.na');
-    default:
-      return '';
-  }
-};
-
-export const translateModelType = (type: string) => {
-  switch (type) {
-    case 'VOLUNTARY':
-      return i18next.t('basics:voluntary');
-    case 'MANDATORY':
-      return i18next.t('basics:mandatory');
     default:
       return '';
   }
