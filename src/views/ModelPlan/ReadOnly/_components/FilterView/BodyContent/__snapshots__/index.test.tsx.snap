@@ -1,0 +1,360 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class=""
+    data-testid="grid"
+  >
+    <div
+      class="filtered-view-section filtered-view-section--model-team margin-bottom-6 border-bottom border-base-light padding-bottom-4"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Model Team
+      </h2>
+      <div
+        class="read-only-model-plan--team-info"
+        data-testid="read-only-model-plan--team-info"
+      >
+        <div
+          class="margin-bottom-3"
+        >
+          <h3
+            class="margin-top-0 margin-bottom-2"
+          >
+            Model lead(s)
+          </h3>
+          <div
+            class="grid-row grid-gap"
+            data-testid="grid"
+            style="row-gap: 2rem;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="filtered-view-section filtered-view-section--model-basics margin-bottom-6 border-bottom border-base-light padding-bottom-4"
+    >
+      <div
+        class="read-only-model-plan--model-basics"
+        data-testid="read-only-model-plan--model-basics"
+      >
+        <div
+          class="display-flex flex-justify flex-align-start"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-4"
+          >
+            Model basics
+          </h2>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--previous-model-names margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Previous model names
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            >
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="filtered-view-section filtered-view-section--general-characteristics margin-bottom-6 border-bottom border-base-light padding-bottom-4"
+    >
+      <div
+        class="read-only-model-plan--general-characteristics"
+        data-testid="read-only-model-plan--general-characteristics"
+      >
+        <div
+          class="display-flex flex-justify flex-align-start"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-4"
+          >
+            General characteristics
+          </h2>
+        </div>
+        <div
+          class=""
+        />
+        <div
+          class=""
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-type-of-alternative-payment-model--apm--do-you-think-the-model-could-be margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What type of Alternative Payment Model (APM) do you think the model could be?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class=""
+        />
+        <div
+          class=""
+        />
+        <div />
+      </div>
+    </div>
+    <div
+      class="filtered-view-section filtered-view-section--participants-and-providers margin-bottom-6 border-bottom border-base-light padding-bottom-4"
+    >
+      <div
+        class="read-only-model-plan--participants-and-providers"
+        data-testid="read-only-model-plan--participants-and-providers"
+      >
+        <div
+          class="display-flex flex-justify flex-align-start"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-4"
+          >
+            Participants and Providers
+          </h2>
+        </div>
+        <div
+          class=""
+        />
+        <div
+          class=""
+        />
+        <div
+          class=""
+        />
+        <div
+          class=""
+        />
+        <div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How frequently are providers added?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How will you decide to add providers?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Can providers leave the model?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="filtered-view-section filtered-view-section--beneficiaries margin-bottom-6 border-bottom border-base-light padding-bottom-4"
+    >
+      <div
+        class="read-only-model-plan--beneficiaries"
+        data-testid="read-only-model-plan--beneficiaries"
+      >
+        <div
+          class="display-flex flex-justify flex-align-start"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-4"
+          >
+            Beneficiaries
+          </h2>
+        </div>
+        <div
+          class=""
+        />
+        <div
+          class=""
+        />
+        <div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--are-there-precedence-rules-between-this-model-and-other-model-s margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Are there precedence rules between this model and other model(s)?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="filtered-view-section filtered-view-section--payments margin-bottom-6 padding-bottom-0"
+    >
+      <div
+        class="read-only-model-plan--payments"
+        data-testid="read-only-model-plan--payments"
+      >
+        <div
+          class="display-flex flex-justify flex-align-start"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-4"
+          >
+            Payment
+          </h2>
+        </div>
+        <div
+          class=""
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What will be the funding source for payments?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class=""
+        />
+        <div />
+      </div>
+    </div>
+    <div
+      class="usa-alert usa-alert--info usa-alert--no-icon"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span
+            class="margin-y-0 font-body-sm text-bold display-block"
+          >
+            Is this view missing information that your group cares about?
+          </span>
+          Contact the MINT Team at 
+          <a
+            class="usa-link"
+            href="mailto:MINTTeam@cms.hhs.gov"
+          >
+            MINTTeam@cms.hhs.gov
+          </a>
+          , so we can learn more about your group.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
