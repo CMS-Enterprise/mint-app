@@ -72,6 +72,7 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID: mp.ID,
 		Content:     content,
+		UserRole:    models.DiscussionRoleNoneOfTheAbove,
 	}
 	pd, err := resolvers.CreatePlanDiscussion(
 		suite.testConfigs.Context,
