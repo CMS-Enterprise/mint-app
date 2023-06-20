@@ -116,8 +116,8 @@ const ReadOnlyPayments = ({
 
   return (
     <div
-      className="read-only-model-plan--participants-and-providers"
-      data-testid="read-only-model-plan--participants-and-providers"
+      className="read-only-model-plan--payments"
+      data-testid="read-only-model-plan--payments"
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">

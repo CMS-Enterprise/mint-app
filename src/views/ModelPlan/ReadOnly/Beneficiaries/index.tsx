@@ -74,8 +74,8 @@ const ReadOnlyBeneficiaries = ({
 
   return (
     <div
-      className="read-only-model-plan--participants-and-providers"
-      data-testid="read-only-model-plan--participants-and-providers"
+      className="read-only-model-plan--beneficiaries"
+      data-testid="read-only-model-plan--beneficiaries"
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">
