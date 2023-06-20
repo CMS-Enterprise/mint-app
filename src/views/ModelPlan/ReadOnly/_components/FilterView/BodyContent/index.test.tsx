@@ -130,7 +130,7 @@ describe('Read Only Filtered View Body Content', () => {
       expect(screen.getByTestId('alert')).toBeInTheDocument();
 
       expect(
-        screen.getByTestId('read-only-model-plan--general-characteristics')
+        screen.getByTestId('read-only-model-plan--payments')
       ).toBeInTheDocument();
     });
     expect(asFragment()).toMatchSnapshot();
