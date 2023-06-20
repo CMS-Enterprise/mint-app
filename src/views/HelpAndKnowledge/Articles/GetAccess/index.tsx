@@ -11,6 +11,7 @@ import {
 } from '@trussworks/react-uswds';
 
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
@@ -107,14 +108,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             <ProcessListHeading type="h3">
               {t('steps.fourth.heading')}
             </ProcessListHeading>
-            <p>{t('steps.fourth.description')}</p>
-          </ProcessListItem>
-
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.fifth.heading')}
-            </ProcessListHeading>
-            <p>{t('steps.fifth.description')}</p>
+            <Trans i18nKey="getAccess:steps:fourth.description">
+              <UswdsReactLink to="/">indexZero</UswdsReactLink>
+              &nbsp;indexOne
+            </Trans>
           </ProcessListItem>
         </ProcessList>
       </Grid>
