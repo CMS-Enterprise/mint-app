@@ -65,7 +65,9 @@
 // Print styles (used for PDF generation)
 @forward './stylesheets/print.scss';
 
-html,
+html {
+  scroll-behavior:smooth
+}
 body,
 #root {
   height: 100%;

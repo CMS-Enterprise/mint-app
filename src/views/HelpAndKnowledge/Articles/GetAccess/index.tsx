@@ -8,6 +8,7 @@ import {
   ProcessListItem,
   SummaryBox
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -15,6 +16,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useNavHash from 'hooks/useNavHash';
 
 type GetAccessContentProps = {
   help?: boolean;
@@ -24,6 +26,8 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { t } = useTranslation('getAccess');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+  const { currentHash, setCurrenHash, isScrolling } = useNavHash();
 
   return (
     <div className="usa-in-page-nav-container">
@@ -38,77 +42,74 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
         >
           <nav aria-label="On this page" className="usa-in-page-nav__nav">
             <h4 className="usa-in-page-nav__heading">On this page</h4>
+
             <ul className="usa-in-page-nav__list">
               <li className="usa-in-page-nav__item">
                 <a
-                  href="#how-to-get-access"
-                  className="usa-in-page-nav__link usa-current"
-                >
-                  {t('overviewHeading')}
-                </a>
-              </li>
-              <li className="usa-in-page-nav__item">
-                <a
                   href="#should-i-request-access"
-                  className="usa-in-page-nav__link"
+                  onClick={() => {
+                    setCurrenHash('#should-i-request-access');
+                    isScrolling.current = true;
+                  }}
+                  className={classNames('usa-in-page-nav__link', {
+                    'usa-current': currentHash === '#should-i-request-access'
+                  })}
                 >
                   {t('summaryBox.copy')}
                 </a>
               </li>
+
               <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
                 <a
-                  href="#nullam-sit-amet-enim"
-                  className="usa-in-page-nav__link"
+                  href="#access-through-eua"
+                  onClick={() => {
+                    setCurrenHash('#access-through-eua');
+                    isScrolling.current = true;
+                  }}
+                  className={classNames('usa-in-page-nav__link', {
+                    'usa-current': currentHash === '#access-through-eua'
+                  })}
                 >
-                  Nullam sit amet enim
+                  {t('steps.heading')}
                 </a>
               </li>
+
               <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
                 <a
-                  href="#vivamus-pharetra-posuere-sapien"
-                  className="usa-in-page-nav__link"
+                  href="#access-through-idm"
+                  onClick={() => {
+                    setCurrenHash('#access-through-idm');
+                    isScrolling.current = true;
+                  }}
+                  className={classNames('usa-in-page-nav__link', {
+                    'usa-current': currentHash === '#access-through-idm'
+                  })}
                 >
-                  Vivamus pharetra posuere sapien
+                  {t('accessThroughIDM')}
                 </a>
               </li>
+
               <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
                 <a
-                  href="#suspendisse-id-velit"
-                  className="usa-in-page-nav__link"
+                  href="#questions-or-issues"
+                  onClick={() => {
+                    setCurrenHash('#questions-or-issues');
+                    isScrolling.current = true;
+                  }}
+                  className={classNames('usa-in-page-nav__link', {
+                    'usa-current': currentHash === '#questions-or-issues'
+                  })}
                 >
-                  Suspendisse id velit
-                </a>
-              </li>
-              <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
-                <a
-                  href="#orci-magna-rhoncus-neque"
-                  className="usa-in-page-nav__link"
-                >
-                  Orci magna rhoncus neque
-                </a>
-              </li>
-              <li className="usa-in-page-nav__item">
-                <a
-                  href="#aliquam-erat-volutpat-velit-vitae-ligula-volutpat"
-                  className="usa-in-page-nav__link"
-                >
-                  Aliquam erat volutpat: velit vitae ligula volutpat
-                </a>
-              </li>
-              <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
-                <a href="#vitae-ligula" className="usa-in-page-nav__link">
-                  Vitae ligula
+                  {t('questionsHeading')}
                 </a>
               </li>
             </ul>
           </nav>
         </aside>
       )}
+
       <main>
-        <PageHeading
-          className="margin-bottom-2 margin-top-4 usa-anchor"
-          id="how-to-get-access"
-        >
+        <PageHeading className="margin-bottom-2 margin-top-4">
           {t('overviewHeading')}
         </PageHeading>
 
@@ -116,231 +117,250 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           {t('description')}
         </p>
 
-        <SummaryBox
-          heading={t('summaryBox.copy')}
-          className="padding-3 usa-anchor"
-          id="should-i-request-access"
-        >
-          <ul className="padding-left-3 margin-bottom-0 margin-top-2 margin-left-1">
-            <li>{t('summaryBox.listItem.employees')}</li>
+        <div className="nav-anchor" id="should-i-request-access">
+          <SummaryBox heading={t('summaryBox.copy')} className="padding-3">
+            <ul className="padding-left-3 margin-bottom-0 margin-top-2 margin-left-1">
+              <li>{t('summaryBox.listItem.employees')}</li>
 
-            <li>{t('summaryBox.listItem.contractors')}</li>
-          </ul>
-        </SummaryBox>
+              <li>{t('summaryBox.listItem.contractors')}</li>
+            </ul>
+          </SummaryBox>
+        </div>
 
-        <PageHeading className="margin-top-4 margin-bottom-1" headingLevel="h2">
-          {t('steps.heading')}
-        </PageHeading>
+        <div className="nav-anchor" id="access-through-eua">
+          <PageHeading
+            className="margin-top-4 margin-bottom-1"
+            headingLevel="h2"
+          >
+            {t('steps.heading')}
+          </PageHeading>
 
-        <ProcessList>
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.first.heading')}
-            </ProcessListHeading>
+          <ProcessList>
+            <ProcessListItem className="maxw-none">
+              <ProcessListHeading type="h3">
+                {t('steps.first.heading')}
+              </ProcessListHeading>
+
+              <p>
+                {t('steps.first.description.one')}
+                <Link href="eua.cms.gov">
+                  eua.cms.gov
+                  <IconLaunch className="margin-left-05 text-tbottom" />
+                </Link>
+
+                {t('steps.first.description.two')}
+              </p>
+            </ProcessListItem>
+
+            <ProcessListItem className="maxw-none">
+              <ProcessListHeading type="h3">
+                {t('steps.second.heading')}
+              </ProcessListHeading>
+
+              <ul className="margin-top-1">
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.one">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.two">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.three">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.four">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.five">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.six">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+              </ul>
+            </ProcessListItem>
+
+            <ProcessListItem className="maxw-none padding-bottom-3">
+              <ProcessListHeading type="h3">
+                {t('steps.third.heading')}
+              </ProcessListHeading>
+
+              <p>{t('steps.third.description')}</p>
+            </ProcessListItem>
+
+            <ProcessListItem className="maxw-none">
+              <ProcessListHeading type="h3">
+                {t('steps.fourth.heading')}
+              </ProcessListHeading>
+
+              <Trans i18nKey="getAccess:steps:fourth.description">
+                <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
+                &nbsp;indexOne
+              </Trans>
+            </ProcessListItem>
+          </ProcessList>
+        </div>
+
+        <div className="nav-anchor" id="access-through-idm">
+          <h2>{t('accessThroughIDM')}</h2>
+
+          <Alert type="info" noIcon className="margin-bottom-2">
+            {t('accessInfo1')}
 
             <p>
-              {t('steps.first.description.one')}
+              {t('accessInfo2')}
+
               <Link href="eua.cms.gov">
-                eua.cms.gov
+                home.idm.cms.gov
                 <IconLaunch className="margin-left-05 text-tbottom" />
               </Link>
 
-              {t('steps.first.description.two')}
+              <Trans i18nKey="getAccess:accessInfo3">
+                <span className="text-bold text-italic">indexZero</span>
+                &nbsp;indexOne
+              </Trans>
             </p>
-          </ProcessListItem>
+          </Alert>
 
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.second.heading')}
-            </ProcessListHeading>
+          <ProcessList>
+            <ProcessListItem className="maxw-none">
+              <ProcessListHeading type="h3">
+                {t('steps.first.heading')}
+              </ProcessListHeading>
 
-            <ul className="margin-top-1">
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.one">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
+              <p>
+                {t('steps.first.description.one')}
+                <Link href="eua.cms.gov">
+                  eua.cms.gov
+                  <IconLaunch className="margin-left-05 text-tbottom" />
+                </Link>
 
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.two">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
+                {t('steps.first.description.two')}
+              </p>
+            </ProcessListItem>
 
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.three">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
+            <ProcessListItem className="maxw-none">
+              <ProcessListHeading type="h3">
+                {t('steps.second.heading')}
+              </ProcessListHeading>
 
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.four">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
+              <ul className="margin-top-1">
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.one">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
 
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.five">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.two">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
 
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.six">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-            </ul>
-          </ProcessListItem>
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.three">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
 
-          <ProcessListItem className="maxw-none padding-bottom-3">
-            <ProcessListHeading type="h3">
-              {t('steps.third.heading')}
-            </ProcessListHeading>
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.four">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
 
-            <p>{t('steps.third.description')}</p>
-          </ProcessListItem>
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.five">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
 
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.fourth.heading')}
-            </ProcessListHeading>
+                <li>
+                  <Trans i18nKey="getAccess:steps:second.description.six">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+              </ul>
+            </ProcessListItem>
 
-            <Trans i18nKey="getAccess:steps:fourth.description">
-              <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
-              &nbsp;indexOne
-            </Trans>
-          </ProcessListItem>
-        </ProcessList>
+            <ProcessListItem className="maxw-none padding-bottom-3">
+              <ProcessListHeading type="h3">
+                {t('steps.third.heading')}
+              </ProcessListHeading>
 
-        <h2>{t('accessThroughIDM')}</h2>
+              <p>{t('steps.third.description')}</p>
+            </ProcessListItem>
 
-        <Alert type="info" noIcon className="margin-bottom-2">
-          {t('accessInfo1')}
+            <ProcessListItem className="maxw-none padding-bottom-3">
+              <ProcessListHeading type="h3">
+                {t('steps.third.heading')}
+              </ProcessListHeading>
 
-          <p>
-            {t('accessInfo2')}
+              <p>{t('steps.third.description')}</p>
+            </ProcessListItem>
 
-            <Link href="eua.cms.gov">
-              home.idm.cms.gov
-              <IconLaunch className="margin-left-05 text-tbottom" />
-            </Link>
+            <ProcessListItem className="maxw-none padding-bottom-3">
+              <ProcessListHeading type="h3">
+                {t('steps.third.heading')}
+              </ProcessListHeading>
 
-            <Trans i18nKey="getAccess:accessInfo3">
-              <span className="text-bold text-italic">indexZero</span>
-              &nbsp;indexOne
-            </Trans>
-          </p>
-        </Alert>
+              <p>{t('steps.third.description')}</p>
+            </ProcessListItem>
 
-        <ProcessList>
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.first.heading')}
-            </ProcessListHeading>
+            <ProcessListItem className="maxw-none">
+              <ProcessListHeading type="h3">
+                {t('steps.fourth.heading')}
+              </ProcessListHeading>
 
+              <Trans i18nKey="getAccess:steps:fourth.description">
+                <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
+                &nbsp;indexOne
+              </Trans>
+            </ProcessListItem>
+          </ProcessList>
+        </div>
+
+        <div className="nav-anchor" id="questions-or-issues">
+          <Alert
+            type="info"
+            className="margin-bottom-2"
+            heading={t('questionsHeading')}
+          >
             <p>
-              {t('steps.first.description.one')}
-              <Link href="eua.cms.gov">
-                eua.cms.gov
-                <IconLaunch className="margin-left-05 text-tbottom" />
-              </Link>
-
-              {t('steps.first.description.two')}
+              <Trans i18nKey="getAccess:questions">
+                <Link href="mailto:MINTTeam@cms.hhs.gov">indexZero</Link>
+              </Trans>
             </p>
-          </ProcessListItem>
-
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.second.heading')}
-            </ProcessListHeading>
-
-            <ul className="margin-top-1">
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.one">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.two">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.three">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.four">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.five">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-
-              <li>
-                <Trans i18nKey="getAccess:steps:second.description.six">
-                  <span className="text-bold text-italic">indexZero</span>
-                  &nbsp;indexOne
-                </Trans>
-              </li>
-            </ul>
-          </ProcessListItem>
-
-          <ProcessListItem className="maxw-none padding-bottom-3">
-            <ProcessListHeading type="h3">
-              {t('steps.third.heading')}
-            </ProcessListHeading>
-
-            <p>{t('steps.third.description')}</p>
-          </ProcessListItem>
-
-          <ProcessListItem className="maxw-none">
-            <ProcessListHeading type="h3">
-              {t('steps.fourth.heading')}
-            </ProcessListHeading>
-
-            <Trans i18nKey="getAccess:steps:fourth.description">
-              <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
-              &nbsp;indexOne
-            </Trans>
-          </ProcessListItem>
-
-          <ProcessListItem className="maxw-none padding-bottom-3">
-            <ProcessListHeading type="h3">
-              {t('steps.third.heading')}
-            </ProcessListHeading>
-
-            <p>{t('steps.third.description')}</p>
-          </ProcessListItem>
-
-          <ProcessListItem className="maxw-none padding-bottom-3">
-            <ProcessListHeading type="h3">
-              {t('steps.third.heading')}
-            </ProcessListHeading>
-
-            <p>{t('steps.third.description')}</p>
-          </ProcessListItem>
-        </ProcessList>
+          </Alert>
+        </div>
       </main>
     </div>
   );
