@@ -11,6 +11,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import i18next from 'i18next';
 
 import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -23,6 +24,30 @@ import useHashScroll from 'hooks/useHashScroll';
 type GetAccessContentProps = {
   help?: boolean;
 };
+
+type AnchorLink = {
+  anchor: string;
+  text: string;
+};
+
+const anchorLinks: AnchorLink[] = [
+  {
+    anchor: '#should-i-request-access',
+    text: i18next.t('getAccess:summaryBox.copy')
+  },
+  {
+    anchor: '#access-through-eua',
+    text: i18next.t('getAccess:steps.heading')
+  },
+  {
+    anchor: '#access-through-idm',
+    text: i18next.t('getAccess:accessThroughIDM')
+  },
+  {
+    anchor: '#questions-or-issues',
+    text: i18next.t('getAccess:questionsHeading')
+  }
+];
 
 export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { t } = useTranslation('getAccess');
@@ -48,65 +73,25 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             <h4 className="usa-in-page-nav__heading">On this page</h4>
 
             <ul className="usa-in-page-nav__list">
-              <li className="usa-in-page-nav__item">
-                <a
-                  href="#should-i-request-access"
-                  onClick={() => {
-                    setCurrenHash('#should-i-request-access');
-                    isScrolling.current = true;
-                  }}
-                  className={classNames('usa-in-page-nav__link', {
-                    'usa-current': currentHash === '#should-i-request-access'
-                  })}
+              {anchorLinks.map(anchor => (
+                <li
+                  className="usa-in-page-nav__item usa-in-page-nav__item--sub-item"
+                  key={anchor.anchor}
                 >
-                  {t('summaryBox.copy')}
-                </a>
-              </li>
-
-              <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
-                <a
-                  href="#access-through-eua"
-                  onClick={() => {
-                    setCurrenHash('#access-through-eua');
-                    isScrolling.current = true;
-                  }}
-                  className={classNames('usa-in-page-nav__link', {
-                    'usa-current': currentHash === '#access-through-eua'
-                  })}
-                >
-                  {t('steps.heading')}
-                </a>
-              </li>
-
-              <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
-                <a
-                  href="#access-through-idm"
-                  onClick={() => {
-                    setCurrenHash('#access-through-idm');
-                    isScrolling.current = true;
-                  }}
-                  className={classNames('usa-in-page-nav__link', {
-                    'usa-current': currentHash === '#access-through-idm'
-                  })}
-                >
-                  {t('accessThroughIDM')}
-                </a>
-              </li>
-
-              <li className="usa-in-page-nav__item usa-in-page-nav__item--sub-item">
-                <a
-                  href="#questions-or-issues"
-                  onClick={() => {
-                    setCurrenHash('#questions-or-issues');
-                    isScrolling.current = true;
-                  }}
-                  className={classNames('usa-in-page-nav__link', {
-                    'usa-current': currentHash === '#questions-or-issues'
-                  })}
-                >
-                  {t('questionsHeading')}
-                </a>
-              </li>
+                  <a
+                    href={anchor.anchor}
+                    onClick={() => {
+                      setCurrenHash(anchor.anchor);
+                      isScrolling.current = true;
+                    }}
+                    className={classNames('usa-in-page-nav__link', {
+                      'usa-current': currentHash === anchor.anchor
+                    })}
+                  >
+                    {anchor.text}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
         </aside>
