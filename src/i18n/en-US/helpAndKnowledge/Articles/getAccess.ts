@@ -50,6 +50,11 @@ const getAccess = {
       description:
         'After you’ve received an email that your job code request is approved, you can <0>sign in to MINT</0> using your EUA credentials (this is your four-character user ID and password).'
     }
-  }
+  },
+  accessThroughIDM: 'Access through IDM',
+  accessInfo1:
+    'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
+  accessInfo2: 'Visit ',
+  accessInfo3: ' and click <0>New User Registration</0> to create an account.'
 };
 export default getAccess;

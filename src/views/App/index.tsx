@@ -197,7 +197,7 @@ const AppRoutes = () => {
         component={TermsAndConditions}
       />
 
-      <Route exact path="/get-access" component={GetAccess} />
+      <Route exact path="/how-to-get-access" component={GetAccess} />
 
       {/* Misc Routes */}
       {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
