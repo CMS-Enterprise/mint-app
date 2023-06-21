@@ -1,27 +1,32 @@
 /*
 Tailored from https://stackoverflow.com/questions/63713790/how-to-update-url-hash-when-scrolling-through-sections-in-reactjs
+Optional parameter to set custom anchor element/tag/class
 */
 
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-function useNavHash() {
+function useHashScroll(anchorElement?: string) {
   const { hash } = useLocation();
 
+  // Used to set current hash directly from links outside the hook
   const [currentHash, setCurrenHash] = useState<string>(hash);
 
+  // Stores state to buffer scrolling
   const isScrolling = useRef<boolean>(false);
 
   // Buffer to alleviate flicker while smooth-scrolling is happening
-  useEffect(() => {
+  if (isScrolling.current === true) {
     setTimeout(() => {
       isScrolling.current = false;
-    }, 550);
-  }, [isScrolling]);
+    }, 525);
+  }
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll<HTMLElement>('div.nav-anchor');
+      const sections = document.querySelectorAll<HTMLElement>(
+        anchorElement || 'div.nav-anchor'
+      );
       const scrollPosition = window.pageYOffset;
 
       const bottomOfPage =
@@ -59,9 +64,9 @@ function useNavHash() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isScrolling]);
+  }, [isScrolling, anchorElement]);
 
   return { currentHash, setCurrenHash, isScrolling };
 }
 
-export default useNavHash;
+export default useHashScroll;

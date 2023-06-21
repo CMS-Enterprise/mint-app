@@ -1,6 +1,8 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Grid,
+  GridContainer,
   IconLaunch,
   Link,
   ProcessList,
@@ -16,7 +18,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useNavHash from 'hooks/useNavHash';
+import useHashScroll from 'hooks/useHashScroll';
 
 type GetAccessContentProps = {
   help?: boolean;
@@ -27,7 +29,9 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const { currentHash, setCurrenHash, isScrolling } = useNavHash();
+  const { currentHash, setCurrenHash, isScrolling } = useHashScroll(
+    'div.nav-anchor'
+  );
 
   return (
     <div className="usa-in-page-nav-container">
@@ -372,13 +376,13 @@ export const GetAccess = () => {
   return (
     <>
       <MainContent>
-        <div className="grid-container">
-          <div className="tablet:grid-col-12">
+        <GridContainer>
+          <Grid tablet={{ col: 12 }}>
             <HelpBreadcrumb text={t('overviewHeading')} home />
 
             <GetAccessContent help />
-          </div>
-        </div>
+          </Grid>
+        </GridContainer>
       </MainContent>
     </>
   );
