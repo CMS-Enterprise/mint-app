@@ -12,10 +12,13 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
+  IconLaunch,
   Label,
+  Link as TrussLink,
   SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
@@ -29,6 +32,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
   GetModelPlanInfo as GetModelPlanInfoType,
@@ -60,6 +64,8 @@ const BasicsContent = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
+
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
   const history = useHistory();
@@ -307,6 +313,85 @@ const BasicsContent = () => {
                           name="abbreviation"
                         />
                       </FieldGroup>
+
+                      <div
+                        className={classNames(
+                          'bg-base-lightest padding-2 margin-top-4',
+                          {
+                            'maxw-mobile-lg': isTablet
+                          }
+                        )}
+                      >
+                        <Label
+                          htmlFor="plan-basics-demo-code"
+                          className="margin-top-0"
+                        >
+                          {t('otherIdentifiers')}
+                        </Label>
+
+                        <p className="line-height-mono-4">
+                          {t('otherIdentifiersInfo1')}
+
+                          <TrussLink
+                            aria-label="Open AMS in a new tab"
+                            href="https://ams.cmmi.cms.gov"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            variant="external"
+                          >
+                            {t('otherIdentifiersInfo2')}
+                            <IconLaunch className="margin-left-05 text-tbottom" />
+                          </TrussLink>
+
+                          {t('otherIdentifiersInfo3')}
+                        </p>
+                        <Grid row gap>
+                          <Grid desktop={{ col: 6 }}>
+                            <FieldGroup
+                              scrollElement="basics.amsModelID"
+                              error={!!flatErrors['basics.amsModelID']}
+                              className="margin-top-0"
+                            >
+                              <Label htmlFor="plan-basics-ams-model-id">
+                                {t('modelID')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors['basics.amsModelID']}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors['basics.amsModelID']}
+                                id="plan-basics-ams-model-id"
+                                maxLength={50}
+                                name="basics.amsModelID"
+                              />
+                            </FieldGroup>
+                          </Grid>
+                          <Grid desktop={{ col: 6 }}>
+                            <FieldGroup
+                              scrollElement="basics.demoCode"
+                              error={!!flatErrors['basics.demoCode']}
+                              className="margin-top-0"
+                            >
+                              <Label htmlFor="plan-basics-demo-code">
+                                {t('demoCode')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors['basics.demoCode']}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors['basics.demoCode']}
+                                id="plan-basics-demo-code"
+                                maxLength={50}
+                                name="basics.demoCode"
+                              />
+                            </FieldGroup>
+                          </Grid>
+                        </Grid>
+                      </div>
 
                       <FieldGroup
                         scrollElement="modelCategory"

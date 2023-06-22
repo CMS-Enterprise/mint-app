@@ -9,6 +9,13 @@ const basics = {
   shortNameInfo:
     'The abbreviation, acronym, or other common name used for the model.',
   previousNames: 'Previous model names',
+  otherIdentifiers: 'Other identifiers',
+  otherIdentifiersInfo1: 'These are created in ',
+  otherIdentifiersInfo2: 'CMMI Analysis & Management System (AMS).',
+  otherIdentifiersInfo3:
+    ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.',
+  modelID: 'Model ID',
+  demoCode: 'Demo code(s)',
   modelCategory: 'Model category',
   modelCategories: {
     accountableCare: 'Accountable Care',
@@ -79,7 +86,8 @@ const basics = {
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
-  required2: ' are required.'
+  required2: ' are required.',
+  noneEntered: 'None entered'
 };
 
 export default basics;

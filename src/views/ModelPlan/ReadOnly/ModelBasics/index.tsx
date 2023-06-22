@@ -2,12 +2,17 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
+  Grid,
+  IconLaunch,
+  Link as TrussLink,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
 import { formatDateUtc } from 'utils/date';
@@ -35,6 +40,8 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   const { t } = useTranslation('basics');
   const { t: p } = useTranslation('prepareForClearance');
 
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
   const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
@@ -53,6 +60,8 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   );
 
   const {
+    demoCode,
+    amsModelID,
     modelCategory,
     cmsCenters,
     cmsOther,
@@ -110,6 +119,56 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
         list
         listItems={filteredNameHistory}
       />
+
+      <div
+        className={classNames(
+          'bg-base-lightest padding-2 margin-top-4 margin-bottom-4',
+          {
+            'maxw-mobile-lg': isTablet
+          }
+        )}
+      >
+        <p className="margin-top-0 text-bold">{t('otherIdentifiers')}</p>
+
+        <p className="line-height-mono-4">
+          {t('otherIdentifiersInfo1')}
+          <TrussLink
+            aria-label="Open AMS in a new tab"
+            href="https://ams.cmmi.cms.gov"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="external"
+          >
+            {t('otherIdentifiersInfo2')}
+            <IconLaunch className="margin-left-05 text-tbottom" />
+          </TrussLink>
+
+          {t('otherIdentifiersInfo3')}
+        </p>
+        <Grid row gap>
+          <Grid
+            desktop={{ col: 6 }}
+            className={classNames({
+              'padding-bottom-2': isTablet
+            })}
+          >
+            <p className="text-bold margin-top-0 margin-bottom-1">
+              {t('modelID')}
+            </p>
+            {amsModelID || (
+              <div className="text-italic text-base">{t('noneEntered')}</div>
+            )}
+          </Grid>
+          <Grid desktop={{ col: 6 }}>
+            <p className="text-bold margin-top-0 margin-bottom-1">
+              {t('demoCode')}
+            </p>
+            {demoCode || (
+              <div className="text-italic text-base">{t('noneEntered')}</div>
+            )}
+          </Grid>
+        </Grid>
+      </div>
 
       <ReadOnlySection
         heading={t('modelCategory')}
