@@ -38,6 +38,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   const idleTimer = useIdleTimer({
     // Only events NOT included here are 'mousemove' and 'MSPointerMove', as simply moving the cursor across the screen isn't really "activity"
     // compared to scrolling, switching tabs, typing, or clicking.
+    // Events sourced from https://idletimer.dev/docs/api/use-idle-timer
     events: [
       'keydown',
       'wheel',
