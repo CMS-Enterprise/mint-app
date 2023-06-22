@@ -38,7 +38,9 @@ exports[`NDA Page matches snapshot 1`] = `
               <p
                 class="usa-alert__text"
               >
-                Accepted on 07/30/2022
+                <span>
+                  Accepted on 07/30/2022
+                </span>
               </p>
             </div>
           </div>

@@ -116,10 +116,12 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
           <p
             class="usa-alert__text"
           >
-            <span
-              class="mandatory-fields-alert__text"
-            >
-              In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+            <span>
+              <span
+                class="mandatory-fields-alert__text"
+              >
+                In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+              </span>
             </span>
           </p>
         </div>

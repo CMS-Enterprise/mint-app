@@ -106,10 +106,12 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             <p
               class="usa-alert__text"
             >
-              <span
-                class="mandatory-fields-alert__text"
-              >
-                All fields are mandatory
+              <span>
+                <span
+                  class="mandatory-fields-alert__text"
+                >
+                  All fields are mandatory
+                </span>
               </span>
             </p>
           </div>

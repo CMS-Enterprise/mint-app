@@ -17,7 +17,9 @@ exports[`The Alert component matches snapshot 1`] = `
       <p
         class="usa-alert__text"
       >
-        This is information
+        <span>
+          This is information
+        </span>
         <button
           aria-label="Close Button"
           class="usa-button usa-button usa-button--unstyled text-no-underline text-black flex-align-end"

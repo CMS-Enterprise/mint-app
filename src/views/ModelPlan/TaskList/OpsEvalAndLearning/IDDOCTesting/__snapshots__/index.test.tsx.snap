@@ -110,10 +110,12 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
         <p
           class="usa-alert__text"
         >
-          <span
-            class="mandatory-fields-alert__text"
-          >
-            SSM request to begin analysis at least 1 year before implementation
+          <span>
+            <span
+              class="mandatory-fields-alert__text"
+            >
+              SSM request to begin analysis at least 1 year before implementation
+            </span>
           </span>
         </p>
       </div>
