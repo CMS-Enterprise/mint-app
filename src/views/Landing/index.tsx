@@ -164,6 +164,7 @@ export const LandingBody = () => {
 
 export const LandingFooter = () => {
   const { t } = useTranslation('landing');
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const footerItems: FooterItemType[] = t('footerItems', {
     returnObjects: true
@@ -185,24 +186,36 @@ export const LandingFooter = () => {
           ))}
         </Grid>
 
-        <div className="landing__footer padding-top-4 padding-bottom-2">
-          <span className="text-bold margin-right-1">{t('access')}</span>
-          <span>
-            <UswdsReactLink to="/how-to-get-access">
-              {t('learnHowtoGetAccess')}{' '}
-              <IconArrowForward className="margin-left-1 text-tbottom" />
-            </UswdsReactLink>
-          </span>
-        </div>
+        <div
+          className={classNames({
+            'display-block': isTablet,
+            'display-flex': !isTablet
+          })}
+        >
+          <div className="landing__footer padding-top-4 padding-bottom-2 margin-right-2">
+            <span className="text-bold margin-right-1">{t('access')}</span>
+            <span>
+              <UswdsReactLink to="/how-to-get-access">
+                {t('learnHowtoGetAccess')}{' '}
+                <IconArrowForward className="margin-left-1 text-tbottom" />
+              </UswdsReactLink>
+            </span>
+          </div>
 
-        <div className="padding-top-1 padding-bottom-2">
-          <span className="text-bold margin-right-1">{t('questions')}</span>
-          <span>
-            <Link href="mailto:MINTTeam@cms.hhs.gov">
-              {t('email')}
-              <IconMailOutline className="margin-left-1 text-tbottom" />
-            </Link>
-          </span>
+          <div
+            className={classNames('padding-bottom-2', {
+              'padding-top-1': isTablet,
+              'padding-top-4': !isTablet
+            })}
+          >
+            <span className="text-bold margin-right-1">{t('questions')}</span>
+            <span>
+              <Link href="mailto:MINTTeam@cms.hhs.gov">
+                {t('email')}
+                <IconMailOutline className="margin-left-1 text-tbottom" />
+              </Link>
+            </span>
+          </div>
         </div>
       </GridContainer>
     </div>
