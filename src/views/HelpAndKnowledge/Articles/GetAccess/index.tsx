@@ -218,7 +218,7 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           <Alert type="info" noIcon className="margin-bottom-2">
             {t('accessInfo1')}
 
-            <p>
+            <p className="margin-bottom-0">
               {t('accessInfo2')}
 
               <Link href="eua.cms.gov">
@@ -343,7 +343,7 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             className="margin-bottom-2"
             heading={t('questionsHeading')}
           >
-            <p>
+            <p className="margin-bottom-0">
               <Trans i18nKey="getAccess:questions">
                 <Link href="mailto:MINTTeam@cms.hhs.gov">indexZero</Link>
               </Trans>

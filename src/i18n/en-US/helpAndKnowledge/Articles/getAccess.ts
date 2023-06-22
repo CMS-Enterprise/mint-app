@@ -55,7 +55,8 @@ const getAccess = {
   accessInfo1:
     'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
   accessInfo2: 'Visit ',
-  accessInfo3: ' and click <0>New User Registration</0> to create an account.',
+  accessInfo3:
+    ' and click <0>New User Registration</0> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
   questionsHeading: 'Questions or issues?',
   questions:
     'If you encounter issues or have questions about requesting access to MINT, please email <0>MINTTeam@cms.hhs.gov</0> for assistance.'
