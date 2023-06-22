@@ -28,7 +28,10 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
 
   const [timeRemainingArr, setTimeRemainingArr] = useState([0, 'second']);
 
-  const fiveMinutes = Duration.fromObject({ minutes: 5 }).as('milliseconds');
+  const activeDuration = Duration.fromObject({ minutes: 85 }).as(
+    'milliseconds'
+  );
+  const modalDuration = Duration.fromObject({ minutes: 5 }).as('milliseconds');
 
   // Since 5 minutes is used for the `promptTimeout` AND the `timeout`, you effectively have 10 minutes before you're logged out due to inactivity.
   // 5 of those minutes will be uninterrupted, the other 5 will be when the prompt is up.
@@ -41,14 +44,14 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
     },
     onPrompt: () => {
       if (!isLocalAuth && authState?.isAuthenticated) {
-        setTimeRemainingArr(formatSessionTimeRemaining(fiveMinutes));
+        setTimeRemainingArr(formatSessionTimeRemaining(modalDuration));
       }
     },
-    promptTimeout: fiveMinutes,
+    promptTimeout: modalDuration,
     crossTab: true,
     syncTimers: 1000,
     debounce: 500,
-    timeout: fiveMinutes
+    timeout: activeDuration
   });
 
   const forceRenew = async () => {
