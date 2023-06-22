@@ -61,7 +61,7 @@ const mock = [
   {
     request: {
       query: GetModelSummary,
-      variables: { id: 'modelID' }
+      variables: { id: `${modelID}` }
     },
     result: {
       data: {
