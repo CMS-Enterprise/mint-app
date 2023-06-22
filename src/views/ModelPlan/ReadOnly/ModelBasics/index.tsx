@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Grid,
-  IconLaunch,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -140,7 +139,6 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
             variant="external"
           >
             {t('otherIdentifiersInfo2')}
-            <IconLaunch className="margin-left-05 text-tbottom" />
           </TrussLink>
 
           {t('otherIdentifiersInfo3')}

@@ -12,7 +12,6 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  IconLaunch,
   Label,
   Link as TrussLink,
   SummaryBox,
@@ -340,7 +339,6 @@ const BasicsContent = () => {
                             variant="external"
                           >
                             {t('otherIdentifiersInfo2')}
-                            <IconLaunch className="margin-left-05 text-tbottom" />
                           </TrussLink>
 
                           {t('otherIdentifiersInfo3')}
