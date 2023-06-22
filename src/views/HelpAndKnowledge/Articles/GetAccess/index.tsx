@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  IconLaunch,
   Link,
   ProcessList,
   ProcessListHeading,
@@ -132,9 +131,14 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
               <p>
                 {t('stepsEUA.first.description.one')}
-                <Link href="eua.cms.gov">
+                <Link
+                  aria-label="Open EUA in a new tab"
+                  href="https://eua.cms.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="external"
+                >
                   eua.cms.gov
-                  <IconLaunch className="margin-left-05 text-tbottom" />
                 </Link>
 
                 {t('stepsEUA.first.description.two')}
@@ -221,9 +225,14 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             <p className="margin-bottom-0">
               {t('accessInfo2')}
 
-              <Link href="eua.cms.gov">
+              <Link
+                aria-label="Open IDM in a new tab"
+                href="https://home.idm.cms.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="external"
+              >
                 home.idm.cms.gov
-                <IconLaunch className="margin-left-05 text-tbottom" />
               </Link>
 
               <Trans i18nKey="getAccess:accessInfo3">
@@ -243,9 +252,15 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
               <p>
                 {t('stepsIDM.first.description.two')}
-                <Link href="eua.cms.gov">
+
+                <Link
+                  aria-label="Open IDM in a new tab"
+                  href="https://eua.cms.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="external"
+                >
                   eua.cms.gov
-                  <IconLaunch className="margin-left-05 text-tbottom" />
                 </Link>
 
                 {t('stepsIDM.first.description.three')}
