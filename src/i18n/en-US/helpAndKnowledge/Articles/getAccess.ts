@@ -120,6 +120,8 @@ const getAccess = {
   },
   questionsHeading: 'Questions or issues?',
   questions:
-    'If you encounter issues or have questions about requesting access to MINT, please email <0>MINTTeam@cms.hhs.gov</0> for assistance.'
+    'If you encounter issues or have questions about requesting access to MINT, please email <0>MINTTeam@cms.hhs.gov</0> for assistance.',
+  accessInfo: 'Don’t have access yet?',
+  learnHow: 'Learn how to get access'
 };
 export default getAccess;
