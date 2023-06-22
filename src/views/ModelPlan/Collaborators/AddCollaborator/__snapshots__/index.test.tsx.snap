@@ -202,15 +202,13 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
             >
               <p
                 class="usa-alert__text"
-              />
-              <div>
+              >
                 <span
                   class="mandatory-fields-alert__text"
                 >
                   This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
                 </span>
-              </div>
-              <p />
+              </p>
             </div>
           </div>
           <div

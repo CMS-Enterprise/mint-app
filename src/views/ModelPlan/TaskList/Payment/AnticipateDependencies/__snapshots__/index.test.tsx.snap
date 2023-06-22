@@ -358,11 +358,9 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
             >
               <p
                 class="usa-alert__text"
-              />
-              <div>
+              >
                 Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).
-              </div>
-              <p />
+              </p>
             </div>
           </div>
           <div

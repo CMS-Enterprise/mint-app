@@ -369,8 +369,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
         >
           <p
             class="usa-alert__text"
-          />
-          <div>
+          >
             Changing your answer to this question may also affect your selections in the IT solutions and implementation status tracker.  
             <button
               class="usa-button usa-button usa-button--unstyled"
@@ -380,8 +379,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
             >
               Go to IT solutions tracker.
             </button>
-          </div>
-          <p />
+          </p>
         </div>
       </div>
       <fieldset
