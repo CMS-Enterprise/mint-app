@@ -2,7 +2,12 @@ const basics = {
   heading: 'Model basics',
   clearanceHeading: 'Review model basics',
   breadcrumb: 'Model basics',
+  description:
+    'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question using the link below.',
   modelName: 'Model name',
+  shortName: 'Short name',
+  shortNameInfo:
+    'The abbreviation, acronym, or other common name used for the model.',
   previousNames: 'Previous model names',
   modelCategory: 'Model category',
   modelCategories: {
@@ -72,7 +77,9 @@ const basics = {
   na: 'No answer entered',
   otherNotSpecificed: 'Other not specified',
   milestonesInfo:
-    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
+    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
+  required1: 'All fields marked with ',
+  required2: ' are required.'
 };
 
 export default basics;

@@ -22,12 +22,12 @@ import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
@@ -79,12 +79,20 @@ const BasicsContent = () => {
     }
   });
 
-  const { id, modelName, basics, nameHistory } = data?.modelPlan || {};
+  const { id, modelName, abbreviation, basics, nameHistory } =
+    data?.modelPlan || {};
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
   );
 
-  const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
+  const {
+    demoCode,
+    amsModelID,
+    modelCategory,
+    cmsCenters,
+    cmmiGroups,
+    cmsOther
+  } = basics || {};
 
   const [update] = useMutation<UpdateModelPlanAndBasicsVariables>(
     UpdateModelPlanAndBasics
@@ -101,16 +109,20 @@ const BasicsContent = () => {
     const {
       id: updateId,
       modelName: updateModelName,
+      abbreviation: updateAbbreviation,
       basics: updateBasics
     } = formikValues;
     update({
       variables: {
         id: updateId,
         changes: {
-          modelName: updateModelName
+          modelName: updateModelName,
+          abbreviation: updateAbbreviation
         },
         basicsId: updateBasics.id,
         basicsChanges: {
+          demoCode: updateBasics.demoCode,
+          amsModelID: updateBasics.amsModelID,
           modelCategory: updateBasics.modelCategory,
           cmsCenters: updateBasics.cmsCenters,
           cmmiGroups: updateBasics.cmmiGroups,
@@ -136,9 +148,12 @@ const BasicsContent = () => {
     __typename: 'ModelPlan',
     id: id ?? '',
     modelName: modelName ?? '',
+    abbreviation: abbreviation ?? '',
     basics: {
       __typename: 'PlanBasics',
       id: basics?.id ?? '',
+      demoCode: demoCode ?? '',
+      amsModelID: amsModelID ?? '',
       modelCategory: modelCategory ?? null,
       cmsCenters: cmsCenters ?? [],
       cmmiGroups: cmmiGroups ?? [],
@@ -181,20 +196,22 @@ const BasicsContent = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
-      <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {t('heading')}
+      </PageHeading>
+
+      <p className="margin-top-0 margin-bottom-2 font-sans-sm line-height-mono-4">
+        {t('description')}
+      </p>
 
       <AskAQuestion modelID={modelID} />
 
-      <Alert
-        type="info"
-        slim
-        data-testid="mandatory-fields-alert"
-        className="margin-bottom-4"
-      >
-        <span className="mandatory-fields-alert__text">
-          {h('mandatoryFields')}
-        </span>
-      </Alert>
+      <p className="margin-bottom-0 margin-top-6">
+        {t('required1')}
+        <RequiredAsterisk />
+        {t('required2')}
+      </p>
 
       <Formik
         initialValues={initialValues}
@@ -242,7 +259,7 @@ const BasicsContent = () => {
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
                     <Form
-                      className="margin-top-6"
+                      className="margin-top-4"
                       onSubmit={e => {
                         handleSubmit(e);
                         window.scrollTo(0, 0);
@@ -255,7 +272,9 @@ const BasicsContent = () => {
                       >
                         <Label htmlFor="plan-basics-model-name">
                           {t('modelName')}
+                          <RequiredAsterisk />
                         </Label>
+
                         <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
                         <Field
                           as={TextInput}
@@ -267,12 +286,36 @@ const BasicsContent = () => {
                       </FieldGroup>
 
                       <FieldGroup
+                        scrollElement="abbreviation"
+                        error={!!flatErrors.abbreviation}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="plan-basics-model-name">
+                          {t('shortName')}
+                        </Label>
+
+                        <span className="usa-hint display-block text-normal margin-top-1">
+                          {t('shortNameInfo')}
+                        </span>
+
+                        <FieldErrorMsg>{flatErrors.abbreviation}</FieldErrorMsg>
+                        <Field
+                          as={TextInput}
+                          error={!!flatErrors.abbreviation}
+                          id="plan-basics-abbreviation"
+                          maxLength={50}
+                          name="abbreviation"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
                         scrollElement="modelCategory"
                         error={!!flatErrors['basics.modelCategory']}
                         className="margin-top-4"
                       >
                         <Label htmlFor="plan-basics-model-category">
                           {t('modelCategory')}
+                          <RequiredAsterisk />
                         </Label>
                         <FieldErrorMsg>
                           {flatErrors['basics.modelCategory']}
@@ -309,11 +352,16 @@ const BasicsContent = () => {
                         error={!!flatErrors['basics.cmsCenters']}
                         className="margin-top-4"
                       >
-                        <Fieldset legend={t('cmsComponent')}>
+                        <Fieldset>
                           <FieldArray
                             name="basics.cmsCenters"
                             render={arrayHelpers => (
                               <>
+                                <Label htmlFor="plan-basics-cmsCenters">
+                                  {t('cmsComponent')}
+                                  <RequiredAsterisk />
+                                </Label>
+
                                 <FieldErrorMsg>
                                   {flatErrors['basics.cmsCenters']}
                                 </FieldErrorMsg>
