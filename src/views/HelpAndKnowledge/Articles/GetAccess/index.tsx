@@ -37,7 +37,7 @@ const anchorLinks: AnchorLink[] = [
   },
   {
     anchor: '#access-through-eua',
-    text: i18next.t('getAccess:steps.heading')
+    text: i18next.t('getAccess:stepsEUA.heading')
   },
   {
     anchor: '#access-through-idm',
@@ -121,69 +121,69 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             className="margin-top-4 margin-bottom-1"
             headingLevel="h2"
           >
-            {t('steps.heading')}
+            {t('stepsEUA.heading')}
           </PageHeading>
 
           <ProcessList>
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">
-                {t('steps.first.heading')}
+                {t('stepsEUA.first.heading')}
               </ProcessListHeading>
 
               <p>
-                {t('steps.first.description.one')}
+                {t('stepsEUA.first.description.one')}
                 <Link href="eua.cms.gov">
                   eua.cms.gov
                   <IconLaunch className="margin-left-05 text-tbottom" />
                 </Link>
 
-                {t('steps.first.description.two')}
+                {t('stepsEUA.first.description.two')}
               </p>
             </ProcessListItem>
 
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">
-                {t('steps.second.heading')}
+                {t('stepsEUA.second.heading')}
               </ProcessListHeading>
 
-              <ul className="margin-top-1">
+              <ul className="margin-top-1 padding-left-4">
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.one">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.one">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.two">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.two">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.three">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.three">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.four">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.four">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.five">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.five">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.six">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.six">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
@@ -193,18 +193,18 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
             <ProcessListItem className="maxw-none padding-bottom-3">
               <ProcessListHeading type="h3">
-                {t('steps.third.heading')}
+                {t('stepsEUA.third.heading')}
               </ProcessListHeading>
 
-              <p>{t('steps.third.description')}</p>
+              <p>{t('stepsEUA.third.description')}</p>
             </ProcessListItem>
 
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">
-                {t('steps.fourth.heading')}
+                {t('stepsEUA.fourth.heading')}
               </ProcessListHeading>
 
-              <Trans i18nKey="getAccess:steps:fourth.description">
+              <Trans i18nKey="getAccess:stepsEUA.fourth.description">
                 <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
                 &nbsp;indexOne
               </Trans>
@@ -212,7 +212,7 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </ProcessList>
         </div>
 
-        <div className="nav-anchor" id="access-through-idm">
+        <div className="nav-anchor margin-bottom-4" id="access-through-idm">
           <h2>{t('accessThroughIDM')}</h2>
 
           <Alert type="info" noIcon className="margin-bottom-2">
@@ -236,63 +236,44 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           <ProcessList>
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">
-                {t('steps.first.heading')}
+                {t('stepsIDM.first.heading')}
               </ProcessListHeading>
 
+              <p>{t('stepsIDM.first.description.one')}</p>
+
               <p>
-                {t('steps.first.description.one')}
+                {t('stepsIDM.first.description.two')}
                 <Link href="eua.cms.gov">
                   eua.cms.gov
                   <IconLaunch className="margin-left-05 text-tbottom" />
                 </Link>
 
-                {t('steps.first.description.two')}
+                {t('stepsIDM.first.description.three')}
               </p>
             </ProcessListItem>
 
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">
-                {t('steps.second.heading')}
+                {t('stepsIDM.second.heading')}
               </ProcessListHeading>
 
-              <ul className="margin-top-1">
+              <ul className="margin-top-1 padding-left-4">
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.one">
+                  <Trans i18nKey="getAccess:stepsIDM.second.description.one">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.two">
+                  <Trans i18nKey="getAccess:stepsEUA.second.description.two">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:steps:second.description.three">
-                    <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
-                  </Trans>
-                </li>
-
-                <li>
-                  <Trans i18nKey="getAccess:steps:second.description.four">
-                    <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
-                  </Trans>
-                </li>
-
-                <li>
-                  <Trans i18nKey="getAccess:steps:second.description.five">
-                    <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
-                  </Trans>
-                </li>
-
-                <li>
-                  <Trans i18nKey="getAccess:steps:second.description.six">
+                  <Trans i18nKey="getAccess:stepsIDM.second.description.three">
                     <span className="text-bold text-italic">indexZero</span>
                     &nbsp;indexOne
                   </Trans>
@@ -302,34 +283,93 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
             <ProcessListItem className="maxw-none padding-bottom-3">
               <ProcessListHeading type="h3">
-                {t('steps.third.heading')}
+                {t('stepsIDM.third.heading')}
               </ProcessListHeading>
 
-              <p>{t('steps.third.description')}</p>
+              <p>{t('stepsIDM.third.description.one')}</p>
+
+              <ul className="margin-top-1 padding-left-4">
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.third.description.two">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.third.description.three">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.third.description.four">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.third.description.five">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+              </ul>
             </ProcessListItem>
 
             <ProcessListItem className="maxw-none padding-bottom-3">
               <ProcessListHeading type="h3">
-                {t('steps.third.heading')}
+                {t('stepsIDM.fourth.heading')}
               </ProcessListHeading>
 
-              <p>{t('steps.third.description')}</p>
+              <ul className="margin-top-1 padding-left-4">
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.fourth.description.one">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.fourth.description.two">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.fourth.description.three">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+              </ul>
             </ProcessListItem>
 
             <ProcessListItem className="maxw-none padding-bottom-3">
               <ProcessListHeading type="h3">
-                {t('steps.third.heading')}
+                {t('stepsIDM.fifth.heading')}
               </ProcessListHeading>
 
-              <p>{t('steps.third.description')}</p>
+              <ul className="margin-top-1 padding-left-4">
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.fifth.description.one">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey="getAccess:stepsIDM.fifth.description.two">
+                    <span className="text-bold text-italic">indexZero</span>
+                    &nbsp;indexOne
+                  </Trans>
+                </li>
+              </ul>
             </ProcessListItem>
 
             <ProcessListItem className="maxw-none">
               <ProcessListHeading type="h3">
-                {t('steps.fourth.heading')}
+                {t('stepsIDM.sixth.heading')}
               </ProcessListHeading>
 
-              <Trans i18nKey="getAccess:steps:fourth.description">
+              <Trans i18nKey="getAccess:stepsIDM.sixth.description">
                 <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
                 &nbsp;indexOne
               </Trans>

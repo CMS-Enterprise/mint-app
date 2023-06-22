@@ -12,7 +12,7 @@ const getAccess = {
         'CMS contractors with an approved need for access to MINT, Medicare Administrative Contractors, Shared System Maintainers, and Medicare Integrated Systems Testers should request access through IDM.'
     }
   },
-  steps: {
+  stepsEUA: {
     heading: 'Access through EUA',
     description:
       'Below is an overview of the process involved in creating your draft model plan.',
@@ -57,6 +57,67 @@ const getAccess = {
   accessInfo2: 'Visit ',
   accessInfo3:
     ' and click <0>New User Registration</0> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
+  stepsIDM: {
+    first: {
+      heading: 'Sign in to IDM',
+      description: {
+        one:
+          'If you have access to EUA and are currently signed in, we recommend completing these steps in an incognito browser.',
+        two: 'Visit ',
+        three: 'and sign in with your credentials. Do not use your PIV card.'
+      }
+    },
+    second: {
+      heading: 'Request a role',
+      description: {
+        one: 'Click the <0>Role Request</0> button.',
+        two:
+          'The Role Request window will appear with a dropdown to select an application. Select <0>Model Innovation Tool (MINT)</0>.',
+        three:
+          'Then, select the role <0>MINT Medicare Administrative Contractor</0>.'
+      }
+    },
+    third: {
+      heading: 'Remote Identity Proofing (RIDP)',
+      description: {
+        one:
+          'If you have previously requested a role for another application through your IDM account, you may not need to complete this step.',
+        two:
+          'Review the RIDP terms and conditions, check the “I agree to the terms and conditions” selection box, then click the <0>Next</0> button. The Identity Verification form appears.',
+        three:
+          'Complete the Identity Verification form and click the <0>Next</0> button. The RIDP proofing questions appear. ',
+        four:
+          'Answer the proofing questions and click the <0>Verify</0> button. ',
+        five:
+          'You will see an RIDP success message. Then, click the <0>Continue</0> button. '
+      }
+    },
+    fourth: {
+      heading: 'Review request',
+      description: {
+        one:
+          'Review the role request information and enter the reason you need to access MINT.',
+        two:
+          'Then, click the <0>Submit Role Request</0> button. The Role Request window displays a Request ID and a message which states that the request was successfully submitted to an approver for action.',
+        three:
+          'The <0>My Requests</0> indicator on the Self Service Dashboard will update to display your current number of pending requests.'
+      }
+    },
+    fifth: {
+      heading: 'Role approval',
+      description: {
+        one:
+          'After you submit your role request, the approver is notified. Follow-up emails may send upon approval, rejection, or expiration if no action is taken by an approver.',
+        two:
+          'If you wish to check the status of your role request, click <0>My Requests</0> on the Self Service Dashboard. All of your open requests will be listed there. You can also see all of your approved roles by clicking on <0>Manage My Roles</0>.'
+      }
+    },
+    sixth: {
+      heading: 'Sign in to MINT',
+      description:
+        'After your role request is approved, you can <0>sign in to MINT</0> using your IDM credentials.'
+    }
+  },
   questionsHeading: 'Questions or issues?',
   questions:
     'If you encounter issues or have questions about requesting access to MINT, please email <0>MINTTeam@cms.hhs.gov</0> for assistance.'
