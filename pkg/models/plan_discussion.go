@@ -8,21 +8,30 @@ import (
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
-	Content      string             `json:"content" db:"content"`
-	UserRole     DiscussionUserRole `json:"userRole" db:"user_role"`
-	Status       DiscussionStatus   `json:"status" db:"status"`
-	IsAssessment bool               `json:"isAssessment" db:"is_assessment"`
+	Content             string              `json:"content" db:"content"`
+	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
+	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
+	Status              DiscussionStatus    `json:"status" db:"status"`
+	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
 }
 
 // NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
-func NewPlanDiscussion(principal uuid.UUID, isAssessment bool, modelPlanID uuid.UUID, content string, userRole DiscussionUserRole) *PlanDiscussion {
+func NewPlanDiscussion(
+	principal uuid.UUID,
+	isAssessment bool,
+	modelPlanID uuid.UUID,
+	content string,
+	userRole *DiscussionUserRole,
+	userRoleDescription *string,
+) *PlanDiscussion {
 	return &PlanDiscussion{
-		Content:           content,
-		UserRole:          userRole,
-		Status:            DiscussionUnAnswered,
-		IsAssessment:      isAssessment,
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		baseStruct:        NewBaseStruct(principal),
+		Content:             content,
+		UserRole:            userRole,
+		UserRoleDescription: userRoleDescription,
+		Status:              DiscussionUnAnswered,
+		IsAssessment:        isAssessment,
+		modelPlanRelation:   NewModelPlanRelation(modelPlanID),
+		baseStruct:          NewBaseStruct(principal),
 	}
 }
 

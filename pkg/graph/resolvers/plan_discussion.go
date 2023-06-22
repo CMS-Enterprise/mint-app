@@ -34,6 +34,7 @@ func CreatePlanDiscussion(
 		input.ModelPlanID,
 		input.Content,
 		input.UserRole,
+		input.UserRoleDescription,
 	)
 
 	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)

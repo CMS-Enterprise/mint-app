@@ -719,7 +719,8 @@ export interface PlanDiscussionChanges {
 export interface PlanDiscussionCreateInput {
   modelPlanID: UUID;
   content: string;
-  userRole: DiscussionUserRole;
+  userRole?: DiscussionUserRole | null;
+  userRoleDescription?: string | null;
 }
 
 /**

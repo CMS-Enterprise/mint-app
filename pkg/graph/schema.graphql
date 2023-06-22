@@ -365,7 +365,8 @@ type PlanDiscussion  {
 	id: UUID!
 	modelPlanID: UUID!
 	content: String
-  userRole: DiscussionUserRole!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
@@ -385,7 +386,8 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
   content: String!
-  userRole: DiscussionUserRole!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
