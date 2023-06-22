@@ -60,7 +60,7 @@ export const Alert = ({
           className={classes}
           {...props}
         >
-          <div>{children}</div>
+          <span>{children}</span>
           {isClosable && (
             <Button
               type="button"
