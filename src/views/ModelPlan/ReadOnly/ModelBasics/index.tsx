@@ -119,6 +119,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
         listItems={filteredNameHistory}
       />
 
+      {/* Other Identifiers section */}
       <div
         className={classNames(
           'bg-base-lightest padding-2 margin-top-4 margin-bottom-4',
@@ -143,6 +144,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
 
           {t('otherIdentifiersInfo3')}
         </p>
+
         <Grid row gap>
           <Grid
             desktop={{ col: 6 }}
@@ -153,6 +155,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
             <p className="text-bold margin-top-0 margin-bottom-1">
               {t('modelID')}
             </p>
+
             {amsModelID || (
               <div className="text-italic text-base">{t('noneEntered')}</div>
             )}
@@ -161,6 +164,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
             <p className="text-bold margin-top-0 margin-bottom-1">
               {t('demoCode')}
             </p>
+
             {demoCode || (
               <div className="text-italic text-base">{t('noneEntered')}</div>
             )}
