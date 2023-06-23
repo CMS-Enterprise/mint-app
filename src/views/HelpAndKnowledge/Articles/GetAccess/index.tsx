@@ -129,19 +129,18 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 {t('stepsEUA.first.heading')}
               </ProcessListHeading>
 
-              <p>
-                {t('stepsEUA.first.description.one')}
-                <Link
-                  aria-label="Open EUA in a new tab"
-                  href="https://eua.cms.gov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="external"
-                >
-                  eua.cms.gov
-                </Link>
-
-                {t('stepsEUA.first.description.two')}
+              <p className="margin-bottom-0">
+                <Trans i18nKey="getAccess:stepsEUA.first.description">
+                  <Link
+                    aria-label="Open EUA in a new tab"
+                    href="https://eua.cms.gov"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="external"
+                  >
+                    indexZero
+                  </Link>
+                </Trans>
               </p>
             </ProcessListItem>
 
@@ -154,42 +153,36 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.one">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.two">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.three">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.four">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.five">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.six">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
               </ul>
@@ -210,7 +203,6 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
               <Trans i18nKey="getAccess:stepsEUA.fourth.description">
                 <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
-                &nbsp;indexOne
               </Trans>
             </ProcessListItem>
           </ProcessList>
@@ -222,24 +214,20 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           <Alert type="info" noIcon className="margin-bottom-2">
             {t('accessInfo1')}
 
-            <p className="margin-bottom-0">
-              {t('accessInfo2')}
-
-              <Link
-                aria-label="Open IDM in a new tab"
-                href="https://home.idm.cms.gov"
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="external"
-              >
-                home.idm.cms.gov
-              </Link>
-
-              <Trans i18nKey="getAccess:accessInfo3">
-                <span className="text-bold text-italic">indexZero</span>
-                &nbsp;indexOne
+            <dt className="margin-bottom-0 margin-top-2">
+              <Trans i18nKey="getAccess:accessInfo2">
+                <Link
+                  aria-label="Open IDM in a new tab"
+                  href="https://home.idm.cms.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="external"
+                >
+                  indexZero
+                </Link>
+                <span className="text-bold text-italic">indexOne</span>
               </Trans>
-            </p>
+            </dt>
           </Alert>
 
           <ProcessList>
@@ -250,20 +238,18 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
               <p>{t('stepsIDM.first.description.one')}</p>
 
-              <p>
-                {t('stepsIDM.first.description.two')}
-
-                <Link
-                  aria-label="Open IDM in a new tab"
-                  href="https://eua.cms.gov"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="external"
-                >
-                  eua.cms.gov
-                </Link>
-
-                {t('stepsIDM.first.description.three')}
+              <p className="margin-bottom-0">
+                <Trans i18nKey="getAccess:stepsIDM.first.description.two">
+                  <Link
+                    aria-label="Open IDM in a new tab"
+                    href="https://home.idm.cms.gov"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="external"
+                  >
+                    indexZero
+                  </Link>
+                </Trans>
               </p>
             </ProcessListItem>
 
@@ -276,21 +262,18 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.second.description.one">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsEUA.second.description.two">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
 
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.second.description.three">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
               </ul>
@@ -307,25 +290,21 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.third.description.two">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.third.description.three">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.third.description.four">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.third.description.five">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
               </ul>
@@ -340,19 +319,16 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.fourth.description.one">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.fourth.description.two">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.fourth.description.three">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
               </ul>
@@ -367,13 +343,11 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.fifth.description.one">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
                 <li>
                   <Trans i18nKey="getAccess:stepsIDM.fifth.description.two">
                     <span className="text-bold text-italic">indexZero</span>
-                    &nbsp;indexOne
                   </Trans>
                 </li>
               </ul>
@@ -386,7 +360,6 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
               <Trans i18nKey="getAccess:stepsIDM.sixth.description">
                 <UswdsReactLink to="/signin">indexZero</UswdsReactLink>
-                &nbsp;indexOne
               </Trans>
             </ProcessListItem>
           </ProcessList>
@@ -398,11 +371,11 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             className="margin-bottom-2"
             heading={t('questionsHeading')}
           >
-            <p className="margin-bottom-0">
+            <dt className="margin-bottom-0 margin-top-2">
               <Trans i18nKey="getAccess:questions">
                 <Link href="mailto:MINTTeam@cms.hhs.gov">indexZero</Link>
               </Trans>
-            </p>
+            </dt>
           </Alert>
         </div>
       </main>

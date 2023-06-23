@@ -18,10 +18,7 @@ const getAccess = {
       'Below is an overview of the process involved in creating your draft model plan.',
     first: {
       heading: 'Sign in to EUA',
-      description: {
-        one: 'Visit ',
-        two: ' and sign in with your credentials.'
-      }
+      description: 'Visit <0>eua.cms.gov</0> and sign in with your credentials.'
     },
     second: {
       heading: 'Request a job code',
@@ -54,17 +51,16 @@ const getAccess = {
   accessThroughIDM: 'Access through IDM',
   accessInfo1:
     'If you’re a contractor and don’t have an IDM account or your current IDM account uses your EUA credentials (your four-character user ID and password), you must create a new one.',
-  accessInfo2: 'Visit ',
-  accessInfo3:
-    ' and click <0>New User Registration</0> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
+  accessInfo2:
+    'Visit <0>home.idm.cms.gov</0> and click <1>New User Registration</1> to create an account. We recommend using an email address for your new user ID, so it’s easy to remember.',
   stepsIDM: {
     first: {
       heading: 'Sign in to IDM',
       description: {
         one:
           'If you have access to EUA and are currently signed in, we recommend completing these steps in an incognito browser.',
-        two: 'Visit ',
-        three: 'and sign in with your credentials. Do not use your PIV card.'
+        two:
+          'Visit <0>home.idm.cms.gov</0> and sign in with your credentials. Do not use your PIV card.'
       }
     },
     second: {
