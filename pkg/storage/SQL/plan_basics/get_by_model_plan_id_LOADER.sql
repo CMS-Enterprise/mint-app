@@ -9,6 +9,8 @@ WITH QUERIED_IDS AS (
 SELECT
     plan_basics.id,
     plan_basics.model_plan_id,
+    plan_basics.demo_code,
+    plan_basics.ams_model_id,
     plan_basics.model_category,
     plan_basics.cms_centers,
     plan_basics.cms_other,

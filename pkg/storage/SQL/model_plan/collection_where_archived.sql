@@ -1,6 +1,7 @@
 SELECT
     id,
     model_name,
+    abbreviation,
     status,
     archived,
     created_by,

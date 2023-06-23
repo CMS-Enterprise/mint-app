@@ -49,6 +49,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID!
   modelName: String!
+  abbreviation: String
   archived: Boolean!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -130,6 +131,7 @@ https://gqlgen.com/reference/changesets/
 """
 input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
+  abbreviation: String
   someNumbers: [Int!]
   archived: Boolean
   status: ModelStatus
@@ -266,6 +268,9 @@ type PlanBasics {
   id: UUID!
   modelPlanID: UUID!
 
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
@@ -313,6 +318,9 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  demoCode: String
+  amsModelID: String
+
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]
   cmsOther: String
@@ -1608,7 +1616,7 @@ agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
