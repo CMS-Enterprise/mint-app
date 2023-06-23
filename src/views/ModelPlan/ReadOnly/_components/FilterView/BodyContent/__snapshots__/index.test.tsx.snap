@@ -35,47 +35,6 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="filtered-view-section filtered-view-section--model-basics margin-bottom-6 border-bottom border-base-light padding-bottom-4"
-    >
-      <div
-        class="read-only-model-plan--model-basics"
-        data-testid="read-only-model-plan--model-basics"
-      >
-        <div
-          class="display-flex flex-justify flex-align-start"
-        >
-          <h2
-            class="margin-top-0 margin-bottom-4"
-          >
-            Model basics
-          </h2>
-        </div>
-        <div
-          class="desktop:grid-col-12"
-          data-testid="grid"
-        >
-          <div
-            class="read-only-section read-only-section--previous-model-names margin-bottom-3"
-          >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-            >
-              Previous model names
-            </p>
-            <p
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-            >
-              <em
-                class="text-base"
-              >
-                No answer entered
-              </em>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
       class="filtered-view-section filtered-view-section--general-characteristics margin-bottom-6 border-bottom border-base-light padding-bottom-4"
     >
       <div
@@ -120,14 +79,159 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
               </p>
             </div>
           </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-are-the-model-key-characteristics margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What are the model key characteristics?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
         </div>
         <div
           class=""
         />
         <div
           class=""
-        />
-        <div />
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--does-the-model-offer-different-options-for-participation margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Does the model offer different options for participation?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-is-the-agreement-type margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What is the agreement type?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-more-than-one-participation-agreement-be-needed margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will more than one participation agreement be needed?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-authority-allows-cmmi-to-test-the-model margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What authority allows CMMI to test the model?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="grid-row grid-gap"
+            data-testid="grid"
+          >
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--are-waivers-required margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Are waivers required?
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  <em
+                    class="text-base"
+                  >
+                    No answer entered
+                  </em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -148,74 +252,18 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
         </div>
         <div
           class=""
-        />
-        <div
-          class=""
-        />
-        <div
-          class=""
-        />
-        <div
-          class=""
-        />
-        <div>
+        >
           <div
             class="desktop:grid-col-12"
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--how-frequently-are-providers-added margin-bottom-3"
+              class="read-only-section read-only-section--who-are-the-particpants margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                How frequently are providers added?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
-              </p>
-            </div>
-          </div>
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--how-will-you-decide-to-add-providers margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                How will you decide to add providers?
-              </p>
-              <p
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-              >
-                <em
-                  class="text-base"
-                >
-                  No answer entered
-                </em>
-              </p>
-            </div>
-          </div>
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--can-providers-leave-the-model margin-bottom-3"
-            >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
-              >
-                Can providers leave the model?
+                Who are the particpants?
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -229,6 +277,40 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class=""
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-will-you-select-participants margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How will you select participants?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class=""
+        />
+        <div
+          class=""
+        />
+        <div />
       </div>
     </div>
     <div
@@ -252,19 +334,18 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
         />
         <div
           class=""
-        />
-        <div>
+        >
           <div
             class="desktop:grid-col-12"
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--are-there-precedence-rules-between-this-model-and-other-model-s margin-bottom-3"
+              class="read-only-section read-only-section--how-will-you-choose-beneficiaries margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                Are there precedence rules between this model and other model(s)?
+                How will you choose beneficiaries?
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -278,6 +359,358 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
             </div>
           </div>
         </div>
+        <div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-frequently-are-beneficiaries-chosen margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How frequently are beneficiaries chosen?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="filtered-view-section filtered-view-section--ops-eval-and-learning margin-bottom-6 border-bottom border-base-light padding-bottom-4"
+    >
+      <div
+        class="read-only-model-plan--ops-eval-and-learning"
+        data-testid="read-only-model-plan--ops-eval-and-learning"
+      >
+        <div
+          class="display-flex flex-justify flex-align-start"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-4"
+          >
+            Operations, evaluation, and learning
+          </h2>
+        </div>
+        <div
+          class=""
+        />
+        <div
+          class=""
+        >
+          <h3>
+            IDDOC Operations
+          </h3>
+        </div>
+        <div
+          class=""
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-you-establish-a-benchmark-to-capture-performance margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will you establish a benchmark to capture performance?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-you-compute-performance-scores margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will you compute performance scores?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="grid-row grid-gap"
+            data-testid="grid"
+          >
+            <div
+              class="desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-performance-scores margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you make risk adjustments to performance scores?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-feedback-results margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you make risk adjustments to feedback results?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="grid-row grid-gap"
+            data-testid="grid"
+          >
+            <div
+              class="desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you make risk adjustments to payments?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--will-you-make-risk-adjustments-to-others margin-bottom-3"
+                >
+                  <p
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  >
+                    Will you make risk adjustments to others?
+                  </p>
+                  <p
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  >
+                    <em
+                      class="text-base"
+                    >
+                      No answer entered
+                    </em>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class=""
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-data-do-you-need-to-monitor-the-model margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What data do you need to monitor the model?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-data-will-you-send-to-participants margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                What data will you send to participants?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class=""
+        >
+          <h3>
+            Data Sharing, Collection, and Reporting Timing and Frequency
+          </h3>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-often-do-you-anticipate-sharing-data margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How often do you anticipate sharing data?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-often-do-you-anticipate-collecting-data margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How often do you anticipate collecting data?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div />
       </div>
     </div>
     <div
@@ -304,12 +737,12 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
             data-testid="grid"
           >
             <div
-              class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
+              class="read-only-section read-only-section--what-will-you-pay margin-bottom-3"
             >
               <p
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
-                What will be the funding source for payments?
+                What will you pay?
               </p>
               <p
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
@@ -325,8 +758,84 @@ exports[`Read Only Filtered View Body Content matches snapshot 1`] = `
         </div>
         <div
           class=""
-        />
-        <div />
+        >
+          <div
+            class="grid-row grid-gap"
+            data-testid="grid"
+          >
+            <div
+              class="desktop:grid-col-12"
+              data-testid="grid"
+            >
+              <div
+                class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms margin-bottom-3"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  Will participants be allowed to select between multiple payment mechanisms?
+                </p>
+                <p
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                >
+                  <em
+                    class="text-base"
+                  >
+                    No answer entered
+                  </em>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-often-do-you-anticipate-making-payments margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                How often do you anticipate making payments?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-you-recover-the-payments margin-bottom-3"
+            >
+              <p
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will you recover the payments?
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                <em
+                  class="text-base"
+                >
+                  No answer entered
+                </em>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div

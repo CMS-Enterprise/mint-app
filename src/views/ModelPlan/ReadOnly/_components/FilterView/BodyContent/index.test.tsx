@@ -87,13 +87,13 @@ describe('Read Only Filtered View Body Content', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/model-basics?filter-view=oact`
+          `/models/${modelID}/read-only/model-basics?filter-view=cmmi`
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
           <Provider store={store}>
             <Route path="/models/:modelID/read-only/:subinfo">
-              <BodyContent modelID={modelID} filteredView="oact" />
+              <BodyContent modelID={modelID} filteredView="cmmi" />
             </Route>
           </Provider>
         </MockedProvider>
@@ -112,13 +112,13 @@ describe('Read Only Filtered View Body Content', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/model-basics?filter-view=oact`
+          `/models/${modelID}/read-only/model-basics?filter-view=cmmi`
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
           <Provider store={store}>
             <Route path="/models/:modelID/read-only/:subinfo">
-              <BodyContent modelID={modelID} filteredView="oact" />
+              <BodyContent modelID={modelID} filteredView="cmmi" />
             </Route>
           </Provider>
         </MockedProvider>
