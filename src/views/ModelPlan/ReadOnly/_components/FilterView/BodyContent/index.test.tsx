@@ -13,14 +13,11 @@ import {
   ModelStatus,
   TeamRole
 } from 'types/graphql-global-types';
-
-import BodyContent from './index';
-
-const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+import ReadOnly from 'views/ModelPlan/ReadOnly';
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
-  id: modelID,
+  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
   isFavorite: false,
   modelName: 'Testing Model Summary',
   modifiedDts: '2022-08-27T04:00:00Z',
@@ -61,7 +58,7 @@ const mock = [
   {
     request: {
       query: GetModelSummary,
-      variables: { id: `${modelID}` }
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
       data: {
@@ -87,13 +84,13 @@ describe('Read Only Filtered View Body Content', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/model-basics?filter-view=cmmi`
+          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics?filter-view=cmmi`
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
           <Provider store={store}>
             <Route path="/models/:modelID/read-only/:subinfo">
-              <BodyContent modelID={modelID} filteredView="cmmi" />
+              <ReadOnly />
             </Route>
           </Provider>
         </MockedProvider>
@@ -101,7 +98,7 @@ describe('Read Only Filtered View Body Content', () => {
     );
 
     expect(screen.getByText('Model Team')).toBeInTheDocument();
-    expect(screen.getByTestId('alert')).toBeInTheDocument();
+    expect(screen.getByText('CMMI Cost Estimate')).toBeInTheDocument();
 
     expect(
       screen.getByTestId('read-only-model-plan--general-characteristics')
@@ -112,13 +109,13 @@ describe('Read Only Filtered View Body Content', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/model-basics?filter-view=cmmi`
+          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics?filter-view=cmmi`
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
           <Provider store={store}>
             <Route path="/models/:modelID/read-only/:subinfo">
-              <BodyContent modelID={modelID} filteredView="cmmi" />
+              <ReadOnly />
             </Route>
           </Provider>
         </MockedProvider>
@@ -127,7 +124,6 @@ describe('Read Only Filtered View Body Content', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Model Team')).toBeInTheDocument();
-      expect(screen.getByTestId('alert')).toBeInTheDocument();
 
       expect(
         screen.getByTestId('read-only-model-plan--payments')
