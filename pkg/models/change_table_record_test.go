@@ -20,3 +20,12 @@ func TestGQLTableName(t *testing.T) {
 	assert.Equal(t, GQLTableName("UNKNOWN"), enum)
 
 }
+
+func TestNameCamelCase(t *testing.T) {
+	field := Field{
+		Name: "HOORAY_HOerAY_hello",
+	}
+
+	camel := field.NameCamelCase()
+	assert.Equal(t, "hOORAYHOerAYHello", camel)
+}

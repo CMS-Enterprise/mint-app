@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/iancoleman/strcase"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
@@ -94,4 +95,15 @@ type Field struct {
 type FieldValue struct {
 	New interface{} `json:"new"`
 	Old interface{} `json:"old"`
+}
+
+// NameCamelCase converts the name database string value, to lower case camel. This is meant as an approximation of the GQL field name
+func (field *Field) NameCamelCase() string { //can include ctx context.Context if desired
+
+	return toLowerCamelCase(field.Name)
+
+}
+
+func toLowerCamelCase(s string) string {
+	return strcase.ToLowerCamel(s)
 }

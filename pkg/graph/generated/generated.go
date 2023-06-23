@@ -161,8 +161,9 @@ type ComplexityRoot struct {
 	}
 
 	Field struct {
-		Name  func(childComplexity int) int
-		Value func(childComplexity int) int
+		Name          func(childComplexity int) int
+		NameCamelCase func(childComplexity int) int
+		Value         func(childComplexity int) int
 	}
 
 	FieldValue struct {
@@ -1611,6 +1612,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Field.Name(childComplexity), true
+
+	case "Field.nameCamelCase":
+		if e.complexity.Field.NameCamelCase == nil {
+			break
+		}
+
+		return e.complexity.Field.NameCamelCase(childComplexity), true
 
 	case "Field.value":
 		if e.complexity.Field.Value == nil {
@@ -7963,6 +7971,7 @@ type ChangedFields {
 
 type Field {
   name: String!
+  nameCamelCase: String!
   value: FieldValue!
 }
 
@@ -11392,6 +11401,8 @@ func (ec *executionContext) fieldContext_ChangedFields_changes(ctx context.Conte
 			switch field.Name {
 			case "name":
 				return ec.fieldContext_Field_name(ctx, field)
+			case "nameCamelCase":
+				return ec.fieldContext_Field_nameCamelCase(ctx, field)
 			case "value":
 				return ec.fieldContext_Field_value(ctx, field)
 			}
@@ -13739,6 +13750,50 @@ func (ec *executionContext) fieldContext_Field_name(ctx context.Context, field g
 		Object:     "Field",
 		Field:      field,
 		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Field_nameCamelCase(ctx context.Context, field graphql.CollectedField, obj *models.Field) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Field_nameCamelCase(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NameCamelCase(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Field_nameCamelCase(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Field",
+		Field:      field,
+		IsMethod:   true,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
@@ -51298,6 +51353,13 @@ func (ec *executionContext) _Field(ctx context.Context, sel ast.SelectionSet, ob
 		case "name":
 
 			out.Values[i] = ec._Field_name(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "nameCamelCase":
+
+			out.Values[i] = ec._Field_nameCamelCase(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
