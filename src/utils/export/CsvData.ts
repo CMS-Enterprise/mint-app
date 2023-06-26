@@ -4,8 +4,16 @@ const csvFields = [
     value: 'id'
   },
   {
-    label: 'Model Name',
+    label: 'Model name',
     value: 'modelName'
+  },
+  {
+    label: 'Previous name',
+    value: 'nameHistory'
+  },
+  {
+    label: 'Short name',
+    value: 'abbreviation'
   },
   {
     label: 'Status',
@@ -30,6 +38,8 @@ const csvFields = [
 
   // Basics
   'basics.modelCategory',
+  'basics.amsModelID',
+  'basics.demoCode',
   'basics.cmsCenters', // array
   'basics.cmmiGroups', // array
   'basics.cmsOther',
@@ -51,50 +61,6 @@ const csvFields = [
   'basics.phasedIn',
   'basics.phasedInNote',
   'basics.status',
-  // 'basics.',
-
-  // Beneficiaries
-  'beneficiaries.beneficiaries', // array
-  'beneficiaries.beneficiarySelectionMethod', // array
-  'beneficiaries.beneficiariesNote',
-  'beneficiaries.beneficiariesOther',
-  'beneficiaries.beneficiaryOverlap',
-  'beneficiaries.beneficiaryOverlapNote',
-  'beneficiaries.beneficiarySelectionNote',
-  'beneficiaries.beneficiarySelectionOther',
-  'beneficiaries.beneficiarySelectionMethod',
-  'beneficiaries.treatDualElligibleDifferent',
-  'beneficiaries.treatDualElligibleDifferentHow',
-  'beneficiaries.treatDualElligibleDifferentNote',
-  'beneficiaries.excludeCertainCharacteristics',
-  'beneficiaries.excludeCertainCharacteristicsCriteria',
-  'beneficiaries.excludeCertainCharacteristicsNote',
-  'beneficiaries.beneficiarySelectionFrequency',
-  'beneficiaries.beneficiarySelectionFrequencyNote',
-  'beneficiaries.beneficiarySelectionFrequencyOther',
-  'beneficiaries.precedenceRules',
-  'beneficiaries.status',
-  'beneficiaries.numberPeopleImpacted',
-  'beneficiaries.estimateConfidence',
-  'beneficiaries.confidenceNote',
-
-  // Collaborators
-  'collaborators.userAccount.username',
-  'collaborators.userAccount.commonName',
-  'collaborators.teamRole',
-
-  // Discussions
-  'discussions.content',
-  'discussions.createdBy',
-  'discussions.createdDts',
-  'discussions.status',
-
-  // Discussion Replies
-  'discussions.replies.discussionID',
-  'discussions.replies.content',
-  'discussions.replies.createdBy',
-  'discussions.replies.createdDts',
-  'discussions.replies.resolution',
 
   // General Characteristics
   'generalCharacteristics.rulemakingRequired',
@@ -151,6 +117,82 @@ const csvFields = [
   'generalCharacteristics.agreementTypesOther',
   'generalCharacteristics.multiplePatricipationAgreementsNeeded',
   'generalCharacteristics.multiplePatricipationAgreementsNeededNote',
+
+  // Participants and Providers
+  'participantsAndProviders.communicationMethod', // array
+  'participantsAndProviders.communicationMethodOther',
+  'participantsAndProviders.communicationNote',
+  'participantsAndProviders.participantAssumeRisk',
+  'participantsAndProviders.riskType',
+  'participantsAndProviders.riskOther',
+  'participantsAndProviders.riskNote',
+  'participantsAndProviders.willRiskChange',
+  'participantsAndProviders.willRiskChangeNote',
+  'participantsAndProviders.coordinateWork',
+  'participantsAndProviders.coordinateWorkNote',
+  'participantsAndProviders.gainsharePayments',
+  'participantsAndProviders.gainsharePaymentsTrack',
+  'participantsAndProviders.gainsharePaymentsNote',
+  'participantsAndProviders.participantsIds', // array
+  'participantsAndProviders.participantsIdsOther',
+  'participantsAndProviders.participantsIDSNote',
+  'participantsAndProviders.expectedNumberOfParticipants',
+  'participantsAndProviders.estimateConfidence',
+  'participantsAndProviders.confidenceNote',
+  'participantsAndProviders.recruitmentMethod',
+  'participantsAndProviders.recruitmentOther',
+  'participantsAndProviders.recruitmentNote',
+  'participantsAndProviders.selectionMethod', // array
+  'participantsAndProviders.selectionOther',
+  'participantsAndProviders.selectionNote',
+  'participantsAndProviders.participants', // array
+  'participantsAndProviders.medicareProviderType',
+  'participantsAndProviders.statesEngagement',
+  'participantsAndProviders.participantsOther',
+  'participantsAndProviders.participantsNote',
+  'participantsAndProviders.participantsCurrentlyInModels',
+  'participantsAndProviders.participantsCurrentlyInModelsNote',
+  'participantsAndProviders.modelApplicationLevel',
+  'participantsAndProviders.providerAdditionFrequency',
+  'participantsAndProviders.providerAdditionFrequencyOther',
+  'participantsAndProviders.providerAdditionFrequencyNote',
+  'participantsAndProviders.providerAddMethod', // array
+  'participantsAndProviders.providerAddMethodOther',
+  'participantsAndProviders.providerAddMethodNote',
+  'participantsAndProviders.providerLeaveMethod', // array
+  'participantsAndProviders.providerLeaveMethodOther',
+  'participantsAndProviders.providerLeaveMethodNote',
+  'participantsAndProviders.providerOverlap',
+  'participantsAndProviders.providerOverlapHierarchy',
+  'participantsAndProviders.providerOverlapNote',
+  'participantsAndProviders.readyForReviewBy',
+  'participantsAndProviders.readyForReviewDts',
+  'participantsAndProviders.status',
+
+  // Beneficiaries
+  'beneficiaries.beneficiaries', // array
+  'beneficiaries.beneficiarySelectionMethod', // array
+  'beneficiaries.beneficiariesNote',
+  'beneficiaries.beneficiariesOther',
+  'beneficiaries.beneficiaryOverlap',
+  'beneficiaries.beneficiaryOverlapNote',
+  'beneficiaries.beneficiarySelectionNote',
+  'beneficiaries.beneficiarySelectionOther',
+  'beneficiaries.beneficiarySelectionMethod',
+  'beneficiaries.treatDualElligibleDifferent',
+  'beneficiaries.treatDualElligibleDifferentHow',
+  'beneficiaries.treatDualElligibleDifferentNote',
+  'beneficiaries.excludeCertainCharacteristics',
+  'beneficiaries.excludeCertainCharacteristicsCriteria',
+  'beneficiaries.excludeCertainCharacteristicsNote',
+  'beneficiaries.beneficiarySelectionFrequency',
+  'beneficiaries.beneficiarySelectionFrequencyNote',
+  'beneficiaries.beneficiarySelectionFrequencyOther',
+  'beneficiaries.precedenceRules',
+  'beneficiaries.status',
+  'beneficiaries.numberPeopleImpacted',
+  'beneficiaries.estimateConfidence',
+  'beneficiaries.confidenceNote',
 
   // Ops and Eval Learning
   'opsEvalAndLearning.ccmInvolvment', // array
@@ -250,57 +292,6 @@ const csvFields = [
   'opsEvalAndLearning.appealNote',
   'opsEvalAndLearning.status',
 
-  // Participants and Providers
-  'participantsAndProviders.communicationMethod', // array
-  'participantsAndProviders.communicationMethodOther',
-  'participantsAndProviders.communicationNote',
-  'participantsAndProviders.participantAssumeRisk',
-  'participantsAndProviders.riskType',
-  'participantsAndProviders.riskOther',
-  'participantsAndProviders.riskNote',
-  'participantsAndProviders.willRiskChange',
-  'participantsAndProviders.willRiskChangeNote',
-  'participantsAndProviders.coordinateWork',
-  'participantsAndProviders.coordinateWorkNote',
-  'participantsAndProviders.gainsharePayments',
-  'participantsAndProviders.gainsharePaymentsTrack',
-  'participantsAndProviders.gainsharePaymentsNote',
-  'participantsAndProviders.participantsIds', // array
-  'participantsAndProviders.participantsIdsOther',
-  'participantsAndProviders.participantsIDSNote',
-  'participantsAndProviders.expectedNumberOfParticipants',
-  'participantsAndProviders.estimateConfidence',
-  'participantsAndProviders.confidenceNote',
-  'participantsAndProviders.recruitmentMethod',
-  'participantsAndProviders.recruitmentOther',
-  'participantsAndProviders.recruitmentNote',
-  'participantsAndProviders.selectionMethod', // array
-  'participantsAndProviders.selectionOther',
-  'participantsAndProviders.selectionNote',
-  'participantsAndProviders.participants', // array
-  'participantsAndProviders.medicareProviderType',
-  'participantsAndProviders.statesEngagement',
-  'participantsAndProviders.participantsOther',
-  'participantsAndProviders.participantsNote',
-  'participantsAndProviders.participantsCurrentlyInModels',
-  'participantsAndProviders.participantsCurrentlyInModelsNote',
-  'participantsAndProviders.modelApplicationLevel',
-  'participantsAndProviders.providerAdditionFrequency',
-  'participantsAndProviders.providerAdditionFrequencyOther',
-  'participantsAndProviders.providerAdditionFrequencyNote',
-  'participantsAndProviders.providerAddMethod', // array
-  'participantsAndProviders.providerAddMethodOther',
-  'participantsAndProviders.providerAddMethodNote',
-  'participantsAndProviders.providerLeaveMethod', // array
-  'participantsAndProviders.providerLeaveMethodOther',
-  'participantsAndProviders.providerLeaveMethodNote',
-  'participantsAndProviders.providerOverlap',
-  'participantsAndProviders.providerOverlapHierarchy',
-  'participantsAndProviders.providerOverlapNote',
-  'participantsAndProviders.readyForReviewBy',
-  'participantsAndProviders.readyForReviewDts',
-  'participantsAndProviders.status',
-
   // Payments
   'payments.payType', // array
   'payments.payTypeNote',
@@ -363,11 +354,30 @@ const csvFields = [
   'payments.paymentStartDateNote',
   'payments.readyForReviewBy',
   'payments.readyForReviewDts',
-  'payments.status'
+  'payments.status',
+
+  // Collaborators
+  'collaborators.userAccount.username',
+  'collaborators.userAccount.commonName',
+  'collaborators.teamRole',
+
+  // Discussions
+  'discussions.content',
+  'discussions.createdBy',
+  'discussions.createdDts',
+  'discussions.status',
+
+  // Discussion Replies
+  'discussions.replies.discussionID',
+  'discussions.replies.content',
+  'discussions.replies.createdBy',
+  'discussions.replies.createdDts',
+  'discussions.replies.resolution'
 ];
 
 const fieldsToUnwind = [
   'collaborators',
+  'nameHistory',
   'basics.cmsCenters',
   'basics.cmmiGroups',
   'beneficiaries.beneficiaries',
