@@ -49,7 +49,7 @@ const BodyContent = ({
   return (
     <Grid>
       <FitleredViewSection sectionName="model-team">
-        <h2 className="margin-top-0 margin-bottom-4">Model Team</h2>
+        <h2 className="margin-top-0 margin-bottom-4">{t('modelTeam')}</h2>
         <ReadOnlyTeamInfo modelID={modelID} isViewingFilteredView />
       </FitleredViewSection>
 
