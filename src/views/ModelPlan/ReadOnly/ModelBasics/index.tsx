@@ -11,13 +11,6 @@ import SectionWrapper from 'components/shared/SectionWrapper';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
 import { formatDateUtc } from 'utils/date';
-import {
-  translateBooleanOrNull,
-  translateCmmiGroups,
-  translateCmsCenter,
-  translateModelCategory,
-  translateModelType
-} from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
@@ -32,8 +25,10 @@ export type ReadOnlyProps = {
 };
 
 const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
-  const { t } = useTranslation('basics');
-  const { t: p } = useTranslation('prepareForClearance');
+  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: generalT } = useTranslation('draftModelPlan');
+  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -48,6 +43,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
   }
 
   const { nameHistory } = data?.modelPlan || {};
+
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
   );
@@ -81,7 +77,8 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
     if (value) {
       return formatDateUtc(value, 'MM/dd/yyyy');
     }
-    return <em className="text-base">{t('na')}</em>;
+
+    return <em className="text-base">{planBasicsMiscT('na')}</em>;
   };
 
   return (
@@ -91,7 +88,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">
-          {clearance ? t('clearanceHeading') : t('heading')}
+          {clearance
+            ? planBasicsMiscT('clearanceHeading')
+            : planBasicsMiscT('heading')}
         </h2>
 
         {status && <TaskListStatusTag status={status} />}
@@ -99,66 +98,78 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
 
       {clearance && (
         <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {p('forModelPlan', {
+          {prepareForClearanceT('forModelPlan', {
             modelName
           })}
         </p>
       )}
 
       <ReadOnlySection
-        heading={t('previousNames')}
+        heading={planBasicsMiscT('previousNames')}
         list
         listItems={filteredNameHistory}
       />
 
       <ReadOnlySection
-        heading={t('modelCategory')}
-        copy={modelCategory && translateModelCategory(modelCategory)}
+        heading={planBasicsT('modelCategory.question')}
+        copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
       />
 
       <div className="desktop:display-flex flex-justify">
         <div className="desktop:width-card-lg">
           <ReadOnlySection
-            heading={t('cmsComponent')}
+            heading={planBasicsT('cmsCenters.question')}
             list
-            listItems={cmsCenters?.map(translateCmsCenter)}
+            listItems={cmsCenters?.map((cmsCenter): string =>
+              planBasicsT(`cmsCenters.options.${cmsCenter}`)
+            )}
             listOtherItem={cmsOther}
           />
         </div>
         <div className="desktop:width-card-lg">
           <ReadOnlySection
-            heading={t('cmmiGroup')}
+            heading={planBasicsT('cmmiGroups.question')}
             list
-            listItems={cmmiGroups?.map(translateCmmiGroups)}
+            listItems={cmmiGroups?.map((cmmiGroup): string =>
+              planBasicsT(`cmmiGroups.options.${cmmiGroup}`)
+            )}
           />
         </div>
       </div>
 
       <ReadOnlySection
-        heading={t('modelType')}
-        copy={modelType && translateModelType(modelType)}
+        heading={planBasicsT('modelType.question')}
+        copy={planBasicsT(`modelType.options.${modelType}`, '')}
       />
 
-      <ReadOnlySection heading={t('problem')} copy={problem} />
-      <ReadOnlySection heading={t('goal')} copy={goal} />
       <ReadOnlySection
-        heading={t('testInterventions')}
+        heading={planBasicsT('problem.question')}
+        copy={problem}
+      />
+
+      <ReadOnlySection heading={planBasicsT('goal.question')} copy={goal} />
+
+      <ReadOnlySection
+        heading={planBasicsT('testInterventions.question')}
         copy={testInterventions}
       />
-      <ReadOnlySection heading={t('notes')} copy={note} />
+
+      <ReadOnlySection heading={generalT('note')} copy={note} />
 
       <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
         <h3 className="margin-top-0 margin-bottom-4">
-          {t('highLevelTimeline')}
+          {planBasicsMiscT('highLevelTimeline')}
         </h3>
+
         <ProcessList className="read-only-model-plan__timeline">
           <ProcessListItem className="read-only-model-plan__timeline__list-item">
             <ProcessListHeading
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('completeICIP')}
+              {planBasicsT('completeICIP.question')}
             </ProcessListHeading>
+
             <p className="margin-y-0 font-body-md line-height-sans-4">
               {dateOrNoAnswer(completeICIP)}
             </p>
@@ -169,16 +180,18 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('clearance')}
+              {planBasicsMiscT('clearance')}
             </ProcessListHeading>
+
             <div className="mobile-lg:display-flex">
               <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
                 >
-                  {t('clearanceStartDate')}
+                  {planBasicsT('clearanceStarts.question')}
                 </ProcessListHeading>
+
                 <p className="margin-y-0 font-body-md line-height-sans-4">
                   {dateOrNoAnswer(clearanceStarts)}
                 </p>
@@ -188,8 +201,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
                   type="p"
                   className="font-body-sm line-height-sans-4"
                 >
-                  {t('clearanceEndDate')}
+                  {planBasicsT('clearanceEnds.question')}
                 </ProcessListHeading>
+
                 <p className="margin-y-0 font-body-md line-height-sans-4">
                   {dateOrNoAnswer(clearanceEnds)}
                 </p>
@@ -202,8 +216,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('annouceModel')}
+              {planBasicsT('announced.question')}
             </ProcessListHeading>
+
             <p className="margin-y-0 font-body-md line-height-sans-4">
               {dateOrNoAnswer(announced)}
             </p>
@@ -214,16 +229,18 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('applicationPeriod')}
+              {planBasicsMiscT('applicationPeriod')}
             </ProcessListHeading>
+
             <div className="mobile-lg:display-flex">
               <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
                 >
-                  {t('applicationStartDate')}
+                  {planBasicsT('applicationsStart.question')}
                 </ProcessListHeading>
+
                 <p className="margin-y-0 font-body-md line-height-sans-4">
                   {dateOrNoAnswer(applicationsStart)}
                 </p>
@@ -233,8 +250,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
                   type="p"
                   className="font-body-sm line-height-sans-4"
                 >
-                  {t('applicationEndDate')}
+                  {planBasicsT('applicationsEnd.question')}
                 </ProcessListHeading>
+
                 <p className="margin-y-0 font-body-md line-height-sans-4">
                   {dateOrNoAnswer(applicationsEnd)}
                 </p>
@@ -247,7 +265,7 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('perforamncePeriod')}
+              {planBasicsMiscT('demonstrationPerformance')}
             </ProcessListHeading>
             <div className="mobile-lg:display-flex">
               <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -255,8 +273,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
                   type="p"
                   className="font-body-sm line-height-sans-4"
                 >
-                  {t('performanceStartDate')}
+                  {planBasicsT('performancePeriodStarts.question')}
                 </ProcessListHeading>
+
                 <p className="margin-y-0 font-body-md line-height-sans-4">
                   {dateOrNoAnswer(performancePeriodStarts)}
                 </p>
@@ -266,8 +285,9 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
                   type="p"
                   className="font-body-sm line-height-sans-4"
                 >
-                  {t('performanceEndDate')}
+                  {planBasicsT('performancePeriodEnds.question')}
                 </ProcessListHeading>
+
                 <p className="margin-y-0 font-body-md line-height-sans-4">
                   {dateOrNoAnswer(performancePeriodEnds)}
                 </p>
@@ -280,20 +300,21 @@ const ReadOnlyModelBasics = ({ modelID, clearance }: ReadOnlyProps) => {
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('modelWrapUp')}
+              {planBasicsT('wrapUpEnds.question')}
             </ProcessListHeading>
+
             <p className="margin-y-0 font-body-md line-height-sans-4">
               {dateOrNoAnswer(wrapUpEnds)}
             </p>
           </ProcessListItem>
         </ProcessList>
 
-        <ReadOnlySection heading={t('notes')} copy={highLevelNote} />
+        <ReadOnlySection heading={generalT('note')} copy={highLevelNote} />
       </SectionWrapper>
 
       <ReadOnlySection
-        heading={t('tightTimeline')}
-        copy={translateBooleanOrNull(phasedIn)}
+        heading={planBasicsT('phasedIn.question')}
+        copy={planBasicsT(`phasedIn.options.${phasedIn}`, '')} // Default to empty string if bool is null
         notes={phasedInNote}
       />
     </div>
