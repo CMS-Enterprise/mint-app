@@ -58,16 +58,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         </nav>
         <h1
           aria-live="polite"
-          class="mint-h1 margin-top-4 margin-bottom-2"
+          class="mint-h1 margin-top-4"
           tabindex="-1"
         >
           Model basics
         </h1>
-        <p
-          class="margin-top-0 margin-bottom-2 font-sans-sm line-height-mono-4"
-        >
-          If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
-        </p>
         <div
           class="padding-2 bg-primary-lighter"
         >
@@ -345,6 +340,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                     class="usa-fieldset"
                     data-testid="fieldset"
                   >
+                    <legend
+                      class="usa-legend"
+                    >
+                      CMS component
+                    </legend>
                     <label
                       class="usa-label"
                       data-testid="label"
