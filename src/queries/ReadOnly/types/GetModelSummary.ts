@@ -43,6 +43,7 @@ export interface GetModelSummary_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
+  abbreviation: string | null;
   modifiedDts: Time | null;
   status: ModelStatus;
   isFavorite: boolean;

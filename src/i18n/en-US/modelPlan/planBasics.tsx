@@ -24,6 +24,22 @@ export const planBasics: TranslationPlanBasics = {
       UNKNOWN: 'Unknown'
     }
   },
+  amsModelID: {
+    gqlField: 'amsModelID',
+    goField: 'AmsModelID',
+    dbField: 'ams_model_ID',
+    question: 'Model ID',
+    dataType: 'string',
+    formType: 'textarea'
+  },
+  demoCode: {
+    gqlField: 'demoCode',
+    goField: 'DemoCode',
+    dbField: 'demo_code',
+    question: 'Demo code(s)',
+    dataType: 'string',
+    formType: 'textarea'
+  },
   cmsCenters: {
     gqlField: 'cmsCenters',
     goField: 'CMMIGroups',
@@ -238,7 +254,15 @@ export const planBasicsMisc: Record<string, string> = {
   na: 'No answer entered',
   otherNotSpecificed: 'Other not specified',
   milestonesInfo:
-    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.'
+    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
+  required1: 'All fields marked with ',
+  required2: ' are required.',
+  noneEntered: 'None entered',
+  otherIdentifiers: 'Other identifiers',
+  otherIdentifiersInfo1: 'These are created in ',
+  otherIdentifiersInfo2: 'CMMI Analysis & Management System (AMS).',
+  otherIdentifiersInfo3:
+    ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.'
 };
 
 export default planBasics;

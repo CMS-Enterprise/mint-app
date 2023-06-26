@@ -13,22 +13,25 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
+  Link as TrussLink,
   SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import TextAreaField from 'components/shared/TextAreaField';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
 import {
@@ -62,6 +65,8 @@ const BasicsContent = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const history = useHistory();
@@ -83,12 +88,20 @@ const BasicsContent = () => {
     }
   });
 
-  const { id, modelName, basics, nameHistory } = data?.modelPlan || {};
+  const { id, modelName, abbreviation, basics, nameHistory } =
+    data?.modelPlan || {};
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
   );
 
-  const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
+  const {
+    demoCode,
+    amsModelID,
+    modelCategory,
+    cmsCenters,
+    cmmiGroups,
+    cmsOther
+  } = basics || {};
 
   const [update] = useMutation<UpdateModelPlanAndBasicsVariables>(
     UpdateModelPlanAndBasics
@@ -105,16 +118,20 @@ const BasicsContent = () => {
     const {
       id: updateId,
       modelName: updateModelName,
+      abbreviation: updateAbbreviation,
       basics: updateBasics
     } = formikValues;
     update({
       variables: {
         id: updateId,
         changes: {
-          modelName: updateModelName
+          modelName: updateModelName,
+          abbreviation: updateAbbreviation
         },
         basicsId: updateBasics.id,
         basicsChanges: {
+          demoCode: updateBasics.demoCode,
+          amsModelID: updateBasics.amsModelID,
           modelCategory: updateBasics.modelCategory,
           cmsCenters: updateBasics.cmsCenters,
           cmmiGroups: updateBasics.cmmiGroups,
@@ -140,9 +157,12 @@ const BasicsContent = () => {
     __typename: 'ModelPlan',
     id: id ?? '',
     modelName: modelName ?? '',
+    abbreviation: abbreviation ?? '',
     basics: {
       __typename: 'PlanBasics',
       id: basics?.id ?? '',
+      demoCode: demoCode ?? '',
+      amsModelID: amsModelID ?? '',
       modelCategory: modelCategory ?? null,
       cmsCenters: cmsCenters ?? [],
       cmmiGroups: cmmiGroups ?? [],
@@ -185,22 +205,18 @@ const BasicsContent = () => {
         </Breadcrumb>
         <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
+
       <PageHeading className="margin-top-4">
         {planBasicsMiscT('heading')}
       </PageHeading>
 
       <AskAQuestion modelID={modelID} />
 
-      <Alert
-        type="info"
-        slim
-        data-testid="mandatory-fields-alert"
-        className="margin-bottom-4"
-      >
-        <span className="mandatory-fields-alert__text">
-          {generalT('mandatoryFields')}
-        </span>
-      </Alert>
+      <p className="margin-bottom-0 margin-top-6">
+        {planBasicsMiscT('required1')}
+        <RequiredAsterisk />
+        {planBasicsMiscT('required2')}
+      </p>
 
       <Formik
         initialValues={initialValues}
@@ -248,7 +264,7 @@ const BasicsContent = () => {
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
                     <Form
-                      className="margin-top-6"
+                      className="margin-top-4"
                       onSubmit={e => {
                         handleSubmit(e);
                         window.scrollTo(0, 0);
@@ -261,7 +277,9 @@ const BasicsContent = () => {
                       >
                         <Label htmlFor="plan-basics-model-name">
                           {modelPlanT('modelName.question')}
+                          <RequiredAsterisk />
                         </Label>
+
                         <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
                         <Field
                           as={TextInput}
@@ -273,16 +291,120 @@ const BasicsContent = () => {
                       </FieldGroup>
 
                       <FieldGroup
+                        scrollElement="abbreviation"
+                        error={!!flatErrors.abbreviation}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="plan-basics-model-name">
+                          {modelPlanT('abbreviation.question')}
+                        </Label>
+
+                        <span className="usa-hint display-block text-normal margin-top-1">
+                          {modelPlanT('abbreviation.hint')}
+                        </span>
+
+                        <FieldErrorMsg>{flatErrors.abbreviation}</FieldErrorMsg>
+                        <Field
+                          as={TextInput}
+                          error={!!flatErrors.abbreviation}
+                          id="plan-basics-abbreviation"
+                          maxLength={50}
+                          name="abbreviation"
+                        />
+                      </FieldGroup>
+
+                      <div
+                        className={classNames(
+                          'bg-base-lightest padding-2 margin-top-4',
+                          {
+                            'maxw-mobile-lg': isTablet
+                          }
+                        )}
+                      >
+                        <Label
+                          htmlFor="plan-basics-demo-code"
+                          className="margin-top-0"
+                        >
+                          {planBasicsMiscT('otherIdentifiers')}
+                        </Label>
+
+                        <p className="line-height-mono-4">
+                          {planBasicsMiscT('otherIdentifiersInfo1')}
+
+                          <TrussLink
+                            aria-label="Open AMS in a new tab"
+                            href="https://ams.cmmi.cms.gov"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            variant="external"
+                          >
+                            {planBasicsMiscT('otherIdentifiersInfo2')}
+                          </TrussLink>
+
+                          {planBasicsMiscT('otherIdentifiersInfo3')}
+                        </p>
+                        <Grid row gap>
+                          <Grid desktop={{ col: 6 }}>
+                            <FieldGroup
+                              scrollElement="basics.amsModelID"
+                              error={!!flatErrors['basics.amsModelID']}
+                              className="margin-top-0"
+                            >
+                              <Label htmlFor="plan-basics-ams-model-id">
+                                {planBasicsT('amsModelID.question')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors['basics.amsModelID']}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors['basics.amsModelID']}
+                                id="plan-basics-ams-model-id"
+                                maxLength={50}
+                                name="basics.amsModelID"
+                              />
+                            </FieldGroup>
+                          </Grid>
+                          <Grid desktop={{ col: 6 }}>
+                            <FieldGroup
+                              scrollElement="basics.demoCode"
+                              error={!!flatErrors['basics.demoCode']}
+                              className="margin-top-0"
+                            >
+                              <Label htmlFor="plan-basics-demo-code">
+                                {planBasicsT('demoCode.question')}
+                              </Label>
+
+                              <FieldErrorMsg>
+                                {flatErrors['basics.demoCode']}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextInput}
+                                error={!!flatErrors['basics.demoCode']}
+                                id="plan-basics-demo-code"
+                                maxLength={50}
+                                name="basics.demoCode"
+                              />
+                            </FieldGroup>
+                          </Grid>
+                        </Grid>
+                      </div>
+
+                      <FieldGroup
                         scrollElement="modelCategory"
                         error={!!flatErrors['basics.modelCategory']}
                         className="margin-top-4"
                       >
                         <Label htmlFor="plan-basics-model-category">
                           {planBasicsT('modelCategory.question')}
+                          <RequiredAsterisk />
                         </Label>
+
                         <FieldErrorMsg>
                           {flatErrors['basics.modelCategory']}
                         </FieldErrorMsg>
+
                         <Field
                           as={Dropdown}
                           id="plan-basics-model-category"
@@ -322,6 +444,11 @@ const BasicsContent = () => {
                             name="basics.cmsCenters"
                             render={arrayHelpers => (
                               <>
+                                <Label htmlFor="plan-basics-cmsCenters">
+                                  {planBasicsT('cmsCenters.question')}
+                                  <RequiredAsterisk />
+                                </Label>
+
                                 <FieldErrorMsg>
                                   {flatErrors['basics.cmsCenters']}
                                 </FieldErrorMsg>

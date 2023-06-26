@@ -161,6 +161,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const {
     id,
+    abbreviation,
     modelName,
     isFavorite,
     modifiedDts,
@@ -321,7 +322,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             className="margin-0 line-height-sans-2 minh-6"
             headingLevel={isHelpArticle ? 'h2' : 'h1'}
           >
-            {modelName}
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
           </PageHeading>
 
           {!isViewingFilteredGroup && (

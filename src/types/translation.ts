@@ -33,11 +33,14 @@ export type TranslationFieldPropertiesWithOptions = TranslationFieldProperties &
 export type TranslationModelPlan = {
   modelName: TranslationFieldProperties;
   previousName: TranslationFieldProperties;
+  abbreviation: TranslationFieldProperties;
 };
 
 // Plan Basics
 export type TranslationPlanBasics = {
   // Model Plan
+  amsModelID: TranslationFieldProperties;
+  demoCode: TranslationFieldProperties;
   modelCategory: TranslationFieldPropertiesWithOptions;
   cmsCenters: TranslationFieldPropertiesWithOptions;
   cmmiGroups: TranslationFieldPropertiesWithOptions;
