@@ -173,6 +173,11 @@ func (s *Server) routes(
 		MINTTeamEmail: s.Config.GetString(appconfig.MINTTeamEmailKey),
 	}
 
+	addressBook.ModelPlanDateChangedRecipients, err = store.ModelPlanDateChangedEmailRecipientsGet(s.logger)
+	if err != nil {
+		s.logger.Fatal("Failed to get model plan date changed email recipients", zap.Error(err))
+	}
+
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
 	if err != nil {
