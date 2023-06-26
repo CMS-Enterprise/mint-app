@@ -133,12 +133,16 @@ const ReadOnlyBeneficiaries = ({
             }
           />
         )}
-        {treatDualElligibleDifferentNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={treatDualElligibleDifferentNote}
-          />
-        )}
+        {treatDualElligibleDifferentNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'dualEligibility',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={treatDualElligibleDifferentNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,

@@ -204,13 +204,17 @@ const ReadOnlyGeneralCharacteristics = ({
           />
         )}
 
-        {hasComponentsOrTracksNote && (
-          <ReadOnlySection
-            heading={t('tracksDiffer')}
-            copy={hasComponentsOrTracksDiffer}
-            notes={hasComponentsOrTracksNote}
-          />
-        )}
+        {hasComponentsOrTracksNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'differentComponents',
+            <ReadOnlySection
+              heading={t('tracksDiffer')}
+              copy={hasComponentsOrTracksDiffer}
+              notes={hasComponentsOrTracksNote}
+            />
+          )}
       </div>
 
       <div
@@ -310,12 +314,16 @@ const ReadOnlyGeneralCharacteristics = ({
             }
           />
         )}
-        {careCoordinationInvolvedNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={careCoordinationInvolvedNote}
-          />
-        )}
+        {careCoordinationInvolvedNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'careCoordination',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={careCoordinationInvolvedNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -334,12 +342,16 @@ const ReadOnlyGeneralCharacteristics = ({
             }
           />
         )}
-        {additionalServicesInvolvedNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={additionalServicesInvolvedNote}
-          />
-        )}
+        {additionalServicesInvolvedNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'additionalServices',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={additionalServicesInvolvedNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -358,12 +370,16 @@ const ReadOnlyGeneralCharacteristics = ({
             }
           />
         )}
-        {communityPartnersInvolvedNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={communityPartnersInvolvedNote}
-          />
-        )}
+        {communityPartnersInvolvedNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'communityInvolved',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={communityPartnersInvolvedNote}
+            />
+          )}
       </div>
 
       <div
@@ -462,12 +478,16 @@ const ReadOnlyGeneralCharacteristics = ({
             }
           />
         )}
-        {rulemakingRequiredNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={rulemakingRequiredNote}
-          />
-        )}
+        {rulemakingRequiredNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'rulemakingRequired',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={rulemakingRequiredNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
