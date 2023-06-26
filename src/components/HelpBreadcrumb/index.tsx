@@ -14,11 +14,13 @@ import UswdsReactLink from 'components/LinkWrapper';
 
 type HelpBreadcrumbProps = {
   className?: string;
+  home?: boolean;
   text?: string;
 };
 
 export default function HelpBreadcrumb({
   className,
+  home,
   text
 }: HelpBreadcrumbProps) {
   const history = useHistory();
@@ -28,7 +30,7 @@ export default function HelpBreadcrumb({
     if (newTab) {
       window.close();
     } else {
-      history.push('/help-and-knowledge');
+      history.push(home ? '/' : '/help-and-knowledge');
     }
   };
   return (
@@ -47,7 +49,7 @@ export default function HelpBreadcrumb({
         <BreadcrumbBar variant="wrap">
           <Breadcrumb>
             <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-              <span>{t('heading')}</span>
+              <span>{home ? t('home') : t('heading')}</span>
             </BreadcrumbLink>
           </Breadcrumb>
           <Breadcrumb current>{text}</Breadcrumb>

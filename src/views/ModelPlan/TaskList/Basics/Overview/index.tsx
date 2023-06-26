@@ -23,6 +23,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetBasics from 'queries/Basics/GetBasics';
 import {
   GetBasics as GetBasicsType,
@@ -39,8 +40,12 @@ import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Overview = () => {
-  const { t } = useTranslation('basics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: generalT } = useTranslation('draftModelPlan');
+
+  const { modelType: modelTypeConfig } = usePlanTranslation('planBasics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BasicsFormType>>(null);
@@ -109,28 +114,28 @@ const Overview = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{generalT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{generalT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-1">
-        {t('heading')}
+        {planBasicsMiscT('heading')}
       </PageHeading>
 
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {generalT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {generalT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -162,7 +167,7 @@ const Overview = () => {
                 <ErrorAlert
                   testId="formik-validation-errors"
                   classNames="margin-top-3"
-                  heading={h('checkAndFix')}
+                  heading={generalT('checkAndFix')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -187,14 +192,16 @@ const Overview = () => {
                   error={!!flatErrors.modelType}
                   className="margin-top-4"
                 >
-                  <Label htmlFor="modelType">{t('modelType')}</Label>
+                  <Label htmlFor="modelType">
+                    {planBasicsT('modelType.question')}
+                  </Label>
                   <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
                   <Fieldset>
                     <Field
                       as={Radio}
                       id="ModelType-Voluntary"
                       name="modelType"
-                      label={t('voluntary')}
+                      label={modelTypeConfig.options.VOLUNTARY}
                       value="VOLUNTARY"
                       checked={values.modelType === 'VOLUNTARY'}
                     />
@@ -202,7 +209,7 @@ const Overview = () => {
                       as={Radio}
                       id="ModelType-Mandatory"
                       name="modelType"
-                      label={t('Mandatory')}
+                      label={modelTypeConfig.options.MANDATORY}
                       value="MANDATORY"
                       checked={values.modelType === 'MANDATORY'}
                     />
@@ -219,7 +226,7 @@ const Overview = () => {
                     error={flatErrors.problem}
                     id="ModelType-Problem"
                     name="problem"
-                    label={t('problem')}
+                    label={planBasicsT('problem.question')}
                   />
                 </FieldGroup>
 
@@ -233,8 +240,8 @@ const Overview = () => {
                     error={flatErrors.goal}
                     id="ModelType-Goal"
                     name="goal"
-                    hint={t('goalHelp')}
-                    label={t('goal')}
+                    hint={planBasicsT('goal.hint')}
+                    label={planBasicsT('goal.question')}
                   />
                 </FieldGroup>
 
@@ -248,7 +255,7 @@ const Overview = () => {
                     error={flatErrors.testInterventions}
                     id="ModelType-testInterventions"
                     name="testInterventions"
-                    label={t('testInterventions')}
+                    label={planBasicsT('testInterventions.question')}
                   />
                 </FieldGroup>
 
@@ -260,7 +267,7 @@ const Overview = () => {
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => handleFormSubmit('back')}
                   >
-                    {h('back')}
+                    {generalT('back')}
                   </Button>
                   <Button
                     type="submit"
@@ -268,7 +275,7 @@ const Overview = () => {
                     className=""
                     onClick={() => setErrors({})}
                   >
-                    {h('next')}
+                    {generalT('next')}
                   </Button>
                 </div>
                 <Button
@@ -277,7 +284,7 @@ const Overview = () => {
                   onClick={() => handleFormSubmit('task-list')}
                 >
                   <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
+                  {generalT('saveAndReturn')}
                 </Button>
               </Form>
               {id && (

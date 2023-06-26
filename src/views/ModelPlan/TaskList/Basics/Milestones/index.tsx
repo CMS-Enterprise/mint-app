@@ -29,6 +29,7 @@ import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import GetMilestones from 'queries/Basics/GetMilestones';
 import {
   GetMilestones as GetMilestonesType,
@@ -46,8 +47,12 @@ import { NotFoundPartial } from 'views/NotFound';
 import './index.scss';
 
 const Milestones = () => {
-  const { t } = useTranslation('basics');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: planBasicsT } = useTranslation('planBasics');
+  const { t: planBasicsMiscT } = useTranslation('planBasicsMisc');
+  const { t: generalT } = useTranslation('draftModelPlan');
+
+  const { phasedIn: phasedInConfig } = usePlanTranslation('planBasics');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
@@ -151,27 +156,27 @@ const Milestones = () => {
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
+            <span>{generalT('home')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
+            <span>{generalT('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
         </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+        <Breadcrumb current>{planBasicsMiscT('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
       <PageHeading className="margin-top-4 margin-bottom-1">
-        {t('heading')}
+        {planBasicsMiscT('heading')}
       </PageHeading>
       <p
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        {h('for')} {modelName}
+        {generalT('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {generalT('helpText')}
       </p>
 
       <AskAQuestion modelID={modelID} />
@@ -211,7 +216,7 @@ const Milestones = () => {
                 setFieldValue(field, new Date(e.target.value).toISOString());
                 delete errors[field as keyof InitialValueType];
               } catch (err) {
-                setFieldError(field, t('validDate'));
+                setFieldError(field, generalT('validDate'));
               }
             };
             return (
@@ -220,7 +225,7 @@ const Milestones = () => {
                   <ErrorAlert
                     testId="formik-validation-errors"
                     classNames="margin-top-3"
-                    heading={h('checkAndFix')}
+                    heading={generalT('checkAndFix')}
                   >
                     {Object.keys(flatErrors).map(key => {
                       return (
@@ -242,7 +247,7 @@ const Milestones = () => {
                   }}
                 >
                   <PageHeading headingLevel="h3" className="margin-bottom-2">
-                    {t('highLevelTimeline')}
+                    {planBasicsMiscT('highLevelTimeline')}
                   </PageHeading>
 
                   <MINTAlert type="info" slim>
@@ -273,7 +278,7 @@ const Milestones = () => {
                             className="margin-top-0"
                             fieldName="completeICIP"
                             id="Milestone-completeICIP"
-                            label={t('completeICIP')}
+                            label={planBasicsT('completeICIP.question')}
                             placeHolder
                             handleOnBlur={handleOnBlur}
                             formikValue={values.completeICIP}
@@ -291,20 +296,20 @@ const Milestones = () => {
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label margin-bottom-05">
-                          {t('clearance')}
+                          {planBasicsMiscT('clearance')}
                         </legend>
 
                         <label
                           htmlFor="Milestone-clearanceStarts"
                           className="text-base"
                         >
-                          {t('clearanceInfo')}
+                          {planBasicsMiscT('clearanceInfo')}
                         </label>
                         <div className="datepicker__wrapper text-normal">
                           <MINTDatePicker
                             fieldName="clearanceStarts"
                             id="Milestone-clearanceStarts"
-                            label={t('clearanceStartDate')}
+                            label={planBasicsT('clearanceStarts.question')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -318,7 +323,7 @@ const Milestones = () => {
                           <MINTDatePicker
                             fieldName="clearanceEnds"
                             id="Milestone-clearanceEnds"
-                            label={t('clearanceEndDate')}
+                            label={planBasicsT('clearanceEnds.question')}
                             boldLabel={false}
                             placeHolder
                             handleOnBlur={handleOnBlur}
@@ -333,7 +338,7 @@ const Milestones = () => {
                         {(isDateInPast(values.clearanceEnds) ||
                           isDateInPast(values.clearanceStarts)) && (
                           <Alert type="warning" className="margin-top-4">
-                            {h('dateWarning')}
+                            {generalT('dateWarning')}
                           </Alert>
                         )}
                       </ProcessListHeading>
@@ -349,7 +354,7 @@ const Milestones = () => {
                           className="margin-top-0"
                           fieldName="announced"
                           id="Milestone-announced"
-                          label={t('annouceModel')}
+                          label={planBasicsT('announced.question')}
                           placeHolder
                           handleOnBlur={handleOnBlur}
                           formikValue={values.announced}
@@ -366,7 +371,7 @@ const Milestones = () => {
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label margin-bottom-neg-2">
-                          {t('applicationPeriod')}
+                          {planBasicsMiscT('applicationPeriod')}
                         </legend>
                       </ProcessListHeading>
 
@@ -374,7 +379,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="applicationsStart"
                           id="Milestone-applicationsStart"
-                          label={t('applicationStartDate')}
+                          label={planBasicsT('applicationsStart.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -387,7 +392,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="applicationsEnd"
                           id="Milestone-applicationsEnd"
-                          label={t('applicationEndDate')}
+                          label={planBasicsT('applicationsEnd.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -401,7 +406,7 @@ const Milestones = () => {
                       {(isDateInPast(values.applicationsStart) ||
                         isDateInPast(values.applicationsEnd)) && (
                         <Alert type="warning" className="margin-top-4">
-                          {h('dateWarning')}
+                          {generalT('dateWarning')}
                         </Alert>
                       )}
                     </ProcessListItem>
@@ -412,14 +417,14 @@ const Milestones = () => {
                         className="font-body-sm line-height-sans-4 text-normal"
                       >
                         <legend className="usa-label">
-                          {t('demonstrationPerformance')}
+                          {planBasicsMiscT('demonstrationPerformance')}
                         </legend>
 
                         <label
                           htmlFor="Milestone-performancePeriodStarts"
                           className="text-base"
                         >
-                          {t('demonstrationPerformanceInfo')}
+                          {planBasicsMiscT('demonstrationPerformanceInfo')}
                         </label>
                       </ProcessListHeading>
 
@@ -427,7 +432,9 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="performancePeriodStarts"
                           id="Milestone-performancePeriodStarts"
-                          label={t('performanceStartDate')}
+                          label={planBasicsT(
+                            'performancePeriodStarts.question'
+                          )}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -441,7 +448,7 @@ const Milestones = () => {
                         <MINTDatePicker
                           fieldName="performancePeriodEnds"
                           id="Milestone-performancePeriodEnds"
-                          label={t('performanceEndDate')}
+                          label={planBasicsT('performancePeriodEnds.question')}
                           boldLabel={false}
                           placeHolder
                           handleOnBlur={handleOnBlur}
@@ -456,7 +463,7 @@ const Milestones = () => {
                       {(isDateInPast(values.performancePeriodStarts) ||
                         isDateInPast(values.performancePeriodEnds)) && (
                         <Alert type="warning" className="margin-top-4">
-                          {h('dateWarning')}
+                          {generalT('dateWarning')}
                         </Alert>
                       )}
                     </ProcessListItem>
@@ -471,7 +478,7 @@ const Milestones = () => {
                           fieldName="wrapUpEnds"
                           className="margin-top-0"
                           id="Milestone-wrapUpEnds"
-                          label={t('modelWrapUp')}
+                          label={planBasicsT('wrapUpEnds.question')}
                           placeHolder
                           handleOnBlur={handleOnBlur}
                           formikValue={values.wrapUpEnds}
@@ -490,9 +497,11 @@ const Milestones = () => {
                     error={!!flatErrors.phasedIn}
                     className="margin-top-4"
                   >
-                    <Label htmlFor="phasedIn">{t('tightTimeline')}</Label>
+                    <Label htmlFor="phasedIn">
+                      {planBasicsT('phasedIn.question')}
+                    </Label>
                     <span className="usa-hint display-block text-normal margin-top-1">
-                      {t('tightTimelineInfo')}
+                      {planBasicsT('phasedIn.hint')}
                     </span>
                     <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
                     <Fieldset>
@@ -500,7 +509,7 @@ const Milestones = () => {
                         as={Radio}
                         id="phasedIn-Yes"
                         name="phasedIn"
-                        label={h('yes')}
+                        label={phasedInConfig.options.true}
                         value="YES"
                         checked={values.phasedIn === true}
                         onChange={() => {
@@ -511,7 +520,7 @@ const Milestones = () => {
                         as={Radio}
                         id="phasedIn-No"
                         name="phasedIn"
-                        label={h('no')}
+                        label={phasedInConfig.options.false}
                         value="FALSE"
                         checked={values.phasedIn === false}
                         onChange={() => {
@@ -527,7 +536,7 @@ const Milestones = () => {
                     <ReadyForReview
                       id="milestones-status"
                       field="status"
-                      sectionName={t('heading')}
+                      sectionName={planBasicsMiscT('heading')}
                       status={values.status}
                       setFieldValue={setFieldValue}
                       readyForReviewBy={readyForReviewByUserAccount?.commonName}
@@ -553,14 +562,14 @@ const Milestones = () => {
                         }
                       }}
                     >
-                      {h('back')}
+                      {generalT('back')}
                     </Button>
                     <Button
                       type="submit"
                       className=""
                       onClick={() => setErrors({})}
                     >
-                      {h('saveAndStartNext')}
+                      {generalT('saveAndStartNext')}
                     </Button>
                   </div>
                   <Button
@@ -569,7 +578,7 @@ const Milestones = () => {
                     onClick={() => handleFormSubmit('task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
-                    {h('saveAndReturn')}
+                    {generalT('saveAndReturn')}
                   </Button>
                 </Form>
               </>
