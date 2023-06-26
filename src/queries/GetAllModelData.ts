@@ -6,6 +6,8 @@ export default gql`
     modelPlanCollection(filter: INCLUDE_ALL) {
       id
       modelName
+      nameHistory(sort: DESC)
+      abbreviation
       archived
       createdBy
       createdDts
@@ -13,6 +15,8 @@ export default gql`
       modifiedDts
       basics {
         id
+        amsModelID
+        demoCode
         modelCategory
         cmsCenters
         cmsOther
