@@ -46,6 +46,15 @@ const BodyContent = ({
   const individualFilterView =
     allPossibleFilterViews[filteredView as keyof typeof allPossibleFilterViews];
 
+  const components: Record<string, React.ElementType> = {
+    basics: ReadOnlyModelBasics,
+    'general-characteristics': ReadOnlyGeneralCharacteristics,
+    'participants-and-providers': ReadOnlyParticipantsAndProviders,
+    beneficiaries: ReadOnlyBeneficiaries,
+    'ops-eval-and-learning': ReadOnlyOpsEvalAndLearning,
+    payments: ReadOnlyPayments
+  };
+
   return (
     <Grid>
       <FitleredViewSection sectionName="model-team">
@@ -54,127 +63,24 @@ const BodyContent = ({
       </FitleredViewSection>
 
       {Object.keys(individualFilterView).map(task => {
-        if (task === 'basics') {
-          return (
-            <FitleredViewSection
-              sectionName="model-basics"
-              key={task}
-              lastSection={task === Object.keys(individualFilterView).pop()}
-            >
-              <ReadOnlyModelBasics
-                modelID={modelID}
-                filteredView={filteredView}
-                isViewingFilteredView
-                filteredQuestions={
-                  individualFilterView[
-                    task as keyof typeof individualFilterView
-                  ]
-                }
-              />
-            </FitleredViewSection>
-          );
-        }
+        const FitleredViewSectionContent = components[task];
 
-        if (task === 'general-characteristics') {
-          return (
-            <FitleredViewSection
-              sectionName={task}
-              key={task}
-              lastSection={task === Object.keys(individualFilterView).pop()}
-            >
-              <ReadOnlyGeneralCharacteristics
-                modelID={modelID}
-                isViewingFilteredView
-                filteredQuestions={
-                  individualFilterView[
-                    task as keyof typeof individualFilterView
-                  ]
-                }
-              />
-            </FitleredViewSection>
-          );
-        }
-
-        if (task === 'participants-and-providers') {
-          return (
-            <FitleredViewSection
-              sectionName={task}
-              key={task}
-              lastSection={task === Object.keys(individualFilterView).pop()}
-            >
-              <ReadOnlyParticipantsAndProviders
-                modelID={modelID}
-                isViewingFilteredView
-                filteredQuestions={
-                  individualFilterView[
-                    task as keyof typeof individualFilterView
-                  ]
-                }
-              />
-            </FitleredViewSection>
-          );
-        }
-
-        if (task === 'beneficiaries') {
-          return (
-            <FitleredViewSection
-              sectionName={task}
-              key={task}
-              lastSection={task === Object.keys(individualFilterView).pop()}
-            >
-              <ReadOnlyBeneficiaries
-                modelID={modelID}
-                isViewingFilteredView
-                filteredQuestions={
-                  individualFilterView[
-                    task as keyof typeof individualFilterView
-                  ]
-                }
-              />
-            </FitleredViewSection>
-          );
-        }
-
-        if (task === 'ops-eval-and-learning') {
-          return (
-            <FitleredViewSection
-              sectionName={task}
-              key={task}
-              lastSection={task === Object.keys(individualFilterView).pop()}
-            >
-              <ReadOnlyOpsEvalAndLearning
-                modelID={modelID}
-                isViewingFilteredView
-                filteredQuestions={
-                  individualFilterView[
-                    task as keyof typeof individualFilterView
-                  ]
-                }
-              />
-            </FitleredViewSection>
-          );
-        }
-
-        if (task === 'payments') {
-          return (
-            <FitleredViewSection
-              sectionName={task}
-              key={task}
-              lastSection={task === Object.keys(individualFilterView).pop()}
-            >
-              <ReadOnlyPayments
-                modelID={modelID}
-                isViewingFilteredView
-                filteredQuestions={
-                  individualFilterView[
-                    task as keyof typeof individualFilterView
-                  ]
-                }
-              />
-            </FitleredViewSection>
-          );
-        }
-        return <></>;
+        return (
+          <FitleredViewSection
+            sectionName={task}
+            key={task}
+            lastSection={task === Object.keys(individualFilterView).pop()}
+          >
+            <FitleredViewSectionContent
+              modelID={modelID}
+              filteredView={filteredView}
+              isViewingFilteredView
+              filteredQuestions={
+                individualFilterView[task as keyof typeof individualFilterView]
+              }
+            />
+          </FitleredViewSection>
+        );
       })}
 
       <Alert type="info" noIcon>
