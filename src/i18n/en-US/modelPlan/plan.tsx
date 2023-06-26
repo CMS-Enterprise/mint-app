@@ -16,6 +16,15 @@ const modelPlan: TranslationModelPlan = {
     question: 'Previous names',
     dataType: 'string',
     formType: 'text'
+  },
+  abbreviation: {
+    gqlField: 'abbreviation',
+    goField: 'abbreviation',
+    dbField: 'abbreviation',
+    question: 'Short name',
+    hint: 'The abbreviation, acronym, or other common name used for the model.',
+    dataType: 'string',
+    formType: 'text'
   }
 };
 

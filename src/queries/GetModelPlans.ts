@@ -12,6 +12,7 @@ export default gql`
       modifiedDts
       basics {
         id
+        demoCode
         clearanceStarts
         applicationsStart @include(if: $isMAC)
       }
