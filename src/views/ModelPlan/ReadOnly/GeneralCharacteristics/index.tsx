@@ -520,12 +520,16 @@ const ReadOnlyGeneralCharacteristics = ({
             }
           />
         )}
-        {waiversRequiredNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={waiversRequiredNote}
-          />
-        )}
+        {waiversRequiredNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'waiversRequired',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={waiversRequiredNote}
+            />
+          )}
       </div>
     </div>
   );
