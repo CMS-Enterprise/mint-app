@@ -10,6 +10,8 @@ export default gql`
         content
         createdBy
         createdDts
+        userRole
+        userRoleDescription
         status
         isAssessment
         createdByUserAccount {

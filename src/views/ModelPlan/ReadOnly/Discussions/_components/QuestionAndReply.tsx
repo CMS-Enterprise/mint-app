@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, Label, Textarea } from '@trussworks/react-uswds';
+import { Button, Dropdown, Label, Textarea } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
@@ -11,10 +11,12 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 
@@ -93,16 +95,29 @@ const QuestionAndReply = ({
       )}
 
       <Formik
-        initialValues={{ content: '' }}
+        initialValues={{ content: '', userRole: '' }}
         onSubmit={handleCreateDiscussion}
         validationSchema={validationSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<{ content: string }>) => {
-          const { errors, setErrors, handleSubmit, dirty } = formikProps;
+        {(
+          formikProps: FormikProps<{
+            content: string;
+            userRole: DiscussionUserRole;
+          }>
+        ) => {
+          const {
+            errors,
+            values,
+            setErrors,
+            handleSubmit,
+            dirty,
+            setFieldValue
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -128,6 +143,42 @@ const QuestionAndReply = ({
                   window.scrollTo(0, 0);
                 }}
               >
+                <FieldGroup
+                  scrollElement="user-role"
+                  error={!!flatErrors.userRole}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="user-role">
+                    {t('role')}
+                    <RequiredAsterisk />
+                  </Label>
+
+                  <p className="text-base margin-top-0">{t('roleInfo')}</p>
+
+                  <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
+
+                  <Field
+                    as={Dropdown}
+                    id="user-role"
+                    name="userRole"
+                    value={values.userRole || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue('userRole', e.target.value);
+                    }}
+                  >
+                    <option key="default-select" disabled value="">
+                      {`-${t('select')}-`}
+                    </option>
+                    {Object.keys(DiscussionUserRole).map(role => {
+                      return (
+                        <option key={role} value={role}>
+                          {t(`userRole.${role}`)}
+                        </option>
+                      );
+                    })}
+                  </Field>
+                </FieldGroup>
+
                 <FieldGroup
                   scrollElement="content"
                   error={!!flatErrors.content}
