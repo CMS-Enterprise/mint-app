@@ -10,6 +10,8 @@ SELECT
     discR.id,
     discR.discussion_id,
     discR.content,
+    discR.user_role,
+    discR.user_role_description,
     discR.resolution,
     discR.is_assessment,
     discR.created_by,
