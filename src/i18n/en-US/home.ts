@@ -55,6 +55,7 @@ const home = {
       startDate: 'Model start date',
       paymentDate: 'Payment start date',
       keyCharacteristics: 'Key characteristics',
+      demoCode: 'Demo code',
       crTDLs: 'CRs and TDLs',
       status: 'Status',
       recentActivity: 'Recent activity'

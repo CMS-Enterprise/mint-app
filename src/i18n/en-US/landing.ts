@@ -69,8 +69,11 @@ const landing = {
         'Medicare Administrative Contractors and maintainers can see which model a Change Request or Technical Direction Letter applies to, so they can understand more.'
     }
   ],
+  getAccess: 'Get access',
   access: 'Want access to MINT?',
-  email: 'Email <1>MINTTeam@cms.hhs.gov</1> to learn how to get access.'
+  learnHowtoGetAccess: 'Learn how to get access',
+  questions: 'Questions?',
+  email: 'MINTTeam@cms.hhs.gov'
 };
 
 export default landing;

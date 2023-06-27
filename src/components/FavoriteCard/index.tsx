@@ -22,18 +22,18 @@ import './index.scss';
 
 type FavoriteCardProps = {
   className?: string;
-  type?: 'modelPlan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
+  type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
   modelPlan: ModelPlanType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
 };
 
 const FavoriteCard = ({
   className,
-  type = 'modelPlan',
+  type = 'plan',
   modelPlan,
   removeFavorite
 }: FavoriteCardProps) => {
-  const { t } = useTranslation('modelPlan');
+  const { t } = useTranslation('plan');
   const { t: h } = useTranslation('home');
 
   const {
@@ -142,7 +142,7 @@ export const FavoriteIcon = ({
   isFavorite,
   updateFavorite
 }: FavoriteIconProps) => {
-  const { t } = useTranslation('modelPlan');
+  const { t } = useTranslation('plan');
 
   return (
     <div className={classnames('pointer', className)}>

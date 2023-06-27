@@ -99,6 +99,16 @@ describe('The Model Plan Form', () => {
       .should('eq', 200)
       .wait(500);
 
+    cy.get('#plan-basics-abbreviation').type('RMP').should('have.value', 'RMP');
+
+    cy.get('#plan-basics-ams-model-id')
+      .type('46723163')
+      .should('have.value', '46723163');
+
+    cy.get('#plan-basics-demo-code')
+      .type('933245623')
+      .should('have.value', '933245623');
+
     cy.get('#plan-basics-model-category').select('Demonstration');
 
     cy.get('#plan-basics-model-category').contains('Demonstration');
