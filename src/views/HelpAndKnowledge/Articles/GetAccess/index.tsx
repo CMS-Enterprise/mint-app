@@ -266,7 +266,7 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                 </li>
 
                 <li>
-                  <Trans i18nKey="getAccess:stepsEUA.second.description.two">
+                  <Trans i18nKey="getAccess:stepsIDM.second.description.two">
                     <span className="text-bold text-italic">indexZero</span>
                   </Trans>
                 </li>
