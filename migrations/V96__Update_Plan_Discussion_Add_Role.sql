@@ -2,26 +2,31 @@ ALTER TABLE plan_discussion
   ADD COLUMN user_role TEXT,
   ADD COLUMN user_role_description TEXT;
 
--- Create a trigger function to enforce the condition
-CREATE OR REPLACE FUNCTION check_user_role_description()
-  RETURNS TRIGGER AS $$
-BEGIN
-  IF NEW.user_role != 'NONE_OF_THE_ABOVE' OR NEW.user_role IS NULL THEN
-    NEW.user_role_description := '';
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create a trigger that calls the function before any insert or update
-CREATE TRIGGER check_user_role_description_trigger
-  BEFORE INSERT OR UPDATE ON plan_discussion
-  FOR EACH ROW EXECUTE PROCEDURE check_user_role_description();
-
--- Add a CHECK constraint to enforce user_role_description can only be set when user_role is 'NONE_OF_THE_ABOVE'
+-- Add a CHECK constraint to enforce the user_role and user_role_description relationship
+-- If user_role is 'NONE_OF_THE_ABOVE', user_role_description must not be empty
 ALTER TABLE plan_discussion
-  ADD CONSTRAINT user_role_check CHECK (
-      (user_role = 'NONE_OF_THE_ABOVE' AND user_role_description != '')
-      OR
-      (user_role != 'NONE_OF_THE_ABOVE' AND (user_role_description = '' OR user_role_description IS NULL))
+  ADD CONSTRAINT plan_discussion_user_role_check CHECK (
+      user_role IS NOT NULL
+      AND (
+          (upper(user_role) = 'NONE_OF_THE_ABOVE' AND user_role_description != '' AND user_role_description IS NOT NULL)
+          OR
+          (upper(user_role) != 'NONE_OF_THE_ABOVE' AND (user_role_description = '' OR user_role_description IS NULL))
+        )
+    );
+
+
+ALTER TABLE discussion_reply
+  ADD COLUMN user_role TEXT,
+  ADD COLUMN user_role_description TEXT;
+
+-- Add a CHECK constraint to enforce the user_role and user_role_description relationship
+-- If user_role is 'NONE_OF_THE_ABOVE', user_role_description must not be empty
+ALTER TABLE discussion_reply
+  ADD CONSTRAINT discussion_reply_user_role_check  CHECK (
+      user_role IS NOT NULL
+      AND (
+          (upper(user_role) = 'NONE_OF_THE_ABOVE' AND user_role_description != '' AND user_role_description IS NOT NULL)
+          OR
+          (upper(user_role) != 'NONE_OF_THE_ABOVE' AND (user_role_description = '' OR user_role_description IS NULL))
+        )
     );

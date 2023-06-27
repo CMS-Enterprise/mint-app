@@ -216,9 +216,11 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: discussion.ID,
-		Content:      "This is a test reply",
-		Resolution:   true,
+		DiscussionID:        discussion.ID,
+		Content:             "This is a test reply",
+		Resolution:          true,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 
 	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -235,9 +237,11 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: discussion.ID,
-		Content:      "This is a test reply",
-		Resolution:   true,
+		DiscussionID:        discussion.ID,
+		Content:             "This is a test reply",
+		Resolution:          true,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 
 	regularUserPrincipal := suite.testConfigs.Principal
