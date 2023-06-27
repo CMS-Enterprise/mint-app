@@ -93,12 +93,10 @@
     <br />
       {{if .OldRangeStart}}
         <span style="color: red; text-decoration: line-through;">
-      {{if .OldRangeStart}}{{.OldRangeStart.Format "01/02/2006"}}{{else}}None{{end}} -
-      {{if .OldRangeEnd}}{{.OldRangeEnd.Format "01/02/2006"}}{{else}}None{{end}}
+      {{.OldRangeStart.Format "01/02/2006"}} - {{if .OldRangeEnd}}{{.OldRangeEnd.Format "01/02/2006"}}{{else}}None{{end}}
     </span><br/>
         {{if .NewRangeStart}}
-            {{if .NewRangeStart}}{{.NewRangeStart.Format "01/02/2006"}}{{else}}None{{end}} -
-            {{if .NewRangeEnd}}{{.NewRangeEnd.Format "01/02/2006"}}{{else}}None{{end}}
+            {{.NewRangeStart.Format "01/02/2006"}} - {{if .NewRangeEnd}}{{.NewRangeEnd.Format "01/02/2006"}}{{else}}None{{end}}
         {{else}}
           None
         {{end}}
@@ -118,6 +116,7 @@
     <br />
   </p>
 {{end}}
+
 
 
 <br/>
