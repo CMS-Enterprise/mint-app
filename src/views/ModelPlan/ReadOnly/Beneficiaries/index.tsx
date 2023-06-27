@@ -164,12 +164,16 @@ const ReadOnlyBeneficiaries = ({
           />
         )}
 
-        {excludeCertainCharacteristicsNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={excludeCertainCharacteristicsNote}
-          />
-        )}
+        {excludeCertainCharacteristicsNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'excludeCertainCharacteristics',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={excludeCertainCharacteristicsNote}
+            />
+          )}
       </div>
 
       <div
