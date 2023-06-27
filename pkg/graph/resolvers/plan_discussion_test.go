@@ -147,7 +147,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 		UserRoleDescription: nil, // Description not provided
 	}
 
-	planDiscussion, err := CreatePlanDiscussion(
+	_, err := CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
@@ -158,15 +158,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 		suite.testConfigs.Store,
 	)
 
-	suite.NoError(err)
-	suite.NotNil(planDiscussion.ID)
-	suite.EqualValues(plan.ID, planDiscussion.ModelPlanID)
-	suite.EqualValues(planDiscussionInput.Content, planDiscussion.Content)
-	suite.EqualValues(planDiscussionInput.UserRole, planDiscussion.UserRole)
-	suite.EqualValues(models.DiscussionUnAnswered, planDiscussion.Status)
-	suite.True(planDiscussion.IsAssessment) // default principal for the test suite is an assessment user
-	suite.Nil(planDiscussion.ModifiedBy)
-	suite.Nil(planDiscussion.ModifiedDts)
+	suite.Error(err)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
