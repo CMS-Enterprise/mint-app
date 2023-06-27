@@ -1,4 +1,4 @@
-const modelPlan = {
+const plan = {
   home: 'Home',
   teamRoles: {
     modelLead: 'Model Lead',
@@ -48,4 +48,4 @@ const modelPlan = {
   }
 };
 
-export default modelPlan;
+export default plan;
