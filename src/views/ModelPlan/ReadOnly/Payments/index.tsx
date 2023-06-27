@@ -155,19 +155,27 @@ const ReadOnlyPayments = ({
           />
         )}
 
-        {fundingSourceTrustFund && (
-          <ReadOnlySection
-            heading={t('whichFundingType')}
-            copy={fundingSourceTrustFund}
-          />
-        )}
+        {fundingSourceTrustFund &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSource',
+            <ReadOnlySection
+              heading={t('whichFundingType')}
+              copy={fundingSourceTrustFund}
+            />
+          )}
 
-        {fundingSourceNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={fundingSourceNote}
-          />
-        )}
+        {fundingSourceNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSource',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={fundingSourceNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -181,19 +189,27 @@ const ReadOnlyPayments = ({
           />
         )}
 
-        {fundingSourceRTrustFund && (
-          <ReadOnlySection
-            heading={t('whichFundingType')}
-            copy={fundingSourceRTrustFund}
-          />
-        )}
+        {fundingSourceRTrustFund &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceR',
+            <ReadOnlySection
+              heading={t('whichFundingType')}
+              copy={fundingSourceRTrustFund}
+            />
+          )}
 
-        {fundingSourceRNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={fundingSourceRNote}
-          />
-        )}
+        {fundingSourceRNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceR',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={fundingSourceRNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -287,12 +303,16 @@ const ReadOnlyPayments = ({
               }
             />
           )}
-          {affectsMedicareSecondaryPayerClaimsNote && (
-            <ReadOnlySection
-              heading={t('basics:notes')}
-              copy={affectsMedicareSecondaryPayerClaimsNote}
-            />
-          )}
+          {affectsMedicareSecondaryPayerClaimsNote &&
+            checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'affectsMedicareSecondaryPayerClaims',
+              <ReadOnlySection
+                heading={t('basics:notes')}
+                copy={affectsMedicareSecondaryPayerClaimsNote}
+              />
+            )}
 
           {checkGroupMap(
             isViewingFilteredView,
@@ -525,12 +545,16 @@ const ReadOnlyPayments = ({
             }
           />
         )}
-        {canParticipantsSelectBetweenPaymentMechanismsNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={canParticipantsSelectBetweenPaymentMechanismsNote}
-          />
-        )}
+        {canParticipantsSelectBetweenPaymentMechanismsNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'canParticipantsSelectBetweenPaymentMechanisms',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={canParticipantsSelectBetweenPaymentMechanismsNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,

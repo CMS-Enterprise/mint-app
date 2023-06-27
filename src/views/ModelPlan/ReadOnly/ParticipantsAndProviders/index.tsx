@@ -294,9 +294,13 @@ const ReadOnlyParticipantsAndProviders = ({
             }
           />
         )}
-        {riskNote && (
-          <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
-        )}
+        {riskNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'assumeRisk',
+            <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -345,12 +349,16 @@ const ReadOnlyParticipantsAndProviders = ({
             }
           />
         )}
-        {gainsharePaymentsNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={gainsharePaymentsNote}
-          />
-        )}
+        {gainsharePaymentsNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'gainsharing',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={gainsharePaymentsNote}
+            />
+          )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -434,12 +442,16 @@ const ReadOnlyParticipantsAndProviders = ({
             />
           )}
 
-        {providerOverlapNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={providerOverlapNote}
-          />
-        )}
+        {providerOverlapNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'overlapInfo',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={providerOverlapNote}
+            />
+          )}
       </div>
     </div>
   );
