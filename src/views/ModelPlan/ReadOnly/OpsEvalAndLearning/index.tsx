@@ -301,10 +301,15 @@ const ReadOnlyOpsEvalAndLearning = ({
 
         {iddocSupport && (
           <>
-            <ReadOnlySection
-              heading={h('note')}
-              copy={technicalContactsIdentifiedNote}
-            />
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'iddocSupport',
+              <ReadOnlySection
+                heading={h('note')}
+                copy={technicalContactsIdentifiedNote}
+              />
+            )}
 
             {checkGroupMap(
               isViewingFilteredView,
@@ -559,7 +564,12 @@ const ReadOnlyOpsEvalAndLearning = ({
         )}
 
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection heading={h('note')} copy={riskAdjustNote} />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'riskAdjustPayments',
+          <ReadOnlySection heading={h('note')} copy={riskAdjustNote} />
+        )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -594,7 +604,12 @@ const ReadOnlyOpsEvalAndLearning = ({
         )}
 
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
-        <ReadOnlySection heading={h('note')} copy={appealNote} />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'appealPayments',
+          <ReadOnlySection heading={h('note')} copy={appealNote} />
+        )}
       </div>
 
       {/* Evaluation */}
@@ -716,7 +731,12 @@ const ReadOnlyOpsEvalAndLearning = ({
           )}
 
           {/* This is a slight "hack" of this component in order to get around the heading being required */}
-          <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
+          {checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'appToSendFilesToKnown',
+            <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
+          )}
 
           {checkGroupMap(
             isViewingFilteredView,
