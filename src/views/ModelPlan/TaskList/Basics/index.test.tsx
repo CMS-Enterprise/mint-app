@@ -17,10 +17,13 @@ const basicMockData: GetModelPlanInfoType = {
   __typename: 'ModelPlan',
   id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
   modelName: 'My excellent plan that I just initiated',
+  abbreviation: 'MEP',
   nameHistory: ['First Name', 'Second Name', 'Third Name'],
   basics: {
     id: 'asdf',
     __typename: 'PlanBasics',
+    demoCode: '123',
+    amsModelID: '2414213',
     modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
     cmmiGroups: [
       CMMIGroup.STATE_AND_POPULATION_HEALTH_GROUP,

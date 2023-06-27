@@ -9,6 +9,7 @@ import { NavContext } from 'components/Header/navContext';
 import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
 import { localAuthStorageKey } from 'constants/localAuth';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import './index.scss';
 
@@ -28,7 +29,10 @@ export const Header = ({ children }: HeaderProps) => {
   const mobileSideNav = useRef<any>();
   const navbarRef = useRef<HTMLDivElement | null>(null); // Ref used for setting setNavbarHeight
 
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+
   const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
+  const isGetAccess: boolean = pathname === '/how-to-get-access';
 
   useEffect(() => {
     let isMounted = true;
@@ -149,14 +153,25 @@ export const Header = ({ children }: HeaderProps) => {
             </button>
           </div>
         ) : (
-          <Link
-            className={classnames('mint-header__nav-link margin-right-2', {
-              'text-white radius-md border padding-y-105': isLanding
-            })}
-            to="/signin"
-          >
-            {t('header:signIn')}
-          </Link>
+          <div className="display-flex">
+            {!isMobile && (
+              <UswdsReactLink
+                to="/how-to-get-access"
+                className="landing__access-link margin-right-2 margin-top-1"
+              >
+                {t('landing:getAccess')}
+              </UswdsReactLink>
+            )}
+            <Link
+              className={classnames('mint-header__nav-link margin-right-2', {
+                'text-white radius-md border padding-y-105': isLanding,
+                'text-white radius-md border padding-y-105 bg-primary': isGetAccess
+              })}
+              to="/signin"
+            >
+              {t('header:signIn')}
+            </Link>
+          </div>
         )}
       </div>
 

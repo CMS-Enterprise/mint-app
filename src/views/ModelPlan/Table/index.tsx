@@ -286,6 +286,10 @@ const DraftModelPlansTable = ({
         }
       },
       {
+        Header: t('requestsTable.headers.demoCode'),
+        accessor: 'basics.demoCode'
+      },
+      {
         Header: t('requestsTable.headers.crTDLs'),
         accessor: 'crTdls',
         Cell: ({ value }: { value: CRTDLType[] }) => {
