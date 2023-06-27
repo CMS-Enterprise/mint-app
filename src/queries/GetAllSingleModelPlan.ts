@@ -5,13 +5,18 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      nameHistory(sort: DESC)
+      abbreviation
       archived
       createdBy
       createdDts
       modifiedBy
       modifiedDts
+      status
       basics {
         id
+        amsModelID
+        demoCode
         modelCategory
         cmsCenters
         cmsOther
@@ -40,61 +45,6 @@ export default gql`
         modifiedBy
         modifiedDts
         status
-      }
-      beneficiaries {
-        id
-        beneficiaries
-        beneficiariesOther
-        beneficiariesNote
-        treatDualElligibleDifferent
-        treatDualElligibleDifferentHow
-        treatDualElligibleDifferentNote
-        excludeCertainCharacteristics
-        excludeCertainCharacteristicsCriteria
-        excludeCertainCharacteristicsNote
-        beneficiarySelectionFrequency
-        beneficiarySelectionFrequencyNote
-        beneficiarySelectionFrequencyOther
-        beneficiaryOverlap
-        beneficiaryOverlapNote
-        precedenceRules
-        readyForReviewBy
-        readyForReviewDts
-        status
-        numberPeopleImpacted
-        estimateConfidence
-        confidenceNote
-        beneficiarySelectionNote
-        beneficiarySelectionOther
-        beneficiarySelectionMethod
-      }
-      discussions {
-        id
-        content
-        createdBy
-        createdDts
-        status
-        replies {
-          id
-          discussionID
-          content
-          createdBy
-          createdDts
-          resolution
-        }
-      }
-      collaborators {
-        id
-        userAccount {
-          id
-          commonName
-          email
-          username
-        }
-        userID
-        teamRole
-        modelPlanID
-        createdDts
       }
       generalCharacteristics {
         id
@@ -150,6 +100,85 @@ export default gql`
         agreementTypesOther
         multiplePatricipationAgreementsNeeded
         multiplePatricipationAgreementsNeededNote
+      }
+      participantsAndProviders {
+        id
+        communicationMethod
+        communicationMethodOther
+        communicationNote
+        participantAssumeRisk
+        riskType
+        riskOther
+        riskNote
+        willRiskChange
+        willRiskChangeNote
+        coordinateWork
+        coordinateWorkNote
+        gainsharePayments
+        gainsharePaymentsTrack
+        gainsharePaymentsNote
+        participantsIds
+        participantsIdsOther
+        participantsIDSNote
+        expectedNumberOfParticipants
+        estimateConfidence
+        confidenceNote
+        recruitmentMethod
+        recruitmentOther
+        recruitmentNote
+        selectionMethod
+        selectionOther
+        selectionNote
+        participants
+        medicareProviderType
+        statesEngagement
+        participantsOther
+        participantsNote
+        participantsCurrentlyInModels
+        participantsCurrentlyInModelsNote
+        modelApplicationLevel
+        providerAdditionFrequency
+        providerAdditionFrequencyOther
+        providerAdditionFrequencyNote
+        providerAddMethod
+        providerAddMethodOther
+        providerAddMethodNote
+        providerLeaveMethod
+        providerLeaveMethodOther
+        providerLeaveMethodNote
+        providerOverlap
+        providerOverlapHierarchy
+        providerOverlapNote
+        readyForReviewBy
+        readyForReviewDts
+        status
+      }
+      beneficiaries {
+        id
+        beneficiaries
+        beneficiariesOther
+        beneficiariesNote
+        treatDualElligibleDifferent
+        treatDualElligibleDifferentHow
+        treatDualElligibleDifferentNote
+        excludeCertainCharacteristics
+        excludeCertainCharacteristicsCriteria
+        excludeCertainCharacteristicsNote
+        beneficiarySelectionFrequency
+        beneficiarySelectionFrequencyNote
+        beneficiarySelectionFrequencyOther
+        beneficiaryOverlap
+        beneficiaryOverlapNote
+        precedenceRules
+        readyForReviewBy
+        readyForReviewDts
+        status
+        numberPeopleImpacted
+        estimateConfidence
+        confidenceNote
+        beneficiarySelectionNote
+        beneficiarySelectionOther
+        beneficiarySelectionMethod
       }
       opsEvalAndLearning {
         id
@@ -250,58 +279,6 @@ export default gql`
         appealOther
         appealNote
       }
-      participantsAndProviders {
-        id
-        communicationMethod
-        communicationMethodOther
-        communicationNote
-        participantAssumeRisk
-        riskType
-        riskOther
-        riskNote
-        willRiskChange
-        willRiskChangeNote
-        coordinateWork
-        coordinateWorkNote
-        gainsharePayments
-        gainsharePaymentsTrack
-        gainsharePaymentsNote
-        participantsIds
-        participantsIdsOther
-        participantsIDSNote
-        expectedNumberOfParticipants
-        estimateConfidence
-        confidenceNote
-        recruitmentMethod
-        recruitmentOther
-        recruitmentNote
-        selectionMethod
-        selectionOther
-        selectionNote
-        participants
-        medicareProviderType
-        statesEngagement
-        participantsOther
-        participantsNote
-        participantsCurrentlyInModels
-        participantsCurrentlyInModelsNote
-        modelApplicationLevel
-        providerAdditionFrequency
-        providerAdditionFrequencyOther
-        providerAdditionFrequencyNote
-        providerAddMethod
-        providerAddMethodOther
-        providerAddMethodNote
-        providerLeaveMethod
-        providerLeaveMethodOther
-        providerLeaveMethodNote
-        providerOverlap
-        providerOverlapHierarchy
-        providerOverlapNote
-        readyForReviewBy
-        readyForReviewDts
-        status
-      }
       payments {
         id
         payType
@@ -367,7 +344,34 @@ export default gql`
         readyForReviewDts
         status
       }
-      status
+      collaborators {
+        id
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
+        userID
+        teamRole
+        modelPlanID
+        createdDts
+      }
+      discussions {
+        id
+        content
+        createdBy
+        createdDts
+        status
+        replies {
+          id
+          discussionID
+          content
+          createdBy
+          createdDts
+          resolution
+        }
+      }
     }
   }
 `;

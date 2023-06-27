@@ -22,6 +22,7 @@ const mockData: GetModelSummaryTypes = {
   id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
   isFavorite: false,
   modelName: 'Testing Model Summary',
+  abbreviation: 'TMS',
   modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
   basics: {

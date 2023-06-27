@@ -16,7 +16,7 @@ import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFa
 
 const Unfollow = () => {
   const history = useHistory();
-  const { t } = useTranslation('modelPlan');
+  const { t } = useTranslation('plan');
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const { showMessageOnNextPage } = useMessage();

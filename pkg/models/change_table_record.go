@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/iancoleman/strcase"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
@@ -22,6 +23,63 @@ type ChangeTableRecord struct {
 	ModifiedBy  *authentication.UserAccount `json:"modified_by"`
 }
 
+// GQLTableName casts a table name into a strict type for GQL
+func (ctr *ChangeTableRecord) GQLTableName() GQLTableName { //can include ctx context.Context if desired
+
+	switch ctr.TableName {
+	case "analyzed_audit":
+		return GQLTableName("analyzedAudit")
+	case "discussion_reply":
+		return GQLTableName("discussionReply")
+	case "existing_model":
+		return GQLTableName("existingModel")
+	case "existing_model_link":
+		return GQLTableName("existingModelLink")
+	case "model_plan":
+		return GQLTableName("modelPlan")
+	case "nda_agreement":
+		return GQLTableName("ndaAgreement")
+	case "operational_need":
+		return GQLTableName("operationalNeed")
+	case "operational_solution":
+		return GQLTableName("operationalSolution")
+	case "operational_solution_subtask":
+		return GQLTableName("operationalSolutionSubtask")
+	case "plan_basics":
+		return GQLTableName("planBasics")
+	case "plan_beneficiaries":
+		return GQLTableName("planBeneficiaries")
+	case "plan_collaborator":
+		return GQLTableName("planCollaborator")
+	case "plan_cr_tdl":
+		return GQLTableName("planCrTdl")
+	case "plan_discussion":
+		return GQLTableName("planDiscussion")
+	case "plan_document":
+		return GQLTableName("planDocument")
+	case "plan_document_solution_link":
+		return GQLTableName("planDocumentSolutionLink")
+	case "plan_general_characteristics":
+		return GQLTableName("planGeneralCharacteristics")
+	case "plan_ops_eval_and_learning":
+		return GQLTableName("planOpsEvalAndLearning")
+	case "plan_participants_and_providers":
+		return GQLTableName("planParticipantsAndProviders")
+	case "plan_payments":
+		return GQLTableName("planPayments")
+	case "possible_operational_need":
+		return GQLTableName("possibleOperationalNeed")
+	case "possible_operational_solution":
+		return GQLTableName("possibleOperationalSolution")
+	case "user_account":
+		return GQLTableName("userAccount")
+
+	default:
+		return GQLTableName("UNKNOWN") //TODO: this will fail
+	}
+
+}
+
 // ChangedFields contains a slice of changed fields.
 type ChangedFields struct {
 	Changes []*Field `json:"changes"`
@@ -37,4 +95,15 @@ type Field struct {
 type FieldValue struct {
 	New interface{} `json:"new"`
 	Old interface{} `json:"old"`
+}
+
+// NameCamelCase converts the name database string value, to lower case camel. This is meant as an approximation of the GQL field name
+func (field *Field) NameCamelCase() string {
+
+	return toLowerCamelCase(field.Name)
+
+}
+
+func toLowerCamelCase(s string) string {
+	return strcase.ToLowerCamel(s)
 }

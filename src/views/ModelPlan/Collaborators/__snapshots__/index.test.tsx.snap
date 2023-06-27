@@ -84,9 +84,9 @@ exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
               </h4>
               <p
                 class="usa-alert__text"
-              />
-              <div />
-              <p />
+              >
+                <span />
+              </p>
             </div>
           </div>
           <div
