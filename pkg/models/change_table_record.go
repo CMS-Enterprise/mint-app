@@ -26,7 +26,7 @@ type ChangeTableRecord struct {
 // GQLTableName casts a table name into a strict type for GQL
 func (ctr *ChangeTableRecord) GQLTableName() GQLTableName { //can include ctx context.Context if desired
 
-	switch ctr.TableName { // TODO: this could be a map if desired, but GO doesn't allow constant maps
+	switch ctr.TableName {
 	case "analyzed_audit":
 		return GQLTableName("analyzedAudit")
 	case "discussion_reply":
@@ -98,7 +98,7 @@ type FieldValue struct {
 }
 
 // NameCamelCase converts the name database string value, to lower case camel. This is meant as an approximation of the GQL field name
-func (field *Field) NameCamelCase() string { //can include ctx context.Context if desired
+func (field *Field) NameCamelCase() string {
 
 	return toLowerCamelCase(field.Name)
 
