@@ -28,7 +28,14 @@ func CreatePlanDiscussion(
 	principal authentication.Principal,
 	store *storage.Store,
 ) (*models.PlanDiscussion, error) {
-	planDiscussion := models.NewPlanDiscussion(principal.Account().ID, principal.AllowASSESSMENT(), input.ModelPlanID, input.Content)
+	planDiscussion := models.NewPlanDiscussion(
+		principal.Account().ID,
+		principal.AllowASSESSMENT(),
+		input.ModelPlanID,
+		input.Content,
+		input.UserRole,
+		input.UserRoleDescription,
+	)
 
 	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
 	if err != nil {
@@ -223,4 +230,9 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 	}
 
 	return result.([]*models.PlanDiscussion), nil
+}
+
+// GetMostRecentDiscussionRoleSelection implements resolver logic to get the most recent user role selection
+func GetMostRecentDiscussionRoleSelection(logger *zap.Logger, store *storage.Store, principal authentication.Principal) (models.DiscussionUserRole, error) {
+	return store.GetMostRecentDiscussionRoleSelection(logger, principal.Account().ID)
 }

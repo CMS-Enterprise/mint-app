@@ -70,8 +70,10 @@ type PlanCrTdlCreateInput struct {
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-	Content     string    `json:"content"`
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Content             string                     `json:"content"`
+	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
+	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
 // PlanDocumentInput

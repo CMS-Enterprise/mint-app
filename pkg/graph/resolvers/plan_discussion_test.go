@@ -19,8 +19,10 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 
 	input := &model.PlanDiscussionCreateInput{
-		ModelPlanID: plan.ID,
-		Content:     "This is a test comment",
+		ModelPlanID:         plan.ID,
+		Content:             "This is a test comment",
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("test role"),
 	}
 
 	result, err := CreatePlanDiscussion(
@@ -47,8 +49,10 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
 
 	input := &model.PlanDiscussionCreateInput{
-		ModelPlanID: plan.ID,
-		Content:     "This is a test comment",
+		ModelPlanID:         plan.ID,
+		Content:             "This is a test comment",
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("test role"),
 	}
 
 	regularUserPrincipal := suite.testConfigs.Principal
@@ -72,6 +76,97 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	suite.False(result.IsAssessment)
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
+}
+
+func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() {
+	plan := suite.createModelPlan("Test Plan")
+	userRole := models.DiscussionRoleCmsSystemServiceTeam
+
+	planDiscussionInput := &model.PlanDiscussionCreateInput{
+		ModelPlanID:         plan.ID,
+		Content:             "This is a CMS_SYSTEM_SERVICE_TEAM test comment",
+		UserRole:            &userRole,
+		UserRoleDescription: nil, // Description not provided for CMS_SYSTEM_SERVICE_TEAM role
+	}
+
+	planDiscussion, err := CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planDiscussionInput,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(planDiscussion.ID)
+	suite.EqualValues(plan.ID, planDiscussion.ModelPlanID)
+	suite.EqualValues(planDiscussionInput.Content, planDiscussion.Content)
+	suite.EqualValues(planDiscussionInput.UserRole, planDiscussion.UserRole)
+	suite.EqualValues(models.DiscussionUnAnswered, planDiscussion.Status)
+	suite.True(planDiscussion.IsAssessment) // default principal for the test suite is an assessment user
+	suite.Nil(planDiscussion.ModifiedBy)
+	suite.Nil(planDiscussion.ModifiedDts)
+}
+
+func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
+	plan := suite.createModelPlan("Test Plan")
+	userRole := models.DiscussionRoleNoneOfTheAbove
+
+	planDiscussionInput := &model.PlanDiscussionCreateInput{
+		ModelPlanID:         plan.ID,
+		Content:             "This is a NONE_OF_THE_ABOVE test comment",
+		UserRole:            &userRole,
+		UserRoleDescription: nil, // Description not provided for NONE_OF_THE_ABOVE role
+	}
+
+	_, err := CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planDiscussionInput,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+
+	suite.Error(err)
+	suite.Contains(err.Error(), "violates check constraint \"user_role_check\"")
+}
+
+func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
+	plan := suite.createModelPlan("Test Plan")
+
+	planDiscussionInput := &model.PlanDiscussionCreateInput{
+		ModelPlanID:         plan.ID,
+		Content:             "This is a test comment",
+		UserRole:            nil, // Role not provided
+		UserRoleDescription: nil, // Description not provided
+	}
+
+	planDiscussion, err := CreatePlanDiscussion(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		planDiscussionInput,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(planDiscussion.ID)
+	suite.EqualValues(plan.ID, planDiscussion.ModelPlanID)
+	suite.EqualValues(planDiscussionInput.Content, planDiscussion.Content)
+	suite.EqualValues(planDiscussionInput.UserRole, planDiscussion.UserRole)
+	suite.EqualValues(models.DiscussionUnAnswered, planDiscussion.Status)
+	suite.True(planDiscussion.IsAssessment) // default principal for the test suite is an assessment user
+	suite.Nil(planDiscussion.ModifiedBy)
+	suite.Nil(planDiscussion.ModifiedDts)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {

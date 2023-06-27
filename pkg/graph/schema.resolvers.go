@@ -940,6 +940,14 @@ func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(c
 	return resolvers.SearchChangeTableDateHistogramConsolidatedAggregations(logger, r.searchClient, interval, limit, offset)
 }
 
+// MostRecentDiscussionRoleSelection is the resolver for the mostRecentDiscussionRoleSelection field.
+func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (models.DiscussionUserRole, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.GetMostRecentDiscussionRoleSelection(logger, r.store, principal)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx)
@@ -1040,3 +1048,13 @@ type planPaymentsResolver struct{ *Resolver }
 type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planDiscussionResolver) UserRoleDescription(ctx context.Context, obj *models.PlanDiscussion) (*string, error) {
+	panic(fmt.Errorf("not implemented: UserRoleDescription - userRoleDescription"))
+}
