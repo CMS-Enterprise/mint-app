@@ -256,7 +256,12 @@ const ReadOnlyModelBasics = ({
         />
       )}
 
-      <ReadOnlySection heading={generalT('note')} copy={note} />
+      {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
+        'note',
+        <ReadOnlySection heading={generalT('note')} copy={note} />
+      )}
 
       {isViewingFilteredView && filteredView !== 'ipc' ? (
         <>
