@@ -1,7 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, Dropdown, Label, Textarea } from '@trussworks/react-uswds';
+import {
+  Button,
+  Dropdown,
+  Label,
+  Textarea,
+  TextInput
+} from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
@@ -19,11 +25,16 @@ import {
 import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum } from 'utils/modelPlan';
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;
   discussionReplyID?: string | null | undefined;
-  handleCreateDiscussion: (formikValues: { content: string }) => void;
+  handleCreateDiscussion: (formikValues: {
+    content: string;
+    userRole: DiscussionUserRole;
+    userRoleDescription: '';
+  }) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
   reply?: DiscussionType | ReplyType | null;
@@ -88,6 +99,15 @@ const QuestionAndReply = ({
                 : t('justNow')}
             </span>
           </div>
+
+          {reply.userRole && (
+            <p className="text-base margin-left-5 margin-y-0">
+              {reply.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
+                ? reply.userRoleDescription
+                : t(`userRole.${reply.userRole}`)}
+            </p>
+          )}
+
           <div className="margin-left-5">
             <p>{reply.content}</p>
           </div>
@@ -95,7 +115,11 @@ const QuestionAndReply = ({
       )}
 
       <Formik
-        initialValues={{ content: '', userRole: '' }}
+        initialValues={{
+          content: '',
+          userRole: '' as DiscussionUserRole,
+          userRoleDescription: ''
+        }}
         onSubmit={handleCreateDiscussion}
         validationSchema={validationSchema}
         validateOnBlur={false}
@@ -105,7 +129,8 @@ const QuestionAndReply = ({
         {(
           formikProps: FormikProps<{
             content: string;
-            userRole: DiscussionUserRole;
+            userRole: DiscussionUserRole | '';
+            userRoleDescription: '';
           }>
         ) => {
           const {
@@ -113,7 +138,6 @@ const QuestionAndReply = ({
             values,
             setErrors,
             handleSubmit,
-            dirty,
             setFieldValue
           } = formikProps;
           const flatErrors = flattenErrors(errors);
@@ -169,14 +193,36 @@ const QuestionAndReply = ({
                     <option key="default-select" disabled value="">
                       {`-${t('select')}-`}
                     </option>
-                    {Object.keys(DiscussionUserRole).map(role => {
-                      return (
-                        <option key={role} value={role}>
-                          {t(`userRole.${role}`)}
-                        </option>
-                      );
-                    })}
+                    {Object.keys(DiscussionUserRole)
+                      .sort(sortOtherEnum)
+                      .map(role => {
+                        return (
+                          <option key={role} value={role}>
+                            {t(`userRole.${role}`)}
+                          </option>
+                        );
+                      })}
                   </Field>
+
+                  {values.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE && (
+                    <div className="margin-top-3">
+                      <Label
+                        htmlFor="user-role-description"
+                        className="text-normal"
+                      >
+                        {t('enterDescription')}
+                        <RequiredAsterisk />
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.userRoleDescription}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        id="user-role-description"
+                        name="userRoleDescription"
+                      />
+                    </div>
+                  )}
                 </FieldGroup>
 
                 <FieldGroup
@@ -232,7 +278,13 @@ const QuestionAndReply = ({
                   </Button>
                   <Button
                     type="submit"
-                    disabled={!dirty}
+                    disabled={
+                      !values.content ||
+                      !values.userRole ||
+                      (values.userRole ===
+                        DiscussionUserRole.NONE_OF_THE_ABOVE &&
+                        !values.userRoleDescription)
+                    }
                     onClick={() => setErrors({})}
                   >
                     {renderType === 'question' ? t('save') : t('saveAnswer')}

@@ -9,6 +9,7 @@ import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 
 type SingleDiscussionProps = {
@@ -58,6 +59,14 @@ const SingleDiscussion = ({
             : t('justNow')}
         </span>
       </div>
+
+      {discussion.userRole && (
+        <p className="text-base margin-left-5 margin-y-0">
+          {discussion.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
+            ? discussion.userRoleDescription
+            : t(`userRole.${discussion.userRole}`)}
+        </p>
+      )}
 
       <div
         className={classNames({

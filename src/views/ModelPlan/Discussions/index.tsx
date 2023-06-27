@@ -29,14 +29,16 @@ import {
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
-import { DiscussionStatus } from 'types/graphql-global-types';
+import {
+  DiscussionStatus,
+  PlanDiscussionCreateInput
+} from 'types/graphql-global-types';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 
-import QuestionAndReply from '../ReadOnly/Discussions/_components/QuestionAndReply';
-
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
+import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
 
@@ -47,9 +49,7 @@ export type DiscussionsProps = {
   askAQuestion?: boolean;
 };
 
-type DicussionFormPropTypes = {
-  content: string;
-};
+type DicussionFormPropTypes = Omit<PlanDiscussionCreateInput, 'modelPlanID'>;
 
 const Discussions = ({
   modelID,
@@ -183,16 +183,18 @@ const Discussions = ({
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
     let payload = {};
 
+    console.log(formikValues);
+
     // Setting the mutation payload depending on discussionType
     if (discussionType === 'question') {
       payload = {
         modelPlanID: modelID,
-        content: formikValues.content
+        ...formikValues
       };
     } else if (discussionType === 'reply' && reply) {
       payload = {
         discussionID: reply.id,
-        content: formikValues.content,
+        ...formikValues,
         resolution: true
       };
     } else {

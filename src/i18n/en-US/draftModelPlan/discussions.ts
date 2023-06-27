@@ -47,6 +47,7 @@ const discussions = {
   role: 'Your role',
   roleInfo: 'This will display with your name to help others identify you.',
   select: 'Select',
+  enterDescription: 'Enter a short description for your role',
   userRole: {
     CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
     IT_ARCHITECT: 'IT Architect',
