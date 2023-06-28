@@ -134,7 +134,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "violates check constraint \"user_role_check\"")
+	suite.Contains(err.Error(), "violates check constraint \"plan_discussion_user_role_check\"")
 }
 
 func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
