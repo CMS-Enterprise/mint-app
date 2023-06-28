@@ -1,0 +1,2 @@
+ALTER TYPE team_role ADD VALUE 'OACT';
+ALTER TYPE team_role ADD VALUE 'PAYMENT';

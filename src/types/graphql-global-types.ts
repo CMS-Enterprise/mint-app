@@ -556,6 +556,8 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+  OACT = "OACT",
+  PAYMENT = "PAYMENT",
   QUALITY = "QUALITY",
 }
 

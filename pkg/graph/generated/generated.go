@@ -8323,6 +8323,8 @@ enum TeamRole {
   EVALUATION
   IT_LEAD
   QUALITY
+  OACT
+  PAYMENT
 }
 
 enum ModelType
