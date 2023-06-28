@@ -36,6 +36,7 @@ require github.com/xhit/go-simple-mail/v2 v2.13.0
 require (
 	github.com/aquasecurity/esquery v0.2.0
 	github.com/contribsys/faktory v1.6.2
+	github.com/iancoleman/strcase v0.2.0
 )
 
 require (

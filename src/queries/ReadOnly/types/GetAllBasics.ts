@@ -12,6 +12,8 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus } from "./..
 export interface GetAllBasics_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
+  demoCode: string | null;
+  amsModelID: string | null;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;

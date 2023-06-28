@@ -1588,6 +1588,7 @@ There are two types of CRs:`,
 
 const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
+  home: 'Home',
   description:
     'Get help with the creation of your Model Plan and the implementation of IT solutions.',
   read: 'Read',
