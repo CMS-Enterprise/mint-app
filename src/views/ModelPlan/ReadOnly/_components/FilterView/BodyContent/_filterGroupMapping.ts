@@ -52,6 +52,9 @@ const FilterGroupMap = {
     beneficiaries: ['precedenceRules'],
     payments: [
       'fundingSource',
+      'fundingSourceTrustFund',
+      'fundingSourceR',
+      'fundingSourceRTrustFund',
       'payClaims',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
@@ -64,8 +67,6 @@ const FilterGroupMap = {
     payments: [
       'fundingSource',
       'fundingSourceTrustFund',
-      'fundingSourceR',
-      'fundingSourceRTrustFund',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
       'fundingStructure',
@@ -148,8 +149,9 @@ const FilterGroupMap = {
     beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
     'ops-eval-and-learning': [
       'contractorSupport',
-      'contractorSupport',
+      'contractorSupportHow',
       'iddocSupport',
+      'technicalContactsIdentified',
       'captureParticipantInfo',
       'icdOwner',
       'draftIcdDueDate',
@@ -180,7 +182,6 @@ const FilterGroupMap = {
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
-      'waiverOnlyAppliesPartOfPayment',
       'nonClaimsPayments',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'
@@ -224,11 +225,10 @@ const FilterGroupMap = {
       'payModelDifferentiation',
       'ancitipateCreatingDependencies',
       'needsClaimsDataCollection',
-      'thirdParty',
+      'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',
-      'waiverOnlyAppliesPartOfPayment',
       'nonClaimsPayments',
       'planningToUseInnovationPaymentContractor',
       'anticipateReconcilingPaymentsRetrospectively'

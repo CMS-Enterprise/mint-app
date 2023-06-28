@@ -284,7 +284,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           />
         )}
 
-        {iddocSupport &&
+        {(isViewingFilteredView || iddocSupport) &&
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
@@ -305,7 +305,7 @@ const ReadOnlyOpsEvalAndLearning = ({
 
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
 
-        {iddocSupport && (
+        {(isViewingFilteredView || iddocSupport) && (
           <>
             {checkGroupMap(
               isViewingFilteredView,
@@ -332,7 +332,7 @@ const ReadOnlyOpsEvalAndLearning = ({
       </div>
 
       {/* Interface Control Document - ICD */}
-      {iddocSupport && (
+      {(isViewingFilteredView || iddocSupport) && (
         <>
           <div
             className={`${

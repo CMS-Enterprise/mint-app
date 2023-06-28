@@ -183,27 +183,42 @@ const ReadOnlyBeneficiaries = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'numberPeopleImpacted',
-          <ReadOnlySection
-            heading={t('howManyImpacted')}
-            copy={numberPeopleImpacted?.toString()}
-          />
-        )}
+        {isViewingFilteredView &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'numberPeopleImpacted',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('howManyImpacted'),
+                copy: numberPeopleImpacted?.toString(),
+                notes: confidenceNote
+              }}
+              secondSection={{
+                heading: t('levelOfConfidence'),
+                copy:
+                  estimateConfidence &&
+                  translateConfidenceType(estimateConfidence)
+              }}
+            />
+          )}
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'estimateConfidence',
-          <ReadOnlySection
-            heading={t('levelOfConfidence')}
-            copy={
-              estimateConfidence && translateConfidenceType(estimateConfidence)
-            }
-            notes={confidenceNote}
-          />
+        {!isViewingFilteredView && (
+          <>
+            <ReadOnlySection
+              heading={t('howManyImpacted')}
+              copy={numberPeopleImpacted?.toString()}
+            />
+
+            <ReadOnlySection
+              heading={t('levelOfConfidence')}
+              copy={
+                estimateConfidence &&
+                translateConfidenceType(estimateConfidence)
+              }
+              notes={confidenceNote}
+            />
+          </>
         )}
 
         {checkGroupMap(

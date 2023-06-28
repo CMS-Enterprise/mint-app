@@ -55,8 +55,6 @@ const BodyContent = ({
     payments: ReadOnlyPayments
   };
 
-  // console.log(individualFilterView);
-
   return (
     <Grid>
       <FitleredViewSection sectionName="model-team">
