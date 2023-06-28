@@ -288,7 +288,7 @@ const ReadOnlyModelBasics = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'clearanceStartDate',
+            'clearanceStarts',
             <SideBySideReadOnlySection
               firstSection={{
                 heading: planBasicsT('clearanceStarts.question'),
@@ -307,7 +307,7 @@ const ReadOnlyModelBasics = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'annouceModel',
+            'announced',
             <ReadOnlySection
               heading={planBasicsT('announced.question')}
               copy={announced && formatDateUtc(announced, 'MM/dd/yyyy')}
@@ -317,7 +317,7 @@ const ReadOnlyModelBasics = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'applicationStartDate',
+            'applicationsStart',
             <SideBySideReadOnlySection
               firstSection={{
                 heading: planBasicsT('applicationsStart.question'),
@@ -337,7 +337,7 @@ const ReadOnlyModelBasics = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'performanceStartDate',
+            'performancePeriodStarts',
             <SideBySideReadOnlySection
               firstSection={{
                 heading: planBasicsT('performancePeriodStarts.question'),
@@ -357,7 +357,7 @@ const ReadOnlyModelBasics = ({
           {checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'modelWrapUp',
+            'wrapUpEnds',
             <ReadOnlySection
               heading={planBasicsT('wrapUpEnds.question')}
               copy={wrapUpEnds && formatDateUtc(wrapUpEnds, 'MM/dd/yyyy')}

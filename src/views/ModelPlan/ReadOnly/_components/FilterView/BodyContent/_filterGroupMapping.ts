@@ -1,18 +1,18 @@
 const FilterGroupMap = {
   cmmi: {
     'general-characteristics': [
-      'modelAPM',
+      'alternativePaymentModelTypes',
       'keyCharacteristics',
       'participationOptions',
-      'agreementType',
-      'moreParticipation',
-      'authorityAllowed',
+      'agreementTypes',
+      'multiplePatricipationAgreementsNeeded',
+      'authorityAllowances',
       'waiversRequired'
     ],
     'participants-and-providers': [
       'participants',
-      'typeMedicateProvider',
-      'describeStates',
+      'medicareProviderType',
+      'statesEngagement',
       'selectionMethod'
     ],
     beneficiaries: [
@@ -43,7 +43,7 @@ const FilterGroupMap = {
   },
   oact: {
     basics: ['nameHistory'],
-    'general-characteristics': ['modelAPM'],
+    'general-characteristics': ['alternativePaymentModelTypes'],
     'participants-and-providers': [
       'providerAdditionFrequency',
       'providerAddMethod',
@@ -62,8 +62,11 @@ const FilterGroupMap = {
     ]
   },
   dfsdm: {
-    basics: ['nameHistory', 'modelType', 'goal', 'performanceStartDate'],
-    'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
+    basics: ['nameHistory', 'modelType', 'goal', 'performancePeriodStarts'],
+    'participants-and-providers': [
+      'expectedNumberOfParticipants',
+      'estimateConfidence'
+    ],
     payments: [
       'fundingSource',
       'fundingSourceTrustFund',
@@ -75,8 +78,11 @@ const FilterGroupMap = {
     ]
   },
   ccw: {
-    basics: ['nameHistory', 'performanceStartDate'],
-    'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
+    basics: ['nameHistory', 'performancePeriodStarts'],
+    'participants-and-providers': [
+      'expectedNumberOfParticipants',
+      'estimateConfidence'
+    ],
     'ops-eval-and-learning': [
       'ccmInvolvment',
       'sendFilesBetweenCcw',
@@ -97,9 +103,9 @@ const FilterGroupMap = {
     'general-characteristics': ['rulemakingRequired'],
     'participants-and-providers': [
       'participants',
-      'typeMedicateProvider',
-      'describeStates',
-      'howManyParticipants',
+      'medicareProviderType',
+      'statesEngagement',
+      'expectedNumberOfParticipants',
       'estimateConfidence',
       'providerAdditionFrequency',
       'providerAddMethod',
@@ -125,28 +131,31 @@ const FilterGroupMap = {
       'nameHistory',
       'modelType',
       'goal',
-      'annouceModel',
-      'performanceStartDate',
+      'announced',
+      'performancePeriodStarts',
       'phasedIn'
     ],
     'general-characteristics': [
       'keyCharacteristics',
-      'specificGeographies',
-      'geographyType',
-      'geographyApplied',
+      'geographiesTargeted',
+      'geographiesTargetedTypes',
+      'geographiesTargetedAppliedTo',
       'rulemakingRequired'
     ],
     'participants-and-providers': [
       'participants',
-      'typeMedicateProvider',
-      'describeStates',
-      'modelLevel',
+      'medicareProviderType',
+      'statesEngagement',
+      'modelApplicationLevel',
       'selectionMethod',
-      'collectTINs',
+      'participantsIds',
       'providerOverlap',
-      'overlapInfo'
+      'providerOverlapHierarchy'
     ],
-    beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
+    beneficiaries: [
+      'treatDualElligibleDifferent',
+      'excludeCertainCharacteristics'
+    ],
     'ops-eval-and-learning': [
       'contractorSupport',
       'contractorSupportHow',
@@ -176,7 +185,7 @@ const FilterGroupMap = {
       'changesMedicarePhysicianFeeSchedule',
       'affectsMedicareSecondaryPayerClaims',
       'payModelDifferentiation',
-      'ancitipateCreatingDependencies',
+      'creatingDependenciesBetweenServices',
       'needsClaimsDataCollection',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
@@ -192,27 +201,30 @@ const FilterGroupMap = {
       'nameHistory',
       'modelType',
       'goal',
-      'annouceModel',
-      'performanceStartDate',
+      'announced',
+      'performancePeriodStarts',
       'phasedIn'
     ],
     'general-characteristics': [
       'keyCharacteristics',
-      'specificGeographies',
-      'geographyType',
-      'geographyApplied',
+      'geographiesTargeted',
+      'geographiesTargetedTypes',
+      'geographiesTargetedAppliedTo',
       'rulemakingRequired'
     ],
     'participants-and-providers': [
       'participants',
-      'typeMedicateProvider',
-      'describeStates',
-      'modelLevel',
+      'medicareProviderType',
+      'statesEngagement',
+      'modelApplicationLevel',
       'selectionMethod',
       'providerOverlap',
-      'overlapInfo'
+      'providerOverlapHierarchy'
     ],
-    beneficiaries: ['dualEligibility', 'excludeCertainCharacteristics'],
+    beneficiaries: [
+      'treatDualElligibleDifferent',
+      'excludeCertainCharacteristics'
+    ],
     'ops-eval-and-learning': [
       'contractorSupport',
       'contractorSupportHow',
@@ -223,7 +235,7 @@ const FilterGroupMap = {
       'changesMedicarePhysicianFeeSchedule',
       'affectsMedicareSecondaryPayerClaims',
       'payModelDifferentiation',
-      'ancitipateCreatingDependencies',
+      'creatingDependenciesBetweenServices',
       'needsClaimsDataCollection',
       'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
@@ -247,15 +259,15 @@ const FilterGroupMap = {
   cbosc: {
     basics: [
       'nameHistory',
-      'annouceModel',
-      'applicationStartDate',
-      'performanceStartDate'
+      'announced',
+      'applicationsStart',
+      'performancePeriodStarts'
     ],
     'participants-and-providers': [
       'participants',
-      'typeMedicateProvider',
-      'describeStates',
-      'howManyParticipants',
+      'medicareProviderType',
+      'statesEngagement',
+      'expectedNumberOfParticipants',
       'estimateConfidence',
       'communicationMethod'
     ],

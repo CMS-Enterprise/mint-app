@@ -153,7 +153,7 @@ const ReadOnlyParticipantsAndProviders = ({
             checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
-              'typeMedicateProvider',
+              'medicareProviderType',
               <ReadOnlySection
                 heading={t('typeMedicateProvider')}
                 copy={medicareProviderType}
@@ -165,7 +165,7 @@ const ReadOnlyParticipantsAndProviders = ({
             checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
-              'describeStates',
+              'statesEngagement',
               <ReadOnlySection
                 heading={t('describeStates')}
                 copy={statesEngagement}
@@ -186,7 +186,7 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'modelLevel',
+          'modelApplicationLevel',
           <ReadOnlySection
             heading={t('modelLevel')}
             copy={modelApplicationLevel}
@@ -205,7 +205,7 @@ const ReadOnlyParticipantsAndProviders = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'howManyParticipants',
+            'expectedNumberOfParticipants',
             <SideBySideReadOnlySection
               firstSection={{
                 heading: t('howManyParticipants'),
@@ -245,7 +245,7 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'recruitParticipants',
+          'recruitmentMethod',
           <ReadOnlySection
             heading={t('recruitParticipants')}
             copy={
@@ -297,7 +297,7 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'assumeRisk',
+          'participantAssumeRisk',
           <SideBySideReadOnlySection
             firstSection={{
               heading: t('assumeRisk'),
@@ -316,14 +316,14 @@ const ReadOnlyParticipantsAndProviders = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'assumeRisk',
+            'participantAssumeRisk',
             <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
           )}
 
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'changeRisk',
+          'willRiskChange',
           <ReadOnlySection
             heading={t('changeRisk')}
             copy={translateBooleanOrNull(willRiskChange)}
@@ -342,7 +342,7 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'workCoordination',
+          'coordinateWork',
           <ReadOnlySection
             heading={t('workCoordination')}
             copy={translateBooleanOrNull(coordinateWork)}
@@ -353,7 +353,7 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'gainsharing',
+          'gainsharePayments',
           <SideBySideReadOnlySection
             firstSection={{
               heading: t('gainsharing'),
@@ -371,7 +371,7 @@ const ReadOnlyParticipantsAndProviders = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'gainsharing',
+            'gainsharePayments',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={gainsharePaymentsNote}
@@ -381,7 +381,7 @@ const ReadOnlyParticipantsAndProviders = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'collectTINs',
+          'participantsIds',
           <ReadOnlySection
             heading={t('collectTINs')}
             list
@@ -453,7 +453,7 @@ const ReadOnlyParticipantsAndProviders = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'overlapInfo',
+            'providerOverlapHierarchy',
             <ReadOnlySection
               heading={t('overlapInfo')}
               copy={providerOverlapHierarchy}
@@ -464,7 +464,7 @@ const ReadOnlyParticipantsAndProviders = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'overlapInfo',
+            'providerOverlapHierarchy',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={providerOverlapNote}

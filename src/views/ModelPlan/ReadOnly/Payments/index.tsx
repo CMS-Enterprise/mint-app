@@ -345,7 +345,7 @@ const ReadOnlyPayments = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'ancitipateCreatingDependencies',
+            'creatingDependenciesBetweenServices',
             <ReadOnlySection
               heading={t('ancitipateCreatingDependencies')}
               copy={translateBooleanOrNull(creatingDependenciesBetweenServices)}

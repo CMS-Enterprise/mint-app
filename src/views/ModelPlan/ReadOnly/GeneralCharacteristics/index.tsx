@@ -155,7 +155,7 @@ const ReadOnlyGeneralCharacteristics = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'whichExistingModel',
+            'existingModel',
             <ReadOnlySection
               heading={t('whichExistingModel')}
               copy={existingModel}
@@ -165,7 +165,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'resembleModel',
+          'resemblesExistingModel',
           <ReadOnlySection
             heading={t('resembleModel')}
             copy={translateBooleanOrNull(resemblesExistingModel)}
@@ -186,7 +186,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'waysResembleModel',
+          'resemblesExistingModelHow',
           <ReadOnlySection
             heading={t('waysResembleModel')}
             copy={resemblesExistingModelHow}
@@ -197,7 +197,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'differentComponents',
+          'hasComponentsOrTracks',
           <ReadOnlySection
             heading={t('differentComponents')}
             copy={translateBooleanOrNull(hasComponentsOrTracks)}
@@ -208,7 +208,7 @@ const ReadOnlyGeneralCharacteristics = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'differentComponents',
+            'hasComponentsOrTracksDiffer',
             <ReadOnlySection
               heading={t('tracksDiffer')}
               copy={hasComponentsOrTracksDiffer}
@@ -227,7 +227,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'modelAPM',
+          'alternativePaymentModelTypes',
           <ReadOnlySection
             heading={t('modelAPM')}
             list
@@ -257,7 +257,7 @@ const ReadOnlyGeneralCharacteristics = ({
             {checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
-              'reviewPlanBids',
+              'collectPlanBids',
               <ReadOnlySection
                 heading={t('reviewPlanBids')}
                 copy={translateBooleanOrNull(collectPlanBids)}
@@ -268,7 +268,7 @@ const ReadOnlyGeneralCharacteristics = ({
             {checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
-              'manageEnrollment',
+              'managePartCDEnrollment',
               <ReadOnlySection
                 heading={t('manageEnrollment')}
                 copy={translateBooleanOrNull(managePartCDEnrollment)}
@@ -279,7 +279,7 @@ const ReadOnlyGeneralCharacteristics = ({
             {checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
-              'updatedContract',
+              'planContractUpdated',
               <ReadOnlySection
                 heading={t('updatedContract')}
                 copy={translateBooleanOrNull(planContractUpdated)}
@@ -300,7 +300,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'careCoordination',
+          'careCoordinationInvolved',
           <SideBySideReadOnlySection
             firstSection={{
               heading: t('careCoordination'),
@@ -318,7 +318,7 @@ const ReadOnlyGeneralCharacteristics = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'careCoordination',
+            'careCoordinationInvolved',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={careCoordinationInvolvedNote}
@@ -328,7 +328,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'additionalServices',
+          'additionalServicesInvolved',
           <SideBySideReadOnlySection
             firstSection={{
               heading: t('additionalServices'),
@@ -346,7 +346,7 @@ const ReadOnlyGeneralCharacteristics = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'additionalServices',
+            'additionalServicesInvolved',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={additionalServicesInvolvedNote}
@@ -356,7 +356,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'communityInvolved',
+          'communityPartnersInvolved',
           <SideBySideReadOnlySection
             firstSection={{
               heading: t('communityInvolved'),
@@ -374,7 +374,7 @@ const ReadOnlyGeneralCharacteristics = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'communityInvolved',
+            'communityPartnersInvolved',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={communityPartnersInvolvedNote}
@@ -392,7 +392,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'specificGeographies',
+          'geographiesTargeted',
           <ReadOnlySection
             heading={t('specificGeographies')}
             copy={translateBooleanOrNull(geographiesTargeted)}
@@ -402,7 +402,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'geographyType',
+          'geographiesTargetedTypes',
           <ReadOnlySection
             heading={t('geographyType')}
             list
@@ -414,7 +414,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'geographyApplied',
+          'geographiesTargetedAppliedTo',
           <ReadOnlySection
             heading={t('geographyApplied')}
             list
@@ -440,7 +440,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'agreementType',
+          'agreementTypes',
           <ReadOnlySection
             heading={t('agreementType')}
             list
@@ -452,7 +452,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'moreParticipation',
+          'multiplePatricipationAgreementsNeeded',
           <ReadOnlySection
             heading={t('moreParticipation')}
             copy={translateBooleanOrNull(multiplePatricipationAgreementsNeeded)}
@@ -460,6 +460,7 @@ const ReadOnlyGeneralCharacteristics = ({
           />
         )}
       </div>
+
       <div>
         {checkGroupMap(
           isViewingFilteredView,
@@ -492,7 +493,7 @@ const ReadOnlyGeneralCharacteristics = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'authorityAllowed',
+          'authorityAllowances',
           <ReadOnlySection
             heading={t('authorityAllowed')}
             list

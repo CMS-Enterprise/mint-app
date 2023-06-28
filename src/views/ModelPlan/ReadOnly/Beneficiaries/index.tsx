@@ -117,7 +117,7 @@ const ReadOnlyBeneficiaries = ({
         {checkGroupMap(
           isViewingFilteredView,
           filteredQuestions,
-          'dualEligibility',
+          'treatDualElligibleDifferent',
           <SideBySideReadOnlySection
             firstSection={{
               heading: t('dualEligibility'),
@@ -137,7 +137,7 @@ const ReadOnlyBeneficiaries = ({
           checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
-            'dualEligibility',
+            'treatDualElligibleDifferent',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={treatDualElligibleDifferentNote}
