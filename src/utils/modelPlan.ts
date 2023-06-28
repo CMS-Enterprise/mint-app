@@ -74,6 +74,10 @@ export const translateTeamRole = (teamRole: string) => {
       return i18next.t('plan:teamRoles.modelLead');
     case 'MODEL_TEAM':
       return i18next.t('plan:teamRoles.modelTeam');
+    case 'OACT':
+      return i18next.t('plan:teamRoles.oact');
+    case 'PAYMENT':
+      return i18next.t('plan:teamRoles.payment');
     case 'QUALITY':
       return i18next.t('plan:teamRoles.quality');
     default:

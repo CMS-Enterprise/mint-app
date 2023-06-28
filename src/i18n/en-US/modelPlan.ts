@@ -7,6 +7,8 @@ const plan = {
     learning: 'Learning',
     modelTeam: 'Model Team',
     itLead: 'IT Lead',
+    oact: 'OACT',
+    payment: 'Payment',
     quality: 'Quality'
   },
   planStatuses: {
