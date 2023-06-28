@@ -361,6 +361,7 @@ export enum OperationalSolutionKey {
   ACO_OS = "ACO_OS",
   APPS = "APPS",
   ARS = "ARS",
+  BCDA = "BCDA",
   CBOSC = "CBOSC",
   CCW = "CCW",
   CDX = "CDX",

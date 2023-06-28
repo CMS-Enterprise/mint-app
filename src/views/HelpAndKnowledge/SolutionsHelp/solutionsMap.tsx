@@ -82,7 +82,8 @@ export type ContactRoles =
   | 'Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)'
   | 'Quality Subject Matter Expert (QSME)'
   | 'Director, Division of Portfolio Management & Strategy'
-  | 'Director, Division of Budget and Administrative Services (DBAS)';
+  | 'Director, Division of Budget and Administrative Services (DBAS)'
+  | 'Product Manager';
 
 export type SolutionContactType = {
   name: string;
@@ -1095,6 +1096,33 @@ export const helpSolutions: HelpSolutionType[] = [
       timeline: (props: SolutionDetailProps) => (
         <SharedSystemsTimeLine {...props} />
       )
+    }
+  },
+  {
+    enum: OperationalSolutionKey.BCDA,
+    key: 'bcda',
+    route: 'bcda',
+    // TODO: Verify categories
+    categories: [OperationalSolutionCategories.DATA_REPORTING],
+    name: 'Beneficiary Claims Data API',
+    pointsOfContact: [
+      {
+        name: 'BCDA Team',
+        email: 'bcapi@cms.hhs.gov'
+      },
+      {
+        name: 'Nicole Pham',
+        email: 'xuanphien.pham@cms.hhs.gov',
+        role: 'Product Manager'
+      }
+    ],
+    systemOwner: {
+      name: 'Data Analytics and Strategy Group',
+      system: 'Office of Enterprise Data and Analytics'
+    },
+    components: {
+      // TODO: Update component timeline to BCDA
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   }
 ];
