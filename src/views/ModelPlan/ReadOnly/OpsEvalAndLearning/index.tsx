@@ -269,7 +269,9 @@ const ReadOnlyOpsEvalAndLearning = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
+        {!isViewingFilteredView && (
+          <h3>{readOnly('opsEvalAndLearning.headings.iddoc')}</h3>
+        )}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -282,20 +284,24 @@ const ReadOnlyOpsEvalAndLearning = ({
           />
         )}
 
-        {iddocSupport && (
-          <SideBySideReadOnlySection
-            firstSection={{
-              heading: t('technicalContacts'),
-              copy: translateBooleanOrNull(technicalContactsIdentified)
-            }}
-            secondSection={
-              technicalContactsIdentified === true && {
-                heading: h('pleaseSpecify'),
-                copy: technicalContactsIdentifiedDetail
+        {iddocSupport &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'technicalContactsIdentified',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('technicalContacts'),
+                copy: translateBooleanOrNull(technicalContactsIdentified)
+              }}
+              secondSection={
+                technicalContactsIdentified === true && {
+                  heading: h('pleaseSpecify'),
+                  copy: technicalContactsIdentifiedDetail
+                }
               }
-            }
-          />
-        )}
+            />
+          )}
 
         {/* This is a slight "hack" of this component in order to get around the heading being required */}
 
@@ -335,7 +341,9 @@ const ReadOnlyOpsEvalAndLearning = ({
                 : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
             }`}
           >
-            <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
+            {!isViewingFilteredView && (
+              <h3>{readOnly('opsEvalAndLearning.headings.icd')}</h3>
+            )}
 
             {checkGroupMap(
               isViewingFilteredView,
@@ -367,7 +375,10 @@ const ReadOnlyOpsEvalAndLearning = ({
                 : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
             }`}
           >
-            <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
+            {!isViewingFilteredView && (
+              <h3>{readOnly('opsEvalAndLearning.headings.testing')}</h3>
+            )}
+
             {checkGroupMap(
               isViewingFilteredView,
               filteredQuestions,
@@ -402,7 +413,9 @@ const ReadOnlyOpsEvalAndLearning = ({
                 : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
             }`}
           >
-            <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
+            {!isViewingFilteredView && (
+              <h3>{readOnly('opsEvalAndLearning.headings.dataMonitoring')}</h3>
+            )}
 
             {checkGroupMap(
               isViewingFilteredView,
@@ -691,17 +704,19 @@ const ReadOnlyOpsEvalAndLearning = ({
       </div>
 
       {/* CCWAndQuality */}
-      {isCCWInvolvement(ccmInvolvment) && (
-        <div
-          className={`${
-            isViewingFilteredView
-              ? ''
-              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
-          }`}
-        >
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {!isViewingFilteredView && (
           <h3>{readOnly('opsEvalAndLearning.headings.ccw')}</h3>
+        )}
 
-          {checkGroupMap(
+        {isCCWInvolvement(ccmInvolvment) ||
+          checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'sendFilesBetweenCcw',
@@ -712,7 +727,8 @@ const ReadOnlyOpsEvalAndLearning = ({
             />
           )}
 
-          {checkGroupMap(
+        {isCCWInvolvement(ccmInvolvment) ||
+          checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'appToSendFilesToKnown',
@@ -730,15 +746,17 @@ const ReadOnlyOpsEvalAndLearning = ({
             />
           )}
 
-          {/* This is a slight "hack" of this component in order to get around the heading being required */}
-          {checkGroupMap(
+        {/* This is a slight "hack" of this component in order to get around the heading being required */}
+        {isCCWInvolvement(ccmInvolvment) ||
+          checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'appToSendFilesToKnown',
             <ReadOnlySection heading={h('note')} copy={appToSendFilesToNote} />
           )}
 
-          {checkGroupMap(
+        {isCCWInvolvement(ccmInvolvment) ||
+          checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'useCcwForFileDistribiutionToParticipants',
@@ -750,21 +768,22 @@ const ReadOnlyOpsEvalAndLearning = ({
               notes={useCcwForFileDistribiutionToParticipantsNote}
             />
           )}
-        </div>
-      )}
+      </div>
 
       {/* Quality */}
-      {isQualityMeasures(dataNeededForMonitoring) && (
-        <div
-          className={`${
-            isViewingFilteredView
-              ? ''
-              : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
-          }`}
-        >
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {!isViewingFilteredView && (
           <h3>{readOnly('opsEvalAndLearning.headings.quality')}</h3>
+        )}
 
-          {checkGroupMap(
+        {isQualityMeasures(dataNeededForMonitoring) ||
+          checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'developNewQualityMeasures',
@@ -775,7 +794,8 @@ const ReadOnlyOpsEvalAndLearning = ({
             />
           )}
 
-          {checkGroupMap(
+        {isQualityMeasures(dataNeededForMonitoring) ||
+          checkGroupMap(
             isViewingFilteredView,
             filteredQuestions,
             'qualityPerformanceImpactsPayment',
@@ -785,8 +805,7 @@ const ReadOnlyOpsEvalAndLearning = ({
               notes={qualityPerformanceImpactsPaymentNote}
             />
           )}
-        </div>
-      )}
+      </div>
 
       {/* DataSharing */}
       <div
@@ -796,7 +815,9 @@ const ReadOnlyOpsEvalAndLearning = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        <h3>{readOnly('opsEvalAndLearning.headings.data')}</h3>
+        {!isViewingFilteredView && (
+          <h3>{readOnly('opsEvalAndLearning.headings.data')}</h3>
+        )}
 
         {checkGroupMap(
           isViewingFilteredView,

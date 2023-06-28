@@ -148,27 +148,29 @@ const ReadOnlyParticipantsAndProviders = ({
           />
         )}
 
-        {medicareProviderType &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'typeMedicateProvider',
-            <ReadOnlySection
-              heading={t('typeMedicateProvider')}
-              copy={medicareProviderType}
-            />
-          )}
+        {(!isViewingFilteredView && medicareProviderType) ||
+          (isViewingFilteredView &&
+            checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'typeMedicateProvider',
+              <ReadOnlySection
+                heading={t('typeMedicateProvider')}
+                copy={medicareProviderType}
+              />
+            ))}
 
-        {statesEngagement &&
-          checkGroupMap(
-            isViewingFilteredView,
-            filteredQuestions,
-            'describeStates',
-            <ReadOnlySection
-              heading={t('describeStates')}
-              copy={statesEngagement}
-            />
-          )}
+        {(!isViewingFilteredView && statesEngagement) ||
+          (isViewingFilteredView &&
+            checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'describeStates',
+              <ReadOnlySection
+                heading={t('describeStates')}
+                copy={statesEngagement}
+              />
+            ))}
 
         {checkGroupMap(
           isViewingFilteredView,
@@ -199,27 +201,43 @@ const ReadOnlyParticipantsAndProviders = ({
             : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
         }`}
       >
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'howManyParticipants',
-          <ReadOnlySection
-            heading={t('howManyParticipants')}
-            copy={expectedNumberOfParticipants?.toString()}
-          />
-        )}
+        {isViewingFilteredView &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'howManyParticipants',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('howManyParticipants'),
+                copy: expectedNumberOfParticipants?.toString()
+              }}
+              secondSection={{
+                heading: t('estimateConfidence'),
+                copy:
+                  estimateConfidence &&
+                  translateConfidenceType(estimateConfidence),
+                listOtherItem: riskOther,
+                notes: confidenceNote
+              }}
+            />
+          )}
 
-        {checkGroupMap(
-          isViewingFilteredView,
-          filteredQuestions,
-          'estimateConfidence',
-          <ReadOnlySection
-            heading={t('estimateConfidence')}
-            copy={
-              estimateConfidence && translateConfidenceType(estimateConfidence)
-            }
-            notes={confidenceNote}
-          />
+        {!isViewingFilteredView && (
+          <>
+            <ReadOnlySection
+              heading={t('howManyParticipants')}
+              copy={expectedNumberOfParticipants?.toString()}
+            />
+
+            <ReadOnlySection
+              heading={t('estimateConfidence')}
+              copy={
+                estimateConfidence &&
+                translateConfidenceType(estimateConfidence)
+              }
+              notes={confidenceNote}
+            />
+          </>
         )}
 
         {/* If "Other", then display "Other — Lorem ipsum." */}

@@ -136,70 +136,80 @@ const ReadOnlyModelBasics = ({
       )}
 
       {/* Other Identifiers section */}
-      <div
-        className={classNames(
-          'bg-base-lightest padding-2 margin-top-4 margin-bottom-4',
-          {
-            'maxw-mobile-lg': isTablet
-          }
-        )}
-      >
-        <p className="margin-top-0 text-bold">
-          {planBasicsMiscT('otherIdentifiers')}
-        </p>
-
-        <p className="line-height-mono-4">
-          {planBasicsMiscT('otherIdentifiersInfo1')}
-          <TrussLink
-            aria-label="Open AMS in a new tab"
-            href="https://ams.cmmi.cms.gov"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="external"
-          >
-            {planBasicsMiscT('otherIdentifiersInfo2')}
-          </TrussLink>
-
-          {planBasicsMiscT('otherIdentifiersInfo3')}
-        </p>
-
-        <Grid row gap>
-          <Grid
-            desktop={{ col: 6 }}
-            className={classNames({
-              'padding-bottom-2': isTablet
-            })}
-          >
-            <p className="text-bold margin-top-0 margin-bottom-1">
-              {planBasicsT('amsModelID.question')}
-            </p>
-
-            {amsModelID || (
-              <div className="text-italic text-base">
-                {planBasicsMiscT('noneEntered')}
-              </div>
-            )}
-          </Grid>
-          <Grid desktop={{ col: 6 }}>
-            <p className="text-bold margin-top-0 margin-bottom-1">
-              {planBasicsT('demoCode.question')}
-            </p>
-
-            {demoCode || (
-              <div className="text-italic text-base">
-                {planBasicsMiscT('noneEntered')}
-              </div>
-            )}
-          </Grid>
-        </Grid>
-      </div>
-
-      <ReadOnlySection
-        heading={planBasicsT('modelCategory.question')}
-        copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
-      />
-
       {!isViewingFilteredView && (
+        <div
+          className={classNames(
+            'bg-base-lightest padding-2 margin-top-4 margin-bottom-4',
+            {
+              'maxw-mobile-lg': isTablet
+            }
+          )}
+        >
+          <p className="margin-top-0 text-bold">
+            {planBasicsMiscT('otherIdentifiers')}
+          </p>
+
+          <p className="line-height-mono-4">
+            {planBasicsMiscT('otherIdentifiersInfo1')}
+            <TrussLink
+              aria-label="Open AMS in a new tab"
+              href="https://ams.cmmi.cms.gov"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="external"
+            >
+              {planBasicsMiscT('otherIdentifiersInfo2')}
+            </TrussLink>
+
+            {planBasicsMiscT('otherIdentifiersInfo3')}
+          </p>
+
+          <Grid row gap>
+            <Grid
+              desktop={{ col: 6 }}
+              className={classNames({
+                'padding-bottom-2': isTablet
+              })}
+            >
+              <p className="text-bold margin-top-0 margin-bottom-1">
+                {planBasicsT('amsModelID.question')}
+              </p>
+
+              {amsModelID || (
+                <div className="text-italic text-base">
+                  {planBasicsMiscT('noneEntered')}
+                </div>
+              )}
+            </Grid>
+            <Grid desktop={{ col: 6 }}>
+              <p className="text-bold margin-top-0 margin-bottom-1">
+                {planBasicsT('demoCode.question')}
+              </p>
+
+              {demoCode || (
+                <div className="text-italic text-base">
+                  {planBasicsMiscT('noneEntered')}
+                </div>
+              )}
+            </Grid>
+          </Grid>
+        </div>
+      )}
+
+      {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
+        'modelCategory',
+        <ReadOnlySection
+          heading={planBasicsT('modelCategory.question')}
+          copy={planBasicsT(`modelCategory.options.${modelCategory}`, '')} // Default to empty string if category is null
+        />
+      )}
+
+      {checkGroupMap(
+        isViewingFilteredView,
+        filteredQuestions,
+        'cmsCenters',
         <SideBySideReadOnlySection
           firstSection={{
             heading: planBasicsT('cmsCenters.question'),
@@ -355,7 +365,14 @@ const ReadOnlyModelBasics = ({
           )}
         </>
       ) : (
-        <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
+        <SectionWrapper
+          className={classNames(
+            'read-only-model-plan__timeline--wrapper border-base-light padding-top-4 ',
+            {
+              'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6': !isViewingFilteredView
+            }
+          )}
+        >
           <h3 className="margin-top-0 margin-bottom-4">
             {planBasicsMiscT('highLevelTimeline')}
           </h3>

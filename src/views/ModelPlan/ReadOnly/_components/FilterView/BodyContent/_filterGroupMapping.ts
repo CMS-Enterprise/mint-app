@@ -62,10 +62,15 @@ const FilterGroupMap = {
     basics: ['nameHistory', 'modelType', 'goal', 'performanceStartDate'],
     'participants-and-providers': ['howManyParticipants', 'estimateConfidence'],
     payments: [
+      'fundingSource',
+      'fundingSourceTrustFund',
+      'fundingSourceR',
+      'fundingSourceRTrustFund',
       'numberPaymentsPerPayCycle',
       'planningToUseInnovationPaymentContractor',
       'fundingStructure',
-      'anticipatedPaymentFrequency'
+      'anticipatedPaymentFrequency',
+      'paymentStartDate'
     ]
   },
   ccw: {
@@ -80,24 +85,30 @@ const FilterGroupMap = {
     payments: ['sharedSystemsInvolvedAdditionalClaimPayment']
   },
   ipc: {
-    basics: ['nameHistory'],
-    'general-characteristics': [
-      'isNewModel',
-      'whichExistingModel',
-      'resembleModel',
-      'modelResemblance',
-      'waysResembleModel',
-      'differentComponents'
+    basics: [
+      'nameHistory',
+      'modelCategory',
+      'cmsCenters',
+      'cmmiGroups',
+      'modelType',
+      'goal'
     ],
+    'general-characteristics': ['rulemakingRequired'],
     'participants-and-providers': [
       'participants',
       'typeMedicateProvider',
       'describeStates',
       'howManyParticipants',
-      'estimateConfidence'
+      'estimateConfidence',
+      'providerAdditionFrequency',
+      'providerAddMethod',
+      'providerLeaveMethod'
     ],
     payments: [
       'fundingSource',
+      'fundingSourceTrustFund',
+      'fundingSourceR',
+      'fundingSourceRTrustFund',
       'payType',
       'nonClaimsPayments',
       'numberPaymentsPerPayCycle',
@@ -165,7 +176,7 @@ const FilterGroupMap = {
       'payModelDifferentiation',
       'ancitipateCreatingDependencies',
       'needsClaimsDataCollection',
-      'thirdParty',
+      'providingThirdPartyFile',
       'isContractorAwareTestDataRequirements',
       'beneficiaryCostSharingLevelAndHandling',
       'waiveBeneficiaryCostSharingForAnyServices',

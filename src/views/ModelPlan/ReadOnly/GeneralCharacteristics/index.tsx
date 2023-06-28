@@ -471,7 +471,7 @@ const ReadOnlyGeneralCharacteristics = ({
               copy: translateBooleanOrNull(rulemakingRequired)
             }}
             secondSection={
-              rulemakingRequired === true && {
+              !!(rulemakingRequired === true || isViewingFilteredView) && {
                 heading: t('ruleMakingInfo'),
                 copy: rulemakingRequiredDescription
               }
