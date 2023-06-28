@@ -12,6 +12,7 @@ import { ModelPlanFilter, ModelStatus, KeyCharacteristic, TeamRole, DiscussionSt
 export interface GetModelPlans_modelPlanCollection_basics {
   __typename: "PlanBasics";
   id: UUID;
+  demoCode: string | null;
   clearanceStarts: Time | null;
   applicationsStart: Time | null;
 }

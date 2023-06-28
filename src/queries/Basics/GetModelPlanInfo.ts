@@ -5,9 +5,12 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      abbreviation
       nameHistory(sort: DESC)
       basics {
         id
+        demoCode
+        amsModelID
         modelCategory
         cmsCenters
         cmsOther

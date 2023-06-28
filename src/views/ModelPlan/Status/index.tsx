@@ -31,7 +31,7 @@ type StatusFormProps = {
 };
 
 const Status = () => {
-  const { t } = useTranslation('modelPlan');
+  const { t } = useTranslation('plan');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
