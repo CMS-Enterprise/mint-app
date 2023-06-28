@@ -1189,12 +1189,16 @@ export const translateDocumentType = (documentType: DocumentType) => {
   switch (documentType) {
     case 'CONCEPT_PAPER':
       return i18next.t('documents:documentTypes.concept');
+    case 'DESIGN_PARAMETERS_MEMO':
+      return i18next.t('documents:documentTypes.designParamMemo');
     case 'POLICY_PAPER':
       return i18next.t('documents:documentTypes.policy');
     case 'ICIP_DRAFT':
       return i18next.t('documents:documentTypes.icipDraft');
     case 'MARKET_RESEARCH':
       return i18next.t('documents:documentTypes.marketResearch');
+    case 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION':
+      return i18next.t('documents:documentTypes.adminOfficePresentation');
     case 'OTHER':
       return i18next.t('documents:documentTypes.other');
     default:
