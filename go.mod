@@ -17,7 +17,7 @@ require (
 	github.com/lib/pq v1.10.7
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/okta/okta-jwt-verifier-golang v1.3.1
-	github.com/opensearch-project/opensearch-go/v2 v2.2.0
+	github.com/opensearch-project/opensearch-go/v2 v2.3.0
 	github.com/pquerna/otp v1.4.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.13.0
@@ -36,6 +36,7 @@ require github.com/xhit/go-simple-mail/v2 v2.13.0
 require (
 	github.com/aquasecurity/esquery v0.2.0
 	github.com/contribsys/faktory v1.6.2
+	github.com/iancoleman/strcase v0.2.0
 )
 
 require (

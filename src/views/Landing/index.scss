@@ -32,7 +32,12 @@ $card-radius: 6px;
     }
 
     &__footer {
-        border-top: 1px solid $mint-cool-20
+        border-bottom: 1px solid $mint-cool-20
+    }
+
+    &__vr {
+        padding-bottom: 0.15em;
+        border-left: 1px solid $mint-cool-20;
     }
 
     &__content {

@@ -398,7 +398,8 @@ https://gqlgen.com/reference/changesets/
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
-  userRole: DiscussionUserRole!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -408,6 +409,8 @@ type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
 	content: String
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	resolution: Boolean
   isAssessment: Boolean!
 
@@ -425,6 +428,8 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 input DiscussionReplyCreateInput {
   discussionID: UUID!
   content: String!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
   resolution: Boolean! = false
 }
 
@@ -436,6 +441,8 @@ https://gqlgen.com/reference/changesets/
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
   resolution: Boolean
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -1398,6 +1405,7 @@ type ChangedFields {
 
 type Field {
   name: String!
+  nameCamelCase: String!
   value: FieldValue!
 }
 
@@ -1410,6 +1418,12 @@ type ChangeTableRecord {
   guid: ID!
   modelPlanID: UUID!
   tableID: Int!
+
+  """
+  Returns the table name in the format of the type returned in GraphQL
+  Example:  a table name of model_plan returns as ModelPlan
+  """
+  gqlTableName: GQLTableName!
   tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
@@ -1418,6 +1432,34 @@ type ChangeTableRecord {
   modifiedDts: Time
   modifiedBy: UserAccount
 }
+
+# lint-disable enum-values-all-caps
+enum GQLTableName {
+  analyzedAudit
+  discussionReply
+  existingModel
+  existingModelLink
+  modelPlan
+  ndaAgreement
+  operationalNeed
+  operationalSolution
+  operationalSolutionSubtask
+  planBasics
+  planBeneficiaries
+  planCollaborator
+  planCrTdl
+  planDiscussion
+  planDocument
+  planDocumentSolutionLink
+  planGeneralCharacteristics
+  planOpsEvalAndLearning
+  planParticipantsAndProviders
+  planPayments
+  possibleOperationalNeed
+  possibleOperationalSolution
+  userAccount
+}
+# lint-enable enum-values-all-caps
 
 input SearchRequest {
   query: Map!

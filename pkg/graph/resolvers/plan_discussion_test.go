@@ -134,7 +134,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "violates check constraint \"user_role_check\"")
+	suite.Contains(err.Error(), "violates check constraint \"plan_discussion_user_role_check\"")
 }
 
 func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
@@ -147,7 +147,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 		UserRoleDescription: nil, // Description not provided
 	}
 
-	planDiscussion, err := CreatePlanDiscussion(
+	_, err := CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
@@ -158,15 +158,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 		suite.testConfigs.Store,
 	)
 
-	suite.NoError(err)
-	suite.NotNil(planDiscussion.ID)
-	suite.EqualValues(plan.ID, planDiscussion.ModelPlanID)
-	suite.EqualValues(planDiscussionInput.Content, planDiscussion.Content)
-	suite.EqualValues(planDiscussionInput.UserRole, planDiscussion.UserRole)
-	suite.EqualValues(models.DiscussionUnAnswered, planDiscussion.Status)
-	suite.True(planDiscussion.IsAssessment) // default principal for the test suite is an assessment user
-	suite.Nil(planDiscussion.ModifiedBy)
-	suite.Nil(planDiscussion.ModifiedDts)
+	suite.Error(err)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
@@ -216,9 +208,11 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: discussion.ID,
-		Content:      "This is a test reply",
-		Resolution:   true,
+		DiscussionID:        discussion.ID,
+		Content:             "This is a test reply",
+		Resolution:          true,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 
 	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -235,9 +229,11 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: discussion.ID,
-		Content:      "This is a test reply",
-		Resolution:   true,
+		DiscussionID:        discussion.ID,
+		Content:             "This is a test reply",
+		Resolution:          true,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 
 	regularUserPrincipal := suite.testConfigs.Principal

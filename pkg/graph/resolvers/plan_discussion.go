@@ -155,8 +155,21 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 }
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
-func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreateInput, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	discussionReply := models.NewDiscussionReply(principal.Account().ID, principal.AllowASSESSMENT(), input.DiscussionID, input.Content, input.Resolution)
+func CreateDiscussionReply(
+	logger *zap.Logger,
+	input *model.DiscussionReplyCreateInput,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.DiscussionReply, error) {
+	discussionReply := models.NewDiscussionReply(
+		principal.Account().ID,
+		principal.AllowASSESSMENT(),
+		input.DiscussionID,
+		input.Content,
+		input.Resolution,
+		input.UserRole,
+		input.UserRoleDescription,
+	)
 
 	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
 	if err != nil {

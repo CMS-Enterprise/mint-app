@@ -178,7 +178,7 @@ export const LandingFooter = () => {
       <GridContainer className="padding-top-6 padding-bottom-4">
         <h2 className="margin-bottom-2 margin-top-0">{t('footerHeading')}</h2>
 
-        <Grid row gap={4} className="padding-bottom-2">
+        <Grid row gap={4} className="padding-bottom-2 landing__footer">
           {footerItems.map(item => (
             <Grid tablet={{ col: 4 }} key={item.heading}>
               <h3 className="margin-bottom-0">{item.heading}</h3>
@@ -195,13 +195,14 @@ export const LandingFooter = () => {
             'display-flex': !isTablet
           })}
         >
-          <div className="landing__footer padding-top-4 padding-bottom-2 margin-right-2">
+          <div className="padding-top-4 padding-bottom-2 margin-right-2">
             <span className="text-bold margin-right-1">{t('access')}</span>
             <span>
               <UswdsReactLink to="/how-to-get-access">
                 {t('learnHowtoGetAccess')}{' '}
                 <IconArrowForward className="margin-left-1 text-tbottom" />
               </UswdsReactLink>
+              {!isTablet && <span className="margin-left-2 landing__vr" />}
             </span>
           </div>
 

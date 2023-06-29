@@ -594,6 +594,8 @@ export interface CreateOperationalSolutionSubtaskInput {
 export interface DiscussionReplyCreateInput {
   discussionID: UUID;
   content: string;
+  userRole?: DiscussionUserRole | null;
+  userRoleDescription?: string | null;
   resolution: boolean;
 }
 
@@ -710,7 +712,8 @@ export interface PlanCrTdlCreateInput {
 export interface PlanDiscussionChanges {
   content?: string | null;
   status?: DiscussionStatus | null;
-  userRole: DiscussionUserRole;
+  userRole?: DiscussionUserRole | null;
+  userRoleDescription?: string | null;
 }
 
 /**

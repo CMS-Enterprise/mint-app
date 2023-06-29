@@ -79,16 +79,17 @@ type ComplexityRoot struct {
 	}
 
 	ChangeTableRecord struct {
-		Action      func(childComplexity int) int
-		Fields      func(childComplexity int) int
-		ForeignKey  func(childComplexity int) int
-		GUID        func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		PrimaryKey  func(childComplexity int) int
-		TableID     func(childComplexity int) int
-		TableName   func(childComplexity int) int
+		Action       func(childComplexity int) int
+		Fields       func(childComplexity int) int
+		ForeignKey   func(childComplexity int) int
+		GQLTableName func(childComplexity int) int
+		GUID         func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
+		ModifiedBy   func(childComplexity int) int
+		ModifiedDts  func(childComplexity int) int
+		PrimaryKey   func(childComplexity int) int
+		TableID      func(childComplexity int) int
+		TableName    func(childComplexity int) int
 	}
 
 	ChangedFields struct {
@@ -118,6 +119,8 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		Resolution            func(childComplexity int) int
+		UserRole              func(childComplexity int) int
+		UserRoleDescription   func(childComplexity int) int
 	}
 
 	ExistingModel struct {
@@ -160,8 +163,9 @@ type ComplexityRoot struct {
 	}
 
 	Field struct {
-		Name  func(childComplexity int) int
-		Value func(childComplexity int) int
+		Name          func(childComplexity int) int
+		NameCamelCase func(childComplexity int) int
+		Value         func(childComplexity int) int
 	}
 
 	FieldValue struct {
@@ -1205,6 +1209,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ChangeTableRecord.ForeignKey(childComplexity), true
 
+	case "ChangeTableRecord.gqlTableName":
+		if e.complexity.ChangeTableRecord.GQLTableName == nil {
+			break
+		}
+
+		return e.complexity.ChangeTableRecord.GQLTableName(childComplexity), true
+
 	case "ChangeTableRecord.guid":
 		if e.complexity.ChangeTableRecord.GUID == nil {
 			break
@@ -1372,6 +1383,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.Resolution(childComplexity), true
+
+	case "DiscussionReply.userRole":
+		if e.complexity.DiscussionReply.UserRole == nil {
+			break
+		}
+
+		return e.complexity.DiscussionReply.UserRole(childComplexity), true
+
+	case "DiscussionReply.userRoleDescription":
+		if e.complexity.DiscussionReply.UserRoleDescription == nil {
+			break
+		}
+
+		return e.complexity.DiscussionReply.UserRoleDescription(childComplexity), true
 
 	case "ExistingModel.authority":
 		if e.complexity.ExistingModel.Authority == nil {
@@ -1610,6 +1635,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Field.Name(childComplexity), true
+
+	case "Field.nameCamelCase":
+		if e.complexity.Field.NameCamelCase == nil {
+			break
+		}
+
+		return e.complexity.Field.NameCamelCase(childComplexity), true
 
 	case "Field.value":
 		if e.complexity.Field.Value == nil {
@@ -7017,7 +7049,8 @@ https://gqlgen.com/reference/changesets/
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
-  userRole: DiscussionUserRole!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -7027,6 +7060,8 @@ type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
 	content: String
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	resolution: Boolean
   isAssessment: Boolean!
 
@@ -7044,6 +7079,8 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 input DiscussionReplyCreateInput {
   discussionID: UUID!
   content: String!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
   resolution: Boolean! = false
 }
 
@@ -7055,6 +7092,8 @@ https://gqlgen.com/reference/changesets/
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
   resolution: Boolean
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -8017,6 +8056,7 @@ type ChangedFields {
 
 type Field {
   name: String!
+  nameCamelCase: String!
   value: FieldValue!
 }
 
@@ -8029,6 +8069,12 @@ type ChangeTableRecord {
   guid: ID!
   modelPlanID: UUID!
   tableID: Int!
+
+  """
+  Returns the table name in the format of the type returned in GraphQL
+  Example:  a table name of model_plan returns as ModelPlan
+  """
+  gqlTableName: GQLTableName!
   tableName: String!
   primaryKey: UUID!
   foreignKey: UUID
@@ -8037,6 +8083,34 @@ type ChangeTableRecord {
   modifiedDts: Time
   modifiedBy: UserAccount
 }
+
+# lint-disable enum-values-all-caps
+enum GQLTableName {
+  analyzedAudit
+  discussionReply
+  existingModel
+  existingModelLink
+  modelPlan
+  ndaAgreement
+  operationalNeed
+  operationalSolution
+  operationalSolutionSubtask
+  planBasics
+  planBeneficiaries
+  planCollaborator
+  planCrTdl
+  planDiscussion
+  planDocument
+  planDocumentSolutionLink
+  planGeneralCharacteristics
+  planOpsEvalAndLearning
+  planParticipantsAndProviders
+  planPayments
+  possibleOperationalNeed
+  possibleOperationalSolution
+  userAccount
+}
+# lint-enable enum-values-all-caps
 
 input SearchRequest {
   query: Map!
@@ -11017,6 +11091,50 @@ func (ec *executionContext) fieldContext_ChangeTableRecord_tableID(ctx context.C
 	return fc, nil
 }
 
+func (ec *executionContext) _ChangeTableRecord_gqlTableName(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GQLTableName(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.GQLTableName)
+	fc.Result = res
+	return ec.marshalNGQLTableName2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGQLTableName(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ChangeTableRecord_gqlTableName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ChangeTableRecord",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type GQLTableName does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ChangeTableRecord_tableName(ctx context.Context, field graphql.CollectedField, obj *models.ChangeTableRecord) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 	if err != nil {
@@ -11383,6 +11501,8 @@ func (ec *executionContext) fieldContext_ChangedFields_changes(ctx context.Conte
 			switch field.Name {
 			case "name":
 				return ec.fieldContext_Field_name(ctx, field)
+			case "nameCamelCase":
+				return ec.fieldContext_Field_nameCamelCase(ctx, field)
 			case "value":
 				return ec.fieldContext_Field_value(ctx, field)
 			}
@@ -11735,6 +11855,88 @@ func (ec *executionContext) _DiscussionReply_content(ctx context.Context, field 
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_content(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionReply",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DiscussionReply_userRole(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionReply_userRole(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserRole, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DiscussionUserRole)
+	fc.Result = res
+	return ec.marshalODiscussionUserRole2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionReply_userRole(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionReply",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DiscussionUserRole does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DiscussionReply_userRoleDescription(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserRoleDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionReply_userRoleDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "DiscussionReply",
 		Field:      field,
@@ -13732,6 +13934,50 @@ func (ec *executionContext) fieldContext_Field_name(ctx context.Context, field g
 		Object:     "Field",
 		Field:      field,
 		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Field_nameCamelCase(ctx context.Context, field graphql.CollectedField, obj *models.Field) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Field_nameCamelCase(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NameCamelCase(), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Field_nameCamelCase(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Field",
+		Field:      field,
+		IsMethod:   true,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
@@ -18353,6 +18599,10 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
 			case "content":
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
@@ -18456,6 +18706,10 @@ func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
 			case "content":
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
@@ -18559,6 +18813,10 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
 			case "content":
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
@@ -27699,6 +27957,10 @@ func (ec *executionContext) fieldContext_PlanDiscussion_replies(ctx context.Cont
 				return ec.fieldContext_DiscussionReply_discussionID(ctx, field)
 			case "content":
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
+			case "userRole":
+				return ec.fieldContext_DiscussionReply_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionReply_userRoleDescription(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
 			case "isAssessment":
@@ -46394,6 +46656,8 @@ func (ec *executionContext) fieldContext_Query_searchChanges(ctx context.Context
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46495,6 +46759,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTable(ctx context.Con
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46596,6 +46862,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableWithFreeText(ctx
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46697,6 +46965,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByModelPlanID(ct
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46798,6 +47068,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByDateRange(ctx 
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -46899,6 +47171,8 @@ func (ec *executionContext) fieldContext_Query_searchModelPlanChangesByDateRange
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -47000,6 +47274,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByActor(ctx cont
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -47101,6 +47377,8 @@ func (ec *executionContext) fieldContext_Query_searchChangeTableByModelStatus(ct
 				return ec.fieldContext_ChangeTableRecord_modelPlanID(ctx, field)
 			case "tableID":
 				return ec.fieldContext_ChangeTableRecord_tableID(ctx, field)
+			case "gqlTableName":
+				return ec.fieldContext_ChangeTableRecord_gqlTableName(ctx, field)
 			case "tableName":
 				return ec.fieldContext_ChangeTableRecord_tableName(ctx, field)
 			case "primaryKey":
@@ -50475,7 +50753,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 		asMap["resolution"] = false
 	}
 
-	fieldsInOrder := [...]string{"discussionID", "content", "resolution"}
+	fieldsInOrder := [...]string{"discussionID", "content", "userRole", "userRoleDescription", "resolution"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -50500,6 +50778,24 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 				return it, err
 			}
 			it.Content = data
+		case "userRole":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userRole"))
+			data, err := ec.unmarshalODiscussionUserRole2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UserRole = data
+		case "userRoleDescription":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userRoleDescription"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UserRoleDescription = data
 		case "resolution":
 			var err error
 
@@ -51037,6 +51333,13 @@ func (ec *executionContext) _ChangeTableRecord(ctx context.Context, sel ast.Sele
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "gqlTableName":
+
+			out.Values[i] = ec._ChangeTableRecord_gqlTableName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "tableName":
 
 			out.Values[i] = ec._ChangeTableRecord_tableName(ctx, field, obj)
@@ -51220,6 +51523,14 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 		case "content":
 
 			out.Values[i] = ec._DiscussionReply_content(ctx, field, obj)
+
+		case "userRole":
+
+			out.Values[i] = ec._DiscussionReply_userRole(ctx, field, obj)
+
+		case "userRoleDescription":
+
+			out.Values[i] = ec._DiscussionReply_userRoleDescription(ctx, field, obj)
 
 		case "resolution":
 
@@ -51591,6 +51902,13 @@ func (ec *executionContext) _Field(ctx context.Context, sel ast.SelectionSet, ob
 		case "name":
 
 			out.Values[i] = ec._Field_name(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "nameCamelCase":
+
+			out.Values[i] = ec._Field_nameCamelCase(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -59701,6 +60019,22 @@ func (ec *executionContext) marshalNFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmin
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNGQLTableName2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGQLTableName(ctx context.Context, v interface{}) (models.GQLTableName, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.GQLTableName(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGQLTableName2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGQLTableName(ctx context.Context, sel ast.SelectionSet, v models.GQLTableName) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, v interface{}) (model.GeographyApplication, error) {
