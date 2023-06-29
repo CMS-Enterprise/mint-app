@@ -68,11 +68,9 @@ const QuestionAndReply = ({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
   });
 
-  const { data, loading, error } = useQuery<GetMostRecentRoleSelectionType>(
+  const { data, loading } = useQuery<GetMostRecentRoleSelectionType>(
     GetMostRecentRoleSelection
   );
-
-  console.log(data);
 
   const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection;
 
@@ -128,7 +126,7 @@ const QuestionAndReply = ({
       <Formik
         initialValues={{
           content: '',
-          userRole: '' as DiscussionUserRole,
+          userRole: mostRecentUserRole || ('' as DiscussionUserRole),
           userRoleDescription: ''
         }}
         onSubmit={handleCreateDiscussion}
@@ -196,7 +194,8 @@ const QuestionAndReply = ({
                     as={Dropdown}
                     id="user-role"
                     name="userRole"
-                    value={values.userRole || mostRecentUserRole || ''}
+                    disabled={loading}
+                    value={values.userRole || ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue('userRole', e.target.value);
                     }}

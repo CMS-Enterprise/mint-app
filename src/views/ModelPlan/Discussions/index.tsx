@@ -31,6 +31,7 @@ import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscus
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
 import {
   DiscussionStatus,
+  DiscussionUserRole,
   PlanDiscussionCreateInput
 } from 'types/graphql-global-types';
 import { getUnansweredQuestions } from 'utils/modelPlan';
@@ -181,9 +182,7 @@ const Discussions = ({
   };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
-    let payload = {};
-
-    console.log(formikValues);
+    let payload: any = {};
 
     // Setting the mutation payload depending on discussionType
     if (discussionType === 'question') {
@@ -200,6 +199,9 @@ const Discussions = ({
     } else {
       return; // Currently we have no mutations when discussions is displayed
     }
+
+    if (payload.userRole !== DiscussionUserRole.NONE_OF_THE_ABOVE)
+      payload.userRoleDescription = null;
 
     createDiscussionMethods[discussionType]({
       variables: {
