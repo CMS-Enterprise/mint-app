@@ -19,6 +19,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import Spinner from 'components/Spinner';
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
@@ -129,6 +130,7 @@ const QuestionAndReply = ({
           userRole: mostRecentUserRole || ('' as DiscussionUserRole),
           userRoleDescription: ''
         }}
+        enableReinitialize
         onSubmit={handleCreateDiscussion}
         validationSchema={validationSchema}
         validateOnBlur={false}
@@ -190,29 +192,33 @@ const QuestionAndReply = ({
 
                   <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
 
-                  <Field
-                    as={Dropdown}
-                    id="user-role"
-                    name="userRole"
-                    disabled={loading}
-                    value={values.userRole || ''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('userRole', e.target.value);
-                    }}
-                  >
-                    <option key="default-select" disabled value="">
-                      {`-${t('select')}-`}
-                    </option>
-                    {Object.keys(DiscussionUserRole)
-                      .sort(sortOtherEnum)
-                      .map(role => {
-                        return (
-                          <option key={role} value={role}>
-                            {t(`userRole.${role}`)}
-                          </option>
-                        );
-                      })}
-                  </Field>
+                  {loading ? (
+                    <Spinner />
+                  ) : (
+                    <Field
+                      as={Dropdown}
+                      id="user-role"
+                      name="userRole"
+                      disabled={loading}
+                      value={values.userRole || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('userRole', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${t('select')}-`}
+                      </option>
+                      {Object.keys(DiscussionUserRole)
+                        .sort(sortOtherEnum)
+                        .map(role => {
+                          return (
+                            <option key={role} value={role}>
+                              {t(`userRole.${role}`)}
+                            </option>
+                          );
+                        })}
+                    </Field>
+                  )}
 
                   {values.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE && (
                     <div className="margin-top-3">
@@ -228,6 +234,7 @@ const QuestionAndReply = ({
                       </FieldErrorMsg>
                       <Field
                         as={TextInput}
+                        value={values.userRoleDescription || ''}
                         id="user-role-description"
                         name="userRoleDescription"
                       />
