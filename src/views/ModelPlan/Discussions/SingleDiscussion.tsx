@@ -22,6 +22,7 @@ type SingleDiscussionProps = {
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
+  last: boolean;
 };
 
 const SingleDiscussion = ({
@@ -33,7 +34,8 @@ const SingleDiscussion = ({
   setDiscussionStatusMessage,
   setDiscussionType,
   setReply,
-  setIsDiscussionOpen
+  setIsDiscussionOpen,
+  last
 }: SingleDiscussionProps) => {
   const { t } = useTranslation('discussions');
 
@@ -53,6 +55,7 @@ const SingleDiscussion = ({
             index={index}
           />
         )}
+
         <span className="margin-left-5 margin-top-05 text-base">
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
@@ -61,7 +64,11 @@ const SingleDiscussion = ({
       </div>
 
       {discussion.userRole && (
-        <p className="text-base margin-left-5 margin-y-0">
+        <p
+          className={classNames(
+            'text-base margin-top-0 position-absolute margin-left-5'
+          )}
+        >
           {discussion.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
             ? discussion.userRoleDescription
             : t(`userRole.${discussion.userRole}`)}
@@ -75,32 +82,39 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
-        <p className="margin-y-0 padding-y-1 text-pre-wrap">
+        <p
+          className={classNames(
+            'margin-top-0 margin-bottom-1 padding-top-1 padding-bottom-2 text-pre-wrap',
+            {
+              'padding-top-5': !!discussion.userRole,
+              'margin-bottom-2': last
+            }
+          )}
+        >
           {discussion.content}
         </p>
-        <div className="display-flex margin-bottom-2">
-          {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
-          {hasEditAccess && answerQuestion && (
-            <>
-              <IconAnnouncement className="text-primary margin-right-1" />
-              <Button
-                type="button"
-                unstyled
-                role="button"
-                onClick={() => {
-                  if (setIsDiscussionOpen) {
-                    setIsDiscussionOpen(true);
-                  }
-                  setDiscussionStatusMessage('');
-                  setDiscussionType('reply');
-                  setReply(discussion);
-                }}
-              >
-                {t('answer')}
-              </Button>
-            </>
-          )}
-        </div>
+
+        {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
+        {hasEditAccess && answerQuestion && (
+          <div className="display-flex margin-bottom-2">
+            <IconAnnouncement className="text-primary margin-right-1" />
+            <Button
+              type="button"
+              unstyled
+              role="button"
+              onClick={() => {
+                if (setIsDiscussionOpen) {
+                  setIsDiscussionOpen(true);
+                }
+                setDiscussionStatusMessage('');
+                setDiscussionType('reply');
+                setReply(discussion);
+              }}
+            >
+              {t('answer')}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
