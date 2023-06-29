@@ -24,6 +24,8 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
+  userRole: DiscussionUserRole | null;
+  userRoleDescription: string | null;
   isAssessment: boolean;
   createdBy: UUID;
   createdDts: Time;

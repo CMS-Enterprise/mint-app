@@ -338,6 +338,8 @@ const DiscussionCard = () => {
           content:
             'You should submit an onboarding request as soon as your team has a sense of what direction you want for IT support.',
           isAssessment: true,
+          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRoleDescription: '',
           createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
           createdDts: justNow,
           resolution: true,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import {
   Button,
   Dropdown,
@@ -18,10 +19,12 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
 import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -64,6 +67,14 @@ const QuestionAndReply = ({
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
   });
+
+  const { data, loading, error } = useQuery<GetMostRecentRoleSelectionType>(
+    GetMostRecentRoleSelection
+  );
+
+  console.log(data);
+
+  const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection;
 
   return (
     <>
@@ -185,7 +196,7 @@ const QuestionAndReply = ({
                     as={Dropdown}
                     id="user-role"
                     name="userRole"
-                    value={values.userRole || ''}
+                    value={values.userRole || mostRecentUserRole || ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue('userRole', e.target.value);
                     }}

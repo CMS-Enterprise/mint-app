@@ -21,6 +21,8 @@ export default gql`
           id
           discussionID
           content
+          userRole
+          userRoleDescription
           isAssessment
           createdBy
           createdDts
