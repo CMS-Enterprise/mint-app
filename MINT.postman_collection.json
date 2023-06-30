@@ -603,7 +603,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query {\n    mostRecentDiscussionRoleSelection\n}\n",
+								"query": "query {\n    mostRecentDiscussionRoleSelection {\n        userRole\n        userRoleDescription\n    }\n}\n",
 								"variables": "{\n    \n}"
 							}
 						},

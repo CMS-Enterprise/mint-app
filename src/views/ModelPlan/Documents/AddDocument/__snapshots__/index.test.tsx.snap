@@ -223,6 +223,23 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
+                      id="FileUpload-DESIGN_PARAMETERS_MEMO"
+                      name="documentType"
+                      type="radio"
+                      value="DESIGN_PARAMETERS_MEMO"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-DESIGN_PARAMETERS_MEMO"
+                    >
+                      Design Parameter Memo
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
                       id="FileUpload-ICIP_DRAFT"
                       name="documentType"
                       type="radio"
@@ -250,6 +267,23 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                       for="FileUpload-MARKET_RESEARCH"
                     >
                       Market Research
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                      name="documentType"
+                      type="radio"
+                      value="OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
+                    >
+                      Office of the Administrator Presentation
                     </label>
                   </div>
                   <div

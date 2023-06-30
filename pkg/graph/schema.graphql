@@ -1487,6 +1487,11 @@ input PageParams {
   limit: Int!
 }
 
+type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
 """
 Query definition for the schema
 """
@@ -1546,7 +1551,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  mostRecentDiscussionRoleSelection: DiscussionUserRole!
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
@@ -1727,6 +1732,8 @@ enum TeamRole {
   EVALUATION
   IT_LEAD
   QUALITY
+  OACT
+  PAYMENT
 }
 
 enum ModelType
@@ -1792,6 +1799,8 @@ enum DocumentType {
   POLICY_PAPER,
   ICIP_DRAFT,
   MARKET_RESEARCH,
+  DESIGN_PARAMETERS_MEMO,
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
 }
 

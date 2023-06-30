@@ -80,9 +80,11 @@ const documents = {
   whatType: 'What type of document are you uploading?',
   documentTypes: {
     concept: 'Concept Paper',
+    designParamMemo: 'Design Parameter Memo',
     policy: 'Policy Paper',
     icipDraft: 'ICIP Draft',
     marketResearch: 'Market Research',
+    adminOfficePresentation: 'Office of the Administrator Presentation',
     other: 'Other'
   },
   whatKind: 'What kind of document is this?',

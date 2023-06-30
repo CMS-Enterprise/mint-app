@@ -123,6 +123,11 @@ type ComplexityRoot struct {
 		UserRoleDescription   func(childComplexity int) int
 	}
 
+	DiscussionRoleSelection struct {
+		UserRole            func(childComplexity int) int
+		UserRoleDescription func(childComplexity int) int
+	}
+
 	ExistingModel struct {
 		Authority                     func(childComplexity int) int
 		Category                      func(childComplexity int) int
@@ -1103,7 +1108,7 @@ type QueryResolver interface {
 	SearchChangeTableByActor(ctx context.Context, actor string, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableByModelStatus(ctx context.Context, modelStatus models.ModelStatus, limit int, offset int) ([]*models.ChangeTableRecord, error)
 	SearchChangeTableDateHistogramConsolidatedAggregations(ctx context.Context, interval string, limit int, offset int) ([]*models.DateHistogramAggregationBucket, error)
-	MostRecentDiscussionRoleSelection(ctx context.Context) (models.DiscussionUserRole, error)
+	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1397,6 +1402,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.UserRoleDescription(childComplexity), true
+
+	case "DiscussionRoleSelection.userRole":
+		if e.complexity.DiscussionRoleSelection.UserRole == nil {
+			break
+		}
+
+		return e.complexity.DiscussionRoleSelection.UserRole(childComplexity), true
+
+	case "DiscussionRoleSelection.userRoleDescription":
+		if e.complexity.DiscussionRoleSelection.UserRoleDescription == nil {
+			break
+		}
+
+		return e.complexity.DiscussionRoleSelection.UserRoleDescription(childComplexity), true
 
 	case "ExistingModel.authority":
 		if e.complexity.ExistingModel.Authority == nil {
@@ -8138,6 +8157,11 @@ input PageParams {
   limit: Int!
 }
 
+type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
 """
 Query definition for the schema
 """
@@ -8197,7 +8221,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  mostRecentDiscussionRoleSelection: DiscussionUserRole!
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
@@ -8378,6 +8402,8 @@ enum TeamRole {
   EVALUATION
   IT_LEAD
   QUALITY
+  OACT
+  PAYMENT
 }
 
 enum ModelType
@@ -8443,6 +8469,8 @@ enum DocumentType {
   POLICY_PAPER,
   ICIP_DRAFT,
   MARKET_RESEARCH,
+  DESIGN_PARAMETERS_MEMO,
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   OTHER
 }
 
@@ -12328,6 +12356,91 @@ func (ec *executionContext) fieldContext_DiscussionReply_modifiedDts(ctx context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DiscussionRoleSelection_userRole(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionRoleSelection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionRoleSelection_userRole(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserRole, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.DiscussionUserRole)
+	fc.Result = res
+	return ec.marshalNDiscussionUserRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionRoleSelection_userRole(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionRoleSelection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DiscussionUserRole does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DiscussionRoleSelection_userRoleDescription(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionRoleSelection) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionRoleSelection_userRoleDescription(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserRoleDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionRoleSelection_userRoleDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionRoleSelection",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -47535,10 +47648,10 @@ func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(models.DiscussionUserRole); ok {
+		if data, ok := tmp.(*models.DiscussionRoleSelection); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be github.com/cmsgov/mint-app/pkg/models.DiscussionUserRole`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DiscussionRoleSelection`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -47550,9 +47663,9 @@ func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.DiscussionUserRole)
+	res := resTmp.(*models.DiscussionRoleSelection)
 	fc.Result = res
-	return ec.marshalNDiscussionUserRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx, field.Selections, res)
+	return ec.marshalNDiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -47562,7 +47675,13 @@ func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type DiscussionUserRole does not have child fields")
+			switch field.Name {
+			case "userRole":
+				return ec.fieldContext_DiscussionRoleSelection_userRole(ctx, field)
+			case "userRoleDescription":
+				return ec.fieldContext_DiscussionRoleSelection_userRoleDescription(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DiscussionRoleSelection", field.Name)
 		},
 	}
 	return fc, nil
@@ -51601,6 +51720,38 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 		case "modifiedDts":
 
 			out.Values[i] = ec._DiscussionReply_modifiedDts(ctx, field, obj)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var discussionRoleSelectionImplementors = []string{"DiscussionRoleSelection"}
+
+func (ec *executionContext) _DiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, obj *models.DiscussionRoleSelection) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, discussionRoleSelectionImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DiscussionRoleSelection")
+		case "userRole":
+
+			out.Values[i] = ec._DiscussionRoleSelection_userRole(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "userRoleDescription":
+
+			out.Values[i] = ec._DiscussionRoleSelection_userRoleDescription(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -59653,6 +59804,20 @@ func (ec *executionContext) unmarshalNDiscussionReplyChanges2map(ctx context.Con
 func (ec *executionContext) unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx context.Context, v interface{}) (model.DiscussionReplyCreateInput, error) {
 	res, err := ec.unmarshalInputDiscussionReplyCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDiscussionRoleSelection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v models.DiscussionRoleSelection) graphql.Marshaler {
+	return ec._DiscussionRoleSelection(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNDiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._DiscussionRoleSelection(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNDiscussionStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, v interface{}) (models.DiscussionStatus, error) {
