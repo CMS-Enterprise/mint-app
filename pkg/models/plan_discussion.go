@@ -92,3 +92,9 @@ const (
 	DiscussionRoleSharedSystemMaintainer           DiscussionUserRole = "SHARED_SYSTEM_MAINTAINER"
 	DiscussionRoleNoneOfTheAbove                   DiscussionUserRole = "NONE_OF_THE_ABOVE"
 )
+
+// DiscussionRoleSelection represents a user's selection of a DiscussionUserRole and optionally a description of their role
+type DiscussionRoleSelection struct {
+	UserRole            DiscussionUserRole `json:"userRole" db:"user_role"`
+	UserRoleDescription *string            `json:"userRoleDescription" db:"user_role_description"`
+}

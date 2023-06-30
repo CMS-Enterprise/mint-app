@@ -941,7 +941,7 @@ func (r *queryResolver) SearchChangeTableDateHistogramConsolidatedAggregations(c
 }
 
 // MostRecentDiscussionRoleSelection is the resolver for the mostRecentDiscussionRoleSelection field.
-func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (models.DiscussionUserRole, error) {
+func (r *queryResolver) MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 

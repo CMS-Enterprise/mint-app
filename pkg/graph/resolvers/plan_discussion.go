@@ -246,6 +246,10 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 }
 
 // GetMostRecentDiscussionRoleSelection implements resolver logic to get the most recent user role selection
-func GetMostRecentDiscussionRoleSelection(logger *zap.Logger, store *storage.Store, principal authentication.Principal) (models.DiscussionUserRole, error) {
+func GetMostRecentDiscussionRoleSelection(
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+) (*models.DiscussionRoleSelection, error) {
 	return store.GetMostRecentDiscussionRoleSelection(logger, principal.Account().ID)
 }
