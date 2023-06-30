@@ -19,7 +19,6 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import Spinner from 'components/Spinner';
 import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
@@ -31,14 +30,12 @@ import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum } from 'utils/modelPlan';
 
+import { DicussionFormPropTypes } from '.';
+
 type QuestionAndReplyProps = {
   closeModal?: () => void;
   discussionReplyID?: string | null | undefined;
-  handleCreateDiscussion: (formikValues: {
-    content: string;
-    userRole: DiscussionUserRole;
-    userRoleDescription: '';
-  }) => void;
+  handleCreateDiscussion: (formikValues: DicussionFormPropTypes) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
   reply?: DiscussionType | ReplyType | null;
@@ -73,7 +70,9 @@ const QuestionAndReply = ({
     GetMostRecentRoleSelection
   );
 
-  const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection;
+  const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection?.userRole;
+  const mostRecentUserRoleDescription =
+    data?.mostRecentDiscussionRoleSelection?.userRoleDescription;
 
   return (
     <>
@@ -128,7 +127,7 @@ const QuestionAndReply = ({
         initialValues={{
           content: '',
           userRole: mostRecentUserRole || ('' as DiscussionUserRole),
-          userRoleDescription: ''
+          userRoleDescription: mostRecentUserRoleDescription || ''
         }}
         enableReinitialize
         onSubmit={handleCreateDiscussion}
@@ -137,19 +136,14 @@ const QuestionAndReply = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(
-          formikProps: FormikProps<{
-            content: string;
-            userRole: DiscussionUserRole | '';
-            userRoleDescription: '';
-          }>
-        ) => {
+        {(formikProps: FormikProps<DicussionFormPropTypes>) => {
           const {
             errors,
             values,
             setErrors,
             handleSubmit,
-            setFieldValue
+            setFieldValue,
+            isSubmitting
           } = formikProps;
           const flatErrors = flattenErrors(errors);
 
@@ -192,33 +186,29 @@ const QuestionAndReply = ({
 
                   <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
 
-                  {loading ? (
-                    <Spinner />
-                  ) : (
-                    <Field
-                      as={Dropdown}
-                      id="user-role"
-                      name="userRole"
-                      disabled={loading}
-                      value={values.userRole || ''}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldValue('userRole', e.target.value);
-                      }}
-                    >
-                      <option key="default-select" disabled value="">
-                        {`-${t('select')}-`}
-                      </option>
-                      {Object.keys(DiscussionUserRole)
-                        .sort(sortOtherEnum)
-                        .map(role => {
-                          return (
-                            <option key={role} value={role}>
-                              {t(`userRole.${role}`)}
-                            </option>
-                          );
-                        })}
-                    </Field>
-                  )}
+                  <Field
+                    as={Dropdown}
+                    id="user-role"
+                    name="userRole"
+                    disabled={loading}
+                    value={values.userRole || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue('userRole', e.target.value);
+                    }}
+                  >
+                    <option key="default-select" disabled value="">
+                      {`-${t('select')}-`}
+                    </option>
+                    {Object.keys(DiscussionUserRole)
+                      .sort(sortOtherEnum)
+                      .map(role => {
+                        return (
+                          <option key={role} value={role}>
+                            {t(`userRole.${role}`)}
+                          </option>
+                        );
+                      })}
+                  </Field>
 
                   {values.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE && (
                     <div className="margin-top-3">
@@ -296,6 +286,7 @@ const QuestionAndReply = ({
                   <Button
                     type="submit"
                     disabled={
+                      isSubmitting ||
                       !values.content ||
                       !values.userRole ||
                       (values.userRole ===

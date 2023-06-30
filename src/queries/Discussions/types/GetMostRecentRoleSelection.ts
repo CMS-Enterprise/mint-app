@@ -9,6 +9,12 @@ import { DiscussionUserRole } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetMostRecentRoleSelection
 // ====================================================
 
+export interface GetMostRecentRoleSelection_mostRecentDiscussionRoleSelection {
+  __typename: "DiscussionRoleSelection";
+  userRole: DiscussionUserRole;
+  userRoleDescription: string | null;
+}
+
 export interface GetMostRecentRoleSelection {
-  mostRecentDiscussionRoleSelection: DiscussionUserRole;
+  mostRecentDiscussionRoleSelection: GetMostRecentRoleSelection_mostRecentDiscussionRoleSelection;
 }

@@ -50,7 +50,10 @@ export type DiscussionsProps = {
   askAQuestion?: boolean;
 };
 
-type DicussionFormPropTypes = Omit<PlanDiscussionCreateInput, 'modelPlanID'>;
+export type DicussionFormPropTypes = Omit<
+  PlanDiscussionCreateInput,
+  'modelPlanID'
+>;
 
 const Discussions = ({
   modelID,
