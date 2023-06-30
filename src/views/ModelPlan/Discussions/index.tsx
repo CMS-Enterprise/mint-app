@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -9,6 +10,7 @@ import {
   IconAnnouncement
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -33,6 +35,7 @@ import {
   PlanDiscussionCreateInput
 } from 'types/graphql-global-types';
 import { getUnansweredQuestions } from 'utils/modelPlan';
+import { isAssessment, isMAC } from 'utils/user';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
@@ -77,8 +80,12 @@ const Discussions = ({
     }
   });
 
-  // Previously discussions had restricted access, leaving this in here in case we need to reenable in the future;
-  const hasEditAccess: boolean = true;
+  const flags = useFlags();
+
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const hasEditAccess: boolean =
+    isCollaborator || isAssessment(groups, flags) || isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
