@@ -5,8 +5,8 @@ VERSION="1.1.0"
 DOWNLOAD_URL="https://github.com/opensearch-project/opensearch-cli/releases/download/${VERSION}/opensearch-cli-${VERSION}-linux-x64.zip"
 
 # Download the file
-wget -O ~/.local/opensearch-cli.zip ${DOWNLOAD_URL}  && \\
-unzip -o ~/.local/opensearch-cli.zip -d ~/.local/ && \\
+wget -O ~/.local/opensearch-cli.zip ${DOWNLOAD_URL}  && \
+unzip -o ~/.local/opensearch-cli.zip -d ~/.local/ && \
 rm ~/.local/opensearch-cli.zip
 
 # Confirm that the CLI is working properly
