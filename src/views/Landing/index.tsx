@@ -322,7 +322,7 @@ const DiscussionCard = () => {
       id: 'c5960290-81b2-4303-8249-84d334de56b3',
       content: 'When should we submit an onboarding request to use Salesforce?',
       createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
-      userRole: DiscussionUserRole.IT_ARCHITECT,
+      userRole: DiscussionUserRole.MODEL_TEAM,
       userRoleDescription: '',
       createdDts: hour3ago,
       status: DiscussionStatus.ANSWERED,
@@ -338,7 +338,7 @@ const DiscussionCard = () => {
           content:
             'You should submit an onboarding request as soon as your team has a sense of what direction you want for IT support.',
           isAssessment: true,
-          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRole: DiscussionUserRole.LEADERSHIP,
           userRoleDescription: '',
           createdBy: 'd508dcaa-a455-4848-b717-49cbe5e3cf6b',
           createdDts: justNow,

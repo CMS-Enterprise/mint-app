@@ -22,7 +22,7 @@ type SingleDiscussionProps = {
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
-  last: boolean;
+  isLast: boolean;
 };
 
 const SingleDiscussion = ({
@@ -35,7 +35,7 @@ const SingleDiscussion = ({
   setDiscussionType,
   setReply,
   setIsDiscussionOpen,
-  last
+  isLast
 }: SingleDiscussionProps) => {
   const { t } = useTranslation('discussions');
 
@@ -87,7 +87,7 @@ const SingleDiscussion = ({
             'margin-top-0 margin-bottom-1 padding-top-1 padding-bottom-2 text-pre-wrap',
             {
               'padding-top-5': !!discussion.userRole,
-              'margin-bottom-2': last
+              'margin-bottom-2': isLast
             }
           )}
         >

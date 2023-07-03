@@ -70,7 +70,7 @@ const FormatDiscussion = ({
                       setDiscussionType={setDiscussionType}
                       setReply={setReply}
                       setIsDiscussionOpen={setIsDiscussionOpen}
-                      last={index === discussionsContentList.length - 1}
+                      isLast={index === discussionsContentList.length - 1}
                     />
                   )
                 )}
@@ -87,7 +87,7 @@ const FormatDiscussion = ({
                 setDiscussionType={setDiscussionType}
                 setReply={setReply}
                 setIsDiscussionOpen={setIsDiscussionOpen}
-                last={index === discussionsContentList.length - 1}
+                isLast={index === discussionsContentList.length - 1}
               />
             )}
             {/* Divider to separate questions if not the last question */}
