@@ -57,7 +57,10 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             {item.description2 && (
               <p>
                 <Trans i18nKey="helpAndKnowledge:solutions.bcda.timeline.items.0.description2">
-                  <UswdsReactLink to="/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline">
+                  <UswdsReactLink
+                    to="/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline"
+                    target="_blank"
+                  >
                     indexZero
                   </UswdsReactLink>
                 </Trans>
