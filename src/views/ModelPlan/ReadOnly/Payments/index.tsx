@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
+import classNames from 'classnames';
 
 import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
 import { GetAllPayments as GetModelPlanPaymentType } from 'queries/ReadOnly/types/GetAllPayments';
@@ -20,10 +21,17 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
-const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
+const ReadOnlyPayments = ({
+  modelID,
+  clearance,
+  isViewingFilteredView,
+  filteredQuestions
+}: ReadOnlyProps) => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: p } = useTranslation('prepareForClearance');
@@ -107,16 +115,31 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
     status
   } = data?.modelPlan.payments || {};
 
+  const isClaims: boolean =
+    payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) || false;
+
+  const isCostSharing: boolean =
+    (payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
+      payClaims?.includes(
+        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+      )) ||
+    false;
+
+  const isNonClaims: boolean =
+    payType?.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) || false;
+
   return (
     <div
-      className="read-only-model-plan--participants-and-providers"
-      data-testid="read-only-model-plan--participants-and-providers"
+      className="read-only-model-plan--payments"
+      data-testid="read-only-model-plan--payments"
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (
@@ -127,315 +150,487 @@ const ReadOnlyPayments = ({ modelID, clearance }: ReadOnlyProps) => {
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('fundingSourceQuestion')}
-          list
-          listItems={fundingSource?.map(translateSourceOptions)}
-          listOtherItem={fundingSourceOther}
-        />
-
-        {fundingSourceTrustFund && (
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'fundingSource',
           <ReadOnlySection
-            heading={t('whichFundingType')}
-            copy={fundingSourceTrustFund}
+            heading={t('fundingSourceQuestion')}
+            list
+            listItems={fundingSource?.map(translateSourceOptions)}
+            listOtherItem={fundingSourceOther}
           />
         )}
 
-        {fundingSourceNote && (
+        {(isViewingFilteredView || fundingSourceTrustFund) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceTrustFund',
+            <ReadOnlySection
+              heading={t('whichFundingType')}
+              copy={fundingSourceTrustFund}
+            />
+          )}
+
+        {(isViewingFilteredView || fundingSourceNote) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceTrustFund',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={fundingSourceNote}
+            />
+          )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'fundingSourceR',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={fundingSourceNote}
+            heading={t('reconciliationQuestion')}
+            list
+            listItems={fundingSourceR?.map(translateSourceOptions)}
+            listOtherItem={fundingSourceROther}
           />
         )}
 
-        <ReadOnlySection
-          heading={t('reconciliationQuestion')}
-          list
-          listItems={fundingSourceR?.map(translateSourceOptions)}
-          listOtherItem={fundingSourceROther}
-        />
+        {(fundingSourceRTrustFund || isViewingFilteredView) &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceRTrustFund',
+            <ReadOnlySection
+              heading={t('whichFundingType')}
+              copy={fundingSourceRTrustFund}
+            />
+          )}
 
-        {fundingSourceRTrustFund && (
+        {fundingSourceRNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingSourceRTrustFund',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={fundingSourceRNote}
+            />
+          )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'payRecipients',
           <ReadOnlySection
-            heading={t('whichFundingType')}
-            copy={fundingSourceRTrustFund}
+            heading={t('whoWillYouPayQuestion')}
+            list
+            listItems={payRecipients?.map(translatePayRecipient)}
+            listOtherItem={payRecipientsOtherSpecification}
+            notes={payRecipientsNote}
           />
         )}
 
-        {fundingSourceRNote && (
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'payType',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={fundingSourceRNote}
+            heading={t('whatWillYouPay')}
+            list
+            listItems={payType?.map(translatePayType)}
+            notes={payTypeNote}
           />
         )}
-
-        <ReadOnlySection
-          heading={t('whoWillYouPayQuestion')}
-          list
-          listItems={payRecipients?.map(translatePayRecipient)}
-          listOtherItem={payRecipientsOtherSpecification}
-          notes={payRecipientsNote}
-        />
-
-        <ReadOnlySection
-          heading={t('whatWillYouPay')}
-          list
-          listItems={payType?.map(translatePayType)}
-          notes={payTypeNote}
-        />
       </div>
 
-      {payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-          <h3>{t('whatWillYouPayOptions.claims')}</h3>
+      <div
+        className={classNames({
+          'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light':
+            isClaims && !isViewingFilteredView
+        })}
+      >
+        {isClaims && <h3>{t('whatWillYouPayOptions.claims')}</h3>}
 
-          <ReadOnlySection
-            heading={t('selectClaims')}
-            list
-            listItems={payClaims?.map(translateClaimsBasedPayType)}
-            listOtherItem={payClaimsOther}
-            notes={payClaimsNote}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'payClaims',
+            <ReadOnlySection
+              heading={t('selectClaims')}
+              list
+              listItems={payClaims?.map(translateClaimsBasedPayType)}
+              listOtherItem={payClaimsOther}
+              notes={payClaimsNote}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('excludedFromPayment')}
-            copy={translateBooleanOrNull(shouldAnyProvidersExcludedFFSSystems)}
-            notes={shouldAnyProviderExcludedFFSSystemsNote}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'shouldAnyProvidersExcludedFFSSystems',
+            <ReadOnlySection
+              heading={t('excludedFromPayment')}
+              copy={translateBooleanOrNull(
+                shouldAnyProvidersExcludedFFSSystems
+              )}
+              notes={shouldAnyProviderExcludedFFSSystemsNote}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('chageMedicareFeeSchedule')}
-            copy={translateBooleanOrNull(changesMedicarePhysicianFeeSchedule)}
-            notes={changesMedicarePhysicianFeeScheduleNote}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'changesMedicarePhysicianFeeSchedule',
+            <ReadOnlySection
+              heading={t('chageMedicareFeeSchedule')}
+              copy={translateBooleanOrNull(changesMedicarePhysicianFeeSchedule)}
+              notes={changesMedicarePhysicianFeeScheduleNote}
+            />
+          )}
 
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={
-                affectsMedicareSecondaryPayerClaims
-                  ? 'desktop:width-card-lg'
-                  : ''
-              }
-            >
-              <ReadOnlySection
-                heading={t('modelAffect')}
-                copy={translateBooleanOrNull(
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'affectsMedicareSecondaryPayerClaims',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('modelAffect'),
+                copy: translateBooleanOrNull(
                   affectsMedicareSecondaryPayerClaims
-                )}
-              />
-            </div>
-            {affectsMedicareSecondaryPayerClaims && (
-              <div className="desktop:width-card-lg">
-                <ReadOnlySection
-                  heading={h('howSo')}
-                  copy={affectsMedicareSecondaryPayerClaimsHow}
-                />
-              </div>
-            )}
-          </div>
-          {affectsMedicareSecondaryPayerClaimsNote && (
+                )
+              }}
+              secondSection={
+                affectsMedicareSecondaryPayerClaims === true && {
+                  heading: h('howSo'),
+                  copy: affectsMedicareSecondaryPayerClaimsHow
+                }
+              }
+            />
+          )}
+        {(isClaims && affectsMedicareSecondaryPayerClaimsNote) ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'affectsMedicareSecondaryPayerClaims',
             <ReadOnlySection
               heading={t('basics:notes')}
               copy={affectsMedicareSecondaryPayerClaimsNote}
             />
           )}
 
-          <ReadOnlySection
-            heading={t('affectCurrentPolicy')}
-            copy={payModelDifferentiation}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'payModelDifferentiation',
+            <ReadOnlySection
+              heading={t('affectCurrentPolicy')}
+              copy={payModelDifferentiation}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('ancitipateCreatingDependencies')}
-            copy={translateBooleanOrNull(creatingDependenciesBetweenServices)}
-            notes={creatingDependenciesBetweenServicesNote}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'creatingDependenciesBetweenServices',
+            <ReadOnlySection
+              heading={t('ancitipateCreatingDependencies')}
+              copy={translateBooleanOrNull(creatingDependenciesBetweenServices)}
+              notes={creatingDependenciesBetweenServicesNote}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('needsClaimsDataCollection')}
-            copy={translateBooleanOrNull(needsClaimsDataCollection)}
-            notes={needsClaimsDataCollectionNote}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'needsClaimsDataCollection',
+            <ReadOnlySection
+              heading={t('needsClaimsDataCollection')}
+              copy={translateBooleanOrNull(needsClaimsDataCollection)}
+              notes={needsClaimsDataCollectionNote}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('thirdParty')}
-            copy={translateBooleanOrNull(providingThirdPartyFile)}
-          />
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'providingThirdPartyFile',
+            <ReadOnlySection
+              heading={t('thirdParty')}
+              copy={translateBooleanOrNull(providingThirdPartyFile)}
+            />
+          )}
 
-          <ReadOnlySection
-            heading={t('isContractorAwareTestDataRequirements')}
-            copy={translateBooleanOrNull(isContractorAwareTestDataRequirements)}
-          />
-        </div>
-      )}
+        {isClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'isContractorAwareTestDataRequirements',
+            <ReadOnlySection
+              heading={t('isContractorAwareTestDataRequirements')}
+              copy={translateBooleanOrNull(
+                isContractorAwareTestDataRequirements
+              )}
+            />
+          )}
+      </div>
 
-      {payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
-        payClaims?.includes(
-          ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-        ) && (
-          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-            <h3>{t('beneficaryCostSharingQuestions')}</h3>
+      <div
+        className={classNames({
+          'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light':
+            isCostSharing && !isViewingFilteredView
+        })}
+      >
+        {isCostSharing && <h3>{t('beneficaryCostSharingQuestions')}</h3>}
 
+        {isCostSharing ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'beneficiaryCostSharingLevelAndHandling',
             <ReadOnlySection
               heading={t('beneficiaryCostSharingLevelAndHandling')}
               copy={beneficiaryCostSharingLevelAndHandling}
             />
+          )}
 
-            <div className="desktop:display-flex flex-justify">
-              <div
-                className={
+        {isCostSharing ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'waiveBeneficiaryCostSharingForAnyServices',
+            <SideBySideReadOnlySection
+              firstSection={{
+                heading: t('waiveBeneficiaryCostSharingForAnyServices'),
+                copy: translateBooleanOrNull(
                   waiveBeneficiaryCostSharingForAnyServices
-                    ? 'desktop:width-card-lg'
-                    : ''
+                )
+              }}
+              secondSection={
+                waiveBeneficiaryCostSharingForAnyServices === true && {
+                  heading: t('waiveBeneficiaryCostSharingServiceSpecification'),
+                  copy: waiveBeneficiaryCostSharingServiceSpecification
                 }
-              >
-                <ReadOnlySection
-                  heading={t('waiveBeneficiaryCostSharingForAnyServices')}
-                  copy={translateBooleanOrNull(
-                    waiveBeneficiaryCostSharingForAnyServices
-                  )}
-                />
-              </div>
-              {waiveBeneficiaryCostSharingForAnyServices && (
-                <div className="desktop:width-card-lg">
-                  <ReadOnlySection
-                    heading={t(
-                      'waiveBeneficiaryCostSharingServiceSpecification'
-                    )}
-                    copy={waiveBeneficiaryCostSharingServiceSpecification}
-                  />
-                </div>
-              )}
-            </div>
-            {waiveBeneficiaryCostSharingForAnyServices && (
-              <ReadOnlySection
-                heading={t('waiverOnlyAppliesPartOfPayment')}
-                copy={translateBooleanOrNull(waiverOnlyAppliesPartOfPayment)}
-                notes={waiveBeneficiaryCostSharingNote}
-              />
-            )}
-          </div>
-        )}
-
-      {payType?.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-          <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
-          <ReadOnlySection
-            heading={t('nonClaimsPayments')}
-            list
-            listItems={nonClaimsPayments?.map(translateNonClaimsBasedPayType)}
-            listOtherItem={nonClaimsPaymentOther}
-            notes={nonClaimsPaymentsNote}
-          />
-
-          <ReadOnlySection
-            heading={t('paymentCalculationOwner')}
-            copy={paymentCalculationOwner}
-          />
-
-          <ReadOnlySection
-            heading={t('numberPaymentsPerPayCycle')}
-            copy={numberPaymentsPerPayCycle}
-            notes={numberPaymentsPerPayCycleNote}
-          />
-
-          <ReadOnlySection
-            heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
-            copy={translateBooleanOrNull(
-              sharedSystemsInvolvedAdditionalClaimPayment
-            )}
-            notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
-          />
-
-          <ReadOnlySection
-            heading={t('planningToUseInnovationPaymentContractor')}
-            copy={translateBooleanOrNull(
-              planningToUseInnovationPaymentContractor
-            )}
-            notes={planningToUseInnovationPaymentContractorNote}
-          />
-
-          <ReadOnlySection
-            heading={t('fundingStructure')}
-            copy={fundingStructure}
-          />
-        </div>
-      )}
-
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('expectedCalculationComplexityLevel')}
-          copy={
-            expectedCalculationComplexityLevel &&
-            translateComplexityLevel(expectedCalculationComplexityLevel)
-          }
-          notes={expectedCalculationComplexityLevelNote}
-        />
-
-        <div className="desktop:display-flex flex-justify">
-          <div
-            className={
-              affectsMedicareSecondaryPayerClaims ? 'desktop:width-card-lg' : ''
-            }
-          >
-            <ReadOnlySection
-              heading={t('canParticipantsSelectBetweenPaymentMechanisms')}
-              copy={translateBooleanOrNull(
-                canParticipantsSelectBetweenPaymentMechanisms
-              )}
-              notes={canParticipantsSelectBetweenPaymentMechanismsNote}
+              }
             />
-          </div>
-          {canParticipantsSelectBetweenPaymentMechanisms && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={canParticipantsSelectBetweenPaymentMechanismsHow}
-              />
-            </div>
           )}
-        </div>
-        {canParticipantsSelectBetweenPaymentMechanismsNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={canParticipantsSelectBetweenPaymentMechanismsNote}
-          />
-        )}
-
-        <ReadOnlySection
-          heading={t('anticipatedPaymentFrequency')}
-          list
-          listItems={anticipatedPaymentFrequency?.map(
-            translateAnticipatedPaymentFrequencyType
+        {(isCostSharing && waiveBeneficiaryCostSharingForAnyServices) ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'waiverOnlyAppliesPartOfPayment',
+            <ReadOnlySection
+              heading={t('waiverOnlyAppliesPartOfPayment')}
+              copy={translateBooleanOrNull(waiverOnlyAppliesPartOfPayment)}
+              notes={waiveBeneficiaryCostSharingNote}
+            />
           )}
-          listOtherItem={anticipatedPaymentFrequencyOther}
-          notes={anticipatedPaymentFrequencyNote}
-        />
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2">
-        <ReadOnlySection
-          heading={t('willRecoverPayments')}
-          copy={translateBooleanOrNull(willRecoverPayments)}
-          notes={willRecoverPaymentsNote}
-        />
+      <div
+        className={classNames({
+          'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light':
+            isNonClaims && !isViewingFilteredView
+        })}
+      >
+        {isNonClaims && <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>}
 
-        <ReadOnlySection
-          heading={t('anticipateReconcilingPaymentsRetrospectively')}
-          copy={translateBooleanOrNull(
-            anticipateReconcilingPaymentsRetrospectively
+        {isNonClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'nonClaimsPayments',
+            <ReadOnlySection
+              heading={t('nonClaimsPayments')}
+              list
+              listItems={nonClaimsPayments?.map(translateNonClaimsBasedPayType)}
+              listOtherItem={nonClaimsPaymentOther}
+              notes={nonClaimsPaymentsNote}
+            />
           )}
-          notes={anticipateReconcilingPaymentsRetrospectivelyNote}
-        />
 
-        <ReadOnlySection
-          heading={t('paymentStartDateQuestion')}
-          copy={
-            paymentStartDate && formatDateUtc(paymentStartDate, 'MM/dd/yyyy')
-          }
-          notes={paymentStartDateNote}
-        />
+        {isNonClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'paymentCalculationOwner',
+            <ReadOnlySection
+              heading={t('paymentCalculationOwner')}
+              copy={paymentCalculationOwner}
+            />
+          )}
+
+        {isNonClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'numberPaymentsPerPayCycle',
+            <ReadOnlySection
+              heading={t('numberPaymentsPerPayCycle')}
+              copy={numberPaymentsPerPayCycle}
+              notes={numberPaymentsPerPayCycleNote}
+            />
+          )}
+
+        {isNonClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'sharedSystemsInvolvedAdditionalClaimPayment',
+            <ReadOnlySection
+              heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
+              copy={translateBooleanOrNull(
+                sharedSystemsInvolvedAdditionalClaimPayment
+              )}
+              notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
+            />
+          )}
+
+        {isNonClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'planningToUseInnovationPaymentContractor',
+            <ReadOnlySection
+              heading={t('planningToUseInnovationPaymentContractor')}
+              copy={translateBooleanOrNull(
+                planningToUseInnovationPaymentContractor
+              )}
+              notes={planningToUseInnovationPaymentContractorNote}
+            />
+          )}
+
+        {isNonClaims ||
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'fundingStructure',
+            <ReadOnlySection
+              heading={t('fundingStructure')}
+              copy={fundingStructure}
+            />
+          )}
+      </div>
+
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'expectedCalculationComplexityLevel',
+          <ReadOnlySection
+            heading={t('expectedCalculationComplexityLevel')}
+            copy={
+              expectedCalculationComplexityLevel &&
+              translateComplexityLevel(expectedCalculationComplexityLevel)
+            }
+            notes={expectedCalculationComplexityLevelNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'canParticipantsSelectBetweenPaymentMechanisms',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('canParticipantsSelectBetweenPaymentMechanisms'),
+              copy: translateBooleanOrNull(
+                canParticipantsSelectBetweenPaymentMechanisms
+              )
+            }}
+            secondSection={
+              canParticipantsSelectBetweenPaymentMechanisms === true && {
+                heading: h('howSo'),
+                copy: canParticipantsSelectBetweenPaymentMechanismsHow
+              }
+            }
+          />
+        )}
+        {canParticipantsSelectBetweenPaymentMechanismsNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'canParticipantsSelectBetweenPaymentMechanisms',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={canParticipantsSelectBetweenPaymentMechanismsNote}
+            />
+          )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'anticipatedPaymentFrequency',
+          <ReadOnlySection
+            heading={t('anticipatedPaymentFrequency')}
+            list
+            listItems={anticipatedPaymentFrequency?.map(
+              translateAnticipatedPaymentFrequencyType
+            )}
+            listOtherItem={anticipatedPaymentFrequencyOther}
+            notes={anticipatedPaymentFrequencyNote}
+          />
+        )}
+      </div>
+
+      <div>
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'willRecoverPayments',
+          <ReadOnlySection
+            heading={t('willRecoverPayments')}
+            copy={translateBooleanOrNull(willRecoverPayments)}
+            notes={willRecoverPaymentsNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'anticipateReconcilingPaymentsRetrospectively',
+          <ReadOnlySection
+            heading={t('anticipateReconcilingPaymentsRetrospectively')}
+            copy={translateBooleanOrNull(
+              anticipateReconcilingPaymentsRetrospectively
+            )}
+            notes={anticipateReconcilingPaymentsRetrospectivelyNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'paymentStartDate',
+          <ReadOnlySection
+            heading={t('paymentStartDateQuestion')}
+            copy={
+              paymentStartDate && formatDateUtc(paymentStartDate, 'MM/dd/yyyy')
+            }
+            notes={paymentStartDateNote}
+          />
+        )}
       </div>
     </div>
   );

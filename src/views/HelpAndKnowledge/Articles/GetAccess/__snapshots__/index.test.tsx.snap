@@ -396,13 +396,13 @@ exports[`Get Access Article matches snapshot 1`] = `
                        button.
                     </li>
                     <li>
-                      Read and confirm the process of modifying job codes. Then, click the 
+                      The Role Request window will appear with a dropdown to select an application. Select 
                       <span
                         class="text-bold text-italic"
                       >
-                        Next
+                        Model Innovation Tool (MINT)
                       </span>
-                       button.
+                      .
                     </li>
                     <li>
                       Then, select the role 
