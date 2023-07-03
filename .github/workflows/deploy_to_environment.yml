@@ -39,6 +39,13 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
+      - name: Clean Opensearch Domain
+        if: contains(inputs.env, 'dev')
+        env:
+          OPENSEARCH_ENDPOINT: ${{ vars.OPENSEARCH_ENDPOINT}}
+          OPENSEARCH_PASSWORD: ${{ secrets.OPENSEARCH_PASSWORD}}
+        run: |
+          ./scripts/opensearch_clean.sh
       - name: Backup the database
         if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
         run: |
