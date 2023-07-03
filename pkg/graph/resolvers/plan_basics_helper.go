@@ -64,22 +64,20 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]dateChange, error) {
 	return dateChanges, nil
 }
 
-func (dp *DateProcessor) checkDateFieldChanged(field string) (bool, *time.Time, *time.Time) {
+func (dp *DateProcessor) checkDateFieldChanged(field string) (
+	bool,
+	*time.Time,
+	*time.Time,
+) {
 	newVal, newExists := dp.changes[field]
 	oldVal, oldExists := dp.existing[field]
 
 	if newExists && oldExists {
 		var newTimeVal time.Time
 		var err error
-		switch v := newVal.(type) {
-		case time.Time:
-			newTimeVal = v
-		case string:
-			newTimeVal, err = time.Parse(time.RFC3339, v)
-			if err != nil {
-				return false, nil, nil
-			}
-		default:
+
+		newTimeVal, err = time.Parse(time.RFC3339, newVal.(string))
+		if err != nil {
 			return false, nil, nil
 		}
 
