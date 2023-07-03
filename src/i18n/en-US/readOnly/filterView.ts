@@ -1,9 +1,12 @@
 const filterView = {
   group: 'Group',
+  modelTeam: 'Model Team',
   content: 'Filter down to the content your group cares the most about.',
   selectAGroup: 'Select a group',
   alert: {
     heading: 'Don’t see your group listed?',
+    bodyContentHeading:
+      'Is this view missing information that your group cares about?',
     content:
       'Contact the MINT Team at <1>MINTTeam@cms.hhs.gov</1>, so we can learn more about your group.'
   },
