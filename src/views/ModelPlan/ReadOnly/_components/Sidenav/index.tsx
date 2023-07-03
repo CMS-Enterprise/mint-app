@@ -5,7 +5,7 @@ import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { subComponentsProps } from '../..';
-import SideNavFilterButton from '../FilterView/SideNavFilterButton';
+import FilterButton from '../FilterView/FilterButton';
 
 import './index.scss';
 
@@ -62,7 +62,7 @@ const SideNav = ({
     >
       {!flags.hideGroupView && openFilterModal && (
         <div className="margin-bottom-4">
-          <SideNavFilterButton openFilterModal={openFilterModal} />
+          <FilterButton openFilterModal={openFilterModal} />
         </div>
       )}
       <TrussSideNav items={subNavigationLinks} />
