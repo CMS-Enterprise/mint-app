@@ -43,7 +43,22 @@ const discussions = {
   assessment: 'MINT Team',
   viewMoreQuestions: 'View more questions',
   alreadyAnswered:
-    '“{{-question}}” has already been answered. You can view it in the answered questions below.'
+    '“{{-question}}” has already been answered. You can view it in the answered questions below.',
+  role: 'Your role',
+  roleInfo: 'This will display with your name to help others identify you.',
+  select: 'Select',
+  enterDescription: 'Enter a short description for your role',
+  userRole: {
+    CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
+    IT_ARCHITECT: 'IT Architect',
+    LEADERSHIP: 'Leadership',
+    MEDICARE_ADMINISTRATIVE_CONTRACTOR: 'Medicare Administrative Contractor',
+    MINT_TEAM: 'MINT Team',
+    MODEL_IT_LEAD: 'Model IT Lead',
+    MODEL_TEAM: 'Model Team',
+    SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
+    NONE_OF_THE_ABOVE: 'None of the above'
+  }
 };
 
 export default discussions;

@@ -29,14 +29,17 @@ import {
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import { CreateModelPlanReply as CreateModelPlanReplyType } from 'queries/types/CreateModelPlanReply';
-import { DiscussionStatus } from 'types/graphql-global-types';
+import {
+  DiscussionStatus,
+  DiscussionUserRole,
+  PlanDiscussionCreateInput
+} from 'types/graphql-global-types';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
 
-import QuestionAndReply from '../ReadOnly/Discussions/_components/QuestionAndReply';
-
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
+import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
 
@@ -47,9 +50,10 @@ export type DiscussionsProps = {
   askAQuestion?: boolean;
 };
 
-type DicussionFormPropTypes = {
-  content: string;
-};
+export type DicussionFormPropTypes = Omit<
+  PlanDiscussionCreateInput,
+  'modelPlanID'
+>;
 
 const Discussions = ({
   modelID,
@@ -81,7 +85,7 @@ const Discussions = ({
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const isCollaborator = data?.modelPlan?.isCollaborator;
   const hasEditAccess: boolean =
-    (isCollaborator || isAssessment(groups, flags)) && !isMAC(groups);
+    isCollaborator || isAssessment(groups, flags) || isMAC(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
@@ -181,23 +185,26 @@ const Discussions = ({
   };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
-    let payload = {};
+    let payload: any = {};
 
     // Setting the mutation payload depending on discussionType
     if (discussionType === 'question') {
       payload = {
         modelPlanID: modelID,
-        content: formikValues.content
+        ...formikValues
       };
     } else if (discussionType === 'reply' && reply) {
       payload = {
         discussionID: reply.id,
-        content: formikValues.content,
+        ...formikValues,
         resolution: true
       };
     } else {
       return; // Currently we have no mutations when discussions is displayed
     }
+
+    if (payload.userRole !== DiscussionUserRole.NONE_OF_THE_ABOVE)
+      payload.userRoleDescription = null;
 
     createDiscussionMethods[discussionType]({
       variables: {
