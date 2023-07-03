@@ -10,6 +10,8 @@ export default gql`
         content
         createdBy
         createdDts
+        userRole
+        userRoleDescription
         status
         isAssessment
         createdByUserAccount {
@@ -19,6 +21,8 @@ export default gql`
           id
           discussionID
           content
+          userRole
+          userRoleDescription
           isAssessment
           createdBy
           createdDts
