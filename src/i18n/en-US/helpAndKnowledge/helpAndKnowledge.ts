@@ -17,7 +17,7 @@ type SolutionCategoryType = {
   description: string;
 };
 
-const solutionCategoryies: Record<
+export const solutionCategories: Record<
   OperationalSolutionCategoryRoute,
   SolutionCategoryType
 > = {
@@ -1653,7 +1653,7 @@ const helpAndKnowledge = {
     description2: 'if you have any questions.'
   },
 
-  categories: solutionCategoryies,
+  categories: solutionCategories,
   solutions
 };
 

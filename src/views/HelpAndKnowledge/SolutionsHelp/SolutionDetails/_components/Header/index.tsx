@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 type HeaderProps = {
@@ -20,6 +22,9 @@ const Header = ({ className, solution }: HeaderProps) => {
         index !== solution.categories.length - 1
           ? ', '
           : ''
+      } ${
+        solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+          ?.subHeader && t(`categories.${categoryKey}.subHeader`)
       }`
   );
 

@@ -9,7 +9,8 @@ import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
-import OperationalSolutionCategories, {
+import {
+  OperationalSolutionCategories,
   OperationalSolutionCategoryRoute
 } from 'data/operationalSolutionCategories';
 import useModalSolutionState from 'hooks/useModalSolutionState';

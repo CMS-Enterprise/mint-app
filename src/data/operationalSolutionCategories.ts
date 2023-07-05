@@ -1,4 +1,4 @@
-enum OperationalSolutionCategories {
+export enum OperationalSolutionCategories {
   APPLICATIONS_ACO = 'applications-and-participation-interaction-aco-and-kidney',
   APPLICATIONS_NON_ACO = 'applications-and-participation-interaction-non-aco',
   COMMUNICATION_TOOLS = 'communication-tools-and-help-desk',
@@ -10,6 +10,15 @@ enum OperationalSolutionCategories {
   MEDICARE_FFS = 'medicare-fee-for-service',
   PAYMENT_FINANCIALS = 'payments-and-financials',
   QUALITY = 'quality'
+}
+
+export enum OperationalSolutionSubCategories {
+  APPLICATIONS = 'APPLICATIONS',
+  PARTICIPANT_INTERACTION = 'PARTICIPANT_INTERACTION',
+  COOPERATIVE_AGREEMENT_APPS = 'COOPERATIVE_AGREEMENT_APPS',
+  PARTICIPANT_AGREEMENT_APPS = 'PARTICIPANT_AGREEMENT_APPS',
+  COMMUNICATION_TOOLS = 'COMMUNICATION_TOOLS',
+  HELP_DESK = 'HELP_DESK'
 }
 
 export type OperationalSolutionCategoryRoute =
@@ -24,5 +33,3 @@ export type OperationalSolutionCategoryRoute =
   | 'medicare-fee-for-service'
   | 'payments-and-financials'
   | 'quality';
-
-export default OperationalSolutionCategories;

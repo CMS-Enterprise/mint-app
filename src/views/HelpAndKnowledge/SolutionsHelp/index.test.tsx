@@ -1,4 +1,4 @@
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import { helpSolutions, HelpSolutionType } from './solutionsMap';

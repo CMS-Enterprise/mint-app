@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { ComponentMeta } from '@storybook/react';
 
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 

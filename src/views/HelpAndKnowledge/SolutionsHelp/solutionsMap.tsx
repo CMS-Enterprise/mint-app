@@ -1,7 +1,9 @@
 import React from 'react';
 
-import OperationalSolutionCategories, {
-  OperationalSolutionCategoryRoute
+import {
+  OperationalSolutionCategories,
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
 } from 'data/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'types/graphql-global-types';
 
@@ -115,6 +117,7 @@ export interface HelpSolutionType {
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
+  subCategories?: OperationalSolutionSubCategories[];
   acronym?: string;
   name: string;
   pointsOfContact: SolutionContactType[];
@@ -129,6 +132,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'innovation',
     route: '4-innovation',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: '4i',
     name: '4innovation',
     pointsOfContact: [
@@ -175,6 +179,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     pointsOfContact: [

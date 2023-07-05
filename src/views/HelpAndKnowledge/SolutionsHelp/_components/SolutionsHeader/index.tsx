@@ -7,6 +7,7 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
 import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -31,7 +32,9 @@ const SolutionsHeader = ({
 }: OperationalSolutionsHelpProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const categoryKey = category ? operationalSolutionCategoryMap[category] : '';
+  const categoryKey: OperationalSolutionCategoryRoute | '' = category
+    ? operationalSolutionCategoryMap[category]
+    : '';
 
   const breadcrumbs = [
     { text: t('heading'), url: '/help-and-knowledge' },
@@ -42,7 +45,16 @@ const SolutionsHeader = ({
   ];
 
   if (categoryKey) {
-    breadcrumbs.push({ text: t(`categories.${categoryKey}.header`), url: '' });
+    let crumbText = t(`categories.${categoryKey}.header`);
+
+    if (
+      solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+        ?.subHeader
+    ) {
+      crumbText += ` ${t(`categories.${categoryKey}.subHeader`)}`;
+    }
+
+    breadcrumbs.push({ text: crumbText, url: '' });
   }
 
   return (
@@ -62,6 +74,13 @@ const SolutionsHeader = ({
           {categoryKey
             ? t(`categories.${categoryKey}.header`)
             : t('operationalSolutions')}
+          {solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+            ?.subHeader && (
+            <span className="text-normal">
+              {' '}
+              {t(`categories.${categoryKey}.subHeader`)}
+            </span>
+          )}
         </PageHeading>
 
         <p className="margin-bottom-4 font-body-lg">
