@@ -42,10 +42,10 @@ jobs:
       - name: Clean Opensearch Domain
         if: contains(inputs.env, 'dev')
         env:
-          OPENSEARCH_ENDPOINT: ${{ vars.OPENSEARCH_ENDPOINT}}
-          OPENSEARCH_PASSWORD: ${{ secrets.OPENSEARCH_PASSWORD}}
+          OPENSEARCH_ENDPOINT: ${{ vars.OPENSEARCH_ENDPOINT  }}
+          OPENSEARCH_PASSWORD: ${{ secrets.OPENSEARCH_PASSWORD  }}
         run: |
-          ./scripts/opensearch_clean.sh
+          ./scripts/opensearch_clean.sh $OPENSEARCH_ENDPOINT $OPENSEARCH_PASSWORD
       - name: Backup the database
         if: contains(inputs.env, 'impl') || contains(inputs.env, 'prod')
         run: |
