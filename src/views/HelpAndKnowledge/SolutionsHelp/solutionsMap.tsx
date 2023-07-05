@@ -5,6 +5,7 @@ import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
+import BCDATimeLine from './SolutionDetails/Solutions/BCDA';
 import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
@@ -243,6 +244,33 @@ export const helpSolutions: HelpSolutionType[] = [
       system: 'Center for Medicare'
     },
     components: {}
+  },
+  {
+    enum: OperationalSolutionKey.BCDA,
+    key: 'bcda',
+    route: 'beneficiary-claims-data-api',
+    // TODO: add category here once its created
+    // OperationalSolutionCategories.APPLICATION_PARTICIPANT_INTERACTION
+    categories: [],
+    name: 'Beneficiary Claims Data API',
+    pointsOfContact: [
+      {
+        name: 'BCDA Team',
+        email: 'bcapi@cms.hhs.gov'
+      },
+      {
+        name: 'Nicole Pham',
+        email: 'xuanphien.pham@cms.hhs.gov',
+        role: 'Product Manager'
+      }
+    ],
+    systemOwner: {
+      name: 'Data Analytics and Strategy Group',
+      system: 'Office of Enterprise Data and Analytics'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => <BCDATimeLine {...props} />
+    }
   },
   {
     enum: OperationalSolutionKey.CDX,
@@ -1096,33 +1124,6 @@ export const helpSolutions: HelpSolutionType[] = [
       timeline: (props: SolutionDetailProps) => (
         <SharedSystemsTimeLine {...props} />
       )
-    }
-  },
-  {
-    enum: OperationalSolutionKey.BCDA,
-    key: 'bcda',
-    route: 'bcda',
-    // TODO: Verify categories
-    categories: [OperationalSolutionCategories.DATA_REPORTING],
-    name: 'Beneficiary Claims Data API',
-    pointsOfContact: [
-      {
-        name: 'BCDA Team',
-        email: 'bcapi@cms.hhs.gov'
-      },
-      {
-        name: 'Nicole Pham',
-        email: 'xuanphien.pham@cms.hhs.gov',
-        role: 'Product Manager'
-      }
-    ],
-    systemOwner: {
-      name: 'Data Analytics and Strategy Group',
-      system: 'Office of Enterprise Data and Analytics'
-    },
-    components: {
-      // TODO: Update component timeline to BCDA
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   }
 ];
