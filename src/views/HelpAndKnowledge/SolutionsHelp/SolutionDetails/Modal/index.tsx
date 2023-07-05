@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 
+import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'views/ModelPlan/ReadOnly';
 import MobileNav from 'views/ModelPlan/ReadOnly/_components/MobileNav';
@@ -160,6 +161,10 @@ const SolutionDetailsModal = ({
                   />
 
                   <Contact contact={solution.pointsOfContact[0]} />
+
+                  <Alert type="info" noIcon lessPadding>
+                    {t('itLeadInfo')}
+                  </Alert>
                 </Grid>
               )}
 

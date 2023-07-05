@@ -1641,7 +1641,8 @@ const helpAndKnowledge = {
       'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov',
     description2: 'if you have any questions.'
   },
-
+  itLeadInfo:
+    'If your model has an IT lead, please make sure you work with them when expressing interest in solutions.',
   categories: solutionCategoryies,
   solutions
 };
