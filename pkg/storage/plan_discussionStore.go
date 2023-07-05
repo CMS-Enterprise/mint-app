@@ -25,6 +25,9 @@ var planDiscussionDeleteSQL string
 //go:embed SQL/plan_discussion/get_by_id.sql
 var planDiscussionGetByID string
 
+//go:embed SQL/plan_discussion/get_most_recent_user_role.sql
+var getUserRoleSQL string
+
 //go:embed SQL/discussion_reply/create.sql
 var discussionReplyCreateSQL string
 
@@ -241,4 +244,25 @@ func (s *Store) DiscussionReplyByID(logger *zap.Logger, id uuid.UUID) (*models.D
 	}
 
 	return discussionReply, nil
+}
+
+// GetMostRecentDiscussionRoleSelection retrieves the latest role selection for a given user
+func (s *Store) GetMostRecentDiscussionRoleSelection(
+	logger *zap.Logger,
+	userID uuid.UUID,
+) (*models.DiscussionRoleSelection, error) {
+	statement, err := s.db.PrepareNamed(getUserRoleSQL)
+	if err != nil {
+		logger.Error("failed to prepare SQL statement", zap.Error(err))
+		return nil, err
+	}
+
+	var selection models.DiscussionRoleSelection
+	err = statement.Get(&selection, map[string]interface{}{"user_id": userID})
+	if err != nil {
+		logger.Error("failed to get latest role selection", zap.Error(err))
+		return nil, err
+	}
+
+	return &selection, nil
 }

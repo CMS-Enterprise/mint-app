@@ -70,8 +70,10 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 
 func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content string) *models.PlanDiscussion {
 	input := &model.PlanDiscussionCreateInput{
-		ModelPlanID: mp.ID,
-		Content:     content,
+		ModelPlanID:         mp.ID,
+		Content:             content,
+		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: models.StringPointer("test role"),
 	}
 	pd, err := resolvers.CreatePlanDiscussion(
 		suite.testConfigs.Context,
