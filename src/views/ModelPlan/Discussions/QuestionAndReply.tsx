@@ -1,7 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, Label, Textarea } from '@trussworks/react-uswds';
+import { useQuery } from '@apollo/client';
+import {
+  Button,
+  Dropdown,
+  Label,
+  Textarea,
+  TextInput
+} from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
@@ -11,17 +18,24 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
+import GetMostRecentRoleSelection from 'queries/Discussions/GetMostRecentRoleSelection';
 import {
   GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
   GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
 } from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { GetMostRecentRoleSelection as GetMostRecentRoleSelectionType } from 'queries/Discussions/types/GetMostRecentRoleSelection';
+import { DiscussionUserRole } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum } from 'utils/modelPlan';
+
+import { DicussionFormPropTypes } from '.';
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;
   discussionReplyID?: string | null | undefined;
-  handleCreateDiscussion: (formikValues: { content: string }) => void;
+  handleCreateDiscussion: (formikValues: DicussionFormPropTypes) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
   reply?: DiscussionType | ReplyType | null;
@@ -51,6 +65,14 @@ const QuestionAndReply = ({
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
   });
+
+  const { data, loading } = useQuery<GetMostRecentRoleSelectionType>(
+    GetMostRecentRoleSelection
+  );
+
+  const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection?.userRole;
+  const mostRecentUserRoleDescription =
+    data?.mostRecentDiscussionRoleSelection?.userRoleDescription;
 
   return (
     <>
@@ -86,6 +108,15 @@ const QuestionAndReply = ({
                 : t('justNow')}
             </span>
           </div>
+
+          {reply.userRole && (
+            <p className="text-base margin-left-5 margin-y-0">
+              {reply.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
+                ? reply.userRoleDescription
+                : t(`userRole.${reply.userRole}`)}
+            </p>
+          )}
+
           <div className="margin-left-5">
             <p>{reply.content}</p>
           </div>
@@ -93,16 +124,29 @@ const QuestionAndReply = ({
       )}
 
       <Formik
-        initialValues={{ content: '' }}
+        initialValues={{
+          content: '',
+          userRole: mostRecentUserRole || ('' as DiscussionUserRole),
+          userRoleDescription: mostRecentUserRoleDescription || ''
+        }}
+        enableReinitialize
         onSubmit={handleCreateDiscussion}
         validationSchema={validationSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<{ content: string }>) => {
-          const { errors, setErrors, handleSubmit, dirty } = formikProps;
+        {(formikProps: FormikProps<DicussionFormPropTypes>) => {
+          const {
+            errors,
+            values,
+            setErrors,
+            handleSubmit,
+            setFieldValue,
+            isSubmitting
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -128,6 +172,66 @@ const QuestionAndReply = ({
                   window.scrollTo(0, 0);
                 }}
               >
+                <FieldGroup
+                  scrollElement="user-role"
+                  error={!!flatErrors.userRole}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="user-role">
+                    {t('role')}
+                    <RequiredAsterisk />
+                  </Label>
+
+                  <p className="text-base margin-top-0">{t('roleInfo')}</p>
+
+                  <FieldErrorMsg>{flatErrors.userRole}</FieldErrorMsg>
+
+                  <Field
+                    as={Dropdown}
+                    id="user-role"
+                    name="userRole"
+                    disabled={loading}
+                    value={values.userRole || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue('userRole', e.target.value);
+                    }}
+                  >
+                    <option key="default-select" disabled value="">
+                      {`-${t('select')}-`}
+                    </option>
+                    {Object.keys(DiscussionUserRole)
+                      .sort(sortOtherEnum)
+                      .map(role => {
+                        return (
+                          <option key={role} value={role}>
+                            {t(`userRole.${role}`)}
+                          </option>
+                        );
+                      })}
+                  </Field>
+
+                  {values.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE && (
+                    <div className="margin-top-3">
+                      <Label
+                        htmlFor="user-role-description"
+                        className="text-normal"
+                      >
+                        {t('enterDescription')}
+                        <RequiredAsterisk />
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.userRoleDescription}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        value={values.userRoleDescription || ''}
+                        id="user-role-description"
+                        name="userRoleDescription"
+                      />
+                    </div>
+                  )}
+                </FieldGroup>
+
                 <FieldGroup
                   scrollElement="content"
                   error={!!flatErrors.content}
@@ -181,7 +285,14 @@ const QuestionAndReply = ({
                   </Button>
                   <Button
                     type="submit"
-                    disabled={!dirty}
+                    disabled={
+                      isSubmitting ||
+                      !values.content ||
+                      !values.userRole ||
+                      (values.userRole ===
+                        DiscussionUserRole.NONE_OF_THE_ABOVE &&
+                        !values.userRoleDescription)
+                    }
                     onClick={() => setErrors({})}
                   >
                     {renderType === 'question' ? t('save') : t('saveAnswer')}
