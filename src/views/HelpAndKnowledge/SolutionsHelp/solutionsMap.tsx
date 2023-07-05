@@ -374,6 +374,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cmsBox',
     route: 'cms-box',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'CMS Box',
     pointsOfContact: [
       {
@@ -409,6 +410,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cbosc',
     route: 'consolidated-business-operations-support-center',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.HELP_DESK],
     acronym: 'CBOSC',
     name: 'Consolidated Business Operations Support Center',
     pointsOfContact: [
@@ -443,7 +445,10 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
-    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     name: 'CPI Vetting',
     pointsOfContact: [
       {
@@ -462,6 +467,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'electronicFileTransfer',
     route: 'electronic-file-transfer',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     acronym: 'EFT',
     name: 'Electronic File Transfer',
     pointsOfContact: [
@@ -509,6 +515,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'govDelivery',
     route: 'gov-delivery',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'GovDelivery',
     pointsOfContact: [
       {
@@ -531,6 +538,9 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'grantSolutions',
     route: 'grant-solutions',
     categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
+    subCategories: [
+      OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS
+    ],
     acronym: 'GS',
     name: 'GrantSolutions',
     pointsOfContact: [
@@ -881,6 +891,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'outlookMailbox',
     route: 'outlook-mailbox',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'Outlook Mailbox',
     pointsOfContact: [
       {
@@ -958,7 +969,10 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
-    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     acronym: 'ARS',
     name: 'Salesforce Application Review and Scoring',
     pointsOfContact: [
@@ -1034,7 +1048,10 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
-    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     acronym: 'LOI',
     name: 'Salesforce Letter of Intent',
     pointsOfContact: [
@@ -1073,6 +1090,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
     categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'POST / PORTAL',
     name: 'Salesforce Project Officer Support Tool / Portal',
     pointsOfContact: [
@@ -1114,7 +1132,10 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
-    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
+    subCategories: [
+      OperationalSolutionSubCategories.APPLICATIONS,
+      OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+    ],
     acronym: 'RFA',
     name: 'Salesforce Request for Application',
     pointsOfContact: [
