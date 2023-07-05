@@ -252,6 +252,44 @@ const solutions: SolutionTType = {
       ]
     }
   },
+  bcda: {
+    about: {
+      description: `The Beneficiary Claims Data API (BCDA) gives organizations the insights they need to provide high quality, coordinated care. BCDA uses the FHIR® standard as a simple, flexible, and effective way for Medicare Shared Savings Program, ACO REACH, and other Alternative Payment Model participants to receive Medicare Part A, B, and D claims.`,
+      components: [
+        {
+          header: 'Capabilities',
+          items: [
+            'BCDA supplements ACOs’ insight into their assigned beneficiary populations with Medicare claims data.',
+            'BCDA enables ACOs to make claims data requests more often - once a week.',
+            'BCDA offers Medicare claims data in a format that is aligned with a healthcare interoperability standard and the CMS interoperability rule.'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'If a model is already using 4innovation (4i), it’s much quicker to onboard to BCDA (a few weeks versus several months). It’s best to involve BCDA during the development process, so they can help determine if it’s right for your model.',
+      items: [
+        {
+          header: 'Inquire about BCDA',
+          description:
+            'If you’re interested in using BCDA for your model or would like to learn more about the system, please contact the BCDA Team. They can give a demo and share information about the system.',
+          description2:
+            'Since BCDA leverages 4i, model teams are encouraged to learn more about the <0>timing and steps involved for using 4i</0>.'
+        },
+        {
+          header: 'Get approval from CMMI leadership',
+          description:
+            'If after talking with the BCDA Team, you feel BCDA is right for your model, CMMI leadership will need to approve this.'
+        },
+        {
+          header: 'Onboard to BCDA',
+          description:
+            'Once your model is approved to use BCDA by CMMI leadership, the BCDA Team can help guide you through the onboarding process.'
+        }
+      ]
+    }
+  },
   centralizedDataExhange: {
     about: {
       description: `Enables CMMI-to-Participant Interoperability; and enables application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one, centralized file exchange.
