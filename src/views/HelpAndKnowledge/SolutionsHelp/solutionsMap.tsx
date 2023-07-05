@@ -50,6 +50,33 @@ export const operationalSolutionCategoryMap: Record<
   quality: OperationalSolutionCategories.QUALITY
 };
 
+export const operationalSolutionSubCategoryMap: Record<
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories[] | null
+> = {
+  'applications-and-participation-interaction-aco-and-kidney': [
+    OperationalSolutionSubCategories.APPLICATIONS,
+    OperationalSolutionSubCategories.PARTICIPANT_INTERACTION
+  ],
+  'applications-and-participation-interaction-non-aco': [
+    OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS,
+    OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS,
+    OperationalSolutionSubCategories.PARTICIPANT_INTERACTION
+  ],
+  'communication-tools-and-help-desk': [
+    OperationalSolutionSubCategories.COMMUNICATION_TOOLS,
+    OperationalSolutionSubCategories.HELP_DESK
+  ],
+  'contract-vehicles': null,
+  data: null,
+  learning: null,
+  legal: null,
+  'medicare-advantage-and-part-d': null,
+  'medicare-fee-for-service': null,
+  'payments-and-financials': null,
+  quality: null
+};
+
 export type ContactRoles =
   | 'Product Owner'
   | 'Senior Lead'
@@ -255,9 +282,8 @@ export const helpSolutions: HelpSolutionType[] = [
     enum: OperationalSolutionKey.BCDA,
     key: 'bcda',
     route: 'beneficiary-claims-data-api',
-    // TODO: add category here once its created
-    // OperationalSolutionCategories.APPLICATION_PARTICIPANT_INTERACTION
-    categories: [],
+    categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     name: 'Beneficiary Claims Data API',
     pointsOfContact: [
       {
@@ -364,6 +390,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
     pointsOfContact: [
       {
@@ -416,6 +443,7 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     name: 'CPI Vetting',
     pointsOfContact: [
       {
@@ -930,6 +958,7 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     acronym: 'ARS',
     name: 'Salesforce Application Review and Scoring',
     pointsOfContact: [
@@ -1005,6 +1034,7 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     acronym: 'LOI',
     name: 'Salesforce Letter of Intent',
     pointsOfContact: [
@@ -1084,6 +1114,7 @@ export const helpSolutions: HelpSolutionType[] = [
       OperationalSolutionCategories.APPLICATIONS_ACO,
       OperationalSolutionCategories.APPLICATIONS_NON_ACO
     ],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     acronym: 'RFA',
     name: 'Salesforce Request for Application',
     pointsOfContact: [

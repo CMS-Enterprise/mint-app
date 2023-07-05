@@ -1,4 +1,7 @@
-import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import {
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'data/operationalSolutionCategories';
 import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
 
@@ -73,6 +76,21 @@ export const solutionCategories: Record<
     header: 'Quality',
     description: 'Learn about the solutions available for quality.'
   }
+};
+
+const solutionSubCategories: Record<
+  OperationalSolutionSubCategories,
+  string
+> = {
+  [OperationalSolutionSubCategories.APPLICATIONS]: 'Applications',
+  [OperationalSolutionSubCategories.COMMUNICATION_TOOLS]: 'Communication tools',
+  [OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS]:
+    'Cooperative agreement applications',
+  [OperationalSolutionSubCategories.HELP_DESK]: 'Help desk',
+  [OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS]:
+    'Participant agreement applications',
+  [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION]:
+    'Participant interaction'
 };
 
 const solutions: SolutionTType = {
@@ -1692,6 +1710,7 @@ const helpAndKnowledge = {
   },
 
   categories: solutionCategories,
+  subCategories: solutionSubCategories,
   solutions
 };
 

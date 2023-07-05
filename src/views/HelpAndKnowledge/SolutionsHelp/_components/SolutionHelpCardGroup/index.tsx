@@ -6,8 +6,12 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
-import { HelpSolutionType } from '../../solutionsMap';
+import {
+  HelpSolutionType,
+  operationalSolutionSubCategoryMap
+} from '../../solutionsMap';
 import SolutionHelpCard from '../SolutionHelpCard';
 
 import './index.scss';
@@ -15,7 +19,7 @@ import './index.scss';
 type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   setResultsNum: (offset: number) => void;
 };
 
@@ -25,8 +29,40 @@ function Solutions({
   category
 }: {
   currentSolutions: HelpSolutionType[];
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
 }) {
+  const { t } = useTranslation('helpAndKnowledge');
+
+  if (category && operationalSolutionSubCategoryMap[category]) {
+    return (
+      <div className="margin-top-6">
+        {operationalSolutionSubCategoryMap[category]!.map(subCategory => {
+          const subCategorySolutions = currentSolutions.filter(solution =>
+            solution.subCategories?.includes(subCategory)
+          );
+
+          return (
+            <React.Fragment key={subCategory}>
+              <h2>{t(`subCategories.${subCategory}`)}</h2>
+              <Grid row gap>
+                {subCategorySolutions.map(solution => (
+                  <Grid
+                    tablet={{ col: 6 }}
+                    desktop={{ col: 4 }}
+                    key={solution.key}
+                    className="display-flex flex-align-stretch"
+                  >
+                    <SolutionHelpCard solution={solution} category={category} />
+                  </Grid>
+                ))}
+              </Grid>
+            </React.Fragment>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <Grid row gap={2} className="margin-bottom-2">
       {currentSolutions.map(solution => (

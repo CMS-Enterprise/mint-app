@@ -11,6 +11,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
@@ -19,7 +20,7 @@ import './index.scss';
 
 type SolutionCardProps = {
   className?: string;
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   solution: HelpSolutionType;
 };
 

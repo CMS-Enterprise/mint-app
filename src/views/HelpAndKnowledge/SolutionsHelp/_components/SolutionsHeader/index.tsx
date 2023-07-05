@@ -74,14 +74,14 @@ const SolutionsHeader = ({
           {categoryKey
             ? t(`categories.${categoryKey}.header`)
             : t('operationalSolutions')}
-          {solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
-            ?.subHeader && (
-            <span className="text-normal">
-              {' '}
-              {t(`categories.${categoryKey}.subHeader`)}
-            </span>
-          )}
         </PageHeading>
+
+        {solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+          ?.subHeader && (
+          <span className="font-body-xl">
+            {t(`categories.${categoryKey}.subHeader`)}
+          </span>
+        )}
 
         <p className="margin-bottom-4 font-body-lg">
           {categoryKey
