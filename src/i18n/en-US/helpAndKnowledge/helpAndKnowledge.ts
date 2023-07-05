@@ -1272,37 +1272,18 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Application Review and Scoring (ARS) allows model teams to track a panel’s review and scoring of the submitted applications to a participation agreement model.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
+          itemHeaders: ['Scoring Rubric', 'Application Scoring'],
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            'Establish a framework to score applications and set up the panel members.',
+            'Score applications and track the input from each panel member.'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+          header: '',
+          items: ['View an ARS screenshot'],
+          links: [
+            'https://drive.google.com/uc?export=view&id=1z1jWuUk4xLgW4NY0UjbYW9gO_9IjI7BW'
           ]
         }
       ]
@@ -1347,27 +1328,23 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
   salesforceConnect: {
     about: {
       description:
-        'The Salesforce.com Connect Communities are configured applications that enable the exchange of information between model participants, model teams, and support contractors in a secure manner.',
+        'Salesforce CONNECT creates a social media-like environment to facilitate participant-to-participant and CMS-to-participant collaboration. ',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
+          itemHeaders: ['Group management', 'Engage', 'Learn'],
           items: [
-            'Define groups',
-            'Communicate events',
-            'Live chat feed',
-            'Share Q&A',
-            'Share documents & links',
-            'Follow topics',
-            'Global search'
+            'Define collaboration groups that can include participants, contractors, and CMS staff.',
+            'Members of a Group can interact through chat, Q&A, and information sharing.',
+            'Follow topics and search for information. Share and organize relevant materials.'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Provide a secure community where model participants, practicioners (doctors and nurses), model teams, vendors, and experts can collaborate on model goals',
-            'Store, share and organize learning materials',
-            'Ask and answer questions, FAQs',
-            'Host and facilitate events'
+          header: 'Samples',
+          items: ['View sample 1', 'View sample 2'],
+          links: [
+            'https://drive.google.com/uc?export=view&id=16cg308CI-PnbbWOaDanXlHmpzKPqQWdc',
+            'https://drive.google.com/uc?export=view&id=1ArGZsXTeFrsLA67uRN3Jyr4U6UwG1sVR'
           ]
         }
       ]
@@ -1418,40 +1395,50 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
   salesforcePortal: {
     about: {
       description:
-        'The Salesforce Project Officer Support Tool/Portal (POST/PORTAL) enables the collection of data to monitor the model and support model evaluation. It also enables interaction with awardees and participants and the sending of reports/data to those participants.',
+        'The Project Officer Support Tool helps model teams manage participants after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
+          description:
+            'The capabilities for POST vary between models. The following capabilities are common across models. The project team will create the capabilities that your model requires.',
+          itemHeaders: [
+            'Access management',
+            'Applications',
+            'Sign Participant Agreements',
+            'Participant Profile',
+            'Participant Documents',
+            'Submission Management',
+            'Participant Engagement',
+            'Case Management',
+            'Reports and Dashboards'
+          ],
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            'Participants can reuse existing CMS user accounts or create a new one.',
+            'Applications – View and edit applications submitted through the RFA.',
+            'Sign Participant Agreements (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
+            'Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
+            'Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
+            'Submission Management – Establish and manage timeframes for data submission.',
+            // @ts-ignore
+            {
+              header: 'Engage with your participants with features such as:',
+              items: [
+                'Post announcements, FAQs, and other information',
+                'Engage in chats, surveys, and polls',
+                'Manage events, tasks, and email templates',
+                'Manage Corrective Action Plans'
+              ]
+            },
+            'Case Management – Manage requests, tickets, and questions from participants.',
+            'Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+          header: 'Samples',
+          items: ['View sample 1', 'View sample 2'],
+          links: [
+            'https://drive.google.com/uc?export=view&id=1cFGP0eisdER8wZ7mFwR6ctwV09wWu11G',
+            'https://drive.google.com/uc?export=view&id=1AXJ29X1Lo21EfDcqrCsHv0q2XVvO9ZzE'
           ]
         }
       ]

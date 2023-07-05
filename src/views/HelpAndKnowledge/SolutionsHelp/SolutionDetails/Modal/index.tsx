@@ -162,7 +162,12 @@ const SolutionDetailsModal = ({
 
                   <Contact contact={solution.pointsOfContact[0]} />
 
-                  <Alert type="info" noIcon lessPadding>
+                  <Alert
+                    type="info"
+                    noIcon
+                    lessPadding
+                    className="margin-top-5"
+                  >
                     {t('itLeadInfo')}
                   </Alert>
                 </Grid>
