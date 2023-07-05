@@ -99,8 +99,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               )}
 
               <ComponentListType
-                className={classNames('padding-left-4 margin-top-0', {
-                  'list-style-none padding-left-0': component.items.length === 1
+                className={classNames('padding-left-4', {
+                  'list-style-none padding-left-0 margin-top-neg-2':
+                    component.items.length === 1,
+                  'margin-top-0': component.items.length > 1
                 })}
               >
                 {component.items.map(
@@ -147,6 +149,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                                 )
                               )}
                             </ul>
+                            {item.description && (
+                              <p className="margin-y-0">{item.description}</p>
+                            )}
                           </>
                         ) : (
                           listItem
@@ -156,18 +161,6 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                   }
                 )}
               </ComponentListType>
-
-              {/* {component.externalLink && (
-                <Link
-                  aria-label="Open in a new tab"
-                  href={component.externalLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="external"
-                >
-                  {component.externalLinkText}
-                </Link>
-              )} */}
             </div>
           );
         })}

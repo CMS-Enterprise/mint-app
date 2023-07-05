@@ -1415,7 +1415,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           items: [
             'Participants can reuse existing CMS user accounts or create a new one.',
             'Applications – View and edit applications submitted through the RFA.',
-            'Sign Participant Agreements (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
+            '(coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
             'Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
             'Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
             'Submission Management – Establish and manage timeframes for data submission.',
@@ -1450,37 +1450,42 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         'The Salesforce Request for Application (RFA) allows model teams to collect applications from organizations that want to participate in a participation agreement model.',
       components: [
         {
-          header: 'Functions',
+          header: 'Product capabilities',
+          itemHeaders: [
+            'Access management',
+            'Data collection',
+            'Conditional logic',
+            'Documents',
+            'Vet Providers',
+            'Track',
+            'Sign Participant Agreements'
+          ],
           items: [
-            'Portal registration',
-            'User access management',
-            'Model application management',
-            'Organization management',
-            'Contact management',
-            'Practitioner submission & tracking',
-            'Submission Period management',
-            'Case management',
-            'File submission / approval',
-            'Mass file download',
-            'File tracker / dashboard',
-            'Annual / quarterly deliverable management',
-            'Attestation management',
-            'Corrective action planning',
-            'Events, tasks, email / templates',
-            'Reports',
-            'Dashboards',
-            'Single Sign On (OKTA) w/ MFA',
-            'RIDP (Remote Identity Proofing)',
-            'Anti-virus file scanning'
+            'Access management – Candidate participants can reuse existing CMS user accounts or create a new one.',
+            // @ts-ignore
+            {
+              header:
+                'Collect the data you need to review and select participants such as:',
+              items: [
+                'Organization information',
+                'Contact information',
+                'Provider network'
+              ],
+              description:
+                'You can customize the data collection during the development process.'
+            },
+            'Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)',
+            'Collect supporting documents from the candidate participants.',
+            '(coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.',
+            'submissions',
+            '(coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.'
           ]
         },
         {
-          header: 'Product capabilities',
-          items: [
-            'Securely communicate with model organizations during the model solicitation lifecycle (identifying interest, applying to participant, manage participation/compliance)',
-            'Enable the collection of information and the exchange of documents',
-            'Track/monitor model participant deliverable submission and compliance',
-            'Enter/escalate questions/issues to support contractors'
+          header: '',
+          items: ['View an RFA screenshot'],
+          links: [
+            'https://drive.google.com/uc?export=view&id=1xijatfSN4cv8cYAT29oKZcv1jo15RDcl'
           ]
         }
       ]
