@@ -1,32 +1,76 @@
 #!/bin/bash
+set -euo pipefail
 
-# Get the latest version of OpenSearch CLI
-VERSION="1.1.0"
-DOWNLOAD_URL="https://github.com/opensearch-project/opensearch-cli/releases/download/${VERSION}/opensearch-cli-${VERSION}-linux-x64.zip"
+get_opensearch_cli() {
+  local version="1.1.0"
+  local download_url="https://github.com/opensearch-project/opensearch-cli/releases/download/${version}/opensearch-cli-${version}-linux-x64.zip"
+  local download_path="$HOME/.local/opensearch-cli.zip"
+  local extraction_path="$HOME/.local/"
 
-# Download the file
-wget -O ~/.local/opensearch-cli.zip ${DOWNLOAD_URL}  && \
-unzip -o ~/.local/opensearch-cli.zip -d ~/.local/ && \
-rm ~/.local/opensearch-cli.zip
+  echo "Downloading OpenSearch CLI version $version..."
 
-# Confirm that the CLI is working properly
-~/.local/opensearch-cli --version
+  wget -O "$download_path" "$download_url"
 
-mkdir ~/.opensearch-cli
-cat << EOF > ~/.opensearch-cli/config.yaml
+  echo "Extracting OpenSearch CLI..."
+
+  unzip -o "$download_path" -d "$extraction_path" && rm "$download_path"
+}
+
+verify_cli() {
+  echo "Verifying OpenSearch CLI..."
+
+  "$HOME/.local/opensearch-cli" --version || {
+    echo "CLI verification failed!"
+    exit 1
+  }
+}
+
+configure_cli() {
+  local endpoint="$1"
+  local password="$2"
+  local config_path="$HOME/.opensearch-cli/config.yaml"
+
+  mkdir -p "$HOME/.opensearch-cli"
+
+  cat > "$config_path" << EOF
 profiles:
     - name: default
-      endpoint: "${OPENSEARCH_ENDPOINT}"
+      endpoint: "${endpoint}"
       user: mint-admin
-      password: "${OPENSEARCH_PASSWORD}"
+      password: "${password}"
       max_retry: 3
       timeout: 10
 EOF
 
-chmod 0600 ~/.opensearch-cli/config.yaml
+  chmod 0600 "$config_path"
+}
 
-# Delete the index to clear data
-~/.local/opensearch-cli curl delete -P "/change_table_idx" --pretty -p default
+clear_index() {
+  local index_name="/change_table_idx"
+  local profile_name="default"
 
-# Immediately recreate index
-~/.local/opensearch-cli curl put -P "/change_table_idx" --pretty -p default
+  echo "Clearing index $index_name..."
+
+  "$HOME/.local/opensearch-cli" curl delete -P "$index_name" --pretty -p "$profile_name"
+
+  echo "Recreating index $index_name..."
+
+  "$HOME/.local/opensearch-cli" curl put -P "$index_name" --pretty -p "$profile_name"
+}
+
+main() {
+  if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 OPENSEARCH_ENDPOINT OPENSEARCH_PASSWORD"
+    exit 1
+  fi
+
+  local endpoint="$1"
+  local password="$2"
+
+  get_opensearch_cli
+  verify_cli
+  configure_cli "$endpoint" "$password"
+  clear_index
+}
+
+main "$@"
