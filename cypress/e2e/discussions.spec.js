@@ -12,6 +12,14 @@ describe('Discussion Center', () => {
 
     cy.contains('button', 'Save question').should('be.disabled');
 
+    cy.get('#user-role').should('not.be.disabled');
+
+    cy.get('#user-role').select('None of the above');
+
+    cy.get('#user-role-description')
+      .type('Designer')
+      .should('have.value', 'Designer');
+
     cy.get('#discussion-content')
       .type('How to I get to model characteristics?')
       .should('have.value', 'How to I get to model characteristics?');

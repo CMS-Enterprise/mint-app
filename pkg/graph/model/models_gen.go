@@ -31,9 +31,11 @@ type CurrentUser struct {
 
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
-	DiscussionID uuid.UUID `json:"discussionID"`
-	Content      string    `json:"content"`
-	Resolution   bool      `json:"resolution"`
+	DiscussionID        uuid.UUID                  `json:"discussionID"`
+	Content             string                     `json:"content"`
+	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
+	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
+	Resolution          bool                       `json:"resolution"`
 }
 
 // The current user's Launch Darkly key
@@ -70,8 +72,10 @@ type PlanCrTdlCreateInput struct {
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-	Content     string    `json:"content"`
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Content             string                     `json:"content"`
+	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
+	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
 // PlanDocumentInput

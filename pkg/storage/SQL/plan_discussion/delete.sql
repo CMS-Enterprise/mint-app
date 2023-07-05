@@ -3,6 +3,8 @@ WHERE id = :id
 RETURNING id,
 model_plan_id,
 content,
+user_role,
+user_role_description,
 status,
 is_assessment,
 created_by,

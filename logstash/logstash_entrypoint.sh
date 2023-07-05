@@ -9,5 +9,9 @@ fi
 # Copy Logstash config from environment variable into file for Logstash service to read
 echo "$LOGSTASH_CONF_BASE64" | base64 -d > /usr/share/logstash/pipeline/logstash.conf
 
+# Set log level to ERROR for JDBC input
+echo "logger.logstash.name = logstash.inputs.jdbc" >> /usr/share/logstash/config/log4j2.properties
+echo "logger.logstash.level = ERROR" >> /usr/share/logstash/config/log4j2.properties
+
 # Start Logstash
 logstash -f /usr/share/logstash/pipeline/logstash.conf
