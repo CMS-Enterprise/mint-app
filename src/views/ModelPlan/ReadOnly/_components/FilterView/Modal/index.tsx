@@ -10,7 +10,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 
-import groupOptions from '../util';
+import { groupOptions } from '../util';
 
 type FilterViewModalProps = {
   filteredView: string | null;
@@ -27,11 +27,17 @@ const FilterViewModal = ({
   const [filteredGroup, setFilteredGroup] = useState('');
 
   const handleSubmit = (value: string) => {
+    // timeout hack to get scroll to work here
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+
     if (value === 'view-all') {
       history.push(`${history.location.pathname}`);
     } else {
       history.push(`${history.location.pathname}?filter-view=${value}`);
     }
+
     closeModal();
   };
 

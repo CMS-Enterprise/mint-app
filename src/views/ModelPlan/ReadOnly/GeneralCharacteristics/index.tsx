@@ -20,12 +20,16 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { checkGroupMap } from '../_components/FilterView/util';
 import ReadOnlySection from '../_components/ReadOnlySection';
+import SideBySideReadOnlySection from '../_components/SideBySideReadOnlySection';
 import { ReadOnlyProps } from '../ModelBasics';
 
 const ReadOnlyGeneralCharacteristics = ({
   modelID,
-  clearance
+  clearance,
+  isViewingFilteredView,
+  filteredQuestions
 }: ReadOnlyProps) => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
@@ -117,7 +121,9 @@ const ReadOnlyGeneralCharacteristics = ({
         <h2 className="margin-top-0 margin-bottom-4">
           {clearance ? t('clearanceHeading') : t('heading')}
         </h2>
-        {status && <TaskListStatusTag status={status} />}
+        {!isViewingFilteredView && status && (
+          <TaskListStatusTag status={status} />
+        )}
       </div>
 
       {clearance && (
@@ -128,262 +134,403 @@ const ReadOnlyGeneralCharacteristics = ({
         </p>
       )}
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('isNewModel')}
-          copy={translateNewModel(isNewModel)}
-        />
-
-        {!isNewModel && (
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'isNewModel',
           <ReadOnlySection
-            heading={t('whichExistingModel')}
-            copy={existingModel}
+            heading={t('isNewModel')}
+            copy={translateNewModel(isNewModel)}
           />
         )}
 
-        <ReadOnlySection
-          heading={t('resembleModel')}
-          copy={translateBooleanOrNull(resemblesExistingModel)}
-        />
+        {!isNewModel &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'existingModel',
+            <ReadOnlySection
+              heading={t('whichExistingModel')}
+              copy={existingModel}
+            />
+          )}
 
-        <ReadOnlySection
-          heading={t('modelResemblance')}
-          list
-          listItems={mappedExistingModels}
-        />
-
-        <ReadOnlySection
-          heading={t('waysResembleModel')}
-          copy={resemblesExistingModelHow}
-          notes={resemblesExistingModelNote}
-        />
-
-        <ReadOnlySection
-          heading={t('differentComponents')}
-          copy={translateBooleanOrNull(hasComponentsOrTracks)}
-        />
-
-        {hasComponentsOrTracksNote && (
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'resemblesExistingModel',
           <ReadOnlySection
-            heading={t('tracksDiffer')}
-            copy={hasComponentsOrTracksDiffer}
-            notes={hasComponentsOrTracksNote}
+            heading={t('resembleModel')}
+            copy={translateBooleanOrNull(resemblesExistingModel)}
           />
         )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'modelResemblance',
+          <ReadOnlySection
+            heading={t('modelResemblance')}
+            list
+            listItems={mappedExistingModels}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'resemblesExistingModelHow',
+          <ReadOnlySection
+            heading={t('waysResembleModel')}
+            copy={resemblesExistingModelHow}
+            notes={resemblesExistingModelNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'hasComponentsOrTracks',
+          <ReadOnlySection
+            heading={t('differentComponents')}
+            copy={translateBooleanOrNull(hasComponentsOrTracks)}
+          />
+        )}
+
+        {hasComponentsOrTracksNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'hasComponentsOrTracksDiffer',
+            <ReadOnlySection
+              heading={t('tracksDiffer')}
+              copy={hasComponentsOrTracksDiffer}
+              notes={hasComponentsOrTracksNote}
+            />
+          )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('modelAPM')}
-          list
-          listItems={alternativePaymentModelTypes?.map(
-            translateAlternativePaymentTypes
-          )}
-          notes={alternativePaymentModelNote}
-        />
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'alternativePaymentModelTypes',
+          <ReadOnlySection
+            heading={t('modelAPM')}
+            list
+            listItems={alternativePaymentModelTypes?.map(
+              translateAlternativePaymentTypes
+            )}
+            notes={alternativePaymentModelNote}
+          />
+        )}
 
-        <ReadOnlySection
-          heading={t('keyCharacteristicsQuestion')}
-          list
-          listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
-          listOtherItem={keyCharacteristicsOther}
-          notes={keyCharacteristicsNote}
-        />
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'keyCharacteristics',
+          <ReadOnlySection
+            heading={t('keyCharacteristicsQuestion')}
+            list
+            listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
+            listOtherItem={keyCharacteristicsOther}
+            notes={keyCharacteristicsNote}
+          />
+        )}
 
         {(keyCharacteristics?.includes(KeyCharacteristic.PART_C) ||
           keyCharacteristics?.includes(KeyCharacteristic.PART_D)) && (
           <>
-            <ReadOnlySection
-              heading={t('reviewPlanBids')}
-              copy={translateBooleanOrNull(collectPlanBids)}
-              notes={collectPlanBidsNote}
-            />
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'collectPlanBids',
+              <ReadOnlySection
+                heading={t('reviewPlanBids')}
+                copy={translateBooleanOrNull(collectPlanBids)}
+                notes={collectPlanBidsNote}
+              />
+            )}
 
-            <ReadOnlySection
-              heading={t('manageEnrollment')}
-              copy={translateBooleanOrNull(managePartCDEnrollment)}
-              notes={managePartCDEnrollmentNote}
-            />
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'managePartCDEnrollment',
+              <ReadOnlySection
+                heading={t('manageEnrollment')}
+                copy={translateBooleanOrNull(managePartCDEnrollment)}
+                notes={managePartCDEnrollmentNote}
+              />
+            )}
 
-            <ReadOnlySection
-              heading={t('updatedContract')}
-              copy={translateBooleanOrNull(planContractUpdated)}
-              notes={planContractUpdatedNote}
-            />
+            {checkGroupMap(
+              isViewingFilteredView,
+              filteredQuestions,
+              'planContractUpdated',
+              <ReadOnlySection
+                heading={t('updatedContract')}
+                copy={translateBooleanOrNull(planContractUpdated)}
+                notes={planContractUpdatedNote}
+              />
+            )}
           </>
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'careCoordinationInvolved',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('careCoordination'),
+              copy: translateBooleanOrNull(careCoordinationInvolved)
+            }}
+            secondSection={
+              careCoordinationInvolved === true && {
+                heading: h('howSo'),
+                copy: careCoordinationInvolvedDescription
+              }
+            }
+          />
+        )}
+        {careCoordinationInvolvedNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'careCoordinationInvolved',
             <ReadOnlySection
-              heading={t('careCoordination')}
-              copy={translateBooleanOrNull(careCoordinationInvolved)}
+              heading={t('basics:notes')}
+              copy={careCoordinationInvolvedNote}
             />
-          </div>
-          {careCoordinationInvolved && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={careCoordinationInvolvedDescription}
-              />
-            </div>
           )}
-        </div>
-        {careCoordinationInvolvedNote && (
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'additionalServicesInvolved',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('additionalServices'),
+              copy: translateBooleanOrNull(additionalServicesInvolved)
+            }}
+            secondSection={
+              additionalServicesInvolved === true && {
+                heading: h('howSo'),
+                copy: additionalServicesInvolvedDescription
+              }
+            }
+          />
+        )}
+        {additionalServicesInvolvedNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'additionalServicesInvolved',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={additionalServicesInvolvedNote}
+            />
+          )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'communityPartnersInvolved',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('communityInvolved'),
+              copy: translateBooleanOrNull(communityPartnersInvolved)
+            }}
+            secondSection={
+              communityPartnersInvolved === true && {
+                heading: h('howSo'),
+                copy: communityPartnersInvolvedDescription
+              }
+            }
+          />
+        )}
+        {communityPartnersInvolvedNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'communityPartnersInvolved',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={communityPartnersInvolvedNote}
+            />
+          )}
+      </div>
+
+      <div
+        className={`${
+          isViewingFilteredView
+            ? ''
+            : 'margin-bottom-4 border-bottom-1px border-base-light padding-bottom-2'
+        }`}
+      >
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargeted',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={careCoordinationInvolvedNote}
+            heading={t('specificGeographies')}
+            copy={translateBooleanOrNull(geographiesTargeted)}
           />
         )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('additionalServices')}
-              copy={translateBooleanOrNull(additionalServicesInvolved)}
-            />
-          </div>
-          {additionalServicesInvolved && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={additionalServicesInvolvedDescription}
-              />
-            </div>
-          )}
-        </div>
-        {additionalServicesInvolvedNote && (
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargetedTypes',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={additionalServicesInvolvedNote}
+            heading={t('geographyType')}
+            list
+            listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
+            listOtherItem={geographiesTargetedTypesOther}
           />
         )}
 
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('communityInvolved')}
-              copy={translateBooleanOrNull(communityPartnersInvolved)}
-            />
-          </div>
-          {communityPartnersInvolved && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={h('howSo')}
-                copy={communityPartnersInvolvedDescription}
-              />
-            </div>
-          )}
-        </div>
-        {communityPartnersInvolvedNote && (
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'geographiesTargetedAppliedTo',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={communityPartnersInvolvedNote}
+            heading={t('geographyApplied')}
+            list
+            listItems={geographiesTargetedAppliedTo?.map(
+              translateGeographyApplication
+            )}
+            listOtherItem={geographiesTargetedAppliedToOther}
+            notes={geographiesTargetedNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'participationOptions',
+          <ReadOnlySection
+            heading={t('participationOptions')}
+            copy={translateBooleanOrNull(participationOptions)}
+            notes={participationOptionsNote}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'agreementTypes',
+          <ReadOnlySection
+            heading={t('agreementType')}
+            list
+            listItems={agreementTypes?.map(translateAgreementTypes)}
+            listOtherItem={agreementTypesOther}
+          />
+        )}
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'multiplePatricipationAgreementsNeeded',
+          <ReadOnlySection
+            heading={t('moreParticipation')}
+            copy={translateBooleanOrNull(multiplePatricipationAgreementsNeeded)}
+            notes={multiplePatricipationAgreementsNeededNote}
           />
         )}
       </div>
 
-      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-        <ReadOnlySection
-          heading={t('specificGeographies')}
-          copy={translateBooleanOrNull(geographiesTargeted)}
-        />
-
-        <ReadOnlySection
-          heading={t('geographyType')}
-          list
-          listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
-          listOtherItem={geographiesTargetedTypesOther}
-        />
-
-        <ReadOnlySection
-          heading={t('geographyApplied')}
-          list
-          listItems={geographiesTargetedAppliedTo?.map(
-            translateGeographyApplication
-          )}
-          listOtherItem={geographiesTargetedAppliedToOther}
-          notes={geographiesTargetedNote}
-        />
-
-        <ReadOnlySection
-          heading={t('participationOptions')}
-          copy={translateBooleanOrNull(participationOptions)}
-          notes={participationOptionsNote}
-        />
-
-        <ReadOnlySection
-          heading={t('agreementType')}
-          list
-          listItems={agreementTypes?.map(translateAgreementTypes)}
-          listOtherItem={agreementTypesOther}
-        />
-
-        <ReadOnlySection
-          heading={t('moreParticipation')}
-          copy={translateBooleanOrNull(multiplePatricipationAgreementsNeeded)}
-          notes={multiplePatricipationAgreementsNeededNote}
-        />
-      </div>
-      <div className="margin-bottom-4 padding-bottom-2">
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
+      <div>
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'rulemakingRequired',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('rulemakingRequired'),
+              copy: translateBooleanOrNull(rulemakingRequired)
+            }}
+            secondSection={
+              !!(rulemakingRequired === true || isViewingFilteredView) && {
+                heading: t('ruleMakingInfo'),
+                copy: rulemakingRequiredDescription
+              }
+            }
+          />
+        )}
+        {rulemakingRequiredNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'rulemakingRequired',
             <ReadOnlySection
-              heading={t('rulemakingRequired')}
-              copy={translateBooleanOrNull(rulemakingRequired)}
+              heading={t('basics:notes')}
+              copy={rulemakingRequiredNote}
             />
-          </div>
-
-          {rulemakingRequired && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('ruleMakingInfo')}
-                copy={rulemakingRequiredDescription}
-              />
-            </div>
           )}
-        </div>
-        {rulemakingRequiredNote && (
+
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'authorityAllowances',
           <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={rulemakingRequiredNote}
+            heading={t('authorityAllowed')}
+            list
+            listItems={authorityAllowances?.map(translateAuthorityAllowance)}
+            listOtherItem={authorityAllowancesOther}
+            notes={authorityAllowancesNote}
           />
         )}
 
-        <ReadOnlySection
-          heading={t('authorityAllowed')}
-          list
-          listItems={authorityAllowances?.map(translateAuthorityAllowance)}
-          listOtherItem={authorityAllowancesOther}
-          notes={authorityAllowancesNote}
-        />
-
-        <div className="desktop:display-flex flex-justify">
-          <div className="desktop:width-card-lg">
-            <ReadOnlySection
-              heading={t('waiversRequired')}
-              copy={translateBooleanOrNull(waiversRequired)}
-            />
-          </div>
-
-          {waiversRequired && (
-            <div className="desktop:width-card-lg">
-              <ReadOnlySection
-                heading={t('waiverTypesQuestion')}
-                list
-                listItems={waiversRequiredTypes?.map(translateWaiverTypes)}
-              />
-            </div>
-          )}
-        </div>
-        {waiversRequiredNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={waiversRequiredNote}
+        {checkGroupMap(
+          isViewingFilteredView,
+          filteredQuestions,
+          'waiversRequired',
+          <SideBySideReadOnlySection
+            firstSection={{
+              heading: t('waiversRequired'),
+              copy: translateBooleanOrNull(waiversRequired)
+            }}
+            secondSection={
+              waiversRequired === true && {
+                heading: t('waiverTypesQuestion'),
+                list: true,
+                listItems: waiversRequiredTypes?.map(translateWaiverTypes)
+              }
+            }
           />
         )}
+        {waiversRequiredNote &&
+          checkGroupMap(
+            isViewingFilteredView,
+            filteredQuestions,
+            'waiversRequired',
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={waiversRequiredNote}
+            />
+          )}
       </div>
     </div>
   );

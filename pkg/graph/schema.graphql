@@ -1487,6 +1487,11 @@ input PageParams {
   limit: Int!
 }
 
+type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
 """
 Query definition for the schema
 """
@@ -1546,7 +1551,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  mostRecentDiscussionRoleSelection: DiscussionUserRole!
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
@@ -1597,19 +1602,19 @@ deletePlanDocument(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_USER)

@@ -247,19 +247,22 @@ func (s *Store) DiscussionReplyByID(logger *zap.Logger, id uuid.UUID) (*models.D
 }
 
 // GetMostRecentDiscussionRoleSelection retrieves the latest role selection for a given user
-func (s *Store) GetMostRecentDiscussionRoleSelection(logger *zap.Logger, userID uuid.UUID) (models.DiscussionUserRole, error) {
+func (s *Store) GetMostRecentDiscussionRoleSelection(
+	logger *zap.Logger,
+	userID uuid.UUID,
+) (*models.DiscussionRoleSelection, error) {
 	statement, err := s.db.PrepareNamed(getUserRoleSQL)
 	if err != nil {
 		logger.Error("failed to prepare SQL statement", zap.Error(err))
-		return models.DiscussionRoleNoneOfTheAbove, err
+		return nil, err
 	}
 
-	var role models.DiscussionUserRole
-	err = statement.Get(&role, map[string]interface{}{"user_id": userID})
+	var selection models.DiscussionRoleSelection
+	err = statement.Get(&selection, map[string]interface{}{"user_id": userID})
 	if err != nil {
 		logger.Error("failed to get latest role selection", zap.Error(err))
-		return models.DiscussionRoleNoneOfTheAbove, err
+		return nil, err
 	}
 
-	return role, nil
+	return &selection, nil
 }

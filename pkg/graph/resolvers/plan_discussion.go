@@ -37,7 +37,7 @@ func CreatePlanDiscussion(
 		input.UserRoleDescription,
 	)
 
-	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
+	err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +130,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func CreateDiscussionReply(
 		input.UserRoleDescription,
 	)
 
-	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
+	err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	if err != nil {
 		return nil, err
 	}
-	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -246,6 +246,10 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 }
 
 // GetMostRecentDiscussionRoleSelection implements resolver logic to get the most recent user role selection
-func GetMostRecentDiscussionRoleSelection(logger *zap.Logger, store *storage.Store, principal authentication.Principal) (models.DiscussionUserRole, error) {
+func GetMostRecentDiscussionRoleSelection(
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+) (*models.DiscussionRoleSelection, error) {
 	return store.GetMostRecentDiscussionRoleSelection(logger, principal.Account().ID)
 }
