@@ -362,9 +362,11 @@ type UserInfo {
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-	id:          UUID!
+	id: UUID!
 	modelPlanID: UUID!
 	content: String
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
@@ -384,6 +386,8 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
   content: String!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -394,6 +398,8 @@ https://gqlgen.com/reference/changesets/
 input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -403,6 +409,8 @@ type DiscussionReply  {
 	id: UUID!
 	discussionID: UUID!
 	content: String
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 	resolution: Boolean
   isAssessment: Boolean!
 
@@ -420,6 +428,8 @@ DiscussionReplyCreateInput represents the necessary fields to create a discussio
 input DiscussionReplyCreateInput {
   discussionID: UUID!
   content: String!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
   resolution: Boolean! = false
 }
 
@@ -431,6 +441,8 @@ https://gqlgen.com/reference/changesets/
 input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
   resolution: Boolean
+  userRole: DiscussionUserRole
+  userRoleDescription: String
 }
 
 """
@@ -1475,6 +1487,11 @@ input PageParams {
   limit: Int!
 }
 
+type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
 """
 Query definition for the schema
 """
@@ -1534,6 +1551,8 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 enum ModelPlanFilter {
@@ -1583,19 +1602,19 @@ deletePlanDocument(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasRole(role: MINT_USER)
+@hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_USER)
@@ -2217,6 +2236,7 @@ enum OperationalSolutionKey{
   POST_PORTAL
   RFA
   SHARED_SYSTEMS
+  BCDA
 }
 
 enum OperationalSolutionSubtaskStatus {
@@ -2381,4 +2401,17 @@ enum SearchableTaskListSection {
   BENEFICIARIES,
   OPERATIONS_EVALUATION_AND_LEARNING,
   PAYMENT
+}
+# lint-enable defined-types-are-used
+
+enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM,
+  IT_ARCHITECT,
+  LEADERSHIP,
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
+  MINT_TEAM,
+  MODEL_IT_LEAD,
+  MODEL_TEAM,
+  SHARED_SYSTEM_MAINTAINER,
+  NONE_OF_THE_ABOVE,
 }
