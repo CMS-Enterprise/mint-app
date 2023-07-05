@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
+import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -13,7 +14,7 @@ import './index.scss';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
-  category?: string | null;
+  category?: OperationalSolutionCategoryRoute | null;
   resultsNum: number;
   resultsMax: number;
   setQuery: (query: string) => void;
@@ -30,7 +31,7 @@ const SolutionsHeader = ({
 }: OperationalSolutionsHelpProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const categoryKey = operationalSolutionCategoryMap[category || ''];
+  const categoryKey = category ? operationalSolutionCategoryMap[category] : '';
 
   const breadcrumbs = [
     { text: t('heading'), url: '/help-and-knowledge' },

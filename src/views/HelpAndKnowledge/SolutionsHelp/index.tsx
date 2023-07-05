@@ -9,7 +9,9 @@ import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Divider from 'components/shared/Divider';
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import OperationalSolutionCategories, {
+  OperationalSolutionCategoryRoute
+} from 'data/operationalSolutionCategories';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import CategoryFooter from './_components/CategoryFooter';
@@ -28,7 +30,7 @@ type OperationalSolutionsHelpProps = {
 
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRouteParam = (
-  route: string,
+  route: OperationalSolutionCategoryRoute,
   solutions: HelpSolutionType[]
 ): HelpSolutionType[] => {
   const categoryKey: OperationalSolutionCategories | undefined =
@@ -70,7 +72,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const params = new URLSearchParams(location.search);
 
-  const category = params.get('category');
+  const category = params.get('category') as OperationalSolutionCategoryRoute;
   const page = params.get('page');
 
   // Get the solution map details from solution route param

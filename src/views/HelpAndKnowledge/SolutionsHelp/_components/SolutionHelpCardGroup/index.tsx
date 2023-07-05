@@ -30,7 +30,12 @@ function Solutions({
   return (
     <Grid row gap={2} className="margin-bottom-2">
       {currentSolutions.map(solution => (
-        <Grid tablet={{ col: 6 }} desktop={{ col: 4 }} key={solution.key}>
+        <Grid
+          tablet={{ col: 6 }}
+          desktop={{ col: 4 }}
+          key={solution.key}
+          className="display-flex flex-align-stretch"
+        >
           <SolutionHelpCard solution={solution} category={category} />
         </Grid>
       ))}

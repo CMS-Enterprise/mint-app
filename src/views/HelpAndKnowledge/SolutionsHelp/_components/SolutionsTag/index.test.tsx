@@ -16,8 +16,8 @@ describe('Operation Solution Help Tag', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap['data-reporting']}
-            category={OperationalSolutionCategories.DATA_REPORTING}
+            route={operationalSolutionCategoryMap.data}
+            category={OperationalSolutionCategories.DATA}
           />
         </Route>
       </MemoryRouter>
@@ -40,8 +40,8 @@ describe('Operation Solution Help Tag', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
-            route={operationalSolutionCategoryMap['data-reporting']}
-            category={OperationalSolutionCategories.DATA_REPORTING}
+            route={operationalSolutionCategoryMap.data}
+            category={OperationalSolutionCategories.DATA}
           />
         </Route>
       </MemoryRouter>

@@ -7,7 +7,7 @@ import { findCategoryMapByRouteParam, searchSolutions } from '.';
 describe('solution help utils', () => {
   it('returns a corresponding category solutions by route', () => {
     const route: OperationalSolutionCategories =
-      OperationalSolutionCategories.HELP_DESKS;
+      OperationalSolutionCategories.COMMUNICATION_TOOLS;
 
     const foundSolutions = findCategoryMapByRouteParam(route, helpSolutions);
 
@@ -16,7 +16,7 @@ describe('solution help utils', () => {
         enum: OperationalSolutionKey.CBOSC,
         key: 'cbosc',
         route: 'consolidated-business-operations-support-center',
-        categories: [OperationalSolutionCategories.HELP_DESKS],
+        categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
         acronym: 'CBOSC',
         name: 'Consolidated Business Operations Support Center',
         pointsOfContact: [

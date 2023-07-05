@@ -4,11 +4,13 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
-import OperationalSolutionCategories from 'data/operationalSolutionCategories';
+import OperationalSolutionCategories, {
+  OperationalSolutionCategoryRoute
+} from 'data/operationalSolutionCategories';
 
 type SolutionsTagProps = {
   className?: string;
-  route: string;
+  route: OperationalSolutionCategoryRoute;
   category: OperationalSolutionCategories;
 };
 
