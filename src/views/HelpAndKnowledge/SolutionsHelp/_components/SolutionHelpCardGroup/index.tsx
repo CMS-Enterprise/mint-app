@@ -64,7 +64,7 @@ function Solutions({
   }
 
   return (
-    <Grid row gap={2} className="margin-bottom-2">
+    <Grid row gap={2} className="margin-bottom-2 margin-top-6">
       {currentSolutions.map(solution => (
         <Grid
           tablet={{ col: 6 }}

@@ -26,10 +26,10 @@ describe('Operation Solution Help Tag', () => {
     const tag = getByTestId('solutions-tag');
 
     expect(tag).toBeInTheDocument();
-    expect(tag).toHaveTextContent('Data reporting');
+    expect(tag).toHaveTextContent('Data');
     expect(tag).toHaveAttribute(
       'href',
-      '/help-and-knowledge/operational-solutions?category=data-reporting'
+      '/help-and-knowledge/operational-solutions?category=data'
     );
   });
 

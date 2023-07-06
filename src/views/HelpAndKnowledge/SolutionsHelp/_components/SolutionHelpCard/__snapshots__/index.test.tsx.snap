@@ -3,7 +3,7 @@
 exports[`Operation Solution Help Card matches snapshot 1`] = `
 <DocumentFragment>
   <ul
-    class="usa-card-group flex-column flex-no-wrap"
+    class="usa-card-group flex-no-wrap"
     data-testid="CardGroup"
   >
     <li
@@ -14,10 +14,10 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
         class="usa-card__container"
       >
         <div
-          class="padding-3 solution-card__container"
+          class="padding-3 solution-card__container solution-card__fill-card-space"
         >
           <div
-            class="solution-card__header"
+            class="solution-card__header solution-card__fill-card-space"
           >
             <h3
               class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
@@ -34,16 +34,19 @@ exports[`Operation Solution Help Card matches snapshot 1`] = `
               class="display-flex flex-wrap padding-top-05"
             >
               <a
-                aria-label="Articles under the Data reporting category"
+                aria-label="Articles under the Applications and participant interaction category"
                 class="usa-link display-block margin-right-05 margin-bottom-1"
                 data-testid="solutions-tag"
-                href="/help-and-knowledge/operational-solutions?category=data-reporting"
+                href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
               >
                 <span
                   class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
                   data-testid="tag"
                 >
-                  Data reporting
+                  Applications and participant interaction
+                  <span>
+                     (ACO and kidney models)
+                  </span>
                 </span>
               </a>
             </div>
