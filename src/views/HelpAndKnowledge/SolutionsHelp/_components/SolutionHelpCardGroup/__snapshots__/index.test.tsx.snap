@@ -347,6 +347,91 @@ exports[`Operation Solution Help Card Group matches snapshot 1`] = `
                     class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
                     style="word-break: break-word;"
                   >
+                    Beneficiary Claims Data API
+                  </h3>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  />
+                  <p
+                    class="solution-card__body"
+                  >
+                    The Beneficiary Claims Data API (BCDA) gives organizations the insights they need to provide high quality, coordinated care. BCDA uses the FHIR® standard as a simple, flexible, and effective way for Medicare Shared Savings Program, ACO REACH, and other Alternative Payment Model participants to receive Medicare Part A, B, and D claims.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    >
+                      BCDA Team
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: Beneficiary Claims Data API"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=beneficiary-claims-data-api&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-column flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container"
+              >
+                <div
+                  class="solution-card__header"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
                     Centralized Data Exchange
                   </h3>
                   <p
@@ -814,109 +899,6 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     aria-label="Click to learn more about this solution: Consolidated Business Operations Support Center"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
                     href="/help-and-knowledge/operational-solutions?solution=consolidated-business-operations-support-center&section=about"
-                  >
-                    About this solution
-                    <svg
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="tablet:grid-col-6 desktop:grid-col-4"
-        data-testid="grid"
-      >
-        <ul
-          class="usa-card-group flex-column flex-no-wrap"
-          data-testid="CardGroup"
-        >
-          <li
-            class="usa-card solution-card margin-bottom-2 shadow"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container"
-            >
-              <div
-                class="padding-3 solution-card__container"
-              >
-                <div
-                  class="solution-card__header"
-                >
-                  <h3
-                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
-                    style="word-break: break-word;"
-                  >
-                    CPI Vetting
-                  </h3>
-                  <div
-                    class="display-flex flex-wrap padding-top-05"
-                  >
-                    <a
-                      aria-label="Articles under the Data exchange category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
-                      data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=data-exchange"
-                    >
-                      <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
-                        data-testid="tag"
-                      >
-                        Data exchange
-                      </span>
-                    </a>
-                  </div>
-                  <p
-                    class="solution-card__body"
-                  >
-                    CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
-
-They make sure CMS is paying the right provider the right amount for services covered under their programs. They support proper enrollment and accurate billing practices by working with providers, states, and other stakeholders. They strive to protect patients while also minimizing unnecessary burden on providers.
-
-CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.
-                  </p>
-                  <div
-                    class="tablet:grid-col-6 margin-bottom-2"
-                    data-testid="grid"
-                  >
-                    <p
-                      class="text-bold margin-bottom-0"
-                    >
-                      Point of contact
-                    </p>
-                    <p
-                      class="margin-y-0"
-                    >
-                      MINT Team
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="mint-divider"
-                  />
-                  <a
-                    aria-label="Click to learn more about this solution: CPI Vetting"
-                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=cpi-vetting&section=about"
                   >
                     About this solution
                     <svg
