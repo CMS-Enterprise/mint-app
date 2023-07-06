@@ -52,7 +52,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for 
+    for My excellent plan that I just initiated
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -466,6 +466,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
         </form>
       </div>
     </div>
+  </div>
+  <div
+    class="mint-page-number margin-y-6"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 3 of 5
+    </span>
   </div>
 </DocumentFragment>
 `;

@@ -52,7 +52,7 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for 
+    for My excellent plan that I just initiated
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -133,7 +133,9 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
               data-testid="payment-beneficiary-cost-sharing"
               id="payment-beneficiary-cost-sharing"
               name="beneficiaryCostSharingLevelAndHandling"
-            />
+            >
+              This is a string
+            </textarea>
           </div>
           <div
             class="usa-form-group margin-top-4"
@@ -169,6 +171,25 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 </label>
               </div>
               <div
+                class="usa-form-group margin-left-4 margin-y-1"
+                data-scroll="waiveBeneficiaryCostSharingServiceSpecification"
+              >
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="waiveBeneficiaryCostSharingServiceSpecification"
+                >
+                  Please specify which services.
+                </label>
+                <textarea
+                  aria-labelledby="label-payment-waive-any-service-specification hint-payment-waive-any-service-specification"
+                  class="height-15 usa-textarea"
+                  data-testid="payment-waive-any-service-specification"
+                  id="payment-waive-any-service-specification"
+                  name="waiveBeneficiaryCostSharingServiceSpecification"
+                />
+              </div>
+              <div
                 class="usa-radio"
                 data-testid="radio"
               >
@@ -187,6 +208,66 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 </label>
               </div>
             </fieldset>
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="waiverOnlyAppliesPartOfPayment"
+            >
+              <label
+                class="usa-label maxw-none text-normal"
+                data-testid="label"
+                for="waiverOnlyAppliesPartOfPayment"
+              >
+                Would the waiver only apply for part of the payment?
+              </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                For example, we would assess cost-sharing for the service itself, but not for an add-on payment
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-waive-part-of-payment-true"
+                    id="payment-waive-part-of-payment-true"
+                    name="waiverOnlyAppliesPartOfPayment"
+                    type="radio"
+                    value="YES"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-waive-part-of-payment-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-waive-part-of-payment-false"
+                    id="payment-waive-part-of-payment-false"
+                    name="waiverOnlyAppliesPartOfPayment"
+                    type="radio"
+                    value="NO"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-waive-part-of-payment-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
             <div
               class="margin-top-4 margin-bottom-8"
             >
@@ -263,6 +344,15 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
         </form>
       </div>
     </div>
+  </div>
+  <div
+    class="mint-page-number margin-y-6"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 3 of 5
+    </span>
   </div>
 </DocumentFragment>
 `;
