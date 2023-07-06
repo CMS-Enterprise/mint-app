@@ -52,7 +52,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for My excellent plan that I just initiated
+    for 
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -148,24 +148,6 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
-                  name="beneficiarySelectionFrequency"
-                  type="radio"
-                  value="BIANNUALLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
-                >
-                  Biannually
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-MONTHLY"
                   name="beneficiarySelectionFrequency"
                   type="radio"
@@ -220,6 +202,24 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
+                  id="beneficiaries-beneficiarySelectionFrequency-SEMIANNUALLY"
+                  name="beneficiarySelectionFrequency"
+                  type="radio"
+                  value="SEMIANNUALLY"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-beneficiarySelectionFrequency-SEMIANNUALLY"
+                >
+                  Semi-Annually
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-OTHER"
                   name="beneficiarySelectionFrequency"
                   type="radio"
@@ -231,26 +231,6 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 >
                   Other
                 </label>
-              </div>
-              <div
-                class="margin-left-4 margin-top-1"
-              >
-                <label
-                  class="usa-label text-normal"
-                  data-testid="label"
-                  for="beneficiaries-beneficiary-selection-frequency-other"
-                >
-                  Please specify
-                </label>
-                <textarea
-                  aria-labelledby="label-beneficiaries-beneficiary-selection-frequency-other hint-beneficiaries-beneficiary-selection-frequency-other"
-                  class="maxw-none mint-textarea usa-textarea"
-                  id="beneficiaries-beneficiary-selection-frequency-other"
-                  maxlength="5000"
-                  name="beneficiarySelectionFrequencyOther"
-                >
-                  Very often
-                </textarea>
               </div>
             </fieldset>
             <div
@@ -405,55 +385,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               data-testid="beneficiaries-precedence-rules"
               id="beneficiaries-precedence-rules"
               name="precedenceRules"
-            >
-              lorem ipsum
-            </textarea>
-          </div>
-          <div
-            class="usa-form-group margin-top-8 margin-bottom-3"
-          >
-            <div
-              class="usa-summary-box bg-white border-base-light padding-2"
-              data-testid="summary-box"
-            >
-              <div
-                class="usa-summary-box__body"
-              >
-                <h3
-                  class="usa-summary-box__heading"
-                />
-                <div
-                  class="usa-summary-box__text"
-                >
-                  <p
-                    class="margin-0"
-                  >
-                    Model Plan status
-                  </p>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      data-testid="beneficiaries-status"
-                      id="beneficiaries-status"
-                      name="status"
-                      type="checkbox"
-                      value="IN_PROGRESS"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="beneficiaries-status"
-                    >
-                      This section of the Model Plan (Beneficiaries) is ready for review.
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
           </div>
           <div
             class="margin-top-6 margin-bottom-3"

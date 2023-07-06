@@ -52,7 +52,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for My excellent plan that I just initiated
+    for 
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -246,25 +246,6 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                 </label>
               </div>
               <div
-                class="usa-form-group margin-left-4 margin-y-1"
-                data-scroll="canParticipantsSelectBetweenPaymentMechanismsHow"
-              >
-                <label
-                  class="usa-label text-normal"
-                  data-testid="label"
-                  for="payment-multiple-payments-how"
-                >
-                  Please describe
-                </label>
-                <input
-                  class="usa-input"
-                  data-testid="payment-multiple-payments-how"
-                  id="payment-multiple-payments-how"
-                  name="canParticipantsSelectBetweenPaymentMechanismsHow"
-                  value="lorem ipsum"
-                />
-              </div>
-              <div
                 class="usa-radio"
                 data-testid="radio"
               >
@@ -350,7 +331,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                       class=" css-14el2xx-placeholder"
                       id="react-select-3-placeholder"
                     >
-                      1 selected
+                      0 selected
                     </div>
                     <div
                       class=" css-6j8wv5-Input"
@@ -358,6 +339,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                     >
                       <input
                         aria-autocomplete="list"
+                        aria-describedby="react-select-3-placeholder"
                         aria-expanded="false"
                         aria-haspopup="true"
                         aria-labelledby="label-anticipatedPaymentFrequency"
@@ -378,31 +360,6 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                   <div
                     class=" css-1hb7zxy-IndicatorsContainer"
                   >
-                    <button
-                      aria-label="Clear selection"
-                      class="usa-button--unstyled"
-                      id="clear-selection"
-                      tabindex="0"
-                      type="button"
-                    >
-                      <div
-                        aria-hidden="true"
-                        class=" css-1e245h0-indicatorContainer"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="css-tj5bde-Svg"
-                          focusable="false"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          width="20"
-                        >
-                          <path
-                            d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
                     <span
                       class=" css-1vtyy7d-indicatorSeparator"
                     />
@@ -429,53 +386,8 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                   <input
                     name="anticipatedPaymentFrequency"
                     type="hidden"
-                    value="ANNUALLY"
                   />
                 </div>
-              </div>
-              <div
-                class="easi-multiselect--selected"
-              >
-                <h4
-                  class="text-normal margin-bottom-1"
-                >
-                  Selected payment frequency
-                </h4>
-                <ul
-                  class="usa-list--unstyled"
-                  id="payment-frequency-payments-tags"
-                >
-                  <li
-                    class="margin-bottom-05 margin-right-05 display-inline-block"
-                  >
-                    <span
-                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
-                      data-testid="multiselect-tag--Annually"
-                      id="selected-ANNUALLY"
-                    >
-                      Annually 
-                      <svg
-                        aria-label="Remove Annually"
-                        class="usa-icon margin-left-05"
-                        focusable="false"
-                        height="1em"
-                        role="button"
-                        tabindex="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                </ul>
               </div>
             </div>
             <div
@@ -554,15 +466,6 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
         </form>
       </div>
     </div>
-  </div>
-  <div
-    class="mint-page-number margin-y-6"
-  >
-    <span
-      class="mint-page-number__page-num"
-    >
-      Page 4 of 5
-    </span>
   </div>
 </DocumentFragment>
 `;

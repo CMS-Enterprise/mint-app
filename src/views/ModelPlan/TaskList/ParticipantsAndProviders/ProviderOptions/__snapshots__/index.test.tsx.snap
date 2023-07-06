@@ -136,24 +136,6 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="participants-and-providers-additional-frequency-BIANNUALLY"
-            name="providerAdditionFrequency"
-            type="radio"
-            value="BIANNUALLY"
-          />
-          <label
-            class="usa-radio__label"
-            for="participants-and-providers-additional-frequency-BIANNUALLY"
-          >
-            Biannually
-          </label>
-        </div>
-        <div
-          class="usa-radio"
-          data-testid="radio"
-        >
-          <input
-            class="usa-radio__input"
             id="participants-and-providers-additional-frequency-MONTHLY"
             name="providerAdditionFrequency"
             type="radio"
@@ -200,6 +182,24 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             for="participants-and-providers-additional-frequency-ROLLING"
           >
             Rolling
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="participants-and-providers-additional-frequency-SEMIANNUALLY"
+            name="providerAdditionFrequency"
+            type="radio"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-radio__label"
+            for="participants-and-providers-additional-frequency-SEMIANNUALLY"
+          >
+            Semi-Annually
           </label>
         </div>
         <div
