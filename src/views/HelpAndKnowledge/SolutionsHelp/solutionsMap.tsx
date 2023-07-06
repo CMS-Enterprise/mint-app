@@ -359,8 +359,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
@@ -1053,7 +1053,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforceConnect',
     route: 'salesforce-connect',
     categories: [OperationalSolutionCategories.LEARNING],
-    name: 'Salesforce Connect',
+    name: 'Salesforce CONNECT',
     pointsOfContact: [
       {
         name: 'Elia Cossis',
@@ -1072,8 +1072,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
@@ -1156,8 +1156,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
@@ -1201,8 +1201,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {

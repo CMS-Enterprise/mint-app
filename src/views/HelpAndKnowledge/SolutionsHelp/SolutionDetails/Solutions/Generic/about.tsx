@@ -139,7 +139,13 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                 </span>
               )}
 
-              <ComponentListType className="padding-left-4 margin-top-0">
+              <ComponentListType
+                className={classNames('padding-left-4', {
+                  'list-style-none padding-left-0 margin-top-neg-2':
+                    component.items.length === 1,
+                  'margin-top-0': component.items.length > 1
+                })}
+              >
                 {component.items.map(
                   (item: string | AboutComponentType, index: number) => {
                     const listItem = (
@@ -154,7 +160,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                         key={
                           typeof item === 'object' ? item.header : item + index
                         }
-                        className="list-item"
+                        className={classNames({
+                          'list-item': component.items.length > 1
+                        })}
                       >
                         {component.itemHeaders && (
                           <span className="text-bold">
@@ -188,6 +196,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                                 )
                               )}
                             </ul>
+                            {item.description && (
+                              <p className="margin-y-0">{item.description}</p>
+                            )}
                           </>
                         ) : (
                           listItem
