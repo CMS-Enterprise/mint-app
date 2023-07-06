@@ -23,8 +23,10 @@ const Header = ({ className, solution }: HeaderProps) => {
           ? ', '
           : ''
       } ${
-        solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
-          ?.subHeader && t(`categories.${categoryKey}.subHeader`)
+        (solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
+          ?.subHeader &&
+          t(`categories.${categoryKey}.subHeader`)) ||
+        ''
       }`
   );
 
