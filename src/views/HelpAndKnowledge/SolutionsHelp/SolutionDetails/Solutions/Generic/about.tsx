@@ -11,6 +11,7 @@ import '../index.scss';
 type ListItemType = {
   header: string;
   items: string[];
+  description?: string;
 };
 
 type LinkType = {
