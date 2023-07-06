@@ -8221,7 +8221,7 @@ type Query {
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   searchChangeTableDateHistogramConsolidatedAggregations(interval: String!, limit: Int!, offset: Int!): [DateHistogramAggregationBucket!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  mostRecentDiscussionRoleSelection: DiscussionRoleSelection!
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
@@ -47658,14 +47658,11 @@ func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionRoleSelection)
 	fc.Result = res
-	return ec.marshalNDiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, field.Selections, res)
+	return ec.marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -57836,9 +57833,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			}
 
@@ -59804,20 +59798,6 @@ func (ec *executionContext) unmarshalNDiscussionReplyChanges2map(ctx context.Con
 func (ec *executionContext) unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx context.Context, v interface{}) (model.DiscussionReplyCreateInput, error) {
 	res, err := ec.unmarshalInputDiscussionReplyCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNDiscussionRoleSelection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v models.DiscussionRoleSelection) graphql.Marshaler {
-	return ec._DiscussionRoleSelection(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNDiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._DiscussionRoleSelection(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNDiscussionStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, v interface{}) (models.DiscussionStatus, error) {
@@ -64153,6 +64133,13 @@ func (ec *executionContext) marshalODataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._DiscussionRoleSelection(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, v interface{}) (*models.DiscussionStatus, error) {
