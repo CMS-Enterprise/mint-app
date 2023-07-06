@@ -14,3 +14,10 @@
         display: flex !important;
     }
 }
+
+.mint-alert-slim {
+    .usa-alert__body {
+        padding-right: 1rem !important;
+        padding-left: 1rem !important;
+    }
+}
