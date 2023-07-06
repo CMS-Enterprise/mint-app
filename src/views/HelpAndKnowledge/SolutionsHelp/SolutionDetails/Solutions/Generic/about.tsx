@@ -22,7 +22,7 @@ interface AboutComponentType {
   header: string;
   description?: string;
   level?: 'h3' | 'h4';
-  items: string[] | ListItemType;
+  items: (string | ListItemType)[];
   ordered?: boolean;
   itemHeaders?: string[]; // Must be the same number of items as items[]
   links?: LinkType[]; // Must be the same number of items as items[]
@@ -46,7 +46,11 @@ const returnHeadingLevel = (
 ): keyof JSX.IntrinsicElements =>
   (level || 'h3') as keyof JSX.IntrinsicElements;
 
-// Formats Trans component from array of links to be embedded
+/*
+Formats Trans component from array of links to be embedded
+Returns links as MINT/internal or external links
+Used with <link1>, <link2>, etc embedded tags in translation file
+*/
 const getTransLinkComponents = (links?: LinkType[]) => {
   const linkObj: Record<string, React.ReactNode> = {};
   if (links) {
@@ -120,7 +124,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                   'margin-bottom-0 font-body-md': component.level === 'h4'
                 })}
               >
-                {component.header}
+                <Trans
+                  i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.header`}
+                  components={getTransLinkComponents(component.links)}
+                />
               </HeadingLevel>
 
               {component.description && (
@@ -155,15 +162,28 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                           </span>
                         )}
 
+                        {/* Renders list item or another nested list */}
                         {typeof item === 'object' ? (
                           <>
-                            <span>{item.header}</span>
+                            <span>
+                              <Trans
+                                i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}.header`}
+                                components={getTransLinkComponents(
+                                  component.links
+                                )}
+                              />
+                            </span>
 
                             <ul className="padding-left-4 margin-top-0">
                               {(item as ListItemType).items.map(
-                                (subItem: string) => (
+                                (subItem: string, subItemIndex: number) => (
                                   <li key={subItem} className="list-item">
-                                    {subItem}
+                                    <Trans
+                                      i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}.items.${subItemIndex}`}
+                                      components={getTransLinkComponents(
+                                        component.links
+                                      )}
+                                    />
                                   </li>
                                 )
                               )}

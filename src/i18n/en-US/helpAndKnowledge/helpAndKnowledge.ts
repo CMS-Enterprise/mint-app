@@ -611,8 +611,6 @@ CMMI works with CPI to screen participant and provider candidates prior to those
             'Each dashboard is specific to the exact practice, and will contain information about that practice’s patients.',
             'Dashboards are targeted at the Practice/Physician level, not at higher levels like hospital administrators or group administrators.',
             'Dashboards are not intended to be used by CMS or CMMI internally – they are for the participating practices.',
-            // Not sure why typescript isn't respecting the union type here - string[] | ListItemType
-            // @ts-ignore
             {
               header:
                 'Each dashboard will contain information that is sensitive to each practice, including:',
@@ -1011,7 +1009,7 @@ The Model team will receive an implementation milestone schedule that identifies
             'Exchange data through Application Programming Interfaces (API)',
           links: [{ link: 'https://nemsis.org/', external: true }],
           items: [
-            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with <externalLink1>Emergency Management Services</externalLink1>',
+            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with <link1>Emergency Management Services</link1>',
             'Electronic Health Records integration (a Bulk FHIR API is coming soon)'
           ],
           level: 'h4',
@@ -1042,48 +1040,82 @@ The Model team will receive an implementation milestone schedule that identifies
             }
           ],
           description: '<link1>See a video sample.</link1>'
+        },
+        {
+          header: 'Produce reports and files for participants. ',
+          links: [
+            {
+              link:
+                'https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1',
+              external: true
+            }
+          ],
+          items: [
+            {
+              header:
+                'Participant feedback dashboards that supply curated reports to participants based on CMS data (<link1>see a video sample</link1>). Dashboards use the Looker commercial tool and can include information such as:',
+              items: [
+                'Multiple levels of reports (e.g., entity, practitioner, beneficiary)',
+                'Utilization information',
+                'Cost information',
+                'Claims-based quality measures',
+                'Model-specific metrics'
+              ]
+            },
+            'Quality measure results - aggregate quality measure calculation results report',
+            'Medicare FFS Claims and Part D raw data files.'
+          ],
+          level: 'h4'
+        },
+        {
+          header: 'Analytics',
+          items: [
+            'Computations and algorithms such as probabilistic matching and attribution.',
+            'Model Space (coming soon) – a workspace for model contractors, model teams, and BSG’s IT teams to create and share analytical tools using languages such as Python through Data Bricks.'
+          ],
+          level: 'h4',
+          description: 'Create analytics for model teams, including:'
         }
       ]
     },
     timeline: {
       description:
-        'It takes about 5 months for a new model to start using IPC.',
+        'The ISP systems (CDX, HDR, eDFR) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.',
       items: [
         {
-          header: 'Work with the IPC internal team',
-          description: `After learning about an upcoming model, the IPC internal team will reach out to the Model team to kick off discussions. Alternatively, Model teams can reach out to the IPC internal team if they have questions or would like to start discussions sooner.
-
-The Model team will receive an implementation milestone schedule that identifies necessary tasks and completion dates to meet their scheduled first payment requirements.`
-        },
-        {
-          header: 'Determine ROM and contract modification',
+          header: 'Contact the ISP Team',
           description:
-            'The IPC internal team will establish a ROM based on several factors:',
-          items: [
-            'Number of Participants in the Model',
-            'Frequency of payments',
-            'Number of recoupments (demands)',
-            'Frequency of recoupments (demands)'
-          ],
-          description2:
-            'The IPC and OFM bank contracts will be modified to support the Model.'
+            'Contact Hung Van if you’re interested in using ISP or want to learn more.'
         },
         {
-          header: 'Implementation to the IPC',
-          description: `The Model team is provided a Welcome Packet which serves as an introduction to the IPC, an overview of the implementation process and a guide to the IPC payment and recoupment (demand) process. Additionally, workgroup meetings are established with the IPC, Model team, and, if necessary, their IT support contractor(s) to ensure a successful implementation. Some key implementation activities include:`,
-          items: [
-            'Validate Model participant information',
-            'Onboard Model participants to the IPC Portal and collect Model participant banking information.',
-            'Establish connectivity with the IPC to exchange files',
-            'Prepare the payment and demand files',
-            'Onboard to the Healthcare Integrated General Ledger Accounting System (HIGLAS)',
-            'Conduct HIGLAS UAT testing'
-          ]
-        },
-        {
-          header: 'Ready for payments',
+          header: 'Initial discussion',
           description:
-            'After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.'
+            'The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.'
+        },
+        {
+          header: 'Commit to using ISP',
+          description:
+            'The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.'
+        },
+        {
+          header: 'Discovery, user research, and roadmap',
+          description:
+            'The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.'
+        },
+        {
+          header: 'Sprints',
+          description:
+            'Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.'
+        },
+        {
+          header: 'Prepare for live system operations',
+          description:
+            'ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.'
+        },
+        {
+          header: 'Monitor system performance',
+          description:
+            'After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.'
         }
       ]
     }
@@ -1363,7 +1395,6 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'From the CMS Connect app on your desktop, search for “Create or manage a resource mailbox” or “Mailbox request.” You’ll need to provide the following information:',
           items: [
             'Request type (Create a new resource mailbox)',
-            // @ts-ignore
             {
               items: [
                 'Mailbox name (Please be specific. For example: CMS OP Feedback).',
