@@ -35,11 +35,11 @@ export enum AlternativePaymentModelType {
 
 export enum AnticipatedPaymentFrequencyType {
   ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
   DAILY = "DAILY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
+  SEMIANNUALLY = "SEMIANNUALLY",
   SEMIMONTHLY = "SEMIMONTHLY",
   WEEKLY = "WEEKLY",
 }
@@ -145,12 +145,12 @@ export enum DataForMonitoringType {
 
 export enum DataFrequencyType {
   ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
   DAILY = "DAILY",
   MONTHLY = "MONTHLY",
   NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
+  SEMIANNUALLY = "SEMIANNUALLY",
   SEMI_MONTHLY = "SEMI_MONTHLY",
   WEEKLY = "WEEKLY",
 }
@@ -219,11 +219,11 @@ export enum EvaluationApproachType {
 
 export enum FrequencyType {
   ANNUALLY = "ANNUALLY",
-  BIANNUALLY = "BIANNUALLY",
   MONTHLY = "MONTHLY",
   OTHER = "OTHER",
   QUARTERLY = "QUARTERLY",
   ROLLING = "ROLLING",
+  SEMIANNUALLY = "SEMIANNUALLY",
 }
 
 export enum FundingSource {

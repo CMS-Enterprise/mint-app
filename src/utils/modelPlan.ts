@@ -488,9 +488,9 @@ export const translateAnticipatedPaymentFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
       return i18next.t('payments:anticipatedPaymentFrequencyOptions.annually');
-    case 'BIANNUALLY':
+    case 'SEMIANNUALLY':
       return i18next.t(
-        'payments:anticipatedPaymentFrequencyOptions.biannually'
+        'payments:anticipatedPaymentFrequencyOptions.semiAnnually'
       );
     case 'DAILY':
       return i18next.t('payments:anticipatedPaymentFrequencyOptions.daily');
@@ -637,8 +637,10 @@ export const translateFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
       return i18next.t('participantsAndProviders:frequencyOptions.annually');
-    case 'BIANNUALLY':
-      return i18next.t('participantsAndProviders:frequencyOptions.biannually');
+    case 'SEMIANNUALLY':
+      return i18next.t(
+        'participantsAndProviders:frequencyOptions.semiAnnually'
+      );
     case 'QUARTERLY':
       return i18next.t('participantsAndProviders:frequencyOptions.quarterly');
     case 'MONTHLY':
@@ -1078,9 +1080,9 @@ export const translateDataFrequencyType = (type: string) => {
       return i18next.t(
         'operationsEvaluationAndLearning:dataSharingHowOftenOptions.annually'
       );
-    case 'BIANNUALLY':
+    case 'SEMIANNUALLY':
       return i18next.t(
-        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.bianually'
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.semiAnnually'
       );
     case 'QUARTERLY':
       return i18next.t(

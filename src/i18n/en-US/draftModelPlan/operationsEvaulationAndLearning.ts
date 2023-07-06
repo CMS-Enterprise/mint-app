@@ -212,7 +212,7 @@ const operationsEvaluationAndLearning = {
   dataSharingHowOftenSeleted: 'Data sharing frequency',
   dataSharingHowOftenOptions: {
     annually: 'Annually',
-    bianually: 'Biannually',
+    semiAnnually: 'Semi-Annually',
     quarterly: 'Quarterly',
     monthly: 'Monthly',
     semiMonthly: 'Semi-monthly',

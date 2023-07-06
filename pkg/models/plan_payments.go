@@ -13,8 +13,8 @@ type AnticipatedPaymentFrequencyType string
 const (
 	// AnticipatedPaymentFrequencyTypeAnnually indicates annual payments
 	AnticipatedPaymentFrequencyTypeAnnually AnticipatedPaymentFrequencyType = "ANNUALLY"
-	// AnticipatedPaymentFrequencyTypeBiannually indicates biannual payments
-	AnticipatedPaymentFrequencyTypeBiannually AnticipatedPaymentFrequencyType = "BIANNUALLY"
+	// AnticipatedPaymentFrequencyTypeSemiAnnually indicates biannual payments
+	AnticipatedPaymentFrequencyTypeSemiAnnually AnticipatedPaymentFrequencyType = "SEMIANNUALLY"
 	// AnticipatedPaymentFrequencyTypeQuarterly indicates payments every quarter
 	AnticipatedPaymentFrequencyTypeQuarterly AnticipatedPaymentFrequencyType = "QUARTERLY"
 	// AnticipatedPaymentFrequencyTypeMonthly indicates payments every month

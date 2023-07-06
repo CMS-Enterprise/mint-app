@@ -60,7 +60,7 @@ const dataSharingOptions: DataStartsType[] = [
 
 const dataFrequencyOptions: DataFrequencyType[] = [
   DataFrequencyType.ANNUALLY,
-  DataFrequencyType.BIANNUALLY,
+  DataFrequencyType.SEMIANNUALLY,
   DataFrequencyType.QUARTERLY,
   DataFrequencyType.MONTHLY,
   DataFrequencyType.SEMI_MONTHLY,
