@@ -1677,7 +1677,6 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
             'Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
             'Submission Management – Establish and manage timeframes for data submission.',
-            // @ts-ignore
             {
               header: 'Engage with your participants with features such as:',
               items: [
