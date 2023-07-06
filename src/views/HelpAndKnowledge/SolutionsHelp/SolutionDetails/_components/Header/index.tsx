@@ -17,17 +17,17 @@ const Header = ({ className, solution }: HeaderProps) => {
   // Maps all related categories into a comma separated string
   const solutionsHeader = solution.categories.map(
     (categoryKey, index) =>
-      `${t(`categories.${categoryKey}.header`)}${
-        solution.categories.length > 1 &&
-        index !== solution.categories.length - 1
-          ? ', '
-          : ''
-      } ${
+      `${t(`categories.${categoryKey}.header`)} ${
         (solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
           ?.subHeader &&
           t(`categories.${categoryKey}.subHeader`)) ||
         ''
-      }`
+      }${
+        solution.categories.length > 1 &&
+        index !== solution.categories.length - 1
+          ? ', '
+          : ''
+      } `
   );
 
   return (
