@@ -953,6 +953,141 @@ The Model team will receive an implementation milestone schedule that identifies
       ]
     }
   },
+  innovationSupport: {
+    about: {
+      description:
+        'The Innovation Support Platform (ISP) is a contract with three integrated IT systems that support the participant interaction that occurs after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
+      components: [
+        {
+          header: 'Product capabilities',
+          items: [],
+          links: [
+            {
+              link:
+                'https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
+              external: false
+            },
+            {
+              link:
+                'https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
+              external: false
+            },
+            {
+              link:
+                'https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
+              external: false
+            }
+          ],
+          description:
+            'ISP supplies the capabilities below through: <link1>Centralized Data Exchange (CDX)</link1>, <link2>Health Data Reporting (HDR)</link2>, and <link3>Expanded Data Feedback Reporting (eDFR)</link3>. You can work with BSG to configure the specific capabilities you need for your model.'
+        },
+        {
+          header: 'Access management',
+          items: [],
+          level: 'h4',
+          description:
+            'Participants can reuse existing CMS user accounts or create a new one.'
+        },
+        {
+          header: 'Configure model',
+          items: [
+            'Model year',
+            'Performance periods',
+            'Submission periods',
+            'Pre-load participant information',
+            'Pre-load beneficiary information'
+          ],
+          level: 'h4',
+          description: 'Setup the model in the system, including:'
+        },
+        {
+          header: 'Submission management',
+          items: [],
+          level: 'h4',
+          description: 'Establish and manage timeframes for data submission.'
+        },
+        {
+          header:
+            'Exchange data through Application Programming Interfaces (API)',
+          links: [{ link: 'https://nemsis.org/', external: true }],
+          items: [
+            'API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with <externalLink1>Emergency Management Services</externalLink1>',
+            'Electronic Health Records integration (a Bulk FHIR API is coming soon)'
+          ],
+          level: 'h4',
+          description: 'Engage in interoperable data exchanges, including:'
+        },
+        {
+          header: 'Collect and process health-related data.',
+          items: [
+            'Expanded Demographics data that complies with United States Core Data for Interoperability (USCDI) standards.',
+            'Social Determinants of Health (SDOH) data using the PRAPARE, North Carolina, or AHC tools.',
+            'Quality Measures (i.e., numerators, denominators, exclusions, exceptions)',
+            'Clinical Data',
+            'Other model-defined metrics and qualitative data.'
+          ],
+          level: 'h4',
+          description:
+            'Collect data from participants through data entry on web pages, file uploads, or APIs, including:'
+        },
+        {
+          header: '',
+          items: [],
+          level: 'h4',
+          links: [
+            {
+              link:
+                'https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1',
+              external: true
+            }
+          ],
+          description: '<link1>See a video sample.</link1>'
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'It takes about 5 months for a new model to start using IPC.',
+      items: [
+        {
+          header: 'Work with the IPC internal team',
+          description: `After learning about an upcoming model, the IPC internal team will reach out to the Model team to kick off discussions. Alternatively, Model teams can reach out to the IPC internal team if they have questions or would like to start discussions sooner.
+
+The Model team will receive an implementation milestone schedule that identifies necessary tasks and completion dates to meet their scheduled first payment requirements.`
+        },
+        {
+          header: 'Determine ROM and contract modification',
+          description:
+            'The IPC internal team will establish a ROM based on several factors:',
+          items: [
+            'Number of Participants in the Model',
+            'Frequency of payments',
+            'Number of recoupments (demands)',
+            'Frequency of recoupments (demands)'
+          ],
+          description2:
+            'The IPC and OFM bank contracts will be modified to support the Model.'
+        },
+        {
+          header: 'Implementation to the IPC',
+          description: `The Model team is provided a Welcome Packet which serves as an introduction to the IPC, an overview of the implementation process and a guide to the IPC payment and recoupment (demand) process. Additionally, workgroup meetings are established with the IPC, Model team, and, if necessary, their IT support contractor(s) to ensure a successful implementation. Some key implementation activities include:`,
+          items: [
+            'Validate Model participant information',
+            'Onboard Model participants to the IPC Portal and collect Model participant banking information.',
+            'Establish connectivity with the IPC to exchange files',
+            'Prepare the payment and demand files',
+            'Onboard to the Healthcare Integrated General Ledger Accounting System (HIGLAS)',
+            'Conduct HIGLAS UAT testing'
+          ]
+        },
+        {
+          header: 'Ready for payments',
+          description:
+            'After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.'
+        }
+      ]
+    }
+  },
   integratedDataRepository: {
     about: {
       description: `The Integrated Data Repository (IDR) is a multi-platform and high-volume data warehouse comprising integrated views of data across Medicare Parts A, B, C, and D, Beneficiary Entitlement, Enrollment and Utilization data. Provider reference information, Drug data, Contracts for Plans, and Medicaid and Children’s Health Insurance Program (CHIP).
@@ -1272,14 +1407,24 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Additional resources',
           links: [
-            'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
-            'https://mmshub.cms.gov/mms-tools',
-            'https://qpp.cms.gov/'
+            {
+              link:
+                'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+              external: true
+            },
+            {
+              link: 'https://mmshub.cms.gov/mms-tools',
+              external: true
+            },
+            {
+              link: 'https://qpp.cms.gov/',
+              external: true
+            }
           ],
           items: [
-            'Quality Vertical Model Resources on SharePoint',
-            'Measure Management System (MMS) Tools',
-            'Quality Payment Program'
+            '<externalLink1>Quality Vertical Model Resources on SharePoint</externalLink1>',
+            '<externalLink1>Measure Management System (MMS) Tools</externalLink1>',
+            '<externalLink1>Quality Payment Program</externalLink1>'
           ]
         }
       ]

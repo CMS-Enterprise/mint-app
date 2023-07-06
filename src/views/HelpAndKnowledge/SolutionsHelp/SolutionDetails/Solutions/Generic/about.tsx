@@ -1,8 +1,9 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import '../index.scss';
@@ -12,6 +13,11 @@ type ListItemType = {
   items: string[];
 };
 
+type LinkType = {
+  link: string;
+  external: boolean;
+};
+
 interface AboutComponentType {
   header: string;
   description?: string;
@@ -19,7 +25,7 @@ interface AboutComponentType {
   items: string[] | ListItemType;
   ordered?: boolean;
   itemHeaders?: string[]; // Must be the same number of items as items[]
-  links?: string[]; // Must be the same number of items as items[]
+  links?: LinkType[]; // Must be the same number of items as items[]
 }
 
 export interface AboutConfigType {
@@ -39,6 +45,29 @@ const returnHeadingLevel = (
   level: 'h4' | undefined
 ): keyof JSX.IntrinsicElements =>
   (level || 'h3') as keyof JSX.IntrinsicElements;
+
+// Formats Trans component from array of links to be embedded
+const getTransLinkComponents = (links?: LinkType[]) => {
+  const linkObj: Record<string, React.ReactNode> = {};
+  if (links) {
+    links.forEach((link, index) => {
+      linkObj[`link${index + 1}`] = link.external ? (
+        <Link
+          aria-label="Open in a new tab"
+          href={link.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="external"
+        >
+          link
+        </Link>
+      ) : (
+        <UswdsReactLink to={link.link}>link</UswdsReactLink>
+      );
+    });
+  }
+  return linkObj;
+};
 
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -95,24 +124,22 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               </HeadingLevel>
 
               {component.description && (
-                <span className="text-pre-wrap ">{component.description}</span>
+                <span className="text-pre-wrap ">
+                  <Trans
+                    i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.description`}
+                    components={getTransLinkComponents(component.links)}
+                  />
+                </span>
               )}
 
               <ComponentListType className="padding-left-4 margin-top-0">
                 {component.items.map(
                   (item: string | AboutComponentType, index: number) => {
-                    const listItem = component.links ? (
-                      <Link
-                        aria-label="Open in a new tab"
-                        href={component.links[index]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variant="external"
-                      >
-                        {item}
-                      </Link>
-                    ) : (
-                      item
+                    const listItem = (
+                      <Trans
+                        i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}`}
+                        components={getTransLinkComponents(component.links)}
+                      />
                     );
 
                     return (

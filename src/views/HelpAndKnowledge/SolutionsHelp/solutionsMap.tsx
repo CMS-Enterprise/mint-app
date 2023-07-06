@@ -688,6 +688,51 @@ export const helpSolutions: HelpSolutionType[] = [
     }
   },
   {
+    enum: null,
+    key: 'innovationSupport',
+    route: 'innovation-support-platform',
+    categories: [
+      OperationalSolutionCategories.APPLICATIONS_NON_ACO,
+      OperationalSolutionCategories.CONTRACT_VEHICLES
+    ],
+    subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
+    acronym: 'ISP',
+    name: 'Innovation Support Platform',
+    pointsOfContact: [
+      {
+        name: 'Hung Van',
+        email: 'hung.van@cms.hhs.gov',
+        role: 'Technical Lead'
+      },
+      {
+        name: 'Joe Pusateri',
+        email: 'joe.pusateri@cms.hhs.gov',
+        role: 'Contracting Officer Representative'
+      }
+    ],
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Prime'
+      },
+      {
+        name: 'Acument',
+        system: 'Subcontractor'
+      },
+      {
+        name: 'ICF International',
+        system: 'Subcontractor'
+      },
+      {
+        name: 'Tier 1 Consulting',
+        system: 'Subcontractor'
+      }
+    ],
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
     enum: OperationalSolutionKey.IDR,
     key: 'integratedDataRepository',
     route: 'integrated-data-repository',
