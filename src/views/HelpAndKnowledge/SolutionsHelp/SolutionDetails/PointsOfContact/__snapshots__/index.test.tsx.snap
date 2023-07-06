@@ -1,0 +1,5321 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: 4innovation 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              4i/ACO-OS Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="ACO-OIT@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:ACO-OIT@cms.hhs.gov"
+              target="_blank"
+            >
+              ACO-OIT@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Aparna Vyas
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="aparna.vyas@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:aparna.vyas@cms.hhs.gov"
+              target="_blank"
+            >
+              aparna.vyas@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Project Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Ashley Corbin
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="ashley.corbin@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:ashley.corbin@cms.hhs.gov"
+              target="_blank"
+            >
+              ashley.corbin@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Nora Fleming
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="nora.fleming@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:nora.fleming@cms.hhs.gov"
+              target="_blank"
+            >
+              nora.fleming@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Information Technology
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Enterprise Systems Solutions Group, Division of Applications Development and Support
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovative Design, Development, and Operations Contract (IDDOC)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Softrams
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Accountable Care Organization - Operational System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              4i/ACO-OS Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="ACO-OIT@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:ACO-OIT@cms.hhs.gov"
+              target="_blank"
+            >
+              ACO-OIT@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Aparna Vyas
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="aparna.vyas@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:aparna.vyas@cms.hhs.gov"
+              target="_blank"
+            >
+              aparna.vyas@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Project Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Ashley Corbin
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="ashley.corbin@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:ashley.corbin@cms.hhs.gov"
+              target="_blank"
+            >
+              ashley.corbin@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Nora Fleming
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="nora.fleming@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:nora.fleming@cms.hhs.gov"
+              target="_blank"
+            >
+              nora.fleming@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Information Technology
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Enterprise Systems Solutions Group, Division of Applications Development and Support
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovative Design, Development, and Operations Contract (IDDOC)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Softrams
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Automated Plan Payment System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Aliza Kim
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="aliza.kim@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:aliza.kim@cms.hhs.gov"
+              target="_blank"
+            >
+              aliza.kim@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Project Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Edgar Howard
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="edgar.howard@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:edgar.howard@cms.hhs.gov"
+              target="_blank"
+            >
+              edgar.howard@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of Payment Operations
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Medicare Plan Payment Group, Division of Payment Operations
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: CMS Box 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: CMS Qualtrics 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: CPI Vetting 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Centralized Data Exchange 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Yolanda Villanova
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="yolanda.villanova@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:yolanda.villanova@cms.hhs.gov"
+              target="_blank"
+            >
+              yolanda.villanova@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Product Owner
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Hung Van
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="hung.van@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:hung.van@cms.hhs.gov"
+              target="_blank"
+            >
+              hung.van@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Technical Lead
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Support Platform (ISP)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Global Alliant
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Chronic Conditions Warehouse 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Cheryl Brown
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="cheryl.brown@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:cheryl.brown@cms.hhs.gov"
+              target="_blank"
+            >
+              cheryl.brown@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            CMMI Government Task Lead
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Enterprise Data and Analytics
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Research Data Development Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            CMMI Technology Solution (CTS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Softrams
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Consolidated Business Operations Support Center 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Richard Speights
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="richard.speights@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:richard.speights@cms.hhs.gov"
+              target="_blank"
+            >
+              richard.speights@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Contracting Officer Representative
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Don Rocker
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="don.rocker1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:don.rocker1@cms.hhs.gov"
+              target="_blank"
+            >
+              don.rocker1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Operations and Management Lead 
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group, Division of IT Operations and Security
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Development and Operation Services (IDOS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              NewWave
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Electronic File Transfer 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Expanded Data Feedback Reporting 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Zach Nall
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="r.nall@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:r.nall@cms.hhs.gov"
+              target="_blank"
+            >
+              r.nall@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Product Owner
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Support Platform (ISP)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Global Alliant
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: GovDelivery 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Andrew Rushton
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="andrew.rushton@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:andrew.rushton@cms.hhs.gov"
+              target="_blank"
+            >
+              andrew.rushton@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Administrator
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Alison Rigby
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="alison.rigby@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:alison.rigby@cms.hhs.gov"
+              target="_blank"
+            >
+              alison.rigby@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Administrator
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: GrantSolutions 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Mary Greene
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="mary.greene@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:mary.greene@cms.hhs.gov"
+              target="_blank"
+            >
+              mary.greene@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of Grants Management
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Michelle Brown
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="michelle.brown@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:michelle.brown@cms.hhs.gov"
+              target="_blank"
+            >
+              michelle.brown@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Deputy Director, Division of Grants Management
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Health Data Reporting 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Hung Van
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="hung.van@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:hung.van@cms.hhs.gov"
+              target="_blank"
+            >
+              hung.van@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Technical Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Curtis Naumann
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="curtis.naumann@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:curtis.naumann@cms.hhs.gov"
+              target="_blank"
+            >
+              curtis.naumann@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Product Owner
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Support Platform (ISP)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Global Alliant
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Health Plan Management System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Division of Plan Data
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Healthcare Integrated General Ledger Accounting System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Donna Schmidt
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="donna.schmidt@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:donna.schmidt@cms.hhs.gov"
+              target="_blank"
+            >
+              donna.schmidt@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of System Support, Operation and Security (DSSOS)
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Financial Management
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Accounting Management Group
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Innovation Payment Contractor 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Ron Topper
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="ronald.topper@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:ronald.topper@cms.hhs.gov"
+              target="_blank"
+            >
+              ronald.topper@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of Budget and Administrative Services (DBAS)
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Sue Nonemaker
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="sue.nonemaker@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:sue.nonemaker@cms.hhs.gov"
+              target="_blank"
+            >
+              sue.nonemaker@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Project Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Alyssa Larson
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="alyssa.larson@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:alyssa.larson@cms.hhs.gov"
+              target="_blank"
+            >
+              alyssa.larson@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Philip Tennant
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="philip.tennant@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:philip.tennant@cms.hhs.gov"
+              target="_blank"
+            >
+              philip.tennant@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group, Division of Budget and Administrative Services
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          />
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              National Government Services (NGS)
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Integrated Data Repository 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Jim Brogan
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="jim.brogan@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:jim.brogan@cms.hhs.gov"
+              target="_blank"
+            >
+              jim.brogan@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Deputy Director, Division of Enterprise Information Management Services
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Murari Selvakesavan
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="murari.selvakesavan@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:murari.selvakesavan@cms.hhs.gov"
+              target="_blank"
+            >
+              murari.selvakesavan@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            System Owner
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Information Technology
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Enterprise Architecture and Data Group, Division of Enterprise Information Management Services
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Learning and Diffusion Group 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Andrew Philip
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="andrew.philip@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:andrew.philip@cms.hhs.gov"
+              target="_blank"
+            >
+              andrew.philip@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of Model Learning Systems (DMLS)
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Taiwanna Messam Lucienne
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="taiwanna.lucienne@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:taiwanna.lucienne@cms.hhs.gov"
+              target="_blank"
+            >
+              taiwanna.lucienne@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Deputy Director, Division of Model Learning Systems (DMLS)
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Alexis Malfesi
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="alexis.malfesi@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:alexis.malfesi@cms.hhs.gov"
+              target="_blank"
+            >
+              alexis.malfesi@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Beneficiary Listening Session Point of Contact
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Erin Carrillo
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="erin.carrillo1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:erin.carrillo1@cms.hhs.gov"
+              target="_blank"
+            >
+              erin.carrillo1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Beneficiary Listening Session Point of Contact
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Legal Vertical 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Megan Hyde
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="megan.hyde@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:megan.hyde@cms.hhs.gov"
+              target="_blank"
+            >
+              megan.hyde@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Co-team Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Erin Hagenbrok
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="erin.hagenbrok1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:erin.hagenbrok1@cms.hhs.gov"
+              target="_blank"
+            >
+              erin.hagenbrok1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Co-team Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Ann Vrabel
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="ann.vrabel1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:ann.vrabel1@cms.hhs.gov"
+              target="_blank"
+            >
+              ann.vrabel1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Division Director
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Melanie Dang
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="melanie.dang1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:melanie.dang1@cms.hhs.gov"
+              target="_blank"
+            >
+              melanie.dang1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Deputy Division Director
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Master Data Management 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Cheryl Brown
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="cheryl.brown@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:cheryl.brown@cms.hhs.gov"
+              target="_blank"
+            >
+              cheryl.brown@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            CMMI/BSG Point of Contact
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Felicia Addai
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="felicia.addai2@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:felicia.addai2@cms.hhs.gov"
+              target="_blank"
+            >
+              felicia.addai2@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            CMMI/BSG Project Support
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Miyani Treva
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="miyani.treva@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:miyani.treva@cms.hhs.gov"
+              target="_blank"
+            >
+              miyani.treva@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Overlaps Operations Support
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Sameera Gudipati
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="sameera.gudipati1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:sameera.gudipati1@cms.hhs.gov"
+              target="_blank"
+            >
+              sameera.gudipati1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            OIT Point of Contact
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Glenn Eyler
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="cglenn.eyler@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:cglenn.eyler@cms.hhs.gov"
+              target="_blank"
+            >
+              cglenn.eyler@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            OIT Government Task Lead
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Information Technology
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Enterprise Architecture and Data Group
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Measure and Instrument Development and Support 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Dustin Allison
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="dustin.allison@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:dustin.allison@cms.hhs.gov"
+              target="_blank"
+            >
+              dustin.allison@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Quality Vertical
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Teresa Winder-Wells
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="teresa.winder-wells@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:teresa.winder-wells@cms.hhs.gov"
+              target="_blank"
+            >
+              teresa.winder-wells@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Contracting Officer Representative, Division of Centralized Contracts and Services (DCCS)
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Tim Day
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="timothy.day@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:timothy.day@cms.hhs.gov"
+              target="_blank"
+            >
+              timothy.day@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Quality Subject Matter Expert (QSME)
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Jim Gerber
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="james.gerber@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:james.gerber@cms.hhs.gov"
+              target="_blank"
+            >
+              james.gerber@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of Portfolio Management & Strategy
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Medicare Advantage Prescription Drug System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Medicare Plan Payment Group, Division of Payment Operations
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Outlook Mailbox 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              MINT Team
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="MINTTeam@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:MINTTeam@cms.hhs.gov"
+              target="_blank"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Quality Vertical 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Alesia Hovatter
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="alesia.hovatter@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:alesia.hovatter@cms.hhs.gov"
+              target="_blank"
+            >
+              alesia.hovatter@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Senior Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Susannah Bernheim
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="susannah.bernheim@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:susannah.bernheim@cms.hhs.gov"
+              target="_blank"
+            >
+              susannah.bernheim@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Chief Quality Officer and Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Dustin Allison
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="dustin.allison1@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:dustin.allison1@cms.hhs.gov"
+              target="_blank"
+            >
+              dustin.allison1@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Interim Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Sasha Gibbel
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="sasha.gibbel@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:sasha.gibbel@cms.hhs.gov"
+              target="_blank"
+            >
+              sasha.gibbel@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Quality Analyst
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Whitney Saint-Fleur
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="whitney.saintfleur@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:whitney.saintfleur@cms.hhs.gov"
+              target="_blank"
+            >
+              whitney.saintfleur@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Quality Analyst
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Research, Measurement, Assessment, Design, and Analysis 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Joe Pusateri
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="joseph.pusateri@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:joseph.pusateri@cms.hhs.gov"
+              target="_blank"
+            >
+              joseph.pusateri@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Contracting Officer Representative
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce Application Review and Scoring 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Elia Cossis
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="elia.cossis@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:elia.cossis@cms.hhs.gov"
+              target="_blank"
+            >
+              elia.cossis@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Platform Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Chinelo Johnson
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="echinelo.johnson@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:echinelo.johnson@cms.hhs.gov"
+              target="_blank"
+            >
+              echinelo.johnson@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Point of Contact
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Development and Operation Services (IDOS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              NewWave
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce CONNECT 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Elia Cossis
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="elia.cossis@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:elia.cossis@cms.hhs.gov"
+              target="_blank"
+            >
+              elia.cossis@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Platform Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Chinelo Johnson
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="echinelo.johnson@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:echinelo.johnson@cms.hhs.gov"
+              target="_blank"
+            >
+              echinelo.johnson@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Point of Contact
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            CMMI Technology Solution (CTS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Softrams
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce Letter of Intent 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Elia Cossis
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="elia.cossis@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:elia.cossis@cms.hhs.gov"
+              target="_blank"
+            >
+              elia.cossis@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Platform Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Chinelo Johnson
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="echinelo.johnson@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:echinelo.johnson@cms.hhs.gov"
+              target="_blank"
+            >
+              echinelo.johnson@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Point of Contact
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Development and Operation Services (IDOS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              NewWave
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce Project Officer Support Tool or Portal 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Elia Cossis
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="elia.cossis@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:elia.cossis@cms.hhs.gov"
+              target="_blank"
+            >
+              elia.cossis@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Platform Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Chinelo Johnson
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="echinelo.johnson@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:echinelo.johnson@cms.hhs.gov"
+              target="_blank"
+            >
+              echinelo.johnson@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Point of Contact
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            CMMI Technology Solution (CTS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Softrams
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Salesforce Request for Application 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Elia Cossis
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="elia.cossis@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:elia.cossis@cms.hhs.gov"
+              target="_blank"
+            >
+              elia.cossis@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Platform Lead
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Chinelo Johnson
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="echinelo.johnson@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:echinelo.johnson@cms.hhs.gov"
+              target="_blank"
+            >
+              echinelo.johnson@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Point of Contact
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            CMMI Technology Solution (CTS)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Softrams
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IT Solutions Points of Contact Components matches the snapshot: Shared Systems 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Donna Schmidt
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="donna.schmidt@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:donna.schmidt@cms.hhs.gov"
+              target="_blank"
+            >
+              donna.schmidt@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Director, Division of System Support, Operation and Security (DSSOS)
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header padding-0"
+            data-testid="CardHeader"
+          >
+            <h3
+              class="margin-0"
+            >
+              Madhu Annadata
+            </h3>
+          </header>
+          <div
+            class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
+            data-testid="CardBody"
+          >
+            <a
+              aria-label="madhu.annadata@cms.hhs.gov"
+              class="usa-link margin-0 line-height-body-5"
+              href="mailto:madhu.annadata@cms.hhs.gov"
+              target="_blank"
+            >
+              madhu.annadata@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div
+            class="usa-card__footer padding-0 font-body-xs"
+            data-testid="CardFooter"
+          >
+            Subject Matter Expert
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Information Technology
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Applications Management Group, Division of Shared Systems Management
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
