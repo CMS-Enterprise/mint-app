@@ -284,6 +284,7 @@ export const helpSolutions: HelpSolutionType[] = [
     route: 'beneficiary-claims-data-api',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
+    acronym: 'BCDA',
     name: 'Beneficiary Claims Data API',
     pointsOfContact: [
       {

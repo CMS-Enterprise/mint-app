@@ -442,6 +442,55 @@ exports[`IT Solutions About Components matches the snapshot: Automated Plan Paym
 </DocumentFragment>
 `;
 
+exports[`IT Solutions About Components matches the snapshot: Beneficiary Claims Data API 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Beneficiary Claims Data API (BCDA) gives organizations the insights they need to provide high quality, coordinated care. BCDA uses the FHIR® standard as a simple, flexible, and effective way for Medicare Shared Savings Program, ACO REACH, and other Alternative Payment Model participants to receive Medicare Part A, B, and D claims.
+      </p>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Capabilities
+        </h3>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            BCDA supplements ACOs’ insight into their assigned beneficiary populations with Medicare claims data.
+          </li>
+          <li
+            class="list-item"
+          >
+            BCDA enables ACOs to make claims data requests more often - once a week.
+          </li>
+          <li
+            class="list-item"
+          >
+            BCDA offers Medicare claims data in a format that is aligned with a healthcare interoperability standard and the CMS interoperability rule.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`IT Solutions About Components matches the snapshot: CMS Box 1`] = `
 <DocumentFragment>
   <div>
@@ -1581,6 +1630,342 @@ exports[`IT Solutions About Components matches the snapshot: Innovation Payment 
 </DocumentFragment>
 `;
 
+exports[`IT Solutions About Components matches the snapshot: Innovation Support Platform 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Innovation Support Platform (ISP) is a contract with three integrated IT systems that support the participant interaction that occurs after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.
+      </p>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Product capabilities
+        </h3>
+        <span
+          class="text-pre-wrap "
+        >
+          ISP supplies the capabilities below through: 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
+          >
+            Centralized Data Exchange (CDX)
+          </a>
+          , 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about"
+          >
+            Health Data Reporting (HDR)
+          </a>
+          , and 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about"
+          >
+            Expanded Data Feedback Reporting (eDFR)
+          </a>
+          . You can work with BSG to configure the specific capabilities you need for your model.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Access management
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Participants can reuse existing CMS user accounts or create a new one.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Configure model
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Setup the model in the system, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            Model year
+          </li>
+          <li
+            class="list-item"
+          >
+            Performance periods
+          </li>
+          <li
+            class="list-item"
+          >
+            Submission periods
+          </li>
+          <li
+            class="list-item"
+          >
+            Pre-load participant information
+          </li>
+          <li
+            class="list-item"
+          >
+            Pre-load beneficiary information
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Submission management
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Establish and manage timeframes for data submission.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Exchange data through Application Programming Interfaces (API)
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Engage in interoperable data exchanges, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with 
+            <a
+              aria-label="Open in a new tab"
+              class="usa-link usa-link--external"
+              href="https://nemsis.org/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Emergency Management Services
+            </a>
+          </li>
+          <li
+            class="list-item"
+          >
+            Electronic Health Records integration (a Bulk FHIR API is coming soon)
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Collect and process health-related data.
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Collect data from participants through data entry on web pages, file uploads, or APIs, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            Expanded Demographics data that complies with United States Core Data for Interoperability (USCDI) standards.
+          </li>
+          <li
+            class="list-item"
+          >
+            Social Determinants of Health (SDOH) data using the PRAPARE, North Carolina, or AHC tools.
+          </li>
+          <li
+            class="list-item"
+          >
+            Quality Measures (i.e., numerators, denominators, exclusions, exceptions)
+          </li>
+          <li
+            class="list-item"
+          >
+            Clinical Data
+          </li>
+          <li
+            class="list-item"
+          >
+            Other model-defined metrics and qualitative data.
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        />
+        <span
+          class="text-pre-wrap "
+        >
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            See a video sample.
+          </a>
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Produce reports and files for participants. 
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            <span>
+              Participant feedback dashboards that supply curated reports to participants based on CMS data (
+              <a
+                aria-label="Open in a new tab"
+                class="usa-link usa-link--external"
+                href="https://cmsbox.app.box.com/s/8rody63c7w6x2skkrchit43a7q4e7fa1"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                see a video sample
+              </a>
+              ). Dashboards use the Looker commercial tool and can include information such as:
+            </span>
+            <ul
+              class="padding-left-4 margin-top-0"
+            >
+              <li
+                class="list-item"
+              >
+                Multiple levels of reports (e.g., entity, practitioner, beneficiary)
+              </li>
+              <li
+                class="list-item"
+              >
+                Utilization information
+              </li>
+              <li
+                class="list-item"
+              >
+                Cost information
+              </li>
+              <li
+                class="list-item"
+              >
+                Claims-based quality measures
+              </li>
+              <li
+                class="list-item"
+              >
+                Model-specific metrics
+              </li>
+            </ul>
+          </li>
+          <li
+            class="list-item"
+          >
+            Quality measure results - aggregate quality measure calculation results report
+          </li>
+          <li
+            class="list-item"
+          >
+            Medicare FFS Claims and Part D raw data files.
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Analytics
+        </h4>
+        <span
+          class="text-pre-wrap "
+        >
+          Create analytics for model teams, including:
+        </span>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            Computations and algorithms such as probabilistic matching and attribution.
+          </li>
+          <li
+            class="list-item"
+          >
+            Model Space (coming soon) – a workspace for model contractors, model teams, and BSG’s IT teams to create and share analytical tools using languages such as Python through Data Bricks.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`IT Solutions About Components matches the snapshot: Integrated Data Repository 1`] = `
 <DocumentFragment>
   <div>
@@ -2135,41 +2520,17 @@ exports[`IT Solutions About Components matches the snapshot: Quality Vertical 1`
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Quality Vertical Model Resources on SharePoint
-            </a>
+            &lt;externalLink1&gt;Quality Vertical Model Resources on SharePoint&lt;/externalLink1&gt;
           </li>
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://mmshub.cms.gov/mms-tools"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Measure Management System (MMS) Tools
-            </a>
+            &lt;externalLink1&gt;Measure Management System (MMS) Tools&lt;/externalLink1&gt;
           </li>
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://qpp.cms.gov/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Quality Payment Program
-            </a>
+            &lt;externalLink1&gt;Quality Payment Program&lt;/externalLink1&gt;
           </li>
         </ul>
       </div>
@@ -2621,7 +2982,7 @@ exports[`IT Solutions About Components matches the snapshot: Salesforce Letter o
 </DocumentFragment>
 `;
 
-exports[`IT Solutions About Components matches the snapshot: Salesforce Project Officer Support Tool or Portal 1`] = `
+exports[`IT Solutions About Components matches the snapshot: Salesforce Project Officer Support Tool / Portal 1`] = `
 <DocumentFragment>
   <div>
     <h2
