@@ -6,7 +6,10 @@ import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/shared/Alert';
-import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
+import {
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'data/operationalSolutionCategories';
 
 import {
   HelpSolutionType,
@@ -37,9 +40,24 @@ function Solutions({
     return (
       <div className="margin-top-6">
         {operationalSolutionSubCategoryMap[category]!.map(subCategory => {
-          const subCategorySolutions = currentSolutions.filter(solution =>
+          let subCategorySolutions = currentSolutions.filter(solution =>
             solution.subCategories?.includes(subCategory)
           );
+
+          // Order of subcatery for APPLICATIONS is not alphabetical like other, needs a certain order
+          if (subCategory === OperationalSolutionSubCategories.APPLICATIONS) {
+            const setIndexes = [3, 4, 2, 0, 1];
+            subCategorySolutions = setIndexes.map(i => subCategorySolutions[i]);
+          }
+
+          // Order of subcatery for PARTICIPANT_AGREEMENT_APPS is not alphabetical like other, needs a certain order
+          if (
+            subCategory ===
+            OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
+          ) {
+            const setIndexes = [2, 3, 1, 0];
+            subCategorySolutions = setIndexes.map(i => subCategorySolutions[i]);
+          }
 
           return (
             <React.Fragment key={subCategory}>
