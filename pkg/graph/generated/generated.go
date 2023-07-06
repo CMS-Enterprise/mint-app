@@ -8906,6 +8906,7 @@ enum OperationalSolutionKey{
   POST_PORTAL
   RFA
   SHARED_SYSTEMS
+  BCDA
 }
 
 enum OperationalSolutionSubtaskStatus {
