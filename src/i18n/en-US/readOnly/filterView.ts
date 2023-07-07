@@ -14,6 +14,8 @@ const filterView = {
   viewFiltered: 'View filtered content',
   youAreViewing: 'You are viewing',
   information: 'information.',
+  all: 'all',
+  allInformation: 'information about this model.',
   clearFilter: 'Clear filter',
   filterButton: 'Filter'
 };
