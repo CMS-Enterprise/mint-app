@@ -17,7 +17,6 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
-import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
@@ -284,8 +283,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           filteredView={filteredView}
         />
       </Modal>
-
-      {hasEditAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 
       {filteredView && (
         <FilterViewBanner
