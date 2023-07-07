@@ -101,41 +101,23 @@ const solutions: SolutionTType = {
       components: [
         {
           header: 'Product capabilties',
-          itemHeaders: [
-            'Agreement management',
-            'Participant Management',
-            'Benefits Enhancements',
-            'Contact/User Management',
-            'Reports & Analytics',
-            'Data Hub & Data Exchange',
-            'Knowledge Library',
-            'Provider Overlap Check',
-            'Beneficiary Overlap Check',
-            'Beneficiary Lookup Feature',
-            'Data Exchange with downstream systems',
-            'Claim and Claim Line Feeds (CCLF)',
-            'Identity & Access Management',
-            'Application Programming Interface (API) Key Mgt',
-            '4i Command Line Interface (CLI) Tool',
-            'Tasks and Notifications'
-          ],
           items: [
-            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
-            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
-            'Add and manage Benefit Enhancements and Payment mechanisms.',
-            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
-            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
-            'Provide secure access to sensitive data such as claims and beneficiary reports,',
-            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
-            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
-            'Beneficiary overlap check across the models',
-            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
-            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
-            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
-            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
-            'Request and manage API keys and monitor API usage statistics',
-            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
-            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+            '<bold>Agreement management</bold> - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            '<bold>Participant Management</bold> - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            '<bold>Benefits Enhancements</bold> - Add and manage Benefit Enhancements and Payment mechanisms.',
+            '<bold>Contact/User Management</bold> - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            '<bold>Reports & Analytics</bold> - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            '<bold>Data Hub & Data Exchange</bold> - Provide secure access to sensitive data such as claims and beneficiary reports,',
+            '<bold>Knowledge Library</bold> - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            '<bold>Provider Overlap Check</bold> - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            '<bold>Beneficiary Overlap Check</bold> - Beneficiary overlap check across the models',
+            '<bold>Beneficiary Lookup Feature</bold> - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            '<bold>Data Exchange with downstream systems</bold> - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            '<bold>Claim and Claim Line Feeds (CCLF)</bold> - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            '<bold>Identity & Access Management</bold> - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            '<bold>Application Programming Interface (API) Key Mgt</bold> - Request and manage API keys and monitor API usage statistics',
+            '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
       ]
@@ -209,41 +191,23 @@ const solutions: SolutionTType = {
       components: [
         {
           header: 'Product capabilties',
-          itemHeaders: [
-            'Agreement management',
-            'Participant Management',
-            'Benefits Enhancements',
-            'Contact/User Management',
-            'Reports & Analytics',
-            'Data Hub & Data Exchange',
-            'Knowledge Library',
-            'Provider Overlap Check',
-            'Beneficiary Overlap Check',
-            'Beneficiary Lookup Feature',
-            'Data Exchange with downstream systems',
-            'Claim and Claim Line Feeds (CCLF)',
-            'Identity & Access Management',
-            'Application Programming Interface (API) Key Mgt',
-            '4i Command Line Interface (CLI) Tool',
-            'Tasks and Notifications'
-          ],
           items: [
-            'Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
-            'Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
-            'Add and manage Benefit Enhancements and Payment mechanisms.',
-            'Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
-            'View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
-            'Provide secure access to sensitive data such as claims and beneficiary reports,',
-            'Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
-            'Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
-            'Beneficiary overlap check across the models',
-            'This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
-            'Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
-            'CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
-            'Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
-            'Request and manage API keys and monitor API usage statistics',
-            'Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
-            'Show users Tasks and Notifications, the ability for users to manage and control the notifications'
+            '<bold>Agreement management</bold> - Create and manage ACO/Entity data, Change Request management, Sign and manage Participation Agreements and HIPAA Disclosure Forms to access sensitive data',
+            '<bold>Participant Management</bold> - Add and manage participants, Real-time feedback on Participant Medicare enrollment checks for providers.',
+            '<bold>Benefits Enhancements</bold> - Add and manage Benefit Enhancements and Payment mechanisms.',
+            '<bold>Contact/User Management</bold> - Invitation-based access enables users to access the system and manage users in their Entities, elect a Designated Official (DO)',
+            '<bold>Reports & Analytics</bold> - View and download real-time reports related to agreements, participants, users’ access, and change requests for APM Entities',
+            '<bold>Data Hub & Data Exchange</bold> - Provide secure access to sensitive data such as claims and beneficiary reports,',
+            '<bold>Knowledge Library</bold> - Publish and manage model and system content (FAQs/Documents/ Articles/ Events/Webinars)',
+            '<bold>Provider Overlap Check</bold> - Allow entities to check the provider overlap within and across the models and resolve the overlap errors before submitting the records.',
+            '<bold>Beneficiary Overlap Check</bold> - Beneficiary overlap check across the models',
+            '<bold>Beneficiary Lookup Feature</bold> - This feature will show the beneficiary alignment to Medicare Shared Savings Program, KCC, ACO REACH, VTAPM, or PCF if the beneficiary is in one of the above programs.',
+            '<bold>Data Exchange with downstream systems</bold> - Entity, Provider, and beneficiary data transmission for participating APMs to CMS systems like Shared Systems (FFS SSMs, MDM, IPC, and BCDA)',
+            '<bold>Claim and Claim Line Feeds (CCLF)</bold> - CCLF are a package of 12 files containing claims and beneficiary data, sent monthly to entities participating in models under CM/CMMI',
+            '<bold>Identity & Access Management</bold> - Multi-factor authentication with Okta, Remote identity proofing with Experian, seamless integration with CMS IDM and EUA',
+            '<bold>Application Programming Interface (API) Key Mgt</bold> - Request and manage API keys and monitor API usage statistics',
+            '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
+            '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
       ]
@@ -1453,9 +1417,9 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             }
           ],
           items: [
-            '<externalLink1>Quality Vertical Model Resources on SharePoint</externalLink1>',
-            '<externalLink1>Measure Management System (MMS) Tools</externalLink1>',
-            '<externalLink1>Quality Payment Program</externalLink1>'
+            '<link1>Quality Vertical Model Resources on SharePoint</link1>',
+            '<link2>Measure Management System (MMS) Tools</link2>',
+            '<link3>Quality Payment Program</link3>'
           ]
         }
       ]
@@ -1516,10 +1480,9 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       components: [
         {
           header: 'Product capabilities',
-          itemHeaders: ['Scoring Rubric', 'Application Scoring'],
           items: [
-            'Establish a framework to score applications and set up the panel members.',
-            'Score applications and track the input from each panel member.'
+            '<bold>Scoring Rubric</bold> - Establish a framework to score applications and set up the panel members.',
+            '<bold>Application Scoring</bold> - Score applications and track the input from each panel member.'
           ]
         },
         {
@@ -1579,11 +1542,10 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       components: [
         {
           header: 'Product capabilities',
-          itemHeaders: ['Group management', 'Engage', 'Learn'],
           items: [
-            'Define collaboration groups that can include participants, contractors, and CMS staff.',
-            'Members of a Group can interact through chat, Q&A, and information sharing.',
-            'Follow topics and search for information. Share and organize relevant materials.'
+            '<bold>Group management</bold> - Define collaboration groups that can include participants, contractors, and CMS staff.',
+            '<bold>Engage</bold> - Members of a Group can interact through chat, Q&A, and information sharing.',
+            '<bold>Learn</bold> - Follow topics and search for information. Share and organize relevant materials.'
           ]
         },
         {
@@ -1659,26 +1621,16 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           header: 'Product capabilities',
           description:
             'The capabilities for POST vary between models. The following capabilities are common across models. The project team will create the capabilities that your model requires.',
-          itemHeaders: [
-            'Access management',
-            'Applications',
-            'Sign Participant Agreements',
-            'Participant Profile',
-            'Participant Documents',
-            'Submission Management',
-            'Participant Engagement',
-            'Case Management',
-            'Reports and Dashboards'
-          ],
           items: [
-            'Participants can reuse existing CMS user accounts or create a new one.',
-            'Applications – View and edit applications submitted through the RFA.',
-            '(coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
-            'Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
-            'Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
-            'Submission Management – Establish and manage timeframes for data submission.',
+            '<bold>Access management</bold> - Participants can reuse existing CMS user accounts or create a new one.',
+            '<bold>Applications</bold> - Applications – View and edit applications submitted through the RFA.',
+            '<bold>Sign Participant Agreements</bold> - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.',
+            '<bold>Participant Profile</bold> - Participant Profile – Create and manage profiles of your participants and awardees, including contact information and organization characteristics.',
+            '<bold>Participant Documents</bold> - Participant Documents – Collect, approve, and manage documents with your participants (e.g., agreements, attestations, progress reports, status reports, and marketing materials).',
+            '<bold>Submission Management</bold> - Submission Management – Establish and manage timeframes for data submission.',
             {
-              header: 'Engage with your participants with features such as:',
+              header:
+                '<bold>Participant Engagement</bold> - Engage with your participants with features such as:',
               items: [
                 'Post announcements, FAQs, and other information',
                 'Engage in chats, surveys, and polls',
@@ -1686,8 +1638,8 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
                 'Manage Corrective Action Plans'
               ]
             },
-            'Case Management – Manage requests, tickets, and questions from participants.',
-            'Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.'
+            '<bold>Case Management</bold> - Case Management – Manage requests, tickets, and questions from participants.',
+            '<bold>Reports and Dashboards</bold> - Reports and Dashboards – Produce standard and ad-hoc reports based on the data in the system.'
           ]
         },
         {
@@ -1719,21 +1671,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       components: [
         {
           header: 'Product capabilities',
-          itemHeaders: [
-            'Access management',
-            'Data collection',
-            'Conditional logic',
-            'Documents',
-            'Vet Providers',
-            'Track',
-            'Sign Participant Agreements'
-          ],
           items: [
-            'Access management – Candidate participants can reuse existing CMS user accounts or create a new one.',
-            // @ts-ignore
+            '<bold>Access management</bold> - Access management – Candidate participants can reuse existing CMS user accounts or create a new one.',
             {
               header:
-                'Collect the data you need to review and select participants such as:',
+                '<bold>Data collection</bold> - Collect the data you need to review and select participants such as:',
               items: [
                 'Organization information',
                 'Contact information',
@@ -1742,11 +1684,11 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
               description:
                 'You can customize the data collection during the development process.'
             },
-            'Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)',
-            'Collect supporting documents from the candidate participants.',
-            '(coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.',
-            'submissions',
-            '(coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.'
+            '<bold>Conditional logic</bold> - Build logic into the questions you ask applicants (e.g., present new questions based on answers to prior questions)',
+            '<bold>Documents</bold> - Collect supporting documents from the candidate participants.',
+            '<bold>Vet Providers</bold> - (coming soon) – Determine if Medicare FFS providers are valid by checking against data from the Center for Program Integrity (CPI), such as PECOS.',
+            '<bold>Track</bold> - submissions',
+            '<bold>Sign Participant Agreements</bold> - (coming soon) – Electronically sign Participant Agreements after reviewing applications and selecting participants.'
           ]
         },
         {

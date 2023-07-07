@@ -24,8 +24,8 @@ interface AboutComponentType {
   description?: string;
   level?: 'h3' | 'h4';
   items: (string | ListItemType)[];
+  noList?: boolean;
   ordered?: boolean;
-  itemHeaders?: string[]; // Must be the same number of items as items[]
   links?: LinkType[]; // Must be the same number of items as items[]
 }
 
@@ -33,14 +33,20 @@ export interface AboutConfigType {
   description: string;
   subDescription?: string;
   items?: string[];
+  noList?: boolean;
   ordered?: boolean;
   components?: AboutComponentType[];
 }
 
 const returnListType = (
-  ordered: boolean | undefined
-): keyof JSX.IntrinsicElements =>
-  `${ordered ? 'o' : 'u'}l` as keyof JSX.IntrinsicElements;
+  ordered: boolean | undefined,
+  none?: boolean
+): keyof JSX.IntrinsicElements => {
+  if (none) {
+    return 'span' as keyof JSX.IntrinsicElements;
+  }
+  return `${ordered ? 'o' : 'u'}l` as keyof JSX.IntrinsicElements;
+};
 
 const returnHeadingLevel = (
   level: 'h4' | undefined
@@ -127,7 +133,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               >
                 <Trans
                   i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.header`}
-                  components={getTransLinkComponents(component.links)}
+                  components={{
+                    ...getTransLinkComponents(component.links),
+                    bold: <strong />
+                  }}
                 />
               </HeadingLevel>
 
@@ -135,51 +144,42 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                 <span className="text-pre-wrap ">
                   <Trans
                     i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.description`}
-                    components={getTransLinkComponents(component.links)}
+                    components={{
+                      ...getTransLinkComponents(component.links),
+                      bold: <strong />
+                    }}
                   />
                 </span>
               )}
 
               <ComponentListType
                 className={classNames('padding-left-4', {
-                  'list-style-none padding-left-0 margin-top-neg-2':
-                    component.items.length === 1,
+                  // 'list-style-none padding-left-0 margin-top-neg-2':
+                  //   component.items.length === 1 && component.level !== 'h4',
                   'margin-top-0': component.items.length > 1
                 })}
               >
                 {component.items.map(
                   (item: string | AboutComponentType, index: number) => {
-                    const listItem = (
-                      <Trans
-                        i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}`}
-                        components={getTransLinkComponents(component.links)}
-                      />
-                    );
-
                     return (
                       <li
                         key={
                           typeof item === 'object' ? item.header : item + index
                         }
-                        className={classNames({
-                          'list-item': component.items.length > 1
-                        })}
+                        // className={classNames({
+                        //   'list-item': component.items.length > 1
+                        // })}
                       >
-                        {component.itemHeaders && (
-                          <span className="text-bold">
-                            {component.itemHeaders[index]} -{' '}
-                          </span>
-                        )}
-
                         {/* Renders list item or another nested list */}
                         {typeof item === 'object' ? (
                           <>
                             <span>
                               <Trans
                                 i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}.header`}
-                                components={getTransLinkComponents(
-                                  component.links
-                                )}
+                                components={{
+                                  ...getTransLinkComponents(component.links),
+                                  bold: <strong />
+                                }}
                               />
                             </span>
 
@@ -189,9 +189,12 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                                   <li key={subItem} className="list-item">
                                     <Trans
                                       i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}.items.${subItemIndex}`}
-                                      components={getTransLinkComponents(
-                                        component.links
-                                      )}
+                                      components={{
+                                        ...getTransLinkComponents(
+                                          component.links
+                                        ),
+                                        bold: <strong />
+                                      }}
                                     />
                                   </li>
                                 )
@@ -202,7 +205,13 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                             )}
                           </>
                         ) : (
-                          listItem
+                          <Trans
+                            i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}`}
+                            components={{
+                              ...getTransLinkComponents(component.links),
+                              bold: <strong />
+                            }}
+                          />
                         )}
                       </li>
                     );
