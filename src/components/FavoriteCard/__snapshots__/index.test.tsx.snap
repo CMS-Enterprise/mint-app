@@ -56,6 +56,7 @@ exports[`FavoriteCard matches the snapshot 1`] = `
           </div>
           <div
             class="padding-0"
+            data-testid="task-list-status"
           >
             <div
               class="grid-row"
