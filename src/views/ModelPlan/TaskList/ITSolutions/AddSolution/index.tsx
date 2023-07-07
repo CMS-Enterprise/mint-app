@@ -143,7 +143,6 @@ const AddSolution = () => {
     formikValues: OperationalSolutionFormType
   ) => {
     const { key } = formikValues;
-    console.log(formikValues);
 
     let updateMutation;
     try {
