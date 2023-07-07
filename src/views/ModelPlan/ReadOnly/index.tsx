@@ -325,6 +325,14 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             )}
           </PageHeading>
 
+          <TaskListStatus
+            readOnly
+            modelID={modelID}
+            status={status}
+            statusLabel
+            modifiedDts={modifiedDts ?? ''}
+          />
+
           {!isViewingFilteredGroup && (
             <ModelSummary
               descriptionRef={descriptionRef}
@@ -342,19 +350,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
         </GridContainer>
       </SummaryBox>
-      <SectionWrapper className="model-plan-status-bar bg-base-lightest">
-        <GridContainer>
-          <div className="padding-y-1 status-min-height">
-            <TaskListStatus
-              readOnly
-              modelID={modelID}
-              status={status}
-              statusLabel
-              modifiedDts={modifiedDts ?? ''}
-            />
-          </div>
-        </GridContainer>
-      </SectionWrapper>
 
       <MobileNav
         subComponents={subComponents}

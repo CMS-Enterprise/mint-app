@@ -32,7 +32,7 @@ const TaskListStatus = ({
 
   return (
     <div className="padding-0">
-      <Grid row style={{ gap: '10px' }}>
+      <Grid row style={{ gap: '16px' }}>
         <Grid
           col={modifiedDts ? 12 : 'auto'}
           desktop={{ col: 'auto' }}
@@ -48,7 +48,6 @@ const TaskListStatus = ({
           col={modifiedDts ? 12 : 'auto'}
           desktop={{ col: 'auto' }}
           className="display-flex flex-align-center flex-wrap"
-          style={{ gap: '10px' }}
         >
           {!!modifiedDts && (
             <p className="margin-y-0 text-normal">
@@ -69,6 +68,20 @@ const TaskListStatus = ({
             </div>
           )}
         </Grid>
+        {readOnly && (
+          <div className="display-flex flex-align-center">
+            <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+            <div>
+              <UswdsReactLink
+                to={`/models/${modelID}/task-list`}
+                className="display-flex flex-align-center"
+              >
+                <IconEdit className="margin-right-1" />
+                {t('edit')}
+              </UswdsReactLink>
+            </div>
+          </div>
+        )}
       </Grid>
     </div>
   );
