@@ -23,6 +23,8 @@ const modelPlanTaskList = {
     more: ' more'
   },
   sideNav: {
+    actions: 'Actions',
+    readOnlyView: 'Switch to the Read View for this Model Plan',
     saveAndExit: 'Save & Exit',
     view: 'View this Model Plan',
     remove: 'Remove your Model Plan',
