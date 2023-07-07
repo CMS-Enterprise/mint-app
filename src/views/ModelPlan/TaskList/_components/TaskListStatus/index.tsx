@@ -31,7 +31,7 @@ const TaskListStatus = ({
   const { t: h } = useTranslation('generalReadOnly');
 
   return (
-    <div className="padding-0">
+    <div className="padding-0" data-testid="task-list-status">
       <Grid row style={{ gap: '16px' }}>
         <Grid
           col={modifiedDts ? 12 : 'auto'}

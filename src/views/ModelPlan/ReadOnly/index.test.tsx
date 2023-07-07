@@ -13,7 +13,7 @@ import {
   ModelStatus,
   TeamRole
 } from 'types/graphql-global-types';
-import { translateKeyCharacteristics } from 'utils/modelPlan';
+import { translateModelPlanStatus } from 'utils/modelPlan';
 
 import ReadOnly from './index';
 
@@ -101,23 +101,16 @@ describe('Read Only Model Plan Summary', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('read-only-model-summary')).toBeInTheDocument();
+      expect(screen.getByTestId('model-plan-read-only')).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      const { getByText } = within(
-        screen.getByTestId('read-only-model-summary__description')
-      );
-      expect(getByText('This is the goal')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('First Collaborator')).toBeInTheDocument();
-      expect(screen.getByText('August 20, 2022')).toBeInTheDocument();
+      const { getByText } = within(screen.getByTestId('task-list-status'));
       expect(
-        screen.getByText(
-          translateKeyCharacteristics(KeyCharacteristic.EPISODE_BASED)
-        )
+        getByText(translateModelPlanStatus(ModelStatus.PLAN_DRAFT))
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('read-only-side-nav__wrapper')
       ).toBeInTheDocument();
     });
   });
