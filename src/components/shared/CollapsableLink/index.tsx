@@ -68,8 +68,8 @@ const CollapsableLink = ({
       unstyled
       data-testid="collapsable-link"
     >
-      {iconPosition === 'left' ? selectedLabel : expandIcon}
-      {iconPosition === 'left' ? expandIcon : selectedLabel}
+      {iconPosition === 'right' ? selectedLabel : expandIcon}
+      {iconPosition === 'right' ? expandIcon : selectedLabel}
     </Button>
   );
   return (
