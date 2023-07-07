@@ -158,7 +158,10 @@ const AddCustomSolution = () => {
             id: operationalSolutionID,
             changes: {
               needed: customOperationalSolution.needed,
-              nameOther: !selectedSolution ? nameOther : null,
+              nameOther:
+                selectedSolution === OperationalSolutionKey.OTHER_NEW_PROCESS
+                  ? nameOther
+                  : null,
               otherHeader: selectedSolution ? otherHeader : null,
               pocEmail,
               pocName
