@@ -9,52 +9,6 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
     role="main"
     tabindex="-1"
   >
-    <nav
-      aria-label="Navigation toggle between task list and overview"
-      class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105 sub-nav"
-      data-testid="sub-navigation-bar"
-    >
-      <div
-        aria-label="Navigation toggle between task list and overview"
-        class="pointer"
-        data-testid="sub-navigation-link"
-        role="link"
-        tabindex="0"
-      >
-        <div
-          class="grid-container"
-          data-testid="sub-navigation-text"
-        >
-          Need to update this information?  
-          <div
-            class="text-white text-bold display-inline-flex margin-left-05"
-          >
-            <div
-              data-testid="sub-navigation-link-text"
-            >
-               Go to the Model Plan task list 
-            </div>
-            <svg
-              class="usa-icon text-white margin-left-1 right-icon"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </nav>
     <div
       class="usa-summary-box padding-y-6 border-0 bg-primary-lighter margin-top-0"
       data-testid="read-only-model-summary"
@@ -96,7 +50,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                   />
                 </svg>
-                Back to all models
+                View all models
               </a>
               <div
                 class="pointer"
@@ -124,7 +78,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
             </div>
             <h1
               aria-live="polite"
-              class="mint-h1 margin-0 line-height-sans-2 minh-6"
+              class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
               tabindex="-1"
             >
               Testing Model Summary 
@@ -135,97 +89,87 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
               </span>
             </h1>
             <div
-              class="mint-collapsable-link"
+              class="padding-0"
             >
               <div
-                class="mint-collapsable-link__content-no-bar"
-                id="testing-model-summary--description"
+                class="grid-row"
+                data-testid="grid"
+                style="gap: 16px;"
               >
                 <div
-                  class="description-truncated margin-bottom-2"
+                  class="grid-col-12 desktop:grid-col-auto display-flex flex-align-center"
+                  data-testid="grid"
+                  style="gap: 10px;"
                 >
-                  <dd
-                    class="description-definition margin-0 font-body-lg line-height-body-5 text-light minh-5"
-                    data-testid="read-only-model-summary__description"
+                  <p
+                    class="margin-y-0"
                   >
-                    This is the goal
-                  </dd>
+                    Status:
+                  </p>
+                  <span
+                    class="mint-tag bg-base text-white margin-right-0"
+                    data-testid="tag"
+                  >
+                    Draft model plan
+                  </span>
                 </div>
                 <div
-                  class="grid-row margin-top-3"
+                  class="grid-col-12 desktop:grid-col-auto display-flex flex-align-center flex-wrap"
                   data-testid="grid"
                 >
-                  <div
-                    class="grid-col-6 margin-bottom-2 minh-7"
-                    data-testid="grid"
+                  <p
+                    class="margin-y-0 text-normal"
                   >
-                    <dd
-                      class="description-definition margin-0 font-body-sm"
-                    >
-                      Key characteristics
-                    </dd>
-                    <dt
-                      class="text-bold margin-bottom-05 font-body-lg line-height-sans-2 margin-bottom-0"
-                    >
-                      Episode-Based Model
-                    </dt>
-                  </div>
+                    Last updated on 08/27/2022
+                  </p>
+                </div>
+                <div
+                  class="display-flex flex-align-center"
+                >
                   <div
-                    class="grid-col-6 margin-bottom-2 minh-7"
-                    data-testid="grid"
-                  >
-                    <dd
-                      class="description-definition margin-0 font-body-sm"
+                    class="height-2 border-left-2px border-base-light margin-right-2 "
+                  />
+                  <div>
+                    <a
+                      class="usa-link display-flex flex-align-center"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
                     >
-                      Model lead(s)
-                    </dd>
-                    <dt
-                      class="text-bold margin-bottom-05 font-body-lg line-height-sans-2 margin-bottom-0"
-                    >
-                      First Collaborator
-                    </dt>
-                  </div>
-                  <div
-                    class="grid-col-6 margin-bottom-2 desktop:margin-bottom-0 minh-7"
-                    data-testid="grid"
-                  >
-                    <dd
-                      class="description-definition margin-0 font-body-sm"
-                    >
-                      Model start date
-                    </dd>
-                    <dt
-                      class="text-bold margin-bottom-05 font-body-lg line-height-sans-2 margin-bottom-0"
-                    >
-                      August 20, 2022
-                    </dt>
-                  </div>
-                  <div
-                    class="grid-col-6 margin-bottom-2 desktop:margin-bottom-0 minh-7"
-                    data-testid="grid"
-                  >
-                    <dd
-                      class="description-definition margin-0 font-body-sm"
-                    >
-                      CRs and TDLs
-                    </dd>
-                    <dt
-                      class="text-bold margin-bottom-05 font-body-lg line-height-sans-2 margin-bottom-0 "
-                    >
-                      TDL-123
-                    </dt>
+                      <svg
+                        class="usa-icon margin-right-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                        />
+                      </svg>
+                      Edit Model Plan
+                    </a>
                   </div>
                 </div>
               </div>
+            </div>
+            <div
+              class="mint-collapsable-link"
+            >
               <button
                 aria-controls="testing-model-summary--description"
-                aria-expanded="true"
+                aria-expanded="false"
                 class="usa-button usa-button--unstyled margin-top-3 padding-0"
                 data-testid="collapsable-link"
                 type="button"
               >
+                Show model summary
                 <svg
-                  class="usa-icon mint-collapsable-link__eye-icon"
+                  class="usa-icon top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -234,14 +178,13 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0z"
+                    d="M0 0h24v24H0z"
                     fill="none"
                   />
                   <path
-                    d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 0 0 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
+                    d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                   />
                 </svg>
-                Hide model summary
               </button>
             </div>
           </div>
@@ -249,53 +192,56 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mint-section model-plan-status-bar bg-base-lightest"
-      data-testid="section-wrapper"
+      class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
+      data-testid="group-filter-banner"
     >
       <div
         class="grid-container"
         data-testid="gridContainer"
       >
         <div
-          class="padding-y-1 status-min-height"
+          class="banner display-flex flex-justify"
         >
           <div
-            class="padding-0"
+            class="display-flex flex-align-center"
+            style="gap: 1rem;"
           >
-            <div
-              class="grid-row"
-              data-testid="grid"
-              style="gap: 10px;"
+            <svg
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <div
-                class="grid-col-12 desktop:grid-col-auto display-flex flex-align-center"
-                data-testid="grid"
-                style="gap: 10px;"
-              >
-                <p
-                  class="margin-y-0"
-                >
-                  Status:
-                </p>
-                <span
-                  class="mint-tag bg-base text-white margin-right-0"
-                  data-testid="tag"
-                >
-                  Draft model plan
-                </span>
-              </div>
-              <div
-                class="grid-col-12 desktop:grid-col-auto display-flex flex-align-center flex-wrap"
-                data-testid="grid"
-                style="gap: 10px;"
-              >
-                <p
-                  class="margin-y-0 text-normal"
-                >
-                  Last updated on 08/27/2022
-                </p>
-              </div>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+              />
+            </svg>
+            <div>
+              You are viewing 
+              <strong>
+                all
+              </strong>
+               information about this model.
             </div>
+          </div>
+          <div
+            class="display-flex flex-justify flex-align-center flex-align-self-end"
+            style="gap: 1rem;"
+          >
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="button"
+            >
+              Filter
+            </button>
           </div>
         </div>
       </div>
@@ -372,26 +318,6 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
               data-testid="read-only-side-nav__wrapper"
               id="read-only-side-nav__wrapper"
             >
-              <div
-                class="margin-bottom-4"
-              >
-                <div
-                  class="bg-base-lightest padding-2"
-                >
-                  <p
-                    class="margin-top-0 text-bold line-height-sans-5"
-                  >
-                    Are you part of a group that only cares about some of these fields?
-                  </p>
-                  <button
-                    class="usa-button"
-                    data-testid="button"
-                    type="button"
-                  >
-                    Filter view
-                  </button>
-                </div>
-              </div>
               <ul
                 class="usa-sidenav"
                 data-testid="sidenav"
