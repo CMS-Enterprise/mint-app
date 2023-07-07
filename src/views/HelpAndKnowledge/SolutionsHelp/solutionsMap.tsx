@@ -327,8 +327,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
@@ -950,7 +950,7 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforceConnect',
     route: 'salesforce-connect',
     categories: [OperationalSolutionCategories.LEARNING],
-    name: 'Salesforce Connect',
+    name: 'Salesforce CONNECT',
     pointsOfContact: [
       {
         name: 'Elia Cossis',
@@ -969,8 +969,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
@@ -1025,8 +1025,8 @@ export const helpSolutions: HelpSolutionType[] = [
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
-    acronym: 'POST / PORTAL',
-    name: 'Salesforce Project Officer Support Tool / Portal',
+    acronym: 'POST',
+    name: 'Salesforce Project Officer Support Tool or Portal',
     pointsOfContact: [
       {
         name: 'Elia Cossis',
@@ -1045,8 +1045,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
@@ -1083,8 +1083,8 @@ export const helpSolutions: HelpSolutionType[] = [
     },
     contractors: [
       {
-        name: 'NewWave',
-        system: 'Innovation Development and Operation Services (IDOS)'
+        name: 'Softrams',
+        system: 'CMMI Technology Solution (CTS)'
       }
     ],
     components: {
