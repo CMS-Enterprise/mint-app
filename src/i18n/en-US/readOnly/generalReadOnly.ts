@@ -1,5 +1,5 @@
 const generalReadOnly = {
-  back: 'Back to all models',
+  back: 'View all models',
   description: {
     more: 'Read more',
     less: 'Read less'
