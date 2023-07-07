@@ -316,7 +316,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           )}
 
           <PageHeading
-            className="margin-0 line-height-sans-2 minh-6"
+            className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
             headingLevel={isHelpArticle ? 'h2' : 'h1'}
           >
             {modelName}{' '}
