@@ -6,7 +6,7 @@ import { Button, GridContainer, IconVisiblity } from '@trussworks/react-uswds';
 import './index.scss';
 
 type FilterViewBannerProps = {
-  filteredView: string;
+  filteredView: string | null;
   openFilterModal: () => void;
 };
 
@@ -29,22 +29,24 @@ const FilterViewBanner = ({
           >
             <IconVisiblity size={3} />
             <div>
-              {t('youAreViewing')} <strong>{filteredView}</strong>{' '}
-              {t('information')}
+              {t('youAreViewing')} <strong>{filteredView ?? t('all')}</strong>{' '}
+              {filteredView !== null ? t('information') : t('allInformation')}
             </div>
           </div>
           <div
             className="display-flex flex-justify flex-align-center flex-align-self-end"
             style={{ gap: '1rem' }}
           >
-            <Button
-              type="button"
-              unstyled
-              className="text-white text-no-wrap"
-              onClick={() => history.push(`${history.location.pathname}`)}
-            >
-              {t('clearFilter')}
-            </Button>
+            {filteredView && (
+              <Button
+                type="button"
+                unstyled
+                className="text-white text-no-wrap"
+                onClick={() => history.push(`${history.location.pathname}`)}
+              >
+                {t('clearFilter')}
+              </Button>
+            )}
             <Button type="button" onClick={openFilterModal}>
               {t('filterButton')}
             </Button>

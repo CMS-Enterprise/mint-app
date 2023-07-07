@@ -2,10 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { subComponentsProps } from '../..';
-import FilterButton from '../FilterView/FilterButton';
 
 import './index.scss';
 
@@ -27,7 +25,6 @@ const SideNav = ({
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('helpAndKnowledge');
 
-  const flags = useFlags();
   const translationKey = solutionNavigation ? h : t;
 
   // Mapping of all sub navigation links
@@ -60,11 +57,6 @@ const SideNav = ({
       id="read-only-side-nav__wrapper"
       data-testid="read-only-side-nav__wrapper"
     >
-      {!flags.hideGroupView && openFilterModal && (
-        <div className="margin-bottom-4">
-          <FilterButton openFilterModal={openFilterModal} />
-        </div>
-      )}
       <TrussSideNav items={subNavigationLinks} />
     </div>
   );
